@@ -6,11 +6,11 @@ tags: ["AI", "Artificial Intelligence", "Machine Learning", "Deep Learning", "Ge
 categories: ["Technology", "AI", "Trends", "Innovation"]
 image: https://cdn.digitalisationworld.com/uploads/images/aad60f21ef343ef51b2644999c6b56842801598a223e1272.jpg
 math: false
-license: CC BY-SA 4.0
+license: NA
 hidden: false
 comments: true
 draft: false
-author: "Your Name"
+author: "Shoubhik Banerjee"
 ---
 
 ![AI Advancements 2025]
