@@ -13,7 +13,6 @@ draft: false
 author: "Shoubhik Banerjee"
 ---
 
-![AI Advancements 2025]
 
 # AI and Its Recent Advancements
 
