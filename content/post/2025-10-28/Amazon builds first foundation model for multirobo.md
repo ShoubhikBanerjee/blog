@@ -6,7 +6,7 @@ achieving 10% efficiency improvements through AI-powered coordination of over on
 date: 2025-10-28T01:26:59.684386+05:30
 tags: ["Amazon", "DeepFleet", "Foundation Models", "Robotics", "Machine Learning", "AI", "Fleet Management", "Logistics", "Automation", "Multirobot Coordination"]
 categories: ["Artificial Intelligence", "Robotics", "Cloud Computing"]
-image: "NA"
+image: "https://assets.amazon.science/dims4/default/9fabab1/2147483647/strip/true/crop/1430x403+0+0/resize/1200x338!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F43%2F47%2F5d418d2c4c018052aafae4b4319b%2Fpicture4.png"
 math: false
 license: "NA"
 hidden: false
@@ -18,8 +18,7 @@ author: "Shoubhik Banerjee"
 # 🤖 Amazon Builds First Foundation Model for Multirobot Coordination
 
 ![Robots laden with storage pods at a fulfillment center and with packages at a sortation
-center](https://assets.amazon.science/dims4/default/9fabab1/2147483647/strip/true/crop/1430x403+0+0/resize/1200x338!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fsc
-ience%2F43%2F47%2F5d418d2c4c018052aafae4b4319b%2Fpicture4.png)
+center](https://assets.amazon.science/dims4/default/9fabab1/2147483647/strip/true/crop/1430x403+0+0/resize/1200x338!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F43%2F47%2F5d418d2c4c018052aafae4b4319b%2Fpicture4.png)
 
 *Robots laden with storage pods at a fulfillment center (left) and with packages at a sortation
 center (right)*
@@ -78,8 +77,7 @@ can contain robots (laden or unladen with fixed orientations), obstacles, storag
 locations, or serve as travel lanes.
 
 ![Sample models of a fulfillment center (top) and a sortation center
-(bottom)](https://assets.amazon.science/dims4/default/94e76b7/2147483647/strip/true/crop/1430x956+0+0/resize/1200x802!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2F
-science%2Fb5%2F81%2Fd9caac7a4c3782f72c3c31b58443%2Fpicture1.png)
+(bottom)](https://assets.amazon.science/dims4/default/94e76b7/2147483647/strip/true/crop/1430x956+0+0/resize/1200x802!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Fb5%2F81%2Fd9caac7a4c3782f72c3c31b58443%2Fpicture1.png)
 
 *Sample models of a fulfillment center (top) and a sortation center (bottom)*
 
@@ -96,8 +94,7 @@ of their immediate environments.
 - Updates floor state by sequentially applying predicted actions
 
 ![Architecture of the robot-centric
-model](https://assets.amazon.science/dims4/default/70f935b/2147483647/strip/true/crop/1430x495+0+0/resize/1200x415!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fsci
-ence%2F80%2Fa2%2F3e97fdad4f1199aa6c0491a4179c%2Fpicture2.png)
+model](https://assets.amazon.science/dims4/default/70f935b/2147483647/strip/true/crop/1430x495+0+0/resize/1200x415!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F80%2Fa2%2F3e97fdad4f1199aa6c0491a4179c%2Fpicture2.png)
 
 *Architecture of the robot-centric model*
 
@@ -114,8 +111,7 @@ sophisticated attention mechanisms.
 - Uses final embeddings to predict each robot's next action
 
 ![The architecture of the robot-floor
-model](https://assets.amazon.science/dims4/default/8b1c791/2147483647/strip/true/crop/1430x369+0+0/resize/1200x310!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fsci
-ence%2F3d%2F6e%2Fbe236a324315a824bf7be0c85d9e%2Fthe-architecture-of-the-robot-floor-model.png)
+model](https://assets.amazon.science/dims4/default/8b1c791/2147483647/strip/true/crop/1430x369+0+0/resize/1200x310!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F3d%2F6e%2Fbe236a324315a824bf7be0c85d9e%2Fthe-architecture-of-the-robot-floor-model.png)
 
 *The architecture of the robot-floor model*
 
@@ -142,8 +138,7 @@ This model represents the floor as a graph structure, capturing spatial relation
 - Captures long-range effects through graph structure
 
 ![The architecture of the graph-floor
-model](https://assets.amazon.science/dims4/default/d2601f9/2147483647/strip/true/crop/1430x488+0+0/resize/1200x410!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fsci
-ence%2Fa1%2F64%2F9fdf76e548bf91ae7419ba99be6c%2Fpicture3.png)
+model](https://assets.amazon.science/dims4/default/d2601f9/2147483647/strip/true/crop/1430x488+0+0/resize/1200x410!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Fa1%2F64%2F9fdf76e548bf91ae7419ba99be6c%2Fpicture3.png)
 
 *The architecture of the graph-floor model*
 
