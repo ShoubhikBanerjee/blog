@@ -1,7 +1,7 @@
 ---
 title: "AI and Open Datasets Drive Engineering and Healthcare Innovation"
 description: "Artificial intelligence is currently transforming the field of biology, moving the discipline from discovery to engineering. Parallel to this shift, open datasets are serving as a primary driver for..."
-date: 2026-08-30T22:00:00+05:30
+date: 2026-08-30T21:51:14+05:30
 tags: [AI, Biology, Healthcare, OpenData, ClinicalTrials, MedicalResearch]
 categories: [AI]
 image: "https://ragtimez.com/og-default.png"

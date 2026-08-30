@@ -1,7 +1,7 @@
 ---
 title: "AI system creates 5‑second video with synchronized audio in under three seconds"
 description: "A new artificial intelligence tool is able to produce a five‑second video clip with synchronized audio in less than three seconds of processing time. The system achieved the top ranking for..."
-date: 2026-08-30T22:00:00+05:30
+date: 2026-08-30T21:51:14+05:30
 tags: [OpenAI, AIvideo, ArtificialAnalysis]
 categories: [AI]
 image: "https://ai-tldr.dev/og-image.png"
