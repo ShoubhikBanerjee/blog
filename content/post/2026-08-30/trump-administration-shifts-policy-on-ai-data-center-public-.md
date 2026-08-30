@@ -1,7 +1,7 @@
 ---
 title: "Trump Administration Shifts Policy on AI Data Center Public Disclosure"
 description: "The Trump administration has directed the Environmental Protection Agency to stop publicizing or seeking public input on the construction of AI data centers. This change in policy aims to prevent..."
-date: 2026-08-30T23:04:28+05:30
+date: 2026-08-30T23:12:46+05:30
 tags: [AI, DataCenters, Policy, EPA, Infrastructure]
 categories: [AI]
 image: "https://www.usatoday.com/gcdn/authoring/authoring-images/2026/08/27/USAT/91497879007-20260810-t-100041-z-941353913-rc-2-jmmayv-3-el-rtrmadp-3-usaaidatacenters.JPG?crop=5993,3374,x9,y627&width=3200&height=1802&format=pjpg&auto=webp"

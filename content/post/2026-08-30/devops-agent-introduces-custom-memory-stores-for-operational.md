@@ -1,7 +1,7 @@
 ---
 title: "DevOps Agent Introduces Custom Memory Stores for Operational Knowledge"
 description: "The August 27, 2026, update to the DevOps Agent enables users to create custom memory stores, providing a mechanism to retain operational knowledge across sessions. This update moves beyond previous..."
-date: 2026-08-30T23:04:28+05:30
+date: 2026-08-30T23:12:46+05:30
 tags: [DevOps, AIAgents, CloudOperations, Automation]
 categories: [AI]
 image: "https://images.ctfassets.net/ct0aopd36mqt/51cg1nDeDwY3QV8Q8Z2bVX/73d108504bcf60ba8d92ebeb7e372b43/aws-devops-agent-DevOpsAgent.png"

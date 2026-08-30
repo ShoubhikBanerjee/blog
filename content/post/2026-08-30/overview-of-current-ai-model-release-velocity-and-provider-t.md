@@ -1,7 +1,7 @@
 ---
 title: "Overview of Current AI Model Release Velocity and Provider Trends"
 description: "The pace of AI model releases has accelerated significantly. Currently, there are 403 live models being tracked across 58 providers, with 38 new models added from 17 providers in the last 30 days."
-date: 2026-08-30T23:04:28+05:30
+date: 2026-08-30T23:12:46+05:30
 tags: [AI, MachineLearning, TechTrends, ModelTracking]
 categories: [AI]
 author: "Shoubhik Banerjee"

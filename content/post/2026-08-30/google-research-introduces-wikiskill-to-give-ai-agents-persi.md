@@ -1,7 +1,7 @@
 ---
 title: "Google Research introduces WikiSkill to give AI agents persistent memory"
 description: "Google Research has introduced a framework called WikiSkill, which separates an AI model's core intelligence from its procedural memory. By allowing agents to record and learn from their past..."
-date: 2026-08-30T23:04:28+05:30
+date: 2026-08-30T23:12:46+05:30
 tags: [GoogleResearch, AI, MachineLearning, AIAgents, Gemini]
 categories: [AI]
 image: "https://superpowerdaily.com/podcast/2026-08-30-google-gives-ai-agents-a-memory-of-past-work/opengraph-image"
