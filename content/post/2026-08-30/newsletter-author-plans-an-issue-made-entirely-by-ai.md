@@ -1,7 +1,7 @@
 ---
 title: "Newsletter author plans an issue made entirely by AI"
 description: "An issue of a newsletter made entirely by AI is planned, according to the author of this week's edition. The author said that 100% of this week's newsletter was made by a human, but that readers will..."
-date: 2026-08-30T21:51:14+05:30
+date: 2026-08-30T22:18:59+05:30
 tags: [AI, writing, newsletter, generativeAI, AIforWriters]
 categories: [AI]
 image: "https://substackcdn.com/image/fetch/$s_!9LrN!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9dd16126-2804-469a-9c20-4624a377ac0d_800x436.jpeg"

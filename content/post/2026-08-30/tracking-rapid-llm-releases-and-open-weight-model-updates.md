@@ -1,7 +1,7 @@
 ---
 title: "Tracking rapid LLM releases and open-weight model updates"
 description: "Large language models are moving faster than any other part of the AI stack — new frontier releases, open-weight drops and benchmark shake-ups land almost weekly. This page tracks all of it in one..."
-date: 2026-08-30T21:51:14+05:30
+date: 2026-08-30T22:18:59+05:30
 tags: [LLM, OpenAI, Anthropic, GoogleDeepMind, openweight]
 categories: [AI]
 image: "https://ainews.ai/assets/images/logo.png"

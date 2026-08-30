@@ -1,7 +1,7 @@
 ---
 title: "Texas freezes spending on Flock AI surveillance cameras"
 description: "Texas Governor Greg Abbott has suspended state spending on Flock's AI surveillance cameras. The move came ahead of a Texas Tribune investigation that revealed the state had spent over $30 million on..."
-date: 2026-08-30T21:51:14+05:30
+date: 2026-08-30T22:18:59+05:30
 tags: [A, I, s, u, r, v, e, i, l, l, a, n, c, e]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/268713_Americans_seem_to_agree_that_destroy_Flock_cameras_is_good_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

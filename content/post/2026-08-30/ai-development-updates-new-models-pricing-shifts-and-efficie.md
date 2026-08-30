@@ -1,7 +1,7 @@
 ---
 title: "AI Development Updates: New Models, Pricing Shifts, and Efficiency Gains"
 description: "Recent months have seen significant developments in AI tools and models. Anthropic's Claude Opus 4.7, released in April, achieved a new record of 87.6% on the SWE-bench Verified benchmark. However,..."
-date: 2026-08-30T21:51:14+05:30
+date: 2026-08-30T22:18:59+05:30
 tags: [AImodels, AIagents, SWEbench, AIpricing, developertools]
 categories: [AI]
 image: "https://timewell.jp/images/columns/ai-coding-tools-complete-benchmark-2026/cover.png"

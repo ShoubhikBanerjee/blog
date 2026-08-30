@@ -1,7 +1,7 @@
 ---
 title: "Google Research launches WikiSkill framework to boost Gemini 3.5 Flash performance"
 description: "Google Research introduced WikiSkill, a framework intended to help AI agents retain practical lessons from earlier attempts without retraining the underlying model."
-date: 2026-08-30T21:51:14+05:30
+date: 2026-08-30T22:18:59+05:30
 tags: [Google, AIagents, MachineLearning]
 categories: [AI]
 image: "https://superpowerdaily.com/posts/google-gives-ai-agents-a-memory-of-past-work/opengraph-image"

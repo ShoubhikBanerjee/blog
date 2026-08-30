@@ -1,7 +1,7 @@
 ---
 title: "Nvidia Introduces Integrated System for End-to-End Agentic Workloads"
 description: "Nvidia announced that it is moving beyond pure GPU performance to market complete systems aimed at running agentic workloads from start to finish. The new offering combines the company's Rubin..."
-date: 2026-08-30T21:51:14+05:30
+date: 2026-08-30T22:18:59+05:30
 tags: [Nvidia, AIagents, Hardware]
 categories: [AI]
 author: "Shoubhik Banerjee"
