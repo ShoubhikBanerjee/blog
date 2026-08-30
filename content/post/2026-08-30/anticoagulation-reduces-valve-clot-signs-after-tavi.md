@@ -1,7 +1,7 @@
 ---
 title: "Anticoagulation reduces valve clot signs after TAVI"
 description: "A study found that anticoagulation therapy reduced imaging signs of clot formation on new heart valves after transcatheter aortic valve implantation (TAVI) compared with antiplatelet therapy, without..."
-date: 2026-08-30T22:18:59+05:30
+date: 2026-08-30T22:24:25+05:30
 tags: [TAVI, anticoagulation, NOACs, ASA, valvethrombosis, cardiology]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "New Repository Offers UiPath Integration SDKs and UI Widgets"
 description: "A new repository of skills for interfacing UiPath capabilities to external developers is now available. The repository includes a collection of reusable React UI widgets designed for building..."
-date: 2026-08-30T22:18:59+05:30
+date: 2026-08-30T22:24:25+05:30
 tags: [UiPath, SDK, Automation, Python, React]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/375663?s=280&v=4"

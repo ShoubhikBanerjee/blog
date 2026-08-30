@@ -1,7 +1,7 @@
 ---
 title: "Model, Harness, and Tools Form AI Service Architecture"
 description: "The model is one part of the service."
-date: 2026-08-30T22:18:59+05:30
+date: 2026-08-30T22:24:25+05:30
 tags: [AI, model, harness, tools]
 categories: [AI]
 image: "https://cdn.thenewstack.io/media/2026/08/2da449a5-kamran-abdullayev-tswbnkb2mby-unsplash.jpg"

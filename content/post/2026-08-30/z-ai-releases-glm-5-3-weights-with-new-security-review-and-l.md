@@ -1,7 +1,7 @@
 ---
 title: "Z.ai Releases GLM-5.3 Weights with New Security Review and License Condition"
 description: "Z.ai has made the weight files for its GLM-5.3 model publicly available, adding a licensing condition that was not anticipated by the community. The model, a mixture‑of‑experts architecture with..."
-date: 2026-08-30T22:18:59+05:30
+date: 2026-08-30T22:24:25+05:30
 tags: [Zai, GLM53, AIsecurity, largemodels]
 categories: [AI]
 image: "https://oukdqujzonxvqhiefdsv.supabase.co/storage/v1/object/public/blogs/85c97134-187d-444a-88f4-d9f57c2b7cc7.png"

@@ -1,7 +1,7 @@
 ---
 title: "2-bit UD-Q2_K_XL Model Runs on Single DGX Spark at 17.7 tok/s"
 description: "A 2‑bit neural network variant (UD‑Q2_K_XL, 109 GB) was tested on a single DGX Spark system. The model fit within the hardware's memory limits and achieved a processing speed of 17.7 tokens per..."
-date: 2026-08-30T22:18:59+05:30
+date: 2026-08-30T22:24:25+05:30
 tags: [AI, Quantization, DGX, LowBit, ModelPerformance]
 categories: [AI]
 image: "https://devio2024-media.developers.io/image/upload/v1788061840/user-gen-eyecatch/ftmnqrlujplttchac2ut.png"

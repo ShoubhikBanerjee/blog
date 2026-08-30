@@ -1,7 +1,7 @@
 ---
 title: "AI Model Releases Accelerate, Alibaba Leads with Qwen3.8 Flash"
 description: "The pace of AI model releases has accelerated significantly."
-date: 2026-08-30T22:18:59+05:30
+date: 2026-08-30T22:24:25+05:30
 tags: [AI, Alibaba, Qwen38, ModelReleases]
 categories: [AI]
 author: "Shoubhik Banerjee"

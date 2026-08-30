@@ -1,7 +1,7 @@
 ---
 title: "Ling 3.0 Flash Fin added to August 2026 LLM leaderboard"
 description: "The Ling 3.0 Flash Fin model has been released. It now appears on the LLM leaderboard for August 2026, a resource that compares frontier AI models by quality, cost, and context."
-date: 2026-08-30T22:18:59+05:30
+date: 2026-08-30T22:24:25+05:30
 tags: [LingAI, LLMLeaderboard, AIModels]
 categories: [AI]
 image: "https://benchlm.ai/api/og"

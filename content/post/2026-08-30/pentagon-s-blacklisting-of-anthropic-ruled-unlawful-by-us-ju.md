@@ -1,7 +1,7 @@
 ---
 title: "Pentagon's blacklisting of Anthropic ruled unlawful by US judge"
 description: "A US judge has ruled that the Pentagon's blacklisting of Anthropic was unlawful. The ruling addresses a legal challenge to the defense department's decision to exclude the AI company from certain..."
-date: 2026-08-30T22:18:59+05:30
+date: 2026-08-30T22:24:25+05:30
 tags: [Anthropic, Pentagon, AIregulation, USlaw, governmentAI]
 categories: [AI]
 author: "Shoubhik Banerjee"
