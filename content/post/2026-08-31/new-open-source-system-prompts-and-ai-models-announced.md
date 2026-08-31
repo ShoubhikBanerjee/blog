@@ -1,7 +1,7 @@
 ---
 title: "New Open-Source System Prompts and AI Models Announced"
 description: "On 12/07/2026 a new collection of open‑sourced system prompts, internal tools and AI models was announced."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [OpenSource, AIModels, PromptSecurity]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/185671340?v=4"

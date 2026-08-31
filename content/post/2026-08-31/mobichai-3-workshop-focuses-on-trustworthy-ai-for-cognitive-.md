@@ -1,7 +1,7 @@
 ---
 title: "MobiCHAI’3 Workshop Focuses on Trustworthy AI for Cognitive Support"
 description: "The ACM International Conference on Mobile Human-Computer Interaction 2026 will host the 3rd International Workshop on Mobile Cognition-Altering and Cognitive-Augmenting Technologies using..."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [AI, MobileHCI, CognitiveAugmentation, HumanCenteredAI, Healthcare, TrustworthyAI]
 categories: [AI]
 author: "Shoubhik Banerjee"

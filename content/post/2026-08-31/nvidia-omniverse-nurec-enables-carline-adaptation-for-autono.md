@@ -1,7 +1,7 @@
 ---
 title: "NVIDIA Omniverse NuRec Enables Carline Adaptation for Autonomous Vehicle Perception Software"
 description: "NVIDIA Omniverse NuRec addresses the carline adaptation challenge by allowing developers to reconstruct real-world drives and render them for new vehicle configurations. This development makes it..."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [NVIDIA, Omniverse, AutonomousVehicles, NuRec, GaussianSplatting, Simulation]
 categories: [AI]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/NuRec-AV.gif"

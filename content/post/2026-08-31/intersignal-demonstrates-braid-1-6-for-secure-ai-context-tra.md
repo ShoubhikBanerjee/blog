@@ -1,7 +1,7 @@
 ---
 title: "Intersignal Demonstrates Braid 1.6 for Secure AI Context Transfer"
 description: "Intersignal LLC announced a successful physical demonstration of Braid 1.6, a local-first system for moving authenticated situational context between independent AI models."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [AI, interoperability, contexttransfer, localAI, Braid, Intersignal]
 categories: [AI]
 image: "https://mmx.prnewswire.com/media/MS1978369/Intersignal-Braid.jpg?id=OA2920392&p=facebook"

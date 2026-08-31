@@ -1,7 +1,7 @@
 ---
 title: "xAI launches Grok Bot: persistent AI agents for multi-step tasks"
 description: "xAI recently launched Grok Bot, a system of always-on AI agents that run on dedicated cloud computers instead of a user’s laptop."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [xAI, GrokBot, AIagents, cloudautomation, workflowautomation]
 categories: [AI]
 image: "https://framerusercontent.com/images/y0xDJiewpQj5eQVbdrku0VjIg.png?width=1248&height=624"

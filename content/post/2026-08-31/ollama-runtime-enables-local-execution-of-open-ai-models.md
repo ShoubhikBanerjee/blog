@@ -1,7 +1,7 @@
 ---
 title: "Ollama runtime enables local execution of open AI models"
 description: "Ollama provides a runtime environment for running open-source large language models locally. The tool supports multiple AI models and integrates with development tools and chat platforms."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [Ollama, LocalAI, OpenSource, AIModels, SelfHostedAI]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/151674099?v=4"

@@ -1,7 +1,7 @@
 ---
 title: "Development of Agentic Warfighting Units for Department of Defense Missions"
 description: "A task force operating in a Maryland basement has developed a formation of agentic warfighters designed to collect intelligence, develop missions, and execute against targets 24/7 within a..."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [DepartmentofDefense, AIagents, AgenticWarfare, NationalSecurity]
 categories: [AI]
 image: "https://warontherocks.com/wp-content/uploads/wotr-og-images/wotr-og-46371-5454ed8947f2.jpg"

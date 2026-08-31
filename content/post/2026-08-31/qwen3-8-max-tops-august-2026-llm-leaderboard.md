@@ -1,7 +1,7 @@
 ---
 title: "Qwen3.8 Max Tops August 2026 LLM Leaderboard"
 description: "Alibaba's Qwen3.8 Max has been ranked as the best-performing model released in August 2026 on the BenchLM LLM leaderboard, which tracks 406+ large language models across 408 benchmarks."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [LLM, Leaderboard, Qwen38Max, BenchLM, AIModels, 2026]
 categories: [AI]
 image: "https://llm-stats.com/og/main.png"

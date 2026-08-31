@@ -1,7 +1,7 @@
 ---
 title: "Debian Project Approves New Policy Allowing Generative AI in Linux Development"
 description: "The Debian Project has voted to allow developers to use AI tools in their contributions to the Linux distribution’s development, maintenance, and documentation. The new policy acknowledges that the..."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [Debian, Linux, GenerativeAI, OpenSource]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/09/STK414_AI_CVIRGINIA_I__0009_7.png?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

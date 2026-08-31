@@ -1,7 +1,7 @@
 ---
 title: "NHS watchdog warns AI scribe errors jeopardise medical records"
 description: "Doctors’ AI scribes get names of drugs and diagnoses wrong, NHS watchdog warns"
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [NHS, AI, healthcare]
 categories: [AI]
 author: "Shoubhik Banerjee"

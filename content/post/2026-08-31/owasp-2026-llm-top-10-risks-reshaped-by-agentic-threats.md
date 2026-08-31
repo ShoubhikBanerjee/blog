@@ -1,7 +1,7 @@
 ---
 title: "OWASP 2026 LLM Top 10 risks reshaped by agentic threats"
 description: "Every AI security framework names the risks you have to control. Zenity is built to implement those controls at runtime."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [OWASP2026, LLMSecurity, AIAgents, PromptInjection, RuntimeControls]
 categories: [AI]
 image: "https://cdn.sanity.io/images/bqvkdjz2/production/0be8f03a2d2a895a3aea51d71f51056a045b4793-1921x1080.png?w=1920&q=85&auto=format"

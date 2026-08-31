@@ -1,7 +1,7 @@
 ---
 title: "NVIDIA BioNeMo Agent Toolkit integrates with Claude Science for scientific workflows"
 description: "NVIDIA and Anthropic have integrated the NVIDIA BioNeMo Agent Toolkit into Claude Science, enabling AI agents to discover, launch, and call BioNeMo NIM microservices for complex scientific workflows..."
-date: 2026-08-31T22:29:11+05:30
+date: 2026-08-31T22:56:10+05:30
 tags: [AIagents, BioNeMo, ClaudeScience, NVIDIA, scientificAI, proteinfolding]
 categories: [AI]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/AdobeStock_842772489-e1787092703768-660x370.webp"
