@@ -1,7 +1,7 @@
 ---
 title: "SWE-smith: Scalable Toolkit for Training Software Engineering Agents Debuts at NeurIPS 2025"
 description: "Presented at NeurIPS 2025 in the Datasets & Benchmarks Track, SWE-smith is a new toolkit for training software engineering agents (SWE-agents). It enables the transformation of GitHub repositories..."
-date: 2026-08-31T18:56:17+05:30
+date: 2026-08-31T19:24:12+05:30
 tags: [AI, softwareengineering, NeurIPS2025, datasets, benchmarking]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/139597579?v=4"

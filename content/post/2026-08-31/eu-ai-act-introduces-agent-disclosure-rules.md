@@ -1,7 +1,7 @@
 ---
 title: "EU AI Act Introduces Agent Disclosure Rules"
 description: "The EU AI Act (Regulation 2024/1689) has introduced transparency obligations under Article 50(1), known as Agent Disclosure Rules."
-date: 2026-08-31T18:56:17+05:30
+date: 2026-08-31T19:24:12+05:30
 tags: [EUAIAct, AgentDisclosure, Transparency, Regulation20241689]
 categories: [AI]
 author: "Shoubhik Banerjee"

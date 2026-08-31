@@ -1,7 +1,7 @@
 ---
 title: "OpenClaw Releases 2.0 Update"
 description: "OpenClaw has released OpenClaw 2.0, which is described as the largest update in the history of the project."
-date: 2026-08-31T18:56:17+05:30
+date: 2026-08-31T19:24:12+05:30
 tags: [OpenClaw, OpenSource, SoftwareUpdate]
 categories: [AI]
 author: "Shoubhik Banerjee"

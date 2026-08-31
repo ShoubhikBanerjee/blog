@@ -1,7 +1,7 @@
 ---
 title: "AutoGPT Launches Hosted Platform for AI Agent Workflow Automation"
 description: "AutoGPT has publicly launched its hosted platform, enabling users to build, deploy, and run AI agents that complete entire workflows. The platform is described as a vision for accessible AI for..."
-date: 2026-08-31T18:56:17+05:30
+date: 2026-08-31T19:24:12+05:30
 tags: [AIagents, NoCode, Automation, AItools, PromptEngineering]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/130738209?v=4"

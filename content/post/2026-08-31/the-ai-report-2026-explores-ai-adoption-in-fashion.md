@@ -1,7 +1,7 @@
 ---
 title: "The AI Report 2026 explores AI adoption in fashion"
 description: "The AI Report 2026 has been released, offering insights into AI's role in the fashion industry through interviews, surveys, and industry perspectives."
-date: 2026-08-31T18:56:17+05:30
+date: 2026-08-31T19:24:12+05:30
 tags: [AI, fashion, sustainability, industryreport, AIadoption]
 categories: [AI]
 image: "https://www.theinterline.com/wp-content/uploads/2026/08/underbeneath-Header.jpg"

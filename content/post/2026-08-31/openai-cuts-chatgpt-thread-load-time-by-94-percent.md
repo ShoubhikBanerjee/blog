@@ -1,7 +1,7 @@
 ---
 title: "OpenAI cuts ChatGPT thread load time by 94 percent"
 description: "OpenAI reduced the load time for large ChatGPT conversation threads by 94% in tests, improving performance from 27.6 seconds to 1.7 seconds for a 741-turn thread with 231 MB of data. The improvement..."
-date: 2026-08-31T18:56:17+05:30
+date: 2026-08-31T19:24:12+05:30
 tags: [OpenAI, ChatGPT, performance, clientside, AI]
 categories: [AI]
 image: "https://www.explainx.ai/og/_index/blog.webp"

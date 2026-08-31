@@ -1,7 +1,7 @@
 ---
 title: "LazyCodex AI Launches OmO Support for Codex Models"
 description: "The LazyCodex AI project has introduced OmO (oh-my-openagent) support for Codex models, providing a streamlined setup for users. The development follows restrictions on Anthropic models, prompting a..."
-date: 2026-08-31T18:56:17+05:30
+date: 2026-08-31T19:24:12+05:30
 tags: [LazyCodex, AIagents, Codex, OmO, OpenSource, AIdevelopment]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/11153873?v=4"

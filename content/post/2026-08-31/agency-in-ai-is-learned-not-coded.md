@@ -1,7 +1,7 @@
 ---
 title: "Agency in AI is learned, not coded"
 description: "A new understanding of AI agency has emerged: the capacity to perceive, reason, and act is a product of model training, not external code orchestration. This principle underpins the development of AI..."
-date: 2026-08-31T18:56:17+05:30
+date: 2026-08-31T19:24:12+05:30
 tags: [AIagents, machinelearning, neuralnetworks, LLM, reinforcementlearning]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/189210346?v=4"
