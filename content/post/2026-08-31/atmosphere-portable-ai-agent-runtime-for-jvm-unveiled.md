@@ -1,7 +1,7 @@
 ---
 title: "Atmosphere: Portable AI Agent Runtime for JVM Unveiled"
 description: "A new portable AI agent runtime designed for the JVM has been announced, enabling unified development of AI agents across multiple frameworks and protocols."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [AIagents, JVM, AIruntime, LLM, Multimodal]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/318873?v=4"

@@ -1,7 +1,7 @@
 ---
 title: "National Academies Convene Hundreds of Gatherings Annually"
 description: "The National Academies convene hundreds of gatherings annually."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [N, a, t, i, o, n, a, l, A, c, a, d, e, m, i, e, s, C, o, n, f, e, r, e, n, c, e, s, A, c, a, d, e, m, i, a, W, o, r, k, s, h, o, p, s, F, o, r, u, m, s, R, o, u, n, d, t, a, b, l, e, s]
 categories: [AI]
 image: "https://www.nationalacademies.org/cover.jpg"

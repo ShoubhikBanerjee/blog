@@ -1,7 +1,7 @@
 ---
 title: "Claude Code plugin introduces Karpathy-inspired coding guidelines"
 description: "A new CLAUDE.md file has been developed to improve Claude Code behavior, based on observations of LLM coding pitfalls."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [ClaudeCode, LLM, coding, guidelines, AI, development]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/254743058?v=4"

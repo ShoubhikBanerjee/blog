@@ -1,7 +1,7 @@
 ---
 title: "EU AI Act adds transparency rules for autonomous AI agents"
 description: "The EU AI Act (Regulation 2024/1689) has introduced new transparency obligations for autonomous AI agents under Article 50(1). These rules require agents to disclose their operational status,..."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [EUAIAct, AIagents, transparency, autonomoussystems, AIregulation]
 categories: [AI]
 author: "Shoubhik Banerjee"

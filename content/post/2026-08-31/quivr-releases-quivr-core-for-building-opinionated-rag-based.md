@@ -1,7 +1,7 @@
 ---
 title: "Quivr releases quivr-core for building opinionated RAG-based personal assistants"
 description: "Quivr has introduced `quivr-core`, the foundational engine behind Quivr.com, designed to facilitate the creation of a personal assistant or 'second brain.' This opinionated RAG (Retrieval-Augmented..."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [Quivr, RAG, GenerativeAI, Python, LLM]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/252322352?v=4"

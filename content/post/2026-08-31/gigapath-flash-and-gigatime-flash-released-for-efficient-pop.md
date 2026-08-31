@@ -1,7 +1,7 @@
 ---
 title: "GigaPath-Flash and GigaTIME-Flash Released for Efficient Population-Scale Pathology Research"
 description: "The Flash family of models, including GigaPath-Flash and GigaTIME-Flash, has been developed to improve the efficiency of large-scale pathology research. By reducing computational requirements, these..."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [PathologyAI, CancerResearch, FoundationModels, MachineLearning, Bioinformatics]
 categories: [AI]
 image: "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/08/GigaPathFlash-TWLIFB-1200x627_NEW.jpg"

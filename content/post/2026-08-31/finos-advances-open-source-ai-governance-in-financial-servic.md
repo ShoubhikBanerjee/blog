@@ -1,7 +1,7 @@
 ---
 title: "FINOS Advances Open Source AI Governance in Financial Services"
 description: "FINOS has announced new initiatives and events to support financial institutions in adopting AI through open source frameworks and governance. The organization is hosting technical deep-dives,..."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [FINOS, OpenSource, AIGovernance, FinancialServices, EnterpriseAI, CDM]
 categories: [AI]
 image: "https://www.finos.org/hubfs/social-suggested-images/www.finos.orghubfsTWAF%202020TWAF.png"

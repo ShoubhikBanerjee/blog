@@ -1,7 +1,7 @@
 ---
 title: "Google launches Agent Valley, a 5‑week live series for building AI agents"
 description: "Google announced a new learning resource called **Agent Valley** in the latest *What’s New in Google SecOps* update (August 24 – 31, 2026). The program is a 5‑week live series designed to teach..."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [AgentValley, AIagents, GoogleCloud, SecOps]
 categories: [AI]
 image: "https://uploads-us-west-2.insided.com/securitygooglecloud-en/attachment/c9af1d6e-9615-4184-b3c5-39c53dfd0862_thumb.png"

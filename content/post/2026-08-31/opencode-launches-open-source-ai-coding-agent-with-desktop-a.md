@@ -1,7 +1,7 @@
 ---
 title: "OpenCode launches open source AI coding agent with desktop app"
 description: "OpenCode, an open source coding agent, has released a new AI-powered development tool alongside a desktop application."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [OpenCode, AIcoding, opensource, codingagent, desktopapp]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/66570915?v=4"

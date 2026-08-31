@@ -1,7 +1,7 @@
 ---
 title: "Graphify adds local, deterministic knowledge-graph mapping for codebases"
 description: "A new tool called Graphify lets developers turn an entire codebase and its associated documentation into a locally‑generated, queryable knowledge graph."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [graphify, knowledgegraph, localAI, devtools, AIcoding]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/297659074?v=4"

@@ -1,7 +1,7 @@
 ---
 title: "LightRAG: Simple and Fast Retrieval-Augmented Generation Now at v1.0+"
 description: "LightRAG is an open-source Retrieval-Augmented Generation (RAG) system developed by the HKUDS research group. It is designed for simplicity and speed, and has recently hit a series of milestones..."
-date: 2026-08-31T22:04:32+05:30
+date: 2026-08-31T22:29:11+05:30
 tags: [RAG, KnowledgeGraph, AI, OpenSource, Retrieval]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/118165258?v=4"
