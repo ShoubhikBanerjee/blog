@@ -1,7 +1,7 @@
 ---
 title: "New AI agent skills for real engineering workflows"
 description: "A new set of AI agent skills has been introduced to address common failure modes in AI-assisted software development, focusing on alignment and process control."
-date: 2026-08-31T18:32:11+05:30
+date: 2026-08-31T18:56:17+05:30
 tags: [AIagents, ClaudeCode, softwaredevelopment, engineering, workflow, skills]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/28293365?v=4"

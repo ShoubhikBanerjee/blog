@@ -1,7 +1,7 @@
 ---
 title: "AgentGuide launches AI Agent development and job-seeking knowledge base"
 description: "A new open-source knowledge base, AgentGuide, has been introduced to provide a systematic, practical, and job-oriented solution for AI Agent development and career preparation."
-date: 2026-08-31T18:32:11+05:30
+date: 2026-08-31T18:56:17+05:30
 tags: [AIagents, AgentGuide, AIdevelopment, jobseeking, knowledgebase, systematiclearning]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/54011546?v=4"

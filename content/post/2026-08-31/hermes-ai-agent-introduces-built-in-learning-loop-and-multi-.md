@@ -1,7 +1,7 @@
 ---
 title: "Hermes AI agent introduces built-in learning loop and multi-platform deployment"
 description: "A new AI agent, Hermes, has been introduced with a built-in learning loop, multi-platform deployment options, and extensive customization capabilities."
-date: 2026-08-31T18:32:11+05:30
+date: 2026-08-31T18:56:17+05:30
 tags: [AIagents, Hermes, AIdeployment, multiplatform, learningloop, serverless]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/134168893?v=4"

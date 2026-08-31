@@ -1,7 +1,7 @@
 ---
 title: "Claude Code: AI Coding Assistant Launched for Terminal and IDE"
 description: "Anthropic has released Claude Code, an agentic coding tool designed to accelerate development workflows. The tool integrates directly into terminals, IDEs, or GitHub via natural language commands."
-date: 2026-08-31T18:32:11+05:30
+date: 2026-08-31T18:56:17+05:30
 tags: [AI, CodingTools, DeveloperTools, Git, Plugins]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/76263028?v=4"

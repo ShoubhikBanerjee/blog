@@ -1,7 +1,7 @@
 ---
 title: "n8n launches fair-code AI workflow automation platform"
 description: "n8n has introduced a fair-code workflow automation platform with native AI capabilities, enabling users to build and deploy AI agents and workflows. The platform combines visual building with custom..."
-date: 2026-08-31T18:32:11+05:30
+date: 2026-08-31T18:56:17+05:30
 tags: [n8n, AIautomation, workflow, faircode, selfhosting]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/45487711?v=4"

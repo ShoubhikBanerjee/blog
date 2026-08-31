@@ -1,7 +1,7 @@
 ---
 title: "New token-compression layer cuts AI agent bills up to 85%"
 description: "A new open-source compression layer for AI coding agents reduces input and output token counts by up to 85% without changing answers or agent code."
-date: 2026-08-31T18:32:11+05:30
+date: 2026-08-31T18:56:17+05:30
 tags: [AItokens, AIagents, compression, codingagents, opensource]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/294291659?v=4"

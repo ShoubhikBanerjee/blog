@@ -1,7 +1,7 @@
 ---
 title: "Claude Code integrates Semrush MCP for live competitor analysis"
 description: "AI competitor analysis often returns generic, stale, or inaccurate results because tools rely on outdated training data, lack live web access, or hallucinate details. A new workflow addresses this by..."
-date: 2026-08-31T18:32:11+05:30
+date: 2026-08-31T18:56:17+05:30
 tags: [AI, ClaudeCode, Semrush, MCP, competitoranalysis]
 categories: [AI]
 image: "https://static.semrush.com/blog/uploads/media/bc/67/bc67122fc262c537459705a0bf67693c/7cc2ab6a880da7e041a3c5b79f281a2f/ai-tools-for-competitor-analysis.png"
