@@ -1,7 +1,7 @@
 ---
 title: "Qwen3.8 Max Leads August 2026 AI Model Rankings"
 description: "Alibaba's Qwen3.8 Max has been ranked as the best new model released in August 2026, according to the BenchLM LLM leaderboard tracking 228+ models across 406+ benchmarks."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [AIrankings, LLMleaderboard, Qwen38Max, BenchLM, AImodels, OpenSourceAI]
 categories: [AI]
 image: "https://llm-stats.com/og/main.png"

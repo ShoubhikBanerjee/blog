@@ -1,7 +1,7 @@
 ---
 title: "ChatGPT, Reddit, and Roblox designated as Very Large Online Platforms under EU DSA"
 description: "The European Commission has designated ChatGPT, Reddit, and Roblox as Very Large Online Platforms under the EU’s Digital Services Act (DSA), subjecting them to stricter accountability and..."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [DSA, EU, ChatGPT, Reddit, Roblox, OnlinePlatforms]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/08/STK155_OPEN_AI_4_CVirginia_B.png?quality=90&strip=all&crop=0%2C10.742221417566%2C100%2C78.515557164868&w=1200"

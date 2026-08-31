@@ -1,7 +1,7 @@
 ---
 title: "LiteLLM Open Source AI Gateway Launches for 100+ LLM Providers"
 description: "LiteLLM, an open source AI Gateway, has been released, offering a unified interface to call over 100 LLM providers, including OpenAI, Anthropic, Gemini, Bedrock, Azure, and more, using the OpenAI..."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [LiteLLM, AIgateway, LLM, OpenAI, PythonSDK, ProxyServer]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/121462774?v=4"

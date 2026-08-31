@@ -1,7 +1,7 @@
 ---
 title: "Quickchat AI Enables No-Code Remote MCP Server Connections for AI Agents"
 description: "Quickchat AI has introduced a way to connect AI Agents to remote Model Context Protocol (MCP) servers with no code on its free plan. This allows an AI Agent to reach out to remote servers to retrieve..."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [QuickchatAI, ModelContextProtocol, AIAgents, NoCode]
 categories: [AI]
 image: "https://quickchat.ai/blog-assets/posts/connect-ai-agent-to-mcp-server_bg.png"

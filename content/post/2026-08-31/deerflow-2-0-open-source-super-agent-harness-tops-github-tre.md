@@ -1,7 +1,7 @@
 ---
 title: "DeerFlow 2.0 open-source super agent harness tops GitHub Trending"
 description: "On February 28th, 2026, DeerFlow claimed the 🏆 #1 spot on GitHub Trending following the launch of version 2."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [DeerFlow, AIagents, opensource, GitHubTrending, automation]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/4158466?v=4"

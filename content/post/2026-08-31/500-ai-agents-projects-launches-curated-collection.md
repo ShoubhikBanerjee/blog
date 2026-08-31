@@ -1,7 +1,7 @@
 ---
 title: "500 AI Agents Projects Launches Curated Collection"
 description: "A new curated collection, the 500 AI Agents Projects, has been released, offering a comprehensive repository of AI agent use cases, implementations, and tutorials across industries and frameworks."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [AIagents, OpenSource, AIdevelopment, Frameworks, UseCases, Tutorials]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/3095771?v=4"

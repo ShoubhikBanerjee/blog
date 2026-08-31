@@ -1,7 +1,7 @@
 ---
 title: "Instagram to Limit Reach of Unlabeled AI-Generated Profiles"
 description: "Instagram is implementing new measures to address the rise of fake AI-influencer accounts that have become increasingly difficult to detect."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [Instagram, AI, SocialMedia, AIInfluencers]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/vege-ai-influencer.png?quality=90&strip=all&crop=0%2C0%2C100%2C48.836288442078&w=1200"

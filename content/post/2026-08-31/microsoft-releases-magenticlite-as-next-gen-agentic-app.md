@@ -1,7 +1,7 @@
 ---
 title: "Microsoft releases MagenticLite as next-gen agentic app"
 description: "MagenticLite is an experimental agent that expands the capabilities of Magentic-UI by enabling cross-platform automation across the browser and local file system."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [MagenticLite, AIagents, MicrosoftAI, agenticapps, browserautomation]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/6154722?v=4"

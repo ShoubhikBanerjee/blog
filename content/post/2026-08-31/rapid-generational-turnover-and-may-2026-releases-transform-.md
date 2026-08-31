@@ -1,7 +1,7 @@
 ---
 title: "Rapid Generational Turnover and May 2026 Releases Transform the AI Coding Agent Market"
 description: "Generational turnover in AI coding tools has accelerated dramatically in 2026, with the AI coding agent market doubling in size between mid-2025 and early 2026. The landscape has fractured into..."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [AICoding, ClaudeCode, CursorIDE, OpenAICodex, SoftwareAgents]
 categories: [AI]
 image: "https://timewell.jp/images/columns/ai-coding-tools-complete-benchmark-2026/cover.png"

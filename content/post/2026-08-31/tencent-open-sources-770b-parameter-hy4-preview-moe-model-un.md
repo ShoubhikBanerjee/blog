@@ -1,7 +1,7 @@
 ---
 title: "Tencent open-sources 770B parameter Hy4 preview MoE model under Apache 2.0"
 description: "Tencent's Hunyuan team open-sourced Hy4 preview, a 770 billion parameter mixture-of-experts (MoE) model, on August 28, 2026. The release marks a significant development in accessible large-scale AI."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [Tencent, Hy4, OpenSource, AIModels, MixtureOfExperts]
 categories: [AI]
 image: "https://oukdqujzonxvqhiefdsv.supabase.co/storage/v1/object/public/blogs/3f0b19f5-4aad-45d7-a724-c5f22fd85742.png"

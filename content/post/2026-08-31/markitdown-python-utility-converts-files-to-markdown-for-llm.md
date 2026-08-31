@@ -1,7 +1,7 @@
 ---
 title: "MarkItDown: Python Utility Converts Files to Markdown for LLMs"
 description: "A new Python utility called MarkItDown has been released, designed to convert various file formats to Markdown for use with large language models (LLMs) and text analysis pipelines."
-date: 2026-08-31T19:24:12+05:30
+date: 2026-08-31T19:35:04+05:30
 tags: [Python, Markdown, LLMs, TextProcessing, DeveloperTools]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/6154722?v=4"
