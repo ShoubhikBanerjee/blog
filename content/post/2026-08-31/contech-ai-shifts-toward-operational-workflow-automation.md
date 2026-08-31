@@ -1,7 +1,7 @@
 ---
 title: "ConTech AI Shifts Toward Operational Workflow Automation"
 description: "AI adoption in construction technology is progressing beyond conversational interfaces to the automation of operational workflows. This shift is part of a broader new phase in the US AEC software..."
-date: 2026-08-31T19:35:04+05:30
+date: 2026-08-31T22:04:32+05:30
 tags: [ConTech, AEC, AIautomation, ConstructionTechnology]
 categories: [AI]
 image: "https://media.licdn.com/dms/image/v2/D5612AQGWVXvuUhc57w/article-cover_image-shrink_720_1280/B56aBI02cNHIAQ-/0/1787928211892?e=2147483647&v=beta&t=zh54B0pcbXpkccy2jBTMgVwejkyhEvSnCQClmC_ZRMM"

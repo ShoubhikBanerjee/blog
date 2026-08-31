@@ -1,7 +1,7 @@
 ---
 title: "OpenAI launches ChatGPT Work, a cloud and desktop task‑automation product"
 description: "OpenAI announced **ChatGPT Work** on July 9th and has been iterating on it since."
-date: 2026-08-31T19:35:04+05:30
+date: 2026-08-31T22:04:32+05:30
 tags: [OpenAI, ChatGPTWork, AItools]
 categories: [AI]
 image: "https://static.simonwillison.net/static/2026/chatgpt-work-card.jpg"

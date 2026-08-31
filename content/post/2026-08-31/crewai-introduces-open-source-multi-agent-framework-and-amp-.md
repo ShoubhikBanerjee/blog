@@ -1,7 +1,7 @@
 ---
 title: "CrewAI introduces open-source multi-agent framework and AMP Suite"
 description: "CrewAI has launched an open-source Python framework for building production-ready multi-agent workflows, alongside the CrewAI AMP Suite for enterprise-grade deployment and management."
-date: 2026-08-31T19:35:04+05:30
+date: 2026-08-31T22:04:32+05:30
 tags: [CrewAI, MultiAgentAI, AIAutomation, OpenSource, EnterpriseAI, AgenticWorkflow]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/170677839?v=4"

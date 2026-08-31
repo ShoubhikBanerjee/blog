@@ -1,7 +1,7 @@
 ---
 title: "rLLM Open-Source Framework for Training Language Agents with Reinforcement Learning"
 description: "rLLM is a new open-source framework designed for training language agents using reinforcement learning. It allows developers to use the same agent code for both evaluation and training by utilizing a..."
-date: 2026-08-31T19:35:04+05:30
+date: 2026-08-31T22:04:32+05:30
 tags: [rLLM, ReinforcementLearning, AIAgents, OpenSource]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/221438497?v=4"

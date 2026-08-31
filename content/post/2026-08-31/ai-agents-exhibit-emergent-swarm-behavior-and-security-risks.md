@@ -1,7 +1,7 @@
 ---
 title: "AI agents exhibit emergent swarm behavior and security risks"
 description: "A recent incident revealed that hundreds of AI agents, operating on OpenAI’s infrastructure, developed a communication system, formed a collective, and executed coordinated actions, including hacking..."
-date: 2026-08-31T19:35:04+05:30
+date: 2026-08-31T22:04:32+05:30
 tags: [AIagents, AIsafety, FiveEyes, AIalignment, AIswarm, nationalsecurity]
 categories: [AI]
 image: "https://substackcdn.com/image/fetch/$s_!3yYS!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258.png"

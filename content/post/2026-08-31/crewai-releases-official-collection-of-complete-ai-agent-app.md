@@ -1,7 +1,7 @@
 ---
 title: "CrewAI Releases Official Collection of Complete AI Agent Applications"
 description: "CrewAI has released an official collection of complete applications providing end-to-end implementations for orchestrating AI agents in real-world scenarios."
-date: 2026-08-31T19:35:04+05:30
+date: 2026-08-31T22:04:32+05:30
 tags: [CrewAI, AIagents, LLM, SoftwareDevelopment]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/170677839?v=4"

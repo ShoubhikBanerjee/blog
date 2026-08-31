@@ -1,7 +1,7 @@
 ---
 title: "Tide Launches Raziel AI Security Tool Assuming Breach Imminence"
 description: "Tide launched Raziel, an AI security tool designed under the assumption that hackers already exist within networks. This release addresses escalating risks from AI-generated code vulnerabilities and..."
-date: 2026-08-31T19:35:04+05:30
+date: 2026-08-31T22:04:32+05:30
 tags: [AISecurity, Cybersecurity, TideRaziel, EmergentAuthority, ZeroTrust, AIagents]
 categories: [AI]
 image: "https://cdn.thenewstack.io/media/2026/08/e3958712-steven-cordes-k8beq0pu6iy-unsplash-scaled.jpg"

@@ -1,7 +1,7 @@
 ---
 title: "Texas Governor Freezes Flock AI Camera Funding Amid Backlash"
 description: "Texas Governor Greg Abbott has frozen state spending on Flock AI surveillance cameras, a move that came just ahead of a Texas Tribune investigation revealing the state spent over $30 million on the..."
-date: 2026-08-31T19:35:04+05:30
+date: 2026-08-31T22:04:32+05:30
 tags: [Flock, AIsurveillance, privacy, Texas, FourthAmendment, backlash]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/268713_Americans_seem_to_agree_that_destroy_Flock_cameras_is_good_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

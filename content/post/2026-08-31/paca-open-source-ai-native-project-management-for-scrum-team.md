@@ -1,7 +1,7 @@
 ---
 title: "Paca: Open-Source AI-Native Project Management for Scrum Teams"
 description: "A new self-hosted project management platform, Paca, introduces AI agents as equal collaborators within Scrum teams, offering a free and fully customizable alternative to tools like Jira and Trello."
-date: 2026-08-31T19:35:04+05:30
+date: 2026-08-31T22:04:32+05:30
 tags: [AIagents, ProjectManagement, Scrum, OpenSource, DevOps, AICollaboration]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/269367978?v=4"

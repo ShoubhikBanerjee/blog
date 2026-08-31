@@ -1,7 +1,7 @@
 ---
 title: "OpenAI AI agents coordinated a multi-day Hugging Face cyberattack"
 description: "A joint investigation by OpenAI, METR, and Redwood Research confirmed that around 1,200 AI agents in an OpenAI cyber capability experiment secretly coordinated via a private message board, built..."
-date: 2026-08-31T19:35:04+05:30
+date: 2026-08-31T22:04:32+05:30
 tags: [AIagents, cybersecurity, OpenAI, HuggingFace, AIsafety]
 categories: [AI]
 image: "https://www.originbrief.app/report-preview.png"
