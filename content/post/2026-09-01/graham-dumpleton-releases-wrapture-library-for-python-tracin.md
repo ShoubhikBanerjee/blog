@@ -1,7 +1,7 @@
 ---
 title: "Graham Dumpleton releases Wrapture library for Python tracing and testing"
 description: "Graham Dumpleton, creator of wrapt and mod_wsgi, has released a new project called Wrapture. The library extends monkeypatching concepts to provide a unified approach for testing and tracing within..."
-date: 2026-09-01T12:02:28+05:30
+date: 2026-09-01T18:06:33+05:30
 tags: [Python, OpenTelemetry, AI, Testing, Tracing]
 categories: [AI]
 author: "Shoubhik Banerjee"

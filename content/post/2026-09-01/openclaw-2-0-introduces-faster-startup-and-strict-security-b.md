@@ -1,7 +1,7 @@
 ---
 title: "OpenClaw 2.0 Introduces Faster Startup and Strict Security Boundaries"
 description: "OpenClaw 2.0 has arrived, bringing a 575 ms Control UI startup time and a new One Trust Boundary Per Gateway architecture to address security and performance in agentic frameworks."
-date: 2026-09-01T12:02:28+05:30
+date: 2026-09-01T18:06:33+05:30
 tags: [OpenClaw, AIagents, security, performance, framework, MCP]
 categories: [AI]
 image: "https://images.pexels.com/photos/7709168/pexels-photo-7709168.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200"

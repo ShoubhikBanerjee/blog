@@ -1,7 +1,7 @@
 ---
 title: "Modernizing Australian healthcare through integrated digital systems"
 description: "Australian healthcare has transitioned from paper-based records to a fragmented landscape of digital systems. Many of these legacy systems were designed for isolated use, leaving health information..."
-date: 2026-09-01T12:02:28+05:30
+date: 2026-09-01T18:06:33+05:30
 tags: [AustralianHealthcare, DigitalHealth, HealthTech, Interoperability]
 categories: [AI]
 image: "https://ik.imagekit.io/tht/uploads/news-pictures/1-darlinghurst-blog-post-image-20260827124900.webp"

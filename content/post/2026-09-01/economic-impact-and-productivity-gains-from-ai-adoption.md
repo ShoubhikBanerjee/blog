@@ -1,7 +1,7 @@
 ---
 title: "Economic Impact and Productivity Gains from AI Adoption"
 description: "Recent analysis indicates that AI is driving significant shifts in labour productivity, with projections suggesting growth between 0.4-1.3 percentage points in high-exposure G7 countries and an..."
-date: 2026-09-01T12:02:28+05:30
+date: 2026-09-01T18:06:33+05:30
 tags: [AI, Productivity, Economics, Technology]
 categories: [AI]
 author: "Shoubhik Banerjee"

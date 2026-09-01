@@ -1,7 +1,7 @@
 ---
 title: "The University of Scranton Announces Faculty Promotions and Appointments for 2026-27"
 description: "The University of Scranton has announced 22 faculty promotions effective Aug. 31, 2026, alongside new leadership appointments and faculty achievements heading into the 2026-27 academic year."
-date: 2026-09-01T12:02:28+05:30
+date: 2026-09-01T18:06:33+05:30
 tags: [UniversityOfScranton, HigherEducation, FacultyNews, AcademicAppointments]
 categories: [AI]
 image: "https://news.scranton.edu//_assets/images/detail-placeholder.jpg"

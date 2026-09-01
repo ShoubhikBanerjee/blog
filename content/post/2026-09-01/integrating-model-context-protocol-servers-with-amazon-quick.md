@@ -1,7 +1,7 @@
 ---
 title: "Integrating Model Context Protocol Servers with Amazon Quick"
 description: "Amazon Quick now supports Model Context Protocol (MCP) integrations, enabling autonomous execution, real-time data access, and specialized AI sub-agent integrations. This integration allows AI agents..."
-date: 2026-09-01T12:02:28+05:30
+date: 2026-09-01T18:06:33+05:30
 tags: [AWS, AmazonBedrock, MCP, AIAgents, CloudComputing]
 categories: [AI]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/08/20742.png"

@@ -1,7 +1,7 @@
 ---
 title: "Kākāpō Population Increases Following Record Breeding Season"
 description: "The total population of the kākāpō has reached 325 individuals as of 31st August 2026. This increase follows a record breeding season, with this year's chicks having now matured into juveniles."
-date: 2026-09-01T12:02:28+05:30
+date: 2026-09-01T18:06:33+05:30
 tags: [kakapo, conservation, wildlife]
 categories: [AI]
 author: "Shoubhik Banerjee"
