@@ -1,7 +1,7 @@
 ---
 title: "AWS Agent Registry Generally Available for Enterprise AI Management"
 description: "AWS has announced the general availability of the AWS Agent Registry, a service designed to provide a central, searchable catalog for agents, tools, skills, and custom resources. As organizations..."
-date: 2026-09-01T06:02:48+05:30
+date: 2026-09-01T12:02:28+05:30
 tags: [AWS, AIAgents, CloudGovernance, EnterpriseAI]
 categories: [AI]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-20739-featured-image.png"

@@ -1,7 +1,7 @@
 ---
 title: "Amazon Bedrock Launches Managed Knowledge Bases with Agentic Retrieval"
 description: "Amazon Bedrock Knowledge Bases has introduced managed knowledge bases, evolving from traditional RAG to agentic retrieval. This new capability enables multi-turn planning, iterative retrieval, and..."
-date: 2026-09-01T06:02:48+05:30
+date: 2026-09-01T12:02:28+05:30
 tags: [AmazonBedrock, AgenticRetrieval, KnowledgeBases, AWS, RAG, AI]
 categories: [AI]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/27/ML-21427-featured-image.png"
