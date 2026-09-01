@@ -1,7 +1,7 @@
 ---
 title: "Phil Schiller Steps Back from App Store and Apple Events Role"
 description: "Apple Fellow Phil Schiller is officially reducing his operational responsibilities, stepping down from overseeing the App Store and Apple product launches as the company prepares for a leadership..."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [Apple, PhilSchiller, AppStore, leadership, JohnTernus, EddyCue]
 categories: [AI]
 author: "Shoubhik Banerjee"

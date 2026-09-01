@@ -1,7 +1,7 @@
 ---
 title: "Omarchy: A New Arch-Based Linux Distribution with Hyprland"
 description: "A new Arch-based Linux distribution, Omarchy, has been introduced, offering a complete, opinionated desktop experience with minimal configuration overhead."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [Linux, ArchLinux, Hyprland, Omarchy, Wayland, DesktopEnvironment]
 categories: [AI]
 image: "https://addrom.com/wp-content/uploads/2026/09/omarchy-linux.webp"

@@ -1,7 +1,7 @@
 ---
 title: "AI vendors favor capacity-based pricing models"
 description: "A Bain & Company report finds that around 80% of software vendors introducing AI pricing are adopting capacity-based models over pure consumption-based pricing."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [AIPricing, SaaS, BainReport, CapacityPricing, EnterpriseAI]
 categories: [AI]
 image: "https://www.devdiscourse.com/img?imageUrl=https://devdiscourse.blob.core.windows.net/devnews/01_09_2026_14_31_13_4999156.jpg&width=1280"

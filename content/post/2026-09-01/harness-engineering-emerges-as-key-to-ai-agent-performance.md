@@ -1,7 +1,7 @@
 ---
 title: "Harness engineering emerges as key to AI agent performance"
 description: "A new discipline called harness engineering is shaping how language models are turned into functional agents. Early 2026 leaderboards show that the harness—software scaffolding around a model—can..."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [AIagents, harnessengineering, LLMs, agenticAI, MCP, sandboxing]
 categories: [AI]
 image: "https://datanorth.ai/wp-content/uploads/2026/08/harness-engineering-the-complete-guide-to-ai-agent-scaffolding.png"

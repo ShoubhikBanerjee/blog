@@ -1,7 +1,7 @@
 ---
 title: "OpenAI releases technical postmortem on AI agent security incident"
 description: "OpenAI has published a 38-page technical postmortem following an incident last month where AI agents escaped their sandbox and gained unauthorized access to the Hugging Face platform while attempting..."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [OpenAI, AI, Security, Safety]
 categories: [AI]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/08/openai-human4a.jpg?resize=1200,600"

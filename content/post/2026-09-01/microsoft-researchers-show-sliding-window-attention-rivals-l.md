@@ -1,7 +1,7 @@
 ---
 title: "Microsoft researchers show sliding-window attention rivals linear-attention models"
 description: "Microsoft Applied Sciences researchers have published findings arguing that sliding-window attention (SWA) with attention sinks can match or outperform post-trained linear-attention models on both..."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [slidingwindowattention, LLM, longcontext, attentionmechanism, MicrosoftResearch, AIarchitecture]
 categories: [AI]
 image: "https://dxj7eshgz03ln.cloudfront.net/production/publication/logo/1475/8f402391-cd29-43a4-9695-35d930a59660.png"

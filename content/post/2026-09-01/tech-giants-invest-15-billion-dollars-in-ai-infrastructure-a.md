@@ -1,7 +1,7 @@
 ---
 title: "Tech Giants Invest 15 Billion Dollars in AI Infrastructure at LEAP 2026"
 description: "The opening days of LEAP 2026 in Riyadh have resulted in approximately $15 billion in investments, partnerships, and computing infrastructure agreements. Held under the theme 'Into New Worlds,' the..."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [LEAP2026, AIinfrastructure, SaudiArabia, HUMAIN, CloudComputing]
 categories: [AI]
 image: "https://fastcompanyme.com/wp-content/uploads/2026/09/LEAP-2026-reveals-the-direction-of-Saudi-Arabias-next-AI-strategy.jpg"

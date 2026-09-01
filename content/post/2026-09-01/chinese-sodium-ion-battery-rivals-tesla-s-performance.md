@@ -1,7 +1,7 @@
 ---
 title: "Chinese sodium-ion battery rivals Tesla’s performance"
 description: "A Chinese sodium-ion battery has demonstrated performance comparable to Tesla’s batteries, with production quality and design features matching industry standards."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [sodiumion, batteries, EV, energy, Tesla, lithium]
 categories: [AI]
 image: "https://www.sciencedaily.com/images/scidaily-icon.png"

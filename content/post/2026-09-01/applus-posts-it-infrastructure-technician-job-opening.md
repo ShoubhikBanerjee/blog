@@ -1,7 +1,7 @@
 ---
 title: "Applus+ Posts IT Infrastructure Technician Job Opening"
 description: "Applus+, a global testing, inspection, and certification company with presence in more than 70 countries across 5 continents and a team of over 28,000 people, is currently hiring a Systems and..."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [ITJobs, Infrastructure, WindowsServer, Virtualization, SQLServer, LinuxAdmin]
 categories: [AI]
 image: "https://cdn.jobtoday.com/pics/share-pict-1200x630@2x.jpg"

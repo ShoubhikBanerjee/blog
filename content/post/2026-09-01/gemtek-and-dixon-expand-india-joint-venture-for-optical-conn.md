@@ -1,7 +1,7 @@
 ---
 title: "Gemtek and Dixon expand India joint venture for optical connectivity manufacturing"
 description: "Gemtek Technology Co., Ltd. and Dixon Technologies (India) Limited are advancing their strategic collaboration through their joint venture in India, expanding manufacturing and market opportunities..."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [opticalconnectivity, manufacturing, India, photonics, AIinfrastructure, telecommunications]
 categories: [AI]
 image: "https://www.devdiscourse.com/img?imageUrl=https://devdiscourse.blob.core.windows.net/devnews/01_09_2026_12_43_06_8326137.jpg&width=1280"

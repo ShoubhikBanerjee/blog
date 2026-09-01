@@ -1,7 +1,7 @@
 ---
 title: "Development of a RAG-enabled Chatbot using LangChain and LLaMA"
 description: "A new RAG-powered chatbot implementation has been developed using LangChain to orchestrate an LLaMA model and NVIDIA embeddings. The system is designed to provide context-aware responses by..."
-date: 2026-09-01T18:06:33+05:30
+date: 2026-09-01T22:04:40+05:30
 tags: [RAG, LangChain, LLaMA, FastAPI, FAISS]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/125358861?v=4"
