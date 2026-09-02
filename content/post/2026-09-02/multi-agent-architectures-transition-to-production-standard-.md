@@ -1,7 +1,7 @@
 ---
 title: "Multi-agent architectures transition to production standard with major 2026 framework updates"
 description: "Most engineering teams building AI systems in 2026 are no longer working with single agents. Multi-agent architectures moved from a research pattern to a production standard as the landscape shifted..."
-date: 2026-09-02T06:03:44+05:30
+date: 2026-09-02T12:02:38+05:30
 tags: [AIagents, MultiAgentSystems, LangGraph, MicrosoftAgentFramework, CrewAI, AIorchestration]
 categories: [AI]
 image: "https://src.n-ix.com/uploads/2026/08/28/3644be4d-57e6-470a-9788-7973f7e889d4.png"

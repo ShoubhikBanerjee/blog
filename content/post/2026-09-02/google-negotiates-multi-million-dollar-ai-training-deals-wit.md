@@ -1,7 +1,7 @@
 ---
 title: "Google Negotiates Multi-Million Dollar AI Training Deals With Major Hollywood Studios"
 description: "Google is reportedly reaching out to several of Hollywood’s major studios to secure licensing agreements that would allow the company to train its AI models on copyrighted film and television..."
-date: 2026-09-02T06:03:44+05:30
+date: 2026-09-02T12:02:38+05:30
 tags: [Google, GenerativeAI, Hollywood, Licensing, DeepMind]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/ai-label-3.jpg?quality=90&strip=all&crop=0%2C12.885618424569%2C100%2C74.228763150863&w=1200"

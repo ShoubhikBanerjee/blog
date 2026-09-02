@@ -1,7 +1,7 @@
 ---
 title: "BenchMIRT Introduces Multidimensional Auditing for LLM Benchmarks"
 description: "Researchers have introduced BenchMIRT, a new method for auditing Large Language Model (LLM) benchmarks at the level of individual prompts. This approach allows researchers to isolate specific signals..."
-date: 2026-09-02T06:03:44+05:30
+date: 2026-09-02T12:02:38+05:30
 tags: [LLM, Benchmarking, AIResearch, BenchMIRT]
 categories: [AI]
 image: "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/c_Rnu4DRj6Djxk1IT0gKu.png"
