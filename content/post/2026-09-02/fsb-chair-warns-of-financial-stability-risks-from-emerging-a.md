@@ -1,7 +1,7 @@
 ---
 title: "FSB Chair Warns of Financial Stability Risks From Emerging AI Models"
 description: "Financial Stability Board (FSB) Chair and Governor of the Bank of England Andrew Bailey has warned that emerging AI models pose a growing threat to financial stability and economic growth. In a..."
-date: 2026-09-02T18:03:08+05:30
+date: 2026-09-02T22:08:32+05:30
 tags: [AIsecurity, FinancialStability, AnthropicMythos, G20, Cybersecurity]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "AI plugin updates execute_sql output format"
 description: "A new version of the plugin has been released, changing the output format of `execute_sql` from an array of arrays to an array of objects. This is the first non-alpha release."
-date: 2026-09-02T18:03:08+05:30
+date: 2026-09-02T22:08:32+05:30
 tags: [AI, plugin, SQL, outputformat, mcp]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "Anthropic Launches Claude Fable 5.1 with Improved Performance and Reduced Pricing"
 description: "Anthropic has released its latest AI models, Claude Fable 5.1 and Mythos 5.1, aimed at addressing customer feedback regarding pricing, data retention, and safety constraints."
-date: 2026-09-02T18:03:08+05:30
+date: 2026-09-02T22:08:32+05:30
 tags: [Anthropic, Claude, AWS, ArtificialIntelligence, CloudComputing]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/STKB364_CLAUDE_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

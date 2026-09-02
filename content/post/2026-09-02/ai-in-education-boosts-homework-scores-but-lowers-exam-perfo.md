@@ -1,7 +1,7 @@
 ---
 title: "AI in education boosts homework scores but lowers exam performance"
 description: "A large-scale study tracking 27,000 students in China found that generative AI improved homework efficiency but reduced exam performance over time."
-date: 2026-09-02T18:03:08+05:30
+date: 2026-09-02T22:08:32+05:30
 tags: [AIeducation, studentperformance, generativeAI, educationresearch, OECD, studentusage]
 categories: [AI]
 image: "https://www.aljazeera.com/wp-content/uploads/2026/09/INTERACTIVE-AI-education-1788270689.png?resize=1200%2C630"

@@ -1,7 +1,7 @@
 ---
 title: "Google Introduces Agentic Video Understanding Across Gemini Models"
 description: "Google has launched agentic video understanding for its latest models, including Gemini 3.7 Flash, 3.6 Flash, and 3.5 Flash-Lite. This capability improves analysis accuracy while reducing token..."
-date: 2026-09-02T18:03:08+05:30
+date: 2026-09-02T22:08:32+05:30
 tags: [Gemini, GoogleAI, VideoAnalysis, AI, MachineLearning]
 categories: [AI]
 image: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/agentic-video___keyword__blog-header.width-1300.png"

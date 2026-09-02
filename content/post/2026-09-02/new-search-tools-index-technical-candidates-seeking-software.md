@@ -1,7 +1,7 @@
 ---
 title: "New Search Tools Index Technical Candidates Seeking Software Engineering Roles"
 description: "New search platforms have emerged to index and highlight technical professionals seeking new opportunities. Tools such as nthesis.ai/public/hn-wants-to-be-hired and wantstobehired.com allow..."
-date: 2026-09-02T18:03:08+05:30
+date: 2026-09-02T22:08:32+05:30
 tags: [JobSearch, SoftwareEngineering, HackerNews, TechTalent, RemoteWork]
 categories: [AI]
 author: "Shoubhik Banerjee"

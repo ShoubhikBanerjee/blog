@@ -1,7 +1,7 @@
 ---
 title: "Google and Qualcomm Expand Spatial Computing with Android XR and Gemini AI Integration"
 description: "In 2026, the extended reality (XR) landscape has reached an inflection point with more than 60 million devices in the market. Google has announced a strategic re-engagement with immersive technology..."
-date: 2026-09-02T18:03:08+05:30
+date: 2026-09-02T22:08:32+05:30
 tags: [AndroidXR, GeminiAI, Qualcomm, SpatialComputing, XREcosystem]
 categories: [AI]
 image: "https://gadget.harianaceh.co.id/wp-content/uploads/2025/02/Logo-Harian-Aceh-Indonesia.jpeg"

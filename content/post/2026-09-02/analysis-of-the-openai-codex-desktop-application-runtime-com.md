@@ -1,7 +1,7 @@
 ---
 title: "Analysis of the OpenAI Codex desktop application runtime components"
 description: "The OpenAI Codex desktop application, which has been rebranded to ChatGPT, includes a large runtime environment containing a variety of bundled software dependencies."
-date: 2026-09-02T18:03:08+05:30
+date: 2026-09-02T22:08:32+05:30
 tags: [OpenAI, Codex, ChatGPT, SoftwareArchitecture]
 categories: [AI]
 author: "Shoubhik Banerjee"

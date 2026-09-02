@@ -1,7 +1,7 @@
 ---
 title: "Kier Group integrates AI tools and develops custom agents"
 description: "Kier Group plc, a construction and infrastructure services company based in Salford, England, has adopted AI tools and is developing custom AI agents to enhance operations."
-date: 2026-09-02T18:03:08+05:30
+date: 2026-09-02T22:08:32+05:30
 tags: [AI, KierGroup, MicrosoftCopilot, AIagents, construction, infrastructure]
 categories: [AI]
 image: "https://news.microsoft.com/source/emea/wp-content/uploads/2026/09/Louisa-Finlay.jpg"

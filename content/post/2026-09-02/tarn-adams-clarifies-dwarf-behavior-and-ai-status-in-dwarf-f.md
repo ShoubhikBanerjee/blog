@@ -1,7 +1,7 @@
 ---
 title: "Tarn Adams Clarifies Dwarf Behavior and AI Status in Dwarf Fortress"
 description: "On 1st September 2026, Tarn Adams, co-creator of Dwarf Fortress, addressed the nature of dwarf actions within the game."
-date: 2026-09-02T18:03:08+05:30
+date: 2026-09-02T22:08:32+05:30
 tags: [DwarfFortress, TarnAdams, Gaming]
 categories: [AI]
 author: "Shoubhik Banerjee"
