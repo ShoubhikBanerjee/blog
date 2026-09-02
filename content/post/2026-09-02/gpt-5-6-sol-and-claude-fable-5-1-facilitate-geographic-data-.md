@@ -1,7 +1,7 @@
 ---
 title: "GPT-5.6-Sol and Claude Fable 5.1 facilitate geographic data mapping"
 description: "On 1st September 2026, developers leveraged multiple AI tools to create a utility for mapping local political boundaries, including the Granada Community Services District and the Midcoast Community..."
-date: 2026-09-02T12:02:38+05:30
+date: 2026-09-02T18:03:08+05:30
 tags: [AI, GeoJSON, Mapping, SoftwareDevelopment]
 categories: [AI]
 image: "https://static.simonwillison.net/static/2026/geojson-tool.webp"

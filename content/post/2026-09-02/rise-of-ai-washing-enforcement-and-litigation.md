@@ -1,7 +1,7 @@
 ---
 title: "Rise of AI Washing Enforcement and Litigation"
 description: "Regulators and private plaintiffs have increasingly targeted companies for overstating their AI capabilities, a practice known as 'AI washing.' Recent securities class actions against Tempus AI and..."
-date: 2026-09-02T12:02:38+05:30
+date: 2026-09-02T18:03:08+05:30
 tags: [AIwashing, SEC, litigation, TempusAI, GitLab, enforcement]
 categories: [AI]
 image: "http://www.mondaq.com/images/profile/companythumb/20053.webp?v=20241101121959"

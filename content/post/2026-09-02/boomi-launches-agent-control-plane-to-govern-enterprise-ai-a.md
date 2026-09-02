@@ -1,7 +1,7 @@
 ---
 title: "Boomi Launches Agent Control Plane to Govern Enterprise AI Agent Execution"
 description: "Boomi has announced its new Agent Control Plane, an infrastructure platform designed to connect AI agents to core business systems while addressing governance and execution risks in enterprise..."
-date: 2026-09-02T12:02:38+05:30
+date: 2026-09-02T18:03:08+05:30
 tags: [Boomi, AIGovernance, EnterpriseAI, AgenticAI]
 categories: [AI]
 author: "Shoubhik Banerjee"

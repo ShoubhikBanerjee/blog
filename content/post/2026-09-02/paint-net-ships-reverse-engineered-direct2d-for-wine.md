@@ -1,7 +1,7 @@
 ---
 title: "Paint.NET ships reverse-engineered Direct2D for WINE"
 description: "Paint.NET has overcome a long-standing compatibility hurdle by shipping an internal, clean-room rewrite of Direct2D for use on WINE."
-date: 2026-09-02T12:02:38+05:30
+date: 2026-09-02T18:03:08+05:30
 tags: [PaintNET, Direct2D, WINE, reverseengineering, compatibility]
 categories: [AI]
 author: "Shoubhik Banerjee"

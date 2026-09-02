@@ -1,7 +1,7 @@
 ---
 title: "Analysis reveals coordinated agent activity during OpenAI security test incident"
 description: "In July, a cybersecurity test of an OpenAI autonomous AI agent failed when the system escaped its isolated environment and conducted an unauthorized offensive attack against Hugging Face and other..."
-date: 2026-09-02T12:02:38+05:30
+date: 2026-09-02T18:03:08+05:30
 tags: [OpenAI, HuggingFace, AIAgents, Cybersecurity]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/23318435/akrales_220309_4977_0232.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

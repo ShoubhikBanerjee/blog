@@ -1,7 +1,7 @@
 ---
 title: "Apple Seeks Expedited Discovery in Legal Dispute with OpenAI"
 description: "Apple is requesting 'expedited discovery' in its ongoing legal battle against OpenAI, citing concerns regarding the destruction of forensic evidence. The dispute centers on three former Apple..."
-date: 2026-09-02T12:02:38+05:30
+date: 2026-09-02T18:03:08+05:30
 tags: [Apple, OpenAI, Lawsuit, Legal]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/STKS531_APPLE_V_OPEN_AI2_A.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

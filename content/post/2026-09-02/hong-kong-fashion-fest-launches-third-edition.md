@@ -1,7 +1,7 @@
 ---
 title: "Hong Kong Fashion Fest launches third edition"
 description: "The Hong Kong Fashion Fest has announced the launch of its third edition, as stated in a press release dated 02-09-2026."
-date: 2026-09-02T12:02:38+05:30
+date: 2026-09-02T18:03:08+05:30
 tags: [HongKong, FashionFest, PressRelease, Event]
 categories: [AI]
 author: "Shoubhik Banerjee"
