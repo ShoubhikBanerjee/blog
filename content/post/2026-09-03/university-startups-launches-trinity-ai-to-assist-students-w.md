@@ -1,7 +1,7 @@
 ---
 title: "University Startups Launches Trinity AI to Assist Students with Disability Transition Planning"
 description: "Trinity is a conversational AI solution developed by University Startups to assist students with disabilities in taking ownership of their postsecondary and Individualized Education Program (IEP)..."
-date: 2026-09-03T06:04:34+05:30
+date: 2026-09-03T12:16:06+05:30
 tags: [ArtificialIntelligence, EdTech, AWS, Accessibility, SpecialEducation]
 categories: [AI]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/31/ML-20631-featured-image.png"

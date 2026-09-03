@@ -1,7 +1,7 @@
 ---
 title: "New automated AI solution monitors dashboard content failures"
 description: "A new automated solution now monitors dashboards and visually analyzes them using large language models (LLMs) on Amazon Bedrock. The system detects visual content failures and provides proactive..."
-date: 2026-09-03T06:04:34+05:30
+date: 2026-09-03T12:16:06+05:30
 tags: [AWS, AmazonBedrock, ArtificialIntelligence, Monitoring, Serverless]
 categories: [AI]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21432-featured-image.png"
