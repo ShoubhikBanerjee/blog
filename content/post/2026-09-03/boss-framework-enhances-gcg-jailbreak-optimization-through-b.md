@@ -1,7 +1,7 @@
 ---
 title: "BOSS framework enhances GCG jailbreak optimization through breadth-oriented search"
 description: "A new research paper submitted on 2 Sep 2026 introduces **BOSS**, a plug‑and‑play framework that improves optimization‑based jailbreak attacks built on Greedy Coordinate Gradient (GCG)."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [jailbreak, adversarialAI, GCG, BOSS, AIsecurity]
 categories: [AI]
 author: "Shoubhik Banerjee"

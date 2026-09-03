@@ -1,7 +1,7 @@
 ---
 title: "Training the Full Deployed Matrix Improves Low‑Rank Clone Distillation"
 description: "A new study shows that aligning training with the exact weight shape deployed at inference restores unused capacity in weight‑inheritance distillation and yields sizable performance gains."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [modeldistillation, weightinheritance, AIefficiency]
 categories: [AI]
 author: "Shoubhik Banerjee"

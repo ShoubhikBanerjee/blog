@@ -1,7 +1,7 @@
 ---
 title: "C³T Transformer Enables Counterfactual Causal Reasoning of Sentiment Shifts in Social Media Threads"
 description: "A new paper titled **C$^{3}$T: Counterfactual Causal Reasoning for Sentiment Shifts in Social‑Media Conversation Trees** was submitted on 2 Sep 2026 to the Computer Science > Computation and Language..."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [sentimentanalysis, causalAI, socialmedia, nlp]
 categories: [AI]
 author: "Shoubhik Banerjee"

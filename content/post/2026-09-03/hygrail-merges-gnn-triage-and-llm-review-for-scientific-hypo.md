@@ -1,7 +1,7 @@
 ---
 title: "HyGRAIL merges GNN triage and LLM review for scientific hypothesis discovery"
 description: "A new framework called HyGRAIL combines heterogeneous graph neural network triage with large language model review to discover scientific hypotheses from incomplete knowledge graphs."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [AI, KnowledgeGraphs, HypothesisDiscovery]
 categories: [AI]
 author: "Shoubhik Banerjee"

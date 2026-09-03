@@ -1,7 +1,7 @@
 ---
 title: "NS-Copilot: LLM‑Driven Multi‑Agent System for End‑to‑End Neuroscience Analysis"
 description: "A new system called NS‑Copilot has been introduced that uses large language models and a multi‑agent architecture to automate neuroscience data analysis."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [Neuroscience, LLM, MultiAgent, AI, NSCopilot]
 categories: [AI]
 author: "Shoubhik Banerjee"

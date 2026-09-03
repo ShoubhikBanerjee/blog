@@ -1,7 +1,7 @@
 ---
 title: "Observable Trajectory Signals Enable Risk Prediction for Web Agents Without Internal Signals"
 description: "A paper titled **“Monitoring Web Agents Without Internal Signals: Observable Trajectories and Key‑Step Supervision**” was submitted on 2 Sep 2026 to the Computer Science > Artificial Intelligence..."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [AIagents, riskprediction, webautomation, arXiv]
 categories: [AI]
 author: "Shoubhik Banerjee"

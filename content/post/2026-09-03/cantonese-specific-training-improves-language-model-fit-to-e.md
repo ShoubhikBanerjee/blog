@@ -1,7 +1,7 @@
 ---
 title: "Cantonese-Specific Training Improves Language Model Fit to Eye-Tracking Data"
 description: "Information-theoretic measures derived from autoregressive language models are widely used to characterize the expectations that shape human reading, but whether language-variety-specific training..."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [Cantonese, LanguageModels, EyeTracking, Surprisal]
 categories: [AI]
 author: "Shoubhik Banerjee"

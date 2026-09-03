@@ -1,7 +1,7 @@
 ---
 title: "US Pushes G20 to Adopt Carolina Principles for AI Regulation"
 description: "The United States urged G20 members at a North Carolina meeting to avoid new AI-specific regulations and refrain from creating new oversight bodies for the technology. The proposal, dubbed the..."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [AIregulation, G20, CarolinaPrinciples, USpolicy, AIgovernance]
 categories: [AI]
 image: "https://www.technology.org/texorgwp/wp-content/uploads/2025/08/istrfry-marcus-T41c_r3CVOs-unsplash.jpg"

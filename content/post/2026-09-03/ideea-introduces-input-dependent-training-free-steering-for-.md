@@ -1,7 +1,7 @@
 ---
 title: "IDEEA introduces input-dependent, training-free steering for LLMs"
 description: "A paper titled **IDEEA: training-free Input-Dependent stEEring via Activation cluster matching** was submitted on 2 Sep 2026 to the Computer Science > Computation and Language category. It proposes a..."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [LLM, steering, trainingfree, AI, TruthfulQA]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "CHIME Improves Long-Horizon Agent Planning Using Credit-Aware Memory Evolution"
 description: "Researchers have introduced Credit-Aware Hierarchical Memory Evolution (CHIME), a framework designed to enhance agentic planning capabilities without requiring parameter updates."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [AI, MachineLearning, LLM, AgenticAI]
 categories: [AI]
 author: "Shoubhik Banerjee"

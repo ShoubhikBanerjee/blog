@@ -1,7 +1,7 @@
 ---
 title: "New tri-agent framework evaluates LLM question clarification"
 description: "Researchers have introduced a novel tri-agent framework to evaluate an LLM's ability to engage in clarifying dialogue, particularly for ambiguous or underspecified user queries in interactive systems."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [LLM, AIagents, evaluation, clarification, dialogue, benchmarking]
 categories: [AI]
 author: "Shoubhik Banerjee"

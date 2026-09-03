@@ -1,7 +1,7 @@
 ---
 title: "Reliable Enterprise Agent Deployment (READY) framework introduced for AI workflow qualification"
 description: "A new framework called Reliable Enterprise Agent Deployment (READY) provides a systematic way to qualify AI agents for deployment in enterprise workflows."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [AIagents, EnterpriseAI, Reliability, HumanInTheLoop]
 categories: [AI]
 author: "Shoubhik Banerjee"

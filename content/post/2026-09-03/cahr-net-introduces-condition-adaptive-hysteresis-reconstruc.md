@@ -1,7 +1,7 @@
 ---
 title: "CAHR-Net Introduces Condition-Adaptive Hysteresis Reconstruction for Magnetic Core Loss Modeling"
 description: "A new paper proposes CAHR-Net, a condition-adaptive hysteresis reconstruction network that improves magnetic core loss modeling by injecting operating conditions into the physical hysteresis loop..."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [AI, magneticcoreloss, hysteresismodeling, CAHRNet, machinelearning, powerlossestimation]
 categories: [AI]
 author: "Shoubhik Banerjee"

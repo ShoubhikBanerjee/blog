@@ -1,7 +1,7 @@
 ---
 title: "MineTRACE Introduces Transparent AI for Mineral Exploration"
 description: "Researchers have introduced MineTRACE, a web-based system that uses AI to provide evidence-grounded mineral prospectivity analysis for eight commodities: Cu, Au, Ni, W, Sn, Co, Ta, and Mn."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [AI, mineralexploration, geoscience, MineTRACE, transparency]
 categories: [AI]
 author: "Shoubhik Banerjee"

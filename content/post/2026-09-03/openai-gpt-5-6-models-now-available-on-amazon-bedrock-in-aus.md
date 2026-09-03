@@ -1,7 +1,7 @@
 ---
 title: "OpenAI GPT-5.6 Models Now Available on Amazon Bedrock in Australia"
 description: "Australian development teams can now access OpenAI GPT-5.6 models through Amazon Bedrock by utilizing infrastructure located in the Asia Pacific (Sydney) and Asia Pacific (Melbourne) AWS regions...."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [AWS, OpenAI, AmazonBedrock, CloudComputing, GenerativeAI]
 categories: [AI]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/Accessing-OpenAI-models-on-Amazon-Bedrock-from-Australia-with-global-cross-Region-inference.png"

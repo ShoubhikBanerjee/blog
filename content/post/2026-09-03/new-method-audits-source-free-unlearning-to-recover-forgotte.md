@@ -1,7 +1,7 @@
 ---
 title: "New Method Audits Source-Free Unlearning to Recover Forgotten Classes"
 description: "Class unlearning aims to remove a model's ability to recognize designated forget classes while preserving performance on retain classes. However, low forget accuracy after unlearning does not..."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [MachineLearning, Unlearning, ModelAuditing, CIFAR, ComputerVision]
 categories: [AI]
 author: "Shoubhik Banerjee"

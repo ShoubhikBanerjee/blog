@@ -1,7 +1,7 @@
 ---
 title: "Amazon Updates Alexa for Shopping to Detect and Verify Impersonation Scams"
 description: "Amazon has launched a new feature for its AI assistant to combat impersonation scams. The update allows users to ask the assistant to determine whether an email, text message, or phone call actually..."
-date: 2026-09-03T12:16:06+05:30
+date: 2026-09-03T18:04:33+05:30
 tags: [Amazon, Alexa, AI, Cybersecurity, AlexaForShopping]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/alexa-shopping-ai-hero-lm.jpg?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"
