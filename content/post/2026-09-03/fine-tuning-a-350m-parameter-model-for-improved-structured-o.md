@@ -1,7 +1,7 @@
 ---
 title: "Fine-tuning a 350M Parameter Model for Improved Structured Output Generation"
 description: "A recent development demonstrates how to fine-tune a 350M parameter model to improve structured output adherence using 100 GRPO steps. The process utilizes a custom training pipeline and an..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AI, LLM, OpenSource, MachineLearning]
 categories: [AI]
 image: "https://huggingface.co/blog/assets/grpo-with-trl-ifstruct/thumbnail.png"

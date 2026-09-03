@@ -1,7 +1,7 @@
 ---
 title: "Update on end-to-end post-training conversion for ultra-low-bit language models"
 description: "Researchers have completed an end-to-end post-training conversion of the Qwen 4B-parameter model to evaluate the performance and runtime behavior of ultra-low-bit quantization."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AI, Quantization, LLM, MachineLearning, ModelCompression]
 categories: [AI]
 author: "Shoubhik Banerjee"

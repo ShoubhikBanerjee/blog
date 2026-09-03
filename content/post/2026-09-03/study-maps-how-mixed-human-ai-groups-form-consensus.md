@@ -1,7 +1,7 @@
 ---
 title: "Study Maps How Mixed Human‑AI Groups Form Consensus"
 description: "A recent experiment examined how mixing large language model (LLM) agents with humans in a collaborative description game changes the way groups reach consensus."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [humanAI, consensus, LLMagents, collectivebehavior]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "Unified Particle Filter LSTM for Data-Driven Process Simulation"
 description: "Researchers introduced a new approach to data-driven process simulation that generates realistic case trajectories from historical event logs without requiring an explicitly specified model of the..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AI, processsimulation, LSTM, particlefilter, datascience]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "StatFormBench: New Benchmark for Statistical Problem Formulation in LLMs"
 description: "A new benchmark called **StatFormBench** has been released to evaluate how large language models handle the upstream step of statistical problem formulation."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [StatFormBench, LLM, Benchmark, Statistics, AI]
 categories: [AI]
 author: "Shoubhik Banerjee"

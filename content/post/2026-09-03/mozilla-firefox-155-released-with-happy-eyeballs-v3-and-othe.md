@@ -1,7 +1,7 @@
 ---
 title: "Mozilla Firefox 155 released with Happy Eyeballs v3 and other updates"
 description: "The open‑source Mozilla Firefox web browser has been updated to version 155 and is now available for download."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [Firefox, OpenSource, WebBrowser]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "EmoStance Enables Affective‑Orientation Control in Empathetic Dialogue"
 description: "Researchers introduced EmoStance, a system that brings response‑side affective‑orientation control to empathetic dialogue generation by leveraging multi‑annotator emoji distributions as weak..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [empatheticAI, dialogue, NLP, emoji]
 categories: [AI]
 author: "Shoubhik Banerjee"

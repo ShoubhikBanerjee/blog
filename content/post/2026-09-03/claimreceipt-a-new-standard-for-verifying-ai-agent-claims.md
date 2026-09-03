@@ -1,7 +1,7 @@
 ---
 title: "ClaimReceipt: A New Standard for Verifying AI Agent Claims"
 description: "A new specification called ClaimReceipt introduces a rigorous method for verifying claims made by AI agents by binding evidence to a signed experiment manifest."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AIAgents, ModelVerification, Auditing, Transparency]
 categories: [AI]
 author: "Shoubhik Banerjee"

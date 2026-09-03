@@ -1,7 +1,7 @@
 ---
 title: "DocHop Benchmark Evaluates Multi-hop Reasoning in Document-style Images"
 description: "DocHop, a new benchmark introduced on 2 Sep 2026, targets the under‑explored ability of multimodal large language models (MLLMs) to combine textual narrative context with chart evidence for..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AI, Benchmark, MultiHop, DocumentUnderstanding, MLLM]
 categories: [AI]
 author: "Shoubhik Banerjee"

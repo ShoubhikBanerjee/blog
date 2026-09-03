@@ -1,7 +1,7 @@
 ---
 title: "PILL Method Enables Efficient Preset-Length-Free Infilling for Diffusion Language Models"
 description: "Researchers have introduced PILL (Probing-based InfiLling with preset-Length-free decoding), an efficient method for diffusion language models (DLMs) that performs infilling without requiring a..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [DiffusionModels, DLM, MachineLearning, ArtificialIntelligence]
 categories: [AI]
 author: "Shoubhik Banerjee"

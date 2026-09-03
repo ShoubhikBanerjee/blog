@@ -1,7 +1,7 @@
 ---
 title: "Nvidia to acquire Hugging Face for $12.93 billion"
 description: "Nvidia has agreed to purchase Hugging Face, the popular open-source AI platform, for $12.93 billion."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [Nvidia, HuggingFace, AI, acquisition, opensource, AIhardware]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25835739/STKP210_JENSEN_HUANG_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

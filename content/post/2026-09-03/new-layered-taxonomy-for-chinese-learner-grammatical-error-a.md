@@ -1,7 +1,7 @@
 ---
 title: "New Layered Taxonomy for Chinese Learner Grammatical Error Annotation"
 description: "A new research paper introduces a layered taxonomy for annotating grammatical errors in Chinese learner writing, aiming to bridge computational Chinese grammatical error correction (CGEC) with..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [CGEC, ChineseGrammar, ErrorAnnotation, NLP, Linguistics, arXiv]
 categories: [AI]
 author: "Shoubhik Banerjee"

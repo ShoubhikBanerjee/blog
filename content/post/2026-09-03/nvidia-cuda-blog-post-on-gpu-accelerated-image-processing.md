@@ -1,7 +1,7 @@
 ---
 title: "NVIDIA CUDA Blog Post on GPU-Accelerated Image Processing"
 description: "NVIDIA has published a new technical blog post detailing a GPU-accelerated image processing pipeline using CUDA, with step-by-step optimizations and companion code available for testing."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [NVIDIA, CUDA, GPU, ImageProcessing, Optimization]
 categories: [AI]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/keyboard_16x9-660x370.jpg"

@@ -1,7 +1,7 @@
 ---
 title: "funes adds durable local memory to coding agents"
 description: "Earlier this year, *Software Forgets: Agent Traces Are the Memory* made the case that coding agents already produce the record we keep losing. funes turns those traces into usable memory."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AIagents, memory, coding, local, funes]
 categories: [AI]
 image: "https://huggingface.co/blog/assets/funes/thumbnail.jpg"

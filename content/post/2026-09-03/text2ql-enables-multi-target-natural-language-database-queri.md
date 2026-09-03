@@ -1,7 +1,7 @@
 ---
 title: "text2ql Enables Multi-Target Natural Language Database Queries with Deterministic Mode"
 description: "A new open‑source Python framework called **text2ql** was submitted on 2 Sep 2026. It targets natural‑language interfaces to databases and claims to overcome three common structural limitations."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [text2ql, NL2SQL, opensource, databases, AI]
 categories: [AI]
 author: "Shoubhik Banerjee"

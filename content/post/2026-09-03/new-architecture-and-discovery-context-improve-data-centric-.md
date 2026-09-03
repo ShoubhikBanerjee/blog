@@ -1,7 +1,7 @@
 ---
 title: "New Architecture and Discovery Context Improve Data-Centric AI Agents"
 description: "Researchers have identified architectural gaps caused by the stateless nature of LLM APIs and proposed new frameworks for managing conversational state and semantic memory."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AIArchitecture, AIAgents, LLM, MachineLearning]
 categories: [AI]
 author: "Shoubhik Banerjee"

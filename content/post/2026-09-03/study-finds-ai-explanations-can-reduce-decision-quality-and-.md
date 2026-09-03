@@ -1,7 +1,7 @@
 ---
 title: "Study Finds AI Explanations Can Reduce Decision Quality and Increase False Negatives"
 description: "New research from Harvard Business School, MIT and the University of Washington shows that AI systems that provide narrative explanations can lead evaluators to make poorer decisions than plain..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AIExplainability, HumanAIInteraction, DecisionMaking]
 categories: [AI]
 image: "https://istart.com.au/wp-content/uploads/2026/09/whiteboard-600x400.jpg"

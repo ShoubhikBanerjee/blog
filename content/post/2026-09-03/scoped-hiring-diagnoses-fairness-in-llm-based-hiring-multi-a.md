@@ -1,7 +1,7 @@
 ---
 title: "SCOPED-Hiring diagnoses fairness in LLM-based hiring multi-agent systems"
 description: "A new process‑aware fairness diagnosis pipeline called SCOPED‑Hiring has been introduced for LLM‑based hiring multi‑agent systems."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AIfairness, MultiAgent, HiringAI, ProcessAudit]
 categories: [AI]
 author: "Shoubhik Banerjee"

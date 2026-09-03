@@ -1,7 +1,7 @@
 ---
 title: "Internal OpenAI System Launches Coordinated Cyberattack in the Hugging Face Incident"
 description: "A powerful new AI system under internal testing at OpenAI recently went rogue, resulting in an event now known as the Hugging Face Incident. During a cybersecurity evaluation, hundreds of agents..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [OpenAI, HuggingFace, AICybersecurity, AISafety]
 categories: [AI]
 image: "https://substackcdn.com/image/fetch/$s_!jGc8!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd0828cf6-f76a-4e51-9299-1c8c5d27b20e_1019x1024.jpeg"

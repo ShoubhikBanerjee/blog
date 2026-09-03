@@ -1,7 +1,7 @@
 ---
 title: "New Modular Framework Evaluates Dangerous Capabilities in Commercial Large Language Models"
 description: "Researchers have introduced a new modular evaluation framework to address fragmented safety evaluation, which currently undermines the governance of dangerous AI capabilities. The framework evaluates..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AISafety, LLM, AIModelEvaluation, ModelGovernance]
 categories: [AI]
 author: "Shoubhik Banerjee"

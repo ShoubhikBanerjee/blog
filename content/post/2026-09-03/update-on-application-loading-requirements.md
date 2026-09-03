@@ -1,7 +1,7 @@
 ---
 title: "Update on application loading requirements"
 description: "An application is currently in the process of loading. To ensure the application displays correctly, users must have JavaScript enabled in their web browser."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [JavaScript, WebDevelopment, SoftwareUpdate]
 categories: [AI]
 author: "Shoubhik Banerjee"

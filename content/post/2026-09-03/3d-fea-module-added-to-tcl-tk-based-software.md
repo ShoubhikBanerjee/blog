@@ -1,7 +1,7 @@
 ---
 title: "3D FEA module added to Tcl/Tk-based software"
 description: "A new 3D Finite Element Analysis (FEA) module has been developed for an existing Tcl/Tk-based FEA software package."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [FEA, TclTk, engineering, 3Dmodeling, software]
 categories: [AI]
 author: "Shoubhik Banerjee"

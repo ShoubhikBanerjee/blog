@@ -1,7 +1,7 @@
 ---
 title: "Second Circuit Vacates Injunction, Clearing Genius Group for $1.2 B Capital Plan"
 description: "The U.S. Court of Appeals for the Second Circuit has vacated the preliminary injunction that blocked Genius Group Limited from issuing shares, raising capital, and purchasing Bitcoin, removing the..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [GeniusGroup, AIeducation, LegalUpdate, BitcoinTreasury, CapitalPlan]
 categories: [AI]
 image: "https://d1io3yog0oux5.cloudfront.net/_8f6f7f2974f1411f6a02468eb10fc15c/geniusgroup/db/873/7023/social_image_resized.jpg"

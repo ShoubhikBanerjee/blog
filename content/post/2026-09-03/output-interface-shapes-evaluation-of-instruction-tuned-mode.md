@@ -1,7 +1,7 @@
 ---
 title: "Output Interface Shapes Evaluation of Instruction-Tuned Models"
 description: "Researchers have shown that the surface format in which an answer is written – the output *interface* – can fundamentally confound how we judge both instruction‑tuning data quality and model..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AIEvaluation, InstructionTuning, ModelCapability, Benchmarking]
 categories: [AI]
 author: "Shoubhik Banerjee"

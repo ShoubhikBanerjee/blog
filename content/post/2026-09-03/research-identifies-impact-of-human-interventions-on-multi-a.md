@@ -1,7 +1,7 @@
 ---
 title: "Research Identifies Impact of Human Interventions on Multi-Agent Medical System Accuracy"
 description: "New research into multi-agent medical systems has identified that human interventions at specific 'fault points' significantly alter diagnostic accuracy. The study analyzed simulated doctor-patient..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [MedicalAI, AIAgents, ClinicalReasoning, MedQA, HealthcareTech]
 categories: [AI]
 author: "Shoubhik Banerjee"

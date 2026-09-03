@@ -1,7 +1,7 @@
 ---
 title: "Google Releases Gemini 3.8 Flash with Enhanced Reasoning and Specialized Cyber Version"
 description: "On September 2, 2026, Google launched Gemini 3.8 Flash, arriving just a few weeks after the release of its predecessor. The new model is designed to 'work harder' by performing more reasoning steps..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [GoogleGemini, AIagents, SoftwareEngineering, CyberSecurity]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK255_Google_Gemini_B_474198.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

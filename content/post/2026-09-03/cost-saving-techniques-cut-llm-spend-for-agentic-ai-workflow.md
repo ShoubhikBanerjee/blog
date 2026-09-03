@@ -1,7 +1,7 @@
 ---
 title: "Cost‑saving techniques cut LLM spend for agentic AI workflows"
 description: "ProjectDiscovery applied this to their security testing agent Neo in April 2026."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [LLM, AgenticAI, PromptCaching, CostOptimization]
 categories: [AI]
 image: "https://www.getreadyforagents.com/blog/agent-token-economics-cost-efficiency-production-hero.png"

@@ -1,7 +1,7 @@
 ---
 title: "Selective Spectral Reversal of Edited Knowledge in Large Language Models"
 description: "Knowledge editing provides an efficient way to update factual knowledge in large language models."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [knowledgeediting, spectralreversal, LLMsecurity]
 categories: [AI]
 author: "Shoubhik Banerjee"

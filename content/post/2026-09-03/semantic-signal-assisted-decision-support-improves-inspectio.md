@@ -1,7 +1,7 @@
 ---
 title: "Semantic Signal-Assisted Decision Support Improves Inspection Efficiency in Return Processing"
 description: "A new framework called Semantic Signal‑Assisted Decision Support converts return notes into a condition factor and a signal‑quality score to guide inspection depth and recovery allocation when labor..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [AI, DecisionSupport, InspectionOptimization, SupplyChain]
 categories: [AI]
 author: "Shoubhik Banerjee"

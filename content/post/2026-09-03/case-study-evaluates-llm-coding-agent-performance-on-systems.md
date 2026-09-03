@@ -1,7 +1,7 @@
 ---
 title: "Case Study Evaluates LLM Coding Agent Performance on Systems-Level Requirements"
 description: "Researchers have conducted a case study to empirically characterize how an LLM coding agent behaves when implementing a multi-component data system based on a detailed pre-existing specification."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [LLM, codingagents, softwareengineering, datasystems, HotpotQA]
 categories: [AI]
 author: "Shoubhik Banerjee"

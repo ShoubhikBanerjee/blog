@@ -1,7 +1,7 @@
 ---
 title: "Azure Foundry Introduces Knowledge Bases and Toolboxes for AI Agents"
 description: "Foundry has introduced new capabilities for AI agents, specifically Foundry IQ for knowledge management and Toolboxes for integrated tool orchestration. These developments focus on optimizing context..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [Azure, Foundry, AIAgents, MachineLearning, DataRetrieval]
 categories: [AI]
 image: "https://azure.microsoft.com/en-us/blog/wp-content/uploads/2026/09/Foundry-Economics-Series_3.jpg"

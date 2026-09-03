@@ -1,7 +1,7 @@
 ---
 title: "New AI System Reduces Guilty Bias in Legal Judgment Prediction"
 description: "Legal Judgment Prediction (LJP) models often exhibit 'Guilty Bias' due to training on prosecutorial narratives and imbalanced datasets. Researchers introduced OBJECTION, an inference-time pipeline..."
-date: 2026-09-03T18:04:33+05:30
+date: 2026-09-03T22:06:46+05:30
 tags: [LegalAI, BiasMitigation, AIethics, LegalTech, AdversarialAI]
 categories: [AI]
 author: "Shoubhik Banerjee"
