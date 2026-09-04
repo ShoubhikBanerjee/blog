@@ -1,7 +1,7 @@
 ---
 title: "Diagens Tech and PolyU Launch Joint Lab for General AI in Medical Applications"
 description: "On 2 September, Diagens Technology Co., Ltd. (02526.HK, Diagens‑B, “Diagens Tech”) and Hong Kong Polytechnic University (“PolyU”) jointly unveiled the PolyU – DIAGENS Joint Laboratory for Artificial..."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [AI, Healthcare, PolyU, DiagensTech, MedicalAI]
 categories: [AI]
 author: "Shoubhik Banerjee"

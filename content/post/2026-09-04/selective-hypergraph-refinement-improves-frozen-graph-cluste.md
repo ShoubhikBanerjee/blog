@@ -1,7 +1,7 @@
 ---
 title: "Selective Hypergraph Refinement Improves Frozen Graph Clustering"
 description: "Selective Hypergraph Refinement for Frozen Graph Clustering was submitted on 3 Sep 2026 to the Computer Science > Machine Learning category. The paper investigates post‑processing techniques that can..."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [graphclustering, hypergraph, machinelearning, arxiv]
 categories: [AI]
 author: "Shoubhik Banerjee"

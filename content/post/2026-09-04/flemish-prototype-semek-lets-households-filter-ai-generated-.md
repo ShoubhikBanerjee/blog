@@ -1,7 +1,7 @@
 ---
 title: "Flemish prototype Semek lets households filter AI-generated online content"
 description: "A new Flemish prototype called **Semek** has been installed between the internet and the home Wi‑Fi network, giving users direct control over which online content reaches their devices."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [AIprivacy, localAI, contentfiltering, FlemishTech]
 categories: [AI]
 image: "https://picturepackcdn-h33aaywmsq-ew.a.run.app/belgapicturepack:174426587:full?v=6a966dd6&m=agneooeg"

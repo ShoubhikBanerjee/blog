@@ -1,7 +1,7 @@
 ---
 title: "Core Scientific stock rises on AI infrastructure shift and market sentiment"
 description: "Core Scientific (ticker $CORZ) jumped 6.0% in trading today."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [CoreScientific, AIinfrastructure, stockmovement]
 categories: [AI]
 author: "Shoubhik Banerjee"

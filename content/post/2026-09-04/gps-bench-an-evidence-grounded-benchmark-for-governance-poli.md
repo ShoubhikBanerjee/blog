@@ -1,7 +1,7 @@
 ---
 title: "GPS-Bench: An Evidence-Grounded Benchmark for Governance Policy Simulation"
 description: "A new benchmark called **GPS‑Bench** has been introduced to evaluate large‑language‑model (LLM) based policy simulations using public evidence about policies, actors, and outcomes."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [AI, policySimulation, benchmarks, multiAgent, LLM]
 categories: [AI]
 author: "Shoubhik Banerjee"

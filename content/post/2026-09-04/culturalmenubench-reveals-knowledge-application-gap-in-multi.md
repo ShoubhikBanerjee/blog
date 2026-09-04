@@ -1,7 +1,7 @@
 ---
 title: "CulturalMenuBench Reveals Knowledge-Application Gap in Multimodal Culinary AI"
 description: "On 3 Sep 2026, researchers released **CulturalMenuBench**, a benchmark designed to test whether multimodal language models can move beyond visual matching to genuine cultural understanding of food."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [MultimodalAI, CulinaryBenchmark, CulturalAI, AIEvaluation]
 categories: [AI]
 author: "Shoubhik Banerjee"

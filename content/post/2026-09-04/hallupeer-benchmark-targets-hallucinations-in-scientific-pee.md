@@ -1,7 +1,7 @@
 ---
 title: "HalluPeer Benchmark Targets Hallucinations in Scientific Peer Reviews"
 description: "The growing scale of academic peer review has prompted the use of large language models (LLMs) as review assistants, but these models can produce fluent yet unsupported claims that threaten review..."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [AI, peerreview, hallucination, benchmark, LLM]
 categories: [AI]
 author: "Shoubhik Banerjee"

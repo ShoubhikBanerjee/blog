@@ -1,7 +1,7 @@
 ---
 title: "FreNet introduces visual prior‑driven feature reconfiguration for lesion segmentation"
 description: "A new framework called **FreNet** has been introduced to improve medical lesion segmentation by applying visual priors and feature reconfiguration at both pixel and feature levels."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [MedicalAI, LesionSegmentation, FreNet, DeepLearning, ComputerVision]
 categories: [AI]
 author: "Shoubhik Banerjee"

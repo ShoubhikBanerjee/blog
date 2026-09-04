@@ -1,7 +1,7 @@
 ---
 title: "Adaptive Spectral Bandwidth Improves Graph-Based SSL on CIFAR-100"
 description: "A paper submitted on 3 Sep 2026 presents a geometry‑aware graph construction method that uses adaptive spectral bandwidth control to improve semi‑supervised learning."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [MachineLearning, GraphLearning, AdaptiveBandwidth, SemiSupervisedLearning, CIFAR100]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "Synthetic Semantic Supervision Boosts Small Transformer Code Embeddings"
 description: "On 3 Sep 2026, a paper titled *Synthetic Semantic Supervision for Contrastive Code Representation Learning in Small Transformers: An Empirical Study* was submitted. The work introduces a new way to..."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [codeembeddings, contrastivelearning, syntheticsupervision, smalltransformers, AIresearch]
 categories: [AI]
 author: "Shoubhik Banerjee"

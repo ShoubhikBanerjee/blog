@@ -1,7 +1,7 @@
 ---
 title: "SimSkill Introduces Self-Evolving Agent Framework for Urban Traffic Simulation"
 description: "Researchers have introduced SimSkill, a self-evolving agent framework designed to function within the Simulation of Urban MObility (SUMO) traffic simulator."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [SimSkill, SUMO, AI, TrafficSimulation, AutonomousAgents]
 categories: [AI]
 author: "Shoubhik Banerjee"

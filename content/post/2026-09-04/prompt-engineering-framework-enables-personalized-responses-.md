@@ -1,7 +1,7 @@
 ---
 title: "Prompt-engineering framework enables personalized responses for AI teaching assistants"
 description: "A new study presents a prompt-engineering-based framework designed to personalize general-purpose LLM/RAG-based AI teaching assistants, such as Jill Watson, across various academic courses and..."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [AI, LLM, EdTech, PromptEngineering, RAG]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "Recent Developments in LLM KV Cache Compression and Efficiency"
 description: "New research introduces two distinct approaches to optimizing key-value (KV) cache memory usage in large language models to address bottlenecks in long-context inference and reasoning workloads."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [LLM, KVCache, AI, MachineLearning, Inference]
 categories: [AI]
 author: "Shoubhik Banerjee"

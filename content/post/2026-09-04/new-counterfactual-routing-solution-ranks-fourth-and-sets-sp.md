@@ -1,7 +1,7 @@
 ---
 title: "New Counterfactual Routing Solution Ranks Fourth and Sets Speed Record at IJCAI 2025"
 description: "A team submitted a solution to the IJCAI 2025 **Counterfactual Routing Competition** that focuses on generating counterfactual explanations for the shortest‑path problem."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [IJCAI, CounterfactualRouting, AIOptimization, IntegerProgramming]
 categories: [AI]
 author: "Shoubhik Banerjee"

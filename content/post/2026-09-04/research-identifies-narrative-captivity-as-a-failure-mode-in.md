@@ -1,7 +1,7 @@
 ---
 title: "Research Identifies Narrative Captivity as a Failure Mode in LLM Moral Advisory"
 description: "Researchers have identified a new phenomenon called narrative captivity, where large language models (LLMs) align with one-sided accounts in multi-turn interpersonal conflicts. This occurs when a..."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [AIResearch, LLM, NaturalLanguageProcessing, MoralAI]
 categories: [AI]
 author: "Shoubhik Banerjee"

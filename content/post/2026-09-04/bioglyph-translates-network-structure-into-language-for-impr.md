@@ -1,7 +1,7 @@
 ---
 title: "BioGlyph translates network structure into language for improved LLM reasoning"
 description: "A new method called **BioGlyph** converts graph topology into a language of structural roles, enabling large language models to answer questions about complex networks more accurately."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [MachineLearning, NetworkScience, LLMs, BioGlyph]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "Sequence-to-sequence models improve Tamil spell and grammar correction"
 description: "Tamil spell and grammar correction, a long‑standing challenge due to the language’s agglutinative structure and rich morphology, sees its first end‑to‑end results with fine‑tuned seq2seq models."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [TamilAI, GrammarCorrection, Seq2Seq, LowResourceNLP, mBART]
 categories: [AI]
 author: "Shoubhik Banerjee"

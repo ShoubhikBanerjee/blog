@@ -1,7 +1,7 @@
 ---
 title: "Kraft Heinz Shares Slide 3% amid Weak Fundamentals and Mixed Investor Activity"
 description: "Kraft Heinz (KHC) fell 3.1% today as investors remain cautious about the company’s recent performance. The pullback appears tied to ongoing concerns over weaker sales trends, profit pressure, and a..."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [KraftHeinz, Stocks, InvestorActivity, InsiderTrading]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "New Survey Highlights Gaps in AI‑Driven Data Center Energy Optimization"
 description: "Data centers are increasingly optimized by artificial intelligence and, at the same time, increasingly loaded by it. A newly submitted paper systematically surveys the literature, uncovers..."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [AI, DataCenters, EnergyOptimization, Sustainability]
 categories: [AI]
 author: "Shoubhik Banerjee"

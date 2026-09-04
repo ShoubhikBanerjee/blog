@@ -1,7 +1,7 @@
 ---
 title: "Deep RL Framework Adds Uncertainty‑Aware Risk and Anomaly Detection for Power Distribution Networks"
 description: "Reliable operation of modern distribution networks depends on timely identification of operational risks and anomalous events under pervasive uncertainty."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [reinforcementlearning, uncertaintyquantification, distributionnetworks, AI, riskanalysis]
 categories: [AI]
 author: "Shoubhik Banerjee"

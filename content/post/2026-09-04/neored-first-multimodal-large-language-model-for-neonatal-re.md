@@ -1,7 +1,7 @@
 ---
 title: "NeoRed: First Multimodal Large Language Model for Neonatal Respiratory Diagnosis"
 description: "A new multimodal large language model, **NeoRed**, has been introduced as the first system specifically designed to generate diagnostic reports for neonatal respiratory diseases."
-date: 2026-09-04T12:10:15+05:30
+date: 2026-09-04T18:05:55+05:30
 tags: [NeonatalAI, MLLM, MedicalImaging, HealthcareAI]
 categories: [AI]
 author: "Shoubhik Banerjee"
