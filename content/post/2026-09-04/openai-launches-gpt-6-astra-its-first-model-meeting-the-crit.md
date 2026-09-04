@@ -1,7 +1,7 @@
 ---
 title: "OpenAI launches GPT‑6 Astra, its first model meeting the critical cybersecurity threshold"
 description: "OpenAI announced today the rollout of GPT‑6 Astra, a new model that the company describes as a generational leap in capability and the first to meet its 'critical cybersecurity capability threshold.'"
-date: 2026-09-04T06:03:19+05:30
+date: 2026-09-04T12:10:15+05:30
 tags: [OpenAI, GPT6, AIAlignment, Cybersecurity, AGI]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKS522_AGI_C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
