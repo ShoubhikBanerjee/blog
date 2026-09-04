@@ -1,7 +1,7 @@
 ---
 title: "Ukraine Releases Millions of Drone Flight Data Points for AI Training"
 description: "Battlefields in Ukraine are littered with the remnants of drones, which are now firmly established as a critical weapon of modern warfare. The Ukrainian Ministry of Defense announced in January that..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [Ukraine, DroneData, AITraining, DefenseTech]
 categories: [AI]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/drone-data.jpg?resize=1200,600"

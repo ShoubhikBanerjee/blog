@@ -1,7 +1,7 @@
 ---
 title: "PlanFence Enables Dependency-Scoped Validation to Prevent Stale Plans in Distributed LLM-Agent Teams"
 description: "A new protocol called **PlanFence** was introduced to tackle the problem of *stale‑plan execution* in distributed teams of large‑language‑model (LLM) agents. The work, submitted on 3 Sep 2026, shows..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [AI, LLMAgents, PlanFence, DistributedAI, Safety]
 categories: [AI]
 author: "Shoubhik Banerjee"

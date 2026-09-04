@@ -1,7 +1,7 @@
 ---
 title: "New AI Method Predicts B2B Customer Conversion with 91% Accuracy"
 description: "A paper submitted on 3 Sep 2026 introduces a methodology for predicting whether a B2B customer will convert, achieving 91 % accuracy."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [MachineLearning, B2B, CatBoost, CustomerConversion]
 categories: [AI]
 author: "Shoubhik Banerjee"

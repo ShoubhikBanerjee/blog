@@ -1,7 +1,7 @@
 ---
 title: "Study Reveals Bias-Driven Leakage in Audio-Video Model Attention Triangle"
 description: "On 3 Sep 2026 a paper titled “The Attention Triangle in Audio‑Video Models” was submitted, investigating how cross‑modal attention routes semantics in audio‑video diffusion models."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [audiovisual, crossmodal, attention, AIresearch, semanticleakage]
 categories: [AI]
 author: "Shoubhik Banerjee"

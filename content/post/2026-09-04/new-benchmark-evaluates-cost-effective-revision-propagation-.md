@@ -1,7 +1,7 @@
 ---
 title: "New Benchmark Evaluates Cost‑Effective Revision Propagation for Conversational Artifacts"
 description: "Large Language Models (LLMs) are increasingly used to generate artifacts through iterative conversation, but revising a local change requires the model to identify dependencies and propagate updates..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [LLM, Revision, Benchmark, AIResearch]
 categories: [AI]
 author: "Shoubhik Banerjee"

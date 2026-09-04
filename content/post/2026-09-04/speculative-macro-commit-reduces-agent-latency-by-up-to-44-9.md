@@ -1,7 +1,7 @@
 ---
 title: "Speculative Macro Commit Reduces Agent Latency by Up to 44.9%"
 description: "A new runtime mechanism called Speculative Macro Commit (SMC) has been introduced for a two‑tier agent system, pairing a large authoritative actor with a faster speculative drafter."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [SpeculativeAI, AgentLatency, SMC]
 categories: [AI]
 author: "Shoubhik Banerjee"

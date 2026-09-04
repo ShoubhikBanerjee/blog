@@ -1,7 +1,7 @@
 ---
 title: "Necessary Tool‑Evidence Path Rewards improve agentic vision‑language models"
 description: "A new paper presents the NTEP annotation scheme and NTEP‑R reward to make tool use in agentic vision‑language models more purposeful and efficient."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [visionlanguage, agenticVLM, NTEP]
 categories: [AI]
 author: "Shoubhik Banerjee"

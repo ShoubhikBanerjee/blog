@@ -1,7 +1,7 @@
 ---
 title: "AutoGraphForge: Automated Graph Theory Conjecture–Proof Pipeline Launched"
 description: "An automated system called **AutoGraphForge** has been built to generate, refute, formalize, and prove graph‑theoretic conjectures."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [graphtheory, automatedreasoning, Lean4, AI]
 categories: [AI]
 author: "Shoubhik Banerjee"

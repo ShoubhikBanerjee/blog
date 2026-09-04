@@ -1,7 +1,7 @@
 ---
 title: "Dude: Dual-Detection Multi-Agent System for Paper-Code Discrepancy Detection"
 description: "LLM‑empowered paper‑code discrepancy detection has received growing concern because the scaling of research submissions exceeds the manual review capability. In this paper, the authors propose Dude,..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [papercode, AIagents, discrepancydetection, LLM, research]
 categories: [AI]
 author: "Shoubhik Banerjee"

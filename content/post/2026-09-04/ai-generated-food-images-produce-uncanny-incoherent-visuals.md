@@ -1,7 +1,7 @@
 ---
 title: "AI‑Generated Food Images Produce Uncanny, Incoherent Visuals"
 description: "'There is a torrent of unappetizing slop coming from restaurants, cafes, and brands that are increasingly turning to AI to generate images promoting their food.'"
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [AI, food, diffusionmodels, imagegeneration]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/268722_Why_does_AI_food_look_like_that_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

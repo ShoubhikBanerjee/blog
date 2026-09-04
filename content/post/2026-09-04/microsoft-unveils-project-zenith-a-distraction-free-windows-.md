@@ -1,7 +1,7 @@
 ---
 title: "Microsoft unveils Project Zenith: a distraction‑free Windows for developers"
 description: "Microsoft has named its developer‑optimized Windows experience **Project Zenith**, positioning it as a distraction‑free Windows environment built specifically for developers."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [Microsoft, Windows, AI, DeveloperTools, AMD]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/projectzenith.jpg?quality=90&strip=all&crop=0%2C10.435506901475%2C100%2C79.128986197049&w=1200"

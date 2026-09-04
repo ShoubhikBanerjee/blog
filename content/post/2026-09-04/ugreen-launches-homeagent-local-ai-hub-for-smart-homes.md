@@ -1,7 +1,7 @@
 ---
 title: "Ugreen launches HomeAgent: local AI hub for smart homes"
 description: "Ugreen, known for its phone power banks, chargers, and NAS storage solutions, is moving into the smart home — in a big way."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [Ugreen, SmartHome, LocalAI, Privacy]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/LR6B5640.jpeg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -1,7 +1,7 @@
 ---
 title: "OpenAI’s GPT‑6 Astra rollout stalls, paying users left waiting"
 description: "OpenAI launched GPT‑6 Astra, but the rollout left paying subscribers locked out."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [OpenAI, GPT6, AIrollout]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2285138968.jpg?quality=90&strip=all&crop=0%2C12.219817290162%2C100%2C75.560365419677&w=1200"

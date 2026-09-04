@@ -1,7 +1,7 @@
 ---
 title: "FOMC Holds Rates Amid Inflation Concerns and AI Growth"
 description: "The Federal Open Market Committee (FOMC) maintained the federal funds rate at 3.50%–3.75% during its July 28–29, 2026, meeting, marking the fifth consecutive meeting without a policy change. The..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [FOMC, FederalReserve, Inflation, AI, MonetaryPolicy, Economy]
 categories: [AI]
 image: "https://ic.com/blog/wp-content/uploads/2026/04/ASIA-2026.png"

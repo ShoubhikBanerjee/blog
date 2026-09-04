@@ -1,7 +1,7 @@
 ---
 title: "PPO‑STGNN: AI Scheduler for Cloud‑Edge‑End DAG Tasks"
 description: "A paper submitted on 3 Sep 2026 introduces **PPO‑STGNN**, a DAG task‑scheduling algorithm that combines proximal policy optimization (PPO) with spatio‑temporal graph neural networks (STGNNs) for..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [DAGScheduling, CloudEdgeComputing, GraphNeuralNetwork, ReinforcementLearning, AI]
 categories: [AI]
 author: "Shoubhik Banerjee"

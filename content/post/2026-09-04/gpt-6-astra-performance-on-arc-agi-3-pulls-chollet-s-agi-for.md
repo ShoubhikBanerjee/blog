@@ -1,7 +1,7 @@
 ---
 title: "GPT-6 Astra Performance on ARC-AGI-3 Pulls Chollet's AGI Forecast Forward"
 description: "GPT-6 Astra has demonstrated human-beating efficiency on ARC-AGI-3, pulling Chollet's AGI forecast forward. While benchmarks disagree on the model, its performance on this specific evaluation marks a..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [GPT6Astra, ARCAGI3, AGI]
 categories: [AI]
 author: "Shoubhik Banerjee"

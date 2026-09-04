@@ -1,7 +1,7 @@
 ---
 title: "Dalek: A Self‑Maintaining, Self‑Evolving Closed AI Machine"
 description: "Dalek is a newly introduced closed machine for agents that can self‑maintain, self‑evolve, self‑reproduce, and self‑organize on any substrate that satisfies a general host contract."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [AIagents, SelfReproduction, MachineLearning]
 categories: [AI]
 author: "Shoubhik Banerjee"

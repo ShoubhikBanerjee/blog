@@ -1,7 +1,7 @@
 ---
 title: "New Benchmark DSB-IFEval Evaluates Implicit Instruction Following in Full-Duplex Voice Agents"
 description: "Full-duplex voice assistants must constantly decide when to listen, back‑channel, interrupt, handle overlaps, take the floor, and yield. Existing benchmarks rely on explicit turn‑management..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [voiceagents, benchmark, fullduplex, turntaking, LLM]
 categories: [AI]
 author: "Shoubhik Banerjee"

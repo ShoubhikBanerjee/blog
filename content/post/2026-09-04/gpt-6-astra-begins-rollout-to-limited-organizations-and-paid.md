@@ -1,7 +1,7 @@
 ---
 title: "GPT-6 Astra Begins Rollout to Limited Organizations and Paid ChatGPT Users"
 description: "GPT-6 Astra is now being deployed, starting with a select group of organizations and expanding to all paid ChatGPT tiers in the next few days."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [OpenAI, GPT6, AIModels, ChatGPT]
 categories: [AI]
 image: "https://chats-llm.com/og-image.png"

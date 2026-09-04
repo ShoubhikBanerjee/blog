@@ -1,7 +1,7 @@
 ---
 title: "Compass Pathways Issues New Employee Inducement Grants Under Nasdaq Rule 5635(c)(4)"
 description: "Compass Pathways plc announced that it granted equity awards to thirty‑one newly hired non‑executive employees as a material inducement under Nasdaq Listing Rule 5635(c)(4).  The awards were granted..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [CompassPathways, Biotech, EmployeeGrants, Nasdaq]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "2026 PNPL Competition Expands LibriBrain Dataset for Cross-Subject Speech Decoding"
 description: "The 2026 PNPL competition introduced the LibriBrain100 dataset and two new tracks aimed at advancing non‑invasive speech decoding toward a practical brain‑computer interface (BCI)."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [PNPL, BCI, MEG, SpeechDecoding]
 categories: [AI]
 author: "Shoubhik Banerjee"

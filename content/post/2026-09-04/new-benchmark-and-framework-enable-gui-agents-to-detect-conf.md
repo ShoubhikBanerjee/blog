@@ -1,7 +1,7 @@
 ---
 title: "New Benchmark and Framework Enable GUI Agents to Detect Conflict and Stop Acting"
 description: "Researchers released a new benchmark and an inference‑time framework to help graphical user interface (GUI) agents recognize when they should refrain from executing a user request."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [AI, GUIAgents, ConflictAwareness, MachineLearning]
 categories: [AI]
 author: "Shoubhik Banerjee"

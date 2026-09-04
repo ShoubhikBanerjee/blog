@@ -1,7 +1,7 @@
 ---
 title: "New InertiaKV Methods Boost Decoding-Time KV Cache Efficiency"
 description: "A paper submitted on 3 Sep 2026 to the Computer Science > Artificial Intelligence category introduces aggressive KV‑cache eviction techniques that rely on temporal aggregation rather than solely on..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [AI, KVCache, Decoding, TemporalAggregation]
 categories: [AI]
 author: "Shoubhik Banerjee"

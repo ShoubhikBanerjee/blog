@@ -1,7 +1,7 @@
 ---
 title: "Urgent Search Launched for Power Platform Administrator in Manchester IT Hub"
 description: "A blue-chip client has launched an urgent recruitment drive for a Power Platform Administrator to support its operations in Manchester or Inverness. Managed through a preferred supplier, this..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [PowerPlatform, PowerBI, ManchesterTech, ITJobs, TechCareers]
 categories: [AI]
 author: "Shoubhik Banerjee"

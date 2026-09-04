@@ -1,7 +1,7 @@
 ---
 title: "Solidcore Resources Upgraded to B Rating and Retains Prime ESG Status"
 description: "Solidcore Resources plc announced that its ISS STOXX ESG Corporate Rating has been upgraded from **B‑** to **B**, while the company continues to hold “Prime” status, positioning it among the industry..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [ESG, Sustainability, Mining, ISSSTOXX, CorporateRating]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "SpaceXAI releases Grok Build: a terminal-based AI coding agent"
 description: "SpaceXAI has open‑sourced Grok Build, its terminal‑based AI coding agent."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [SpaceXAI, AIcoding, Rust, TerminalAI]
 categories: [AI]
 image: "https://avatars.githubusercontent.com/u/130314967?v=4"

@@ -1,7 +1,7 @@
 ---
 title: "New Survey Defines Proactive Service Framework for Large Language Model Agents"
 description: "A new survey introduces an operational definition of proactive service for large language model (LLM) agents, framing it as a partially observable sequential decision process and outlining a..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [LLM, ProactiveAgents, AIResearch]
 categories: [AI]
 author: "Shoubhik Banerjee"

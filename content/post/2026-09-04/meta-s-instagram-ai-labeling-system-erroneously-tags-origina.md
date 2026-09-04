@@ -1,7 +1,7 @@
 ---
 title: "Meta's Instagram AI Labeling System Erroneously Tags Original and Minorly Edited Photos"
 description: "Instagram's system for labeling synthetically generated content has recently gone haywire. Over the last few weeks, users have reported that Meta is automatically applying an 'AI Content' label to..."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [Instagram, Meta, AILabeling, GenerativeAI]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/268439_ai_art_label_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

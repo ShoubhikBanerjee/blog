@@ -1,7 +1,7 @@
 ---
 title: "Provenance Density Interface Boosts Human Discrimination Between Truth and Fabrication"
 description: "Researchers introduced Provenance Density, an evidence‑visualization interface that displays how densely verified claims appear within a text."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [ProvenanceDensity, AIExplainability, FactChecking]
 categories: [AI]
 author: "Shoubhik Banerjee"

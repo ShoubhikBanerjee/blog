@@ -1,7 +1,7 @@
 ---
 title: "Prompt Engineering Variability Limits LLM Accuracy in Drug Toxicity Prediction"
 description: "In a newly submitted computer‑science paper (3 Sep 2026), researchers analyse how prompt phrasing affects large language model (LLM) performance for predicting drug toxicity."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [AI, DrugDiscovery, PromptEngineering, ToxicityPrediction]
 categories: [AI]
 author: "Shoubhik Banerjee"

@@ -1,7 +1,7 @@
 ---
 title: "FlowBalance Method Introduces Verifier-Grounded Self-Improvement for Reasoning Models"
 description: "On September 3, 2026, researchers introduced FlowBalance, a self-improvement method for reasoning models designed to address the fragility inherent in on-policy experience loops."
-date: 2026-09-04T18:05:55+05:30
+date: 2026-09-04T22:05:53+05:30
 tags: [MachineLearning, ComputerScience, FlowBalance, ReasoningModels]
 categories: [AI]
 author: "Shoubhik Banerjee"
