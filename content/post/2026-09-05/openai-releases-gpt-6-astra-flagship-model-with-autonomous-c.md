@@ -1,7 +1,7 @@
 ---
 title: "OpenAI releases GPT-6 Astra flagship model with autonomous cybersecurity capabilities"
 description: "OpenAI has officially launched its GPT-6 Astra flagship model, an AI system capable of independently identifying high-severity cybersecurity vulnerabilities and executing complex, multistep computer..."
-date: 2026-09-05T18:01:46+05:30
+date: 2026-09-05T22:02:16+05:30
 tags: [OpenAI, GPT6, Astra, Cybersecurity, ArtificialIntelligence]
 categories: [AI]
 image: "https://img.piri.net/piri/upload/3/2026/9/4/764a552a-openai-says-gpt-6-astra-can-detect-high-severity-security.webp"

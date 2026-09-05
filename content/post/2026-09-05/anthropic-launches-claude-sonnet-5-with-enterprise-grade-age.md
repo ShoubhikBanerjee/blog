@@ -1,7 +1,7 @@
 ---
 title: "Anthropic launches Claude Sonnet 5 with enterprise‑grade agentic performance"
 description: "Anthropic officially launched Claude Sonnet 5, a specialized agentic model designed for long‑running software‑engineering tasks, terminal operations, and complex browser navigation. The release comes..."
-date: 2026-09-05T18:01:46+05:30
+date: 2026-09-05T22:02:16+05:30
 tags: [Anthropic, ClaudeSonnet5, AIagents, EnterpriseAI]
 categories: [AI]
 image: "https://substackcdn.com/image/fetch/$s_!SWJ2!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F89034d69-8501-46b0-9cfb-27e12ecd41b7_1536x1024.png"

@@ -1,7 +1,7 @@
 ---
 title: "OpenAI Announces Overhaul of AI Agent Incident Reporting Standards"
 description: "OpenAI has announced plans to overhaul its reporting framework for AI agent misalignment incidents following public concern regarding the company's handling of unintended model behaviors, including..."
-date: 2026-09-05T18:01:46+05:30
+date: 2026-09-05T22:02:16+05:30
 tags: [OpenAI, AIagents, AISafety, TechPolicy]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKS533_AI_AGENTS_HACKING_D_54a015.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

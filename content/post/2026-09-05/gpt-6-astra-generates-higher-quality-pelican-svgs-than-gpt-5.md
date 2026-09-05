@@ -1,7 +1,7 @@
 ---
 title: "GPT-6 Astra Generates Higher‑Quality Pelican SVGs Than GPT‑5.6 Models"
 description: "I received access to GPT‑6 Astra and used it to generate SVG images of pelicans riding bicycles at several reasoning levels, then compared the results side‑by‑side with GPT‑5.6 models (Sol, Terra,..."
-date: 2026-09-05T18:01:46+05:30
+date: 2026-09-05T22:02:16+05:30
 tags: [GPT6, Astra, AIComparison, CostEfficiency, SVG]
 categories: [AI]
 image: "https://static.simonwillison.net/static/2026/astra-grid-card.jpg"

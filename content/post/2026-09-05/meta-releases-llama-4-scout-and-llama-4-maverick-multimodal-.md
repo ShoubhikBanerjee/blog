@@ -1,7 +1,7 @@
 ---
 title: "Meta Releases Llama 4 Scout and Llama 4 Maverick Multimodal Models"
 description: "Meta Platforms has released the latest versions of its large language model (LLM), introducing two new models: Llama 4 Scout and Llama 4 Maverick."
-date: 2026-09-05T18:01:46+05:30
+date: 2026-09-05T22:02:16+05:30
 tags: [Meta, Llama4, AI, LLM, Multimodal]
 categories: [AI]
 image: "http://24x7liveindia.com/public/uploads/images/2023/02/1676645585.png"

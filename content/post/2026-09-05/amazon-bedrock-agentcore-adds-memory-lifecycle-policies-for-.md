@@ -1,7 +1,7 @@
 ---
 title: "Amazon Bedrock AgentCore Adds Memory Lifecycle Policies for Long‑Running Agents"
 description: "Memory lifecycle policies help long‑running agents on Amazon Bedrock AgentCore stay effective by systematically managing what they remember and forget."
-date: 2026-09-05T18:01:46+05:30
+date: 2026-09-05T22:02:16+05:30
 tags: [AmazonBedrock, AgentCore, AImemory, AWS, LLMops]
 categories: [AI]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-featured-image.png"

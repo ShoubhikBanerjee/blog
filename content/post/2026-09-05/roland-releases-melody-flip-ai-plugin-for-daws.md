@@ -1,7 +1,7 @@
 ---
 title: "Roland Releases Melody Flip AI Plugin for DAWs"
 description: "Roland has entered the generative AI music space with Melody Flip, a DAW plug‑in that creates short musical loops to spark creativity."
-date: 2026-09-05T18:01:46+05:30
+date: 2026-09-05T22:02:16+05:30
 tags: [Roland, AImusic, MelodyFlip]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Melody_Flip_Palettes-Fav.png?quality=90&strip=all&crop=0%2C10.595205290714%2C100%2C78.809589418573&w=1200"
