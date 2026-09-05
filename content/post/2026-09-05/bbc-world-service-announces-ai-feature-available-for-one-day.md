@@ -1,7 +1,7 @@
 ---
 title: "BBC World Service Announces AI Feature Available for One Day"
 description: "On 5 September 2026, the BBC World Service’s latest five‑minute news bulletin announced an AI‑related feature that will be available for a single day. Additional episodes are listed on the programme..."
-date: 2026-09-05T12:02:47+05:30
+date: 2026-09-05T18:01:46+05:30
 tags: [BBC, AI, NewsBulletin, Release]
 categories: [AI]
 image: "https://ichef.bbci.co.uk/images/ic/1024x576/p060dh18.jpg"

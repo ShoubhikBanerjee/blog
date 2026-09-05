@@ -1,7 +1,7 @@
 ---
 title: "Enterprises Rethink Infrastructure for AI Inference Era"
 description: "The era of AI inference has arrived, and enterprises are now required to redesign their infrastructure to meet the speed, efficiency, scalability and performance‑per‑watt demands of continuous,..."
-date: 2026-09-05T12:02:47+05:30
+date: 2026-09-05T18:01:46+05:30
 tags: [AIInference, EnterpriseInfrastructure, DataMovement, Latency, MemoryBandwidth]
 categories: [AI]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/07/iStock-2239372581.jpg?resize=1200,600"

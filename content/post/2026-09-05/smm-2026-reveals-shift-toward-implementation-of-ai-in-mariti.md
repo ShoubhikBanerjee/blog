@@ -1,7 +1,7 @@
 ---
 title: "SMM 2026 Reveals Shift Toward Implementation of AI in Maritime Operations"
 description: "At the SMM 2026 maritime trade event, industry focus regarding artificial intelligence has moved from theoretical potential toward practical, ready-to-use implementations for ship operations."
-date: 2026-09-05T12:02:47+05:30
+date: 2026-09-05T18:01:46+05:30
 tags: [MaritimeTech, ArtificialIntelligence, SMM2026, Digitalization, MaritimeSafety]
 categories: [AI]
 author: "Shoubhik Banerjee"

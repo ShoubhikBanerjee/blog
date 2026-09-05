@@ -1,7 +1,7 @@
 ---
 title: "ISRO launches GSLV-F17, puts EOS-05 imaging satellite into geosynchronous orbit"
 description: "The Indian Space Research Organization (ISRO) successfully launched the GSLV‑F17 rocket early Friday, placing the EOS‑05 Earth‑imaging satellite into geosynchronous orbit."
-date: 2026-09-05T12:02:47+05:30
+date: 2026-09-05T18:01:46+05:30
 tags: [ISRO, GSLV, EarthObservation, SpaceLaunch]
 categories: [AI]
 image: "https://img.piri.net/piri/upload/3/2026/9/4/28b4f95a-india-places-earth-imaging-satellite-in-geosynchronous-orbit.webp"

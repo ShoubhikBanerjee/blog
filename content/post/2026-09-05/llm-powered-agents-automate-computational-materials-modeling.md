@@ -1,7 +1,7 @@
 ---
 title: "LLM‑Powered Agents Automate Computational Materials Modeling"
 description: "Computational materials modeling connects physical theory, atomistic mechanisms, and materials design, but its value depends on workflows that are specified, executed, checked, and interpreted with..."
-date: 2026-09-05T12:02:47+05:30
+date: 2026-09-05T18:01:46+05:30
 tags: [AIagents, MaterialsModeling, LLM]
 categories: [AI]
 author: "Shoubhik Banerjee"

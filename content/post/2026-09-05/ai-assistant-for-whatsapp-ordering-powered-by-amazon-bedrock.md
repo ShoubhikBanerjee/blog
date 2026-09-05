@@ -1,7 +1,7 @@
 ---
 title: "AI Assistant for WhatsApp Ordering Powered by Amazon Bedrock AgentCore and Nova Models"
 description: "A new end-to-end AI ordering assistant has been developed for WhatsApp, utilizing Amazon Bedrock AgentCore and Amazon Nova models to manage customer interactions. The system allows users to place..."
-date: 2026-09-05T12:02:47+05:30
+date: 2026-09-05T18:01:46+05:30
 tags: [AWS, AmazonBedrock, WhatsApp, AIagents, AmazonNova]
 categories: [AI]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-featured-image.png"
