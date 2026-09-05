@@ -1,0 +1,373 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="A comprehensive overview of MTEB v2, the enhanced Massive Text Embedding Benchmark that introduces multimodal support, better caching, unified protocols, and streamlined evaluation for embedding and retrieval systems."><title>🚀 Introducing MTEB v2: Evaluation of Embedding and Retrieval Systems for More Than Just Text</title><link rel=canonical href=https://shoubhikbanerjee.github.io/blog/p/introducing-mteb-v2-evaluation-of-embedding-and-retrieval-systems-for-more-than-just-text/><link rel=stylesheet href=/blog/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="🚀 Introducing MTEB v2: Evaluation of Embedding and Retrieval Systems for More Than Just Text"><meta property='og:description' content="A comprehensive overview of MTEB v2, the enhanced Massive Text Embedding Benchmark that introduces multimodal support, better caching, unified protocols, and streamlined evaluation for embedding and retrieval systems."><meta property='og:url' content='https://shoubhikbanerjee.github.io/blog/p/introducing-mteb-v2-evaluation-of-embedding-and-retrieval-systems-for-more-than-just-text/'><meta property='og:site_name' content='Tech Insights: AI & Cloud'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='MTEB'><meta property='article:tag' content='Embeddings'><meta property='article:tag' content='Multimodal'><meta property='article:tag' content='Retrieval'><meta property='article:tag' content='Benchmark'><meta property='article:tag' content='HuggingFace'><meta property='article:tag' content='Machine Learning'><meta property='article:tag' content='NLP'><meta property='article:tag' content='Evaluation'><meta property='article:tag' content='CrossEncoders'><meta property='article:published_time' content='2025-10-28T00:58:59+05:30'><meta property='article:modified_time' content='2025-10-28T00:58:59+05:30'><meta property='og:image' content='https://shoubhikbanerjee.github.io/blog/NA'><meta name=twitter:title content="🚀 Introducing MTEB v2: Evaluation of Embedding and Retrieval Systems for More Than Just Text"><meta name=twitter:description content="A comprehensive overview of MTEB v2, the enhanced Massive Text Embedding Benchmark that introduces multimodal support, better caching, unified protocols, and streamlined evaluation for embedding and retrieval systems."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://shoubhikbanerjee.github.io/blog/NA'><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/blog/><img src=/blog/img/avatar_hu_821b54dcdbdebe26.png width=300 height=293 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🚀</span></figure><div class=site-meta><h1 class=site-name><a href=/blog>Tech Insights: AI & Cloud</a></h1><h2 class=site-description>Insights That Matter for AI, Cloud, and the Next Big Thing.</h2></div></header><ol class=menu-social><li><a href=https://github.com/ShoubhikBanerjee target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.linkedin.com/in/shoubhik-banerjee target=_blank title=LinkedIn rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-linkedin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 10-4 0"/><path d="M3 7a4 4 0 014-4h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4z"/></svg></a></li><li><a href=https://shoubhikbanerjee.com/ target=_blank title=Web rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-world"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1018 0A9 9 0 003 12"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 000 18"/><path d="M12.5 3a17 17 0 010 18"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/blog/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/blog/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/blog/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/blog/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#-what-is-mteb>🤔 What is MTEB?</a></li><li><a href=#-what-are-the-reasons-for-the-changes>🔄 What are the reasons for the changes?</a></li><li><a href=#-so-what-has-changed>✨ So what has changed?</a><ol><li><a href=#key-new-features>Key New Features:</a></li></ol></li><li><a href=#-easier-evaluation>⚡ Easier evaluation</a></li><li><a href=#-better-local-and-online-cachin>🗄️ Better local and online cachin</a></li><li><a href=#-multimodal-input-forma>🖼️ Multimodal Input forma</a><ol><li><a href=#examples-of-different-input-types>Examples of different input types:</a></li></ol></li><li><a href=#-better-support-for-crossencoders>🔀 Better support for CrossEncoders</a></li><li><a href=#-unified-retrieval-reranking-and-instruction-variants>🔗 Unified Retrieval, Reranking and instruction variants</a></li><li><a href=#-search-interface>🔍 Search Interface</a></li><li><a href=#-new-documentation>📚 New Documentation</a></li><li><a href=#-better-support-for-loading-and-comparing-results>📊 Better support for loading and comparing results</a></li><li><a href=#-descriptive-statistics>📈 Descriptive Statistics</a></li><li><a href=#-saving-predictions>💾 Saving Predictions</a></li><li><a href=#-support-datasets-v4>📦 Support datasets v4</a></li><li><a href=#-upgrading-from-v1>🔄 Upgrading from v1</a><ol><li><a href=#replacing-mtebmteb>Replacing <code>mteb.MTEB</code></a></li><li><a href=#replacing-mtebload_results>Replacing <code>mteb.load_results()</code></a></li><li><a href=#converting-model-to-new-format>Converting model to new format</a></li><li><a href=#reuploading-datasets>Reuploading datasets</a></li><li><a href=#converting-reranking-datasets-to-new-format>Converting Reranking datasets to new format</a></li></ol></li><li><a href=#-credits>🙌 Credits</a></li><li><a href=#-conclusion>🏁 Conclusion</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/blog/p/introducing-mteb-v2-evaluation-of-embedding-and-retrieval-systems-for-more-than-just-text/><img src=/blog/NA loading=lazy alt="Featured image of post 🚀 Introducing MTEB v2: Evaluation of Embedding and Retrieval Systems for More Than Just Text"></a></div><div class=article-details><header class=article-category><a href=/blog/categories/machine-learning/>Machine Learning
+</a><a href=/blog/categories/natural-language-processing/>Natural Language Processing
+</a><a href=/blog/categories/ai-research/>AI Research</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/blog/p/introducing-mteb-v2-evaluation-of-embedding-and-retrieval-systems-for-more-than-just-text/>🚀 Introducing MTEB v2: Evaluation of Embedding and Retrieval Systems for More Than Just Text</a></h2><h3 class=article-subtitle>A comprehensive overview of MTEB v2, the enhanced Massive Text Embedding Benchmark that introduces multimodal support, better caching, unified protocols, and streamlined evaluation for embedding and retrieval systems.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Oct 28, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>11 minute read</time></div></footer></div></header><section class=article-content><h1 id=-introducing-mteb-v2-evaluation-of-embedding-and-retrieval-systems-for-more-than-just-text>🚀 Introducing MTEB v2: Evaluation of Embedding and Retrieval Systems for More Than Just Text</h1><p>We are very happy to announce the release of <strong>MTEB v2</strong>. This release has something for
+everyone, including a more consistent interface, better typing, new documentation, and better
+support for multimodal models and non-embedding based retrieval systems. This blog post will
+introduce you to some of the new features, but before diving into the new features, let&rsquo;s start
+with an introduction to MTEB and why we started working on v2.</p><h2 id=-what-is-mteb>🤔 What is MTEB?</h2><p>The Massive Text Embedding Benchmark (MTEB) was initially launched by Muennighoff et al (2022)
+as a benchmark that broadens the scope of existing retrieval benchmarks to cover a broad range
+of embedding tasks including classification, clustering, reranking and retrieval. It has since
+then seen multiple contributions, such as the open-science collaboration MMTEB (Enevoldsen et
+al., 2024) adding a broad range of language support, the image extension, MIEB (Xiao et al.,
+2025), and a plethora of other monolingual and domain-specific extensions. We extend our sincere
+thanks to all those who have contributed!</p><h2 id=-what-are-the-reasons-for-the-changes>🔄 What are the reasons for the changes?</h2><p>While all of these contributions to the package naturally had a huge positive impact on the
+scope of <code>mteb</code>, they also led to a bloating of the package, making it both hard to maintain and
+expand. In addition, the development in the field called for broader support for evaluation of
+retrieval systems across multiple modalities. Supporting these changes in the long-term without
+continuously breaking backward compatibility required us to do a large-scale refactor of MTEB,
+to put it in a state where we could introduce new changes without introducing breaking changes.
+Our design philosophy for long-term usability and reproducibility of embedding benchmarks is
+further detailed in Chung et al., 2025.</p><h2 id=-so-what-has-changed>✨ So what has changed?</h2><p>This section gives an overview of the new features added in v2. Below we give an overview of
+changes following by detailed examples. If you are hungering for more information, do check out
+the <a class=link href=https://mteb.github.io/mteb/ target=_blank rel=noopener>documentation</a>.</p><h3 id=key-new-features>Key New Features:</h3><ul><li>⚡ Easier evaluation using <code>mteb.evaluate</code></li><li>🗄️ Easier caching and results loading using the `ResultCache</li><li>🖼️ Support for multimodal evaluatio</li><li>🔀 Better support for CrossEncoders</li><li>🔗 Unified Retrieval, Reranking and instruction variants</li><li>🔍 Search Interface</li><li>📚 New documentation</li><li>📊 Descriptive statistics for all tasks</li><li>🔧 Better support for error analysis, allowing you to save predictions</li><li>📦 Support datasets v4</li><li>🏗️ Standardization of file names and typing across the library (PEP8 compatible</li><li>📝 Consistent logging and progress bars</li></ul><h2 id=-easier-evaluation>⚡ Easier evaluation</h2><p>Evaluations are now a lot easier using <code>mteb.evaluate</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>model</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>get_model</span><span class=p>(</span><span class=s2>&#34;model_name&#34;</span><span class=p>)</span>  <span class=c1># load reference implementation if it exists</span>
+</span></span><span class=line><span class=cl><span class=n>tasks</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>get_tasks</span><span class=p>(</span><span class=n>tasks</span> <span class=o>=</span> <span class=p>[</span><span class=s2>&#34;taskname1&#34;</span><span class=p>,</span> <span class=s2>&#34;taskname2&#34;</span><span class=p>])</span> <span class=n>results</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>evaluate</span><span class=p>(</span><span class=n>model</span><span class=p>,</span> <span class=n>tasks</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=-better-local-and-online-cachin>🗄️ Better local and online cachin</h2><p>The new <code>mteb.ResultCache</code> makes managing the cache notably easier:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>mteb.cache</span> <span class=kn>import</span> <span class=n>ResultCache</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>model</span> <span class=o>=</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=n>tasks</span> <span class=o>=</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=n>cache</span> <span class=o>=</span> <span class=n>ResultCache</span><span class=p>(</span><span class=n>cache_path</span><span class=o>=</span><span class=s2>&#34;~/.cache/mteb&#34;</span><span class=p>)</span>  <span class=c1># default</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># simple evaluate with cache</span>
+</span></span><span class=line><span class=cl><span class=n>results</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>evaluate</span><span class=p>(</span><span class=n>model</span><span class=p>,</span> <span class=n>tasks</span><span class=p>,</span> <span class=n>cache</span><span class=o>=</span><span class=n>cache</span><span class=p>)</span>  <span class=c1># only runs if results not in cache</span>
+</span></span></code></pre></td></tr></table></div></div><p>It allows you to access the online cache so you don&rsquo;t have to rerun existing models:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># no need to rerun already public results</span>
+</span></span><span class=line><span class=cl><span class=n>cache</span><span class=o>.</span><span class=n>download_from_remote</span><span class=p>()</span>  <span class=c1># download the latest results from the remote repository</span>
+</span></span><span class=line><span class=cl><span class=n>results</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>evaluate</span><span class=p>(</span><span class=n>model</span><span class=p>,</span> <span class=n>tasks</span><span class=p>,</span> <span class=n>cache</span><span class=o>=</span><span class=n>cache</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=-multimodal-input-forma>🖼️ Multimodal Input forma</h2><p>Models in mteb who implements the <code>Encoder</code> protocol now supports multimodal input. With the
+model protocol roughly looking like so:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>class</span> <span class=nc>EncoderProtocol</span><span class=p>(</span><span class=n>Protocol</span><span class=p>):</span>  <span class=c1># simplified &#34;&#34;&#34;The interface for an encoder in MTEB.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>encode</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>inputs</span><span class=p>:</span> <span class=n>DataLoader</span><span class=p>[</span><span class=n>BatchedInput</span><span class=p>],</span> <span class=o>...</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Array</span><span class=p>:</span> <span class=o>...</span>
+</span></span></code></pre></td></tr></table></div></div><p>Not only does this allow more efficient loading using the torch dataloader, but it also allows
+keys for multiple modalities:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>batch_input</span><span class=p>:</span> <span class=n>BatchedInput</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;text&#34;</span><span class=p>:</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>],</span> <span class=s2>&#34;images&#34;</span><span class=p>:</span> <span class=nb>list</span><span class=p>[</span><span class=n>PIL</span><span class=o>.</span><span class=n>Image</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;audio&#34;</span><span class=p>:</span> <span class=nb>list</span><span class=p>[</span><span class=nb>list</span><span class=p>[</span><span class=n>audio</span><span class=p>]],</span>  <span class=c1># upcoming # + optional fields such as document title</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Where <code>text</code> is a batch of texts and <code>list[images]</code> is a batch for that texts. This e.g. allows
+markdown documents with multiple figures like so:</p><blockquote><p>As you see in the following figure [figure 1] there is a correlation between A and B.</p></blockquote><h3 id=examples-of-different-input-types>Examples of different input types:</h3><ol><li><p><strong><code>TextInput</code></strong> For pure text inputs:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=p>{</span><span class=s2>&#34;text&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;This is a sample text.&#34;</span><span class=p>,</span> <span class=s2>&#34;Another text.&#34;</span><span class=p>]}</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong><code>CorpusInput</code></strong> For corpus-style inputs with titles and bodies:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=p>{</span><span class=s2>&#34;text&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;Title 1 Body 1&#34;</span><span class=p>,</span> <span class=s2>&#34;Title 2 Body 2&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl> <span class=s2>&#34;title&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;Title 1&#34;</span><span class=p>,</span> <span class=s2>&#34;Title 2&#34;</span><span class=p>],</span> <span class=s2>&#34;body&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;Body 1&#34;</span><span class=p>,</span> <span class=s2>&#34;Body 2&#34;</span><span class=p>]}</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong><code>QueryInput</code></strong> For query–instruction pairs:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;text&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;Instruction: Your task is to find document for this query. Query: What is AI?&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>             <span class=s2>&#34;Instruction: Your task is to find term for definition. Query: Define machine learning.&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;query&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;What is AI?&#34;</span><span class=p>,</span> <span class=s2>&#34;Define machine learning.&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;instruction&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;Your task is find document for this query.&#34;</span><span class=p>,</span> <span class=s2>&#34;Your task is to find term for definition.&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong><code>ImageInput</code></strong> For visual inputs consisting of images:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=p>{</span><span class=s2>&#34;image&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>PIL</span><span class=o>.</span><span class=n>Image1</span><span class=p>,</span> <span class=n>PIL</span><span class=o>.</span><span class=n>Image2</span><span class=p>]}</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong><code>MultimodalInput</code></strong> For combined text–image (multimodal) inputs:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=p>{</span><span class=s2>&#34;text&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;This is a sample text.&#34;</span><span class=p>],</span> <span class=s2>&#34;image&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>PIL</span><span class=o>.</span><span class=n>Image1</span><span class=p>]}</span>
+</span></span></code></pre></td></tr></table></div></div></li></ol><p>However, this also allows no text, multi-image inputs (e.g. for PDFs). Overall this greatly
+expands the possible tasks that can now be evaluated in MTEB.</p><h2 id=-better-support-for-crossencoders>🔀 Better support for CrossEncoders</h2><p>Also, we&rsquo;ve introduced a new <code>CrossEncoderProtocol</code> for cross-encoders and now all
+cross-encoders have better support for evaluation:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>class</span> <span class=nc>CrossEncoderProtocol</span><span class=p>(</span><span class=n>Protocol</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>predict</span><span class=p>(</span> <span class=bp>self</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>inputs1</span><span class=p>:</span> <span class=n>DataLoader</span><span class=p>[</span><span class=n>BatchedInput</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=n>inputs2</span><span class=p>:</span> <span class=n>DataLoader</span><span class=p>[</span><span class=n>BatchedInput</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=o>...</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Array</span><span class=p>:</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=-unified-retrieval-reranking-and-instruction-variants>🔗 Unified Retrieval, Reranking and instruction variants</h2><p>The retrieval tasks in MTEB now supports both retrieval and reranking using the same base task.
+The main difference now that Reranking tasks should have <code>top_ranked</code> subset to be evaluated on.
+New structure of retrieval tasks:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>dataset</span><span class=p>[</span><span class=n>subset</span><span class=p>][</span><span class=n>split</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span> <span class=s2>&#34;corpus&#34;</span><span class=p>:</span> <span class=o>...</span><span class=p>,</span>  <span class=c1># dataset</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;queries&#34;</span><span class=p>:</span> <span class=o>...</span><span class=p>,</span>  <span class=c1># dataset &#34;relevant_docs&#34;: ...,  # dict[query id][corpus id] = score</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;top_ranked&#34;</span><span class=p>:</span> <span class=o>...</span><span class=p>,</span>  <span class=c1># dict[query id] = list[corpus id] }</span>
+</span></span></code></pre></td></tr></table></div></div><p>On HuggingFace this dataset should these subsets:</p><ol><li><p><strong>Corpus</strong> - the corpus to retrieve from. Monolingual name: <code>corpus</code>, multilingual name:
+<code>{subset}-corpus</code></p><ul><li>Can contain columns: <code>id</code>, <code>text</code>, <code>title</code> for text corpus</li><li>Or <code>id</code>, <code>image</code>, (<code>text</code> optionally) for image or multimodal corpus</li></ul></li><li><p><strong>Queries</strong> - the queries to retrieve with. Monolingual name: <code>queries</code>, multilingual name:
+<code>{subset}-queries</code></p><ul><li><code>id</code>, <code>text</code> for text queries - <code>id</code>, <code>text</code>, <code>instructions</code> for instruction retrieval/reranking tasks</li><li><code>id</code>, <code>image</code>, (<code>text</code> optionally) for image or multimodal queries</li></ul></li><li><p><strong>Qrels</strong> - the relevance judgements. Monolingual name: <code>qrels</code>, multilingual name:
+<code>{subset}-qrels</code></p><ul><li><code>query-id</code>, <code>corpus-id</code>, <code>score</code> (int or float) for relevance judgements</li></ul></li><li><p><strong>Top Ranked</strong> - the top ranked documents to rerank. Only for reranking tasks</p><ul><li>Monolingual name: <code>top_ranked</code>, multilingual name: <code>{subset}-top_ranked</code></li><li><code>query-id</code>, <code>corpus-ids</code> (<code>list[str]</code>) - the top ranked documents for each query</li></ul></li></ol><h2 id=-search-interface>🔍 Search Interface</h2><p>To make it easier to use MTEB for search, we have added a simple search interface using the new
+<code>SearchProtocol</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>class</span> <span class=nc>SearchProtocol</span><span class=p>(</span><span class=n>Protocol</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Interface for searching models.&#34;&#34;&#34;</span> <span class=k>def</span> <span class=nf>index</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=p>,</span> <span class=n>corpus</span><span class=p>:</span> <span class=n>CorpusDatasetType</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=p>,</span> <span class=n>task_metadata</span><span class=p>:</span> <span class=n>TaskMetadata</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>hf_split</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>hf_subset</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>encode_kwargs</span><span class=p>:</span> <span class=nb>dict</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=n>Any</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>search</span><span class=p>(</span> <span class=bp>self</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>queries</span><span class=p>:</span> <span class=n>QueryDatasetType</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=p>,</span> <span class=n>task_metadata</span><span class=p>:</span> <span class=n>TaskMetadata</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>hf_split</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>hf_subset</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>top_k</span><span class=p>:</span> <span class=nb>int</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>encode_kwargs</span><span class=p>:</span> <span class=nb>dict</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=n>Any</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=n>top_ranked</span><span class=p>:</span> <span class=n>TopRankedDocumentsType</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>RetrievalOutputType</span><span class=p>:</span> <span class=o>...</span>
+</span></span></code></pre></td></tr></table></div></div><p>We&rsquo;re automatically wrapping <code>Encoder</code> and <code>CrossEncoder</code> models support <code>SearchProtocol</code>.
+However, if your model needs a custom index you can implement this protocol directly.</p><h2 id=-new-documentation>📚 New Documentation</h2><p>We&rsquo;ve added a lot of new documentation to make it easier to get started with MTEB:</p><ul><li>You can see API of our models in tasks in API documentation</li><li>We&rsquo;ve added a getting started guide to help you get started with MTEB</li><li>You can see implemented tasks and models in MTEB</li></ul><h2 id=-better-support-for-loading-and-comparing-results>📊 Better support for loading and comparing results</h2><p>The new <code>ResultCache</code> also makes it easier to load, inspect and compare both local and online results:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>mteb.cache</span> <span class=kn>import</span> <span class=n>ResultCache</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>cache</span> <span class=o>=</span> <span class=n>ResultCache</span><span class=p>(</span><span class=n>cache_path</span><span class=o>=</span><span class=s2>&#34;~/.cache/mteb&#34;</span><span class=p>)</span>  <span class=c1># default</span>
+</span></span><span class=line><span class=cl><span class=n>cache</span><span class=o>.</span><span class=n>download_from_remote</span><span class=p>()</span>  <span class=c1># download the latest results from the remote repository</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># load both local and online results</span>
+</span></span><span class=line><span class=cl><span class=n>results</span> <span class=o>=</span> <span class=n>cache</span><span class=o>.</span><span class=n>load_results</span><span class=p>(</span><span class=n>models</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;sentence-transformers/all-MiniLM-L6-v2&#34;</span><span class=p>,</span> <span class=o>...</span><span class=p>],</span> <span class=n>tasks</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;STS12&#34;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl><span class=n>df</span> <span class=o>=</span> <span class=n>results</span><span class=o>.</span><span class=n>to_dataframe</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=-descriptive-statistics>📈 Descriptive Statistics</h2><p>Descriptive statistics isn&rsquo;t a new thing in MTEB, however, now it is there for every task. To extract it simply run:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>mteb</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>task</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>get_task</span><span class=p>(</span><span class=s2>&#34;MIRACLRetrievalHardNegatives&#34;</span><span class=p>)</span> <span class=n>task</span><span class=o>.</span><span class=n>metadata</span><span class=o>.</span><span class=n>descriptive_stats</span>
+</span></span></code></pre></td></tr></table></div></div><p>And you will get a highly detailed set of descriptive statistics covering everything from number
+of samples query lengths, duplicates, etc. These not only make it easier for you to examine
+tasks, but it also makes it easier for us to make quality checks on future tasks.</p><p>Example for reranking task:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span> <span class=nt>&#34;test&#34;</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&#34;num_samples&#34;</span><span class=p>:</span> <span class=mi>160</span><span class=p>,</span> <span class=nt>&#34;number_of_characters&#34;</span><span class=p>:</span> <span class=mi>310133</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&#34;documents_text_statistics&#34;</span><span class=p>:</span> <span class=p>{</span> <span class=nt>&#34;total_text_length&#34;</span><span class=p>:</span> <span class=mi>307938</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;min_text_length&#34;</span><span class=p>:</span> <span class=mi>0</span><span class=p>,</span> <span class=nt>&#34;average_text_length&#34;</span><span class=p>:</span> <span class=mf>2199.557142857143</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;max_text_length&#34;</span><span class=p>:</span> <span class=mi>2710</span><span class=p>,</span> <span class=nt>&#34;unique_texts&#34;</span><span class=p>:</span> <span class=mi>140</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span> <span class=nt>&#34;documents_image_statistics&#34;</span><span class=p>:</span> <span class=kc>null</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&#34;queries_text_statistics&#34;</span><span class=p>:</span> <span class=p>{</span> <span class=nt>&#34;total_text_length&#34;</span><span class=p>:</span> <span class=mi>2195</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;min_text_length&#34;</span><span class=p>:</span> <span class=mi>55</span><span class=p>,</span> <span class=nt>&#34;average_text_length&#34;</span><span class=p>:</span> <span class=mf>109.75</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;max_text_length&#34;</span><span class=p>:</span> <span class=mi>278</span><span class=p>,</span> <span class=nt>&#34;unique_texts&#34;</span><span class=p>:</span> <span class=mi>20</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span> <span class=nt>&#34;queries_image_statistics&#34;</span><span class=p>:</span> <span class=kc>null</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&#34;relevant_docs_statistics&#34;</span><span class=p>:</span> <span class=p>{</span> <span class=nt>&#34;num_relevant_docs&#34;</span><span class=p>:</span> <span class=mi>60</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;min_relevant_docs_per_query&#34;</span><span class=p>:</span> <span class=mi>7</span><span class=p>,</span> <span class=nt>&#34;average_relevant_docs_per_query&#34;</span><span class=p>:</span> <span class=mf>3.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;max_relevant_docs_per_query&#34;</span><span class=p>:</span> <span class=mi>7</span><span class=p>,</span> <span class=nt>&#34;unique_relevant_docs&#34;</span><span class=p>:</span> <span class=mi>140</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span> <span class=nt>&#34;top_ranked_statistics&#34;</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;num_top_ranked&#34;</span><span class=p>:</span> <span class=mi>140</span><span class=p>,</span> <span class=nt>&#34;min_top_ranked_per_query&#34;</span><span class=p>:</span> <span class=mi>7</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;average_top_ranked_per_query&#34;</span><span class=p>:</span> <span class=mf>7.0</span><span class=p>,</span> <span class=nt>&#34;max_top_ranked_per_query&#34;</span><span class=p>:</span> <span class=mi>7</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=-saving-predictions>💾 Saving Predictions</h2><p>To support error analysis it is now possible to save the model prediction on a given task. You
+can do this simply as follows:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>mteb</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># using a small model and small dataset</span>
+</span></span><span class=line><span class=cl><span class=n>encoder</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>get_model</span><span class=p>(</span><span class=s2>&#34;sentence-transformers/static-similarity-mrl-multilingual-v1&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>task</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>get_task</span><span class=p>(</span><span class=s2>&#34;NanoArguAnaRetrieval&#34;</span><span class=p>)</span> <span class=n>prediction_folder</span> <span class=o>=</span> <span class=s2>&#34;path/to/model_predictions&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>res</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>evaluate</span><span class=p>(</span> <span class=n>encoder</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>task</span><span class=p>,</span> <span class=n>prediction_folder</span><span class=o>=</span><span class=n>prediction_folder</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>Result of prediction will be saved in <code>path/to/model_predictions/{task_name}_predictions.json</code>
+and will look like so for retrieval tasks:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span> <span class=nt>&#34;test&#34;</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&#34;query1&#34;</span><span class=p>:</span> <span class=p>{</span><span class=nt>&#34;document1&#34;</span><span class=p>:</span> <span class=mf>0.77</span><span class=p>,</span> <span class=nt>&#34;document2&#34;</span><span class=p>:</span> <span class=mf>0.12</span><span class=p>,</span> <span class=err>...</span><span class=p>},</span> <span class=nt>&#34;query2&#34;</span><span class=p>:</span> <span class=p>{</span><span class=nt>&#34;document2&#34;</span><span class=p>:</span> <span class=mf>0.87</span><span class=p>,</span> <span class=nt>&#34;document1&#34;</span><span class=p>:</span> <span class=mf>0.32</span><span class=p>,</span> <span class=err>...</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=err>...</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=-support-datasets-v4>📦 Support datasets v4</h2><p>With the new functionality for reuploading datasets to the standard datasets Parquet format,
+we&rsquo;ve reuploaded all tasks with <code>trust_remote_code</code>, and MTEB now fully supports Datasets v4.</p><h2 id=-upgrading-from-v1>🔄 Upgrading from v1</h2><p>This section gives an introduction of how to upgrade from v1 to v2.</p><h3 id=replacing-mtebmteb>Replacing <code>mteb.MTEB</code></h3><p>The previous approach to evaluate would require you to first create <code>MTEB</code> object and then call
+<code>.run</code> on that object. The <code>MTEB</code> object was initially a sort of catch all object intended for
+both filtering tasks, selecting tasks, evaluating and few other cases.</p><p>This overload of functionality made it hard to change. We have already for a while made it
+easier to filter and select tasks using <code>get_tasks</code> and <code>mteb.evaluate</code> now superseded <code>MTEB</code> as
+the method for evaluation.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># Approach before 2.0.0:</span>
+</span></span><span class=line><span class=cl><span class=nb>eval</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>MTEB</span><span class=p>(</span><span class=n>tasks</span><span class=o>=</span><span class=n>tasks</span><span class=p>)</span>  <span class=c1># now throw a deprecation warning results = eval.run(</span>
+</span></span><span class=line><span class=cl>    <span class=n>model</span><span class=p>,</span> <span class=n>overwrite</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>encode_kwargs</span><span class=o>=</span><span class=p>{},</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Recommended:</span>
+</span></span><span class=line><span class=cl><span class=n>mteb</span><span class=o>.</span><span class=n>evaluate</span><span class=p>(</span> <span class=n>model</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>tasks</span><span class=p>,</span> <span class=n>overwrite_strategy</span><span class=o>=</span><span class=s2>&#34;only-missing&#34;</span><span class=p>,</span>  <span class=c1># only rerun missing splits</span>
+</span></span><span class=line><span class=cl>    <span class=n>encode_kwargs</span><span class=o>=</span><span class=p>{},</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=replacing-mtebload_results>Replacing <code>mteb.load_results()</code></h3><p>Given the new <code>ResultCache</code> makes dealing with a results from <em>both</em> local and online caches a
+lot easier, it can now replace <code>mteb.load_results</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>tasks</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>get_tasks</span><span class=p>(</span><span class=n>tasks</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;STS12&#34;</span><span class=p>])</span> <span class=n>model_names</span> <span class=o>=</span> <span class=p>[</span><span class=s2>&#34;intfloat/multilingual-e5-large&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Approach before 2.0.0:</span>
+</span></span><span class=line><span class=cl><span class=n>results</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>load_results</span><span class=p>(</span><span class=n>models</span><span class=o>=</span><span class=n>model_names</span><span class=p>,</span> <span class=n>tasks</span><span class=o>=</span><span class=n>tasks</span><span class=p>,</span> <span class=n>download_latest</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Recommended:</span>
+</span></span><span class=line><span class=cl><span class=n>cache</span> <span class=o>=</span> <span class=n>ResultCache</span><span class=p>(</span><span class=s2>&#34;~/.cache/mteb&#34;</span><span class=p>)</span>  <span class=c1># default cache.download_from_remote()  # downloads remote results</span>
+</span></span><span class=line><span class=cl><span class=n>results</span> <span class=o>=</span> <span class=n>cache</span><span class=o>.</span><span class=n>load_results</span><span class=p>(</span><span class=n>models</span><span class=o>=</span><span class=n>model_names</span><span class=p>,</span> <span class=n>tasks</span><span class=o>=</span><span class=n>tasks</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=converting-model-to-new-format>Converting model to new format</h3><p>As mentioned in the above section MTEB v2, now supports multimodal input as the default. Luckily
+for you all models implemented in MTEB already supports this new format! However, if you have a
+local model that you would like to evaluate. Here is a quick conversion guide. If you previous
+implementation looks like so:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># v1.X.X</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>MyDummyEncoder</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>model</span> <span class=o>=</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>encode</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>sentences</span><span class=p>:</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>],</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Array</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>embeddings</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>model</span><span class=o>.</span><span class=n>encode</span><span class=p>(</span><span class=n>sentences</span><span class=p>)</span> <span class=k>return</span> <span class=n>embeddings</span>
+</span></span></code></pre></td></tr></table></div></div><p>You can simply unpack it to its text input like so:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># v2.0.0</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>MyDummyEncoder</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>model</span> <span class=o>=</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>encode</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=nb>input</span><span class=p>:</span> <span class=n>DataLoader</span><span class=p>[</span><span class=n>BatchedInput</span><span class=p>],</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Array</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=c1># unpack to v1 format:</span>
+</span></span><span class=line><span class=cl>        <span class=n>sentences</span> <span class=o>=</span> <span class=p>[</span><span class=n>text</span> <span class=k>for</span> <span class=n>batch</span> <span class=ow>in</span> <span class=n>inputs</span> <span class=k>for</span> <span class=n>text</span> <span class=ow>in</span> <span class=n>batch</span><span class=p>[</span><span class=s2>&#34;text&#34;</span><span class=p>]]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># do as you did beforehand:</span>
+</span></span><span class=line><span class=cl>        <span class=n>embeddings</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>model</span><span class=o>.</span><span class=n>encode</span><span class=p>(</span><span class=n>sentences</span><span class=p>)</span> <span class=k>return</span> <span class=n>embeddings</span>
+</span></span></code></pre></td></tr></table></div></div><p>Of course, it will be more efficient if you work directly with the dataloader.</p><h3 id=reuploading-datasets>Reuploading datasets</h3><p>If your dataset is in old format, or you want to reupload it to the new Parquet format, you can
+do so using the new <code>push_dataset_to_hub</code> method:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>mteb</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>task</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>get_task</span><span class=p>(</span><span class=s2>&#34;MyOldTask&#34;</span><span class=p>)</span> <span class=n>task</span><span class=o>.</span><span class=n>push_dataset_to_hub</span><span class=p>(</span><span class=s2>&#34;my-username/my-new-task&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=converting-reranking-datasets-to-new-format>Converting Reranking datasets to new format</h3><p>If you have a reranking dataset, you can convert it to the retrieval format. To do this you need
+to add your task name to the <code>mteb.abstasks.text.reranking.OLD_FORMAT_RERANKING_TASKS</code> and
+after this it would be converted to the new format automatically. To reupload them in new
+reranking format you refer to the reuploading datasets section.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>mteb</span> <span class=kn>from</span> <span class=nn>mteb.abstasks.text.reranking</span> <span class=kn>import</span> <span class=n>OLD_FORMAT_RERANKING_TASKS</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>OLD_FORMAT_RERANKING_TASKS</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=s2>&#34;MyOldRerankingTask&#34;</span><span class=p>)</span> <span class=n>task</span> <span class=o>=</span> <span class=n>mteb</span><span class=o>.</span><span class=n>get_task</span><span class=p>(</span><span class=s2>&#34;MyOldRerankingTask&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>model</span> <span class=o>=</span> <span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=n>mteb</span><span class=o>.</span><span class=n>evaluate</span><span class=p>(</span><span class=n>model</span><span class=p>,</span> <span class=n>task</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=-credits>🙌 Credits</h2><p><em>Originally posted at: <a class=link href=https://huggingface.co/blog/isaacchung/mteb-v2 target=_blank rel=noopener>https://huggingface.co/blog/isaacchung/mteb-v2</a></em></p><h2 id=-conclusion>🏁 Conclusion</h2><p>MTEB v2 represents a significant milestone in the evolution of embedding and retrieval
+evaluation. With its enhanced multimodal support, streamlined interface, and robust caching
+system, researchers and developers now have access to a more powerful and flexible benchmarking
+framework. The migration from v1 is straightforward, and the new features open up exciting
+possibilities for evaluating next-generation embedding models across multiple modalities.</p><p>Whether you&rsquo;re working with traditional text embeddings or cutting-edge multimodal systems, MTEB
+v2 provides the tools and consistency needed for comprehensive evaluation. The improved
+documentation, error analysis capabilities, and unified protocols make it easier than ever to
+benchmark your models against state-of-the-art baselines.</p><p><em>#MTEB #EMBEDDINGS #MULTIMODAL #RETRIEVAL #BENCHMARK #HUGGINGFACE #ML #NLP #EVALUATION</em></p></section><footer class=article-footer><section class=article-tags><a href=/blog/tags/mteb/>MTEB</a>
+<a href=/blog/tags/embeddings/>Embeddings</a>
+<a href=/blog/tags/multimodal/>Multimodal</a>
+<a href=/blog/tags/retrieval/>Retrieval</a>
+<a href=/blog/tags/benchmark/>Benchmark</a>
+<a href=/blog/tags/huggingface/>Huggingface</a>
+<a href=/blog/tags/machine-learning/>Machine Learning</a>
+<a href=/blog/tags/nlp/>Nlp</a>
+<a href=/blog/tags/evaluation/>Evaluation</a>
+<a href=/blog/tags/crossencoders/>CrossEncoders</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>NA</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/blog/p/llama-embed-nemotron-8b-text-embedding-model-ranks-first-on-multilingual-mteb-leaderboard/><div class=article-image><img src=/blog/NA loading=lazy data-key data-hash=/blog/NA></div><div class=article-details><h2 class=article-title>Llama-Embed-Nemotron-8B Text Embedding Model Ranks First on Multilingual MTEB Leaderboard</h2></div></a></article><article class=has-image><a href=/blog/p/context-is-king-how-contextual-document-embeddings-revolutionize-search-accuracy/><div class=article-image><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Word_embedding_illustration.svg/800px-Word_embedding_illustration.svg.png loading=lazy data-key data-hash=https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Word_embedding_illustration.svg/800px-Word_embedding_illustration.svg.png></div><div class=article-details><h2 class=article-title>🔍 Context is King: How Contextual Document Embeddings Revolutionize Search Accuracy</h2></div></a></article><article class=has-image><a href=/blog/p/glm-4.6-next-generation-language-model-with-enhanced-capabilities/><div class=article-image><img src=https://raw.githubusercontent.com/zai-org/GLM-4.5/refs/heads/main/resources/logo.svg loading=lazy data-key data-hash=https://raw.githubusercontent.com/zai-org/GLM-4.5/refs/heads/main/resources/logo.svg></div><div class=article-details><h2 class=article-title>GLM-4.6: Next-Generation Language Model with Enhanced Capabilities</h2></div></a></article><article class=has-image><a href=/blog/p/art-of-focus-page-aware-sparse-attention-and-ling-2.0s-quest-for-efficient-context-length-scaling/><div class=article-image><img src=https://cdn-uploads.huggingface.co/production/uploads/67bc580ab51d4dc52f08d280/-fblWaXADG8F_3jAbY_uk.png loading=lazy data-key data-hash=https://cdn-uploads.huggingface.co/production/uploads/67bc580ab51d4dc52f08d280/-fblWaXADG8F_3jAbY_uk.png></div><div class=article-details><h2 class=article-title>Art of Focus: Page-Aware Sparse Attention and Ling 2.0's Quest for Efficient Context Length Scaling</h2></div></a></article><article class=has-image><a href=/blog/p/meta-llama-3.1-8b-instruct-the-ultimate-guide-to-advanced-language-ai/><div class=article-image><img src=https://cdn-avatars.huggingface.co/v1/production/uploads/646cf8084eefb026fb8fd8bc/oCTqufkdTkjyGodsx1vo1.png loading=lazy data-key data-hash=https://cdn-avatars.huggingface.co/v1/production/uploads/646cf8084eefb026fb8fd8bc/oCTqufkdTkjyGodsx1vo1.png></div><div class=article-details><h2 class=article-title>Meta Llama 3.1-8B-Instruct: The Ultimate Guide to Advanced Language AI</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Tech Insights: AI & Cloud</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/blog/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

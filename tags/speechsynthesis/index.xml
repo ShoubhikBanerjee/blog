@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SpeechSynthesis on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/speechsynthesis/</link><description>Recent content in SpeechSynthesis on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 06 Jun 2025 21:25:32 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/speechsynthesis/index.xml" rel="self" type="application/rss+xml"/><item><title>🎭 PlayDiffusion: Fixing the Broken Words in AI Speech</title><link>https://shoubhikbanerjee.github.io/blog/p/playdiffusion-fixing-the-broken-words-in-ai-speech/</link><pubDate>Fri, 06 Jun 2025 21:25:32 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/playdiffusion-fixing-the-broken-words-in-ai-speech/</guid><description>&lt;img src="https://github.com/user-attachments/assets/16f783cd-c9c5-4c60-aabc-c57dc4b1f894" alt="Featured image of post 🎭 PlayDiffusion: Fixing the Broken Words in AI Speech" /&gt;&lt;h1 id="-playdiffusion-fixing-the-broken-words-in-ai-speech"&gt;🎭 PlayDiffusion: Fixing the Broken Words in AI Speech
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Discover how Play.AI&amp;rsquo;s innovative diffusion model solves one of the most frustrating limitations in AI speech synthesis—the inability to edit specific words without compromising audio quality. This breakthrough approach maintains prosody and speaker characteristics across edits, enabling seamless audio modifications that were previously impossible with traditional autoregressive models.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-speech-editing-problem"&gt;🔊 The Speech Editing Problem
+&lt;/h2&gt;&lt;p&gt;Imagine you&amp;rsquo;ve just generated a beautifully synthesized voice clip saying &amp;ldquo;The answer is out there, Neo. Go grab it!&amp;rdquo; But then you realize—you need the name to be &amp;ldquo;Trinity&amp;rdquo; instead. With traditional text-to-speech systems, you&amp;rsquo;re stuck with unpleasant choices:&lt;/p&gt;
+&lt;p&gt;🔄 Regenerate the entire sentence (risking different prosody throughout)
+✂️ Replace just &amp;ldquo;Neo&amp;rdquo; (creating obvious audio discontinuities)
+↩️ Regenerate from the edit point (potentially changing the rhythm of what follows)&lt;/p&gt;
+&lt;p&gt;This frustrating limitation stems from the fundamentally linear way conventional autoregressive transformer models work—they generate audio left-to-right, making isolated edits nearly impossible without compromising naturalness and coherence.&lt;/p&gt;
+&lt;p&gt;As developers or content creators, this is more than a minor inconvenience. It&amp;rsquo;s a significant workflow barrier that forces us to accept imperfect audio or spend excessive time regenerating and fine-tuning output.&lt;/p&gt;
+&lt;h2 id="-enter-playdiffusion-non-autoregressive-speech-magic"&gt;🧠 Enter PlayDiffusion: Non-Autoregressive Speech Magic
+&lt;/h2&gt;&lt;p&gt;Play.AI has tackled this problem head-on with PlayDiffusion, leveraging a 𝗻𝗼𝗻-𝗮𝘂𝘁𝗼𝗿𝗲𝗴𝗿𝗲𝘀𝘀𝗶𝘃𝗲 𝗱𝗶𝗳𝗳𝘂𝘀𝗶𝗼𝗻 𝗺𝗼𝗱𝗲𝗹 that makes precise audio edits possible while preserving surrounding context.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s how the PlayDiffusion process works:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;🎵 &lt;strong&gt;Tokenization&lt;/strong&gt; - The audio waveform gets encoded into discrete tokens, creating a compact representation of the speech&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🎭 &lt;strong&gt;Masking&lt;/strong&gt; - Only the portion that needs editing (like the word &amp;ldquo;Neo&amp;rdquo;) gets masked out&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✨ &lt;strong&gt;Diffusion-Based Denoising&lt;/strong&gt; - A specialized diffusion model, conditioned on the revised text, denoises just the masked region&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Decoding&lt;/strong&gt; - The resulting token sequence gets transformed back into speech using a BigVGAN decoder model, maintaining the original speaker&amp;rsquo;s voice characteristics&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This approach differs fundamentally from traditional models by allowing the algorithm to simultaneously consider both past and future context when generating the edited segment—something that&amp;rsquo;s impossible with the one-directional nature of autoregressive models.&lt;/p&gt;
+&lt;h2 id="-technical-innovations-behind-the-magic"&gt;🛠️ Technical Innovations Behind the Magic
+&lt;/h2&gt;&lt;p&gt;What makes PlayDiffusion particularly clever is the architecture modifications necessary to achieve this capability:&lt;/p&gt;
+&lt;h3 id="𝗡𝗼𝗻-𝗖𝗮𝘂𝘀𝗮𝗹-𝗔𝘁𝘁𝗲𝗻𝘁𝗶𝗼𝗻"&gt;𝗡𝗼𝗻-𝗖𝗮𝘂𝘀𝗮𝗹 𝗔𝘁𝘁𝗲𝗻𝘁𝗶𝗼𝗻
+&lt;/h3&gt;&lt;p&gt;Unlike standard decoder-only language models (think GPT), which can only see &amp;ldquo;backward&amp;rdquo; in a sequence, PlayDiffusion implements 𝘯𝘰𝘯-𝘤𝘢𝘶𝘴𝘢𝘭 𝘢𝘵𝘵𝘦𝘯𝘵𝘪𝘰𝘯 𝘩𝘦𝘢𝘥𝘴. This architectural choice allows tokens to attend to past, present, 𝘢𝘯𝘥 future tokens—critical for maintaining coherent transitions when editing mid-sequence.&lt;/p&gt;
+&lt;h3 id="-𝗦𝗽𝗲𝗮𝗸𝗲𝗿-𝗖𝗼𝗻𝗱𝗶𝘁𝗶𝗼𝗻𝗶𝗻𝗴"&gt;🗣️ 𝗦𝗽𝗲𝗮𝗸𝗲𝗿 𝗖𝗼𝗻𝗱𝗶𝘁𝗶𝗼𝗻𝗶𝗻𝗴
+&lt;/h3&gt;&lt;p&gt;The model incorporates speaker embeddings derived from a pre-trained model that maps waveforms to fixed-size vectors. This ensures the edited segments maintain the original voice&amp;rsquo;s unique characteristics—tone, timbre, accent and all.&lt;/p&gt;
+&lt;h3 id="-𝗢𝗽𝘁𝗶𝗺𝗶𝘇𝗲𝗱-𝗧𝗼𝗸𝗲𝗻𝗶𝘇𝗮𝘁𝗶𝗼𝗻"&gt;📊 𝗢𝗽𝘁𝗶𝗺𝗶𝘇𝗲𝗱 𝗧𝗼𝗸𝗲𝗻𝗶𝘇𝗮𝘁𝗶𝗼𝗻
+&lt;/h3&gt;&lt;p&gt;To boost computational efficiency, PlayDiffusion uses a custom BPE (Byte Pair Encoding) tokenizer with only 10,000 text tokens. This significantly reduces embedding table size while maintaining high audio quality.&lt;/p&gt;
+&lt;h2 id="-inside-the-training-process"&gt;🔍 Inside the Training Process
+&lt;/h2&gt;&lt;p&gt;The training approach is particularly fascinating, built on a masking strategy similar to MaskGCT [3]. During training:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Random percentages of audio tokens get masked&lt;/li&gt;
+&lt;li&gt;The model learns to predict these masked tokens using:
+&lt;ul&gt;
+&lt;li&gt;Surrounding unmasked audio context&lt;/li&gt;
+&lt;li&gt;Text input&lt;/li&gt;
+&lt;li&gt;Speaker embedding information&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This is formalized in their training loss function:&lt;/p&gt;
+&lt;p&gt;L𝘮𝘢𝘴𝘬 = −∑(m𝘵,𝘪 ⋅ log pθ(x𝘪|X𝘵,C))&lt;/p&gt;
+&lt;p&gt;Where m𝘵,𝘪 equals 1 for masked tokens and 0 otherwise, essentially focusing the learning exclusively on predicting the masked portions.&lt;/p&gt;
+&lt;h2 id="-iterative-inference-for-quality-results"&gt;🚀 Iterative Inference for Quality Results
+&lt;/h2&gt;&lt;p&gt;The inference process is equally clever, using an iterative approach:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;🎯 Start with a fully masked token sequence&lt;/li&gt;
+&lt;li&gt;🧩 Generate initial predictions for all tokens&lt;/li&gt;
+&lt;li&gt;📊 Assign confidence scores based on prediction probabilities&lt;/li&gt;
+&lt;li&gt;🔄 Adaptively remask tokens with the lowest confidence&lt;/li&gt;
+&lt;li&gt;🔁 Repeat the process, gradually decreasing the number of masked tokens&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This iterative refinement ensures the model focuses its efforts on areas of highest uncertainty first, gradually building a coherent, natural-sounding edit that blends seamlessly with the surrounding audio.&lt;/p&gt;
+&lt;h2 id="-why-this-matters"&gt;💭 Why This Matters
+&lt;/h2&gt;&lt;p&gt;PlayDiffusion represents a significant leap forward in speech synthesis technology. Previously, the rigid nature of autoregressive models meant that any change, no matter how small, often required regenerating entire audio segments—wasting computation resources and creating workflow bottlenecks.&lt;/p&gt;
+&lt;p&gt;With this approach, we&amp;rsquo;re seeing the beginnings of truly 𝗲𝗱𝗶𝘁𝗮𝗯𝗹𝗲 𝘀𝘆𝗻𝘁𝗵𝗲𝘁𝗶𝗰 𝘀𝗽𝗲𝗲𝗰𝗵, where modifications can be made with the same granularity and ease as text editing. The implications extend beyond simple word replacements—this technology enables:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎬 More efficient voiceover workflows with rapid iteration&lt;/li&gt;
+&lt;li&gt;🌐 Localization projects that can selectively modify proper nouns&lt;/li&gt;
+&lt;li&gt;🎮 Dynamic game content with consistent voice character&lt;/li&gt;
+&lt;li&gt;📱 More responsive voice assistants and audio interfaces&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The next time you need to change &amp;ldquo;Neo&amp;rdquo; to &amp;ldquo;Trinity&amp;rdquo; in your synthesized audio, you won&amp;rsquo;t need to regenerate everything—just the part that needs changing, seamlessly integrated with the surrounding context. Isn&amp;rsquo;t that the future of speech synthesis we&amp;rsquo;ve all been waiting for?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/PlayHT/PlayDiffusion" target="_blank" rel="noopener"
+&gt;https://huggingface.co/PlayHT/PlayDiffusion&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#AIAudio #SpeechSynthesis #DiffusionModels #TTS #AudioEditing #MachineLearning #VoiceAI #GenerativeAI #SpeechTechnology #PlayAI&lt;/p&gt;</description></item><item><title>OpenAudio S1-mini: Bringing Emotional Intelligence to Text-to-Speech Technology</title><link>https://shoubhikbanerjee.github.io/blog/p/openaudio-s1-mini-bringing-emotional-intelligence-to-text-to-speech-technology/</link><pubDate>Fri, 06 Jun 2025 21:20:45 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/openaudio-s1-mini-bringing-emotional-intelligence-to-text-to-speech-technology/</guid><description>&lt;img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbut_bMcfnviy0lADwL3o-ie-87cxbm6OdfQ&amp;s" alt="Featured image of post OpenAudio S1-mini: Bringing Emotional Intelligence to Text-to-Speech Technology" /&gt;&lt;h1 id="-openaudio-s1-mini-bringing-emotional-intelligence-to-text-to-speech-technology"&gt;🎭 OpenAudio S1-mini: Bringing Emotional Intelligence to Text-to-Speech Technology
+&lt;/h1&gt;&lt;h2 id="-summary"&gt;📝 Summary
+&lt;/h2&gt;&lt;p&gt;Discover OpenAudio S1-mini, a groundbreaking text-to-speech model that supports 13 languages and over 50 emotional markers. This compact 0.5B parameter model delivers near-professional quality voice synthesis with remarkable accuracy. Learn how this open model is changing the accessibility landscape for content creators and developers working with speech technology.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-revolution-in-multilingual-voice-synthesis"&gt;🌐 The Revolution in Multilingual Voice Synthesis
+&lt;/h2&gt;&lt;p&gt;Text-to-speech technology has evolved dramatically over the past decade, but most solutions have struggled with the natural expressiveness that makes human speech so engaging. Enter OpenAudio S1, a breakthrough TTS system that&amp;rsquo;s redefining what&amp;rsquo;s possible in the realm of synthetic speech.&lt;/p&gt;
+&lt;p&gt;The recently released OpenAudio S1-mini—a distilled version of the larger S1 model—has captured attention across the tech community for delivering exceptional speech synthesis capabilities in a remarkably efficient package. With training on more than 2 million hours of audio data spanning multiple languages, this model represents a significant leap forward in making natural-sounding speech synthesis accessible to developers worldwide.&lt;/p&gt;
+&lt;h2 id="-breaking-language-barriers-with-impressive-multilingual-support"&gt;🌍 Breaking Language Barriers with Impressive Multilingual Support
+&lt;/h2&gt;&lt;p&gt;One of the most impressive aspects of OpenAudio S1-mini is its extensive language support. The model currently handles &lt;strong&gt;13 languages&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🇺🇸 English&lt;/li&gt;
+&lt;li&gt;🇨🇳 Chinese&lt;/li&gt;
+&lt;li&gt;🇯🇵 Japanese&lt;/li&gt;
+&lt;li&gt;🇩🇪 German&lt;/li&gt;
+&lt;li&gt;🇫🇷 French&lt;/li&gt;
+&lt;li&gt;🇪🇸 Spanish&lt;/li&gt;
+&lt;li&gt;🇰🇷 Korean&lt;/li&gt;
+&lt;li&gt;🇦🇪 Arabic&lt;/li&gt;
+&lt;li&gt;🇷🇺 Russian&lt;/li&gt;
+&lt;li&gt;🇳🇱 Dutch&lt;/li&gt;
+&lt;li&gt;🇮🇹 Italian&lt;/li&gt;
+&lt;li&gt;🇵🇱 Polish&lt;/li&gt;
+&lt;li&gt;🇵🇹 Portuguese&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This multilingual capability makes it an invaluable tool for global applications, content localization, and accessibility improvements across linguistic boundaries. For developers working on international products, this eliminates the need to integrate multiple language-specific TTS solutions.&lt;/p&gt;
+&lt;h2 id="-beyond-words-emotional-intelligence-in-synthetic-speech"&gt;🎭 Beyond Words: Emotional Intelligence in Synthetic Speech
+&lt;/h2&gt;&lt;p&gt;What truly sets OpenAudio S1-mini apart is its extensive support for emotional and tonal variation—a feature that&amp;rsquo;s been notoriously difficult to implement in TTS systems. The model supports an impressive array of emotional markers that can transform flat text into expressive speech:&lt;/p&gt;
+&lt;h3 id="-emotional-spectrum"&gt;😀 Emotional Spectrum
+&lt;/h3&gt;&lt;p&gt;The S1-mini can express over &lt;strong&gt;50 distinct emotional states&lt;/strong&gt;, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;😡 Angry, furious, frustrated&lt;/li&gt;
+&lt;li&gt;😢 Sad, depressed, painful&lt;/li&gt;
+&lt;li&gt;😲 Surprised, astonished, excited&lt;/li&gt;
+&lt;li&gt;😌 Satisfied, relaxed, confident&lt;/li&gt;
+&lt;li&gt;😰 Anxious, worried, nervous&lt;/li&gt;
+&lt;li&gt;😄 Delighted, joyful, amused&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-vocal-tone-control"&gt;🔊 Vocal Tone Control
+&lt;/h3&gt;&lt;p&gt;Beyond emotions, the system supports special tone markers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🏃‍♂️ &amp;ldquo;in a hurry tone&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;📢 &amp;ldquo;shouting&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;😱 &amp;ldquo;screaming&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;🤫 &amp;ldquo;whispering&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;🗣️ &amp;ldquo;soft tone&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-special-expression-markers"&gt;🎭 Special Expression Markers
+&lt;/h3&gt;&lt;p&gt;The model even handles paralinguistic expressions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;😂 &amp;ldquo;laughing&amp;rdquo; (Ha,ha,ha)&lt;/li&gt;
+&lt;li&gt;😏 &amp;ldquo;chuckling&amp;rdquo; (Hmm,hmm)&lt;/li&gt;
+&lt;li&gt;😭 &amp;ldquo;sobbing&amp;rdquo; and &amp;ldquo;crying loudly&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;😮‍💨 &amp;ldquo;sighing&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;😰 &amp;ldquo;panting&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This emotional intelligence layer transforms the TTS experience from merely functional to truly communicative, enabling applications that can convey not just information but also sentiment and context.&lt;/p&gt;
+&lt;h2 id="-technical-performance-small-package-powerful-results"&gt;🧠 Technical Performance: Small Package, Powerful Results
+&lt;/h2&gt;&lt;p&gt;Despite being significantly smaller than its full-sized counterpart, OpenAudio S1-mini delivers impressive performance metrics that rival much larger models:&lt;/p&gt;
+&lt;h3 id="-performance-metrics-english-auto-evaluated"&gt;📊 Performance Metrics (English, auto-evaluated)
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;S1 (4B)&lt;/th&gt;
+&lt;th&gt;S1-mini (0.5B)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;WER (Word Error Rate)&lt;/td&gt;
+&lt;td&gt;0.008&lt;/td&gt;
+&lt;td&gt;0.011&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CER (Character Error Rate)&lt;/td&gt;
+&lt;td&gt;0.004&lt;/td&gt;
+&lt;td&gt;0.005&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Speaker Distance&lt;/td&gt;
+&lt;td&gt;0.332&lt;/td&gt;
+&lt;td&gt;0.380&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;These numbers reveal that S1-mini maintains near-parity with the larger S1 model despite being approximately 8x smaller (0.5B parameters versus 4B). This efficiency is particularly noteworthy because it makes high-quality TTS accessible on more modest hardware configurations.&lt;/p&gt;
+&lt;p&gt;The implementation of online Reinforcement Learning from Human Feedback (RLHF) has clearly paid dividends in both models, contributing to their natural-sounding outputs and high accuracy rates.&lt;/p&gt;
+&lt;h2 id="-practical-applications-and-access"&gt;🚀 Practical Applications and Access
+&lt;/h2&gt;&lt;p&gt;The applications for such a capable TTS system span numerous industries:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎮 Game developers can create more dynamic NPC interactions&lt;/li&gt;
+&lt;li&gt;📱 Accessibility tools can provide more natural-sounding assistance&lt;/li&gt;
+&lt;li&gt;🎬 Content creators can automate voiceovers with appropriate emotional context&lt;/li&gt;
+&lt;li&gt;📚 Educational platforms can deliver more engaging audio content&lt;/li&gt;
+&lt;li&gt;🤖 Voice assistants can communicate with greater nuance&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;OpenAudio S1-mini is released under the CC-BY-NC-SA-4.0 license, making it accessible for non-commercial applications while preserving attribution requirements. Developers interested in testing the model can access a demo through the Fish Audio Playground, while the full technical documentation is available on the OpenAudio website and Fish Speech GitHub repository.&lt;/p&gt;
+&lt;h2 id="-the-future-of-voice-synthesis"&gt;💭 The Future of Voice Synthesis
+&lt;/h2&gt;&lt;p&gt;The impressive capabilities of OpenAudio S1-mini highlight how rapidly TTS technology is advancing. As models become more efficient while maintaining high quality, we&amp;rsquo;re approaching a future where synthetic speech is virtually indistinguishable from human speech—not just in pronunciation accuracy, but in emotional resonance.&lt;/p&gt;
+&lt;p&gt;What makes this development particularly exciting is the democratization of advanced voice technology. By compressing sophisticated capabilities into a more compact model, OpenAudio is making these tools accessible to a wider range of developers and use cases.&lt;/p&gt;
+&lt;p&gt;The question now becomes: how will we responsibly integrate increasingly human-like synthetic voices into our digital ecosystem, and what new applications will emerge when emotional expressiveness becomes a standard feature of TTS technology?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits : Originally posted here : &lt;a class="link" href="https://huggingface.co/fishaudio/openaudio-s1-mini" target="_blank" rel="noopener"
+&gt;https://huggingface.co/fishaudio/openaudio-s1-mini&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#TextToSpeech #OpenAudio #AI #NLP #SpeechSynthesis #EmotionalAI #VoiceTech #MachineLearning #TTS #MultilingualAI #HuggingFace #AccessibleTech #OpenSource #VoiceComputing&lt;/p&gt;</description></item></channel></rss>

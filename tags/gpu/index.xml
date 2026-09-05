@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPU on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/gpu/</link><description>Recent content in GPU on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 03 Sep 2026 22:06:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/gpu/index.xml" rel="self" type="application/rss+xml"/><item><title>FlashKAN Accelerates Kolmogorov‑Arnold Networks with GPU‑Fusion and Stabilization</title><link>https://shoubhikbanerjee.github.io/blog/p/flashkan-accelerates-kolmogorovarnold-networks-with-gpufusion-and-stabilization/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/flashkan-accelerates-kolmogorovarnold-networks-with-gpufusion-and-stabilization/</guid><description>&lt;h1 id="flashkan-accelerates-kolmogorovarnold-networks-with-gpufusion-and-stabilization"&gt;FlashKAN Accelerates Kolmogorov‑Arnold Networks with GPU‑Fusion and Stabilization
+&lt;/h1&gt;&lt;p&gt;FlashKAN introduces a GPU‑fused implementation for Kolmogorov‑Arnold Networks (KANs), dramatically reducing the cost of evaluating learnable B‑spline activations.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;KANs place learnable B‑spline activations on network edges rather than fixed activations on nodes.&lt;/li&gt;
+&lt;li&gt;The standard Cox‑de Boor recursion evaluates these activations through &lt;em&gt;k&lt;/em&gt; sequential passes for degree‑&lt;em&gt;k&lt;/em&gt; splines, consuming over 90% of forward‑pass time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;FlashKAN replaces the Cox‑de Boor recursion with the &lt;strong&gt;truncated power form&lt;/strong&gt;, a classical approximation‑theory result that expresses each uniform cubic B‑spline as five \((x)_+^3\) terms at shifted knot positions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-contributions"&gt;⚙️ Key contributions
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;GPU‑fused implementation&lt;/strong&gt; – collapses the activation computation into a single GPU kernel, eliminating recursion, span lookup, and scatter‑gather operations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bounded‑coordinate stabilization&lt;/strong&gt; – clamps the normalized input to \([0, k+1]\), preventing the catastrophic cancellation that historically motivated the Cox‑de Boor recursion.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Production‑ready package&lt;/strong&gt; – open‑source, installable via &lt;code&gt;pip install flashkan&lt;/code&gt;, and works as a drop‑in replacement for existing KAN layers.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The package is released as an open‑source library and can be added to projects with a single pip command.&lt;/li&gt;
+&lt;li&gt;It is designed to be a direct substitute for current KAN layers, requiring no code changes beyond the import.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#FlashKAN #KolmogorovArnoldNetwork #Bsplines #GPU&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.01956v1" target="_blank" rel="noopener"
+&gt;FlashKAN: B-Spline KANs via Truncated Power Form&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA CUDA Blog Post on GPU-Accelerated Image Processing</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuda-blog-post-on-gpu-accelerated-image-processing/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuda-blog-post-on-gpu-accelerated-image-processing/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/keyboard_16x9-660x370.jpg" alt="Featured image of post NVIDIA CUDA Blog Post on GPU-Accelerated Image Processing" /&gt;&lt;h1 id="nvidia-cuda-blog-post-on-gpu-accelerated-image-processing"&gt;NVIDIA CUDA Blog Post on GPU-Accelerated Image Processing
+&lt;/h1&gt;&lt;p&gt;NVIDIA has published a new technical blog post detailing a GPU-accelerated image processing pipeline using CUDA, with step-by-step optimizations and companion code available for testing.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;NVIDIA CUDA remains the foundation of GPU-accelerated computing, powering applications from scientific simulations to large-scale AI training. The post demonstrates a practical image processing pipeline, starting with RGB-to-grayscale conversion and median computation for image tiles.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The pipeline processes an input stream of red, green, and blue images with the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Transfer data from the CPU to the GPU.&lt;/li&gt;
+&lt;li&gt;Convert RGB images to grayscale.&lt;/li&gt;
+&lt;li&gt;For each 32x32 pixel tile, compute the median by sorting pixels and selecting the middle value.&lt;/li&gt;
+&lt;li&gt;Copy the median of each tile back to the CPU.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The base code initializes image data with the following constants:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pixel_t = uint8_t&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TILE_WIDTH = 32&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;HISTO_SIZE = 256&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NB_TILE_X = 250&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NB_TILE_Y = NB_TILE_X&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;IMAGE_LENGTH = TILE_WIDTH * NB_TILE_X&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;IMAGE_SIZE = IMAGE_LENGTH * IMAGE_LENGTH&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NB_IMAGES = 3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;INIT_VALUE = 4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The post outlines six incremental optimizations for the pipeline:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Optimization&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;CCCL API and Compute Sanitizer&lt;/td&gt;
+&lt;td&gt;Easily find indexing bugs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NVTX&lt;/td&gt;
+&lt;td&gt;Improve Nsight Systems benchmarks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CUB’s optimized algorithms&lt;/td&gt;
+&lt;td&gt;Use at the block and device level&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pooled containers&lt;/td&gt;
+&lt;td&gt;Manage GPU memory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pinned containers&lt;/td&gt;
+&lt;td&gt;Speed up host-to-device transfers&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Asynchronous transfers&lt;/td&gt;
+&lt;td&gt;Parallelize GPU work by giving each thread its own stream&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The pipeline runs in parallel for each image.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;A companion code repository is provided, with the option to run the example on Google Colab.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2021/06/CUDA-toolkit-featured.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2021/04/CUDA-Blog-Image-1000x600-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #CUDA #GPU #ImageProcessing #Optimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/the-modern-cuda-toolbox-in-practice-a-step-by-step-optimization-walkthrough/" target="_blank" rel="noopener"
+&gt;The Modern CUDA Toolbox in Practice: A Step-by-Step Optimization Walkthrough | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Hugging Face releases WebGPU kernels library and Fleet benchmarking suite</title><link>https://shoubhikbanerjee.github.io/blog/p/hugging-face-releases-webgpu-kernels-library-and-fleet-benchmarking-suite/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/hugging-face-releases-webgpu-kernels-library-and-fleet-benchmarking-suite/</guid><description>&lt;img src="https://huggingface.co/blog/assets/webgpu-kernels/thumbnail.png" alt="Featured image of post Hugging Face releases WebGPU kernels library and Fleet benchmarking suite" /&gt;&lt;h1 id="hugging-face-releases-webgpu-kernels-library-and-fleet-benchmarking-suite"&gt;Hugging Face releases WebGPU kernels library and Fleet benchmarking suite
+&lt;/h1&gt;&lt;p&gt;Hugging Face has released @huggingface/kernels, a minimal library for loading and running optimized WebGPU kernels from the Hugging Face Hub, alongside an initial collection of 207 kernels and Fleet, an in-browser GPU benchmarking and testing suite.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The library enables loading and running WebGPU kernels directly from the Hugging Face Hub.&lt;/li&gt;
+&lt;li&gt;The initial collection includes 207 kernels covering operations used across various machine learning architectures and workloads.&lt;/li&gt;
+&lt;li&gt;Each kernel is published as a complete, versioned package with its interface, shader templates, correctness cases, benchmark cases, and usage instructions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;WebGPU provides a portable API for GPU operations across modern browsers, with WGSL as the shader language.&lt;/li&gt;
+&lt;li&gt;Performance and behavior of shaders can vary based on workgroup sizes, memory access patterns, vectorization, data types, fusion strategies, input shape, device, browser, and available WebGPU features.&lt;/li&gt;
+&lt;li&gt;@huggingface/kernels bridges kernel repositories and applications: call &lt;code&gt;getKernel&lt;/code&gt; with a Hub repository ID and contract version, then invoke the returned function with typed input data and tensor shapes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Each kernel has its own repository and kernel card, documenting semantics, inputs, outputs, attributes, supported data types, source files, and a ready-to-run example.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;manifest.json&lt;/code&gt; file defines the operation contract.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;test.json&lt;/code&gt; contains correctness cases for implementation validation.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bench.json&lt;/code&gt; includes benchmark and tuning cases for performance evaluation.&lt;/li&gt;
+&lt;li&gt;Kernels can serve as reference implementations for developers building custom WebGPU kernels or integrating operations into their own runtimes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Running kernels requires a browser with WebGPU support, which depends on the browser, operating system, GPU, and driver.&lt;/li&gt;
+&lt;li&gt;WebGPU availability can be checked in JavaScript with &lt;code&gt;&amp;quot;gpu&amp;quot; in navigator&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Fleet allows users to benchmark and test kernels on their hardware, contributing performance and correctness evidence from real-world devices.&lt;/li&gt;
+&lt;li&gt;With user consent, Fleet collects private evidence to identify failures, improve kernel variants, and optimize decisions across diverse hardware.&lt;/li&gt;
+&lt;li&gt;The versioned, self-contained kernel packages ensure reproducibility and ease of integration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/webgpu-kernels/ai-onnx-add.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/webgpu-kernels/kernels.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#WebGPU #HuggingFace #GPU #MachineLearning #Kernels #Benchmarking&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/webgpu-kernels" target="_blank" rel="noopener"
+&gt;Introducing @huggingface/kernels: 200+ WebGPU Kernels for Local AI&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

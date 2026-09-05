@@ -1,0 +1,1272 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nvidia on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/nvidia/</link><description>Recent content in Nvidia on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 05 Sep 2026 22:02:16 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/nvidia/index.xml" rel="self" type="application/rss+xml"/><item><title>Memory‑Driven Chief of Staff Built with NVIDIA NemoClaw</title><link>https://shoubhikbanerjee.github.io/blog/p/memorydriven-chief-of-staff-built-with-nvidia-nemoclaw/</link><pubDate>Sat, 05 Sep 2026 22:02:16 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/memorydriven-chief-of-staff-built-with-nvidia-nemoclaw/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/ai-agent-skills-660x370.jpg" alt="Featured image of post Memory‑Driven Chief of Staff Built with NVIDIA NemoClaw" /&gt;&lt;h1 id="memorydriven-chief-of-staff-built-with-nvidia-nemoclaw"&gt;Memory‑Driven Chief of Staff Built with NVIDIA NemoClaw
+&lt;/h1&gt;&lt;p&gt;A new AI agent called a memory‑driven Chief of Staff was created using NVIDIA NemoClaw to give enterprise‑scale assistants persistent, structured context.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enterprise work involves messages, decisions, projects, and obligations that evolve over time.&lt;/li&gt;
+&lt;li&gt;An AI agent that starts without this context must first reconstruct it before it can contribute.&lt;/li&gt;
+&lt;li&gt;The team built a memory‑driven Chief of Staff that supplies the needed context through a &lt;em&gt;self model&lt;/em&gt; and an audit‑backed ledger.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Self model&lt;/strong&gt; – a human‑readable Markdown knowledge layer that records relevant people, projects, priorities, goals, concepts, and recurring work patterns.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Schema&lt;/strong&gt; – defines indexing, cross‑references, provenance, and growth limits for the self model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SQLite ledger&lt;/strong&gt; – stores obligations, rankings, corrections, and audit events in an append‑only trail.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scheduled jobs&lt;/strong&gt; – periodically review new activity, track obligations, and incorporate user decisions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Intent gate&lt;/strong&gt; – reserves the highest tier for obligations linked to the user’s stated priorities; urgent requests without priority rank lower.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Governed execution&lt;/strong&gt; – deterministic code enforces tier size, overflow behavior, and ranking order; context informs actions but does not authorize them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Useful agent memory requires &lt;strong&gt;structure&lt;/strong&gt;, &lt;strong&gt;selective retrieval&lt;/strong&gt;, and &lt;strong&gt;governance&lt;/strong&gt;, not just raw storage.&lt;/li&gt;
+&lt;li&gt;Conversation history gives short‑term continuity but mixes current priorities with past decisions and temporary requests.&lt;/li&gt;
+&lt;li&gt;Retrieval finds relevant source material, but the agent must still connect information across time (e.g., earlier decisions, later corrections, unresolved obligations, aliasing of project names).&lt;/li&gt;
+&lt;li&gt;The self model stores a &lt;em&gt;derived interpretation&lt;/em&gt; separate from source evidence, allowing developers to pinpoint whether an error arose from evidence, memory maintenance, retrieval, or the final decision.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Three tuning layers&lt;/strong&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Layer&lt;/th&gt;
+&lt;th&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Evidence&lt;/td&gt;
+&lt;td&gt;Raw source material&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Knowledge&lt;/td&gt;
+&lt;td&gt;Structured self model&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Governed execution&lt;/td&gt;
+&lt;td&gt;Controlled action based on intent gates, rankings, and policies&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;For each task, the agent retrieves a bounded set of relevant context, then uses that context within the NVIDIA NemoClaw framework (see Figure 1).&lt;/li&gt;
+&lt;li&gt;The design preserves the agent’s judgments without embedding them in source messages as read flags, labels, or folders.&lt;/li&gt;
+&lt;li&gt;Sending a Slack recommendation still depends on credentials, tool permissions, runtime policy, and user approval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Persistent memory can retain both correct and incorrect judgments; the audit trail records every change, enabling safe correction and accountability.&lt;/li&gt;
+&lt;li&gt;By separating evidence, structured knowledge, and governed execution, developers gain clear diagnostics for any inaccurate answer.&lt;/li&gt;
+&lt;li&gt;The tiered intent system aligns the agent’s actions with true user priorities rather than superficial urgency signals.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/nemoclaw-inputs-self-model.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/ai-agent-skills-1024x576.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIagents #NVIDIA #MemoryManagement #ChiefOfStaff&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/building-a-memory-driven-agent-with-nvidia-nemoclaw/" target="_blank" rel="noopener"
+&gt;Building a Memory-Driven Agent with NVIDIA NemoClaw | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker</title><link>https://shoubhikbanerjee.github.io/blog/p/building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-featured-image.png" alt="Featured image of post Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker" /&gt;&lt;h1 id="building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker"&gt;Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker
+&lt;/h1&gt;&lt;p&gt;Developing a Physical AI system, such as a robot or autonomous vehicle (AV) that translates real-world data into physical actions, cannot be achieved in a single training job. Instead, it requires a continuous pipeline that generates synthetic data, performs post-training on perception and policy models so the system can understand its surroundings and act, and evaluates both in a closed-loop simulation. A Physical AI model factory continuously runs this loop to turn streams of real-world data into improved models.&lt;/p&gt;
+&lt;p&gt;This development outlines how to build a Physical AI model factory using NVIDIA Cosmos 3 on Amazon SageMaker HyperPod with Amazon Elastic Kubernetes Service (Amazon EKS).&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NVIDIA Cosmos 3 is an open omnimodal world foundation model that treats video, image, action, and sound as a single token stream. Unlike common patterns that pair a diffusion-transformer video generator with a separate vision-language model for text conditioning, Cosmos 3 integrates both capabilities into a single trunk at every layer.&lt;/p&gt;
+&lt;p&gt;Key architectural aspects of Cosmos 3 include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mixture-of-Transformers (MoT) Design:&lt;/strong&gt; Features per-layer joint attention and a deliberate train-versus-inference asymmetry.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single Shared Sequence:&lt;/strong&gt; Every modality feeds into a single shared sequence, enabling one model to both read and generate across different modalities.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sequential Processing:&lt;/strong&gt; The model sequence positions an autoregressive (AR) zone (for the text and vision it reads) ahead of a diffusion zone (for the video, audio, and action it produces).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Cosmos 3 runs the same transformer trunk in three distinct modes and processes input modalities with specialized encoders:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component / Mode&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function / Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Forward-dynamics world model&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used for synthetic video generation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Inverse-dynamics action labeler&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used for labeling actions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Deployable action policy&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Acts as the final policy for system deployment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Vision Transformer (ViT)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles image understanding for the images the model reads&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Frozen Wan2.2 video VAE&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles pixel generation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Per-embodiment vector&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Encodes pose deltas and grasp state, allowing the same model to drive both an AV and a robot arm&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Because one model family covers generation, post-training, and evaluation, separate GPU capacity for each stage is unnecessary. Instead of provisioning isolated nodes for each stage, these workloads are scheduled onto a single persistent, resilient GPU node pool under a single cluster control plane using time-shared capacity.&lt;/p&gt;
+&lt;h3 id="capacity-and-cost-metrics"&gt;Capacity and Cost Metrics
+&lt;/h3&gt;&lt;p&gt;Running a continuous pipeline requires a committed capacity plan. Acquiring GPUs stage by stage introduces availability and lead-time variability, and risks landing capacity in an Availability Zone or AWS Region away from your data. Committing to the entire loop—either through a flexible training plan for bounded campaigns or a capacity reservation for open-ended ones—avoids this churn.&lt;/p&gt;
+&lt;p&gt;Since you pay for capacity continuously, the primary metric governing cost is not the peak throughput of any individual job. Instead, the system is optimized for &lt;strong&gt;GPU goodput&lt;/strong&gt;: the useful pipeline progress per reserved GPU-hour across the entire loop.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;NVIDIA has released Cosmos 3 under the Linux Foundation’s OpenMDW-1.1 license. Detailed architectural information can be found in the Cosmos 3 technical report.&lt;/p&gt;
+&lt;p&gt;To help developers get started, the &lt;code&gt;awsome-distributed-ai&lt;/code&gt; GitHub repository contains the runnable code, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Infrastructure templates and job manifests to set up the working cluster.&lt;/li&gt;
+&lt;li&gt;Deployment configurations for Amazon SageMaker HyperPod and Amazon EKS.&lt;/li&gt;
+&lt;li&gt;A shared multi-terabyte storage layer setup.&lt;/li&gt;
+&lt;li&gt;Distributed post-training setups for three representative workloads, featuring an end-to-end walkthrough of the robot-policy stage using the public DROID dataset.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AmazonSageMaker #PhysicalAI #Cosmos3 #Robotics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-sagemaker-hyperpod/" target="_blank" rel="noopener"
+&gt;Build a Physical AI model factory with NVIDIA Cosmos 3 on SageMaker HyperPod | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA CUDA Blog Post on GPU-Accelerated Image Processing</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuda-blog-post-on-gpu-accelerated-image-processing/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuda-blog-post-on-gpu-accelerated-image-processing/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/keyboard_16x9-660x370.jpg" alt="Featured image of post NVIDIA CUDA Blog Post on GPU-Accelerated Image Processing" /&gt;&lt;h1 id="nvidia-cuda-blog-post-on-gpu-accelerated-image-processing"&gt;NVIDIA CUDA Blog Post on GPU-Accelerated Image Processing
+&lt;/h1&gt;&lt;p&gt;NVIDIA has published a new technical blog post detailing a GPU-accelerated image processing pipeline using CUDA, with step-by-step optimizations and companion code available for testing.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;NVIDIA CUDA remains the foundation of GPU-accelerated computing, powering applications from scientific simulations to large-scale AI training. The post demonstrates a practical image processing pipeline, starting with RGB-to-grayscale conversion and median computation for image tiles.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The pipeline processes an input stream of red, green, and blue images with the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Transfer data from the CPU to the GPU.&lt;/li&gt;
+&lt;li&gt;Convert RGB images to grayscale.&lt;/li&gt;
+&lt;li&gt;For each 32x32 pixel tile, compute the median by sorting pixels and selecting the middle value.&lt;/li&gt;
+&lt;li&gt;Copy the median of each tile back to the CPU.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The base code initializes image data with the following constants:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pixel_t = uint8_t&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TILE_WIDTH = 32&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;HISTO_SIZE = 256&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NB_TILE_X = 250&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NB_TILE_Y = NB_TILE_X&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;IMAGE_LENGTH = TILE_WIDTH * NB_TILE_X&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;IMAGE_SIZE = IMAGE_LENGTH * IMAGE_LENGTH&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NB_IMAGES = 3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;INIT_VALUE = 4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The post outlines six incremental optimizations for the pipeline:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Optimization&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;CCCL API and Compute Sanitizer&lt;/td&gt;
+&lt;td&gt;Easily find indexing bugs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NVTX&lt;/td&gt;
+&lt;td&gt;Improve Nsight Systems benchmarks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CUB’s optimized algorithms&lt;/td&gt;
+&lt;td&gt;Use at the block and device level&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pooled containers&lt;/td&gt;
+&lt;td&gt;Manage GPU memory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pinned containers&lt;/td&gt;
+&lt;td&gt;Speed up host-to-device transfers&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Asynchronous transfers&lt;/td&gt;
+&lt;td&gt;Parallelize GPU work by giving each thread its own stream&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The pipeline runs in parallel for each image.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;A companion code repository is provided, with the option to run the example on Google Colab.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2021/06/CUDA-toolkit-featured.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2021/04/CUDA-Blog-Image-1000x600-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #CUDA #GPU #ImageProcessing #Optimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/the-modern-cuda-toolbox-in-practice-a-step-by-step-optimization-walkthrough/" target="_blank" rel="noopener"
+&gt;The Modern CUDA Toolbox in Practice: A Step-by-Step Optimization Walkthrough | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Nvidia launches free Personal AI Router for local inference</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-launches-free-personal-ai-router-for-local-inference/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-launches-free-personal-ai-router-for-local-inference/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Screenshot-2026-09-03-at-10.42.02-AM.png?quality=90&amp;strip=all&amp;crop=0%2C3.342396806572%2C100%2C93.315206386856&amp;w=1200" alt="Featured image of post Nvidia launches free Personal AI Router for local inference" /&gt;&lt;h1 id="nvidia-launches-free-personal-ai-router-for-local-inference"&gt;Nvidia launches free Personal AI Router for local inference
+&lt;/h1&gt;&lt;p&gt;Nvidia has announced the Personal AI Router (PAIR), a free, open-source tool that links idle home computers into a personal AI data center for local inference tasks.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;PAIR is open-source software that discovers compatible PCs on a network, connects them, and prepares them for local AI inference.&lt;/li&gt;
+&lt;li&gt;It is not a hardware router but a virtual inference router that maximizes AI compute in a home.&lt;/li&gt;
+&lt;li&gt;PAIR works with familiar local inference services like Ollama and LM Studio.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;PAIR discovers participating systems, tracks their readiness, schedules independent jobs, and returns responses to the originating application.&lt;/li&gt;
+&lt;li&gt;It routes each inference request to an available system on the home network, avoiding bottlenecks on a single GPU.&lt;/li&gt;
+&lt;li&gt;The system adapts as devices join or leave the network, such as when a user starts playing a game on their desktop PC.&lt;/li&gt;
+&lt;li&gt;PAIR proxies compatible Ollama and LM Studio interfaces, so no new API or agent harness changes are required.&lt;/li&gt;
+&lt;li&gt;It maintains a live view of which nodes can accept new work, considering factors like online status, supported inference engine, model presence, and current workload.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Compatible devices include:
+&lt;ul&gt;
+&lt;li&gt;Nvidia GeForce RTX 20-series GPUs and newer&lt;/li&gt;
+&lt;li&gt;Nvidia RTX Pro GPUs (Turing architecture and newer)&lt;/li&gt;
+&lt;li&gt;Nvidia DGX Spark systems&lt;/li&gt;
+&lt;li&gt;Apple M4 chips or newer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Security is handled via a six-digit pairing code and mTLS (Mutual Transport Layer Security) for encrypted communication.&lt;/li&gt;
+&lt;li&gt;PAIR is designed for dynamic home environments, where systems may power down, sleep, or leave the network.&lt;/li&gt;
+&lt;li&gt;It supports workload-level concurrency, distributing independent inference requests across available nodes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The PAIR beta is available today for Windows, Linux, and macOS.&lt;/li&gt;
+&lt;li&gt;It supports both graphical and terminal interfaces.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;PAIR leverages underutilized compute power in homes, allowing users to run local AI tasks more efficiently.&lt;/li&gt;
+&lt;li&gt;It helps prevent bottlenecks in multi-agent workflows by distributing inference requests across available systems.&lt;/li&gt;
+&lt;li&gt;Nvidia envisions most users will have setups like one MacBook or Windows laptop and one gaming PC.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/nvidia-pair-virtual-inference-router-1024x576.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Screenshot-2026-09-03-at-10.42.02-AM.png?quality=90&amp;amp;strip=all&amp;amp;crop=7.9200247985121%2C0%2C84.159950402976%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Screenshot-2026-09-03-at-10.42.44-AM.png?quality=90&amp;amp;strip=all&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Nvidia #PAIR #localAI #AIinference #Ollama #LMStudio&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/ai-artificial-intelligence/989435/nvidia-pair-personal-ai-router-home-local-llm-compute-tool-rtx-macbook" target="_blank" rel="noopener"
+&gt;Nvidia launches free tool that links idle computers into a personal AI data center&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/nvidia-pair-virtual-inference-router-expands-available-compute-on-your-local-network/" target="_blank" rel="noopener"
+&gt;NVIDIA PAIR Virtual Inference Router Expands Available Compute on Your Local Network | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Nvidia to acquire Hugging Face for $12.93 billion</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-to-acquire-hugging-face-for-12.93-billion/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-to-acquire-hugging-face-for-12.93-billion/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25835739/STKP210_JENSEN_HUANG_B.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200" alt="Featured image of post Nvidia to acquire Hugging Face for $12.93 billion" /&gt;&lt;h1 id="nvidia-to-acquire-hugging-face-for-1293-billion"&gt;Nvidia to acquire Hugging Face for $12.93 billion
+&lt;/h1&gt;&lt;p&gt;Nvidia has agreed to purchase Hugging Face, the popular open-source AI platform, for $12.93 billion.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Hugging Face is an online platform founded in 2016 that hosts open-source AI models, datasets, and tools.&lt;/li&gt;
+&lt;li&gt;It is often described as the &amp;ldquo;GitHub&amp;rdquo; for AI due to its browsable library and community collaboration features.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The acquisition price is $12.93 billion, nearly triple Hugging Face’s last valuation of $4.5 billion in 2023.&lt;/li&gt;
+&lt;li&gt;Nvidia CEO Jensen Huang stated: &amp;ldquo;Together, we will scale Hugging Face’s platform, strengthen its infrastructure and expand access to AI for developers and institutions worldwide.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Hugging Face will remain an open platform for the entire AI ecosystem.&lt;/li&gt;
+&lt;li&gt;Developers will retain the choice of models, frameworks, clouds, inference service providers, and computing platforms.&lt;/li&gt;
+&lt;li&gt;Nvidia compute will not be required to build on or deploy through Hugging Face.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-timeline"&gt;📅 Timeline
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Speculation began on August 23rd after reports that Hugging Face was exploring a $13 billion sale.&lt;/li&gt;
+&lt;li&gt;By August 27th, reports indicated Nvidia was in acquisition talks with Hugging Face, with earlier claims of a $12.9 billion deal already agreed upon.&lt;/li&gt;
+&lt;li&gt;Nvidia has now publicly declared its intent to purchase Hugging Face.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Nvidia gains a strategic foothold to help preserve its AI hardware dominance as closed-source AI providers develop their own chips.&lt;/li&gt;
+&lt;li&gt;Hugging Face previously rejected a $500 million investment offer from Nvidia in 2023, which would have valued it at $7 billion.&lt;/li&gt;
+&lt;li&gt;Hugging Face generates around $150 million in annualized revenue, a fraction of its purchase price.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Nvidia #HuggingFace #AI #acquisition #open-source #AIhardware&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/tech/985474/nvidia-buying-hugging-face-deal" target="_blank" rel="noopener"
+&gt;Nvidia is buying Hugging Face for almost $13 billion&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Nvidia Launches DLSS 5 for RTX 50-Series GPUs and NBA 2K27</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-launches-dlss-5-for-rtx-50-series-gpus-and-nba-2k27/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-launches-dlss-5-for-rtx-50-series-gpus-and-nba-2k27/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/nba-2k-image.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.724534322093%2C100%2C78.550931355815&amp;w=1200" alt="Featured image of post Nvidia Launches DLSS 5 for RTX 50-Series GPUs and NBA 2K27" /&gt;&lt;h1 id="nvidia-launches-dlss-5-for-rtx-50-series-gpus-and-nba-2k27"&gt;Nvidia Launches DLSS 5 for RTX 50-Series GPUs and NBA 2K27
+&lt;/h1&gt;&lt;p&gt;Nvidia is officially launching DLSS 5 this week, an AI upscaling technology the company described as its most significant breakthrough in computer graphics since real-time ray tracing debuted in 2018.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Nvidia stated that DLSS 5 provides developers with controls and sliders to determine how changes appear in their games. Capabilities include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The ability to choose which parts of a scene to enhance.&lt;/li&gt;
+&lt;li&gt;The option to enhance specific elements like foliage, food, or silverware while leaving characters&amp;rsquo; faces alone.&lt;/li&gt;
+&lt;li&gt;Support for 6x frame generation, where the game produces one &amp;ldquo;real&amp;rdquo; frame for every six frames displayed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;While initial demos required two RTX 5090 cards, Nvidia claims a single midrange RTX 5060 can run NBA 2K27 at 1080p with ray tracing and ultra spec DLSS 5, provided it is paired with one of the fastest gaming CPUs and 6x frame generation is enabled.&lt;/p&gt;
+&lt;p&gt;However, the technology carries a significant performance cost:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nvidia estimates a performance hit of 50 to 60 percent.&lt;/li&gt;
+&lt;li&gt;An unofficial mod in Shadow of the Tomb Raider showed performance being cut in half.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;DLSS 5 is available on RTX 50-series desktop and laptop GPUs and through GeForce Now cloud gaming.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Game&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Status&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;NBA 2K27&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Launching September 3rd at 9PM PT on PC&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Resident Evil Requiem&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Not supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;EA Sports FC&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Not supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Starfield&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Not supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Hogwarts Legacy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Not supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Nvidia has not answered questions regarding when the tech will come to games beyond NBA 2K27 or if previously confirmed titles will still include it.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/nba-2k-image.jpg?quality=90&amp;amp;strip=all&amp;amp;crop=0.010757314974178%2C0%2C99.978485370052%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/assets_2026_08_1788195652_nba-2k27-nvidia-dlss-5-comparison-002-off.jpg?quality=90&amp;amp;strip=all&amp;amp;crop=0%2C0%2C100%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/assets_2026_08_1788195652_nba-2k27-nvidia-dlss-5-comparison-002-on.jpg?quality=90&amp;amp;strip=all&amp;amp;crop=0%2C0%2C100%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Nvidia #DLSS5 #RTX50-series #Gaming #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/tech/986378/nvidia-dlss-5-launch-nba-2k27" target="_blank" rel="noopener"
+&gt;Nvidia’s controversial DLSS 5 arrives September 3rd and requires serious GPU horsepower&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA BioNeMo Agent Toolkit integrates with Claude Science for scientific workflows</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-bionemo-agent-toolkit-integrates-with-claude-science-for-scientific-workflows/</link><pubDate>Mon, 31 Aug 2026 22:56:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-bionemo-agent-toolkit-integrates-with-claude-science-for-scientific-workflows/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/AdobeStock_842772489-e1787092703768-660x370.webp" alt="Featured image of post NVIDIA BioNeMo Agent Toolkit integrates with Claude Science for scientific workflows" /&gt;&lt;h1 id="nvidia-bionemo-agent-toolkit-integrates-with-claude-science-for-scientific-workflows"&gt;NVIDIA BioNeMo Agent Toolkit integrates with Claude Science for scientific workflows
+&lt;/h1&gt;&lt;p&gt;NVIDIA and Anthropic have integrated the NVIDIA BioNeMo Agent Toolkit into Claude Science, enabling AI agents to discover, launch, and call BioNeMo NIM microservices for complex scientific workflows in biology, chemistry, genomics, and drug discovery.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The NVIDIA BioNeMo Agent Toolkit packages over a decade of NVIDIA BioNeMo life sciences models, libraries, and workflows into agent-callable skills. Built to run with any agent framework, it enables complex scientific workflows using specialized domain expertise. On internal benchmarks, BioNeMo skills raise task correctness from 60% to 100% and roughly double token efficiency.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The toolkit provides agent-callable skills for biology, chemistry, genomics, and drug discovery.&lt;/li&gt;
+&lt;li&gt;It integrates with Claude Science, Anthropic’s AI workbench for scientific research, to run protein structure prediction workflows.&lt;/li&gt;
+&lt;li&gt;Agents can discover, launch, and call BioNeMo NIM microservices directly within Claude Science.&lt;/li&gt;
+&lt;li&gt;Workflows can include multiple-sequence alignment (MSA) and protein folding models like OpenFold3 and Boltz-2.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Claude Science runs in various configurations based on GPU location and security requirements. This tutorial focuses on running the platform on a machine with a GPU, requiring:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Access to a workstation or cloud machine with an NVIDIA L40S GPU or NVIDIA H100 GPU.&lt;/li&gt;
+&lt;li&gt;Claude Science installed.&lt;/li&gt;
+&lt;li&gt;Approximately 700 GB of storage (UniRef30 database: ~490 GB; Boltz-2 and OpenFold3 containers: 30–40 GB total).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To set up:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;In Claude Science, select &lt;strong&gt;Customize &amp;gt; Compute &amp;gt; NVIDIA BioNeMo NIM &amp;gt; Connect&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Import the BioNeMo Agent Toolkit skills from GitHub.&lt;/li&gt;
+&lt;li&gt;Add an NVIDIA API key and connect to local endpoints (Docker containers using the host GPU).&lt;/li&gt;
+&lt;li&gt;Download and launch local BioNeMo NIM containers for msa-search, OpenFold3, and Boltz-2 microservices.&lt;/li&gt;
+&lt;li&gt;Run a smoke test on each microservice to confirm they are healthy.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-example-workflow"&gt;🧪 Example workflow
+&lt;/h2&gt;&lt;p&gt;The tutorial examines the Seh1 protein and a predicted Mio-family partner from &lt;em&gt;Paracoccidioides lutzii&lt;/em&gt;, a fungus that causes paracoccidioidomycosis. The workflow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Retrieves protein sequences from UniProt.&lt;/li&gt;
+&lt;li&gt;Generates MSAs for single-chain and species-paired sequences using the GPU-accelerated MSA Search NIM.&lt;/li&gt;
+&lt;li&gt;Predicts structures for a single chain and a two-chain complex using OpenFold3 and Boltz-2 NIMs.&lt;/li&gt;
+&lt;li&gt;Compares results across models to evaluate structural differences.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The agent creates unpaired and paired alignments, recording source sequences and checksums for verification. In this run, the search returned 202 sequences for each protein.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AI agents can now orchestrate domain-specific tools for scientific problems, such as protein folding or molecular characterization.&lt;/li&gt;
+&lt;li&gt;The toolkit simplifies the use of specialized models and workflows, reducing the complexity of managing different environment requirements or APIs.&lt;/li&gt;
+&lt;li&gt;Integration with Claude Science enables end-to-end scientific research workflows, from hypothesis generation to experiment execution.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/image-16.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/image-17.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/image-18.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIagents #BioNeMo #ClaudeScience #NVIDIA #scientificAI #proteinfolding&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/run-nvidia-bionemo-nim-microservices-for-protein-structure-prediction-in-claude-science/" target="_blank" rel="noopener"
+&gt;Run NVIDIA BioNeMo NIM Microservices for Protein Structure Prediction in Claude Science | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Omniverse NuRec Enables Carline Adaptation for Autonomous Vehicle Perception Software</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-omniverse-nurec-enables-carline-adaptation-for-autonomous-vehicle-perception-software/</link><pubDate>Mon, 31 Aug 2026 22:56:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-omniverse-nurec-enables-carline-adaptation-for-autonomous-vehicle-perception-software/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/NuRec-AV.gif" alt="Featured image of post NVIDIA Omniverse NuRec Enables Carline Adaptation for Autonomous Vehicle Perception Software" /&gt;&lt;h1 id="nvidia-omniverse-nurec-enables-carline-adaptation-for-autonomous-vehicle-perception-software"&gt;NVIDIA Omniverse NuRec Enables Carline Adaptation for Autonomous Vehicle Perception Software
+&lt;/h1&gt;&lt;p&gt;NVIDIA Omniverse NuRec addresses the carline adaptation challenge by allowing developers to reconstruct real-world drives and render them for new vehicle configurations. This development makes it practical to prepare perception software for vehicles that may not yet exist and scale software across different platform variants without collecting and labeling new real-world datasets for every carline.&lt;/p&gt;
+&lt;h2 id="-the-carline-adaptation-challenge"&gt;🔍 The Carline Adaptation Challenge
+&lt;/h2&gt;&lt;p&gt;A perception stack is shaped by the vehicle that carries it. When the same software is moved to a new carline—such as from an SUV to a sedan—its perception of the world changes. These shifts are caused by differences in sensor placement, calibration, fields of view, occlusions, body geometry, timing, and coverage.&lt;/p&gt;
+&lt;p&gt;Consequences of changing vehicle configurations include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Traffic lights appearing in different parts of the frame.&lt;/li&gt;
+&lt;li&gt;Curbs becoming harder to see.&lt;/li&gt;
+&lt;li&gt;Pedestrians near the edge of coverage becoming ambiguous.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;While real-world data remains essential for grounding performance, collecting and labeling new datasets for every variant is expensive and often impossible early in development when fleets are unavailable.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;p&gt;NuRec uses 3D Gaussian splatting to reconstruct real-world environments from sensor data and render them for simulation. The process enables developers to reuse real-world data to determine how scenarios would look from a target vehicle rig.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Neural Reconstruction:&lt;/strong&gt; NuRec reconstructs a real-world drive captured by an existing vehicle.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Novel-View Synthesis:&lt;/strong&gt; The system renders the scene with gsplat, which projects Gaussians through a specified camera model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Camera Customization:&lt;/strong&gt; Users can change camera extrinsics, intrinsics, fields of view, and lens models, including pinhole, fisheye, and f-theta configurations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Reuse:&lt;/strong&gt; Reconstructed scenes retain original rig trajectories, per-camera calibration, dynamic object tracks, and map data. These assets are used to adapt labels for objects, lanes, traffic lights, and road boundaries in the newly rendered views.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;The system uses specific rig configuration files where each sensor entry defines a camera name, image resolution, lens model, intrinsic parameters, and camera-to-rig pose.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Dataset Name&lt;/td&gt;
+&lt;td style="text-align: left"&gt;NVIDIA Physical AI NuRec Dataset&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Scene Count&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,500+ neural-reconstructed driving scenes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Scene Duration&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Approximately 20 seconds each&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Reconstruction Method&lt;/td&gt;
+&lt;td style="text-align: left"&gt;3D Gaussian splatting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Camera View Types&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Front-wide (120°), front-telephoto (30°), cross-left/right (120°), rear-left/right (70°)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In the rig file, NRE converts colon-delimited names to logical camera IDs. For example, a camera named &lt;code&gt;camera:front:synthetic:120fov&lt;/code&gt; is converted to &lt;code&gt;camera_front_synthetic_120fov&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The NVIDIA Physical AI NuRec Dataset is available on Hugging Face. The dataset is gated, requiring users to accept a license and authenticate with a Hugging Face token before downloading scenes.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/07/nvidia-omniverse-rtx-sensor-ximulation.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/figure-2-optimized.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/figure-3-1.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Omniverse #AutonomousVehicles #NuRec #GaussianSplatting #Simulation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/scale-av-perception-across-vehicle-platforms-with-nvidia-omniverse-nurec/" target="_blank" rel="noopener"
+&gt;Scale AV Perception Across Vehicle Platforms with NVIDIA Omniverse NuRec | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Nvidia Introduces Integrated Rubin‑Vera System for End‑to‑End Agent Workloads</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-integrated-rubinvera-system-for-endtoend-agent-workloads/</link><pubDate>Sun, 30 Aug 2026 23:12:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-integrated-rubinvera-system-for-endtoend-agent-workloads/</guid><description>&lt;h1 id="nvidia-introduces-integrated-rubinvera-system-for-endtoend-agent-workloads"&gt;Nvidia Introduces Integrated Rubin‑Vera System for End‑to‑End Agent Workloads
+&lt;/h1&gt;&lt;p&gt;Nvidia is expanding its focus from raw GPU horsepower to full‑stack hardware that can run agentic workloads from start to finish. By pairing Rubin GPUs with a Vera CPU and additional supporting units, the company aims to cut data movement and speed up the orchestration needed for multi‑step AI agents.&lt;/p&gt;
+&lt;h2 id="-hardware-architecture"&gt;🛠️ Hardware Architecture
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Rubin GPUs + Vera CPU&lt;/strong&gt; – The combination is designed to keep data close to compute, reducing latency caused by moving information between separate components.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Supporting units&lt;/strong&gt; – Additional hardware is included to further accelerate orchestration of complex, multi‑step agents.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-highlights"&gt;⚡ Performance Highlights
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Vera’s orchestration role is reported to deliver &lt;strong&gt;up to 3× improvements on certain I/O‑heavy operations&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The design shifts emphasis from GPU throughput alone to overall latency, memory orchestration, and data plumbing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment-implications"&gt;📦 Deployment Implications
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Integrated racks&lt;/strong&gt; that bundle CPU, GPU, flash storage, and accelerators are expected from hardware partners and cloud vendors.&lt;/li&gt;
+&lt;li&gt;This changes procurement and cost‑modeling decisions, as well as considerations about where sensitive workflows are deployed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-guidance-for-founders-and-operators"&gt;📈 Guidance for Founders and Operators
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Stop treating the GPU as the whole stack; evaluate &lt;strong&gt;full‑stack latency and token cost&lt;/strong&gt; (model inference plus orchestration overhead) against end‑to‑end hardware profiles.&lt;/li&gt;
+&lt;li&gt;When negotiating with cloud providers, request &lt;strong&gt;agent‑focused SLAs&lt;/strong&gt; and detailed specifications of memory and access patterns before committing to large‑scale deployments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-takeaways"&gt;✅ Key Takeaways
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Agent performance now hinges on the entire hardware stack, not just GPU speed.&lt;/li&gt;
+&lt;li&gt;Nvidia’s Rubin‑Vera pairing promises notable I/O gains, potentially lowering the cost of running production agents.&lt;/li&gt;
+&lt;li&gt;Organizations should benchmark complete end‑to‑end latency and seek contracts that reflect the broader resource needs of agentic workloads.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Nvidia #AIagents #Hardware #Inference #Deployment&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aiagentstore.ai/ai-agent-news/this-week" target="_blank" rel="noopener"
+&gt;AI Agents News — Week of August 30, 2026 (Daily Updates)&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Scaling Test-Time Compute to Achieve Gold Medal at IOI 2025 with Open-Weight Models</title><link>https://shoubhikbanerjee.github.io/blog/p/scaling-test-time-compute-to-achieve-gold-medal-at-ioi-2025-with-open-weight-models/</link><pubDate>Tue, 28 Oct 2025 01:57:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/scaling-test-time-compute-to-achieve-gold-medal-at-ioi-2025-with-open-weight-models/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/661f00f7b5891221649e9fe8/etqsASTGFaxXGohuzi6yr.png" alt="Featured image of post Scaling Test-Time Compute to Achieve Gold Medal at IOI 2025 with Open-Weight Models" /&gt;&lt;h1 id="-scaling-test-time-compute-to-achieve-gold-medal-at-ioi-2025-with-open-weight-models"&gt;🏆 Scaling Test-Time Compute to Achieve Gold Medal at IOI 2025 with Open-Weight Models
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/661f00f7b5891221649e9fe8/etqsASTGFaxXGohuzi6yr.png"
+loading="lazy"
+alt="scaling (1)-1"
+&gt;
+&lt;em&gt;Performance scaling trend showing clear improvements with larger candidate pools&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The International Olympiad in Informatics (IOI) represents one of the most prestigious
+algorithmic programming competitions and serves as a critical benchmark for evaluating the
+reasoning and problem-solving capabilities of large language models (LLMs). Achieving gold-medal
+performance at the IOI marks a significant milestone in measuring AI competency. While several
+proprietary models have recently reached this level, their methods remain undisclosed, limiting
+reproducibility and progress within the research community.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;re excited to announce that, for the first time, an open-weight model, &lt;strong&gt;gpt-oss-120b&lt;/strong&gt;, has
+achieved gold-medal performance at IOI 2025. This achievement operates under the same
+constraints as human contestants, including time, memory limitations, and the strict
+50-submission limit per problem. This breakthrough was made possible through our transparent and
+reproducible test-time compute framework, &lt;strong&gt;GenCluster&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;GenCluster is a scalable, multi-stage pipeline that efficiently identifies the most promising
+solutions from thousands of candidates generated in parallel. Using behavioral clustering and
+tournament-style ranking, it systematically surfaces the best solutions for submission.&lt;/p&gt;
+&lt;p&gt;Using gpt-oss-120b as the foundation, GenCluster achieved a final score of &lt;strong&gt;446.75&lt;/strong&gt; at IOI
+2025, surpassing the gold-medal threshold of 438.3. This marks the first demonstration of
+gold-level performance using an open-weight model, establishing a transparent and reproducible
+benchmark for future research in competitive programming and AI reasoning.&lt;/p&gt;
+&lt;h2 id="-how-does-gencluster-work"&gt;⚙️ How does GenCluster work?
+&lt;/h2&gt;&lt;p&gt;GenCluster operates through four key stages, methodically examining thousands of candidate
+solutions to identify the most promising ones when only a limited number of final verifications are permitted:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/661f00f7b5891221649e9fe8/u9F0IqM15utqMEYpsnlI5.png"
+loading="lazy"
+alt="schema_ioi (1)-1"
+&gt;
+&lt;em&gt;GenCluster&amp;rsquo;s four-stage pipeline for solution identification and ranking&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-parallel-candidate-generation"&gt;🧩 Parallel Candidate Generation
+&lt;/h3&gt;&lt;p&gt;The process begins by generating thousands of candidate solutions for each problem in parallel.
+Rather than expecting a single perfect answer, GenCluster explores a large and diverse pool of
+possibilities, increasing the probability that at least one optimal solution emerges. Using
+gpt-oss-120b, this stage achieves a Score@5000 of 499.51 on IOI 2025, representing the upper
+limit for GenCluster to select the best 50 submissions per problem.&lt;/p&gt;
+&lt;h3 id="-behavioral-clustering"&gt;🔄 Behavioral Clustering
+&lt;/h3&gt;&lt;p&gt;Next, solutions are grouped based on their behavioral patterns. Every candidate is executed
+against a set of LLM-generated test cases, and solutions producing identical outputs are
+clustered together. This approach transforms thousands of individual solutions into a manageable
+set of distinct problem-solving strategies.&lt;/p&gt;
+&lt;h3 id="-ranking-with-tournament"&gt;🏁 Ranking with Tournament
+&lt;/h3&gt;&lt;p&gt;To identify the winning strategy, a tournament-style competition is conducted. A representative
+solution from each cluster competes in head-to-head matchups judged by the LLM. Clusters are
+then ranked by their number of wins, allowing the most promising strategies to rise to the top.&lt;/p&gt;
+&lt;h3 id="-submission-strategy"&gt;📝 Submission Strategy
+&lt;/h3&gt;&lt;p&gt;Finally, a round-robin submission strategy maximizes IOI&amp;rsquo;s strict 50-attempt limit per problem.
+Solutions from top-ranked clusters are submitted sequentially, starting with the most
+challenging subtasks. Within each cluster, solutions are ranked and selected based on the length
+of their reasoning trace. This structured approach ensures that the strongest candidates are
+evaluated first, maximizing performance while efficiently utilizing every submission.&lt;/p&gt;
+&lt;h2 id="-what-is-the-best-open-weight-model-for-ioi-2025"&gt;🤖 What is the best open-weight model for IOI 2025?
+&lt;/h2&gt;&lt;p&gt;We evaluated several leading open-weight models on competitive programming benchmarks and found
+that &lt;strong&gt;gpt-oss-120b&lt;/strong&gt; achieved the highest score by a significant margin. It&amp;rsquo;s the only model
+with the potential to reach gold-medal performance when scaled to 5,000 generations per problem.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/661f00f7b5891221649e9fe8/uoilFwN9vL-_7JA8x8c5p.png"
+loading="lazy"
+alt="models-1"
+&gt;
+&lt;em&gt;Comparative performance of open-weight models across different generation budgets&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The gpt-oss family demonstrates stronger gains as the number of generations increases,
+suggesting more effective scaling with test-time compute. While Qwen3-235B-A22B-Thinking
+outperforms gpt-oss-20b and DeepSeek-R1-0528 at smaller generation budgets, its performance
+scales less favorably at larger ones.&lt;/p&gt;
+&lt;h2 id="-impact-of-the-maximum-number-of-tokens"&gt;📊 Impact of the Maximum Number of Tokens
+&lt;/h2&gt;&lt;p&gt;Previous studies have shown that longer reasoning traces often correlate with higher accuracy on
+complex problems, and our results confirm this trend. When we varied the maximum generation
+length, the gpt-oss models continued improving up to their token limits, while Qwen3-235B-A22B
+plateaued around 48K tokens, well below the 80K length recommended by its authors.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/661f00f7b5891221649e9fe8/J3Cq0CasldG5eNkr80ycH.png"
+loading="lazy"
+alt="tokens-1"
+&gt;
+&lt;em&gt;Token length impact on model performance across different architectures&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Interestingly, the gpt-oss models not only produced longer, more detailed reasoning paths but
+also delivered the strongest overall performance, outperforming DeepSeek-R1-0528 and
+Qwen3-235B-A22B once larger compute budgets were applied.&lt;/p&gt;
+&lt;h2 id="-resources"&gt;🚀 Resources
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://arxiv.org/abs/2501.00000" target="_blank" rel="noopener"
+&gt;GenCluster Paper on Arxiv&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://ioi2025.id/leaderboard" target="_blank" rel="noopener"
+&gt;IOI 2025 Leaderboard&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://ioi2025.id/problems" target="_blank" rel="noopener"
+&gt;IOI 2025 Questions&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/nvidia/ioi-gold-medal-with-open-weight" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/nvidia/ioi-gold-medal-with-open-weight&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Our results demonstrate that open-weight models, when combined with a scalable test-time compute
+framework, can approach the performance of leading closed systems on the IOI benchmark. By
+introducing a fully reproducible pipeline built entirely on open-weight models, we aim to make
+advanced reasoning research more transparent, accessible, and verifiable.&lt;/p&gt;
+&lt;p&gt;This achievement represents a significant step forward in democratizing AI research and
+competitive programming capabilities. The transparent nature of our approach allows the research
+community to build upon these findings, potentially leading to even greater advances in
+algorithmic problem-solving and AI reasoning.&lt;/p&gt;
+&lt;p&gt;We hope this work inspires future efforts to leverage test-time compute as a means to further
+scale open models and push the boundaries of what&amp;rsquo;s possible in algorithmic problem-solving with
+transparent, reproducible methodologies.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AI #MachineLearning #OpenWeight #CompetitiveProgramming #IOI #TestTimeCompute
+#AlgorithmicReasoning #GenCluster #NVIDIA #GPT&lt;/em&gt;&lt;/p&gt;</description></item><item><title>OmniVinci: Revolutionary Omni-Modal Understanding LLM by NVIDIA</title><link>https://shoubhikbanerjee.github.io/blog/p/omnivinci-revolutionary-omni-modal-understanding-llm-by-nvidia/</link><pubDate>Tue, 28 Oct 2025 01:44:39 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/omnivinci-revolutionary-omni-modal-understanding-llm-by-nvidia/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post OmniVinci: Revolutionary Omni-Modal Understanding LLM by NVIDIA" /&gt;&lt;h1 id="-omnivinci-revolutionary-omni-modal-understanding-llm-by-nvidia"&gt;🚀 OmniVinci: Revolutionary Omni-Modal Understanding LLM by NVIDIA
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://img.shields.io/badge/ArXiv-Paper-brown"
+loading="lazy"
+alt="ArXiv Paper"
+&gt; &lt;img src="https://img.shields.io/badge/GitHub-Link-blue"
+loading="lazy"
+alt="GitHub
+Code"
+&gt; &lt;img src="https://img.shields.io/badge/HuggingFace-Model-yellow"
+loading="lazy"
+alt="HuggingFace
+Model"
+&gt;&lt;img src="https://img.shields.io/badge/Web-Page-orange"
+loading="lazy"
+alt="Website"
+&gt;&lt;/p&gt;
+&lt;h2 id="-introduction"&gt;🧠 Introduction
+&lt;/h2&gt;&lt;p&gt;OmniVinci represents a groundbreaking leap in artificial intelligence from NVIDIA&amp;rsquo;s research
+division, focusing on omni-modal Large Language Models (LLMs) that transcend traditional
+boundaries. Unlike conventional models that are limited to text processing, OmniVinci can
+seamlessly &lt;strong&gt;see, read, listen, speak, and reason&lt;/strong&gt; across multiple modalities simultaneously.&lt;/p&gt;
+&lt;p&gt;This cutting-edge model positions itself among the elite performers in omni-modality
+understanding, demonstrating exceptional capabilities across popular benchmarks in audio,
+vision, and multimodal reasoning tasks.&lt;/p&gt;
+&lt;h2 id="-performance-excellence"&gt;📊 Performance Excellence
+&lt;/h2&gt;&lt;p&gt;OmniVinci showcases remarkable performance across diverse evaluation metrics, establishing
+itself as a leader in the omni-modal AI landscape:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://shoubhikbanerjee.github.io/blog/nvidia/omnivinci/resolve/main/asset/performance.png"
+loading="lazy"
+alt="Performance Benchmarks"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Comprehensive performance evaluation showing OmniVinci&amp;rsquo;s superiority across multiple
+omni-modality, audio, and vision benchmarks&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The model demonstrates consistent excellence across various challenging tasks, proving its
+versatility and reliability in real-world applications.&lt;/p&gt;
+&lt;h2 id="-quickstart-guide"&gt;⚡ Quickstart Guide
+&lt;/h2&gt;&lt;p&gt;Getting started with OmniVinci is straightforward thanks to its integration with the
+Transformers ecosystem. Below are the essential steps to begin leveraging this powerful model.&lt;/p&gt;
+&lt;h3 id="-environment-setup"&gt;🔧 Environment Setup
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Step 1: Download the Model Repository&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;huggingface-cli download nvidia/omnivinci --local-dir ./omnivinci --local-dir-use-symlinks False &lt;span class="nb"&gt;cd&lt;/span&gt; ./omnivinci
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Step 2: Install Dependencies&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The setup process leverages the NVILA codebase for optimal compatibility:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;bash ./environment_setup.sh omnivinci
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-transformers-integration"&gt;🤗 Transformers Integration
+&lt;/h3&gt;&lt;h4 id="-video-with-audio-processing-example"&gt;🎥 Video with Audio Processing Example
+&lt;/h4&gt;&lt;p&gt;The following example demonstrates OmniVinci&amp;rsquo;s powerful video and audio understanding capabilities:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;span class="lnt"&gt;24
+&lt;/span&gt;&lt;span class="lnt"&gt;25
+&lt;/span&gt;&lt;span class="lnt"&gt;26
+&lt;/span&gt;&lt;span class="lnt"&gt;27
+&lt;/span&gt;&lt;span class="lnt"&gt;28
+&lt;/span&gt;&lt;span class="lnt"&gt;29
+&lt;/span&gt;&lt;span class="lnt"&gt;30
+&lt;/span&gt;&lt;span class="lnt"&gt;31
+&lt;/span&gt;&lt;span class="lnt"&gt;32
+&lt;/span&gt;&lt;span class="lnt"&gt;33
+&lt;/span&gt;&lt;span class="lnt"&gt;34
+&lt;/span&gt;&lt;span class="lnt"&gt;35
+&lt;/span&gt;&lt;span class="lnt"&gt;36
+&lt;/span&gt;&lt;span class="lnt"&gt;37
+&lt;/span&gt;&lt;span class="lnt"&gt;38
+&lt;/span&gt;&lt;span class="lnt"&gt;39
+&lt;/span&gt;&lt;span class="lnt"&gt;40
+&lt;/span&gt;&lt;span class="lnt"&gt;41
+&lt;/span&gt;&lt;span class="lnt"&gt;42
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;transformers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;AutoProcessor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AutoModel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AutoConfig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AutoModelForCausalLM&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;torch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Configuration and model loading&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;./&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;video_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;xxx.mp4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;generation_kwargs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;max_new_tokens&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;max_length&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;99999999&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;load_audio_in_video&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;num_video_frames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;128&lt;/span&gt; &lt;span class="n"&gt;audio_length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;max_3600&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Initialize model components&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;config&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoConfig&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;trust_remote_code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoModel&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;trust_remote_code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;torch_dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;torch.float16&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;device_map&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;auto&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;processor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoProcessor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;trust_remote_code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Configure generation settings&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;generation_config&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;default_generation_config&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;generation_kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Set up audio and video processing&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;load_audio_in_video&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;load_audio_in_video&lt;/span&gt; &lt;span class="n"&gt;processor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;load_audio_in_video&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;load_audio_in_video&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;num_video_frames&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;num_video_frames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;num_video_frames&lt;/span&gt; &lt;span class="n"&gt;processor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;num_video_frames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;num_video_frames&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;audio_length&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;audio_chunk_length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;audio_length&lt;/span&gt; &lt;span class="n"&gt;processor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;audio_chunk_length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;audio_length&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Create conversation with video input&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;conversation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;role&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;user&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;content&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;video&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;video&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;video_path&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Assess the video, followed by a detailed description of its&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;video&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;audio&lt;/span&gt; &lt;span class="n"&gt;contents&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;} ]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Process and generate response&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;processor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply_chat_template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;conversation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tokenize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;add_generation_prompt&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;inputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;processor&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;output_ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;input_ids&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;input_ids&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;media&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;getattr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;media&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;media_config&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;getattr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;media_config&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;processor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;batch_decode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output_ids&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;skip_special_tokens&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-additional-examples"&gt;📁 Additional Examples
+&lt;/h3&gt;&lt;p&gt;For comprehensive understanding of OmniVinci&amp;rsquo;s capabilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Audio Processing&lt;/strong&gt;: Refer to &lt;code&gt;example_mini_audio.py&lt;/code&gt; for pure audio inference examples&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Image Analysis&lt;/strong&gt;: Check &lt;code&gt;example_mini_image.py&lt;/code&gt; for image-based processing workflows&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These examples provide practical implementations for different modal inputs, ensuring you can
+leverage OmniVinci&amp;rsquo;s full potential across various use cases.&lt;/p&gt;
+&lt;h2 id="-license-and-terms-of-use"&gt;⚖️ License and Terms of Use
+&lt;/h2&gt;&lt;p&gt;OmniVinci is released under the &lt;strong&gt;NVIDIA OneWay Noncommercial License&lt;/strong&gt;, which governs its usage
+and distribution. Please review the complete license terms before implementing the model in your projects.&lt;/p&gt;
+&lt;h2 id="-citation"&gt;📚 Citation
+&lt;/h2&gt;&lt;p&gt;When using OmniVinci in your research or projects, please cite the original work:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bibtex" data-lang="bibtex"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nc"&gt;@article&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;omnivinci2025&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;title&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s"&gt;{OmniVinci: Enhancing Architecture and Data for Omni-Modal Understanding LLM}&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;author&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s"&gt;{Hanrong Ye, Chao-Han Huck Yang, Arushi Goel, Wei Huang, Ligeng Zhu,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; Yuanhang Su, Sean Lin, An-Chieh Cheng, Zhen Wan, Jinchuan Tian,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; Yuming Lou, Dong Yang, Zhijian Liu, Yukang Chen, Ambrish Dantrey,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; Ehsan Jahangiri, Sreyan Ghosh, Daguang Xu, Ehsan Hosseini-Asl,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; Danial Mohseni Taheri, Vidya Murali, Sifei Liu, Jason Lu,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; Oluwatobi Olabiyi, Frank Wang, Rafael Valle, Bryan Catanzaro,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; Andrew Tao, Song Han, Jan Kautz, Hongxu Yin, Pavlo Molchanov}&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;journal&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s"&gt;{arXiv}&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;year&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s"&gt;{2025}&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/nvidia/omnivinci" target="_blank" rel="noopener"
+&gt;https://huggingface.co/nvidia/omnivinci&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;OmniVinci represents a significant advancement in omni-modal AI technology, offering
+unprecedented capabilities in understanding and processing multiple data types simultaneously.
+Its integration with the Transformers ecosystem makes it accessible to researchers and
+developers while maintaining state-of-the-art performance across diverse benchmarks.&lt;/p&gt;
+&lt;p&gt;The model&amp;rsquo;s ability to process video, audio, images, and text in a unified framework opens new
+possibilities for applications in content analysis, multimedia understanding, and interactive AI
+systems. With proper setup and implementation, OmniVinci can serve as a powerful foundation for
+next-generation AI applications requiring comprehensive multimodal understanding.&lt;/p&gt;
+&lt;p&gt;For organizations and researchers working on complex AI projects that demand sophisticated
+understanding across multiple modalities, OmniVinci provides a robust, well-documented solution
+backed by NVIDIA&amp;rsquo;s extensive research expertise.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#NVIDIA #OMNIVINCI #MULTIMODAL #AI #TRANSFORMERS #HUGGINGFACE #DEEPLEARNING #RESEARCH&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Nemotron's Open Secret: Accelerating AI Development with Open Models, Data, and Recipes</title><link>https://shoubhikbanerjee.github.io/blog/p/nemotrons-open-secret-accelerating-ai-development-with-open-models-data-and-recipes/</link><pubDate>Tue, 28 Oct 2025 01:03:26 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nemotrons-open-secret-accelerating-ai-development-with-open-models-data-and-recipes/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6311021788942700629e6247/dgIXaIexEM4yFWRzDHb_R.png" alt="Featured image of post Nemotron's Open Secret: Accelerating AI Development with Open Models, Data, and Recipes" /&gt;&lt;h1 id="-nemotrons-open-secret-accelerating-ai-development-with-open-models-data-and-recipes"&gt;🚀 Nemotron&amp;rsquo;s Open Secret: Accelerating AI Development with Open Models, Data, and Recipes
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;NVIDIA Nemotron isn&amp;rsquo;t just a family of models. It&amp;rsquo;s an open collection of models, datasets, and
+training recipes that anyone can use to build, customize, and deploy their own AI systems.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6311021788942700629e6247/dgIXaIexEM4yFWRzDHb_R.png"
+loading="lazy"
+alt="Nemotron Architecture"
+&gt;
+&lt;em&gt;Nemotron Nano V2 hybrid architecture combining Transformer and Mamba-2 layers for enhanced
+efficiency&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;From lightweight edge models to frontier-scale LLMs, Nemotron gives developers full visibility
+into how the models are trained, what data they use, and how to adapt them for new use cases. No black boxes.&lt;/p&gt;
+&lt;p&gt;NVIDIA also uses Nemotron internally to learn how to design the next generation of accelerated
+infrastructure, including GPUs, software, and networking, by experimenting in the open with the community.&lt;/p&gt;
+&lt;h2 id="-tldr"&gt;📋 TL;DR
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;What it is:&lt;/strong&gt; Nemotron is NVIDIA&amp;rsquo;s family of open models, datasets, recipes for training and
+deploying AI at any scale. Models come in three sizes: Nano, Super, and Ultra, covering
+everything from edge devices to data centers, including both text and multimodal variants.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Why it matters:&lt;/strong&gt; Because you can inspect the data, modify the models, and deploy them however
+you want.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key breakthroughs:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid Transformer + Mamba Architecture:&lt;/strong&gt; Nemotron Nano V2 fuses Transformers with Mamba-2
+state-space layers to deliver up to 20X faster inference and on-device reasoning without sacrificing accuracy&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Thinking budgets:&lt;/strong&gt; configurable reasoning depth to balance answer quality vs. cost in
+production&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FP4 pre-training:&lt;/strong&gt; 4-bit precision training on Blackwell GPUs, achieving world-class
+results at dramatically lower energy use&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data-centric optimization:&lt;/strong&gt; curated and synthetic datasets that cut pre-training time by up
+to 4× while improving model accuracy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;For developers:&lt;/strong&gt; Use Nemotron as your foundation for custom AI. From fine-tuning enterprise
+copilots to deploying agentic systems at the edge.&lt;/p&gt;
+&lt;p&gt;Run, adapt, and extend: everything you need including models and datasets, is open on huggingface.co/nvidia&lt;/p&gt;
+&lt;h3 id="-model-overview"&gt;🔧 Model Overview
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Parameters&lt;/th&gt;
+&lt;th&gt;Modality&lt;/th&gt;
+&lt;th&gt;Strengths&lt;/th&gt;
+&lt;th&gt;Ideal Use Cases&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NVIDIA-Nemotron-Nano-9B-v2&lt;/td&gt;
+&lt;td&gt;9B&lt;/td&gt;
+&lt;td&gt;Text&lt;/td&gt;
+&lt;td&gt;Hybrid Transformer–SSM architecture delivering 6–20×&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;faster inference with transformer-level accuracy. Optimized for speed and efficiency.&lt;/td&gt;
+&lt;td&gt;Edge and&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;near-edge AI agents, chatbots, and lightweight copilots.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Llama-3.1-Nemotron-Nano-VL-8B-V1&lt;/td&gt;
+&lt;td&gt;8B&lt;/td&gt;
+&lt;td&gt;Multimodal (Vision + Language)&lt;/td&gt;
+&lt;td&gt;Combines Nemotron&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;reasoning with Llama 3.1 vision-language capabilities for cross-modal understanding.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Multimodal document intelligence, OCR parsing, and AI assistants that &amp;ldquo;see and reason.&amp;rdquo;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Llama-3.3-Nemotron-Super-49B-v1.5&lt;/td&gt;
+&lt;td&gt;49B&lt;/td&gt;
+&lt;td&gt;Text&lt;/td&gt;
+&lt;td&gt;Balanced accuracy and performance for&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;enterprise-scale AI. Built with Nemotron datasets and reasoning recipes.&lt;/td&gt;
+&lt;td&gt;Enterprise copilots,&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RAG systems, workflow automation, and domain fine-tuning.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Llama-3.1-Nemotron-Ultra-253B-v1&lt;/td&gt;
+&lt;td&gt;253B&lt;/td&gt;
+&lt;td&gt;Text&lt;/td&gt;
+&lt;td&gt;Frontier-scale reasoning and alignment&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;optimized for research. Co-designed with NVIDIA&amp;rsquo;s full-stack hardware and data infrastructure.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Large-scale research, long-context reasoning, and infrastructure acceleration.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;License: Open model license and repo-specific terms are published per asset.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-why-nvidia-builds-nemotron"&gt;🎯 Why NVIDIA Builds Nemotron
+&lt;/h2&gt;&lt;p&gt;Nemotron advances a simple idea: &lt;strong&gt;openness accelerates progress&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;By releasing open weights, open datasets, and transparent training and alignment recipes,
+developers can reproduce, audit, and extend what NVIDIA builds, then tailor it to their data,
+compliance needs, and domain-specific use cases.&lt;/p&gt;
+&lt;p&gt;At the same time, Nemotron is part of NVIDIA&amp;rsquo;s strategy of &amp;ldquo;extreme co-design&amp;rdquo; that Jensen Huang
+discussed on the Bg2 Pod. This is where every layer of the stack, across chips, systems,
+software, algorithms, and data, is designed together as one unified system. Training and
+optimizing models in the open provides insights that shape NVIDIA&amp;rsquo;s hardware and software
+roadmap, from GPU architectures and networking to memory scheduling and kernel design.&lt;/p&gt;
+&lt;p&gt;That means every improvement discovered through Nemotron—faster reasoning, better convergence,
+lower energy—eventually flows back into the platform you use, whether you&amp;rsquo;re serving a small
+Nano model at the edge or scaling Ultra in the cloud.&lt;/p&gt;
+&lt;h2 id="-breakthroughs-in-efficiency-and-accuracy"&gt;⚡ Breakthroughs in Efficiency and Accuracy
+&lt;/h2&gt;&lt;p&gt;The latest Nemotron research brings together architectural innovation, precision advances, and
+intelligent reasoning controls—all designed to make models both smarter and faster.&lt;/p&gt;
+&lt;h3 id="-nemotron-nano-v2--hybrid-transformer--mamba-architecture"&gt;🧩 Nemotron Nano V2 — Hybrid Transformer + Mamba Architecture
+&lt;/h3&gt;&lt;p&gt;Nemotron Nano V2 introduces a hybrid Transformer–Mamba architecture that combines the long-range
+reasoning power of Transformers with the sequential efficiency of Mamba-2 state-space layers.
+Most attention layers are replaced with Mamba modules, which process sequences in linear time
+and constant memory per token, while a few key attention layers remain to preserve full-context reasoning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The result:&lt;/strong&gt; 6–20X higher inference throughput on the same hardware with minimal loss in
+accuracy across reasoning and generation benchmarks. This efficiency makes on-device and
+near-edge AI assistants practical for real-time decision-making and multimodal agents that need
+to think fast and act locally.&lt;/p&gt;
+&lt;h3 id="-fp4-pre-training--four-bit-precision-at-full-intelligence"&gt;🔬 FP4 Pre-Training — Four-Bit Precision at Full Intelligence
+&lt;/h3&gt;&lt;p&gt;Nemotron demonstrates energy-efficient FP4 training on Blackwell GPUs using NVIDIA&amp;rsquo;s Transformer
+Engine. This results in world-class accuracy at dramatically lower energy cost, proving that
+four-bit precision can train frontier-level models without sacrificing intelligence.&lt;/p&gt;
+&lt;p&gt;This breakthrough helps reduce the carbon footprint and infrastructure cost of large-scale AI development.&lt;/p&gt;
+&lt;h3 id="-thinking-budgets--reason-smarter-spend-less"&gt;💡 Thinking Budgets — Reason Smarter, Spend Less
+&lt;/h3&gt;&lt;p&gt;Reasoning quality often scales with how long a model &amp;ldquo;thinks.&amp;rdquo; Nemotron introduces
+&lt;strong&gt;configurable thinking budgets&lt;/strong&gt;, allowing developers and businesses to control reasoning
+depth, balancing answer quality and operational cost.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Shorter thinking&lt;/strong&gt; = faster, cheaper responses&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Longer thinking&lt;/strong&gt; = deeper reasoning and higher accuracy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now, you can tune reasoning the same way you tune batch size or context length.&lt;/p&gt;
+&lt;h2 id="-sizing-overview"&gt;📏 Sizing Overview
+&lt;/h2&gt;&lt;p&gt;Nemotron includes text and multimodal large language models across three weight classes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Nano&lt;/strong&gt; – small, fast, and edge-ready&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Super&lt;/strong&gt; – mid-range, balanced for enterprise tasks&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ultra&lt;/strong&gt; – frontier-scale for cutting-edge research&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All models are trained with shared open data recipes, offering reproducible baselines that anyone can extend.&lt;/p&gt;
+&lt;h2 id="-data-centric-efficiency"&gt;📊 Data-Centric Efficiency
+&lt;/h2&gt;&lt;p&gt;Smarter data, not just bigger data, drives Nemotron&amp;rsquo;s performance gains.&lt;/p&gt;
+&lt;p&gt;Refined pre-training datasets, curated and enhanced with synthetic data, accelerate convergence
+by up to 4X, producing more capable models on the same compute budget.&lt;/p&gt;
+&lt;p&gt;This &amp;ldquo;data flywheel&amp;rdquo; approach means developers can train faster, cheaper, and with higher
+accuracy, continuously improving performance through better data.&lt;/p&gt;
+&lt;h2 id="-open-datasets-for-ai-developmen"&gt;🗃️ Open Datasets for AI Developmen
+&lt;/h2&gt;&lt;p&gt;NVIDIA makes its pretraining and post-training datasets available on Hugging Face so developers
+can inspect the underlying data and use it to train their own models.&lt;/p&gt;
+&lt;p&gt;Nemotron datasets play a critical role in how efficiently models learn. Smarter data leads to
+smarter models with the same, or even less, compute. These datasets are optimized not just for
+size but for efficiency, diversity, and reasoning quality.&lt;/p&gt;
+&lt;h3 id="-available-datasets"&gt;📋 Available Datasets
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Dataset&lt;/th&gt;
+&lt;th&gt;Strengths&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Nemotron-Pretraining-Code-v1&lt;/td&gt;
+&lt;td&gt;Preserves high-value math and code while enriching it with&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;diverse multilingual Q&amp;amp;A, fueling the next generation of intelligent, globally-capable models.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nemotron-Post-Training-Dataset-v2&lt;/td&gt;
+&lt;td&gt;Post-training dataset with math, code, general reasoning,&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;and instruction following capabilities improvements.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Llama-Nemotron-VLM-Dataset-v1&lt;/td&gt;
+&lt;td&gt;High-quality annotations that support world class&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;vision-language understanding with permissive license for training.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nemotron-Personas-Datasets&lt;/td&gt;
+&lt;td&gt;Synthetically-generated personas grounded in real-world&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;demographic, geographic and personality trait distributions&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Projects like &lt;strong&gt;Nemotron-MIND&lt;/strong&gt; focus on structured math dialogue reasoning, while
+&lt;strong&gt;Nemotron-CrossThink&lt;/strong&gt; combines topics from science, math, and humanities to push reasoning
+beyond narrow domains.&lt;/p&gt;
+&lt;h2 id="-real-world-application"&gt;🛠️ Real-World Application
+&lt;/h2&gt;&lt;p&gt;Nemotron isn&amp;rsquo;t just a research effort—it&amp;rsquo;s the foundation behind practical, open-source
+workflows developers can deploy today:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;RAG Agent:&lt;/strong&gt; Use Nemotron with the NeMo framework to create retrieval-augmented generation
+(RAG) agents that pull from your private data and deliver context-aware answers in real time&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Computer Use Agent:&lt;/strong&gt; Build an agent that can autonomously execute multi-step tasks in the
+Bash shell, including navigating files, summarizing documents, and analyzing log files&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Report Generator AI Agent:&lt;/strong&gt; Learn how to build an agent that automatically compiles and
+summarizes reports using open Nemotron models, easily customizable for enterprise or research use&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI Coding Agent:&lt;/strong&gt; Build a powerful AI coding assistant directly on your workstation. Adjust
+the model&amp;rsquo;s thinking budget to balance reasoning depth, speed, and compute cost&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multimodal Document Intelligence:&lt;/strong&gt; Combine NVIDIA Llama Nemotron Nano VL with
+vision-language reasoning to parse, understand, and summarize complex documents containing text, charts, and images&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deep Researcher Blueprint:&lt;/strong&gt; Explore the AI-Q NVIDIA Blueprint, a reference design for
+building research-grade agentic workflows that plan, reason, and synthesize insights across multiple data sources&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With Nemotron, developers can start small, scale fast, and customize deeply, all while keeping
+data ownership, transparency, and control.&lt;/p&gt;
+&lt;h2 id="-transparency--openness"&gt;🔍 Transparency &amp;amp; Openness
+&lt;/h2&gt;&lt;p&gt;Nemotron commits to &lt;strong&gt;inspectable lineage&lt;/strong&gt; (models + data), &lt;strong&gt;shareable recipes&lt;/strong&gt;, and
+&lt;strong&gt;reproducible evaluation&lt;/strong&gt; so teams can audit, customize, and deploy safely. If your policies
+require changing the data mix, language balance, or alignment method, the artifacts and
+documentation are there so you can reproduce, and improve, our results.&lt;/p&gt;
+&lt;p&gt;We encourage forks, PRs, and benchmark reproductions. Bring your findings back—that&amp;rsquo;s how the
+whole community gets faster, safer, and smarter together.&lt;/p&gt;
+&lt;h2 id="-build-the-future-with-us"&gt;🤝 Build the Future With Us
+&lt;/h2&gt;&lt;p&gt;Every breakthrough in AI starts with collaboration. Nemotron, more than an NVIDIA project, is
+meant to be a platform for builders—from weekend hackers to enterprise developers.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re fine-tuning models, optimizing inference, or experimenting with different
+architectures, your insights directly shape how the next generation of AI applications and infrastructure will evolve.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;This is your invitation to:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Customize your model:&lt;/strong&gt; Fine-tune Nemotron with your own data using the NeMo framework&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Contribute back:&lt;/strong&gt; Fork models, improve datasets, or publish new recipes that make training
+faster and safer&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Experiment:&lt;/strong&gt; Use open weights to test new ideas in reasoning, alignment, or multimodal
+learning&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benchmark:&lt;/strong&gt; Share what works (and what doesn&amp;rsquo;t) so others can learn faster&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Influence our upcoming features:&lt;/strong&gt; Vote on what features we should prioritize for future
+versions of Nemotron&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Build together:&lt;/strong&gt; Join thousands of developers using open NVIDIA models to power everything
+from agentic AI to robotics and edge systems&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nemotron and NeMo are your building blocks for AI applications. Open, accelerated, and ready to customize.&lt;/p&gt;
+&lt;p&gt;Every pull request, dataset, or benchmark helps design the AI infrastructure of the future.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Let&amp;rsquo;s build it together.&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/nvidia/nemotron-open-models-data" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/nvidia/nemotron-open-models-data&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;NVIDIA&amp;rsquo;s Nemotron represents a paradigm shift in AI development—proving that openness and
+collaboration can accelerate innovation without compromising competitive advantage. By providing
+transparent access to models, datasets, and training recipes, Nemotron enables developers to
+build custom AI solutions while contributing to the broader advancement of artificial intelligence.&lt;/p&gt;
+&lt;p&gt;The breakthrough technologies showcased—from hybrid Transformer-Mamba architectures to FP4
+precision training and configurable thinking budgets—demonstrate that efficiency and
+intelligence aren&amp;rsquo;t mutually exclusive. As AI continues to evolve from research curiosity to
+production necessity, initiatives like Nemotron provide the foundation for sustainable,
+scalable, and customizable AI deployment across every industry and application.&lt;/p&gt;
+&lt;p&gt;The future of AI is open, collaborative, and built together.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#NVIDIA #AI #MACHINELEARNING #OPENAI #NEMOTRON #LLAMA #TRANSFORMERS #MAMBA #DEEPLEARNING
+#ARTIFICIALINTELLIGENCE #HUGGINGFACE #OPENSOURCE&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Llama-Embed-Nemotron-8B Text Embedding Model Ranks First on Multilingual MTEB Leaderboard</title><link>https://shoubhikbanerjee.github.io/blog/p/llama-embed-nemotron-8b-text-embedding-model-ranks-first-on-multilingual-mteb-leaderboard/</link><pubDate>Tue, 28 Oct 2025 00:54:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/llama-embed-nemotron-8b-text-embedding-model-ranks-first-on-multilingual-mteb-leaderboard/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Llama-Embed-Nemotron-8B Text Embedding Model Ranks First on Multilingual MTEB Leaderboard" /&gt;&lt;h1 id="-llama-embed-nemotron-8b-text-embedding-model-ranks-first-on-multilingual-mteb-leaderboard"&gt;🚀 Llama-Embed-Nemotron-8B Text Embedding Model Ranks First on Multilingual MTEB Leaderboard
+&lt;/h1&gt;&lt;h2 id="-build-smarter-language-aware-search-and-retrieval-systems"&gt;🌍 Build Smarter, Language-Aware Search and Retrieval Systems
+&lt;/h2&gt;&lt;p&gt;As global information continues to expand across languages, developers face a growing challenge:
+how to make models understand text in dozens of languages with the same precision, nuance, and
+semantic clarity. Traditional multilingual embedding models often struggle with alignment,
+scalability, and consistent performance.&lt;/p&gt;
+&lt;p&gt;The NVIDIA Llama-Embed-Nemotron-8B model changes this. Built by fine-tuning the Llama-3.1-8B
+foundation model, this embedding model applies cross-lingual representation learning to deliver
+unified, high-fidelity embeddings across linguistically diverse content. Whether you&amp;rsquo;re building
+cross-language retrieval systems, search engines, or conversational AI, this model helps close
+the comprehension gap between languages – high-resource or low-resource alike.&lt;/p&gt;
+&lt;p&gt;This article provides an overview of the model&amp;rsquo;s architecture, training methodology and
+evaluation results, highlighting how it empowers developers to build more intelligent and
+inclusive multilingual applications.&lt;/p&gt;
+&lt;h2 id="-architectural-highlights"&gt;⚙️ Architectural Highlights
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Base model:&lt;/strong&gt; 7.5B parameters, consisting of 32 hidden layers (hidden size dimension =
+4,096).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Key innovation:&lt;/strong&gt; Replaces uni-directional causal attention with bi-directional
+self-attention, enabling richer semantic understanding across the full token context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Embedding output:&lt;/strong&gt; Global average pooling compresses token information into a
+4,096-dimensional dense vector, optimized for semantic search and cross-lingual tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This design allows the model to generate consistent embeddings regardless of input language or
+structure — a crucial step when tackling multilingual retrieval or alignment problems.&lt;/p&gt;
+&lt;h2 id="-training-methodology"&gt;🧠 Training Methodology
+&lt;/h2&gt;&lt;p&gt;The model is trained using a bi-encoder architecture, independently encoding a pair of sentences
+(for example, query and passage) using the embedding model. Using contrastive learning, it
+maximizes similarity between the query and the passage that contains the answer, while
+minimizing it between the query and sampled negative passages that are not useful for answering the question.&lt;/p&gt;
+&lt;h3 id="training-data-mix-16m-pairs"&gt;Training Data Mix (16M pairs):
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;8M from publicly available datasets: Nemotron-CC-v2, MIRACL, HotpotQA, MS MARCO, Natural
+Questions, SQuAD, and more.&lt;/li&gt;
+&lt;li&gt;8M from synthetic datasets: Generated from open-source LLMs covering retrieval, semantic
+similarity and classification problem types.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="two-stage-training-pipeline"&gt;Two-stage Training Pipeline:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pre-training:&lt;/strong&gt; 11.5M query, document pairs curated from Nemotron-CC-v2 – NVIDIA&amp;rsquo;s
+state-of-the-art LLM pre-training dataset.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fine-tuning:&lt;/strong&gt; 4.5M pairs combining public and high-quality synthetic datasets to refine
+semantic precision.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We plan to open-source our multilingual data mix soon, and publish a detailed technical report
+covering training dynamics and multilingual alignment.&lt;/p&gt;
+&lt;h2 id="-performance-evaluation"&gt;📊 Performance Evaluation
+&lt;/h2&gt;&lt;p&gt;We evaluate our model on the MMTEB Benchmark, specifically, on the main &lt;code&gt;MTEB (Multilingual, v2)&lt;/code&gt; split. It consists of 131 tasks across 9 task types and 1,038 languages. Ranking on the
+MMTEB Leaderboards is performed based on the Borda rank. Each task is treated as a preference
+voter, which gives votes on the models per their relative performance on the task. The best
+model obtains the highest number of votes. The model with the highest number of votes across
+tasks obtains the highest rank. The Borda rank tends to prefer models that perform well broadly across tasks.&lt;/p&gt;
+&lt;p&gt;Our model achieves &lt;strong&gt;state-of-the-art performance&lt;/strong&gt; on the MMTEB Benchmark (as of October 21,
+2025). Ranking list is presented below:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Borda Rank&lt;/th&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Borda Votes&lt;/th&gt;
+&lt;th&gt;Mean (Task)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;1.&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;llama-embed-nemotron-8b&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;39,573&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;69.46&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2.&lt;/td&gt;
+&lt;td&gt;gemini-embedding-001&lt;/td&gt;
+&lt;td&gt;39,368&lt;/td&gt;
+&lt;td&gt;68.37&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3.&lt;/td&gt;
+&lt;td&gt;Qwen3-Embedding-8B&lt;/td&gt;
+&lt;td&gt;39,364&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;70.58&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4.&lt;/td&gt;
+&lt;td&gt;Qwen3-Embedding-4B&lt;/td&gt;
+&lt;td&gt;39,099&lt;/td&gt;
+&lt;td&gt;69.45&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5.&lt;/td&gt;
+&lt;td&gt;Qwen3-Embedding-0.6B&lt;/td&gt;
+&lt;td&gt;37,419&lt;/td&gt;
+&lt;td&gt;64.34&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6.&lt;/td&gt;
+&lt;td&gt;gte-Qwen2-7B-instruct&lt;/td&gt;
+&lt;td&gt;37,167&lt;/td&gt;
+&lt;td&gt;62.51&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;7.&lt;/td&gt;
+&lt;td&gt;Linq-Embed-Mistral&lt;/td&gt;
+&lt;td&gt;37,149&lt;/td&gt;
+&lt;td&gt;61.47&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Modern applications — from document search to coding assistants — require embeddings that scale
+and generalize. With Llama-Embed-Nemotron-8B, developers can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Build cross-language retrieval systems that align semantically across diverse alphabets and
+syntax.&lt;/li&gt;
+&lt;li&gt;Power multi-lingual QA and semantic similarity tasks without compromising accuracy.&lt;/li&gt;
+&lt;li&gt;Leverage an open, high-performing model that integrates easily with existing Hugging Face
+pipelines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-try-it-yourself"&gt;🔧 Try it Yourself
+&lt;/h2&gt;&lt;p&gt;Deploy Llama-Embed-Nemotron-8B, or learn more about the NVIDIA NeMo Retriever family of Nemotron
+RAG models on the product page.&lt;/p&gt;
+&lt;p&gt;Stay up to date on NVIDIA Nemotron by subscribing to NVIDIA news and following NVIDIA AI on
+LinkedIn, X, YouTube and the Nemotron channel on Discord.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/nvidia/llama-embed-nemotron-8b" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/nvidia/llama-embed-nemotron-8b&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;The Llama-Embed-Nemotron-8B model represents a significant breakthrough in multilingual text
+understanding, achieving top rankings on the MMTEB benchmark through innovative architectural
+design and comprehensive training methodology. Its bi-directional attention mechanism and
+extensive multilingual training data make it an ideal choice for developers building
+next-generation search and retrieval systems that need to operate seamlessly across language barriers.&lt;/p&gt;
+&lt;p&gt;The model&amp;rsquo;s open availability on Hugging Face, combined with NVIDIA&amp;rsquo;s commitment to releasing
+the training data mix, positions it as a valuable resource for the broader AI community working
+on multilingual applications.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#NVIDIA #AI #NLP #EMBEDDING #MULTILINGUAL #MACHINELEARNING #HUGGINGFACE #RETRIEVAL
+#SEMANTICSEARCH&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

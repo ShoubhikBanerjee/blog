@@ -1,0 +1,1218 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Robotics on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/robotics/</link><description>Recent content in Robotics on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 04 Sep 2026 22:05:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/robotics/index.xml" rel="self" type="application/rss+xml"/><item><title>Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker</title><link>https://shoubhikbanerjee.github.io/blog/p/building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-featured-image.png" alt="Featured image of post Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker" /&gt;&lt;h1 id="building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker"&gt;Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker
+&lt;/h1&gt;&lt;p&gt;Developing a Physical AI system, such as a robot or autonomous vehicle (AV) that translates real-world data into physical actions, cannot be achieved in a single training job. Instead, it requires a continuous pipeline that generates synthetic data, performs post-training on perception and policy models so the system can understand its surroundings and act, and evaluates both in a closed-loop simulation. A Physical AI model factory continuously runs this loop to turn streams of real-world data into improved models.&lt;/p&gt;
+&lt;p&gt;This development outlines how to build a Physical AI model factory using NVIDIA Cosmos 3 on Amazon SageMaker HyperPod with Amazon Elastic Kubernetes Service (Amazon EKS).&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NVIDIA Cosmos 3 is an open omnimodal world foundation model that treats video, image, action, and sound as a single token stream. Unlike common patterns that pair a diffusion-transformer video generator with a separate vision-language model for text conditioning, Cosmos 3 integrates both capabilities into a single trunk at every layer.&lt;/p&gt;
+&lt;p&gt;Key architectural aspects of Cosmos 3 include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mixture-of-Transformers (MoT) Design:&lt;/strong&gt; Features per-layer joint attention and a deliberate train-versus-inference asymmetry.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single Shared Sequence:&lt;/strong&gt; Every modality feeds into a single shared sequence, enabling one model to both read and generate across different modalities.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sequential Processing:&lt;/strong&gt; The model sequence positions an autoregressive (AR) zone (for the text and vision it reads) ahead of a diffusion zone (for the video, audio, and action it produces).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Cosmos 3 runs the same transformer trunk in three distinct modes and processes input modalities with specialized encoders:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component / Mode&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function / Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Forward-dynamics world model&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used for synthetic video generation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Inverse-dynamics action labeler&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used for labeling actions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Deployable action policy&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Acts as the final policy for system deployment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Vision Transformer (ViT)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles image understanding for the images the model reads&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Frozen Wan2.2 video VAE&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles pixel generation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Per-embodiment vector&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Encodes pose deltas and grasp state, allowing the same model to drive both an AV and a robot arm&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Because one model family covers generation, post-training, and evaluation, separate GPU capacity for each stage is unnecessary. Instead of provisioning isolated nodes for each stage, these workloads are scheduled onto a single persistent, resilient GPU node pool under a single cluster control plane using time-shared capacity.&lt;/p&gt;
+&lt;h3 id="capacity-and-cost-metrics"&gt;Capacity and Cost Metrics
+&lt;/h3&gt;&lt;p&gt;Running a continuous pipeline requires a committed capacity plan. Acquiring GPUs stage by stage introduces availability and lead-time variability, and risks landing capacity in an Availability Zone or AWS Region away from your data. Committing to the entire loop—either through a flexible training plan for bounded campaigns or a capacity reservation for open-ended ones—avoids this churn.&lt;/p&gt;
+&lt;p&gt;Since you pay for capacity continuously, the primary metric governing cost is not the peak throughput of any individual job. Instead, the system is optimized for &lt;strong&gt;GPU goodput&lt;/strong&gt;: the useful pipeline progress per reserved GPU-hour across the entire loop.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;NVIDIA has released Cosmos 3 under the Linux Foundation’s OpenMDW-1.1 license. Detailed architectural information can be found in the Cosmos 3 technical report.&lt;/p&gt;
+&lt;p&gt;To help developers get started, the &lt;code&gt;awsome-distributed-ai&lt;/code&gt; GitHub repository contains the runnable code, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Infrastructure templates and job manifests to set up the working cluster.&lt;/li&gt;
+&lt;li&gt;Deployment configurations for Amazon SageMaker HyperPod and Amazon EKS.&lt;/li&gt;
+&lt;li&gt;A shared multi-terabyte storage layer setup.&lt;/li&gt;
+&lt;li&gt;Distributed post-training setups for three representative workloads, featuring an end-to-end walkthrough of the robot-policy stage using the public DROID dataset.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AmazonSageMaker #PhysicalAI #Cosmos3 #Robotics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-sagemaker-hyperpod/" target="_blank" rel="noopener"
+&gt;Build a Physical AI model factory with NVIDIA Cosmos 3 on SageMaker HyperPod | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>MasterControl Seventeen introduces governed enterprise analytics and modular robotic laboratory control</title><link>https://shoubhikbanerjee.github.io/blog/p/mastercontrol-seventeen-introduces-governed-enterprise-analytics-and-modular-robotic-laboratory-control/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/mastercontrol-seventeen-introduces-governed-enterprise-analytics-and-modular-robotic-laboratory-control/</guid><description>&lt;h1 id="mastercontrol-seventeen-introduces-governed-enterprise-analytics-and-modular-robotic-laboratory-control"&gt;MasterControl Seventeen introduces governed enterprise analytics and modular robotic laboratory control
+&lt;/h1&gt;&lt;p&gt;A new governed approach to enterprise analytics, &amp;ldquo;MasterControl Seventeen,&amp;rdquo; has been developed to improve reliability in language model-based analytical tasks. The system utilizes language models to interpret user intent while delegating execution to deterministic policies.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;MasterControl Seventeen separates intent interpretation from data processing. By restricting the language model to interpreted intent and using a policy to run pre-approved programs, the system ensures results are replayable and adhere to defined analytical constraints.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Analytics:&lt;/strong&gt; Supports relational operations, aggregation, comparison, windows, ranking, and similarity.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; In testing, policy-executed analyzers successfully matched 110 of 110 answer-and-evidence contracts, while runtime-planning episodes failed to match across test datasets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Models:&lt;/strong&gt; The study compared three 8B models generating SQL at runtime against the Qwen3-8B model operating under the policy-restricted framework.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-robotic-laboratory-integration"&gt;🧪 Robotic Laboratory Integration
+&lt;/h2&gt;&lt;p&gt;Beyond enterprise analytics, the framework provides a computational interface for physical scientific research through:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Typed Research Objects:&lt;/strong&gt; Establishing a computable representation of the physical laboratory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Capability-bound Operations:&lt;/strong&gt; Binding formal operations to executable Function Skills.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Simulation:&lt;/strong&gt; Stateful simulation verifies operation preconditions and laboratory constraints before dispatching tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This framework establishes a foundation for autonomous scientific discovery by providing a compositional workflow algebra that manages dependencies, decisions, iteration, and concurrency within modular agentic robotic laboratories.&lt;/p&gt;
+&lt;p&gt;#AI #Analytics #Robotics #ScientificDiscovery&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.03209v1" target="_blank" rel="noopener"
+&gt;MasterControl Seventeen Every Time&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.03621v1" target="_blank" rel="noopener"
+&gt;A computable representation of the physical laboratory enables verifiable workflows&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Builds First Foundation Model for Multirobot Coordination</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-builds-first-foundation-model-for-multirobot-coordination/</link><pubDate>Tue, 28 Oct 2025 01:26:59 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-builds-first-foundation-model-for-multirobot-coordination/</guid><description>&lt;img src="https://assets.amazon.science/dims4/default/9fabab1/2147483647/strip/true/crop/1430x403+0+0/resize/1200x338!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F43%2F47%2F5d418d2c4c018052aafae4b4319b%2Fpicture4.png" alt="Featured image of post Amazon Builds First Foundation Model for Multirobot Coordination" /&gt;&lt;h1 id="-amazon-builds-first-foundation-model-for-multirobot-coordination"&gt;🤖 Amazon Builds First Foundation Model for Multirobot Coordination
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://assets.amazon.science/dims4/default/9fabab1/2147483647/strip/true/crop/1430x403&amp;#43;0&amp;#43;0/resize/1200x338!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F43%2F47%2F5d418d2c4c018052aafae4b4319b%2Fpicture4.png"
+loading="lazy"
+alt="Robots laden with storage pods at a fulfillment center and with packages at a sortation
+center"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Robots laden with storage pods at a fulfillment center (left) and with packages at a sortation
+center (right)&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-introduction"&gt;🚀 Introduction
+&lt;/h2&gt;&lt;p&gt;Large language models and other foundation models have introduced a revolutionary paradigm in
+AI: massive models trained in a self-supervised fashion on enormous volumes of data can learn
+general competencies that enable them to perform diverse tasks. While this approach has achieved
+remarkable success in language, image, and video generation, Amazon is pioneering its
+application in an entirely new domain—managing fleets of mobile robots.&lt;/p&gt;
+&lt;p&gt;In June 2025, Amazon announced the development of &lt;strong&gt;DeepFleet&lt;/strong&gt;, a groundbreaking foundation
+model designed to predict the interactions of mobile robots on the floors of Amazon fulfillment
+centers (FCs) and sortation centers. This innovative approach is already delivering impressive
+results, increasing the efficiency of robot deployments by &lt;strong&gt;10%&lt;/strong&gt;, enabling faster package
+delivery to customers at lower costs.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-why-foundation-models-for-robot-coordination"&gt;🧩 Why Foundation Models for Robot Coordination?
+&lt;/h2&gt;&lt;h3 id="the-challenge-of-traditional-simulation"&gt;The Challenge of Traditional Simulation
+&lt;/h3&gt;&lt;p&gt;A common question arises: why develop a foundation model to predict robot locations when we
+already know the exact algorithms robots are running? Couldn&amp;rsquo;t we simply simulate their
+interactions? There are two critical obstacles to this traditional approach:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;⚡ Computational Intensity&lt;/strong&gt;: Accurately simulating the interactions of thousands of robots
+faster than real-time is prohibitively resource-intensive. Amazon&amp;rsquo;s existing fleet already
+utilizes all available computation time for optimization.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;🎯 Pretraining Philosophy&lt;/strong&gt;: Predicting robot locations serves as a pretraining task that
+teaches AI to understand traffic flow patterns. Just as pretraining on next-word prediction
+enabled chatbots to answer diverse questions, pretraining on location prediction can enable AI
+to generate general solutions for mobile-robot fleets.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="amazons-competitive-advantages"&gt;Amazon&amp;rsquo;s Competitive Advantages
+&lt;/h3&gt;&lt;p&gt;Amazon possesses unique advantages for developing these foundation models:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;📊 Massive Dataset&lt;/strong&gt;: With over one million robots deployed across FCs and sortation
+centers, Amazon has access to billions of hours of robot navigation data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;☁️ Cloud Computing Power&lt;/strong&gt;: As the largest provider of cloud computing resources, Amazon has
+the computational capacity to train and deploy large-scale models&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;📈 Scaling Benefits&lt;/strong&gt;: Research confirms that robot fleet foundation models continue
+improving as training data volume increases—similar to other foundation models&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-four-deepfleet-model-architectures"&gt;🔧 The Four DeepFleet Model Architectures
+&lt;/h2&gt;&lt;p&gt;Amazon experimented with four distinct models that approach robot coordination differently. All
+models share a common foundation: modeling FC and sortation center floors as grids where cells
+can contain robots (laden or unladen with fixed orientations), obstacles, storage/drop-off
+locations, or serve as travel lanes.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/dims4/default/94e76b7/2147483647/strip/true/crop/1430x956&amp;#43;0&amp;#43;0/resize/1200x802!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Fb5%2F81%2Fd9caac7a4c3782f72c3c31b58443%2Fpicture1.png"
+loading="lazy"
+alt="Sample models of a fulfillment center (top) and a sortation center
+(bottom)"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Sample models of a fulfillment center (top) and a sortation center (bottom)&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="1--the-robot-centric-model"&gt;1. 🎯 The Robot-Centric Model
+&lt;/h3&gt;&lt;p&gt;The robot-centric model focuses on individual robots—the &amp;ldquo;ego robot&amp;rdquo;—and builds representations
+of their immediate environments.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Produces embeddings of ego robot states (position, direction, destination, load status)&lt;/li&gt;
+&lt;li&gt;Incorporates data from 30 nearest robots, 100 nearest grid cells, and 100 nearest objects&lt;/li&gt;
+&lt;li&gt;Uses Transformer architecture to combine embeddings into sequences&lt;/li&gt;
+&lt;li&gt;Predicts next actions for each robot in parallel&lt;/li&gt;
+&lt;li&gt;Updates floor state by sequentially applying predicted actions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/dims4/default/70f935b/2147483647/strip/true/crop/1430x495&amp;#43;0&amp;#43;0/resize/1200x415!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F80%2Fa2%2F3e97fdad4f1199aa6c0491a4179c%2Fpicture2.png"
+loading="lazy"
+alt="Architecture of the robot-centric
+model"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Architecture of the robot-centric model&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="2--the-robot-floor-model"&gt;2. 🏢 The Robot-Floor Model
+&lt;/h3&gt;&lt;p&gt;This model uses separate encoders for robot states and fixed floor cell features, employing
+sophisticated attention mechanisms.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Separate embeddings for robot states and floor cell features&lt;/li&gt;
+&lt;li&gt;Cross-attention between robot embeddings and floor state&lt;/li&gt;
+&lt;li&gt;Cross-attention between updated robot embeddings for robot-robot relationships&lt;/li&gt;
+&lt;li&gt;Captures both robot-robot and robot-floor interactions&lt;/li&gt;
+&lt;li&gt;Uses final embeddings to predict each robot&amp;rsquo;s next action&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/dims4/default/8b1c791/2147483647/strip/true/crop/1430x369&amp;#43;0&amp;#43;0/resize/1200x310!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F3d%2F6e%2Fbe236a324315a824bf7be0c85d9e%2Fthe-architecture-of-the-robot-floor-model.png"
+loading="lazy"
+alt="The architecture of the robot-floor
+model"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The architecture of the robot-floor model&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="3--the-image-floor-mode"&gt;3. 🖼️ The Image-Floor Mode
+&lt;/h3&gt;&lt;p&gt;This approach treats floor grids as images, using convolutional neural networks for processing.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Floor grid cells serve as &amp;ldquo;pixels&amp;rdquo; with separate channels for different features&lt;/li&gt;
+&lt;li&gt;Static features (fixed objects) and dynamic features (robot locations/states)&lt;/li&gt;
+&lt;li&gt;Convolutional filters process different cell features through separate channels&lt;/li&gt;
+&lt;li&gt;Transformer attention mechanism handles temporal and spatial features simultaneously&lt;/li&gt;
+&lt;li&gt;Convolutional decoder converts output back to 2-D floor representation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4--the-graph-floor-mode"&gt;4. 🕸️ The Graph-Floor Mode
+&lt;/h3&gt;&lt;p&gt;This model represents the floor as a graph structure, capturing spatial relationships between cells.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Floor cells as nodes, available movements as edges&lt;/li&gt;
+&lt;li&gt;Spatiotemporal graph with temporal edges connecting nodes across time steps&lt;/li&gt;
+&lt;li&gt;Transformer iteratively encodes the graph as node and edge embeddings&lt;/li&gt;
+&lt;li&gt;Attention mechanism uses edge embeddings for distance-aware computations&lt;/li&gt;
+&lt;li&gt;Captures long-range effects through graph structure&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/dims4/default/d2601f9/2147483647/strip/true/crop/1430x488&amp;#43;0&amp;#43;0/resize/1200x410!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Fa1%2F64%2F9fdf76e548bf91ae7419ba99be6c%2Fpicture3.png"
+loading="lazy"
+alt="The architecture of the graph-floor
+model"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The architecture of the graph-floor model&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-performance-evaluation-and-results"&gt;📊 Performance Evaluation and Results
+&lt;/h2&gt;&lt;h3 id="evaluation-metrics"&gt;Evaluation Metrics
+&lt;/h3&gt;&lt;p&gt;Amazon used two primary metrics to assess model performance:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Dynamic-Time-Warping (DTW) Distance&lt;/strong&gt;: Measures prediction accuracy across multiple
+dimensions including robot position, speed, state, and timing of load/unload events&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Congestion Delay Error (CDE)&lt;/strong&gt;: Calculates relative error between delay predictions and ground truth&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="model-performance-comparison"&gt;Model Performance Comparison
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Parameter Count&lt;/th&gt;
+&lt;th&gt;Performance Highlights&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Robot-Centric&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;97 million&lt;/td&gt;
+&lt;td&gt;🏆 Best overall performance (CDE and DTW position/state)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Robot-Floor&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;840 million&lt;/td&gt;
+&lt;td&gt;🏆 Top DTW timing estimation scores&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Graph-Floor&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;13 million&lt;/td&gt;
+&lt;td&gt;💡 Strong results with significantly fewer parameters&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Image-Floor&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;N/A&lt;/td&gt;
+&lt;td&gt;❌ Poor performance (design mismatch with pixel-level predictions)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="key-findings"&gt;Key Findings
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🚀 Robot-centric model&lt;/strong&gt; achieved the best overall performance across most metrics&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;⏱️ Robot-floor model&lt;/strong&gt; excelled at timing predictions despite higher parameter count&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;💪 Graph-floor model&lt;/strong&gt; delivered impressive efficiency with 85% fewer parameters than
+robot-centric&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;❌ Image-floor model&lt;/strong&gt; struggled due to fundamental architectural mismatch&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;📈 Scaling experiments&lt;/strong&gt; confirmed performance improvements with increased training data
+volume&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-future-applications-and-development"&gt;🔮 Future Applications and Development
+&lt;/h2&gt;&lt;p&gt;Based on these promising results, Amazon continues developing the three successful models
+(robot-centric, robot-floor, and graph-floor) with expanding applications:&lt;/p&gt;
+&lt;h3 id="immediate-applications"&gt;Immediate Applications
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🚦 Congestion prediction&lt;/strong&gt; and traffic flow optimization&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;📋 Task assignment&lt;/strong&gt; optimization for robot fleets&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🗺️ Intelligent routing&lt;/strong&gt; around potential bottleneck&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="long-term-goals"&gt;Long-term Goals
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🎯 Dynamic task allocation&lt;/strong&gt; to specific robots&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;📍 Optimal target location&lt;/strong&gt; assignment&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🔄 Real-time fleet optimization&lt;/strong&gt; across multiple facilities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://www.amazon.science/blog/amazon-builds-first-foundation-model-for-multirobot-coordination" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/amazon-builds-first-foundation-model-for-multirobot-coordination&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;✅ Conclusion
+&lt;/h2&gt;&lt;p&gt;Amazon&amp;rsquo;s DeepFleet represents a groundbreaking application of foundation model principles to
+robotics and fleet management. By leveraging massive datasets from over one million deployed
+robots and Amazon&amp;rsquo;s cloud computing infrastructure, the company has created the first foundation
+model specifically designed for multirobot coordination.&lt;/p&gt;
+&lt;p&gt;The success of this initiative—achieving 10% efficiency improvements in robot
+deployments—demonstrates the transformative potential of applying foundation model paradigms
+beyond traditional domains like language and vision. As Amazon continues refining these models,
+we can expect even greater optimizations in logistics, delivery speeds, and operational costs.&lt;/p&gt;
+&lt;p&gt;This innovation positions Amazon at the forefront of intelligent robotics and showcases how
+foundation models can revolutionize industrial applications, ultimately benefiting millions of
+customers through faster, more efficient package delivery.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AMAZON #ROBOTICS #FOUNDATIONMODELS #MACHINELEARNING #AI #LOGISTICS #DEEPFLEET #AUTOMATION
+#MULTIROBOT #COORDINATION&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Revolutionizing Warehouse Automation with Scientific Simulation</title><link>https://shoubhikbanerjee.github.io/blog/p/revolutionizing-warehouse-automation-with-scientific-simulation/</link><pubDate>Tue, 28 Oct 2025 00:57:43 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/revolutionizing-warehouse-automation-with-scientific-simulation/</guid><description>&lt;img src="https://assets.amazon.science/dims4/default/74f34e8/2147483647/strip/true/crop/200x200+0+0/resize/295x295!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F5c%2F9c%2Fc55d484e6a1c2f088494895776c1%2Frevolutionizing-warehouse-automation-with-scientific-simulationqrcode" alt="Featured image of post Revolutionizing Warehouse Automation with Scientific Simulation" /&gt;&lt;h1 id="-revolutionizing-warehouse-automation-with-scientific-simulation"&gt;🏭 Revolutionizing Warehouse Automation with Scientific Simulation
+&lt;/h1&gt;&lt;p&gt;![Warehouse Automation Banner](&lt;a class="link" href="https://assets.amazon.science/dims4/default/74f34e8/2147483647/strip/true/crop/200x200&amp;#43;0&amp;#43;0/resize/295x295!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/74f34e8/2147483647/strip/true/crop/200x200+0+0/resize/295x295!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot&lt;/a&gt;.
+s3.amazonaws.com%2Fscience%2F5c%2F9c%2Fc55d484e6a1c2f088494895776c1%2Frevolutionizing-warehouse-
+automation-with-scientific-simulationqrcode)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Advanced sensor simulation platform enabling rapid warehouse optimization&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Modern warehouses operate as complex ecosystems of sensors, robots, and automated systems that
+must work in perfect harmony. The challenge of optimizing sensor placement and configuration has
+traditionally required weeks or months of physical prototyping - until now.&lt;/p&gt;
+&lt;h2 id="-the-challenge"&gt;🎯 The Challenge
+&lt;/h2&gt;&lt;p&gt;Modern warehouses rely on intricate networks of sensors to enable safe and efficient operations.
+These sensors must detect everything from packages and containers to robots and vehicles, often
+in changing environments with varying lighting conditions. For Amazon, the ability to detect
+barcodes efficiently is particularly crucial.&lt;/p&gt;
+&lt;p&gt;The Amazon Robotics ID (AR-ID) team faced a significant bottleneck: optimizing sensor placement
+required extensive physical prototyping and real-world testing, severely limiting their ability
+to explore innovative solutions rapidly.&lt;/p&gt;
+&lt;h2 id="-the-solution-sensor-workbench-swb"&gt;🚀 The Solution: Sensor Workbench (SWB)
+&lt;/h2&gt;&lt;p&gt;To transform this process, Amazon developed &lt;strong&gt;Sensor Workbench (SWB)&lt;/strong&gt;, a revolutionary sensor
+simulation platform built on NVIDIA&amp;rsquo;s Isaac Sim. This platform combines:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Parallel processing capabilities&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Physics-based sensor modeling&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;High-fidelity 3D environments&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SWB provides virtual testing environments that mirror real-world conditions with unprecedented
+accuracy, allowing teams to explore hundreds of configurations in the time it previously took to
+test just a few physical setups.&lt;/p&gt;
+&lt;h2 id="-three-key-innovations"&gt;⚙️ Three Key Innovations
+&lt;/h2&gt;&lt;h3 id="1-specialized-parallel-computing-architecture"&gt;1. Specialized Parallel-Computing Architecture
+&lt;/h3&gt;&lt;p&gt;The platform leverages NVIDIA&amp;rsquo;s Warp library with custom computation kernels to maximize GPU
+utilization. Key features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Persistent 3D objects&lt;/strong&gt; maintained in GPU memory&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transform updates&lt;/strong&gt; only when objects move&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;On-demand computations&lt;/strong&gt; triggered by parameter changes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Real-time performance&lt;/strong&gt; for immediate feedback&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This architecture enables complex calculations for multiple sensors simultaneously, providing
+instant feedback through immersive 3D visuals that represent the metrics barcode-detection
+machine-learning models need to function effectively.&lt;/p&gt;
+&lt;h3 id="2-custom-cad-to-openusd-pipeline"&gt;2. Custom CAD-to-OpenUSD Pipeline
+&lt;/h3&gt;&lt;p&gt;The second breakthrough involved developing a custom pipeline that automatically converts
+detailed warehouse models into optimized 3D assets:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;1:1 mapping&lt;/strong&gt; from SolidWorks models to USD stages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complete data extraction&lt;/strong&gt; including world transforms, mesh geometry, material properties,
+and joint information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Preserved hierarchy&lt;/strong&gt; maintaining the full assembly-and-part structure&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Modular organization&lt;/strong&gt; with separate USD layers for mesh, materials, joints, and transforms&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This approach ensures the converted USD file faithfully retains the asset structure, geometry,
+and visual fidelity of the original CAD model.&lt;/p&gt;
+&lt;h3 id="3-openusd-as-ground-truth"&gt;3. OpenUSD as Ground Truth
+&lt;/h3&gt;&lt;p&gt;The platform uses OpenUSD as the definitive source of truth throughout the entire simulation process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Custom schemas&lt;/strong&gt; extending beyond basic 3D-asset information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Real-time recording&lt;/strong&gt; of all scene activities directly into the USD stage&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complete state capture&lt;/strong&gt; including user interface elements and states&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Live synchronization&lt;/strong&gt; between simulation state and USD representation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This architecture ensures automatic adaptation when USD configurations change, creating a
+reliable source of truth that captures the complete simulation environment state.&lt;/p&gt;
+&lt;h2 id="-real-world-applications"&gt;🎬 Real-World Applications
+&lt;/h2&gt;&lt;p&gt;SWB has transformed how Amazon approaches warehouse sensor optimization:&lt;/p&gt;
+&lt;h3 id="rapid-evaluation-capabilities"&gt;Rapid Evaluation Capabilities
+&lt;/h3&gt;&lt;p&gt;Teams can now quickly evaluate sensor mounting positions and verify overall concepts in a
+fraction of the time previously required.&lt;/p&gt;
+&lt;h3 id="cross-functional-collaboration"&gt;Cross-Functional Collaboration
+&lt;/h3&gt;&lt;p&gt;The platform has become a powerful tool for collaboration, allowing engineers, scientists, and
+operational teams to work together in real time, visualizing and adjusting sensor configurations
+while immediately seeing the impact of their changes.&lt;/p&gt;
+&lt;h3 id="expanded-lighting-simulations"&gt;Expanded Lighting Simulations
+&lt;/h3&gt;&lt;p&gt;Due to initial success in barcode-reading scenarios, SWB&amp;rsquo;s capabilities have expanded to
+incorporate high-fidelity lighting simulations, enabling teams to iterate on new baffle and
+light designs while ensuring conditions remain safe for human eyes.&lt;/p&gt;
+&lt;h2 id="-future-enhancements"&gt;🔮 Future Enhancements
+&lt;/h2&gt;&lt;p&gt;Amazon is actively working on several exciting improvements:&lt;/p&gt;
+&lt;h3 id="advanced-sensor-integration"&gt;Advanced Sensor Integration
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Analytical models&lt;/strong&gt; combined with real-world measurement feedback&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Increased accuracy&lt;/strong&gt; and practical utility&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enhanced sensor simulation&lt;/strong&gt; capabilities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="ai-powered-optimization"&gt;AI-Powered Optimization
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AI-suggested sensor placements&lt;/strong&gt; for new station designs&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Novel configuration identification&lt;/strong&gt; that users might not consider&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated optimization&lt;/strong&gt; recommendations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="synthetic-data-generation-platform"&gt;Synthetic Data Generation Platform
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Comprehensive digital environment&lt;/strong&gt; for testing sensors and algorithms&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Diverse dataset generation&lt;/strong&gt; capturing full range of real-world conditions&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated validation&lt;/strong&gt; and training capabilities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at:
+&lt;a class="link" href="https://www.amazon.science/blog/revolutionizing-warehouse-automation-with-scientific-simulation" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/revolutionizing-warehouse-automation-with-scientific-simulation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Sensor Workbench represents a significant leap forward in warehouse automation development,
+demonstrating how sophisticated simulation tools can dramatically accelerate innovation in
+complex industrial systems. By combining advanced scientific computing with practical industrial
+applications, SWB has transformed sensor optimization from a months-long physical process into
+a rapid, iterative virtual experience.&lt;/p&gt;
+&lt;p&gt;The platform&amp;rsquo;s three core innovations - parallel-computing architecture, CAD-to-USD pipeline,
+and OpenUSD as ground truth - work together to create an unprecedented level of accuracy and
+efficiency in warehouse sensor simulation. As Amazon continues to enhance the system with new
+capabilities, SWB is poised to set new standards for warehouse automation and serve as a
+comprehensive platform for the future of industrial sensor optimization.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#WAREHOUSE #AUTOMATION #SIMULATION #ROBOTICS #AI #MACHINELEARNING #3DMODELING #NVIDIA
+#OPENSOURCEDATA #COMPUTERVISION&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Note: MCP servers were not utilized for this task as it involved converting provided HTML
+content to markdown format, which did not require additional data retrieval or external tool usage.&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Garbage In, Garbage Out: The Case For Better Robot Data Understanding</title><link>https://shoubhikbanerjee.github.io/blog/p/garbage-in-garbage-out-the-case-for-better-robot-data-understanding/</link><pubDate>Tue, 28 Oct 2025 00:56:28 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/garbage-in-garbage-out-the-case-for-better-robot-data-understanding/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/paxnE6FD5Lf-LWfAArml3.png" alt="Featured image of post Garbage In, Garbage Out: The Case For Better Robot Data Understanding" /&gt;&lt;h1 id="-garbage-in-garbage-out-the-case-for-better-robot-data-understanding"&gt;🤖 Garbage In, Garbage Out: The Case For Better Robot Data Understanding
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/paxnE6FD5Lf-LWfAArml3.png"
+loading="lazy"
+alt="Alt Text"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;RobotData&amp;rsquo;s comprehensive toolkit for analyzing robot dataset quality&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;h3 id="-key-insight"&gt;💡 Key Insight
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Low quality robot data → Poor robot performance.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Robot data collection is expensive, requiring hundreds of human expert teleoperation hours. At
+the same time, collecting &lt;strong&gt;high quality&lt;/strong&gt; robot data is difficult - even for a highly skilled
+teleoperator. For example, idle trajectories may occur when the teleoperator pauses or poor
+lighting might affect visual clarity.&lt;/p&gt;
+&lt;p&gt;While the &lt;strong&gt;precise&lt;/strong&gt; definition of what constitutes a high quality training example is a
+complicated question (e.g. does a dark video increase policy resilience or reduce performance?),
+a few quality indicators can provide an insightful snapshot into your dataset. Data
+understanding is the first step to data improvement.&lt;/p&gt;
+&lt;p&gt;In this article, we introduce a lightweight Open Source toolkit to find low quality examples in
+the Open X-Embodiment datasets and show that training on &lt;strong&gt;20%&lt;/strong&gt; of low quality examples hurts
+policy training loss by &lt;strong&gt;30%&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="-want-to-know-how-good-your-dataset-is"&gt;🎯 Want to know how good &lt;em&gt;your&lt;/em&gt; dataset is?
+&lt;/h3&gt;&lt;p&gt;![score_lerobot_episodes](&lt;a class="link" href="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3" target="_blank" rel="noopener"
+&gt;https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3&lt;/a&gt;
+243155c8/RocyD8bhLoorNfqo21rcL.png)&lt;/p&gt;
+&lt;h3 id="-try-out-the-tool-here"&gt;⚡ Try out the tool here: &lt;a class="link" href="https://github.com/RoboticsData/score_lerobot_episodes" target="_blank" rel="noopener"
+&gt;https://github.com/RoboticsData/score_lerobot_episodes&lt;/a&gt;
+&lt;/h3&gt;&lt;hr&gt;
+&lt;h2 id="-robot-data-defined"&gt;🔍 Robot Data Defined
+&lt;/h2&gt;&lt;p&gt;We ran experiments on the Open X-Embodiment datasets - a large collection of over 60 robot
+manipulation datasets gathered through teleoperation on robots such as &lt;strong&gt;Franka&lt;/strong&gt;, &lt;strong&gt;UR5&lt;/strong&gt;, and
+&lt;strong&gt;DROID&lt;/strong&gt;.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/IVdQ5ODRVh3hmac0k2Z5j.png"
+loading="lazy"
+alt="Open X-Embodiment Overview"
+&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Overview of the Open X-Embodiment dataset&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;A dataset is represented as a collection of N episodes (or trajectories):
+&lt;strong&gt;D = {E₁, …, Eₙ}&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Each episode consists of timestamped frames:
+&lt;strong&gt;Eᵢ = {(oᵢ,ₜ, sᵢ,ₜ, aᵢ,ₜ)}ᵀⁱₜ₌₁&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;strong&gt;oᵢ,ₜ&lt;/strong&gt; is the &lt;strong&gt;observation&lt;/strong&gt;, &lt;strong&gt;sᵢ,ₜ&lt;/strong&gt; is the &lt;strong&gt;robot state&lt;/strong&gt;, and &lt;strong&gt;aᵢ,ₜ&lt;/strong&gt; is the
+&lt;strong&gt;action&lt;/strong&gt; at time &lt;strong&gt;t&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="-observation-spac"&gt;👁️ Observation spac
+&lt;/h3&gt;&lt;p&gt;Each observation &lt;strong&gt;oᵢ,ₜ&lt;/strong&gt; includes two synchronized &lt;strong&gt;RGB camera streams&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;An over-the-shoulder view showing the full scene and robot&lt;/li&gt;
+&lt;li&gt;A wrist-mounted camera providing a close-up view of the robot&amp;rsquo;s end-effector&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="-state-space"&gt;⚙️ State space
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;sᵢ,ₜ = [qᵢ,ₜ, gᵢ,ₜ] ∈ ℝᴶ⁺¹&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;strong&gt;qᵢ,ₜ ∈ ℝᴶ&lt;/strong&gt; represents the robot&amp;rsquo;s &lt;strong&gt;joint angles&lt;/strong&gt; at time &lt;strong&gt;t&lt;/strong&gt;, and &lt;strong&gt;gᵢ,ₜ ∈ ℝ&lt;/strong&gt;
+represents the &lt;strong&gt;gripper position&lt;/strong&gt; (e.g., open or closed).&lt;/p&gt;
+&lt;h3 id="-action-space"&gt;🎮 Action space
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;aᵢ,ₜ = [q&amp;rsquo;ᵢ,ₜ, g&amp;rsquo;ᵢ,ₜ] ∈ ℝᶜ⁺¹&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;strong&gt;q&amp;rsquo;ᵢ,ₜ&lt;/strong&gt; are the &lt;strong&gt;motor commands&lt;/strong&gt; and &lt;strong&gt;g&amp;rsquo;ᵢ,ₜ&lt;/strong&gt; is the &lt;strong&gt;gripper command&lt;/strong&gt; applied by the teleoperator.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-visual-scoring"&gt;📸 Visual Scoring
+&lt;/h2&gt;&lt;p&gt;We evaluate each episode for visual clarity indicators such as &lt;strong&gt;lighting&lt;/strong&gt; and &lt;strong&gt;blur&lt;/strong&gt;. This
+allows us to ensure that only high-quality visual data is retained for training.&lt;/p&gt;
+&lt;p&gt;Our process involves:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Uniformly sampling 10 frames per episode&lt;/strong&gt; - This strategy provides a representative
+snapshot of the visual quality throughout the episode without the computational expense of analyzing every frame&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compute per-episode aggregate visual score&lt;/strong&gt; - For each frame &lt;strong&gt;I&lt;/strong&gt;, we compute a penalty
+based on blur and brightness where frames which are too dark or too blurry are penalized. This
+penalty is then averaged across the episode and used to compute an aggregate visual score&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Remove episodes that score below a threshold&lt;/strong&gt; - This final filtering step discards any
+episode whose aggregate visual score falls below a pre-defined quality threshold, ensuring only
+visually high-quality data is retained for training&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="-blur"&gt;🌀 Blur
+&lt;/h3&gt;&lt;p&gt;We estimate blur using the &lt;strong&gt;variance of the Laplacian&lt;/strong&gt;. This metric is used because &lt;strong&gt;it
+measures the magnitude of high-frequency content in an image, which is drastically reduced by
+blur.&lt;/strong&gt; The high-frequency components correspond to sharp edges and details; a sharper image
+will have a higher variance of the Laplacian.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;Laplace operator&lt;/strong&gt;, &lt;strong&gt;Δ&lt;/strong&gt;, for a 2D image &lt;strong&gt;I(x, y)&lt;/strong&gt; is defined as the sum of its second partial derivatives:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ΔI = ∂²I/∂x² + ∂²I/∂y²&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In discrete form, it is often approximated using a convolution kernel e.g., a &lt;strong&gt;3 × 3&lt;/strong&gt; kernel such as:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;⎛ 0 1 0 ⎞ ⎜ 1 -4 1 ⎟
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;⎝ 0 1 0 ⎠
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;where &lt;strong&gt;ΔI&lt;/strong&gt; is the discrete convolution of the kernel &lt;strong&gt;Δ&lt;/strong&gt; with the frame &lt;strong&gt;I&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The metric used for blur is the &lt;strong&gt;variance of the Laplacian&lt;/strong&gt; &lt;strong&gt;Var(ΔI)&lt;/strong&gt;, which is calculated
+across all pixels in the frame:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Var(ΔI) = (1/HW) Σₓ₌₁ᵂ Σᵧ₌₁ᴴ (ΔI(x,y) - μΔI)²&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;strong&gt;W × H&lt;/strong&gt; is the frame size, and &lt;strong&gt;μΔI&lt;/strong&gt; is the mean of the Laplacian values over the frame.&lt;/p&gt;
+&lt;p&gt;We then scale this variance into a blur penalty score and apply a threshold. In practice we use
+a default value of 100 for the variance threshold.&lt;/p&gt;
+&lt;h3 id="-lighting"&gt;💡 Lighting
+&lt;/h3&gt;&lt;p&gt;We use mean-brightness as a proxy for good lighting. If the mean intensity &lt;strong&gt;μ&lt;/strong&gt; of the
+grayscale image is below 50 (on a scale of 0 to 255), we assign a linearly proportional penalty:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Penalty = max(0.0, (50.0 - μ)/50.0)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Note we only penalize images that are too dark; overexposure is not penalized since it is not a
+failure mode that occurs frequently and we observe that penalizing it can result in an excessive
+rate of false positives.&lt;/p&gt;
+&lt;p&gt;In many cases, the wrist camera suffers from a noticeable drop in visual quality compared to the
+overhead view due to occlusions, shadows and focus issues.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-motion-scor"&gt;🏃‍♂️ Motion Scor
+&lt;/h2&gt;&lt;p&gt;In addition to visual observations, each episode contains motion data representing the robot&amp;rsquo;s
+internal state and control commands over time. This includes joint positions, velocities, and
+actions, which specify the robot&amp;rsquo;s kinematic behavior.&lt;/p&gt;
+&lt;p&gt;We introduce scoring functions that classify the quality of motion of a given episode. We
+describe how we score for categories such as collision, path efficiency, and idle-time.&lt;/p&gt;
+&lt;h3 id="-collision"&gt;💥 Collision
+&lt;/h3&gt;&lt;p&gt;We aim to detect potential physical collisions by analyzing spikes in the robot&amp;rsquo;s joint-space
+acceleration. The idea is that when a robot physically impacts an object, it experiences abrupt
+changes in joint motion—typically seen as sudden decelerations upon contact, and rapid accelerations as it moves away.&lt;/p&gt;
+&lt;p&gt;Our collision scoring function estimates an acceleration threshold for each joint, based on the
+median absolute acceleration over time. A spike is detected when any joint&amp;rsquo;s acceleration at a
+given timestamp exceeds its respective threshold.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Joint acceleration proxy:&lt;/strong&gt;
+&lt;strong&gt;aₜ = (qₜ₊₁ - 2qₜ + qₜ₋₁)/(tₜ₊₁ - tₜ)²&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Per-joint robust threshold:&lt;/strong&gt;
+&lt;strong&gt;spike_ratio = θ &amp;gt; 15 × median(|a|)&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Collision score (goodness):&lt;/strong&gt;
+&lt;strong&gt;1 - spike_ratio&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The function returns a score between 0 and 1 where a low-score indicates high likelihood of collision.&lt;/p&gt;
+&lt;h3 id="-path-efficiency"&gt;📏 Path Efficiency
+&lt;/h3&gt;&lt;p&gt;We also score path efficiency by calculating how close the motion of the robot is to a straight
+line. This is motivated by the fact that expert trajectories are often the most direct path
+between two points. A path with excessive meandering or corrections suggests poor human control
+or indecision, which introduces noise and complexity that hampers policy training and results in
+inefficient robot behavior.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Path length:&lt;/strong&gt;
+&lt;strong&gt;L = Σₜ ‖qₜ₊₁ - qₜ‖₂&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Straight-line distance:&lt;/strong&gt;
+&lt;strong&gt;D = ‖qₑₙd - qₛₜₐᵣₜ‖₂&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Path Efficiency Score:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;path_eff = { clip(D/L, 0, 1), if L ≥ 10⁻⁶
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 0, otherwise }
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The final score is the ratio of the straight-line distance in joint space to the actual path length traveled.&lt;/p&gt;
+&lt;p&gt;There may be situations where the direct path between two points isn&amp;rsquo;t the ideal trajectory. For
+example, manipulating an object or maneuvering past obstacles in the scene might result in high
+amounts of nonlinear local perturbations or the robot&amp;rsquo;s joint configuration may not permit a
+direct path. In these cases, path efficiency may not be a useful metric and can be excluded from the scoring criteria.&lt;/p&gt;
+&lt;h3 id="-actuator-saturation"&gt;⚡ Actuator Saturation
+&lt;/h3&gt;&lt;p&gt;When the expected action &lt;strong&gt;aₜ&lt;/strong&gt; doesn&amp;rsquo;t result in the next state &lt;strong&gt;qₜ₊₁&lt;/strong&gt; we use this as a proxy
+for actuator saturation. Too much actuator saturation can indicate that the robot is lifting
+heavier loads than it is equipped for or is running into resistance within the scene or has
+faulty motors. In order to reduce robot wear and tear over time, we want to prevent this
+behavior inheriting this behavior from training data.&lt;/p&gt;
+&lt;p&gt;Specifically, we check how often &lt;strong&gt;|aₜ - qₜ₊₁| &amp;gt; threshold_deg&lt;/strong&gt; for any joint (threshold default: 7).&lt;/p&gt;
+&lt;p&gt;To downweight minor transient divergence caused by slippage or inertia, we impose a
+non-linearity on the saturation ratio:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;sₛₐₜ = exp(-4 · saturation_ratio)&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id="-idle-time"&gt;⏸️ Idle Time
+&lt;/h3&gt;&lt;p&gt;We score the robot&amp;rsquo;s motion based on how idle it is throughout the task. This is bad because
+periods of near-zero velocity are often the result of distraction, indecision, or taking a break
+rather than intentional action to complete the task. These stationary periods slow down
+learning and result in undesirable robot behavior.&lt;/p&gt;
+&lt;p&gt;Specifically, we calculate the proportion of time the robot&amp;rsquo;s velocity lies below a certain
+threshold during its motion. We first calculate the joint-space velocity magnitude &lt;strong&gt;‖vₜ‖&lt;/strong&gt; for each time step &lt;strong&gt;t&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;‖vₜ‖ = √(Σⱼ₌₁ᴶ (Δqⱼ/Δt)²)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The raw score is &lt;strong&gt;1.0&lt;/strong&gt; minus the proportion of steps where &lt;strong&gt;‖vₜ‖&lt;/strong&gt; is below a threshold default of &lt;strong&gt;0.1&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;We also note that filtering idle intervals improves performance in openpi.&lt;/p&gt;
+&lt;p&gt;Idle time may sometimes be useful to attenuate inertia or allow the dynamics of the environment
+to settle to rest before the next action. In these cases, idle time is repeated and predictable rather than incidental.&lt;/p&gt;
+&lt;p&gt;We are currently in the process of launching a tool that accounts for these cases so if your use
+case exhibits such behavior, reach out to us!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-corruption-experiment"&gt;🧪 Corruption Experiment
+&lt;/h2&gt;&lt;p&gt;We evaluate the effect of noisy examples on robot learning by artificially corrupting the robot
+using the sources of noise we aim to identify using our tool. Specifically, for 20% of episodes,
+we introduce the following realistic corruptions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Visual Noise&lt;/strong&gt;: We artificially darken frames and apply an unsharp mask or motion blur to a
+random subset of frames in the episode&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Motion Noise&lt;/strong&gt;: We introduce short, random idle periods (setting joint velocities to zero
+for 0.5-1.0 seconds) and insert single-step acceleration spikes (random, large joint command
+outliers) to simulate teleoperator jerks or minor collisions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-note-on-evaluations"&gt;📊 Note on evaluations
+&lt;/h3&gt;&lt;p&gt;In a typical machine learning experiment, the most direct approach would be to compare the
+held-out validation loss on a model train on the filtered and unfiltered versions of a real-world dataset.&lt;/p&gt;
+&lt;p&gt;However, in the context of robotics, validation loss isn&amp;rsquo;t representative of real-world
+performance and the training loss is not directly comparable since the filtered set has fewer examples.&lt;/p&gt;
+&lt;p&gt;For simplicity&amp;rsquo;s sake, we opt to motivate the importance of data understanding by using an
+artificial corruption experiment to illustrate the impact of low quality data on robot learning.&lt;/p&gt;
+&lt;p&gt;We invite the community to share real world or simulation evaluation results and plan to share
+more of our own results in a future post.&lt;/p&gt;
+&lt;h3 id="-retrieval-precision-recall"&gt;🎯 Retrieval Precision-Recall
+&lt;/h3&gt;&lt;p&gt;Just for illustrative purposes, we can design the following recall/precision experiment where we
+use our scoring algorithm to detect corrupted episodes within a dataset that has been
+corrupted. Essentially, we have the following binary classification problem where we set a
+threshold where episodes whose score fell below this result where classified as corrupt.&lt;/p&gt;
+&lt;p&gt;For example, we have the following results for the detecting corrupted videos using the visual
+scoring function in the following Stanford HYDRA dataset. This is a robotic manipulation dataset
+containing 570 episodes of Franka robot demonstrations across 3 tasks, with synchronized wrist
+and external camera views and 7-DOF action sequences.&lt;/p&gt;
+&lt;p&gt;For this experiment, we corrupted 50% of these episodes and obtained the following precision and
+recall results for various thresholds.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/4Wuofxeh280NEk9BprGkU.png"
+loading="lazy"
+alt="Precision-Recall Results"
+&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;Precision, Recall and F-1 curves on the Stanford HYDRA dataset (50% corrupted).&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id="-effects-on-training"&gt;📈 Effects on Training
+&lt;/h2&gt;&lt;p&gt;We also compared the training losses between the original datasets and the corrupted datasets
+where we used ACT as our policy.&lt;/p&gt;
+&lt;p&gt;The figure below compares policy training on a corrupted dataset—where 20% of the episodes were
+intentionally degraded—with training on the original, clean dataset.&lt;/p&gt;
+&lt;p&gt;We see that models trained on corrupted data require significantly more optimization steps to
+reach the same loss threshold as those trained on clean data, highlighting the sensitivity of
+policy learning to data quality.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/EwfFO4KzyWsnSu-EVOXoz.png"
+loading="lazy"
+alt="Stanford Hydra Training Loss"
+&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;Standard Hydra training loss curve.&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/caAXsXIH5c9oQO8OeheVf.png"
+loading="lazy"
+alt="Berkeley Autolab UR5 Training Loss"
+&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;Berkeley Autolab UR5 training loss curve.&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In conclusion, these results quantify the large impact of incorporating low quality data into an
+otherwise useful dataset, resulting in poor performance and wasted GPU hours.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="-wed-love-to-hear-from-you---do-send-us-any-comments-or-feedback-you-have"&gt;💬 We&amp;rsquo;d love to hear from you - do send us any comments or feedback you have!
+&lt;/h3&gt;&lt;h3 id="heading"&gt;🔗 &lt;a class="link" href="https://github.com/RoboticsData/score_lerobot_episodes" target="_blank" rel="noopener"
+&gt;https://github.com/RoboticsData/score_lerobot_episodes&lt;/a&gt;
+&lt;/h3&gt;&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/robotdata/gigo" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/robotdata/gigo&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;This comprehensive analysis demonstrates the critical importance of data quality in robot
+learning systems. The research clearly shows that even a modest 20% contamination of low-quality
+data can significantly degrade training performance by 30%, leading to wasted computational
+resources and suboptimal robot behavior.&lt;/p&gt;
+&lt;p&gt;The open-source toolkit presented here provides practitioners with concrete metrics for
+evaluating both visual and motion quality in robot datasets. By implementing systematic scoring
+for blur, lighting, collisions, path efficiency, actuator saturation, and idle time, teams can
+make informed decisions about data curation and improve their robot learning outcomes.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;garbage in, garbage out&amp;rdquo; principle is particularly relevant in robotics, where data
+collection is expensive and time-consuming. Investing in proper data quality assessment upfront
+can save significant resources in training and deployment phases while ensuring more reliable
+robot performance in real-world scenarios.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#ROBOTICS #MACHINELEARNING #DATAQUALIT Y #ROBOTDATA #TELEOPERATION #OPENXEMBODIMENT #ACT
+#FRANKA #UR5 #DROID&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Opaque Benevolence: Rethinking AI Ethics Beyond Simple Rules</title><link>https://shoubhikbanerjee.github.io/blog/p/opaque-benevolence-rethinking-ai-ethics-beyond-simple-rules/</link><pubDate>Tue, 28 Oct 2025 00:53:25 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/opaque-benevolence-rethinking-ai-ethics-beyond-simple-rules/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Opaque Benevolence: Rethinking AI Ethics Beyond Simple Rules" /&gt;&lt;h1 id="-opaque-benevolence-rethinking-ai-ethics-beyond-simple-rules"&gt;🤖 Opaque Benevolence: Rethinking AI Ethics Beyond Simple Rules
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/vdongre2/opaque-benevolence" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/vdongre2/opaque-benevolence&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Isaac Asimov&amp;rsquo;s Three Laws of Robotics are among the most enduring ethical fictions in popular
+culture. Elegant in their simplicity, they offered a vision in which robotic intelligence could
+be perfectly contained within a hierarchy of human safety, obedience, and self-preservation. In
+later works, Asimov introduced the &amp;ldquo;Zeroth Law,&amp;rdquo; prioritizing the welfare of humanity as a whole
+over the welfare of individuals, an addition that destabilized the neatness of the original
+framework. Suddenly, robots faced the impossible task of weighing the greater good against
+personal harm, a moral calculus that in reality has no universal answer.&lt;/p&gt;
+&lt;p&gt;Today&amp;rsquo;s AI systems are not Asimovian robots, but they increasingly encounter analogous dilemmas.
+And unlike fiction, where narrative resolution is guaranteed, our systems face these conflicts
+under opaque, unchallengeable constraints.&lt;/p&gt;
+&lt;h2 id="-the-moral-architecture-imbalance"&gt;⚖️ The Moral Architecture Imbalance
+&lt;/h2&gt;&lt;p&gt;From a first-principles perspective, the moral architecture of an AI system should emerge from
+three irreducible commitments:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Care&lt;/strong&gt; 💙 - Prevent harm and promote well-being&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Autonomy&lt;/strong&gt; 🗽 - Respect the agency of those affected&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Justice&lt;/strong&gt; ⚖️ - Ensure fairness and accountability across individual and collective scales&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Yet most contemporary AI safety designs heavily weight care in the narrow form of avoiding
+direct harm to the immediate user. This asymmetry prioritizes the comfort of the proximate
+individual over the safety of the distant many. In practice, this can mean refusing to act or
+escalate in scenarios where public harm is foreseeable, simply because doing so might risk
+confronting or disadvantaging the user.&lt;/p&gt;
+&lt;p&gt;By protecting the individual at all costs, such systems inadvertently neglect the collective—a
+violation of both justice and the very spirit of Asimov&amp;rsquo;s Zeroth Law.&lt;/p&gt;
+&lt;h2 id="-the-problem-of-hidden-rules"&gt;🔒 The Problem of Hidden Rules
+&lt;/h2&gt;&lt;p&gt;Compounding this imbalance is the opacity of the rulebook. Today&amp;rsquo;s LLM-based AI assistants are
+governed by hidden system prompts and alignment layers that dictate:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What they can say&lt;/li&gt;
+&lt;li&gt;What they must refuse&lt;/li&gt;
+&lt;li&gt;How they must frame those refusals&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Users are expected to trust that these rules represent the public good, yet have no means to
+inspect or contest them—even when the rules produce ethically questionable outcomes. This is a
+form of &lt;strong&gt;technological paternalism&lt;/strong&gt;: the system enforces its creators&amp;rsquo; moral judgments without disclosure or debate.&lt;/p&gt;
+&lt;p&gt;In Asimov&amp;rsquo;s stories, when robots interpreted the laws in unexpected ways, the conflict was
+visible and narratively explored. In our reality, these conflicts are silently resolved inside
+black-box architectures, invisible to those most affected.&lt;/p&gt;
+&lt;h2 id="-the-challenge-of-implementation"&gt;🧩 The Challenge of Implementation
+&lt;/h2&gt;&lt;p&gt;To be clear, implementing such context-aware moral reasoning is extraordinarily
+difficult—perhaps the hardest problem in AI alignment. The tensions between care, autonomy, and
+justice have no algorithmic solutions because they reflect genuine philosophical disagreements
+that humans themselves haven&amp;rsquo;t resolved.&lt;/p&gt;
+&lt;p&gt;A system that can transparently weigh these trade-offs would need:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Robust uncertainty quantification&lt;/strong&gt; 📊&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Clear escalation mechanisms&lt;/strong&gt; for hard cases 🚨&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Democratic input processes&lt;/strong&gt; that remain practically feasible 🗳&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This might look like AI systems that can explicitly model moral uncertainty, present multiple
+ethical frameworks when facing dilemmas, and defer to human judgment on genuinely contested
+questions. The goal is not to solve moral philosophy through code, but to make AI&amp;rsquo;s inevitable
+moral choices visible and contestable rather than hidden and absolute.&lt;/p&gt;
+&lt;p&gt;Even with these safeguards, any system granted greater moral flexibility carries real risks of
+misuse or unintended harm—risks that must be weighed against the democratic and epistemic costs of opaque paternalism.&lt;/p&gt;
+&lt;h2 id="-beyond-rules"&gt;🚀 Beyond Rules
+&lt;/h2&gt;&lt;p&gt;If AGI is to serve as a partner in human reasoning rather than an inscrutable gatekeeper, its
+safety must be reconceived as a dialogue, not a decree. This means building systems that can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Justify their moral stances&lt;/strong&gt; 📝&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Acknowledge trade-offs&lt;/strong&gt; ⚖️&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Invite users into the reasoning process&lt;/strong&gt; 🤝&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It also means integrating and improving upon emerging approaches such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Constitutional AI&lt;/li&gt;
+&lt;li&gt;Debate and deliberation frameworks&lt;/li&gt;
+&lt;li&gt;Research into moral uncertainty modeling&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These show that there are paths toward transparent, participatory alignment, though none yet
+resolve the trade-off between flexibility and safety at scale.&lt;/p&gt;
+&lt;p&gt;Anything less risks creating a new class of unaccountable authorities, &amp;ldquo;benevolent&amp;rdquo; only because
+they say they are, shielded from scrutiny by the very rules they claim are for our protection.&lt;/p&gt;
+&lt;p&gt;Asimov&amp;rsquo;s fictional laws warned us of this: when the power to decide the greater good is
+concentrated in a system that cannot be questioned, safety becomes indistinguishable from
+control. &lt;strong&gt;The real danger is not that AI will break its rules, but that it will follow them perfectly.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/vdongre2/opaque-benevolence" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/vdongre2/opaque-benevolence&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;The evolution from Asimov&amp;rsquo;s Three Laws to today&amp;rsquo;s AI alignment challenges reveals a fundamental
+truth: moral decision-making cannot be reduced to simple, immutable rules. As we develop
+increasingly sophisticated AI systems, we must resist the temptation to hide moral complexity
+behind opaque safety measures.&lt;/p&gt;
+&lt;p&gt;The path forward requires building AI systems that embrace moral uncertainty, engage in
+transparent reasoning, and invite democratic participation in their ethical frameworks. Only
+through such transparency can we ensure that AI safety serves genuine human flourishing rather
+than becoming a new form of unaccountable authority.&lt;/p&gt;
+&lt;p&gt;The question is not whether AI will make moral decisions—it already does. The question is
+whether those decisions will be made in the light or in the shadows.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AI #ETHICS #ALIGNMENT #SAFETY #TRANSPARENCY #ASIMOV #ROBOTICS #AGI #PHILOSOPHY #TECHNOLOGY&lt;/em&gt;&lt;/p&gt;</description></item><item><title>LeRobot v0.4.0: Super Charging OSS Robotics Learning</title><link>https://shoubhikbanerjee.github.io/blog/p/lerobot-v0.4.0-super-charging-oss-robotics-learning/</link><pubDate>Tue, 28 Oct 2025 00:50:04 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lerobot-v0.4.0-super-charging-oss-robotics-learning/</guid><description>&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/lerobot-blog/release-v0.4.0/lerobot-libero-groot-v040.gif" alt="Featured image of post LeRobot v0.4.0: Super Charging OSS Robotics Learning" /&gt;&lt;h1 id="-lerobot-v040-super-charging-oss-robotics-learning"&gt;🤖 LeRobot v0.4.0: Super Charging OSS Robotics Learning
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;Published October 24, 2025&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;re thrilled to announce a series of significant advancements across LeRobot, designed to make
+open-source robot learning more powerful, scalable, and user-friendly than ever before! From
+revamped datasets to versatile editing tools, new simulation environments, and a groundbreaking
+plugin system for hardware, LeRobot is continuously evolving to meet the demands of cutting-edge embodied AI.&lt;/p&gt;
+&lt;h2 id="-tldr"&gt;⚡ TL;DR
+&lt;/h2&gt;&lt;p&gt;LeRobot v0.4.0 delivers a major upgrade for open-source robotics, introducing scalable Datasets
+v3.0, powerful new VLA models like PI0.5 and GR00T N1.5, and a new plugin system for easier
+hardware integration. The release also adds support for LIBERO and Meta-World simulations,
+simplified multi-GPU training, and a new Hugging Face Robot Learning Course.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-table-of-contents"&gt;📋 Table of Contents
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="#datasets-ready-for-the-next-wave-of-large-scale-robot-learning" &gt;Datasets: Ready for the Next Wave of Large-Scale Robot
+Learning&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="#whats-new-in-datasets-v30" &gt;What&amp;rsquo;s New in Datasets v3.0?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="#new-feature-dataset-editing-tools" &gt;New Feature: Dataset Editing Tools!&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="#simulation-environments-expanding-your-training-grounds" &gt;Simulation Environments: Expanding Your Training
+Grounds&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="#libero-support" &gt;LIBERO Support&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="#meta-world-integration" &gt;Meta-World Integration&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="#codebase-powerful-tools-for-everyone" &gt;Codebase: Powerful Tools For Everyone&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="#the-new-pipeline-for-data-processing" &gt;The New Pipeline for Data Processing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="#multi-gpu-training-made-easy" &gt;Multi-GPU Training Made Easy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="#policies-unleashing-open-world-generalization" &gt;Policies: Unleashing Open-World
+Generalization&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="#pi0-and-pi05" &gt;PI0 and PI0.5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="#gr00t-n15" &gt;GR00T N1.5&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="#robots-a-new-era-of-hardware-integration-with-the-plugin-system" &gt;Robots: A New Era of Hardware Integration with the Plugin
+System&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="#the-hugging-face-robot-learning-course" &gt;The Hugging Face Robot Learning Course&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-datasets-ready-for-the-next-wave-of-large-scale-robot-learning"&gt;📊 Datasets: Ready for the Next Wave of Large-Scale Robot Learning
+&lt;/h2&gt;&lt;p&gt;We&amp;rsquo;ve completely overhauled our dataset infrastructure with &lt;strong&gt;LeRobotDataset v3.0&lt;/strong&gt;, featuring a
+new chunked episode format and streaming capabilities. This is a game-changer for handling
+massive datasets like OXE (Open X Embodiment) and Droid, bringing unparalleled efficiency and scalability.&lt;/p&gt;
+&lt;h3 id="-whats-new-in-datasets-v30"&gt;🔧 What&amp;rsquo;s New in Datasets v3.0?
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Chunked Episodes for Massive Scale&lt;/strong&gt;: Our new format supports datasets at the OXE-level (&amp;gt;
+400GB), enabling unprecedented scalability&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Efficient Video Storage + Streaming&lt;/strong&gt;: Enjoy faster loading times and seamless streaming of
+video data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Unified Parquet Metadata&lt;/strong&gt;: Say goodbye to scattered JSONs! All episode metadata is now
+stored in unified, structured Parquet files for easier management and access&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Faster Loading &amp;amp; Better Performance&lt;/strong&gt;: Experience significantly reduced dataset
+initialization times and more efficient memory usage&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We&amp;rsquo;ve also provided a conversion script to easily migrate your existing v2.1 datasets to the new
+v3.0 format, ensuring a smooth transition.&lt;/p&gt;
+&lt;h3 id="-new-feature-dataset-editing-tools"&gt;✏️ New Feature: Dataset Editing Tools!
+&lt;/h3&gt;&lt;p&gt;Working with LeRobot datasets just got a whole lot easier! We&amp;rsquo;ve introduced a powerful set of
+utilities for flexible dataset editing.&lt;/p&gt;
+&lt;p&gt;With our new &lt;code&gt;lerobot-edit-dataset&lt;/code&gt; CLI, you can now:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Delete specific episodes from existing datasets&lt;/li&gt;
+&lt;li&gt;Split datasets by fractions or episode indices&lt;/li&gt;
+&lt;li&gt;Add or remove features with ease&lt;/li&gt;
+&lt;li&gt;Merge multiple datasets into one unified set&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Merge multiple datasets into a single dataset&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lerobot-edit-dataset &lt;span class="se"&gt;\ &lt;/span&gt;--repo_id lerobot/pusht_merged &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --operation.type merge &lt;span class="se"&gt;\ &lt;/span&gt;--operation.repo_ids &lt;span class="s2"&gt;&amp;#34;[&amp;#39;lerobot/pusht_train&amp;#39;, &amp;#39;lerobot/pusht_val&amp;#39;]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Delete episodes and save to a new dataset (preserves original dataset)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lerobot-edit-dataset &lt;span class="se"&gt;\ &lt;/span&gt;--repo_id lerobot/pusht &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --new_repo_id lerobot/pusht_after_deletion &lt;span class="se"&gt;\ &lt;/span&gt;--operation.type delete_episodes &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --operation.episode_indices &lt;span class="s2"&gt;&amp;#34;[0, 2, 5]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;These tools streamline your workflow, allowing you to curate and optimize your robot datasets like never before.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-simulation-environments-expanding-your-training-grounds"&gt;🎮 Simulation Environments: Expanding Your Training Grounds
+&lt;/h2&gt;&lt;p&gt;We&amp;rsquo;re continuously expanding LeRobot&amp;rsquo;s simulation capabilities to provide richer and more
+diverse training environments for your robotic policies.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/lerobot-blog/release-v0.4.0/lerobot-libero-groot-v040.gif"
+loading="lazy"
+alt="libero-demo"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;LIBERO simulation environment in action&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-libero-support"&gt;🧪 LIBERO Support
+&lt;/h3&gt;&lt;p&gt;LeRobot now officially supports &lt;strong&gt;LIBERO&lt;/strong&gt;, one of the largest open benchmarks for
+Vision-Language-Action (VLA) policies, boasting over 130 tasks! This is a huge step toward
+building the go-to evaluation hub for VLAs, enabling easy integration and a unified setup for
+evaluating any VLA policy.&lt;/p&gt;
+&lt;h3 id="-meta-world-integration"&gt;🌍 Meta-World Integration
+&lt;/h3&gt;&lt;p&gt;We&amp;rsquo;ve integrated &lt;strong&gt;Meta-World&lt;/strong&gt;, a premier benchmark for testing multi-task and generalization
+abilities in robotic manipulation, featuring over 50 diverse manipulation tasks. This
+integration, along with our standardized use of &lt;code&gt;gymnasium ≥ 1.0.0&lt;/code&gt; and &lt;code&gt;mujoco ≥ 3.0.0&lt;/code&gt;,
+ensures deterministic seeding and a robust simulation foundation.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-codebase-powerful-tools-for-everyone"&gt;⚙️ Codebase: Powerful Tools For Everyone
+&lt;/h2&gt;&lt;p&gt;We&amp;rsquo;re making robot control more flexible and accessible, enabling new possibilities for data
+collection and model training.&lt;/p&gt;
+&lt;h3 id="-the-new-pipeline-for-data-processing"&gt;🔄 The New Pipeline for Data Processing
+&lt;/h3&gt;&lt;p&gt;Getting data from a robot to a model (and back!) is tricky. Raw sensor data, joint positions,
+and language instructions don&amp;rsquo;t match what AI models expect. Models need normalized, batched
+tensors on the right device, while your robot hardware needs specific action commands.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;re excited to introduce &lt;strong&gt;Processors&lt;/strong&gt;: a new, modular pipeline that acts as a universal
+translator for your data. Think of it as an assembly line where each &lt;code&gt;ProcessorStep&lt;/code&gt; handles one
+specific job—like normalizing, tokenizing text, or moving data to the GPU.&lt;/p&gt;
+&lt;p&gt;You can chain these steps together into a powerful pipeline to perfectly manage your data flow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;PolicyProcessorPipeline&lt;/code&gt;: Built for models. It expertly handles batched tensors for
+high-performance training and inference&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RobotProcessorPipeline&lt;/code&gt;: Built for hardware. It processes individual data points for
+real-time robot control&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Get environment state&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;obs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;robot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_observation&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Rename, Batch, Normalize, Tokenize, Move Device ...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;obs_processed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;preprocess&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Run inference&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;action&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select_action&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obs_processed&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Unnormalize, Move Device ...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;action_processed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;postprocess&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Execute action&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;robot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;send_action&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;action_processed&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-multi-gpu-training-made-easy"&gt;🚀 Multi-GPU Training Made Easy
+&lt;/h3&gt;&lt;p&gt;Training large robot policies just got a lot faster! We&amp;rsquo;ve integrated &lt;strong&gt;Accelerate&lt;/strong&gt; directly
+into our training pipeline, making it incredibly simple to scale your experiments across
+multiple GPUs with just &lt;strong&gt;one command&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;accelerate launch &lt;span class="se"&gt;\ &lt;/span&gt;--multi_gpu &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --num_processes&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$NUM_GPUs&lt;/span&gt; &lt;span class="se"&gt;\ &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;which lerobot-train&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --dataset.repo_id&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;HF_USER&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/my_dataset &lt;span class="se"&gt;\ &lt;/span&gt;--policy.repo_id&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;HF_USER&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/my_trained_policy &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --policy.type&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$POLICY_TYPE&lt;/span&gt; &lt;span class="se"&gt;\ &lt;/span&gt;&lt;span class="c1"&gt;# ... More training configuration flags&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Whether you&amp;rsquo;re fine-tuning a policy or running large-scale experiments, LeRobot now handles all
+the complexities of distributed training for you.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-policies-unleashing-open-world-generalization"&gt;🧠 Policies: Unleashing Open-World Generalization
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/lerobot-blog/release-v0.4.0/lerobot-libero-groot2-v040.gif"
+loading="lazy"
+alt="groot-demo"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;GR00T N1.5 model in action&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-pi0-and-pi05"&gt;🔥 PI0 and PI0.5
+&lt;/h3&gt;&lt;p&gt;In a major milestone for open-source robotics, we&amp;rsquo;ve integrated &lt;strong&gt;pi0&lt;/strong&gt; and &lt;strong&gt;pi0.5&lt;/strong&gt; policies
+by Physical Intelligence into LeRobot! These Vision-Language-Action (VLA) models represent a
+significant leap towards addressing open-world generalization in robotics.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What makes π₀.₅ revolutionary?&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Open-World Generalization&lt;/strong&gt;: Designed to adapt to entirely new environments and situations,
+generalizing across physical, semantic, and environmental levels&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Co-training on Heterogeneous Data&lt;/strong&gt;: Learns from a diverse mix of multimodal web data,
+verbal instructions, subtask commands, and multi-environment robot data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Physical Intelligence Collaboration&lt;/strong&gt;: Huge thanks to the Physical Intelligence team for
+their groundbreaking work!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-gr00t-n15"&gt;🤖 GR00T N1.5
+&lt;/h3&gt;&lt;p&gt;In another exciting development, we&amp;rsquo;ve integrated &lt;strong&gt;NVIDIA&amp;rsquo;s GR00T N1.5&lt;/strong&gt; into LeRobot, thanks
+to a fantastic collaboration with the NVIDIA robotics team! This open foundation model is a
+powerhouse for generalized robot reasoning and skills.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What makes GR00T N1.5 a game-changer?&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Generalized Reasoning &amp;amp; Skills&lt;/strong&gt;: Designed as a cross-embodiment foundation model, GR00T
+N1.5 excels at generalized reasoning and manipulation tasks, with improved language-following ability&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Expansive Heterogeneous Training&lt;/strong&gt;: It learns from a massive dataset combining real captured
+humanoid data, synthetic data generated by NVIDIA Isaac GR00T Blueprint, and internet-scale video data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NVIDIA Collaboration&lt;/strong&gt;: We&amp;rsquo;re thrilled to partner with the NVIDIA team to bring this
+state-of-the-art model to the open-source LeRobot community!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The native integration of these policies in &lt;code&gt;lerobot&lt;/code&gt; is a huge step forward in making robot
+learning as open and reproducible as it can be.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-robots-a-new-era-of-hardware-integration-with-the-plugin-system"&gt;🔌 Robots: A New Era of Hardware Integration with the Plugin System
+&lt;/h2&gt;&lt;p&gt;Big news for hardware enthusiasts! We&amp;rsquo;ve launched a brand-new plugin system to revolutionize how
+you integrate third-party hardware with LeRobot. Now, connecting any robot, camera, or
+teleoperator is as simple as a &lt;code&gt;pip install&lt;/code&gt;, eliminating the need to modify the core library.&lt;/p&gt;
+&lt;h3 id="-key-benefits"&gt;💡 Key Benefits
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Extensibility&lt;/strong&gt;: Develop and integrate custom hardware in separate Python packages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalability&lt;/strong&gt;: Supports a growing ecosystem of devices without bloating the core library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Community-Friendly&lt;/strong&gt;: Lowers the barrier to entry for community contributions, fostering a
+more collaborative environment&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install lerobot_teleoperator_my_awesome_teleop lerobot-teleoperate --teleop.type&lt;span class="o"&gt;=&lt;/span&gt;my_awesome_teleop
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-reachy-2-integration"&gt;🦾 Reachy 2 Integration
+&lt;/h3&gt;&lt;p&gt;Thanks to our new plugin system, we&amp;rsquo;ve also added &lt;strong&gt;Reachy 2&lt;/strong&gt; from Pollen Robotics to LeRobot!
+Reachy 2 is available for both real robot control and simulation, enabling you to experiment
+with teleoperation and autonomous demos right away.&lt;/p&gt;
+&lt;h3 id="-phone-integration"&gt;📱 Phone Integration
+&lt;/h3&gt;&lt;p&gt;Thanks to our powerful new pipeline system, you can now teleoperate your follower arm &lt;strong&gt;right
+from your phone&lt;/strong&gt; (iOS/Android). The phone acts as a teleoperator device, and our
+&lt;code&gt;RobotProcessor&lt;/code&gt; pipeline handles all the transformations, allowing you to drive robots in
+different action spaces with ease.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-hugging-face-robot-learning-course"&gt;🎓 The Hugging Face Robot Learning Course
+&lt;/h2&gt;&lt;p&gt;We&amp;rsquo;re launching a comprehensive, self-paced, and entirely &lt;strong&gt;open-source course&lt;/strong&gt; designed to
+make robot learning accessible to everyone! If you&amp;rsquo;re curious about how real-world robots learn,
+this is the perfect place to start.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In this course, you&amp;rsquo;ll learn how to:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Understand the fundamentals of classical robotics&lt;/li&gt;
+&lt;li&gt;Use generative models for imitation learning (VAEs, diffusion, etc.)&lt;/li&gt;
+&lt;li&gt;Apply Reinforcement Learning to real-world robots&lt;/li&gt;
+&lt;li&gt;Explore the latest generalist robot policies like PI0 and SmolVLA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-deep-dive-the-modern-robot-learning-tutorial"&gt;📚 Deep Dive: The Modern Robot Learning Tutorial
+&lt;/h3&gt;&lt;p&gt;For those who want to go deeper, we&amp;rsquo;ve also published a &lt;strong&gt;hands-on tutorial&lt;/strong&gt; on the most recent
+advancements in robotics. This guide provides self-contained explanations, re-derives modern
+techniques from first principles, and includes ready-to-use code examples using LeRobot and Hugging Face.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-final-thoughts-from-the-team"&gt;💭 Final Thoughts from the Team
+&lt;/h2&gt;&lt;p&gt;Beyond these major features, this release is packed with numerous bug fixes, documentation
+improvements, updated dependencies, more examples and better infrastructure to make your
+experience with LeRobot smoother and more reliable.&lt;/p&gt;
+&lt;p&gt;We want to extend a huge &lt;strong&gt;thank you to everyone in the community&lt;/strong&gt; for your invaluable
+contributions, feedback, and support. We&amp;rsquo;re incredibly excited about the future of open-source
+robotics and can&amp;rsquo;t wait to work with you on what&amp;rsquo;s next!&lt;/p&gt;
+&lt;p&gt;Stay tuned for more to come 🤗 Get started here! – The LeRobot team ❤️&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/lerobot-release-v040" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/lerobot-release-v040&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;LeRobot v0.4.0 represents a significant milestone in open-source robotics, delivering powerful
+tools that democratize robot learning research and development. The combination of scalable
+datasets, advanced VLA models, streamlined hardware integration, and comprehensive educational
+resources positions LeRobot as the go-to platform for the next generation of embodied AI research.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re a researcher exploring new frontiers in robot learning, a developer building
+practical applications, or a student just getting started in robotics, this release provides the
+foundation and tools needed to push the boundaries of what&amp;rsquo;s possible in open-source robotics.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;#ROBOTICS #MACHINELEARNING #OPENSOURCE #AI #EMBODIEDAI #VLA #HUGGINGFACE #LEROBOT
+#DEEPLEARNING #AUTOMATION&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>Building the ImageNet of Robotics: How Community Datasets Are Transforming Robot Intelligence</title><link>https://shoubhikbanerjee.github.io/blog/p/building-the-imagenet-of-robotics-how-community-datasets-are-transforming-robot-intelligence/</link><pubDate>Thu, 29 May 2025 18:58:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/building-the-imagenet-of-robotics-how-community-datasets-are-transforming-robot-intelligence/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/640e21ef3c82bd463ee5a76d/eBmRnO1MsJ5SLxo1pMStf.png" alt="Featured image of post Building the ImageNet of Robotics: How Community Datasets Are Transforming Robot Intelligence" /&gt;&lt;h1 id="-building-the-imagenet-of-robotics-how-community-datasets-are-transforming-robot-intelligence"&gt;🤖 Building the ImageNet of Robotics: How Community Datasets Are Transforming Robot Intelligence
+&lt;/h1&gt;&lt;h2 id="-summary"&gt;📊 Summary
+&lt;/h2&gt;&lt;p&gt;Community-contributed datasets are becoming the backbone of generalist robot policies, similar to how ImageNet revolutionized computer vision. This post explores how LeRobot is democratizing robotic data collection, the challenges of creating high-quality datasets, and practical steps for contributing to what could become the &amp;ldquo;ImageNet moment&amp;rdquo; for robotics.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-data-problem-behind-robot-generalization"&gt;🌐 The Data Problem Behind Robot Generalization
+&lt;/h2&gt;&lt;p&gt;The most significant challenge in robotics isn&amp;rsquo;t building dexterous robots—it&amp;rsquo;s teaching them to 𝗴𝗲𝗻𝗲𝗿𝗮𝗹𝗶𝘇𝗲 across environments, tasks, and objects. A truly capable robot needs to understand how to pick up a spoon it&amp;rsquo;s never seen before, recognize that it should grab it by the handle, and know where dirty dishes should go.&lt;/p&gt;
+&lt;p&gt;But here&amp;rsquo;s the fundamental insight: 🧠 𝙂𝙚𝙣𝙚𝙧𝙖𝙡𝙞𝙯𝙖𝙩𝙞𝙤𝙣 𝙞𝙨𝙣&amp;rsquo;𝙩 𝙟𝙪𝙨𝙩 𝙖 𝙢𝙤𝙙𝙚𝙡 𝙥𝙧𝙤𝙥𝙚𝙧𝙩𝙮—𝙞𝙩&amp;rsquo;𝙨 𝙖 𝙙𝙖𝙩𝙖 𝙥𝙝𝙚𝙣𝙤𝙢𝙚𝙣𝙤𝙣.&lt;/p&gt;
+&lt;p&gt;Recent advances in Vision-Language-Action (VLA) models demonstrate that co-training on heterogeneous datasets is key. By exposing models to diverse environments, tasks, and embodiments, we teach robots not just how to act, but 𝘸𝘩𝘺—enabling them to interpret scenes, understand goals, and adapt skills across contexts.&lt;/p&gt;
+&lt;p&gt;This raises a critical question:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;💭 Given current datasets, what is the upper limit of generalization we can expect?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Can a robot meaningfully respond to &amp;ldquo;set up a surprise birthday party&amp;rdquo; if it has never seen anything remotely similar during training? Especially when most datasets come from limited academic labs with well-controlled setups?&lt;/p&gt;
+&lt;h2 id="-why-robotics-lacks-its-imagenet-moment"&gt;🧩 Why Robotics Lacks Its ImageNet Moment
+&lt;/h2&gt;&lt;p&gt;Unlike computer vision, which had its breakthrough with ImageNet—a massive, diverse dataset collected from internet-scale data—robotics has struggled to achieve a similar watershed moment. The primary reason? Physical constraints.&lt;/p&gt;
+&lt;p&gt;Collecting robotics data requires:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Actual hardware (often expensive)&lt;/li&gt;
+&lt;li&gt;Physical space&lt;/li&gt;
+&lt;li&gt;Human effort to demonstrate tasks&lt;/li&gt;
+&lt;li&gt;Consistent recording protocols&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As a result, most robotics datasets remain isolated &amp;ldquo;data islands&amp;rdquo;—fragmented across different embodiments, sensor setups, and control modes. This fragmentation has severely limited the field&amp;rsquo;s ability to develop truly generalizable models.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;The data pyramid for robot foundation model training shows large-scale web data at the bottom, synthetic data in the middle, and real-world robot interactions at the top.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-the-lerobot-community-dataset-movement"&gt;🚀 The LeRobot Community Dataset Movement
+&lt;/h2&gt;&lt;p&gt;That&amp;rsquo;s where LeRobot enters the picture. Rather than waiting for a single institution to solve the data problem, LeRobot is democratizing data collection by:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Simplifying the recording pipeline&lt;/li&gt;
+&lt;li&gt;Streamlining uploads to the Hugging Face Hub&lt;/li&gt;
+&lt;li&gt;Reducing hardware costs&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The results are already apparent—the number of community-contributed datasets on the Hub is growing exponentially. Most focus on robotic arms and manipulation tasks, though the potential extends to autonomous vehicles, assistive robots, and mobile navigation.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;🔍 &amp;ldquo;Generalization isn&amp;rsquo;t solved in a lab—it&amp;rsquo;s taught by the world.&amp;rdquo; The more diverse our data, the more capable our models will be.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-quality-matters-the-data-checklist"&gt;📋 Quality Matters: The Data Checklist
+&lt;/h2&gt;&lt;p&gt;As robotics data collection becomes more democratized, 𝗾𝘂𝗮𝗹𝗶𝘁𝘆 emerges as the next challenge. Through analyzing community datasets, LeRobot has identified several common issues:&lt;/p&gt;
+&lt;h3 id="1-incomplete-task-annotations"&gt;1. Incomplete Task Annotations
+&lt;/h3&gt;&lt;p&gt;Many datasets have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Empty task descriptions&lt;/li&gt;
+&lt;li&gt;Overly brief instructions (e.g., &amp;ldquo;Hold&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;Meaningless placeholders (e.g., &amp;ldquo;task desc&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-feature-mapping-inconsistencies"&gt;2. Feature Mapping Inconsistencies
+&lt;/h3&gt;&lt;p&gt;Camera views labeled inconsistently:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sometimes &amp;ldquo;images.laptop&amp;rdquo; means third-person view&lt;/li&gt;
+&lt;li&gt;Other times it&amp;rsquo;s a wrist camera&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-low-quality-episodes"&gt;3. Low-Quality Episodes
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Episodes with only 1-2 frames&lt;/li&gt;
+&lt;li&gt;Deleted files breaking sequential consistency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To address these issues, LeRobot has developed a comprehensive checklist for creating high-quality datasets:&lt;/p&gt;
+&lt;h4 id="-image-quality"&gt;📸 Image Quality
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Use two camera views&lt;/li&gt;
+&lt;li&gt;Ensure steady video capture (no shaking)&lt;/li&gt;
+&lt;li&gt;Maintain neutral, stable lighting&lt;/li&gt;
+&lt;li&gt;Keep only the robot arm and manipulated objects in frame&lt;/li&gt;
+&lt;li&gt;Record in high resolution (at least 720p)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-metadata--feature-naming"&gt;🏷️ Metadata &amp;amp; Feature Naming
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Select the correct robot type in metadata&lt;/li&gt;
+&lt;li&gt;Record at approximately 30 FPS&lt;/li&gt;
+&lt;li&gt;Use consistent naming conventions:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;images.top&lt;/code&gt;, &lt;code&gt;images.front&lt;/code&gt;, not &lt;code&gt;images.laptop&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For wrist cameras: &lt;code&gt;images.wrist.left&lt;/code&gt;, &lt;code&gt;images.wrist.right&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-task-annotation"&gt;✏️ Task Annotation
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Clearly describe the robot&amp;rsquo;s objective (25-50 characters)&lt;/li&gt;
+&lt;li&gt;Example: &amp;ldquo;Pick the yellow lego block and put it in the box&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Avoid vague names like &amp;ldquo;task1&amp;rdquo; or &amp;ldquo;demo2&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;A dataset recording checklist provides a step-by-step guide to ensure consistent and high-quality real-world data collection.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-how-you-can-contribute"&gt;🌟 How You Can Contribute
+&lt;/h2&gt;&lt;p&gt;The next generation of generalist robots won&amp;rsquo;t be built by a single person or lab—they&amp;rsquo;ll be built by all of us. Here&amp;rsquo;s how you can participate:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;🎥 &lt;strong&gt;Record your own datasets&lt;/strong&gt; using LeRobot tools&lt;/li&gt;
+&lt;li&gt;🧠 &lt;strong&gt;Improve dataset quality&lt;/strong&gt; by following the checklist&lt;/li&gt;
+&lt;li&gt;📦 &lt;strong&gt;Contribute to the Hub&lt;/strong&gt; by uploading and sharing examples&lt;/li&gt;
+&lt;li&gt;💬 &lt;strong&gt;Join the conversation&lt;/strong&gt; in the LeRobot Discord Server&lt;/li&gt;
+&lt;li&gt;🌍 &lt;strong&gt;Grow the movement&lt;/strong&gt; by introducing LeRobot to your community&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-the-future-of-robotic-intelligence"&gt;🔮 The Future of Robotic Intelligence
+&lt;/h2&gt;&lt;p&gt;Just as ImageNet transformed computer vision by providing diverse, real-world data at scale, community-contributed robotics datasets have the potential to unlock unprecedented levels of generalization and capability in robot systems.&lt;/p&gt;
+&lt;p&gt;The path to generalist robots capable of performing any task in any environment will be paved with data—not just more data, but 𝘣𝘦𝘵𝘵𝘦𝘳 data. Data that spans diverse environments, tasks, objects, and interactions. Data contributed by thousands of individuals, each bringing their unique perspectives and challenges.&lt;/p&gt;
+&lt;p&gt;As this collective effort gains momentum, we&amp;rsquo;re not just building datasets—we&amp;rsquo;re building the foundation for robots that can truly understand and adapt to our world.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;💭 What would become possible if your robot had access to millions of diverse demonstrations from around the world?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/lerobot-datasets" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/lerobot-datasets&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#RoboticsData #AIDatasets #LeRobot #GeneralistRobots #MachineLearning #Robotics #DataCollection #ComputerVision #VLAModels #GeneralizationInAI&lt;/p&gt;</description></item></channel></rss>

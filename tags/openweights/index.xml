@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Openweights on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/openweights/</link><description>Recent content in Openweights on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 03 Sep 2026 22:06:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/openweights/index.xml" rel="self" type="application/rss+xml"/><item><title>NeoMME multilingual multimodal encoders released with retrieval variants</title><link>https://shoubhikbanerjee.github.io/blog/p/neomme-multilingual-multimodal-encoders-released-with-retrieval-variants/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/neomme-multilingual-multimodal-encoders-released-with-retrieval-variants/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6264f9655f6f2e14d6ac981c/GJ6FUbgFpq1x8RNOqzmz-.webp" alt="Featured image of post NeoMME multilingual multimodal encoders released with retrieval variants" /&gt;&lt;h1 id="neomme-multilingual-multimodal-encoders-released-with-retrieval-variants"&gt;NeoMME multilingual multimodal encoders released with retrieval variants
+&lt;/h1&gt;&lt;p&gt;NeoMME, a new family of multilingual multimodal encoders, has been released in 260M and 800M parameter sizes, including a specialized NeoMME-Retriever variant for document image retrieval. The models are trained from scratch using a masked discrete-diffusion objective and are available under the Apache 2.0 license.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;NeoMME (pronounced &amp;ldquo;nee-oh-me&amp;rdquo;, IPA /ˈniː.oʊmi/) is a multilingual, multimodal foundation encoder that generates vector representations for text and/or images using a single Transformer encoder. Key characteristics include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Not based on any existing pretrained vision tower, text encoder, or text decoder&lt;/li&gt;
+&lt;li&gt;Images and text share the same computational path&lt;/li&gt;
+&lt;li&gt;Supports pretraining, fine-tuning, parallelization, and serving across both modalities&lt;/li&gt;
+&lt;li&gt;Two model sizes: 260M and 800M parameters&lt;/li&gt;
+&lt;li&gt;Context length of 16,384 tokens (enough for up to two standard 3840×2160 4K UHD images)&lt;/li&gt;
+&lt;li&gt;Available in Hugging Face Transformers&lt;/li&gt;
+&lt;li&gt;All model checkpoints released under Apache 2.0 license&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NeoMME processes both modalities through a single bidirectional Transformer:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Text inputs&lt;/strong&gt;: factorized token embeddings using a BPE tokenizer with 131k-token vocabulary trained from scratch on multilingual text, code, mathematics, and machine-produced image transcripts&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Image inputs&lt;/strong&gt;: divided into a grid of non-overlapping 32×32 patches, projected with a small MLP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The encoder architecture incorporates several recent improvements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Grouped-query attention&lt;/li&gt;
+&lt;li&gt;Query-key normalization&lt;/li&gt;
+&lt;li&gt;Gated attention&lt;/li&gt;
+&lt;li&gt;2D rotary position embeddings&lt;/li&gt;
+&lt;li&gt;Squared-ReLU MLPs&lt;/li&gt;
+&lt;li&gt;Most layers use symmetric sliding-window attention&lt;/li&gt;
+&lt;li&gt;Every sixth layer and the final layer use global attention&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Training uses a masked discrete-diffusion objective:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pretrained from scratch as a discrete masked-diffusion text denoiser&lt;/li&gt;
+&lt;li&gt;Multimodal examples use corruption rates between 0.3 and 1&lt;/li&gt;
+&lt;li&gt;Pretraining mix includes multilingual text, code, mathematics, natural images, and document images&lt;/li&gt;
+&lt;li&gt;Each model processes about 524 billion packed input tokens, including 290 billion tokens from text-only examples&lt;/li&gt;
+&lt;li&gt;NorMuon optimizer used to improve data efficiency during training&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-neomme-retriever"&gt;🚀 NeoMME-Retriever
+&lt;/h2&gt;&lt;p&gt;NeoMME-Retriever reuses the NeoMME backbone with two jointly trained heads added on top:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Head&lt;/th&gt;
+&lt;th&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Dense head&lt;/td&gt;
+&lt;td&gt;Averages backbone hidden state vectors into a normalized vector (mean pooling)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Late-interaction head&lt;/td&gt;
+&lt;td&gt;Projects each text token or image patch from backbone output hidden states to a 128-dimensional normalized vector&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;NeoMME-Retriever returns both dense and late-interaction embeddings in a single forward pass. It ranks document page screenshots directly, bypassing OCR preprocessing. This approach preserves layout, charts, tables, font type and size, and other visual clues that OCR cannot capture.&lt;/p&gt;
+&lt;h2 id="-performance-and-efficiency"&gt;⚙️ Performance and efficiency
+&lt;/h2&gt;&lt;p&gt;Both model sizes lie on the ViDoRe v3 Pareto frontier for nDCG@10 and model size.&lt;/p&gt;
+&lt;p&gt;Throughput at matched 2048×2048 image input size on NVIDIA L40S GPU:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;260M model: ~51 pages per second&lt;/li&gt;
+&lt;li&gt;Approximately 2× ColModernVBERT&amp;rsquo;s throughput&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Storage optimization through hierarchical token pooling and asymmetric quantization:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Late-interaction index reduction&lt;/td&gt;
+&lt;td&gt;~1.5 MB → 6 kB per page&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Compression factor&lt;/td&gt;
+&lt;td&gt;255× smaller&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;nDCG@10 retained&lt;/td&gt;
+&lt;td&gt;&amp;gt;95% of baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;NeoMME offers a unified architecture for multimodal understanding without relying on pretrained unimodal components. The shared computational path for text and images simplifies deployment and enables flexible use across pretraining, fine-tuning, and serving. For retrieval applications, NeoMME-Retriever&amp;rsquo;s ability to process raw page images while maintaining competitive efficiency metrics provides an alternative to OCR-dependent document search pipelines.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://github.com/tonywu71/colpali-cookbooks/blob/481c6ec8866f6f5d39d2d9dd06b5547c2d9a67fa/assets/neomme/architecture.webp?raw=true"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://github.com/tonywu71/colpali-cookbooks/blob/481c6ec8866f6f5d39d2d9dd06b5547c2d9a67fa/assets/neomme/retrieval-heads.webp?raw=true"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://github.com/tonywu71/colpali-cookbooks/blob/c5e737e7e474363822b6f2d95290c0120e0fa993/assets/neomme/vidore-v3-model-size.webp?raw=true"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#multimodalAI #informationretrieval #documentAI #openweights #transformers&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/Hcompany/neomme" target="_blank" rel="noopener"
+&gt;NeoMME: an efficient Multimodal-native and Multilingual Encoder&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

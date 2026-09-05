@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Web Development on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/web-development/</link><description>Recent content in Web Development on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 01:37:43 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/web-development/index.xml" rel="self" type="application/rss+xml"/><item><title>VibeGame: Exploring Vibe Coding Games with AI-Assisted Development</title><link>https://shoubhikbanerjee.github.io/blog/p/vibegame-exploring-vibe-coding-games-with-ai-assisted-development/</link><pubDate>Tue, 28 Oct 2025 01:37:43 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/vibegame-exploring-vibe-coding-games-with-ai-assisted-development/</guid><description>&lt;img src="https://cdn-avatars.huggingface.co/v1/production/uploads/1672164046414-624b4a964056e2a6914a05c5.png" alt="Featured image of post VibeGame: Exploring Vibe Coding Games with AI-Assisted Development" /&gt;&lt;h1 id="-vibegame-exploring-vibe-coding-games"&gt;🎮 VibeGame: Exploring Vibe Coding Games
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;Published September 29, 2025&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-avatars.huggingface.co/v1/production/uploads/1672164046414-624b4a964056e2a6914a05c5.png"
+loading="lazy"
+alt="Dylan Ebert’s avatar"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;By Dylan Ebert&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-problem"&gt;🚨 The Problem
+&lt;/h2&gt;&lt;p&gt;People are trying to vibe code games. And it kind of works, at first. However, as the project
+grows, things begin to fall apart. Why? And what can we do about it?&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll talk about the problem, how I fixed it, and where to go from here.&lt;/p&gt;
+&lt;h2 id="-what-is-vibe-coding"&gt;🤔 What Is &amp;ldquo;Vibe Coding&amp;rdquo;?
+&lt;/h2&gt;&lt;p&gt;First, what is vibe coding? It&amp;rsquo;s originally coined by Andrej Karpathy in a &lt;a class="link" href="https://twitter.com/karpathy/status/1748043513156792473" target="_blank" rel="noopener"
+&gt;viral
+tweet&lt;/a&gt; where it&amp;rsquo;s defined as where you
+&amp;ldquo;fully give in to the vibes, embrace exponentials and forget the code even exists&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;However, since then, it&amp;rsquo;s used descriptively to mean a lot of different things, anywhere from
+just &amp;ldquo;using AI when coding&amp;rdquo; to &amp;ldquo;not thinking about the code at all&amp;rdquo;. In this blog post, I&amp;rsquo;ll
+define it as: &lt;strong&gt;using AI as a high-level programming language to build something&lt;/strong&gt;. Like other
+programming languages, this benefits from understanding what&amp;rsquo;s going on under the hood, but
+doesn&amp;rsquo;t necessarily require it.&lt;/p&gt;
+&lt;p&gt;With this interpretation, you could make a game without understanding code, though knowing the
+fundamentals still helps.&lt;/p&gt;
+&lt;h2 id="-context-management"&gt;🧠 Context Management
+&lt;/h2&gt;&lt;p&gt;Earlier I mentioned that &amp;ldquo;as the project grows, things begin to fall apart&amp;rdquo;. This is because
+there is &lt;a class="link" href="https://arxiv.org/abs/2307.03172" target="_blank" rel="noopener"
+&gt;evidence&lt;/a&gt; that as the context window fills up, model
+performance begins to degrade. This is especially true for game development, where the context
+can grow very large, very quickly.&lt;/p&gt;
+&lt;p&gt;To address this issue, there are many personal ad-hoc solutions, such as writing LLM-specific
+context directly in the project files, or more comprehensive solutions like &lt;a class="link" href="https://github.com/anthropics/cline" target="_blank" rel="noopener"
+&gt;Claude Code
+Development Kit&lt;/a&gt; for large-scale context management.&lt;/p&gt;
+&lt;p&gt;I couldn&amp;rsquo;t find a lightweight, accessible solution, which doesn&amp;rsquo;t rely on significant domain
+knowledge. So I made one: 🧅 &lt;a class="link" href="https://github.com/dylanebert/shallot" target="_blank" rel="noopener"
+&gt;Shallot&lt;/a&gt;, a simple,
+lightweight, unopinionated context management system for Claude Code. It relies on two basic
+commands:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;/peel [prompt]&lt;/code&gt; to load context at the beginning of a conversation&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/nourish&lt;/code&gt; to update context at the end of a conversation&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Anecdotally, this works well. However, it works best when the project stays lean and
+well-organized, so all relevant context can easily fit in the model&amp;rsquo;s context window. While
+Claude Code is used here, the same principles generalize to other models.&lt;/p&gt;
+&lt;p&gt;Beyond context management tools, platform choice is critical. The platform should ideally
+naturally keep projects lean through high-level abstractions, while also being something AI
+models understand well. So, what existing platforms are best suited for vibe coding?&lt;/p&gt;
+&lt;h2 id="-initial-exploration"&gt;🔍 Initial Exploration
+&lt;/h2&gt;&lt;p&gt;I initially tried 3 different approaches to vibe coding games: Roblox MCP, Unity MCP, and web.
+For each, I tried to build a simple incremental game inspired by &lt;a class="link" href="https://store.steampowered.com/app/1681010/Grass_Cutting_Incremental/" target="_blank" rel="noopener"
+&gt;Grass Cutting
+Incremental&lt;/a&gt;, using
+Claude Code for each.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s how it went:&lt;/p&gt;
+&lt;h3 id="-attempt-1-roblox-mcp"&gt;⚡ Attempt 1: Roblox MCP
+&lt;/h3&gt;&lt;p&gt;The &lt;a class="link" href="https://github.com/Roblox/studio-rust-mcp-server" target="_blank" rel="noopener"
+&gt;official MCP server&lt;/a&gt; from Roblox. This
+allows AI to interact with Roblox Studio by sending commands to run code.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Excellent level of abstraction with built-in game mechanics&lt;/li&gt;
+&lt;li&gt;AI could very easily understand the syntax and convert instructions to code&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;No files, only using code to read data, which severely limits context management&lt;/li&gt;
+&lt;li&gt;Very limited runtime information for AI to work with&lt;/li&gt;
+&lt;li&gt;Proprietary walled garden&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Roblox provides an excellent layer of abstraction for keeping the codebase lean and manageable,
+which is perfect for vibe coding. However, the walled garden and lack of context makes it
+infeasible for vibe coding, unless it&amp;rsquo;s in-house at Roblox.&lt;/p&gt;
+&lt;h3 id="-attempt-2-unity-mcp"&gt;🎯 Attempt 2: Unity MCP
+&lt;/h3&gt;&lt;p&gt;The &lt;a class="link" href="https://github.com/dylanebert/unity-mcp-server" target="_blank" rel="noopener"
+&gt;unofficial MCP server&lt;/a&gt; for Unity. This
+allows AI to interact with the Unity Editor: reading the console, managing assets, and
+validating scripts.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Full file system access&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;There are many ways to do everything in Unity, changing frequently across versions, causing AI
+to get confused&lt;/li&gt;
+&lt;li&gt;Requires significant domain knowledge to tell the AI &lt;em&gt;how&lt;/em&gt; to do things, rather than &lt;em&gt;what&lt;/em&gt; to
+do&lt;/li&gt;
+&lt;li&gt;AI performance was inconsistent and unreliable&lt;/li&gt;
+&lt;li&gt;Proprietary engine (though much more transparent than Roblox)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Unity is a powerful engine with a lot of capabilities. However, the complexity and variability
+of the engine makes it difficult for AI to consistently produce good results without significant
+user domain knowledge.&lt;/p&gt;
+&lt;h3 id="-attempt-3-web-stack"&gt;🌐 Attempt 3: Web Stack
+&lt;/h3&gt;&lt;p&gt;The open web platform, using &lt;a class="link" href="https://threejs.org/" target="_blank" rel="noopener"
+&gt;three.js&lt;/a&gt; for 3D rendering,
+&lt;a class="link" href="https://rapier.rs/" target="_blank" rel="noopener"
+&gt;rapier&lt;/a&gt; for physics, and &lt;a class="link" href="https://github.com/NateTheGreatt/bitECS" target="_blank" rel="noopener"
+&gt;bitecs&lt;/a&gt;
+for game logic.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Far superior AI proficiency compared to game engines, likely due to massive training data&lt;/li&gt;
+&lt;li&gt;Full file system access&lt;/li&gt;
+&lt;li&gt;Fully open source stack with complete control/transparency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Relatively low level libraries, requiring essentially building the engine before building the
+game&lt;/li&gt;
+&lt;li&gt;Lack of ecosystem for high-quality 3D games; web tends toward 2D games and simple 3D
+experiences&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This approach had the best AI performance by far, likely due to the vast amount of web
+development data available during training. However, the low-level nature of the libraries meant
+that I had to essentially build a game engine before I could build the game itself. This allows
+us to work at a much higher level of abstraction, like we did with Roblox.&lt;/p&gt;
+&lt;p&gt;Although it required building an engine first, this approach was the only one that produced a
+fun result without heavy domain knowledge.&lt;/p&gt;
+&lt;h3 id="-comparison-summary"&gt;📊 Comparison Summary
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Platform&lt;/th&gt;
+&lt;th&gt;AI Performance&lt;/th&gt;
+&lt;th&gt;Abstraction Level&lt;/th&gt;
+&lt;th&gt;Context Management&lt;/th&gt;
+&lt;th&gt;Open Source&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Roblox&lt;/td&gt;
+&lt;td&gt;⭐⭐⭐&lt;/td&gt;
+&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;
+&lt;td&gt;⭐&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Unity&lt;/td&gt;
+&lt;td&gt;⭐&lt;/td&gt;
+&lt;td&gt;⭐⭐&lt;/td&gt;
+&lt;td&gt;⭐⭐⭐&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Web&lt;/td&gt;
+&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;
+&lt;td&gt;⭐&lt;/td&gt;
+&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-the-solution-vibegame"&gt;🚀 The Solution: VibeGame
+&lt;/h2&gt;&lt;p&gt;After these experiments, I had a clear picture: the web stack had excellent AI performance but
+was too low-level, while Roblox had perfect abstraction but lacked openness and context
+management.&lt;/p&gt;
+&lt;p&gt;So, what about combining the best of both?&lt;/p&gt;
+&lt;p&gt;Introducing &lt;a class="link" href="https://github.com/dylanebert/vibegame" target="_blank" rel="noopener"
+&gt;VibeGame&lt;/a&gt;, a high-level declarative game
+engine built on top of three.js, rapier, and bitecs, designed specifically for AI-assisted game
+development.&lt;/p&gt;
+&lt;h3 id="-design-philosophy"&gt;🎨 Design Philosophy
+&lt;/h3&gt;&lt;p&gt;There were three key decisions that went into the design of VibeGame:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Abstraction:&lt;/strong&gt; A high-level abstraction with built-in features like physics, rendering, and
+common game mechanics, keeping the codebase lean and manageable. This takes inspiration from
+popular high-level sandbox games/game &amp;ldquo;engines&amp;rdquo; like Roblox, Fortnite UEFN, and Minecraft.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Syntax:&lt;/strong&gt; A declarative XML-like syntax for defining game objects and their properties,
+making it easy for AI to understand and generate code. This is similar to HTML/CSS, which AI
+models are already proficient in.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Architecture:&lt;/strong&gt; An Entity-Component-System (ECS) architecture for scalability and
+flexibility. ECS separates data (components) from behavior (systems), encouraging the project to
+stay modular and organized as it grows, conducive to vibe coding and context management.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;A basic game looks like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;world&lt;/span&gt; &lt;span class="na"&gt;canvas&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;#game-canvas&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;sky&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;#87ceeb&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c"&gt;&amp;lt;!-- Ground --&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;static-part&lt;/span&gt; &lt;span class="na"&gt;pos&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;0 -0.5 0&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;shape&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;box&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;20 1 20&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;#90ee90&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;static-part&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c"&gt;&amp;lt;!-- Ball --&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;dynamic-part&lt;/span&gt; &lt;span class="na"&gt;pos&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;-2 4 -3&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;shape&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;sphere&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;1&amp;#34;&lt;/span&gt; &lt;span class="na"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;#ff4500&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;dynamic-part&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;world&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;canvas&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;game-canvas&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;module&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nx"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;GAME&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;vibegame&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;GAME&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;run&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;See it in action in this &lt;a class="link" href="https://jsfiddle.net/dylanebert/w2nk7fbo/" target="_blank" rel="noopener"
+&gt;JSFiddle&lt;/a&gt; or the &lt;a class="link" href="https://huggingface.co/spaces/dylanebert/vibegame" target="_blank" rel="noopener"
+&gt;Live
+Demo&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This will create a simple scene with a ground plane and a falling ball. The player, camera, and
+lighting are created automatically. All of this is modular and can be replaced. Arbitrary custom
+components and systems can be added as needed.&lt;/p&gt;
+&lt;p&gt;This comes bundled with an &lt;a class="link" href="https://github.com/dylanebert/vibegame/blob/main/llms.txt" target="_blank" rel="noopener"
+&gt;llms.txt&lt;/a&gt;
+file containing documentation about the engine, designed specifically for AI, to be included in
+its system prompt or initial context.&lt;/p&gt;
+&lt;h2 id="-so-does-it-actually-work"&gt;✅ So Does It Actually Work?
+&lt;/h2&gt;&lt;p&gt;Yes.&lt;/p&gt;
+&lt;p&gt;Well, kind of.&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="https://dylanebert.github.io/vibegame-grass-example/" target="_blank" rel="noopener"
+&gt;Here&amp;rsquo;s the game&lt;/a&gt; I built to test building
+a simple incremental grass collection game using VibeGame and Claude Code. It worked very well,
+requiring minimal domain knowledge for implementing the core game mechanics.&lt;/p&gt;
+&lt;p&gt;![Grass Cutting Game](&lt;a class="link" href="https://huggingface.co/datasets/huggingface/documentation-images/resolve/m" target="_blank" rel="noopener"
+&gt;https://huggingface.co/datasets/huggingface/documentation-images/resolve/m&lt;/a&gt;
+ain/blog/vibegame/grass_cutting_game.gif)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Simple grass cutting incremental game built with VibeGame&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;However, there are still some major caveats:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;It works well for building what the game engine supports, i.e. a simple platformer or game
+that only relies on basic physics and rendering.&lt;/li&gt;
+&lt;li&gt;However, it struggles with anything more complex that isn&amp;rsquo;t yet implemented in the engine,
+like interaction, inventory, multiplayer, combat, etc.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;So, with a definition of vibe coding that is the one-shot &amp;ldquo;make me a game&amp;rdquo; approach, it doesn&amp;rsquo;t
+work. However, with the definition of treating vibe coding like a high-level programming
+language, it works very well, but requires users to understand the engine&amp;rsquo;s capabilities and
+limitations.&lt;/p&gt;
+&lt;h2 id="-try-it-yoursel"&gt;🛠️ Try It Yoursel
+&lt;/h2&gt;&lt;p&gt;To try it immediately, I built a demo where you can develop a game directly in the browser using
+VibeGame with &lt;a class="link" href="https://huggingface.co/Qwen/Qwen2.5-72B-Instruct" target="_blank" rel="noopener"
+&gt;Qwen3-Next-80B-A3B-Instruct&lt;/a&gt;:
+&lt;a class="link" href="https://huggingface.co/spaces/dylanebert/vibegame" target="_blank" rel="noopener"
+&gt;Live Demo on Hugging Face&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can also test it locally with a frontier model like Claude Code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm create vibegame@latest my-game
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; my-game
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm run dev &lt;span class="c1"&gt;# or bun dev&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Then, paste all the contents of the included &lt;code&gt;llms.txt&lt;/code&gt; to &lt;code&gt;CLAUDE.md&lt;/code&gt;, providing full
+documentation about the engine for the AI to reference (or point your own context management
+system to it). This works with other models as well.&lt;/p&gt;
+&lt;h2 id="-whats-next"&gt;🔮 What&amp;rsquo;s Next?
+&lt;/h2&gt;&lt;p&gt;The engine is currently very barebones and only supports very basic mechanics (unless writing it
+from scratch). However, initial results are promising.&lt;/p&gt;
+&lt;p&gt;Next steps would be:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Flesh out the engine&lt;/strong&gt; with more built-in mechanics, getting closer to par with early
+versions of Roblox or UEFN. This includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Interaction&lt;/li&gt;
+&lt;li&gt;Inventory/items&lt;/li&gt;
+&lt;li&gt;Multiplayer&lt;/li&gt;
+&lt;li&gt;Skinned meshes/animations with curated database&lt;/li&gt;
+&lt;li&gt;Audio with curated database&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Improve the AI guidance systems&lt;/strong&gt;, providing beginners with a better experience. This
+includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Clear messaging about engine capabilities/limitations&lt;/li&gt;
+&lt;li&gt;Guided prompts for common tasks&lt;/li&gt;
+&lt;li&gt;Many more examples and templates&lt;/li&gt;
+&lt;li&gt;Educational resources&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;It&amp;rsquo;s also worth exploring how vibe coding games could harness more proven engines. For example,
+building a high-level sandbox game editor on top of Unity or Unreal Engine (similar to how
+Unreal Editor for Fortnite is built on Unreal Engine) could provide a more controlled
+environment for AI to work with, while leveraging the power of established engines.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;re also likely to see more in-house solutions from major players.&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="https://huggingface.co/dylanebert" target="_blank" rel="noopener"
+&gt;Follow me&lt;/a&gt; to keep up with what&amp;rsquo;s going on in the space!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔗 Links:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/dylanebert/vibegame" target="_blank" rel="noopener"
+&gt;VibeGame&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://huggingface.co/spaces/dylanebert/vibegame" target="_blank" rel="noopener"
+&gt;Hugging Face Demo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://dylanebert.github.io/vibegame-grass-example/" target="_blank" rel="noopener"
+&gt;Example Game (made with VibeGame)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/dylanebert/shallot" target="_blank" rel="noopener"
+&gt;Shallot Context Manager&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/vibegame" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/vibegame&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;VibeGame represents an innovative approach to bridging the gap between AI capabilities and game
+development accessibility. While current limitations prevent true one-shot game creation, the
+engine successfully demonstrates how high-level abstractions combined with AI-friendly syntax
+can enable rapid prototyping and development of simple games.&lt;/p&gt;
+&lt;p&gt;The key insight is that vibe coding works best when treated as a high-level programming language
+rather than magic. By providing the right tools, abstractions, and context management systems,
+we can harness AI&amp;rsquo;s strengths while working within its current limitations.&lt;/p&gt;
+&lt;p&gt;As AI models continue to improve and game engines become more AI-friendly, we&amp;rsquo;re likely to see
+even more sophisticated solutions emerge from both indie developers and major industry players.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#GAMEDEV #AI #WEBDEV #JAVASCRIPT #THREEJS #VIBECODDING #MACHINELEARNING #AUTOMATION&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Beyond Expectations: Running Real-Time Conversational AI Locally with GLTF Avatar Animation</title><link>https://shoubhikbanerjee.github.io/blog/p/beyond-expectations-running-real-time-conversational-ai-locally-with-gltf-avatar-animation/</link><pubDate>Fri, 06 Jun 2025 21:27:05 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/beyond-expectations-running-real-time-conversational-ai-locally-with-gltf-avatar-animation/</guid><description>&lt;img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" alt="Featured image of post Beyond Expectations: Running Real-Time Conversational AI Locally with GLTF Avatar Animation" /&gt;&lt;h1 id="-beyond-expectations-running-real-time-conversational-ai-locally-with-gltf-avatar-animation"&gt;🔮 Beyond Expectations: Running Real-Time Conversational AI Locally with GLTF Avatar Animation
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Discover how local conversational AI models are exceeding performance expectations and explore the exciting frontier of integrating these models with 3D avatar animations through ThreeJS and GLTF in browsers.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-surprising-power-of-local-ai-implementations"&gt;🚀 The Surprising Power of Local AI Implementations
+&lt;/h2&gt;&lt;p&gt;When it comes to conversational AI, we&amp;rsquo;ve grown accustomed to cloud-dependent solutions that require constant internet connectivity and raise privacy concerns. But what if I told you that running these sophisticated models 100% locally is not only possible—it&amp;rsquo;s impressively effective?&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;𝘛𝘩𝘪𝘴 𝘸𝘰𝘳𝘬𝘴 𝘸𝘢𝘺 𝘣𝘦𝘵𝘵𝘦𝘳 𝘵𝘩𝘢𝘯 𝘐 𝘦𝘹𝘱𝘦𝘤𝘵𝘦𝘥!&amp;rdquo; This revelation isn&amp;rsquo;t just exciting—it&amp;rsquo;s transformative for how we conceptualize AI integration in everyday applications.&lt;/p&gt;
+&lt;p&gt;Local AI processing is experiencing a renaissance moment. Modern devices pack enough computational power to handle increasingly optimized models without sacrificing performance. The advantages are compelling:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔒 Enhanced privacy with data never leaving your device&lt;/li&gt;
+&lt;li&gt;⚡ Zero latency from network communication&lt;/li&gt;
+&lt;li&gt;🌐 Offline functionality in any environment&lt;/li&gt;
+&lt;li&gt;💰 Reduced operational costs without cloud processing fees&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The initial success of these local implementations naturally leads to the question: what&amp;rsquo;s next? The answer appears to be bringing these conversational models to life through visual representation.&lt;/p&gt;
+&lt;h2 id="-the-next-frontier-animated-ai-avatars"&gt;🤖 The Next Frontier: Animated AI Avatars
+&lt;/h2&gt;&lt;p&gt;The logical progression from effective local conversational AI is visual embodiment. As noted in the original observation: &amp;ldquo;𝙎𝙤 𝙩𝙝𝙚𝙣 𝙩𝙝𝙚 𝙣𝙚𝙭𝙩 𝙤𝙗𝙫𝙞𝙤𝙪𝙨 𝙨𝙩𝙚𝙥 𝙞𝙨 𝙖𝙫𝙖𝙩𝙖𝙧 𝙖𝙣𝙞𝙢𝙖𝙩𝙞𝙤𝙣&amp;hellip;𝙨𝙤𝙢𝙚𝙝𝙤𝙬.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;This integration introduces fascinating technical challenges and opportunities. For browser-based applications, the technology stack seems clearly defined:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📦 &lt;strong&gt;GLTF (GL Transmission Format)&lt;/strong&gt; avatars as the 3D model standard&lt;/li&gt;
+&lt;li&gt;🎭 &lt;strong&gt;ThreeJS&lt;/strong&gt; as the rendering engine&lt;/li&gt;
+&lt;li&gt;🗣️ &lt;strong&gt;Phoneme animation&lt;/strong&gt; to synchronize speech with facial movements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;GLTF has emerged as the &amp;ldquo;JPEG of 3D&amp;rdquo; for good reason. The format efficiently packages textures, materials, and animations in a web-friendly way, making it ideal for browser-based AI avatars.&lt;/p&gt;
+&lt;h2 id="-building-the-technical-stack-for-animated-ai-companions"&gt;🧩 Building the Technical Stack for Animated AI Companions
+&lt;/h2&gt;&lt;p&gt;Let&amp;rsquo;s explore what this integration might look like from a technical perspective.&lt;/p&gt;
+&lt;h3 id="the-foundation-local-conversational-ai"&gt;The Foundation: Local Conversational AI
+&lt;/h3&gt;&lt;p&gt;At the core is a lightweight, optimized language model capable of running entirely on-device. Recent innovations in model quantization, pruning, and architecture optimization have made this possible even on modest hardware. These models can process natural language, generate contextually appropriate responses, and maintain conversation state without external dependencies.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Pseudocode for initializing a local AI model
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;await&lt;/span&gt; &lt;span class="nx"&gt;LocalAI&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;load&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;path/to/optimized/model&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;conversation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;model&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createConversation&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;handleUserInput&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;await&lt;/span&gt; &lt;span class="nx"&gt;conversation&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getResponse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;generateSpeech&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;animateAvatar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="the-visual-layer-threejs-and-gltf"&gt;The Visual Layer: ThreeJS and GLTF
+&lt;/h3&gt;&lt;p&gt;ThreeJS provides the perfect foundation for rendering 3D content in browsers with WebGL. Combined with GLTF models, you can create expressive avatars that run smoothly across devices:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Pseudocode for setting up a ThreeJS avatar
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;scene&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;THREE&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Scene&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;loader&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;GLTFLoader&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;loader&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;load&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;avatar.gltf&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;gltf&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;avatar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;gltf&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;scene&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;scene&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;avatar&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Extract animation mixers and facial morphs
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;mixer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;THREE&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;AnimationMixer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;avatar&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;morphTargetDictionary&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;avatar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;morphTargetDictionary&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="the-animation-challenge-phoneme-mapping"&gt;The Animation Challenge: Phoneme Mapping
+&lt;/h3&gt;&lt;p&gt;The most technically complex piece is synchronizing speech with facial movements through phoneme animation. Phonemes—the distinct units of sound in language—need to be mapped to facial expressions:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Pseudocode for phoneme-based animation
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;animateAvatar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Convert text to phoneme sequence with timing
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;phonemes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;textToPhonemes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// For each phoneme, animate the corresponding facial morph target
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;phonemes&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;forEach&lt;/span&gt;&lt;span class="p"&gt;(({&lt;/span&gt;&lt;span class="nx"&gt;phoneme&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;startTime&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;duration&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;setTimeout&lt;/span&gt;&lt;span class="p"&gt;(()&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;morphIndex&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;morphTargetDictionary&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;phonemeToMorphMap&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;phoneme&lt;/span&gt;&lt;span class="p"&gt;]];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;avatar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;morphTargetInfluences&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;morphIndex&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Blend to next phoneme
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;setTimeout&lt;/span&gt;&lt;span class="p"&gt;(()&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;avatar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;morphTargetInfluences&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;morphIndex&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="nx"&gt;duration&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="nx"&gt;startTime&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-real-world-applications-and-future-potential"&gt;🔍 Real-World Applications and Future Potential
+&lt;/h2&gt;&lt;p&gt;This technology combination opens doors to numerous applications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎓 &lt;strong&gt;Educational assistants&lt;/strong&gt; with engaging visual presence&lt;/li&gt;
+&lt;li&gt;🏥 &lt;strong&gt;Healthcare companions&lt;/strong&gt; for patient interaction&lt;/li&gt;
+&lt;li&gt;🛒 &lt;strong&gt;Retail customer service&lt;/strong&gt; with personalized avatars&lt;/li&gt;
+&lt;li&gt;🎮 &lt;strong&gt;Gaming NPCs&lt;/strong&gt; with dynamic conversational abilities&lt;/li&gt;
+&lt;li&gt;🌐 &lt;strong&gt;Accessible web interfaces&lt;/strong&gt; for diverse user needs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The most exciting aspect is how this technology democratizes access to embodied AI. Rather than requiring specialized hardware or expensive cloud services, these solutions can run on common devices already in users&amp;rsquo; hands.&lt;/p&gt;
+&lt;h2 id="-looking-forward-the-human-touch"&gt;🌟 Looking Forward: The Human Touch
+&lt;/h2&gt;&lt;p&gt;As we develop these avatar-enhanced conversational systems, the key challenge will be balancing technical capability with human-like interaction. The uncanny valley—that unsettling feeling when something appears almost but not quite human—remains a significant hurdle.&lt;/p&gt;
+&lt;p&gt;The path forward likely involves:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;🎨 Stylized rather than photorealistic avatars&lt;/li&gt;
+&lt;li&gt;🎭 Expressive but not exaggerated animations&lt;/li&gt;
+&lt;li&gt;🧠 Context-aware emotional responses&lt;/li&gt;
+&lt;li&gt;🔄 Natural conversation flow with appropriate pauses and reactions&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;What&amp;rsquo;s particularly exciting about this development is how it bridges the gap between pure text interaction and fully embodied AI. The combination of local processing power with visual representation creates a more engaging, accessible AI experience.&lt;/p&gt;
+&lt;p&gt;As these technologies continue to mature, we might soon find ourselves having meaningful conversations with AI companions that not only understand what we&amp;rsquo;re saying but respond with appropriate facial expressions and gestures—all running entirely on our personal devices.&lt;/p&gt;
+&lt;p&gt;The question now becomes: how will these visual representations shape our relationships with AI systems? Will animated avatars create stronger emotional connections to artificial intelligence, and how might that transform our digital interactions?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/posts/Xenova/927328273503233" target="_blank" rel="noopener"
+&gt;https://huggingface.co/posts/Xenova/927328273503233&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#LocalAI #ConversationalAI #WebGL #ThreeJS #GLTF #AvatarAnimation #EdgeComputing #AIAnimation #FacialAnimation #WebDevelopment #FrontendTech #AITech&lt;/p&gt;</description></item><item><title>Holo1-3B: The Open-Source VLM Redefining Web Automation Cost-Efficiency</title><link>https://shoubhikbanerjee.github.io/blog/p/holo1-3b-the-open-source-vlm-redefining-web-automation-cost-efficiency/</link><pubDate>Fri, 06 Jun 2025 21:23:11 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/holo1-3b-the-open-source-vlm-redefining-web-automation-cost-efficiency/</guid><description>&lt;img src="https://cdn-thumbnails.huggingface.co/social-thumbnails/models/Hcompany/Holo1-3B.png" alt="Featured image of post Holo1-3B: The Open-Source VLM Redefining Web Automation Cost-Efficiency" /&gt;&lt;h1 id="-holo1-3b-the-open-source-vlm-redefining-web-automation-cost-efficiency"&gt;🚀 Holo1-3B: The Open-Source VLM Redefining Web Automation Cost-Efficiency
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;𝙎𝙪𝙢𝙢𝙖𝙧𝙮&lt;/strong&gt;: HCompany&amp;rsquo;s new Holo1-3B model delivers state-of-the-art web automation capabilities at a fraction of the cost of GPT-4 alternatives. This Action Vision-Language Model powers the Surfer-H web agent system with impressive accuracy on UI localization tasks while offering the best accuracy-to-cost ratio in the industry.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-introduction-web-agents-that-see-and-act-like-humans"&gt;🔍 Introduction: Web Agents That See and Act Like Humans
+&lt;/h2&gt;&lt;p&gt;In today&amp;rsquo;s rapidly evolving AI landscape, the ability for models to interact with web interfaces like humans do represents a significant frontier. Web automation traditionally required complex programming, brittle selectors, or expensive API solutions. But what if an AI could simply &lt;em&gt;look&lt;/em&gt; at a website and identify where to click, just as a human would?&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s exactly what HCompany has achieved with their new Holo1-3B model, an open-source Vision-Language Model (VLM) specifically built for web automation. Designed as part of the Surfer-H web agent system, it demonstrates remarkable capabilities that position it as a compelling alternative to expensive proprietary solutions.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s explore why this matters and how this technology could transform how we automate web interactions.&lt;/p&gt;
+&lt;h2 id="-understanding-holo1-and-surfer-h-architecture"&gt;🧠 Understanding Holo1 and Surfer-H Architecture
+&lt;/h2&gt;&lt;p&gt;Holo1 isn&amp;rsquo;t just another VLM—it&amp;rsquo;s an &lt;em&gt;Action&lt;/em&gt; Vision-Language Model specifically optimized for web interaction. As part of the Surfer-H agent architecture, it acts in one of three critical roles:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;𝗣𝗼𝗹𝗶𝗰𝘆 𝗺𝗼𝗱𝗲𝗹&lt;/strong&gt;: Makes decisions and plans the agent&amp;rsquo;s behavior&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;𝗟𝗼𝗰𝗮𝗹𝗶𝘇𝗲𝗿 𝗺𝗼𝗱𝗲𝗹&lt;/strong&gt;: Visually understands UI elements to enable precise interactions&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;𝗩𝗮𝗹𝗶𝗱𝗮𝘁𝗼𝗿 𝗺𝗼𝗱𝗲𝗹&lt;/strong&gt;: Verifies whether actions produced the desired results&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What sets Surfer-H apart is its human-like approach to web navigation—it thinks before acting, takes notes, and can retry if its answer is rejected. Rather than relying on custom APIs or brittle DOM selectors, it operates purely through the browser interface, just as a human would.&lt;/p&gt;
+&lt;p&gt;The system&amp;rsquo;s modular design allows for flexible configuration with different models for each component, enabling strategic tradeoffs between accuracy, speed, and cost.&lt;/p&gt;
+&lt;h2 id="-pareto-optimal-performance-better-results-at-lower-costs"&gt;💰 Pareto-Optimal Performance: Better Results at Lower Costs
+&lt;/h2&gt;&lt;p&gt;When evaluated on the WebVoyager benchmark—a collection of 643 real-world web tasks ranging from price checking to event scheduling—Holo1-powered agents delivered remarkable results:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔥 &lt;strong&gt;Surfer-H + Holo1-7B&lt;/strong&gt;: 92.2% accuracy at $0.13 per task&lt;/li&gt;
+&lt;li&gt;🔥 &lt;strong&gt;Surfer-H + Holo1-3B&lt;/strong&gt;: 89.7% accuracy at $0.11 per task&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For comparison, proprietary alternatives achieved:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GPT-4.1: 92.0% accuracy at $0.54 per task&lt;/li&gt;
+&lt;li&gt;GPT-4.1-mini: 88.8% accuracy at $0.26 per task&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This positions Holo1 on the Pareto frontier—delivering the best accuracy per dollar spent. At approximately 1/5th the cost of GPT-4.1 for similar performance, the economic implications for organizations deploying web automation at scale are substantial.&lt;/p&gt;
+&lt;h2 id="-excelling-at-ui-localization"&gt;🎯 Excelling at UI Localization
+&lt;/h2&gt;&lt;p&gt;A critical skill for web agents is UI localization—identifying precisely where to click or interact with a user interface. Holo1 demonstrates state-of-the-art performance across multiple benchmarks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Screenspot&lt;/li&gt;
+&lt;li&gt;Screenspot-V2&lt;/li&gt;
+&lt;li&gt;Screenspot-Pro&lt;/li&gt;
+&lt;li&gt;GroundUI-Web&lt;/li&gt;
+&lt;li&gt;WebClick (HCompany&amp;rsquo;s new benchmark)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This localization capability is what enables Holo1 to interact with websites like a human would—by visually identifying UI elements rather than relying on hidden code structures that might change frequently.&lt;/p&gt;
+&lt;h2 id="-getting-started-with-holo1-3b"&gt;🛠️ Getting Started with Holo1-3B
+&lt;/h2&gt;&lt;p&gt;The best part? Holo1-3B is available now and relatively simple to implement. Based on the Qwen2.5-VL architecture, it&amp;rsquo;s accessible through Hugging Face&amp;rsquo;s transformers library.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a simplified implementation workflow:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Load the model and processor&lt;/strong&gt;:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoModelForImageTextToText&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;Hcompany/Holo1-3B&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;torch_dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;auto&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;device_map&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;auto&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;processor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoProcessor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Hcompany/Holo1-3B&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start="2"&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Process images with care&lt;/strong&gt;: Since Holo1 uses absolute pixel coordinates, make sure to use the provided &lt;code&gt;smart_resize&lt;/code&gt; function to ensure coordinate accuracy.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Choose your interaction style&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Simple click coordinates: &lt;code&gt;x, y&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Structured JSON output for more complex interactions&lt;/li&gt;
+&lt;li&gt;Full navigation steps with rich context awareness&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For example, having the model select a checkout date on a calendar:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;instruction&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Select July 14th as the check-out date&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;prompt&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;localization&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_localization_prompt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;instruction&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;coordinates&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;run_inference&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prompt&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The model can also handle more complex tasks:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;task&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Book a hotel in Paris on August 3rd for 3 nights&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;prompt&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;navigation&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_navigation_prompt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;step&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;navigation_str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;run_inference&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prompt&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-the-future-of-web-automation"&gt;🔮 The Future of Web Automation
+&lt;/h2&gt;&lt;p&gt;Holo1-3B represents a significant step toward accessible, cost-effective web automation that works like a human user would. Its open-source nature and impressive performance metrics position it as a viable alternative to much more expensive proprietary solutions.&lt;/p&gt;
+&lt;p&gt;The implications extend beyond simple cost savings. By making sophisticated web automation more accessible, Holo1 could democratize automation capabilities that were previously available only to organizations with significant AI budgets.&lt;/p&gt;
+&lt;p&gt;As models like Holo1 continue to evolve, we might see entirely new categories of applications emerge—from personalized web assistants to enterprise-scale automation solutions that operate through visual interfaces rather than APIs or code.&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;🤔 Final Thoughts
+&lt;/h2&gt;&lt;p&gt;When we consider the trajectory of AI development, models like Holo1-3B reveal an important shift: from general-purpose models to specialized systems that excel at specific, high-value tasks. This specialization enables better performance at lower costs, making capabilities more accessible to a wider range of users and organizations.&lt;/p&gt;
+&lt;p&gt;As we move forward, will we see more domain-specialized models outperform general-purpose alternatives? And how might this change the economics of AI deployment across industries?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/Hcompany/Holo1-3B" target="_blank" rel="noopener"
+&gt;https://huggingface.co/Hcompany/Holo1-3B&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#WebAutomation #AI #VisionLanguageModel #Holo1 #OpenSourceAI #WebAgent #MachineLearning #AIProductivity #VLM #CostEffectiveAI #WebVoyager&lt;/p&gt;</description></item></channel></rss>

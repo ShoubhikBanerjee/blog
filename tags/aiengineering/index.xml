@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AIEngineering on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/aiengineering/</link><description>Recent content in AIEngineering on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 06 Jun 2025 20:58:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/aiengineering/index.xml" rel="self" type="application/rss+xml"/><item><title>🚀 PipelineRL: Breaking the Speed-Stability Tradeoff in LLM Reinforcement Learning</title><link>https://shoubhikbanerjee.github.io/blog/p/pipelinerl-breaking-the-speed-stability-tradeoff-in-llm-reinforcement-learning/</link><pubDate>Fri, 06 Jun 2025 20:58:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/pipelinerl-breaking-the-speed-stability-tradeoff-in-llm-reinforcement-learning/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6338a9f676421c054312d8c1/sBXLyV1PHAj-Uy5Uk1FRP.jpeg" alt="Featured image of post 🚀 PipelineRL: Breaking the Speed-Stability Tradeoff in LLM Reinforcement Learning" /&gt;&lt;h1 id="-pipelinerl-breaking-the-speed-stability-tradeoff-in-llm-reinforcement-learning"&gt;🚀 PipelineRL: Breaking the Speed-Stability Tradeoff in LLM Reinforcement Learning
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;𝙎𝙪𝙢𝙢𝙖𝙧𝙮: PipelineRL introduces a groundbreaking approach to LLM reinforcement learning through &amp;ldquo;inflight weight updates&amp;rdquo; - continuously updating model weights during inference without stopping generation. This technique elegantly solves the traditional throughput vs. on-policy data collection tradeoff, enabling faster, more stable RL training for large language models.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="-revolutionizing-rl-training-for-llms"&gt;🔄 Revolutionizing RL Training for LLMs
+&lt;/h2&gt;&lt;p&gt;Reinforcement Learning (RL) with Large Language Models presents a fundamental challenge: how do you balance high inference throughput with on-policy data collection? Traditional approaches force an uncomfortable choice between efficiency and effectiveness. Either you maximize throughput but suffer from stale, off-policy data, or you maintain on-policy learning at the cost of GPU efficiency.&lt;/p&gt;
+&lt;p&gt;Enter PipelineRL, an experimental open-source implementation that elegantly solves this problem through a surprisingly simple innovation: 𝗶𝗻𝗳𝗹𝗶𝗴𝗵𝘁 𝘄𝗲𝗶𝗴𝗵𝘁 𝘂𝗽𝗱𝗮𝘁𝗲𝘀.&lt;/p&gt;
+&lt;h2 id="-how-pipelinerl-works-inflight-weight-updates-explained"&gt;🧠 How PipelineRL Works: Inflight Weight Updates Explained
+&lt;/h2&gt;&lt;h3 id="𝘛𝘩𝘦-𝘛𝘳𝘢𝘥𝘪𝘵𝘪𝘰𝘯𝘢𝘭-𝘋𝘪𝘭𝘦𝘮𝘮𝘢"&gt;𝘛𝘩𝘦 𝘛𝘳𝘢𝘥𝘪𝘵𝘪𝘰𝘯𝘢𝘭 𝘋𝘪𝘭𝘦𝘮𝘮𝘢
+&lt;/h3&gt;&lt;p&gt;In conventional RL approaches, the process unfolds linearly:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Generate data using the current policy&lt;/li&gt;
+&lt;li&gt;Update the policy based on this data&lt;/li&gt;
+&lt;li&gt;Generate new data with the updated policy&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This creates significant inefficiencies. To maintain high throughput, inference servers need large batch sizes, generating data for multiple optimization steps at once. But each step increases the lag between the current policy and the inference policy, making collected data progressively less effective.&lt;/p&gt;
+&lt;h3 id="𝗧𝗵𝗲-𝗣𝗶𝗽𝗲𝗹𝗶𝗻𝗲𝗥𝗟-𝗦𝗼𝗹𝘂𝘁𝗶𝗼𝗻-"&gt;𝗧𝗵𝗲 𝗣𝗶𝗽𝗲𝗹𝗶𝗻𝗲𝗥𝗟 𝗦𝗼𝗹𝘂𝘁𝗶𝗼𝗻 🔥
+&lt;/h3&gt;&lt;p&gt;PipelineRL&amp;rsquo;s genius lies in its continuous operation model:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Inference servers maintain optimal batch sizes for high throughput&lt;/li&gt;
+&lt;li&gt;Model weights update after each optimizer step 𝘸𝘪𝘵𝘩𝘰𝘶𝘵 𝘴𝘵𝘰𝘱𝘱𝘪𝘯𝘨 𝘪𝘯𝘧𝘦𝘳𝘦𝘯𝘤𝘦&lt;/li&gt;
+&lt;li&gt;Inference pauses just briefly to receive new weights&lt;/li&gt;
+&lt;li&gt;Sequence generation continues with updated weights, even with &amp;ldquo;stale&amp;rdquo; KV caches&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The surprising finding? This approach works remarkably well despite theoretical concerns about mixing old KV caches with new model weights!&lt;/p&gt;
+&lt;h2 id="-empirical-results-simplicity-beats-complexity"&gt;📊 Empirical Results: Simplicity Beats Complexity
+&lt;/h2&gt;&lt;p&gt;The proof is in the performance. PipelineRL matches or exceeds Open-Reasoner-Zero&amp;rsquo;s results on reasoning benchmarks like AIME 2024 and MATH 500.&lt;/p&gt;
+&lt;p&gt;What&amp;rsquo;s truly impressive is that PipelineRL achieves this with a dramatically simpler implementation. While Open-Reasoner-Zero employs value functions and various stabilization techniques, PipelineRL uses a simplified version of GRPO (Gradient-based Reinforcement Policy Optimization) with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;No trust region importance weight clamping&lt;/li&gt;
+&lt;li&gt;No overlong sequence filtering&lt;/li&gt;
+&lt;li&gt;No reward shaping&lt;/li&gt;
+&lt;li&gt;No KL penalty or entropy bonus&lt;/li&gt;
+&lt;li&gt;Simple loss normalization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Despite (or perhaps because of) this simplicity, training remains stable throughout.&lt;/p&gt;
+&lt;h2 id="-modular-architecture-built-for-innovation"&gt;🧩 Modular Architecture: Built for Innovation
+&lt;/h2&gt;&lt;p&gt;PipelineRL&amp;rsquo;s architecture emphasizes modularity, enabling researchers to leverage specialized inference and training software innovations. The system defines clear contracts between components:&lt;/p&gt;
+&lt;h3 id="𝗜𝗻𝗳𝗲𝗿𝗲𝗻𝗰𝗲-𝗖𝗼𝗻𝘁𝗿𝗮𝗰𝘁"&gt;𝗜𝗻𝗳𝗲𝗿𝗲𝗻𝗰𝗲 𝗖𝗼𝗻𝘁𝗿𝗮𝗰𝘁
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Process group initialization&lt;/li&gt;
+&lt;li&gt;Weight update trigger&lt;/li&gt;
+&lt;li&gt;Chat completion API&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="𝙏𝙧𝙖𝙞𝙣𝙚𝙧-𝘾𝙤𝙣𝙩𝙧𝙖𝙘𝙩"&gt;𝙏𝙧𝙖𝙞𝙣𝙚𝙧 𝘾𝙤𝙣𝙩𝙧𝙖𝙘𝙩
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Worker initialization&lt;/li&gt;
+&lt;li&gt;Forward pass&lt;/li&gt;
+&lt;li&gt;Backward step&lt;/li&gt;
+&lt;li&gt;Optimizer step&lt;/li&gt;
+&lt;li&gt;Weight gathering and broadcasting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This plug-and-play approach allows researchers to experiment with different inference implementations while maintaining the core PipelineRL advantages.&lt;/p&gt;
+&lt;h2 id="-future-directions--implications"&gt;🔮 Future Directions &amp;amp; Implications
+&lt;/h2&gt;&lt;p&gt;While still experimental, PipelineRL has ambitious plans:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🚀 Implementing coroutines for more precise batch size control&lt;/li&gt;
+&lt;li&gt;🖼️ Adding multi-modal support&lt;/li&gt;
+&lt;li&gt;⚡ Developing sequence parallel training&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The team emphasizes that PipelineRL aims to be a hackable, fast reference implementation rather than an all-encompassing framework. This philosophy encourages researchers to fork the repository and adapt it to their specific needs.&lt;/p&gt;
+&lt;p&gt;A forthcoming research paper will provide deeper analysis of how inflight weight updates affect training dynamics and quantify the speed improvements PipelineRL delivers.&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;🤔 Final Thoughts
+&lt;/h2&gt;&lt;p&gt;PipelineRL represents an elegant solution to a fundamental challenge in RL for LLMs. By updating weights during inference rather than stopping and restarting, it achieves the best of both worlds: high throughput and on-policy learning.&lt;/p&gt;
+&lt;p&gt;What&amp;rsquo;s perhaps most interesting is how this approach challenges our assumptions about what &amp;ldquo;should&amp;rdquo; work in machine learning. The team found that mixing old KV caches with newly updated weights doesn&amp;rsquo;t destabilize training as conventional wisdom might suggest.&lt;/p&gt;
+&lt;p&gt;As LLM training continues to evolve, will we see more innovations that challenge the established &amp;ldquo;rules&amp;rdquo; of deep learning? What other tradeoffs might be eliminated through similarly unconventional approaches?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/ServiceNow/pipelinerl" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/ServiceNow/pipelinerl&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#ReinforcementLearning #LLM #MachineLearning #PipelineRL #AIResearch #DeepLearning #ModelTraining #AIEngineering #ComputationalEfficiency&lt;/p&gt;</description></item><item><title>Beyond the Algorithm: Decoding Strategies that Make LLMs Shine</title><link>https://shoubhikbanerjee.github.io/blog/p/beyond-the-algorithm-decoding-strategies-that-make-llms-shine/</link><pubDate>Fri, 06 Jun 2025 20:56:04 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/beyond-the-algorithm-decoding-strategies-that-make-llms-shine/</guid><description>&lt;img src="https://cdn-images-1.medium.com/max/3640/1*SSYwvJCdjB4llSm1P1XzOg.jpeg" alt="Featured image of post Beyond the Algorithm: Decoding Strategies that Make LLMs Shine" /&gt;&lt;h1 id="-beyond-the-algorithm-decoding-strategies-that-make-llms-shine"&gt;🧠 Beyond the Algorithm: Decoding Strategies that Make LLMs Shine
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Quick Summary:&lt;/strong&gt; While we often focus on model architectures and training data, the magic of language models also depends on how text is generated. Discover how decoding strategies like greedy search, beam search, and sampling techniques influence the text LLMs produce—and why it matters for your applications.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-the-hidden-decision-making-behind-ai-text-generation"&gt;🔍 The Hidden Decision-Making Behind AI Text Generation
+&lt;/h2&gt;&lt;p&gt;When you marvel at AI&amp;rsquo;s ability to continue a text prompt, have you ever wondered exactly &lt;em&gt;how&lt;/em&gt; it chooses the next word? While researchers obsess over model architectures and training algorithms, there&amp;rsquo;s a crucial component that often flies under the radar: &lt;strong&gt;decoding strategies&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;These strategies are the decision-making processes that determine how an LLM selects tokens when generating text. They&amp;rsquo;re the difference between predictable, repetitive outputs and creative, natural-sounding language.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s say we feed &amp;ldquo;I have a dream&amp;rdquo; to an LLM. How does it decide what comes next? The answer lies not in what the model &amp;ldquo;knows,&amp;rdquo; but in how it 𝘤𝘩𝘰𝘰𝘴𝘦𝘴.&lt;/p&gt;
+&lt;h2 id="-the-decoding-toolkit-from-greedy-to-nucleus"&gt;🎲 The Decoding Toolkit: From Greedy to Nucleus
+&lt;/h2&gt;&lt;h3 id="-greedy-search-the-obvious-choice"&gt;🏃‍♂️ Greedy Search: The Obvious Choice
+&lt;/h3&gt;&lt;p&gt;Greedy search is exactly what it sounds like—always picking the most probable next token. For our prompt &amp;ldquo;I have a dream,&amp;rdquo; it might generate:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Most likely token: &amp;ldquo;of&amp;rdquo; (17% probability)&lt;/li&gt;
+&lt;li&gt;Next: &amp;ldquo;being&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Next: &amp;ldquo;a&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Next: &amp;ldquo;doctor&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Final: &amp;ldquo;.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Result: &amp;ldquo;I have a dream of being a doctor.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Simple and efficient? Yes. But also short-sighted. By only considering the single most likely token at each step, greedy search often produces repetitive or predictable text.&lt;/p&gt;
+&lt;h3 id="-beam-search-considering-multiple-paths"&gt;⚖️ Beam Search: Considering Multiple Paths
+&lt;/h3&gt;&lt;p&gt;Beam search is more sophisticated—it explores multiple possible continuations simultaneously. Instead of committing to a single token at each step, it keeps track of the top 𝘯 most promising sequences (where 𝘯 is the &amp;ldquo;beam width&amp;rdquo;).&lt;/p&gt;
+&lt;p&gt;Think of it as exploring multiple branching paths, then selecting the one with the highest overall probability. This helps avoid getting stuck in local maxima that might lead to awkward phrasing.&lt;/p&gt;
+&lt;p&gt;For our example, beam search might produce: &amp;ldquo;I have a dream. I have a dream&amp;rdquo;—which, while repetitive, scored higher in overall probability than the greedy search output.&lt;/p&gt;
+&lt;h3 id="-top-k-sampling-controlled-randomness"&gt;🎯 Top-k Sampling: Controlled Randomness
+&lt;/h3&gt;&lt;p&gt;Top-k sampling introduces an element of creative chance. Instead of always picking the most likely token, it:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Identifies the 𝘬 most probable tokens&lt;/li&gt;
+&lt;li&gt;Redistributes probability among only these tokens&lt;/li&gt;
+&lt;li&gt;Randomly selects from this filtered set&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;With top-k = 20 and our example, we might get: &amp;ldquo;I have a dream job and I want to&amp;rdquo;—more natural and less predictable than pure greedy search.&lt;/p&gt;
+&lt;h3 id="-nucleus-top-p-sampling-dynamic-flexibility"&gt;🔬 Nucleus (Top-p) Sampling: Dynamic Flexibility
+&lt;/h3&gt;&lt;p&gt;Nucleus sampling takes a more adaptive approach. Rather than selecting a fixed number of candidate tokens, it:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Sorts tokens by probability&lt;/li&gt;
+&lt;li&gt;Keeps adding tokens until their cumulative probability exceeds threshold 𝘱&lt;/li&gt;
+&lt;li&gt;Randomly selects from this &amp;ldquo;nucleus&amp;rdquo;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;With 𝘱 = 0.5, our prompt might continue as: &amp;ldquo;I have a dream. I&amp;rsquo;m going to&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;What makes nucleus sampling powerful is its adaptability—when the model is confident, it considers fewer options; when uncertain, it explores more possibilities.&lt;/p&gt;
+&lt;h2 id="-turning-up-the-heat-the-temperature-parameter"&gt;🌡️ Turning Up the Heat: The Temperature Parameter
+&lt;/h2&gt;&lt;p&gt;We can&amp;rsquo;t discuss decoding strategies without mentioning temperature. This parameter controls the &amp;ldquo;creativity&amp;rdquo; of generated text by scaling the logits before applying the softmax function:&lt;/p&gt;
+&lt;p&gt;softmax(x𝑖) = e^(x𝑖/T) / ∑_j e^(x𝑗/T)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Low temperature&lt;/strong&gt; (T → 0): More deterministic, focused on highest probabilities&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;High temperature&lt;/strong&gt; (T → 1): More random, distributing probabilities more evenly&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Temperature acts as a &amp;ldquo;creativity knob&amp;rdquo;—turn it up for brainstorming, down for factual responses.&lt;/p&gt;
+&lt;h2 id="-choosing-the-right-strategy"&gt;🔮 Choosing the Right Strategy
+&lt;/h2&gt;&lt;p&gt;Each decoding method offers different tradeoffs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Greedy search&lt;/strong&gt;: Fast, deterministic, but potentially rigid&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Beam search&lt;/strong&gt;: More thorough exploration, but computationally expensive&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Top-k&lt;/strong&gt;: Good balance of predictability and variety&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Nucleus&lt;/strong&gt;: Adaptive diversity that changes based on model confidence&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The best strategy depends on your application:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Need factual, consistent responses? → Lower temperature, greedy or beam search&lt;/li&gt;
+&lt;li&gt;Creating creative content? → Higher temperature, nucleus sampling&lt;/li&gt;
+&lt;li&gt;Interactive chat application? → Balanced temperature with nucleus sampling&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-this-matters"&gt;🚀 Why This Matters
+&lt;/h2&gt;&lt;p&gt;Understanding these decoding strategies gives you powerful control over LLM outputs. By tuning parameters like temperature, beam width, top-k, and top-p, you can dramatically influence the style and quality of generated text—𝙬𝙞𝙩𝙝𝙤𝙪𝙩 retraining or fine-tuning the model.&lt;/p&gt;
+&lt;p&gt;This knowledge helps explain why the same model can produce wildly different outputs from the same prompt. It&amp;rsquo;s not just about what the model knows—it&amp;rsquo;s about how you ask it to express that knowledge.&lt;/p&gt;
+&lt;p&gt;Next time you&amp;rsquo;re working with language models, remember that the decoding strategy is your hidden superpower. The choice between greedy shortcuts and explorative sampling might be the difference between a mundane response and a truly insightful one.&lt;/p&gt;
+&lt;p&gt;What decoding strategies will you experiment with in your next LLM project?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/mlabonne/decoding-strategies" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/mlabonne/decoding-strategies&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#LLM #MachineLearning #NLP #AIGeneration #BeamSearch #NucleusSampling #TextGeneration #AIEngineering #DeepLearning #GPT&lt;/p&gt;</description></item><item><title>🔥 Unlocking the Invisible: How LLMs Process Concurrent Requests Behind the Scenes</title><link>https://shoubhikbanerjee.github.io/blog/p/unlocking-the-invisible-how-llms-process-concurrent-requests-behind-the-scenes/</link><pubDate>Sat, 31 May 2025 11:50:03 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/unlocking-the-invisible-how-llms-process-concurrent-requests-behind-the-scenes/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/65263bfb3177c2a794997821/OiBhSOlKQCI2LCAJkZWa1.png" alt="Featured image of post 🔥 Unlocking the Invisible: How LLMs Process Concurrent Requests Behind the Scenes" /&gt;&lt;h1 id="-unlocking-the-invisible-how-llms-process-concurrent-requests-behind-the-scenes"&gt;🔥 Unlocking the Invisible: How LLMs Process Concurrent Requests Behind the Scenes
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;𝙎𝙪𝙢𝙢𝙖𝙧𝙮:&lt;/strong&gt; This deep dive explores the critical distinction between prefill and decode phases in LLM token generation—revealing how different batching strategies dramatically impact performance metrics. Learn why chunked prefill can boost throughput by 50% and how to balance the inherent tradeoffs between responsiveness and efficiency in production LLM systems.&lt;/p&gt;
+&lt;h2 id="-the-hidden-duality-of-llm-processing"&gt;🧠 The Hidden Duality of LLM Processing
+&lt;/h2&gt;&lt;p&gt;Ever wonder why your LLM chat sometimes pauses mid-sentence when another user joins? Or why the first response takes so much longer than subsequent tokens? The answer lies in understanding a fundamental duality in how Large Language Models process text.&lt;/p&gt;
+&lt;p&gt;At TNG, we manage a substantial LLM infrastructure—24 H100 GPUs supporting 50 applications, handling 5,000+ inferences hourly and generating over ten million tokens daily. This scale has taught us that performance optimization requires understanding what happens 𝘣𝘦𝘩𝘪𝘯𝘥 the scenes when multiple users interact with these models simultaneously.&lt;/p&gt;
+&lt;p&gt;When an LLM generates text, it operates in two distinct phases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;𝗣𝗿𝗲𝗳𝗶𝗹𝗹 𝗣𝗵𝗮𝘀𝗲:&lt;/strong&gt; Processing the entire prompt to generate the first output token&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;𝗗𝗲𝗰𝗼𝗱𝗲 𝗣𝗵𝗮𝘀𝗲:&lt;/strong&gt; Generating each subsequent token one by one&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration comparing prefill (parallel processing) versus decode (sequential processing) phases&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This distinction is far more consequential than most developers realize. It shapes everything from user experience to resource utilization to overall system throughput.&lt;/p&gt;
+&lt;h2 id="-metrics-that-matter-unpacking-latency-and-throughput"&gt;⏱️ Metrics That Matter: Unpacking Latency and Throughput
+&lt;/h2&gt;&lt;p&gt;The prefill/decode split directly impacts two critical performance metrics:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;𝙏𝙞𝙢𝙚 𝙩𝙤 𝙛𝙞𝙧𝙨𝙩 𝙩𝙤𝙠𝙚𝙣&lt;/strong&gt; (prefill latency) - The initial response time&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;𝙏𝙞𝙢𝙚 𝙥𝙚𝙧 𝙤𝙪𝙩𝙥𝙪𝙩 𝙩𝙤𝙠𝙚𝙣&lt;/strong&gt; (decode latency) - The cadence of subsequent tokens&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For interactive applications, users get frustrated if the first token takes more than 3 seconds to appear (they might think the system is broken) or if tokens generate slower than 3-10 tokens per second (slower than comfortable reading speed).&lt;/p&gt;
+&lt;p&gt;But there&amp;rsquo;s always a tradeoff. Some non-interactive applications might prioritize total token throughput over per-request latency—like when batch-processing translations or generating summaries for an entire code repository.&lt;/p&gt;
+&lt;p&gt;🔍 &lt;strong&gt;Resource Utilization Reality:&lt;/strong&gt; Prefill is compute-intensive (utilizing parallel processing across all input tokens), while decode is memory-bandwidth-limited (processing just one token at a time).&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See graph showing how throughput increases with concurrency until GPU compute power saturates&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This fundamental difference creates fascinating dynamics when multiple requests compete for resources.&lt;/p&gt;
+&lt;h2 id="-batching-strategies-static-vs-continuous"&gt;🚀 Batching Strategies: Static vs. Continuous
+&lt;/h2&gt;&lt;p&gt;When multiple users hit an LLM service simultaneously, the inference engine must decide how to process these concurrent requests. Two primary approaches exist:&lt;/p&gt;
+&lt;h3 id="1-static-batching-simple-but-inefficient"&gt;1. Static Batching: Simple But Inefficient
+&lt;/h3&gt;&lt;p&gt;Static batching processes requests in rigid groups—waiting for the entire batch to complete before starting the next one.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing how static batching processes batches in sequence&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This approach optimizes &amp;ldquo;time per output token&amp;rdquo; since decode phases run uninterrupted, but it creates terrible user experiences for anyone waiting for the next batch. Even worse, it wastes GPU resources since prefill (compute-intensive) and decode (memory-bound) operations can&amp;rsquo;t run concurrently to maximize hardware utilization.&lt;/p&gt;
+&lt;h3 id="2-continuous-batching-more-complex-but-smarter"&gt;2. Continuous Batching: More Complex But Smarter
+&lt;/h3&gt;&lt;p&gt;Most modern inference engines like vLLM implement continuous batching, where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Completed requests immediately free up batch slots&lt;/li&gt;
+&lt;li&gt;New requests enter as soon as space becomes available&lt;/li&gt;
+&lt;li&gt;Prefill and decode operations can run simultaneously&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But this creates a new challenge: 𝘩𝘰𝘸 should prefill and decode operations share resources when running concurrently?&lt;/p&gt;
+&lt;h2 id="-the-breakthrough-chunked-prefill"&gt;🧩 The Breakthrough: Chunked Prefill
+&lt;/h2&gt;&lt;p&gt;The default &amp;ldquo;prefill-first&amp;rdquo; strategy prioritizes new requests, minimizing time to first token. However, this creates an unfortunate side effect: whenever a new request arrives, ongoing decode operations get interrupted—users experience this as sudden pauses in their text generation.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing how prefill operations interrupt decode operations&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The elegant solution? &lt;strong&gt;𝗖𝗵𝘂𝗻𝗸𝗲𝗱 𝗽𝗿𝗲𝗳𝗶𝗹𝗹&lt;/strong&gt; 🔥&lt;/p&gt;
+&lt;p&gt;Rather than processing an entire prompt in one massive operation, we break it into smaller chunks. This creates multiple benefits:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Concurrent decode operations can progress between prefill chunks&lt;/li&gt;
+&lt;li&gt;Users experience slowdowns rather than complete pauses&lt;/li&gt;
+&lt;li&gt;𝗧𝗼𝘁𝗮𝗹 𝘁𝗵𝗿𝗼𝘂𝗴𝗵𝗽𝘂𝘁 𝗶𝗻𝗰𝗿𝗲𝗮𝘀𝗲𝘀 𝗯𝘆 𝟱𝟬% by better balancing compute and memory resources&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing how chunked prefill allows more decode operations to proceed&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Chunk size becomes a tunable parameter to balance competing priorities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;𝘚𝘮𝘢𝘭𝘭𝘦𝘳 chunks → Better decode performance (smoother token generation)&lt;/li&gt;
+&lt;li&gt;𝘓𝘢𝘳𝘨𝘦𝘳 chunks → Faster time to first token&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Default chunk sizes typically range from 512 to 8192 tokens, but the optimal value depends on your specific workload patterns.&lt;/p&gt;
+&lt;h2 id="-key-insights-for-llm-engineers"&gt;🌟 Key Insights for LLM Engineers
+&lt;/h2&gt;&lt;p&gt;This exploration of prefill and decode phases reveals several practical insights:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Measure the right metrics&lt;/strong&gt; - Track both time-to-first-token and time-per-output-token to get a complete performance picture&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Consider your application type&lt;/strong&gt; - Interactive applications need to optimize for latency; batch applications should focus on throughput&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Enable chunked prefill&lt;/strong&gt; - This single optimization can boost throughput by 50% while improving user experience&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Tune chunk size thoughtfully&lt;/strong&gt; - Balance responsiveness against smoothness based on your users&amp;rsquo; needs&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The journey to optimized LLM performance doesn&amp;rsquo;t end here. In environments with unpredictable load patterns, finding the perfect chunk size remains challenging—which is why many practitioners stick with defaults that work well across diverse workloads.&lt;/p&gt;
+&lt;p&gt;What performance bottlenecks are you facing in your LLM deployments? Understanding the prefill/decode dynamic might just hold the key to solving them.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/tngtech/llm-performance-prefill-decode-concurrent-requests" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/tngtech/llm-performance-prefill-decode-concurrent-requests&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#LLMPerformance #AIOptimization #ConcurrentProcessing #MachineLearningInfrastructure #GPUComputing #TokenGeneration #BatchProcessing #AIEngineering #ModelInference #LLMScaling&lt;/p&gt;</description></item><item><title>🔍 Shadows in Plain Sight: How RAG Systems Can Silently Distort Your LLM's Output</title><link>https://shoubhikbanerjee.github.io/blog/p/shadows-in-plain-sight-how-rag-systems-can-silently-distort-your-llms-output/</link><pubDate>Thu, 29 May 2025 19:08:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/shadows-in-plain-sight-how-rag-systems-can-silently-distort-your-llms-output/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/63468720dd6d90d82ccf3450/Kb_hyz1-VUOkJmm6S3CLd.jpeg" alt="Featured image of post 🔍 Shadows in Plain Sight: How RAG Systems Can Silently Distort Your LLM's Output" /&gt;&lt;h1 id="-shadows-in-plain-sight-how-rag-systems-can-silently-distort-your-llms-output"&gt;🔍 Shadows in Plain Sight: How RAG Systems Can Silently Distort Your LLM&amp;rsquo;s Output
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; This eye-opening technical exploration reveals how Retrieval-Augmented Generation systems can introduce subtle but dangerous distortions in LLM outputs. We examine real-world examples, identify key risk factors, and offer practical strategies for detecting and mitigating these &amp;ldquo;shadow distortions&amp;rdquo; to build more reliable AI systems.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-invisible-problem-with-rag-systems"&gt;🌟 The Invisible Problem with RAG Systems
+&lt;/h2&gt;&lt;p&gt;Retrieval-Augmented Generation (RAG) has emerged as a powerful approach for enhancing Large Language Models (LLMs) with external knowledge. By retrieving relevant information from a knowledge base and incorporating it into the generation process, RAG systems help ground LLMs in factual information, reducing hallucinations and improving accuracy.&lt;/p&gt;
+&lt;p&gt;But what happens when the retrieval mechanism introduces its own subtle distortions?&lt;/p&gt;
+&lt;p&gt;I recently observed something concerning while working with several RAG implementations: the retrieved context can silently bias or distort the LLM&amp;rsquo;s output in ways that are difficult to detect but potentially harmful. I call these &amp;ldquo;shadow distortions&amp;rdquo; - subtle shifts in reasoning, framing, or conclusions that occur when an LLM processes imperfectly retrieved information.&lt;/p&gt;
+&lt;h2 id="-understanding-shadow-distortions"&gt;🔬 Understanding Shadow Distortions
+&lt;/h2&gt;&lt;p&gt;Shadow distortions occur when the retrieval component of a RAG system returns information that is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;𝗧𝗲𝗰𝗵𝗻𝗶𝗰𝗮𝗹𝗹𝘆 𝗿𝗲𝗹𝗲𝘃𝗮𝗻𝘁 but contextually misaligned&lt;/li&gt;
+&lt;li&gt;Factually correct but 𝙞𝙣𝙘𝙤𝙢𝙥𝙡𝙚𝙩𝙚 in critical ways&lt;/li&gt;
+&lt;li&gt;Subtly biased in perspective or framing&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Here&amp;rsquo;s a real-world example I encountered: When asking a RAG system about climate change mitigation strategies, the retrieval component returned technically relevant documents about carbon capture technology. However, 90% of the retrieved information focused on a single, controversial approach while omitting mainstream alternatives. The LLM&amp;rsquo;s response then overemphasized this approach, creating a distorted picture of expert consensus.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration below showing how different retrieval results on the same topic can lead to dramatically different LLM outputs despite using identical prompts and model parameters.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;What makes these distortions particularly dangerous is that they&amp;rsquo;re often imperceptible to end users. The output appears authoritative and well-reasoned, with no obvious hallucinations or factual errors. But the underlying reasoning and context have been subtly warped.&lt;/p&gt;
+&lt;h2 id="-the-anatomy-of-distortion"&gt;🧪 The Anatomy of Distortion
+&lt;/h2&gt;&lt;p&gt;Through extensive testing, I&amp;rsquo;ve identified four primary mechanisms through which shadow distortions manifest:&lt;/p&gt;
+&lt;h3 id="1-𝗖𝗼𝗻𝘁𝗲𝘅𝘁𝘂𝗮𝗹-𝗧𝘂𝗻𝗻𝗲𝗹𝗶𝗻𝗴"&gt;1. 𝗖𝗼𝗻𝘁𝗲𝘅𝘁𝘂𝗮𝗹 𝗧𝘂𝗻𝗻𝗲𝗹𝗶𝗻𝗴
+&lt;/h3&gt;&lt;p&gt;When the retrieval system returns documents focused on a narrow subset of perspectives, the LLM can produce responses that mirror this tunnel vision. Even if the LLM has broader knowledge in its parameters, the immediate context often dominates its reasoning process.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Example: Query about cryptocurrency regulation →
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Retrieved documents all discussing one country&amp;#39;s approach →
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Response presents that country&amp;#39;s approach as universal
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="2-𝑆𝑒𝑚𝑎𝑛𝑡𝑖𝑐-𝐵𝑙𝑒𝑒𝑑𝑖𝑛𝑔"&gt;2. 𝑆𝑒𝑚𝑎𝑛𝑡𝑖𝑐 𝐵𝑙𝑒𝑒𝑑𝑖𝑛𝑔
+&lt;/h3&gt;&lt;p&gt;The emotional tone, terminology preference, or rhetorical style of retrieved documents can &amp;ldquo;bleed&amp;rdquo; into the LLM&amp;rsquo;s response, even when the factual content remains accurate. This subtly shifts the framing without changing the core facts.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Example: Medical query →
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Retrieved documents using alarmist language →
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Response maintains technical accuracy but adopts anxiety-inducing framing
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="3--reference-amplification"&gt;3. 🔄 Reference Amplification
+&lt;/h3&gt;&lt;p&gt;When multiple retrieved documents reference the same source or perspective, the LLM tends to overweight its importance, creating an artificial consensus effect.&lt;/p&gt;
+&lt;h3 id="4-𝙏𝙚𝙢𝙥𝙤𝙧𝙖𝙡-𝙎𝙠𝙚𝙬𝙞𝙣𝙜"&gt;4. 𝙏𝙚𝙢𝙥𝙤𝙧𝙖𝙡 𝙎𝙠𝙚𝙬𝙞𝙣𝙜
+&lt;/h3&gt;&lt;p&gt;Retrieval systems that over-index on either very recent or older documents can create misleading temporal context, making outdated information seem current or new developments seem established.&lt;/p&gt;
+&lt;h2 id="-detecting-and-mitigating-shadow-distortions"&gt;🛡️ Detecting and Mitigating Shadow Distortions
+&lt;/h2&gt;&lt;p&gt;After identifying these patterns, I developed several techniques to detect and mitigate shadow distortions:&lt;/p&gt;
+&lt;h3 id="detection-strategies"&gt;Detection Strategies:
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Perspective Contrast Testing&lt;/strong&gt;: Run the same query through multiple knowledge bases with known different perspectives and compare outputs.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Semantic Diversity Analysis&lt;/strong&gt;: Quantitatively measure the diversity of viewpoints, sources, and temporal distribution in retrieved documents.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;🔍 Explanation Chain Analysis&lt;/strong&gt;: Require the LLM to explain its reasoning process and reference sources, then check for over-reliance on particular retrieved documents.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="mitigation-approaches"&gt;Mitigation Approaches:
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Explicit Diversity Enforcement&lt;/strong&gt;: Modify retrieval algorithms to ensure representation of multiple perspectives, time periods, and source types.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;𝗖𝗼𝗻𝘁𝗲𝘅𝘁 𝗕𝗮𝗹𝗮𝗻𝗰𝗶𝗻𝗴&lt;/strong&gt;: Include explicit instructions for the LLM to consider the limitations of the provided context.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Metadata Awareness&lt;/strong&gt;: Add metadata to retrieved documents indicating their recency, perspective alignment, and coverage completeness.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Multi-stage Retrieval&lt;/strong&gt;: Implement a two-pass system where initial retrieval results are analyzed for diversity before final context selection.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;📸 &lt;em&gt;See diagram below showing a multi-stage retrieval system with diversity checks built in.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-building-more-robust-rag-systems"&gt;🧠 Building More Robust RAG Systems
+&lt;/h2&gt;&lt;p&gt;The reality is that no retrieval system will be perfect. The key to building robust RAG systems lies in acknowledging these limitations and designing systems that compensate for them.&lt;/p&gt;
+&lt;p&gt;A promising approach is what I call &amp;ldquo;𝘾𝙤𝙣𝙩𝙚𝙭𝙩-𝘼𝙬𝙖𝙧𝙚 𝙍𝘼𝙂&amp;rdquo; - systems that explicitly model the strengths and limitations of their retrieval components and adjust accordingly. This involves:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Explicitly communicating retrieval confidence and coverage to the LLM&lt;/li&gt;
+&lt;li&gt;Training LLMs to reason about the completeness of retrieved information&lt;/li&gt;
+&lt;li&gt;Implementing circuit breakers that flag potential shadow distortions to users&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The most effective approach combines technical improvements with transparency. When a system might be operating with incomplete information, it should communicate this limitation rather than producing a confident but potentially distorted response.&lt;/p&gt;
+&lt;h2 id="-the-path-forward"&gt;💭 The Path Forward
+&lt;/h2&gt;&lt;p&gt;Shadow distortions represent a subtle but significant challenge for RAG systems. As these systems become more widely deployed in critical applications like healthcare, education, and information retrieval, addressing these distortions becomes increasingly important.&lt;/p&gt;
+&lt;p&gt;The good news is that being aware of the problem is half the solution. By implementing the detection and mitigation strategies outlined above, we can build RAG systems that leverage the power of external knowledge while minimizing the risk of invisible distortions.&lt;/p&gt;
+&lt;p&gt;As we move forward, I believe we need to shift our evaluation metrics for RAG systems beyond simple retrieval precision and recall to include measures of perspective diversity, temporal balance, and distortion resistance.&lt;/p&gt;
+&lt;p&gt;What invisible distortions might be lurking in your RAG systems right now, and how will you bring them into the light?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/posts/BestWishYsh/693532821570217" target="_blank" rel="noopener"
+&gt;https://huggingface.co/posts/BestWishYsh/693532821570217&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#RAGSystems #LLMBias #AIDistortion #MachineLearning #NLP #KnowledgeRetrieval #AIBias #TechnicalAI #DataQuality #AIEngineering #ShadowDistortions&lt;/p&gt;</description></item></channel></rss>

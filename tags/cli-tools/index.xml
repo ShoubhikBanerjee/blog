@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CLI Tools on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cli-tools/</link><description>Recent content in CLI Tools on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 02:11:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cli-tools/index.xml" rel="self" type="application/rss+xml"/><item><title>Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards</title><link>https://shoubhikbanerjee.github.io/blog/p/lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards/</link><pubDate>Tue, 28 Oct 2025 02:11:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards" /&gt;&lt;h1 id="lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards-"&gt;Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards 🛠️🏆
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Repo:&lt;/strong&gt; &lt;a class="link" href="https://github.com/yifanzhang-pro/lanser-cli" target="_blank" rel="noopener"
+&gt;https://github.com/yifanzhang-pro/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Project Page:&lt;/strong&gt; &lt;a class="link" href="https://yifanzhang-pro.github.io/lanser-cli" target="_blank" rel="noopener"
+&gt;https://yifanzhang-pro.github.io/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-tldr-aka-the-elevator-pitch-with-bass"&gt;🎯 TL;DR (a.k.a. the elevator pitch with bass)
+&lt;/h2&gt;&lt;p&gt;LLMs guess. Language servers &lt;strong&gt;check&lt;/strong&gt;. &lt;strong&gt;Lanser-CLI&lt;/strong&gt; is the official implementation of
+&lt;em&gt;Language Server CLI Empowers Language Agents with Process Rewards&lt;/em&gt; — a CLI-first bridge between
+your coding agent and an LSP (e.g., Pyright). It turns IDE-grade facts (defs, refs, types,
+diagnostics, safe edits) into &lt;strong&gt;deterministic, replayable artifacts&lt;/strong&gt; and a &lt;strong&gt;process reward&lt;/strong&gt;
+that tells your agent it&amp;rsquo;s actually getting somewhere.&lt;/p&gt;
+&lt;p&gt;Less &amp;ldquo;trust me bro,&amp;rdquo; more &amp;ldquo;here are the receipts.&amp;rdquo;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-why-this-exists-and-why-your-agent-will-thank-you"&gt;🤔 Why this exists (and why your agent will thank you)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hallucinated APIs&lt;/strong&gt; and &lt;strong&gt;mislocalized edits&lt;/strong&gt; are the jump-scares of agent coding.&lt;/li&gt;
+&lt;li&gt;Language servers already compute &lt;em&gt;verifiable&lt;/em&gt; answers.&lt;/li&gt;
+&lt;li&gt;Agents need those answers in a form that&amp;rsquo;s &lt;strong&gt;deterministic, auditable, and safe to apply&lt;/strong&gt;
+—and they need &lt;strong&gt;shaped feedback&lt;/strong&gt; (XP!) on every step, not just the final diff.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Lanser-CLI&lt;/strong&gt; is the orchestration layer that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pins and speaks LSP like a pro&lt;/li&gt;
+&lt;li&gt;Emits byte-stable, hash-addressed &lt;strong&gt;Analysis Bundles&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Provides &lt;strong&gt;robust selectors&lt;/strong&gt; that survive edits&lt;/li&gt;
+&lt;li&gt;Wraps edits in a &lt;strong&gt;safety envelope&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Computes a &lt;strong&gt;process reward&lt;/strong&gt; so your agent stops flailing and starts leveling up&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-meme-level-overview"&gt;😂 Meme-level overview
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Language Agent:&lt;/strong&gt; &amp;ldquo;I renamed it.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Language Server:&lt;/strong&gt; &amp;ldquo;No you didn&amp;rsquo;t.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Lanser-CLI:&lt;/strong&gt; &amp;ldquo;Here&amp;rsquo;s the diff, the diagnostics delta, the safety check, and the hash. You&amp;rsquo;re
+welcome.&amp;rdquo;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-features-you-actually-want"&gt;⚙️ The features you actually want
+&lt;/h2&gt;&lt;h3 id="1-robust-selectors-goodbye-filelinecol-fragility"&gt;1) Robust Selectors (goodbye &lt;code&gt;file:line:col&lt;/code&gt; fragility)
+&lt;/h3&gt;&lt;p&gt;Address code by &lt;strong&gt;intent&lt;/strong&gt;, not just coordinates:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Symbolic&lt;/strong&gt;: &lt;code&gt;py://pkg.mod#Class.method:body&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AST path&lt;/strong&gt;: &lt;code&gt;ast://[module=pkg.mod]/[class=Class]/[def=method]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Content anchor&lt;/strong&gt;: &lt;code&gt;anchor://src/app.py#&amp;quot;def load_data(&amp;quot;?ctx=24&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;They &lt;strong&gt;relocate deterministically&lt;/strong&gt; as code changes. No more off-by-one chaos.&lt;/p&gt;
+&lt;h3 id="2-analysis-bundles-the-auditable-artifact"&gt;2) Analysis Bundles (the auditable artifact)
+&lt;/h3&gt;&lt;p&gt;Every command emits a JSON bundle that includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Resolved target + facts (defs/refs/hover/diags)&lt;/li&gt;
+&lt;li&gt;Environment capture (server version, position encoding, interpreter, config digest)&lt;/li&gt;
+&lt;li&gt;Stable &lt;strong&gt;&lt;code&gt;bundleId&lt;/code&gt;&lt;/strong&gt; (hash over canonicalized JSON)&lt;/li&gt;
+&lt;li&gt;Optional trace for &lt;strong&gt;offline replay&lt;/strong&gt; and CI audits&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-safety-envelope-because-prod-still-matters"&gt;3) Safety Envelope (because prod still matters)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Preview-first&lt;/strong&gt; for mutations (rename/code actions)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workspace jail&lt;/strong&gt; prevents writes outside project root&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Git-aware&lt;/strong&gt;: clean tree required unless overridden&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transactional apply&lt;/strong&gt; (atomic writes) + conflict reporting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4-process-rewards-xp-for-agents"&gt;4) Process Rewards (XP for agents)
+&lt;/h3&gt;&lt;p&gt;When your agent takes a step, it gets a &lt;strong&gt;score&lt;/strong&gt; shaped by:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Diagnostics going down&lt;/li&gt;
+&lt;li&gt;Safety checks passing&lt;/li&gt;
+&lt;li&gt;Selector ambiguity shrinking&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That&amp;rsquo;s feedback your planner can actually use—online and &lt;strong&gt;replayable&lt;/strong&gt; offline.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-60-second-tour-copypaste-these"&gt;🚀 60-second tour (copy/paste these)
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 0) Clone &amp;amp; explore&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone https://github.com/yifanzhang-pro/lanser-cliuv venv --python 3.12 .venv &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;source&lt;/span&gt; .venv/bin/activate
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uv pip install -e &lt;span class="s2"&gt;&amp;#34;.[dev]&amp;#34;&lt;/span&gt; lanser --help
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Inspect the environment and verify the orchestrator is healthy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser doctor
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Resolve a symbol definition via the selector DSL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser def py://lanser.cli#definition:def --json
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Run document diagnostics with deterministic bundles&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser diag src/lanser/cli.py@L1:C1 --json
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Preview a rename before applying workspace edits&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser rename py://lanser.cli#definition:def new_definition --json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Pro tip:&lt;/strong&gt; Everything above emits &lt;strong&gt;deterministic bundles&lt;/strong&gt; you can stash, diff, replay, and
+score.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-what-deterministic-actually-means-plain-english-edition"&gt;📊 What &amp;ldquo;deterministic&amp;rdquo; actually means (plain-English edition)
+&lt;/h2&gt;&lt;p&gt;When you freeze the workspace + server version + config, the same query yields the &lt;strong&gt;same
+bundle&lt;/strong&gt; with the &lt;strong&gt;same hash&lt;/strong&gt;. Lists are sorted deterministically; JSON is canonicalized
+before hashing. That&amp;rsquo;s why CI can trust it, and why offline replay works without re-running the server.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-under-the-hood-the-short-nerd-bit"&gt;🔧 Under the hood (the short nerd bit)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LSP lifecycle orchestration&lt;/strong&gt;: start/stop, capability negotiation, restarts with backoff&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single-flight cache&lt;/strong&gt;: dedup identical in-flight queries&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Position encoding sanity&lt;/strong&gt;: negotiates UTF-16 per LSP, handles UTF-8/&amp;ldquo;codepoint&amp;rdquo; IO
+correctly&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trace &amp;amp; replay&lt;/strong&gt;: optional JSON-RPC frame capture; regenerate byte-stable bundles offline&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Currently instantiated with Pyright for Python&lt;/strong&gt;; design is LSP-agnostic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-who-this-is-for"&gt;👥 Who this is for
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Agent developers&lt;/strong&gt; who want planning on &lt;strong&gt;facts&lt;/strong&gt; (not &amp;ldquo;hopefully correct&amp;rdquo; heuristics)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infra/CI owners&lt;/strong&gt; who want &lt;strong&gt;reproducible&lt;/strong&gt; static checks and safe automated edits&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Refactor wranglers&lt;/strong&gt; doing large-scale code moves with auditability&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-a-tiny-beforeafter-to-vibe-check-the-reward"&gt;📈 A tiny before/after to vibe-check the reward
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Before:&lt;/strong&gt; Agent renames function, diagnostics unchanged, selector ambiguous → low/negative
+reward.
+&lt;strong&gt;After:&lt;/strong&gt; Diagnostics drop, &lt;code&gt;prepareRename&lt;/code&gt; passes, ambiguity shrinks → &lt;strong&gt;positive reward&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The signal is simple on purpose: it&amp;rsquo;s &lt;strong&gt;shaping&lt;/strong&gt;, not a research paper in disguise. Your
+trainer/evaluator will thank you.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-faq-fast-and-slightly-feral"&gt;❓ FAQ (fast and slightly feral)
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Is this an IDE?&lt;/strong&gt; No. This is a &lt;strong&gt;CLI-first orchestrator&lt;/strong&gt; that makes language-server power
+usable by agents and CI.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Will it break my repo?&lt;/strong&gt; Mutations are preview-by-default, jailed, git-aware, and
+transactional. You&amp;rsquo;d have to try to make it spicy.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Does it only do Python?&lt;/strong&gt; Today&amp;rsquo;s demo rides with &lt;strong&gt;Pyright&lt;/strong&gt;. The design is &lt;strong&gt;LSP-agnostic&lt;/strong&gt;.
+Bring your favorite server via PRs.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Do I need to publish anything to use process rewards?&lt;/strong&gt; Nope. Rewards are computed from
+bundles you already produced. They&amp;rsquo;re replayable offline for evals.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-roadmap-ish-community-flavored"&gt;🗺️ Roadmap-ish (community-flavored
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;More LSP servers + language flavors&lt;/li&gt;
+&lt;li&gt;Richer selectors and ambiguity evidence&lt;/li&gt;
+&lt;li&gt;Expanded batch SDK for high-throughput agent farms&lt;/li&gt;
+&lt;li&gt;First-class eval harness using replayed bundles&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Want a thing? Open an issue. Even better: open a PR.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-try-it-on-your-codebase-today"&gt;🧪 Try it on your codebase today
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Clone the repo 2. Install Lanser-CLI&lt;/li&gt;
+&lt;li&gt;Point Lanser-CLI at a project 4. Run &lt;code&gt;lanser def&lt;/code&gt;, &lt;code&gt;lanser refs&lt;/code&gt;, &lt;code&gt;lanser diag&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Preview a &lt;code&gt;rename&lt;/code&gt; and watch the bundle + reward kick in&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;👉 &lt;strong&gt;Repo:&lt;/strong&gt; &lt;a class="link" href="https://github.com/yifanzhang-pro/lanser-cli" target="_blank" rel="noopener"
+&gt;https://github.com/yifanzhang-pro/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;⭐ &lt;strong&gt;Star it so your agent gets gains.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;🙌 &lt;strong&gt;Contribute memes, ideas, and code.&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Final punchline:&lt;/strong&gt; Tool-use shouldn&amp;rsquo;t be theatrical. With &lt;strong&gt;Lanser-CLI&lt;/strong&gt;, language servers
+become a &lt;strong&gt;ground truth API&lt;/strong&gt;, edits come with &lt;strong&gt;guardrails&lt;/strong&gt;, and agents get a &lt;strong&gt;scoreboard&lt;/strong&gt;
+for every step they take. Ship confidently; leave the guesswork to the ghosts.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/yifAI/lanser-cli" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/yifAI/lanser-cli&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Lanser-CLI represents a significant leap forward in bridging the gap between language servers
+and AI agents. By providing deterministic, auditable artifacts and process rewards, it
+transforms how agents interact with code - moving from guesswork to ground truth. The tool&amp;rsquo;s
+focus on safety, reproducibility, and shaped feedback makes it an essential addition to any
+serious agent development workflow.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re building coding agents, managing CI/CD pipelines, or conducting large-scale
+refactoring operations, Lanser-CLI offers the reliability and insight needed to operate
+confidently in production environments.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#LANGUAGESERVERS #AI #AGENTS #DEVTOOLS #CLI #PYTHON #LSP #AUTOMATION #REFACTORING #CICD&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

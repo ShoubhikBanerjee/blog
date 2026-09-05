@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mobile Development on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/mobile-development/</link><description>Recent content in Mobile Development on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 01:46:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/mobile-development/index.xml" rel="self" type="application/rss+xml"/><item><title>SOTA OCR On-Device with Core ML and dots.ocr</title><link>https://shoubhikbanerjee.github.io/blog/p/sota-ocr-on-device-with-core-ml-and-dots.ocr/</link><pubDate>Tue, 28 Oct 2025 01:46:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sota-ocr-on-device-with-core-ml-and-dots.ocr/</guid><description>&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/dots-ocr-ne/joules_cu.png" alt="Featured image of post SOTA OCR On-Device with Core ML and dots.ocr" /&gt;&lt;h1 id="-sota-ocr-on-device-with-core-ml-and-dotsocr"&gt;🔧 SOTA OCR On-Device with Core ML and dots.ocr
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;Converting cutting-edge OCR models for seamless on-device deployment&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/dots-ocr-ne/joules_cu.png"
+loading="lazy"
+alt="Compute unit energy"
+&gt;
+&lt;em&gt;Power efficiency comparison across different compute units&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Every year our hardware is a little more powerful, our models a little smarter for each
+parameter. In 2025, it is more feasible than ever to run truly competitive models on-device.
+&lt;strong&gt;dots.ocr&lt;/strong&gt;, a 3B parameter OCR model from RedNote, surpasses Gemini 2.5 Pro in OmniDocBench,
+making OCR a truly no compromises on-device use case. Running models on-device is certainly
+appealing to developers: no smuggling API keys, zero cost, and no network required. However, if
+we want these models to run on-device, we need to be mindful of the limited compute and power budgets.&lt;/p&gt;
+&lt;p&gt;Enter the Neural Engine, Apple&amp;rsquo;s custom AI accelerator that has shipped with every Apple device
+since 2017. This accelerator is designed for high performance whilst sipping battery power. Some
+of our testing has found the Neural Engine to be &lt;strong&gt;12x more power efficient than CPU&lt;/strong&gt;, and
+&lt;strong&gt;4x more power efficient than GPU&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/dots-ocr-ne/NE_Header.png"
+loading="lazy"
+alt="NE Header"
+&gt;
+&lt;em&gt;Apple&amp;rsquo;s Neural Engine architecture visualization&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Whilst this all sounds very appealing, unfortunately the Neural Engine is only accessible
+through Core ML, Apple&amp;rsquo;s &lt;em&gt;closed source&lt;/em&gt; ML framework. Furthermore, even just converting a model
+from PyTorch to Core ML can present some challenges, and without a preconverted model or some
+knowledge of the sharp edges it can be arduous for developers. Luckily, Apple also offers MLX, a
+more modern and flexible ML framework that targets the GPU (not the Neural Engine), and can be
+used in conjunction with Core ML.&lt;/p&gt;
+&lt;p&gt;In this three part series, we will provide a &lt;em&gt;reasoning trace&lt;/em&gt; of how we converted &lt;code&gt;dots.ocr&lt;/code&gt; to
+run on-device, using a combination of &lt;code&gt;CoreML&lt;/code&gt; and &lt;code&gt;MLX&lt;/code&gt;. This process should be applicable to
+many other models, and we hope that this will help highlight the ideas and tools needed for
+developers looking to run their own models on-device.&lt;/p&gt;
+&lt;h2 id="-getting-started"&gt;🚀 Getting Started
+&lt;/h2&gt;&lt;p&gt;To follow along, clone the repo. You&amp;rsquo;ll need &lt;code&gt;uv&lt;/code&gt; and &lt;code&gt;hf&lt;/code&gt; installed to run the setup command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./bootstrap.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;If you just want to skip ahead and use the converted model, you can download it here.&lt;/p&gt;
+&lt;h2 id="-conversion"&gt;🔄 Conversion
+&lt;/h2&gt;&lt;p&gt;Converting from PyTorch to CoreML is a two step process:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Capturing your PyTorch execution graph (via &lt;code&gt;torch.jit.trace&lt;/code&gt; or, the more modern approach of &lt;code&gt;torch.export&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Compiling this converted graph to an &lt;code&gt;.mlpackage&lt;/code&gt; using &lt;code&gt;coremltools&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Whilst we do have a few knobs we can tweak for step 2, most of our control is in step 1, the
+graph we feed to &lt;code&gt;coremltools&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Following the programmers litany of &lt;code&gt;make it work, make it right, make it fast&lt;/code&gt;, we will first
+focus on getting the conversion working on GPU, in FLOAT32, and with static shapes. Once we have
+this working, we can dial down the precision and try and move to the Neural Engine.&lt;/p&gt;
+&lt;h2 id="-dotsocr"&gt;🧩 Dots.OCR
+&lt;/h2&gt;&lt;p&gt;Dots.OCR consists of two key components: A 1.2B parameter vision encoder trained from scratch,
+based on the NaViT architecture, and a Qwen2.5-1.5B backbone. We will be using &lt;code&gt;CoreML&lt;/code&gt; to run
+the vision encoder, and &lt;code&gt;MLX&lt;/code&gt; to run the LM backbone.&lt;/p&gt;
+&lt;h2 id="-step-0-understand-and-simplify-the-model"&gt;📊 Step 0: Understand and simplify the model
+&lt;/h2&gt;&lt;p&gt;In order to convert a model, it&amp;rsquo;s best to understand the structure and function before getting
+started. Looking at the original vision modelling file, we can see that the vision encoder is
+similar to the QwenVL family. Like many vision encoders, the vision encoder for &lt;code&gt;dots&lt;/code&gt; works on
+a patch basis, in this case &lt;code&gt;14x14&lt;/code&gt; patches. The &lt;code&gt;dots&lt;/code&gt; vision encoder is capable of processing
+videos and batches of images. This gives us an opportunity to simplify by only processing a
+single image at a time. This approach is frequent in on-device apps, where we convert a model
+that provides the essential functions and iterate if we want to process multiple images.&lt;/p&gt;
+&lt;p&gt;When kicking off the conversion process, it&amp;rsquo;s best to start with a minimal viable model. This
+means removing any bells and whistles that are not strictly necessary for the model to function.
+In our case, dots has many different attention implementations available for both the vision
+encoder and the LM backbone. CoreML has lots of infrastructure oriented around the
+&lt;code&gt;scaled_dot_product_attention&lt;/code&gt; operator, which they introduced in iOS 18. We can simplify the
+model by removing all of the other attention implementations and just focusing on simple &lt;code&gt;sdpa&lt;/code&gt;
+(not the memory efficient variant) for now.&lt;/p&gt;
+&lt;p&gt;Once we&amp;rsquo;ve done this, we see a scary warning message when we load the model:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-mysql" data-lang="mysql"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Sliding&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Window&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Attention&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;enabled&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;but&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;not&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;implemented&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;`&lt;/span&gt;&lt;span class="n"&gt;sdpa&lt;/span&gt;&lt;span class="o"&gt;`&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unexpected&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;results&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;may&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;be&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;encountered&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The model doesn&amp;rsquo;t require Sliding Window Attention to function, so we can happily move on.&lt;/p&gt;
+&lt;h2 id="-step-1-a-simple-harness"&gt;⚡ Step 1: A simple harness
+&lt;/h2&gt;&lt;p&gt;Using &lt;code&gt;torch.jit.trace&lt;/code&gt; is still the most mature method for converting models to CoreML. We
+usually encapsulate this in a simple harness that allows you to modify the compute units used
+and the precision selected.&lt;/p&gt;
+&lt;p&gt;You can check out the initial harness. If we run the following on the original code implementation:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uv run convert.py --precision FLOAT32 --compute_units CPU_AND_GPU
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;We should bump into the first (of many) issues.&lt;/p&gt;
+&lt;h2 id="-step-2-bug-hunting"&gt;🐛 Step 2: Bug hunting
+&lt;/h2&gt;&lt;p&gt;It is rare that a model will convert first time. Often, you will need to progressively make
+changes further and further down the execution graph until you reach the final node.&lt;/p&gt;
+&lt;h3 id="issue-1-data-type-mismatch"&gt;Issue 1: Data Type Mismatch
+&lt;/h3&gt;&lt;p&gt;Our first issue is the following error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-gdscript3" data-lang="gdscript3"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;ERROR&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;converting&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;outer&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;op&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;located&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;vision_tower/rotary_pos_emb/192&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="n"&gt;op&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;matmul&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;when&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;are&lt;/span&gt; &lt;span class="n"&gt;both&lt;/span&gt; &lt;span class="n"&gt;non&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;their&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt; &lt;span class="n"&gt;need&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;match&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;but&lt;/span&gt; &lt;span class="n"&gt;got&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;int32&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;fp32&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Luckily this error gives us quite a bit of information. We can look at the
+&lt;code&gt;VisionRotaryEmbedding&lt;/code&gt; layer and see the following code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;forward&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;seqlen&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Tensor&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;seq&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seqlen&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inv_freq&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inv_freq&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;freqs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;outer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inv_freq&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;freqs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Although &lt;code&gt;torch.arange&lt;/code&gt; has a &lt;code&gt;dtype&lt;/code&gt; argument, &lt;code&gt;coremltools&lt;/code&gt; ignores this for &lt;code&gt;arange&lt;/code&gt; and
+always outputs &lt;code&gt;int32&lt;/code&gt;. We can simply add a cast after the &lt;code&gt;arange&lt;/code&gt; to fix this issue.&lt;/p&gt;
+&lt;h3 id="issue-2-repeat-interleave"&gt;Issue 2: Repeat Interleave
+&lt;/h3&gt;&lt;p&gt;After fixing this, running the conversion again leads us to our next issue at
+&lt;code&gt;repeat_interleave&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-gdscript3" data-lang="gdscript3"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;ERROR&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;converting&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;repeat_interleave&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;op&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;located&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;vision_tower/204&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="n"&gt;Cannot&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;None&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Whilst this error is less informative, we only have a single call to &lt;code&gt;repeat_interleave&lt;/code&gt; in our vision encoder:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;cu_seqlens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;repeat_interleave&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;grid_thw&lt;/span&gt;&lt;span class="p"&gt;[:,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;grid_thw&lt;/span&gt;&lt;span class="p"&gt;[:,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;grid_thw&lt;/span&gt;&lt;span class="p"&gt;[:,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cumsum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;dim&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;grid_thw&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dtype&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;jit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_tracing&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;int32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;cu_seqlens&lt;/code&gt; is used for masking variable length sequences in &lt;code&gt;flash_attention_2&lt;/code&gt;. It&amp;rsquo;s derived
+from the &lt;code&gt;grid_thw&lt;/code&gt; tensor, which represents &lt;code&gt;time&lt;/code&gt;, &lt;code&gt;height&lt;/code&gt; and &lt;code&gt;width&lt;/code&gt;. Since we are only
+processing a single image, we can simply remove this call.&lt;/p&gt;
+&lt;h3 id="issue-3-dynamic-index"&gt;Issue 3: Dynamic Index
+&lt;/h3&gt;&lt;p&gt;Onto the next! This time, we get a more cryptic error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ERROR - converting &amp;#39;_internal_op_tensor_inplace_fill_&amp;#39; op (located at:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#39;vision_tower/0/attn/301_internal_tensor_assign_1&amp;#39;): _internal_op_tensor_inplace_fill does not support dynamic index
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;This is again due to the masking logic to handle variable length sequences. Since we are only
+processing a single image (not a video or batch of images), we don&amp;rsquo;t really need attention
+masking at all! Therefore, we can just use a mask of all &lt;code&gt;True&lt;/code&gt;. To prepare ourselves for the
+Neural Engine conversion, we also switch from using a boolean mask to a float mask of all zeros,
+as the Neural Engine does not support &lt;code&gt;bool&lt;/code&gt; tensors.&lt;/p&gt;
+&lt;h3 id="issue-4-reshape-compatibility"&gt;Issue 4: Reshape Compatibility
+&lt;/h3&gt;&lt;p&gt;With all of this done, the model should now successfully convert to CoreML! However, when we
+&lt;em&gt;run&lt;/em&gt; the model, we get the following error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;error: &amp;#39;mps.reshape&amp;#39; op the result shape is not compatible with the input shape
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;This reshape could be in multiple places! Luckily, we can use a previous warning message to help
+us track down the issue:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;TracerWarning: Iterating over a tensor might cause the trace to be incorrect. Passing a tensor
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;of different shape won&amp;#39;t change the number of iterations executed (and might lead to errors or
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;silently give incorrect results).
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; for t, h, w in grid_thw:
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Most ML compilers &lt;strong&gt;do not&lt;/strong&gt; like dynamic control flow. Luckily for us, as we are only
+processing a single image, we can simply remove the loop and process the single &lt;code&gt;h, w&lt;/code&gt; pair.&lt;/p&gt;
+&lt;p&gt;And there we have it! If we run the conversion again, we should see that the model successfully
+converts and matches the original PyTorch precision:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Max difference: 0.006000518798828125, Mean difference: 1.100682402466191e-05
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-step-3-benchmarking"&gt;📈 Step 3: Benchmarking
+&lt;/h2&gt;&lt;p&gt;Now that we&amp;rsquo;ve got the model working, let&amp;rsquo;s evaluate the size and performance. The good news is
+the model is working, the bad news is that it&amp;rsquo;s over 5GB! This is completely untenable for on
+device deployment! To benchmark the computation time, we can use the built in XCode tooling by calling:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;open DotsOCR_FLOAT32.mlpackage
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;which will launch the XCode inspector for the model. After clicking &lt;code&gt;+ Performance Report&lt;/code&gt; and
+launching a report on all compute devices, you should see something like the following:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/dots-ocr-ne/perf_report_gpu.png"
+loading="lazy"
+alt="GPU Perf report"
+&gt;
+&lt;em&gt;Performance report showing over a second for a single forward pass&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Over a second for a single forward pass of the vision encoder! We have lots of more work.&lt;/p&gt;
+&lt;p&gt;In the second part of this series, we will work on the integration between &lt;code&gt;CoreML&lt;/code&gt; and &lt;code&gt;MLX&lt;/code&gt;,
+to run the full model on-device. In the third part, we will dive deep into the optimizations
+required to get this model running on the Neural Engine, including quantization and dynamic shapes.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/dots-ocr-ne" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/dots-ocr-ne&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Converting state-of-the-art models like dots.ocr for on-device deployment presents unique
+challenges but offers significant benefits in terms of privacy, cost, and offline functionality.
+This first part of our series demonstrated the iterative process of identifying and resolving
+conversion issues when moving from PyTorch to Core ML.&lt;/p&gt;
+&lt;p&gt;Key takeaways include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Start Simple&lt;/strong&gt;: Begin with minimal viable models and gradually add complexity&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Expect Issues&lt;/strong&gt;: Model conversion rarely works on the first attempt&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Understand Your Model&lt;/strong&gt;: Deep knowledge of the model architecture helps in debugging&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Optimize Progressively&lt;/strong&gt;: Follow the &amp;ldquo;make it work, make it right, make it fast&amp;rdquo; principle&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;While we&amp;rsquo;ve achieved a working conversion, the 5GB model size and slow inference times highlight
+the optimization work still ahead. The Neural Engine&amp;rsquo;s power efficiency advantages make this
+effort worthwhile for production on-device applications.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#COREML #OCR #ONDEVICE #NEURALENGINE #PYTORCH #MLX #APPLE #AI #OPTIMIZATION&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

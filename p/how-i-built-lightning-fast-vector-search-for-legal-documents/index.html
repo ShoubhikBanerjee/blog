@@ -1,0 +1,590 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="A comprehensive guide to building high-performance semantic search over 143,485 legal document segments using vector embeddings, optimization techniques, and CPU-based indexing."><title>How I Built Lightning-Fast Vector Search for Legal Documents</title><link rel=canonical href=https://shoubhikbanerjee.github.io/blog/p/how-i-built-lightning-fast-vector-search-for-legal-documents/><link rel=stylesheet href=/blog/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="How I Built Lightning-Fast Vector Search for Legal Documents"><meta property='og:description' content="A comprehensive guide to building high-performance semantic search over 143,485 legal document segments using vector embeddings, optimization techniques, and CPU-based indexing."><meta property='og:url' content='https://shoubhikbanerjee.github.io/blog/p/how-i-built-lightning-fast-vector-search-for-legal-documents/'><meta property='og:site_name' content='Tech Insights: AI & Cloud'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='vector-search'><meta property='article:tag' content='embeddings'><meta property='article:tag' content='legal-technology'><meta property='article:tag' content='semantic-search'><meta property='article:tag' content='usearch'><meta property='article:tag' content='isaacus'><meta property='article:tag' content='performance-optimization'><meta property='article:tag' content='rag'><meta property='article:tag' content='simd'><meta property='article:tag' content='hnsw'><meta property='article:published_time' content='2025-10-28T00:45:06+05:30'><meta property='article:modified_time' content='2025-10-28T00:45:06+05:30'><meta property='og:image' content='https://cdn-uploads.huggingface.co/production/uploads/65839aaab6a60815eefed378/RPd8hpWDbLMKzhy5p5iee.png'><meta name=twitter:title content="How I Built Lightning-Fast Vector Search for Legal Documents"><meta name=twitter:description content="A comprehensive guide to building high-performance semantic search over 143,485 legal document segments using vector embeddings, optimization techniques, and CPU-based indexing."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://cdn-uploads.huggingface.co/production/uploads/65839aaab6a60815eefed378/RPd8hpWDbLMKzhy5p5iee.png'><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/blog/><img src=/blog/img/avatar_hu_821b54dcdbdebe26.png width=300 height=293 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🚀</span></figure><div class=site-meta><h1 class=site-name><a href=/blog>Tech Insights: AI & Cloud</a></h1><h2 class=site-description>Insights That Matter for AI, Cloud, and the Next Big Thing.</h2></div></header><ol class=menu-social><li><a href=https://github.com/ShoubhikBanerjee target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.linkedin.com/in/shoubhik-banerjee target=_blank title=LinkedIn rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-linkedin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 10-4 0"/><path d="M3 7a4 4 0 014-4h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4z"/></svg></a></li><li><a href=https://shoubhikbanerjee.com/ target=_blank title=Web rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-world"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1018 0A9 9 0 003 12"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 000 18"/><path d="M12.5 3a17 17 0 010 18"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/blog/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/blog/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/blog/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/blog/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#-choosing-an-api-provider-or-going-local>🔍 Choosing an API Provider (Or Going Local?)</a></li><li><a href=#-so-why-not-just-go-local>🏠 So, Why Not Just Go Local?</a></li><li><a href=#-getting-embeddings-fast>🚀 Getting Embeddings Fast</a><ol><li><a href=#-async-all-the-things-but-carefully>⚡ Async All The Things (But Carefully)</a></li><li><a href=#-the-speed-numbers>📊 The Speed Numbers</a></li></ol></li><li><a href=#-embedding-legal-texts-with-isaacus>🧩 Embedding Legal Texts with Isaacus</a></li><li><a href=#-the-256-dimension-magic>✨ The 256-Dimension Magic</a><ol><li><a href=#-usearch-from-53-to-2880-queries-per-second-on-just-a-cpu>🔥 USearch: From 53 to 2,880 Queries per Second (on Just a CPU!)</a></li><li><a href=#-the-complete-performance-ladder>📈 The Complete Performance Ladder</a></li></ol></li><li><a href=#-choosing-your-configuration>⚙️ Choosing Your Configuration</a></li><li><a href=#-production-ready-code>💻 Production-Ready Code</a></li><li><a href=#-the-bottom-line>🎯 The Bottom Line</a></li><li><a href=#-credits>🙌 Credits</a></li><li><a href=#-final-thoughts>✅ Final Thoughts</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/blog/p/how-i-built-lightning-fast-vector-search-for-legal-documents/><img src=https://cdn-uploads.huggingface.co/production/uploads/65839aaab6a60815eefed378/RPd8hpWDbLMKzhy5p5iee.png loading=lazy alt="Featured image of post How I Built Lightning-Fast Vector Search for Legal Documents"></a></div><div class=article-details><header class=article-category><a href=/blog/categories/machine-learning/>Machine Learning
+</a><a href=/blog/categories/information-retrieval/>Information Retrieval
+</a><a href=/blog/categories/legal-technology/>Legal Technology</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/blog/p/how-i-built-lightning-fast-vector-search-for-legal-documents/>How I Built Lightning-Fast Vector Search for Legal Documents</a></h2><h3 class=article-subtitle>A comprehensive guide to building high-performance semantic search over 143,485 legal document segments using vector embeddings, optimization techniques, and CPU-based indexing.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Oct 28, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>16 minute read</time></div></footer></div></header><section class=article-content><h1 id=-how-i-built-lightning-fast-vector-search-for-legal-documents>⚡ How I Built Lightning-Fast Vector Search for Legal Documents</h1><p><img src=https://cdn-uploads.huggingface.co/production/uploads/65839aaab6a60815eefed378/RPd8hpWDbLMKzhy5p5iee.png loading=lazy alt="API Terms Comparison">
+<em>Comparison of embedding API provider terms and data usage policies</em></p><p>I wanted to see if I could build semantic search over a large legal dataset — specifically,
+every High Court decision in Australian legal history up to 2023, chunked down to 143,485
+searchable segments. Not because anyone asked me to, but because the combination of scale and
+domain specificity seemed like an interesting technical challenge. Legal text is dense,
+context-heavy, and full of subtle distinctions that keyword search completely misses. Could
+vector search actually handle this at scale and stay fast enough to be useful?</p><p>I&rsquo;ll walk you through what I learned testing different embedding providers, the performance
+benchmarks that surprised me, the code for actually implementing this with
+<a class=link href=https://github.com/unum-cloud/usearch target=_blank rel=noopener>USearch</a> and <a class=link href=https://isaacus.com target=_blank rel=noopener>Isaacus embeddings</a>,and, most importantly, why you need to read the fine print on embedding API terms before you
+feed them anything you care about.</p><h2 id=-choosing-an-api-provider-or-going-local>🔍 Choosing an API Provider (Or Going Local?)</h2><p>Before diving into implementation, I spent some time doing what every developer should do but
+most don&rsquo;t: actually reading the Terms of Service for various embedding API providers. What I
+found was&mldr; sobering. With some help from Claude, I got this comparison table:</p><p><strong>Correction</strong>: <em>I&rsquo;ve been informed that Google, even for paid individual users will train on
+your data. For Google Workspace users (at least in the USA), they will not.</em></p><p>Now, I&rsquo;m not trying to throw shade at any specific provider — these are all legitimate
+businesses with different business models and constraints. But if you&rsquo;re working with legal
+documents, medical records, or anything remotely sensitive, these terms matter a lot. Some
+providers explicitly claim rights to train on your data, and even may share it or sell it to
+third parties under different terms. Others require you to opt out manually, which means your
+data is fair game by default. And in a few cases, free tier users get no protection at all.</p><p>The standout for me was <a class=link href=https://isaacus.com target=_blank rel=noopener>Isaacus</a>, which doesn&rsquo;t train on user data unless
+you explicitly provide feedback, allows benchmarking, and protects free users. (Full disclosure:
+I&rsquo;m working with them so I may be a little biased. But even I wasn&rsquo;t, those terms would matter a lot to me.)</p><h2 id=-so-why-not-just-go-local>🏠 So, Why Not Just Go Local?</h2><p>You might be thinking: &ldquo;Why deal with API terms at all? Just run embeddings locally.&rdquo; That&rsquo;s
+actually a completely reasonable approach, especially for sensitive data. You get full control,
+no data leaves your infrastructure, and you&rsquo;re not at the mercy of rate limits or pricing changes.</p><p>The trade-off is quality and convenience. Some of the best-performing embedding models are
+proprietary and only available through APIs.</p><p>For this project, I&rsquo;m testing several approaches. On the API side, I&rsquo;m comparing Isaacus,
+OpenAI, Voyage AI (with opt-out enabled), and Google Gemini — all using their best models at
+maximum embedding dimensions. I picked these because they either have reasonable terms or, in
+Voyage&rsquo;s case, at least let you opt out of training (but you must do this from the get-go, the
+opt-out won&rsquo;t retroactively apply to any data you&rsquo;ve already submitted). I&rsquo;ll also show you
+performance results from a small and fast local model I fine-tuned myself: a sentence-transformers model based on
+<a class=link href=https://huggingface.co/BAAI/bge-small-en target=_blank rel=noopener>BAAI/bge-small-en</a>, trained specifically on High
+Court of Australia case law from the Open Australian Legal Corpus&mldr; which happens to be the
+exact dataset I&rsquo;m searching through here.</p><p>Does this give my local model an unfair advantage? Absolutely. It was literally trained on the
+data I&rsquo;m now querying. But for this article, I&rsquo;m focusing on speed and ease of implementation
+(building reliable inference infrastructure for local models can be quite involved). The choice
+of embedding model matters a lot and varies by use case, so you should run your own evaluations on your specific data.</p><h2 id=-getting-embeddings-fast>🚀 Getting Embeddings Fast</h2><h3 id=-async-all-the-things-but-carefully>⚡ Async All The Things (But Carefully)</h3><p>When you&rsquo;re processing 143,000 text chunks, doing it sequentially would take&mldr; a long time. So
+I went async, but with guardrails to avoid hammering the APIs and running into rate limits:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># Process up to 5 batches concurrently</span>
+</span></span><span class=line><span class=cl><span class=n>semaphore</span> <span class=o>=</span> <span class=n>asyncio</span><span class=o>.</span><span class=n>Semaphore</span><span class=p>(</span><span class=n>max_concurrent_batches</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>process_batch</span><span class=p>(</span><span class=n>batch_texts</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>async</span> <span class=k>with</span> <span class=n>semaphore</span><span class=p>:</span>  <span class=c1># Rate limiting embeddings = await embed_batch_async(batch_texts)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>embeddings</span>
+</span></span></code></pre></td></tr></table></div></div><p>This simple pattern gave me 3-5x speedup for API calls. For local models, async doesn&rsquo;t help
+much (GPU compute is the bottleneck, not network I/O), but batching still works.</p><h3 id=-the-speed-numbers>📊 The Speed Numbers</h3><p>After implementing these optimizations, here&rsquo;s what the different providers look like in practice:</p><p><strong>Batch Processing Speed (1,000 legal documents):</strong></p><ul><li>Local Model (auslaw-embed, 384d): 924 texts/sec on a 32GB GPU</li><li>OpenAI (text-embedding-3-large, 3072d): 184 texts/sec</li><li>Isaacus (kanon-2-embedder, 1792d): 102 texts/sec</li><li>Google (gemini-embedding-001, 3072d) 19.8 texts/sec</li><li>Voyage AI (voyage-3-large, 2048d): 14 texts/sec (ouch)</li></ul><p><strong>Single Query Latency (what one user experiences):</strong></p><ul><li>Local Model: 7ms average, 15ms p95*</li><li>Google: 501.1ms average, 662.3ms p95</li><li>OpenAI: 1,114ms average 1,723ms p95</li><li>Isaacus: 1,532ms average, 2,097ms p95</li><li>Voyage AI: 1,693ms average, 7,657ms p95</li></ul><p>Note: these timings are during Australian business hours (relevant for my use-case). For
+off-shore providers (OpenAI, Google and Voyage) you can tack on ~80% to those times during on-peak hours.</p><p><em>p95 means &ldquo;95th percentile&rdquo; — basically, 95% of requests are faster than this. It&rsquo;s a better
+measure than average because it shows you what your slower requests look like, which matters for user experience.</em></p><p>The tiny local model absolutely crushes the APIs on speed — 5x faster for batches, 70x faster
+for single queries. But here&rsquo;s the catch, it&rsquo;s using 384-dimensional embeddings vs 1792-3072 for
+the APIs. That dimension difference matters for search quality, which is why I&rsquo;m focusing on
+the API providers for this article.</p><p>A few surprises:</p><ul><li>Voyage&rsquo;s throttling is painful:14 texts/sec on a paid API is rough</li><li>Google doesn&rsquo;t benefit from async: seems to process sequentially anyway</li><li>OpenAI is remarkably consistent: lowest variance despite being network-based</li><li>Isaacus hits a nice middle ground: good speed for the dimensionality</li></ul><h2 id=-embedding-legal-texts-with-isaacus>🧩 Embedding Legal Texts with Isaacus</h2><p>After testing all the providers, I will focus on Isaacus for the deep dive. The
+<a class=link href=https://isaacus.com target=_blank rel=noopener>kanon-2-embedder</a> embeddings are also such that first dimensions carry
+most of the information allowing us to do some interesting things.</p><p>Here&rsquo;s how simple it is to generate embeddings with Isaacus and save them for later use. You
+will need to install the required packages first and will need Python ≥3.8.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pip install isaacus numpy
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>asyncio</span> <span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>isaacus</span> <span class=kn>import</span> <span class=n>AsyncClient</span> <span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>generate_embeddings</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Generate embeddings for your legal corpus using Isaacus API.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Initialize the async client (API key from environment) client = AsyncClient(api_key=os.getenv(&#34;ISAACUS_API_KEY&#34;))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Your corpus and queries corpus_texts = [&#34;The High Court of Australia...&#34;, ...]  # 143,485 docs</span>
+</span></span><span class=line><span class=cl>    <span class=n>queries</span> <span class=o>=</span> <span class=p>[</span><span class=s2>&#34;What is the highest court?&#34;</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>  <span class=c1># Your queries</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Generate corpus embeddings with task-aware encoding corpus_response = await client.embed(</span>
+</span></span><span class=line><span class=cl>        <span class=n>model</span><span class=o>=</span><span class=s2>&#34;kanon-2-embedder&#34;</span><span class=p>,</span> <span class=n>inputs</span><span class=o>=</span><span class=n>corpus_texts</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>task</span><span class=o>=</span><span class=s2>&#34;retrieval/document&#34;</span>  <span class=c1># Tell model these are documents )</span>
+</span></span><span class=line><span class=cl>    <span class=n>corpus_embeddings</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>array</span><span class=p>(</span><span class=n>corpus_response</span><span class=o>.</span><span class=n>embeddings</span><span class=p>,</span> <span class=n>dtype</span><span class=o>=</span><span class=n>np</span><span class=o>.</span><span class=n>float32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Generate sample query embeddings with task-aware encoding query_response = await client.embed(</span>
+</span></span><span class=line><span class=cl>        <span class=n>model</span><span class=o>=</span><span class=s2>&#34;kanon-2-embedder&#34;</span><span class=p>,</span> <span class=n>inputs</span><span class=o>=</span><span class=n>queries</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>task</span><span class=o>=</span><span class=s2>&#34;retrieval/query&#34;</span>  <span class=c1># Tell model these are queries )</span>
+</span></span><span class=line><span class=cl>    <span class=n>query_embeddings</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>array</span><span class=p>(</span><span class=n>query_response</span><span class=o>.</span><span class=n>embeddings</span><span class=p>,</span> <span class=n>dtype</span><span class=o>=</span><span class=n>np</span><span class=o>.</span><span class=n>float32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Create an embeddings dir if it doesn&#39;t exist os.makedirs(&#34;embeddings&#34;, exist_ok=True)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Save to disk for later use np.save(&#34;embeddings/corpus_embeddings.npy&#34;, corpus_embeddings)</span>
+</span></span><span class=line><span class=cl>    <span class=n>np</span><span class=o>.</span><span class=n>save</span><span class=p>(</span><span class=s2>&#34;embeddings/query_embeddings.npy&#34;</span><span class=p>,</span> <span class=n>query_embeddings</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>await</span> <span class=n>client</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Run it</span>
+</span></span><span class=line><span class=cl><span class=n>asyncio</span><span class=o>.</span><span class=n>run</span><span class=p>(</span><span class=n>generate_embeddings</span><span class=p>())</span>
+</span></span></code></pre></td></tr></table></div></div><p>That&rsquo;s it! The embeddings are now saved and ready for optimisation.</p><h2 id=-the-256-dimension-magic>✨ The 256-Dimension Magic</h2><p>Isaacus embeddings are 1792-dimensional, but they&rsquo;re trained with a special property where the
+first dimensions carry the most information (think principal components). This means we can
+truncate to just 256 dimensions and still maintain surprisingly good search quality:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># Load the full embeddings we saved</span>
+</span></span><span class=line><span class=cl><span class=n>corpus_embeddings</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>load</span><span class=p>(</span><span class=s2>&#34;embeddings/corpus_embeddings.npy&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Use only the first 256 dimensions</span>
+</span></span><span class=line><span class=cl><span class=n>corpus_256d</span> <span class=o>=</span> <span class=n>corpus_embeddings</span><span class=p>[:,</span> <span class=p>:</span><span class=mi>256</span><span class=p>]</span><span class=o>.</span><span class=n>astype</span><span class=p>(</span><span class=n>np</span><span class=o>.</span><span class=n>float32</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>Which results in&mldr;</p><ul><li>8.6x faster searches (459 q/s vs 53 q/s)</li><li>7x less memory (140 MB vs 1,028 MB)</li><li>61% recall@10† (vs 100% for full dimensions — explained below)</li><li>57% recall@50</li></ul><p>Important context on these numbers: The recall percentages here are relative to a synthetic
+baseline, not absolute retrieval quality. Here&rsquo;s what I did:</p><ol><li>I used the exact same documents as both corpus and queries (143K documents querying against themselves)</li><li>The &ldquo;perfect&rdquo; 100% baseline is full 1792-dimensional exact search — each document finding itself as the top result</li><li>The 61% and 57% numbers show how much information is lost when optimizing with 256 dimensions</li></ol><p>This is a benchmark of information loss from optimisation, not real-world retrieval quality. For
+actual legal search quality, you&rsquo;d need human-labelled test sets (like the <a class=link href=https://arxiv.org/abs/2406.14928 target=_blank rel=noopener>MLEB
+benchmark</a>).</p><p>Why this still matters: It tells you that the optimizations preserve about 60% of the ranking
+order. The &ldquo;missing&rdquo; 40% aren&rsquo;t wrong results, they&rsquo;re just ranked differently. For RAG where
+you&rsquo;re pulling 50-100 chunks anyway, this is often perfectly fine.</p><p><em>†Recall@10 means &ldquo;what percentage of the true top-10 results did we actually find?&rdquo; Recall@50
+is lower here because this test uses self-matching over identical documents — as k grows, there
+are more &ldquo;perfect&rdquo; matches to retrieve, so missing any lowers the recall fraction.</em></p><h3 id=-usearch-from-53-to-2880-queries-per-second-on-just-a-cpu>🔥 USearch: From 53 to 2,880 Queries per Second (on Just a CPU!)</h3><p>Now for the fun part. Most vector search tutorials will tell you to use FAISS or Pinecone and
+build approximate indexes. But I wanted something different: great results when I need them,
+blazing speed when I don&rsquo;t, and critically no GPU is required.</p><p>Enter <a class=link href=https://github.com/unum-cloud/usearch target=_blank rel=noopener>USearch</a>. It&rsquo;s a lesser-known library that
+delivers both exact and approximate search through SIMD optimization (basically, modern CPU
+instructions that process multiple data points at once). The killer feature? Everything runs on CPU, which means:</p><ul><li>Way cheaper deployment: no expensive GPU instances needed</li><li>Easier scaling: just add more CPU cores</li><li>Lower complexity: no CUDA drivers, no GPU memory management</li><li>Still insanely fast: thanks to SIMD vectorisation</li></ul><p>For a legal search system running 24/7, avoiding GPUs can cut infrastructure costs by 70-80%
+while still delivering sub-millisecond response times. That&rsquo;s a game-changer.</p><p>You can install it with:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pip install usearch
+</span></span></code></pre></td></tr></table></div></div><p><strong>Level 1: Just Use More Cores</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># Batch with multi-threading</span>
+</span></span><span class=line><span class=cl><span class=n>matches</span> <span class=o>=</span> <span class=n>search</span><span class=p>(</span><span class=n>corpus</span><span class=p>,</span> <span class=n>queries</span><span class=p>,</span> <span class=mi>100</span><span class=p>,</span> <span class=n>MetricKind</span><span class=o>.</span><span class=n>Cos</span><span class=p>,</span> <span class=n>exact</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>threads</span><span class=o>=</span><span class=mi>8</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1># Result: 374 q/s (7x speedup from single-threaded)</span>
+</span></span></code></pre></td></tr></table></div></div><p><strong>Level 2: Build an HNSW Index</strong></p><p>For workloads where you query more than you update, building an index pays off:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>usearch.index</span> <span class=kn>import</span> <span class=n>Index</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>index</span> <span class=o>=</span> <span class=n>Index</span><span class=p>(</span> <span class=n>ndim</span><span class=o>=</span><span class=mi>1792</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>metric</span><span class=o>=</span><span class=n>MetricKind</span><span class=o>.</span><span class=n>Cos</span><span class=p>,</span> <span class=n>connectivity</span><span class=o>=</span><span class=mi>32</span><span class=p>,</span>  <span class=c1># Higher = better quality, more memory</span>
+</span></span><span class=line><span class=cl>    <span class=n>expansion_add</span><span class=o>=</span><span class=mi>200</span><span class=p>,</span>  <span class=c1># Build quality expansion_search=100  # Search quality</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Build once (214 seconds)</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span><span class=p>,</span> <span class=n>embedding</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>corpus_embeddings</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>index</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>i</span><span class=p>,</span> <span class=n>embedding</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Search many times (blazing fast)</span>
+</span></span><span class=line><span class=cl><span class=n>matches</span> <span class=o>=</span> <span class=n>index</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=n>query</span><span class=p>,</span> <span class=mi>100</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1># Result: 993 q/s with 98.6% recall@10</span>
+</span></span></code></pre></td></tr></table></div></div><p>HNSW (Hierarchical Navigable Small World graphs) is basically a clever data structure that lets
+you find approximate nearest neighbours way faster than brute force, while still being super accurate.</p><p><strong>Level 3: The Full Stack</strong></p><p>Combining 256d reduction, HNSW indexing, and half-precision storage:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># Prepare 256d embeddings in half precision</span>
+</span></span><span class=line><span class=cl><span class=n>corpus_256d</span> <span class=o>=</span> <span class=n>corpus_embeddings</span><span class=p>[:,</span> <span class=p>:</span><span class=mi>256</span><span class=p>]</span><span class=o>.</span><span class=n>astype</span><span class=p>(</span><span class=n>np</span><span class=o>.</span><span class=n>float16</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>index</span> <span class=o>=</span> <span class=n>Index</span><span class=p>(</span> <span class=n>ndim</span><span class=o>=</span><span class=mi>256</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>metric</span><span class=o>=</span><span class=n>MetricKind</span><span class=o>.</span><span class=n>Cos</span><span class=p>,</span> <span class=n>dtype</span><span class=o>=</span><span class=s2>&#34;f16&#34;</span><span class=p>,</span>  <span class=c1># Half precision saves 2x memory</span>
+</span></span><span class=line><span class=cl>    <span class=n>connectivity</span><span class=o>=</span><span class=mi>32</span><span class=p>,</span> <span class=n>expansion_add</span><span class=o>=</span><span class=mi>200</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>expansion_search</span><span class=o>=</span><span class=mi>100</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Build (59 seconds for 143K docs)</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span><span class=p>,</span> <span class=n>emb</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>corpus_256d</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>index</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>i</span><span class=p>,</span> <span class=n>emb</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>Final numbers:</p><ul><li>2,880 queries/sec (54x faster than baseline!)</li><li>0.35ms per query (sub-millisecond!)</li><li>70 MB total (14.7x memory reduction)</li><li>61% recall@10 (still good enough for RAG)</li></ul><h3 id=-the-complete-performance-ladder>📈 The Complete Performance Ladder</h3><p><img src=https://cdn-uploads.huggingface.co/production/uploads/65839aaab6a60815eefed378/czppJH5L3QKob3V8Z8jml.png loading=lazy alt="Performance Comparison Chart">
+<em>Complete performance comparison across different optimization levels</em></p><p>Reminder: these are relative to 1792-dimensional exact search on the same corpus. These measure
+optimisation trade-offs, not absolute retrieval quality. For legal-specific retrieval
+benchmarks, see <a class=link href=https://arxiv.org/abs/2406.14928 target=_blank rel=noopener>MLEB</a>.</p><p><strong>Baseline system (53 q/s):</strong></p><ul><li>1 user: 19ms (fine)</li><li>100 concurrent users: 1.9 seconds (not that great)</li><li>1,000 users: 19 seconds (really, really bad)</li></ul><p><strong>Optimised system (2,880 q/s):</strong></p><ul><li>1 user: 0.35ms</li><li>100 concurrent users: 35ms</li><li>1,000 concurrent users: 347ms</li><li>10,000 concurrent users: 3.5s</li></ul><p>The optimised system can handle serious traffic on a single machine.</p><h2 id=-choosing-your-configuration>⚙️ Choosing Your Configuration</h2><p>The right choice depends on your requirements:</p><p><strong>Use &ldquo;accuracy&rdquo; mode (baseline + multi-threading) when:</strong></p><ul><li>Legal compliance requires perfect recall</li><li>You&rsquo;re doing careful research, not RAG</li><li>Corpus is small enough (&lt;100K docs)</li></ul><p><strong>Use &ldquo;balanced&rdquo; mode (HNSW, full dimensions) when:</strong></p><ul><li>You need near-perfect results (>95% recall)</li><li>Building a production legal search tool</li><li>Can afford 3-4 minutes of index build time</li><li>This is my recommendation for legal applications</li></ul><p><strong>Use &ldquo;speed&rdquo; mode (full stack) when:</strong></p><ul><li>Building consumer-facing applications</li><li>Memory is very limited (&lt;200MB for index)</li><li>Using RAG with reranking (60% recall is fine as first pass)</li><li>Need to handle thousands of concurrent users</li></ul><h2 id=-production-ready-code>💻 Production-Ready Code</h2><p>Here&rsquo;s the full implementation you can adapt:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span> <span class=kn>from</span> <span class=nn>usearch.index</span> <span class=kn>import</span> <span class=n>Index</span><span class=p>,</span> <span class=n>search</span><span class=p>,</span> <span class=n>MetricKind</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pathlib</span> <span class=kn>import</span> <span class=n>Path</span> <span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Optional</span><span class=p>,</span> <span class=n>Union</span><span class=p>,</span> <span class=n>List</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>OptimizedLegalSearch</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span> <span class=bp>self</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>corpus_embeddings</span><span class=p>:</span> <span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>optimization_level</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&#34;balanced&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>save_path</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>    <span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34; Initialize the search system.
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>        Args:
+</span></span></span><span class=line><span class=cl><span class=s2>            corpus_embeddings: Corpus embeddings (N × D array)
+</span></span></span><span class=line><span class=cl><span class=s2>            optimization_level: One of &#34;accuracy&#34;, &#34;balanced&#34;, or &#34;speed&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>            save_path: Optional path to save/load index
+</span></span></span><span class=line><span class=cl><span class=s2>        &#34;&#34;&#34;</span> <span class=bp>self</span><span class=o>.</span><span class=n>corpus_embeddings</span> <span class=o>=</span> <span class=n>corpus_embeddings</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>optimization_level</span> <span class=o>=</span> <span class=n>optimization_level</span> <span class=bp>self</span><span class=o>.</span><span class=n>save_path</span> <span class=o>=</span> <span class=n>save_path</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>index</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Configure based on optimization level if optimization_level == &#34;speed&#34;:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># Maximum speed: 256d + HNSW + f16 print(&#34;Configuring for maximum speed (256d + HNSW + f16)...&#34;)</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>use_dimensions</span> <span class=o>=</span> <span class=mi>256</span> <span class=bp>self</span><span class=o>.</span><span class=n>use_index</span> <span class=o>=</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>dtype</span> <span class=o>=</span> <span class=s2>&#34;f16&#34;</span> <span class=bp>self</span><span class=o>.</span><span class=n>connectivity</span> <span class=o>=</span> <span class=mi>32</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>expansion_add</span> <span class=o>=</span> <span class=mi>200</span> <span class=bp>self</span><span class=o>.</span><span class=n>expansion_search</span> <span class=o>=</span> <span class=mi>100</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>elif</span> <span class=n>optimization_level</span> <span class=o>==</span> <span class=s2>&#34;balanced&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># Balanced: Full dimensions + HNSW print(&#34;Configuring for balanced speed/quality (HNSW M=32)...&#34;)</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>use_dimensions</span> <span class=o>=</span> <span class=kc>None</span>  <span class=c1># Use all dimensions self.use_index = True</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>dtype</span> <span class=o>=</span> <span class=s2>&#34;f32&#34;</span> <span class=bp>self</span><span class=o>.</span><span class=n>connectivity</span> <span class=o>=</span> <span class=mi>32</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>expansion_add</span> <span class=o>=</span> <span class=mi>200</span> <span class=bp>self</span><span class=o>.</span><span class=n>expansion_search</span> <span class=o>=</span> <span class=mi>100</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>elif</span> <span class=n>optimization_level</span> <span class=o>==</span> <span class=s2>&#34;accuracy&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># Maximum accuracy: Full dimensions, exact search</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Configuring for maximum accuracy (exact search)...&#34;</span><span class=p>)</span> <span class=bp>self</span><span class=o>.</span><span class=n>use_dimensions</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>use_index</span> <span class=o>=</span> <span class=kc>False</span> <span class=bp>self</span><span class=o>.</span><span class=n>dtype</span> <span class=o>=</span> <span class=s2>&#34;f32&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>raise</span> <span class=ne>ValueError</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Unknown optimization level: </span><span class=si>{</span><span class=n>optimization_level</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Prepare corpus self._prepare_corpus()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Build or load index if needed if self.use_index:</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>save_path</span> <span class=ow>and</span> <span class=n>Path</span><span class=p>(</span><span class=n>save_path</span><span class=p>)</span><span class=o>.</span><span class=n>exists</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>load_index</span><span class=p>(</span><span class=n>save_path</span><span class=p>)</span> <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>_build_index</span><span class=p>()</span> <span class=k>if</span> <span class=n>save_path</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=bp>self</span><span class=o>.</span><span class=n>save_index</span><span class=p>(</span><span class=n>save_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>_prepare_corpus</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Prepare corpus embeddings based on optimization settings.&#34;&#34;&#34;</span> <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>use_dimensions</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># Truncate to specified dimensions self.corpus_processed = self.corpus_embeddings[:, :self.use_dimensions]</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>dtype</span> <span class=o>==</span> <span class=s2>&#34;f16&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>corpus_processed</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>corpus_processed</span><span class=o>.</span><span class=n>astype</span><span class=p>(</span><span class=n>np</span><span class=o>.</span><span class=n>float16</span><span class=p>)</span> <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>corpus_processed</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>corpus_processed</span><span class=o>.</span><span class=n>astype</span><span class=p>(</span><span class=n>np</span><span class=o>.</span><span class=n>float32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Corpus reduced to </span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>use_dimensions</span><span class=si>}</span><span class=s2> dimensions&#34;</span><span class=p>)</span> <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>corpus_processed</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>corpus_embeddings</span><span class=o>.</span><span class=n>astype</span><span class=p>(</span><span class=n>np</span><span class=o>.</span><span class=n>float32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Using full </span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>corpus_embeddings</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=si>}</span><span class=s2> dimensions&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Ensure contiguous memory for SIMD optimization</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>corpus_processed</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>ascontiguousarray</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>corpus_processed</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>_build_index</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Build HNSW index for fast approximate search.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>ndim</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>use_dimensions</span> <span class=ow>or</span> <span class=bp>self</span><span class=o>.</span><span class=n>corpus_embeddings</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Building HNSW index (M=</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>connectivity</span><span class=si>}</span><span class=s2>, ef=</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>expansion_search</span><span class=si>}</span><span class=s2>)...&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>start_time</span> <span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>time</span><span class=p>()</span> <span class=bp>self</span><span class=o>.</span><span class=n>index</span> <span class=o>=</span> <span class=n>Index</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>ndim</span><span class=o>=</span><span class=n>ndim</span><span class=p>,</span> <span class=n>metric</span><span class=o>=</span><span class=n>MetricKind</span><span class=o>.</span><span class=n>Cos</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=n>dtype</span><span class=o>=</span><span class=bp>self</span><span class=o>.</span><span class=n>dtype</span><span class=p>,</span> <span class=n>connectivity</span><span class=o>=</span><span class=bp>self</span><span class=o>.</span><span class=n>connectivity</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=n>expansion_add</span><span class=o>=</span><span class=bp>self</span><span class=o>.</span><span class=n>expansion_add</span><span class=p>,</span> <span class=n>expansion_search</span><span class=o>=</span><span class=bp>self</span><span class=o>.</span><span class=n>expansion_search</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Add vectors to index with progress tracking n_docs = len(self.corpus_processed)</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=n>i</span><span class=p>,</span> <span class=n>embedding</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>corpus_processed</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>index</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>i</span><span class=p>,</span> <span class=n>embedding</span><span class=p>)</span> <span class=k>if</span> <span class=p>(</span><span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)</span> <span class=o>%</span> <span class=mi>10000</span> <span class=o>==</span> <span class=mi>0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;  Indexed </span><span class=si>{</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=si>}</span><span class=s2>/</span><span class=si>{</span><span class=n>n_docs</span><span class=si>}</span><span class=s2> documents...&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>build_time</span> <span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>time</span><span class=p>()</span> <span class=o>-</span> <span class=n>start_time</span> <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Index built in </span><span class=si>{</span><span class=n>build_time</span><span class=si>:</span><span class=s2>.1f</span><span class=si>}</span><span class=s2> seconds&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Report memory usage memory_mb = self.index.size * (2 if self.dtype == &#34;f16&#34; else 4) / (1024 * 1024)</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Index memory usage: </span><span class=si>{</span><span class=n>memory_mb</span><span class=si>:</span><span class=s2>.1f</span><span class=si>}</span><span class=s2> MB&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>search</span><span class=p>(</span> <span class=bp>self</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>query_embeddings</span><span class=p>:</span> <span class=n>Union</span><span class=p>[</span><span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>List</span><span class=p>[</span><span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>]],</span>
+</span></span><span class=line><span class=cl>        <span class=n>k</span><span class=p>:</span> <span class=nb>int</span> <span class=o>=</span> <span class=mi>100</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>return_scores</span><span class=p>:</span> <span class=nb>bool</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>    <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>Union</span><span class=p>[</span><span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>,</span> <span class=n>List</span><span class=p>[</span><span class=n>np</span><span class=o>.</span><span class=n>ndarray</span><span class=p>]]:</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34; Search for top-k similar documents.
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>        Args:
+</span></span></span><span class=line><span class=cl><span class=s2>            query_embeddings: Query vector(s) - can be single or batch
+</span></span></span><span class=line><span class=cl><span class=s2>            k: Number of results to return
+</span></span></span><span class=line><span class=cl><span class=s2>            return_scores: Whether to return similarity scores
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>        Returns:
+</span></span></span><span class=line><span class=cl><span class=s2>            Document indices (and optionally scores) for top-k matches &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Ensure numpy array if isinstance(query_embeddings, list):</span>
+</span></span><span class=line><span class=cl>            <span class=n>query_embeddings</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>vstack</span><span class=p>(</span><span class=n>query_embeddings</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Truncate query dimensions if needed if self.use_dimensions:</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=n>query_embeddings</span><span class=o>.</span><span class=n>shape</span><span class=p>)</span> <span class=o>==</span> <span class=mi>1</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>query_processed</span> <span class=o>=</span> <span class=n>query_embeddings</span><span class=p>[:</span><span class=bp>self</span><span class=o>.</span><span class=n>use_dimensions</span><span class=p>]</span> <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>query_processed</span> <span class=o>=</span> <span class=n>query_embeddings</span><span class=p>[:,</span> <span class=p>:</span><span class=bp>self</span><span class=o>.</span><span class=n>use_dimensions</span><span class=p>]</span> <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>query_processed</span> <span class=o>=</span> <span class=n>query_embeddings</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Ensure float32 for queries (better precision) query_processed = query_processed.astype(np.float32)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>use_index</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># HNSW approximate search if len(query_processed.shape) == 1:</span>
+</span></span><span class=line><span class=cl>                <span class=c1># Single query matches = self.index.search(query_processed, k)</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>return_scores</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=k>return</span> <span class=n>matches</span><span class=o>.</span><span class=n>keys</span><span class=p>,</span> <span class=n>matches</span><span class=o>.</span><span class=n>distances</span> <span class=k>return</span> <span class=n>matches</span><span class=o>.</span><span class=n>keys</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=c1># Batch queries results_keys = []</span>
+</span></span><span class=line><span class=cl>                <span class=n>results_scores</span> <span class=o>=</span> <span class=p>[]</span> <span class=k>for</span> <span class=n>q</span> <span class=ow>in</span> <span class=n>query_processed</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>matches</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>index</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=n>q</span><span class=p>,</span> <span class=n>k</span><span class=p>)</span> <span class=n>results_keys</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>matches</span><span class=o>.</span><span class=n>keys</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=k>if</span> <span class=n>return_scores</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                        <span class=n>results_scores</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>matches</span><span class=o>.</span><span class=n>distances</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>return_scores</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=k>return</span> <span class=n>results_keys</span><span class=p>,</span> <span class=n>results_scores</span> <span class=k>return</span> <span class=n>results_keys</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># Exact search with multi-threading matches = search(</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>corpus_processed</span><span class=p>,</span> <span class=n>query_processed</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=n>k</span><span class=p>,</span> <span class=n>MetricKind</span><span class=o>.</span><span class=n>Cos</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=n>exact</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>threads</span><span class=o>=</span><span class=mi>8</span>  <span class=c1># Use 8 threads for parallel processing</span>
+</span></span><span class=line><span class=cl>            <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>return_scores</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=n>matches</span><span class=o>.</span><span class=n>keys</span><span class=p>,</span> <span class=n>matches</span><span class=o>.</span><span class=n>distances</span> <span class=k>return</span> <span class=n>matches</span><span class=o>.</span><span class=n>keys</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>save_index</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>path</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Save HNSW index to disk for fast loading.&#34;&#34;&#34;</span> <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>index</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Saving index to </span><span class=si>{</span><span class=n>path</span><span class=si>}</span><span class=s2>...&#34;</span><span class=p>)</span> <span class=bp>self</span><span class=o>.</span><span class=n>index</span><span class=o>.</span><span class=n>save</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=c1># Also save metadata import json</span>
+</span></span><span class=line><span class=cl>            <span class=n>metadata</span> <span class=o>=</span> <span class=p>{</span> <span class=s2>&#34;optimization_level&#34;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>optimization_level</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;use_dimensions&#34;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>use_dimensions</span><span class=p>,</span> <span class=s2>&#34;dtype&#34;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>dtype</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;connectivity&#34;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>connectivity</span><span class=p>,</span> <span class=s2>&#34;expansion_add&#34;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>expansion_add</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;expansion_search&#34;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>expansion_search</span><span class=p>,</span> <span class=s2>&#34;corpus_size&#34;</span><span class=p>:</span> <span class=nb>len</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>corpus_processed</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>path</span><span class=si>}</span><span class=s2>.meta.json&#34;</span><span class=p>,</span> <span class=s2>&#34;w&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>json</span><span class=o>.</span><span class=n>dump</span><span class=p>(</span><span class=n>metadata</span><span class=p>,</span> <span class=n>f</span><span class=p>,</span> <span class=n>indent</span><span class=o>=</span><span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Index saved successfully&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>load_index</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>path</span><span class=p>:</span> <span class=nb>str</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Load pre-built HNSW index from disk.&#34;&#34;&#34;</span> <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Loading index from </span><span class=si>{</span><span class=n>path</span><span class=si>}</span><span class=s2>...&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>index</span> <span class=o>=</span> <span class=n>Index</span><span class=o>.</span><span class=n>restore</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Load metadata if available import json</span>
+</span></span><span class=line><span class=cl>        <span class=n>meta_path</span> <span class=o>=</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>path</span><span class=si>}</span><span class=s2>.meta.json&#34;</span> <span class=k>if</span> <span class=n>Path</span><span class=p>(</span><span class=n>meta_path</span><span class=p>)</span><span class=o>.</span><span class=n>exists</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>            <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>meta_path</span><span class=p>,</span> <span class=s2>&#34;r&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>metadata</span> <span class=o>=</span> <span class=n>json</span><span class=o>.</span><span class=n>load</span><span class=p>(</span><span class=n>f</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Loaded </span><span class=si>{</span><span class=n>metadata</span><span class=p>[</span><span class=s1>&#39;optimization_level&#39;</span><span class=p>]</span><span class=si>}</span><span class=s2> index with </span><span class=si>{</span><span class=n>metadata</span><span class=p>[</span><span class=s1>&#39;corpus_size&#39;</span><span class=p>]</span><span class=si>}</span><span class=s2> documents&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Example usage</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Load your embeddings corpus_embeddings = np.load(&#34;embeddings/corpus_embeddings.npy&#34;)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Load your queries, if stored similarly query_embeddings = np.load(&#34;embeddings/query_embeddings.npy&#34;)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Create search system with desired optimization searcher = OptimizedLegalSearch(</span>
+</span></span><span class=line><span class=cl>        <span class=n>corpus_embeddings</span><span class=p>,</span> <span class=n>optimization_level</span><span class=o>=</span><span class=s2>&#34;balanced&#34;</span><span class=p>,</span>  <span class=c1># or &#34;speed&#34; or &#34;accuracy&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>save_path</span><span class=o>=</span><span class=s2>&#34;indices/legal_search.index&#34;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Search for similar documents results = searcher.search(query_embeddings[0], k=100)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>Found </span><span class=si>{</span><span class=nb>len</span><span class=p>(</span><span class=n>results</span><span class=p>)</span><span class=si>}</span><span class=s2> similar documents&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>A minimal query workflow would be as simple as:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>query</span> <span class=o>=</span> <span class=s2>&#34;What is the doctrine of precedent?&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>query_emb</span> <span class=o>=</span> <span class=n>client</span><span class=o>.</span><span class=n>embed</span><span class=p>(</span><span class=n>model</span><span class=o>=</span><span class=s2>&#34;kanon-2-embedder&#34;</span><span class=p>,</span> <span class=n>inputs</span><span class=o>=</span><span class=p>[</span><span class=n>query</span><span class=p>],</span> <span class=n>task</span><span class=o>=</span><span class=s2>&#34;retrieval/query&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>results</span> <span class=o>=</span> <span class=n>searcher</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=n>np</span><span class=o>.</span><span class=n>array</span><span class=p>(</span><span class=n>query_emb</span><span class=o>.</span><span class=n>embeddings</span><span class=p>[</span><span class=mi>0</span><span class=p>]),</span> <span class=n>k</span><span class=o>=</span><span class=mi>5</span><span class=p>)</span> <span class=nb>print</span><span class=p>(</span><span class=n>results</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=-the-bottom-line>🎯 The Bottom Line</h2><p>For legal search specifically, I&rsquo;d probably stick with the &ldquo;balanced&rdquo; configuration — 993 q/s
+with 98.6% recall@10 is plenty fast while maintaining near-perfect accuracy. But for general RAG
+applications where you&rsquo;re pulling 50+ chunks and reranking anyway, the fully optimised &ldquo;speed&rdquo;
+mode at 2,880 q/s is incredibly compelling.</p><p>A 61% recall system that responds in 0.35ms often beats a 100% recall system that takes 19ms,
+especially when your retrieval is just the first stage of a multi-step pipeline.</p><p>Now you can build your own performant legal search engine!</p><hr><h2 id=-credits>🙌 Credits</h2><p><em>Originally posted at:
+<a class=link href=https://huggingface.co/blog/adlumal/lightning-fast-vector-search-for-legal-documents target=_blank rel=noopener>https://huggingface.co/blog/adlumal/lightning-fast-vector-search-for-legal-documents</a></em></p><h2 id=-final-thoughts>✅ Final Thoughts</h2><p>This project demonstrates that high-performance vector search doesn&rsquo;t require expensive GPU
+infrastructure or complex distributed systems. By carefully choosing embedding providers with
+reasonable terms, optimizing dimensions intelligently, and leveraging CPU-based SIMD operations,
+you can build production-ready semantic search that scales to hundreds of thousands of
+documents while maintaining sub-millisecond response times.</p><p>The key insights are threefold: first, always read the fine print on API terms before processing
+sensitive data; second, dimension reduction can provide dramatic performance gains with
+acceptable quality trade-offs for many use cases; and third, modern CPU-based vector search
+libraries like USearch can deliver exceptional performance without the complexity and cost of GPU deployments.</p><p>Whether you&rsquo;re building legal document search, medical record retrieval, or any domain-specific
+semantic search system, these techniques provide a practical path to production deployment that
+balances speed, accuracy, and infrastructure costs.</p><p><em>#VECTORSEARCH #LEGALTECHNOLOGY #EMBEDDINGS #ISAACUS #USEARCH #SEMANTICSEARCH #RAG
+#PERFORMANCEOPTIMIZATION #MACHINELEARNING #AI</em></p></section><footer class=article-footer><section class=article-tags><a href=/blog/tags/vector-search/>Vector-Search</a>
+<a href=/blog/tags/embeddings/>Embeddings</a>
+<a href=/blog/tags/legal-technology/>Legal-Technology</a>
+<a href=/blog/tags/semantic-search/>Semantic-Search</a>
+<a href=/blog/tags/usearch/>Usearch</a>
+<a href=/blog/tags/isaacus/>Isaacus</a>
+<a href=/blog/tags/performance-optimization/>Performance-Optimization</a>
+<a href=/blog/tags/rag/>RAG</a>
+<a href=/blog/tags/simd/>Simd</a>
+<a href=/blog/tags/hnsw/>Hnsw</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>NA</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/blog/p/sentence-transformers-is-joining-hugging-face/><div class=article-image><img src=/blog/NA loading=lazy data-key data-hash=/blog/NA></div><div class=article-details><h2 class=article-title>Sentence Transformers is joining Hugging Face!</h2></div></a></article><article class=has-image><a href=/blog/p/australian-made-llm-beats-openai-and-google-at-legal-retrieval/><div class=article-image><img src=https://cdn-uploads.huggingface.co/production/uploads/6497ffbf2a997a45e987e139/W-d5QjuF-f9CYUctuHleg.png loading=lazy data-key data-hash=https://cdn-uploads.huggingface.co/production/uploads/6497ffbf2a997a45e987e139/W-d5QjuF-f9CYUctuHleg.png></div><div class=article-details><h2 class=article-title>Australian-made LLM beats OpenAI and Google at legal retrieval</h2></div></a></article><article class=has-image><a href=/blog/p/qwen3-reranker-8b-revolutionizing-text-ranking-with-multilingual-superpowers/><div class=article-image><img src=https://cdn-thumbnails.huggingface.co/social-thumbnails/models/Qwen/Qwen3-Reranker-8B.png loading=lazy data-key data-hash=https://cdn-thumbnails.huggingface.co/social-thumbnails/models/Qwen/Qwen3-Reranker-8B.png></div><div class=article-details><h2 class=article-title>🚀 Qwen3-Reranker-8B: Revolutionizing Text Ranking with Multilingual Superpowers</h2></div></a></article><article class=has-image><a href=/blog/p/how-financial-news-can-be-used-to-train-good-financial-models/><div class=article-image><img src=https://cdn-uploads.huggingface.co/production/uploads/683ef46c2695302d716db7b9/9lvyh3l9PU2samPrQHScp.png loading=lazy data-key data-hash=https://cdn-uploads.huggingface.co/production/uploads/683ef46c2695302d716db7b9/9lvyh3l9PU2samPrQHScp.png></div><div class=article-details><h2 class=article-title>How Financial News Can Be Used to Train Good Financial Models</h2></div></a></article><article class=has-image><a href=/blog/p/embedding-native-cognition-revolutionizing-ai-through-geometric-understanding/><div class=article-image><img src=https://cdn-uploads.huggingface.co/production/uploads/68c267e3cbb58baebd5fe0e0/m83Qgu2544rB77J0fY0R_.png loading=lazy data-key data-hash=https://cdn-uploads.huggingface.co/production/uploads/68c267e3cbb58baebd5fe0e0/m83Qgu2544rB77J0fY0R_.png></div><div class=article-details><h2 class=article-title>Embedding-Native Cognition: Revolutionizing AI Through Geometric Understanding</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Tech Insights: AI & Cloud</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/blog/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,0 +1,2105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud Computing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/cloud-computing/</link><description>Recent content in Cloud Computing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 02:05:12 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/cloud-computing/index.xml" rel="self" type="application/rss+xml"/><item><title>Building Enterprise Patching and Inventory Dashboards Using Amazon QuickSight</title><link>https://shoubhikbanerjee.github.io/blog/p/building-enterprise-patching-and-inventory-dashboards-using-amazon-quicksight/</link><pubDate>Tue, 28 Oct 2025 02:05:12 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/building-enterprise-patching-and-inventory-dashboards-using-amazon-quicksight/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/10/22/qs_Architecture.jpg" alt="Featured image of post Building Enterprise Patching and Inventory Dashboards Using Amazon QuickSight" /&gt;&lt;h1 id="-building-enterprise-patching-and-inventory-dashboards-using-amazon-quicksight"&gt;🚀 Building Enterprise Patching and Inventory Dashboards Using Amazon QuickSight
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/10/22/qs_Architecture.jpg"
+loading="lazy"
+alt="Architecture diagram"
+&gt;
+&lt;em&gt;Architecture diagram for the enterprise patching and inventory dashboard solution&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;In today&amp;rsquo;s fast-paced IT environment, monitoring and visualizing patching compliance across your
+infrastructure is crucial. This comprehensive guide explores how &lt;strong&gt;Amazon QuickSight&lt;/strong&gt;
+transforms the traditional manual dashboard creation process through AI-powered natural language
+interactions, enabling you to quickly generate insightful patching compliance and inventory visualizations.&lt;/p&gt;
+&lt;h2 id="-solution-overview"&gt;💡 Solution Overview
+&lt;/h2&gt;&lt;p&gt;The solution leverages several AWS services to automate the creation of Amazon QuickSight
+datasets and utilize natural language queries to visualize data. This innovative approach
+reduces what was once a multi-step manual process into a few simple prompts, saving valuable
+time while maintaining accuracy and providing real-time insights into your organization&amp;rsquo;s patching status.&lt;/p&gt;
+&lt;h3 id="-architecture-component"&gt;🏗️ Architecture Component
+&lt;/h3&gt;&lt;p&gt;The solution operates through the following key components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS Systems Manager (SSM)&lt;/strong&gt; - Executes custom scripts to gather inventory information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon S3&lt;/strong&gt; - Central storage for inventory and patching data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Glue&lt;/strong&gt; - Data cataloging and crawling services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Athena&lt;/strong&gt; - Query engine for data analysis&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon QuickSight&lt;/strong&gt; - AI-powered visualization and dashboard creation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS CloudFormation&lt;/strong&gt; - Infrastructure-as-code deployment&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-key-features"&gt;⚙️ Key Features
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Infrastructure Insights Collected:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cloud provider information (AWS, on-premises VMware, etc.)&lt;/li&gt;
+&lt;li&gt;Total and free disk space with status monitoring&lt;/li&gt;
+&lt;li&gt;Disk space percentage and critical alerts&lt;/li&gt;
+&lt;li&gt;EC2-specific metadata including hypervisor types, instance types, and driver versions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Automated Scheduling:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Systems Manager Association: Custom inventory collection every 7 days&lt;/li&gt;
+&lt;li&gt;AWS Glue Crawler: Data synchronization every 12 hours&lt;/li&gt;
+&lt;li&gt;Both intervals are customizable based on organizational requirements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-prerequisites"&gt;📋 Prerequisites
+&lt;/h2&gt;&lt;p&gt;Before implementing this solution, ensure you have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅ Systems Manager Managed nodes (EC2 instances or hybrid nodes)&lt;/li&gt;
+&lt;li&gt;✅ Systems Manager Inventory enabled on target accounts&lt;/li&gt;
+&lt;li&gt;✅ Systems Manager patch scan/install operations configured&lt;/li&gt;
+&lt;li&gt;✅ Amazon QuickSight user account with &lt;strong&gt;Admin Pro&lt;/strong&gt; or &lt;strong&gt;Author Pro&lt;/strong&gt; privileges&lt;/li&gt;
+&lt;li&gt;✅ CloudFormation StackSets permissions&lt;/li&gt;
+&lt;li&gt;✅ AWS Organization ID (if using Organizations)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-implementation-walkthrough"&gt;🔧 Implementation Walkthrough
+&lt;/h2&gt;&lt;h3 id="step-1-deploy-the-cloudformation-stack"&gt;Step 1: Deploy the CloudFormation Stack
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Download the CloudFormation template&lt;/strong&gt; from the GitHub repository 2. &lt;strong&gt;Configure deployment parameters:&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter Category&lt;/th&gt;
+&lt;th&gt;Key Parameters&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;SSM Configuration&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;S3 Bucket Name&lt;/td&gt;
+&lt;td&gt;Central bucket for resource data sync&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Target Type&lt;/td&gt;
+&lt;td&gt;ALL instances, TAG-based, or specific targeting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Tag Key/Value&lt;/td&gt;
+&lt;td&gt;For tag-based instance targeting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;AWS Accounts&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Organization ID&lt;/td&gt;
+&lt;td&gt;Root ID (r-xxx) or OU ID (ou-xxx)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Account IDs&lt;/td&gt;
+&lt;td&gt;Specific accounts (leave empty for all)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Regions&lt;/td&gt;
+&lt;td&gt;Target AWS regions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Amazon Services&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Athena Database&lt;/td&gt;
+&lt;td&gt;Database name for resource data sync&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;QuickSight User&lt;/td&gt;
+&lt;td&gt;QuickSight username for permissions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="step-2-configure-quicksight-permissions"&gt;Step 2: Configure QuickSight Permissions
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Navigate to Amazon QuickSight console&lt;/strong&gt; 2. &lt;strong&gt;Set user role to Admin Pro:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Choose user icon → Manage QuickSight - Select Manage users → Assign Admin Pro role&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Configure AWS resource access:&lt;/strong&gt; - Under Permissions → AWS resources&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Enable Amazon Athena and Amazon S3 access - Select the S3 bucket created by CloudFormation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="step-3-initialize-data-collection"&gt;Step 3: Initialize Data Collection
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Wait for SSM Inventory Association&lt;/strong&gt; to complete (runs every 30 minutes) 2. &lt;strong&gt;Manually trigger AWS Glue Crawler:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Navigate to AWS Glue Crawlers console - Select crawler starting with &amp;ldquo;SSM-GlueCrawler-*&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Choose &lt;strong&gt;Run&lt;/strong&gt; to execute&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-creating-visuals-with-amazon-quicksight-ai"&gt;📊 Creating Visuals with Amazon QuickSight AI
+&lt;/h2&gt;&lt;h3 id="operations-dashboard-visuals"&gt;Operations Dashboard Visuals
+&lt;/h3&gt;&lt;p&gt;The following prompts demonstrate how to create comprehensive operational visualizations:&lt;/p&gt;
+&lt;h4 id="-managed-nodes-by-provider"&gt;🌐 Managed Nodes by Provider
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a pie chart for count of resourceid by provider&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="-system-status-overview"&gt;📊 System Status Overview
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a donut chart for count of resourceid by instancestatus&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="-operating-system-distribution"&gt;💻 Operating System Distribution
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a donut chart for count of resourceid by platformname&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="-disk-space-monitoring"&gt;💾 Disk Space Monitoring
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a visual for count of resourceid by diskspacestatus&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/10/22/qs_operations-1.png"
+loading="lazy"
+alt="Operations Dashboard"
+&gt;
+&lt;em&gt;Comprehensive operations dashboard showing system health metrics&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="aws-ec2-specific-analytics"&gt;AWS EC2-Specific Analytics
+&lt;/h3&gt;&lt;p&gt;For detailed EC2 insights, use these specialized prompts:&lt;/p&gt;
+&lt;h4 id="-aws-driver-versions"&gt;⚡ AWS Driver Versions
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a visual for count of resourceid by application version and application name equals AWS PV Drivers&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="-network-driver-analysis"&gt;🔌 Network Driver Analysis
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a visual for count of resourceid by enaversion&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="-license-type-distribution"&gt;💳 License Type Distribution
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a pie chart for count of resourceid by licensetype&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/10/21/qs_aws_dashboard.png"
+loading="lazy"
+alt="AWS Dashboard"
+&gt;
+&lt;em&gt;AWS EC2 metrics dashboard with detailed component analysis&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-compliance-monitorin"&gt;🛡️ Compliance Monitorin
+&lt;/h3&gt;&lt;p&gt;The compliance sheet focuses on patch and association compliance:&lt;/p&gt;
+&lt;h4 id="patch-compliance-overview"&gt;Patch Compliance Overview
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;create a pie chart for count of resourceid by compliance status for compliancetype equals Patch&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="critical-missing-patches"&gt;Critical Missing Patches
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;create a pivot table with provider, accountid, region, platformname, resourceid, patch title
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;for compliancetype equals Patch and compliance status equal NON_COMPLIANT and patch status equal Missing&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/10/06/Inventory_compliance_patches.png"
+loading="lazy"
+alt="Compliance Dashboard"
+&gt;
+&lt;em&gt;Detailed compliance dashboard showing patch status across infrastructure&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-interactive-querying"&gt;🎯 Interactive Querying
+&lt;/h2&gt;&lt;p&gt;Amazon QuickSight enables real-time questioning of your data through natural language:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example queries:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;List of resourceid by diskspacestatus equal Critical&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;Show me all non-compliant Windows servers&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;Display patch compliance by AWS region&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-cleanup-process"&gt;🧹 Cleanup Process
+&lt;/h2&gt;&lt;p&gt;To remove all resources:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;CloudFormation Stack:&lt;/strong&gt; - Navigate to AWS CloudFormation console&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Select stack named &lt;em&gt;ssm-inventory-patching-dashboard&lt;/em&gt; - Choose &lt;strong&gt;Delete&lt;/strong&gt; → &lt;strong&gt;Delete stack&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;QuickSight Resources:&lt;/strong&gt; - Delete Dashboard, Analyses, and Datasets manually&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://aws.amazon.com/blogs/mt/building-enterprise-patching-and-inventory-dashboards-using-amazon-q-in-amazon-quicksuite/" target="_blank" rel="noopener"
+&gt;https://aws.amazon.com/blogs/mt/building-enterprise-patching-and-inventory-dashboards-using-amazon-q-in-amazon-quicksuite/&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;This solution demonstrates how Amazon QuickSight&amp;rsquo;s AI capabilities transform infrastructure
+monitoring from a complex, time-intensive process into an intuitive, natural language-driven
+experience. By combining AWS Systems Manager&amp;rsquo;s comprehensive data collection with QuickSight&amp;rsquo;s
+intelligent visualization engine, organizations can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Accelerate dashboard creation&lt;/strong&gt; from hours to minutes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Improve compliance visibility&lt;/strong&gt; across hybrid environments&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enable self-service analytics&lt;/strong&gt; for non-technical stakeholders&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Maintain real-time insights&lt;/strong&gt; into infrastructure health&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The integration of multiple AWS services creates a robust, scalable solution that grows with
+your organization&amp;rsquo;s needs while simplifying the complexity of enterprise infrastructure monitoring.&lt;/p&gt;
+&lt;p&gt;Transform your infrastructure monitoring today by implementing this AI-powered visualization
+solution and experience the future of intelligent operational dashboards.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AWS #CLOUD #SYSTEMSMANAGER #QUICKSIGHT #PATCHING #COMPLIANCE #DASHBOARD #AI #AUTOMATION
+#INFRASTRUCTURE&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Why AI for Good Depends on Good Data</title><link>https://shoubhikbanerjee.github.io/blog/p/why-ai-for-good-depends-on-good-data/</link><pubDate>Tue, 28 Oct 2025 01:59:33 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/why-ai-for-good-depends-on-good-data/</guid><description>&lt;img src="https://assets.amazon.science/dims4/default/440e243/2147483647/strip/true/crop/1348x1500+652+0/resize/1200x1335!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Fe0%2Fee%2F6d1d42764bbfafc894b5ae1b5684%2Fmedium-18-05-w-vogels1771-general.jpg" alt="Featured image of post Why AI for Good Depends on Good Data" /&gt;&lt;h1 id="-why-ai-for-good-depends-on-good-data"&gt;🤖 Why AI for Good Depends on Good Data
+&lt;/h1&gt;&lt;p&gt;![Dr. Werner Vogels](&lt;a class="link" href="https://assets.amazon.science/dims4/default/440e243/2147483647/strip/true/crop/1348x1500" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/440e243/2147483647/strip/true/crop/1348x1500&lt;/a&gt;
++652+0/resize/1200x1335!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%
+2Fscience%2Fe0%2Fee%2F6d1d42764bbfafc894b5ae1b5684%2Fmedium-18-05-w-vogels1771-general.jpg)
+&lt;em&gt;Dr. Werner Vogels is the chief technology officer and vice president of Amazon.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-overview"&gt;📝 Overview
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;This is a condensed version of a talk that Amazon vice president and chief technology officer
+Dr. Werner Vogels gave at the AI for Good Global Summit in July 2025 in Geneva.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;New technologies are helping vulnerable communities produce maps that integrate topographical,
+infrastructural, seasonal, and real-time data — an essential tool for many humanitarian endeavors.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-data-divide"&gt;🔍 The Data Divide
+&lt;/h2&gt;&lt;p&gt;In January 2007, computer scientist Jim Gray, a Turing Award laureate often described as the
+father of modern database systems, disappeared while sailing solo to the Farallon Islands off
+San Francisco. Despite deploying every technological resource imaginable, from repositioning
+government satellites to mobilizing thousands of recruits through Amazon&amp;rsquo;s Mechanical Turk to
+analyze satellite images, we never found him. If we had today&amp;rsquo;s AI resources, would the result
+have been different? Maybe. There are things that we can do now that we definitely could not do
+in 2007.&lt;/p&gt;
+&lt;p&gt;While Jim&amp;rsquo;s friends were able to use their private-sector relationships and government
+clearances to access real-time satellite data, most vulnerable communities remain invisible in
+our digital representations of Earth. The Haiti earthquake of 2010 made this painfully clear.
+International rescue teams arrived in Port-au-Prince to find a city that was, for all practical
+purposes, unmapped. Emergency responders had GPS coordinates but couldn&amp;rsquo;t navigate because the
+maps they had couldn&amp;rsquo;t distinguish between alleys and major roadways or locate critical
+infrastructure like hospitals and shelters.&lt;/p&gt;
+&lt;h2 id="-the-invisible-communities"&gt;🌍 The Invisible Communities
+&lt;/h2&gt;&lt;p&gt;The situation in Haiti isn&amp;rsquo;t unique. Consider Makoko, a community in Lagos, Nigeria, that is
+home to more than 300,000 people living on stilt houses in the Lagos Lagoon. On most maps, this
+entire community appears as a blank blue spot. These people are effectively invisible, unable to
+access basic services because they don&amp;rsquo;t exist in our spatial data models.&lt;/p&gt;
+&lt;p&gt;The reason for this omission is simple: most maps are created for commercial purposes, not
+humanitarian needs. We meticulously map shopping districts in major cities but leave vast swaths
+of the developing world uncharted. This creates what I call the &lt;strong&gt;&amp;ldquo;data divide&amp;rdquo;&lt;/strong&gt;, a disparity
+in data access that mirrors and exacerbates existing social inequalities.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-multi-layered-mapping-system"&gt;🗺️ Multi-Layered Mapping System
+&lt;/h2&gt;&lt;p&gt;Effective maps are multilayered systems operating across different timescales:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Layer&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;th&gt;Update Frequency&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Earth Layer&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Slow-changing geographical features (mountains, rivers)&lt;/td&gt;
+&lt;td&gt;Decades/centuries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Infrastructure Layer&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Roads, bridges, buildings&lt;/td&gt;
+&lt;td&gt;Years&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Seasonal Layer&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Vegetation, water levels, environmental factors&lt;/td&gt;
+&lt;td&gt;Seasonal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Real-time Layer&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Human activity, weather patterns, emergencies&lt;/td&gt;
+&lt;td&gt;Constant&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;![Unmapped Communities](&lt;a class="link" href="https://assets.amazon.science/dims4/default/78d29c9/2147483647/strip/true/crop/1920" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/78d29c9/2147483647/strip/true/crop/1920&lt;/a&gt;
+x1080+0+0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.co
+m%2Fscience%2Fed%2F74%2F9bc440354f21bc5551ab2fcc647d%2Funmapped-amzsci-hero-dark-a.jpg)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-democratizing-earth-data"&gt;📡 Democratizing Earth Data
+&lt;/h2&gt;&lt;p&gt;The good news is that the tools for data collection have become much more accessible. The number
+of Earth observation satellites has exploded from about 150 in 2008 to over &lt;strong&gt;10,000&lt;/strong&gt; today.
+These satellites offer not just high-resolution imagery but advanced sensors like multispectral
+imagers, radar, and lidar.&lt;/p&gt;
+&lt;h3 id="-community-driven-mapping"&gt;🚁 Community-Driven Mapping
+&lt;/h3&gt;&lt;p&gt;In the aftermath of the Haiti earthquake, roughly 600 members of the OpenStreetMap community
+were able to create the first reliable crisis map within &lt;strong&gt;48 hours&lt;/strong&gt;. It only took two days to
+go from unmapped to mapped. This crowdsourced map became the default navigation tool for every
+major responding organization, from the UN to the US Marine Corps.&lt;/p&gt;
+&lt;p&gt;The Mapping Makoko project trained local residents to pilot drones and map their community. This
+initiative did more than create a map; it empowered residents with a tool for political
+advocacy, demonstrating the power of democratized data collection.&lt;/p&gt;
+&lt;p&gt;![Aerial footage of Mokoko](&lt;a class="link" href="https://assets.amazon.science/dims4/default/2e8e07c/2147483647/strip/true/crop/1430x748&amp;#43;0&amp;#43;0/resize/1200x628!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/2e8e07c/2147483647/strip/true/crop/1430x748+0+0/resize/1200x628!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s&lt;/a&gt;
+3.amazonaws.com%2Fscience%2Ffa%2F88%2F40d4abb9491aa52fdb00c437adee%2Fpicture3.jpg)
+&lt;em&gt;Aerial footage of Mokoko captured by a drone piloted by a local resident.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-building-with-open-data"&gt;🏥 Building with Open Data
+&lt;/h2&gt;&lt;p&gt;During a recent visit to Rwanda, I saw firsthand how data-driven mapping can transform
+healthcare delivery. The Rwanda Health Intelligence Center uses real-time data to track
+healthcare utilization across the country. By combining this with geospatial data, they&amp;rsquo;ve
+calculated the maximum walking distance for pregnant women to reach a health center.&lt;/p&gt;
+&lt;p&gt;![Rwanda Health Intelligence
+Center](&lt;a class="link" href="https://assets.amazon.science/dims4/default/1c6c53b/2147483647/strip/true/crop/2048x1365&amp;#43;0&amp;#43;0/resize/1200x800!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fs" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/1c6c53b/2147483647/strip/true/crop/2048x1365+0+0/resize/1200x800!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fs&lt;/a&gt;
+cience%2F32%2F8b%2F23831d1344539f5549fc0422fb51%2F54428974370-437d97403c-k.jpg)
+&lt;em&gt;Image of the Rwanda Health Intelligence Center.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Another inspiring example is the &lt;a class="link" href="https://theoceancleanup.com/" target="_blank" rel="noopener"
+&gt;Ocean Cleanup&lt;/a&gt; project, which
+aims to remove 90% of ocean plastic by 2040. They&amp;rsquo;ve developed a river model using drones, AI
+analysis, and GPS-tagged dummy plastics to predict plastic-flow patterns.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-planetary-problem-solving-machine"&gt;🌐 Planetary Problem-Solving Machine
+&lt;/h2&gt;&lt;p&gt;The combination of open data, advanced AI models, and cloud infrastructure creates what I call a
+&lt;strong&gt;planetary problem-solving machine&lt;/strong&gt;. This trio can tackle challenges that were previously intractable:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Open data&lt;/strong&gt; ensures transparency and verifiability&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI&lt;/strong&gt; extracts insights that would be impossible for humans to discern&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cloud infrastructure&lt;/strong&gt; provides the scale needed to process petabytes of data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When we have data that could save lives or protect the environment, keeping it private is
+morally indefensible. The &lt;a class="link" href="https://sdgs.un.org/goals" target="_blank" rel="noopener"
+&gt;United Nations&amp;rsquo; 17 Sustainable Development
+Goals&lt;/a&gt; all depend on geospatial data.&lt;/p&gt;
+&lt;h3 id="-the-now-go-build-cto-fellowship"&gt;💡 The Now Go Build CTO Fellowship
+&lt;/h3&gt;&lt;p&gt;In 2024, I launched the &lt;a class="link" href="https://www.amazon.com/now-go-build" target="_blank" rel="noopener"
+&gt;Now Go Build CTO Fellowship&lt;/a&gt;,bringing together technology leaders from non-profits and social good organizations working to
+address:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🌱 Climate change&lt;/li&gt;
+&lt;li&gt;🚨 Disaster management&lt;/li&gt;
+&lt;li&gt;🏥 Healthcare accessibility&lt;/li&gt;
+&lt;li&gt;🍽️ Food securit&lt;/li&gt;
+&lt;li&gt;📚 Education&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These Fellows are using data to solve the world&amp;rsquo;s hardest problems, whether measuring crop
+yields, connecting surplus food with charities and families, or piloting drones in conflict
+areas — none of which is possible without maps.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://www.amazon.science/blog/why-ai-for-good-depends-on-good-data" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/why-ai-for-good-depends-on-good-data&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;Maps have always been more than navigation tools: they&amp;rsquo;re instruments of power. In the digital
+age, they&amp;rsquo;re becoming tools of justice, healthcare, and environmental protection. By making the
+invisible visible, we can create a more equitable world.&lt;/p&gt;
+&lt;p&gt;The question for all of us is: &lt;strong&gt;What data do we have that could be useful to others?&lt;/strong&gt; And more
+importantly, &lt;strong&gt;what data can we open up?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If we don&amp;rsquo;t act, we risk perpetuating a world where the most vulnerable remain invisible, where
+disasters are compounded by lack of information, and where progress is measured only in places that are profitable.&lt;/p&gt;
+&lt;p&gt;Now go build. 🚀&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AI #MACHINELEARNING #OPENDATA #HUMANITARIAN #MAPPING #SUSTAINABILITY #GEOSPATIAL
+#CLOUDCOMPUTING #SOCIALIMPACT&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Builds First Foundation Model for Multirobot Coordination</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-builds-first-foundation-model-for-multirobot-coordination/</link><pubDate>Tue, 28 Oct 2025 01:26:59 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-builds-first-foundation-model-for-multirobot-coordination/</guid><description>&lt;img src="https://assets.amazon.science/dims4/default/9fabab1/2147483647/strip/true/crop/1430x403+0+0/resize/1200x338!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F43%2F47%2F5d418d2c4c018052aafae4b4319b%2Fpicture4.png" alt="Featured image of post Amazon Builds First Foundation Model for Multirobot Coordination" /&gt;&lt;h1 id="-amazon-builds-first-foundation-model-for-multirobot-coordination"&gt;🤖 Amazon Builds First Foundation Model for Multirobot Coordination
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://assets.amazon.science/dims4/default/9fabab1/2147483647/strip/true/crop/1430x403&amp;#43;0&amp;#43;0/resize/1200x338!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F43%2F47%2F5d418d2c4c018052aafae4b4319b%2Fpicture4.png"
+loading="lazy"
+alt="Robots laden with storage pods at a fulfillment center and with packages at a sortation
+center"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Robots laden with storage pods at a fulfillment center (left) and with packages at a sortation
+center (right)&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-introduction"&gt;🚀 Introduction
+&lt;/h2&gt;&lt;p&gt;Large language models and other foundation models have introduced a revolutionary paradigm in
+AI: massive models trained in a self-supervised fashion on enormous volumes of data can learn
+general competencies that enable them to perform diverse tasks. While this approach has achieved
+remarkable success in language, image, and video generation, Amazon is pioneering its
+application in an entirely new domain—managing fleets of mobile robots.&lt;/p&gt;
+&lt;p&gt;In June 2025, Amazon announced the development of &lt;strong&gt;DeepFleet&lt;/strong&gt;, a groundbreaking foundation
+model designed to predict the interactions of mobile robots on the floors of Amazon fulfillment
+centers (FCs) and sortation centers. This innovative approach is already delivering impressive
+results, increasing the efficiency of robot deployments by &lt;strong&gt;10%&lt;/strong&gt;, enabling faster package
+delivery to customers at lower costs.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-why-foundation-models-for-robot-coordination"&gt;🧩 Why Foundation Models for Robot Coordination?
+&lt;/h2&gt;&lt;h3 id="the-challenge-of-traditional-simulation"&gt;The Challenge of Traditional Simulation
+&lt;/h3&gt;&lt;p&gt;A common question arises: why develop a foundation model to predict robot locations when we
+already know the exact algorithms robots are running? Couldn&amp;rsquo;t we simply simulate their
+interactions? There are two critical obstacles to this traditional approach:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;⚡ Computational Intensity&lt;/strong&gt;: Accurately simulating the interactions of thousands of robots
+faster than real-time is prohibitively resource-intensive. Amazon&amp;rsquo;s existing fleet already
+utilizes all available computation time for optimization.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;🎯 Pretraining Philosophy&lt;/strong&gt;: Predicting robot locations serves as a pretraining task that
+teaches AI to understand traffic flow patterns. Just as pretraining on next-word prediction
+enabled chatbots to answer diverse questions, pretraining on location prediction can enable AI
+to generate general solutions for mobile-robot fleets.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="amazons-competitive-advantages"&gt;Amazon&amp;rsquo;s Competitive Advantages
+&lt;/h3&gt;&lt;p&gt;Amazon possesses unique advantages for developing these foundation models:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;📊 Massive Dataset&lt;/strong&gt;: With over one million robots deployed across FCs and sortation
+centers, Amazon has access to billions of hours of robot navigation data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;☁️ Cloud Computing Power&lt;/strong&gt;: As the largest provider of cloud computing resources, Amazon has
+the computational capacity to train and deploy large-scale models&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;📈 Scaling Benefits&lt;/strong&gt;: Research confirms that robot fleet foundation models continue
+improving as training data volume increases—similar to other foundation models&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-four-deepfleet-model-architectures"&gt;🔧 The Four DeepFleet Model Architectures
+&lt;/h2&gt;&lt;p&gt;Amazon experimented with four distinct models that approach robot coordination differently. All
+models share a common foundation: modeling FC and sortation center floors as grids where cells
+can contain robots (laden or unladen with fixed orientations), obstacles, storage/drop-off
+locations, or serve as travel lanes.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/dims4/default/94e76b7/2147483647/strip/true/crop/1430x956&amp;#43;0&amp;#43;0/resize/1200x802!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Fb5%2F81%2Fd9caac7a4c3782f72c3c31b58443%2Fpicture1.png"
+loading="lazy"
+alt="Sample models of a fulfillment center (top) and a sortation center
+(bottom)"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Sample models of a fulfillment center (top) and a sortation center (bottom)&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="1--the-robot-centric-model"&gt;1. 🎯 The Robot-Centric Model
+&lt;/h3&gt;&lt;p&gt;The robot-centric model focuses on individual robots—the &amp;ldquo;ego robot&amp;rdquo;—and builds representations
+of their immediate environments.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Produces embeddings of ego robot states (position, direction, destination, load status)&lt;/li&gt;
+&lt;li&gt;Incorporates data from 30 nearest robots, 100 nearest grid cells, and 100 nearest objects&lt;/li&gt;
+&lt;li&gt;Uses Transformer architecture to combine embeddings into sequences&lt;/li&gt;
+&lt;li&gt;Predicts next actions for each robot in parallel&lt;/li&gt;
+&lt;li&gt;Updates floor state by sequentially applying predicted actions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/dims4/default/70f935b/2147483647/strip/true/crop/1430x495&amp;#43;0&amp;#43;0/resize/1200x415!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F80%2Fa2%2F3e97fdad4f1199aa6c0491a4179c%2Fpicture2.png"
+loading="lazy"
+alt="Architecture of the robot-centric
+model"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Architecture of the robot-centric model&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="2--the-robot-floor-model"&gt;2. 🏢 The Robot-Floor Model
+&lt;/h3&gt;&lt;p&gt;This model uses separate encoders for robot states and fixed floor cell features, employing
+sophisticated attention mechanisms.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Separate embeddings for robot states and floor cell features&lt;/li&gt;
+&lt;li&gt;Cross-attention between robot embeddings and floor state&lt;/li&gt;
+&lt;li&gt;Cross-attention between updated robot embeddings for robot-robot relationships&lt;/li&gt;
+&lt;li&gt;Captures both robot-robot and robot-floor interactions&lt;/li&gt;
+&lt;li&gt;Uses final embeddings to predict each robot&amp;rsquo;s next action&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/dims4/default/8b1c791/2147483647/strip/true/crop/1430x369&amp;#43;0&amp;#43;0/resize/1200x310!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F3d%2F6e%2Fbe236a324315a824bf7be0c85d9e%2Fthe-architecture-of-the-robot-floor-model.png"
+loading="lazy"
+alt="The architecture of the robot-floor
+model"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The architecture of the robot-floor model&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="3--the-image-floor-mode"&gt;3. 🖼️ The Image-Floor Mode
+&lt;/h3&gt;&lt;p&gt;This approach treats floor grids as images, using convolutional neural networks for processing.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Floor grid cells serve as &amp;ldquo;pixels&amp;rdquo; with separate channels for different features&lt;/li&gt;
+&lt;li&gt;Static features (fixed objects) and dynamic features (robot locations/states)&lt;/li&gt;
+&lt;li&gt;Convolutional filters process different cell features through separate channels&lt;/li&gt;
+&lt;li&gt;Transformer attention mechanism handles temporal and spatial features simultaneously&lt;/li&gt;
+&lt;li&gt;Convolutional decoder converts output back to 2-D floor representation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4--the-graph-floor-mode"&gt;4. 🕸️ The Graph-Floor Mode
+&lt;/h3&gt;&lt;p&gt;This model represents the floor as a graph structure, capturing spatial relationships between cells.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Floor cells as nodes, available movements as edges&lt;/li&gt;
+&lt;li&gt;Spatiotemporal graph with temporal edges connecting nodes across time steps&lt;/li&gt;
+&lt;li&gt;Transformer iteratively encodes the graph as node and edge embeddings&lt;/li&gt;
+&lt;li&gt;Attention mechanism uses edge embeddings for distance-aware computations&lt;/li&gt;
+&lt;li&gt;Captures long-range effects through graph structure&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/dims4/default/d2601f9/2147483647/strip/true/crop/1430x488&amp;#43;0&amp;#43;0/resize/1200x410!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Fa1%2F64%2F9fdf76e548bf91ae7419ba99be6c%2Fpicture3.png"
+loading="lazy"
+alt="The architecture of the graph-floor
+model"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The architecture of the graph-floor model&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-performance-evaluation-and-results"&gt;📊 Performance Evaluation and Results
+&lt;/h2&gt;&lt;h3 id="evaluation-metrics"&gt;Evaluation Metrics
+&lt;/h3&gt;&lt;p&gt;Amazon used two primary metrics to assess model performance:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Dynamic-Time-Warping (DTW) Distance&lt;/strong&gt;: Measures prediction accuracy across multiple
+dimensions including robot position, speed, state, and timing of load/unload events&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Congestion Delay Error (CDE)&lt;/strong&gt;: Calculates relative error between delay predictions and ground truth&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="model-performance-comparison"&gt;Model Performance Comparison
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Parameter Count&lt;/th&gt;
+&lt;th&gt;Performance Highlights&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Robot-Centric&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;97 million&lt;/td&gt;
+&lt;td&gt;🏆 Best overall performance (CDE and DTW position/state)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Robot-Floor&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;840 million&lt;/td&gt;
+&lt;td&gt;🏆 Top DTW timing estimation scores&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Graph-Floor&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;13 million&lt;/td&gt;
+&lt;td&gt;💡 Strong results with significantly fewer parameters&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Image-Floor&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;N/A&lt;/td&gt;
+&lt;td&gt;❌ Poor performance (design mismatch with pixel-level predictions)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="key-findings"&gt;Key Findings
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🚀 Robot-centric model&lt;/strong&gt; achieved the best overall performance across most metrics&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;⏱️ Robot-floor model&lt;/strong&gt; excelled at timing predictions despite higher parameter count&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;💪 Graph-floor model&lt;/strong&gt; delivered impressive efficiency with 85% fewer parameters than
+robot-centric&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;❌ Image-floor model&lt;/strong&gt; struggled due to fundamental architectural mismatch&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;📈 Scaling experiments&lt;/strong&gt; confirmed performance improvements with increased training data
+volume&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-future-applications-and-development"&gt;🔮 Future Applications and Development
+&lt;/h2&gt;&lt;p&gt;Based on these promising results, Amazon continues developing the three successful models
+(robot-centric, robot-floor, and graph-floor) with expanding applications:&lt;/p&gt;
+&lt;h3 id="immediate-applications"&gt;Immediate Applications
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🚦 Congestion prediction&lt;/strong&gt; and traffic flow optimization&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;📋 Task assignment&lt;/strong&gt; optimization for robot fleets&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🗺️ Intelligent routing&lt;/strong&gt; around potential bottleneck&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="long-term-goals"&gt;Long-term Goals
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🎯 Dynamic task allocation&lt;/strong&gt; to specific robots&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;📍 Optimal target location&lt;/strong&gt; assignment&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🔄 Real-time fleet optimization&lt;/strong&gt; across multiple facilities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://www.amazon.science/blog/amazon-builds-first-foundation-model-for-multirobot-coordination" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/amazon-builds-first-foundation-model-for-multirobot-coordination&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;✅ Conclusion
+&lt;/h2&gt;&lt;p&gt;Amazon&amp;rsquo;s DeepFleet represents a groundbreaking application of foundation model principles to
+robotics and fleet management. By leveraging massive datasets from over one million deployed
+robots and Amazon&amp;rsquo;s cloud computing infrastructure, the company has created the first foundation
+model specifically designed for multirobot coordination.&lt;/p&gt;
+&lt;p&gt;The success of this initiative—achieving 10% efficiency improvements in robot
+deployments—demonstrates the transformative potential of applying foundation model paradigms
+beyond traditional domains like language and vision. As Amazon continues refining these models,
+we can expect even greater optimizations in logistics, delivery speeds, and operational costs.&lt;/p&gt;
+&lt;p&gt;This innovation positions Amazon at the forefront of intelligent robotics and showcases how
+foundation models can revolutionize industrial applications, ultimately benefiting millions of
+customers through faster, more efficient package delivery.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AMAZON #ROBOTICS #FOUNDATIONMODELS #MACHINELEARNING #AI #LOGISTICS #DEEPFLEET #AUTOMATION
+#MULTIROBOT #COORDINATION&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Demystifying AI Agents: Understanding the Core Components of Agentic Systems</title><link>https://shoubhikbanerjee.github.io/blog/p/demystifying-ai-agents-understanding-the-core-components-of-agentic-systems/</link><pubDate>Tue, 28 Oct 2025 01:20:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/demystifying-ai-agents-understanding-the-core-components-of-agentic-systems/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Demystifying AI Agents: Understanding the Core Components of Agentic Systems" /&gt;&lt;h1 id="-demystifying-ai-agents-understanding-the-core-components-of-agentic-systems"&gt;🤖 Demystifying AI Agents: Understanding the Core Components of Agentic Systems
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;Amazon vice president and distinguished engineer Marc Brooker explains how agentic systems work
+under the hood — and how AWS&amp;rsquo;s new AgentCore framework implements their essential components.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/video-placeholder"
+loading="lazy"
+alt="Amazon Science Video"
+&gt;
+&lt;em&gt;Amazon vice president and distinguished engineer Marc Brooker on Amazon Bedrock AgentCore.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-rise-of-agentic-ai"&gt;🚀 The Rise of Agentic AI
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;&lt;a class="link" href="https://www.amazon.science/blog/agents" target="_blank" rel="noopener"
+&gt;Agents&lt;/a&gt;&lt;/strong&gt; are the trendiest topic in AI today, and
+with good reason. AI agents act on their users&amp;rsquo; behalf, autonomously doing things like making
+online purchases, building software, researching business trends, or booking travel. By taking
+generative AI out of the sandbox of the chat interface and allowing it to act directly on the
+world, agentic AI represents a leap forward in the power and utility of AI.&lt;/p&gt;
+&lt;p&gt;Agentic AI has been moving really fast: for example, one of the core building blocks of today&amp;rsquo;s
+agents, the &lt;strong&gt;model context protocol (MCP)&lt;/strong&gt;, is only a year old! As in any fast-moving field,
+there are many competing definitions, hot takes, and misleading opinions.&lt;/p&gt;
+&lt;p&gt;To cut through the noise, I&amp;rsquo;d like to describe the core components of an agentic AI system and
+how they fit together. Hopefully, when you&amp;rsquo;ve finished reading this post, agents won&amp;rsquo;t seem as
+mysterious. You&amp;rsquo;ll also understand why we made the choices we did in designing Amazon Web
+Services&amp;rsquo; &lt;strong&gt;Bedrock AgentCore&lt;/strong&gt;, a set of services and tools that lets customers quickly and
+easily design and build their own agentic AI systems.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-agentic-ecosystem"&gt;⚙️ The Agentic Ecosystem
+&lt;/h2&gt;&lt;p&gt;Definitions of the word &amp;ldquo;agent&amp;rdquo; abound, but I like a slight variation on the British programmer
+Simon Willison&amp;rsquo;s minimalist take:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;An agent runs models and tools in a loop to achieve a goal.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The user prompts an AI model (typically a large language model, or LLM) with the goal to be
+attained — say, booking a table at a restaurant near the theater where a movie is playing. Along
+with the goal, the model receives a list of the tools available to it, such as a database of
+restaurant locations or a record of the user&amp;rsquo;s food preferences. The model then plans how to
+achieve the goal and takes a first step by calling one of the tools. The tool provides a
+response, and based on that, the model calls a new tool. Through repetitions of this process,
+the agent ratchets toward accomplishment of the goal.&lt;/p&gt;
+&lt;h3 id="-core-components-of-an-agentic-system"&gt;🧩 Core Components of an Agentic System
+&lt;/h3&gt;&lt;p&gt;An agentic system needs a few core components:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A way to build the agent&lt;/strong&gt; - When you deploy an agent, you don&amp;rsquo;t want to have to code it
+from scratch. There are several agent development frameworks out there, but I&amp;rsquo;m partial to
+Amazon Web Services&amp;rsquo; own &lt;a class="link" href="https://github.com/awslabs/strands" target="_blank" rel="noopener"
+&gt;Strands Agents&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Somewhere to run the AI model&lt;/strong&gt; - A seasoned AI developer can download an open-weight LLM,
+but it takes expertise to do that right. It also takes expensive hardware that&amp;rsquo;s going to be
+poorly utilized for the average user.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Somewhere to run the agentic code&lt;/strong&gt; - With frameworks like Strands, the user creates code
+for an agent object with a defined set of functions. Most of those functions involve sending
+prompts to an AI model, but the code needs to run somewhere.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A mechanism for translating between the text-based LLM and tool calls&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A short-term memory&lt;/strong&gt; for tracking the content of agentic interactions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A long-term memory&lt;/strong&gt; for tracking the user&amp;rsquo;s preferences and affinities across sessions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A way to trace&lt;/strong&gt; the system&amp;rsquo;s execution, to evaluate the agent&amp;rsquo;s performance&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="-building-an-agent-the-react-model"&gt;🔧 Building an Agent: The ReAct Model
+&lt;/h2&gt;&lt;p&gt;It&amp;rsquo;s well known that asking an LLM to explain how it plans to approach a task improves its
+performance on that task. Such &amp;ldquo;chain-of-thought reasoning&amp;rdquo; is now ubiquitous in AI.&lt;/p&gt;
+&lt;p&gt;The analogue in agentic systems is the &lt;strong&gt;ReAct (reasoning + action) model&lt;/strong&gt;, in which the agent has:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;thought&lt;/strong&gt; (&amp;ldquo;I&amp;rsquo;ll use the map function to locate nearby restaurants&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;Performs an &lt;strong&gt;action&lt;/strong&gt; (issuing an API call to the map function)&lt;/li&gt;
+&lt;li&gt;Makes an &lt;strong&gt;observation&lt;/strong&gt; (&amp;ldquo;There are two pizza places and one Indian restaurant within two
+blocks of the movie theater&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![Agent Development Process](&lt;a class="link" href="https://assets.amazon.science/dims4/default/5f29cf3/2147483647/strip/true/crop/1080x1080&amp;#43;0&amp;#43;0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspo" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/5f29cf3/2147483647/strip/true/crop/1080x1080+0+0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspo&lt;/a&gt;
+t.s3.amazonaws.com%2Fscience%2F85%2F0b%2F3cd7bc80466c8ed52f56cd2cc5a8%2Fagent-development.gif)
+&lt;em&gt;AgentCore lets the developer use any agent development framework and any model.&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-tool-integration-and-code-generation"&gt;💡 Tool Integration and Code Generation
+&lt;/h3&gt;&lt;p&gt;The &lt;em&gt;tools&lt;/em&gt; available to the agent can include local tools and remote tools such as databases,
+microservices, and software as a service. A tool&amp;rsquo;s specification includes a natural-language
+explanation of how and when it&amp;rsquo;s used and the syntax of its API calls.&lt;/p&gt;
+&lt;p&gt;The developer can also tell the agent to build its own tools on the fly. For example, if a tool
+retrieves a table stored as comma-separated text and the agent needs to sort it, rather than
+waste resources sending it through an LLM repeatedly, the developer can instruct the agent to
+generate Python code for such repetitive tasks.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-runtime-architecture-firecracker-microvms"&gt;☁️ Runtime Architecture: Firecracker MicroVMs
+&lt;/h2&gt;&lt;p&gt;Historically, there were two main ways to isolate code running on shared servers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Containerization&lt;/strong&gt;: Efficient but offered lower security&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Virtual machines (VMs)&lt;/strong&gt;: Secure but came with computational overhead&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In 2018, Amazon Web Services&amp;rsquo; Lambda serverless-computing service deployed
+&lt;strong&gt;&lt;a class="link" href="https://firecracker-microvm.github.io/" target="_blank" rel="noopener"
+&gt;Firecracker&lt;/a&gt;&lt;/strong&gt;, a new paradigm offering the best of
+both worlds. Firecracker creates &amp;ldquo;microVMs&amp;rdquo; with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Complete hardware isolation&lt;/li&gt;
+&lt;li&gt;Their own Linux kernels&lt;/li&gt;
+&lt;li&gt;Reduced overhead (as low as a few megabytes)&lt;/li&gt;
+&lt;li&gt;Fast startup times (as low as a few milliseconds)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![AWS AgentCore Architecture](&lt;a class="link" href="https://assets.amazon.science/dims4/default/d90c4d6/2147483647/strip/true/crop/1080x1080&amp;#43;0&amp;#43;0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightsp" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/d90c4d6/2147483647/strip/true/crop/1080x1080+0+0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightsp&lt;/a&gt;
+ot.s3.amazonaws.com%2Fscience%2Fb4%2Fa5%2Ff5f50ee842a48ef1e9ea9c58e962%2Fadobe-express-agentcore
+-asw-scalable-10-16-toedit-11-45.gif)&lt;/p&gt;
+&lt;p&gt;AgentCore uses &lt;strong&gt;session-based isolation&lt;/strong&gt;, where every session with an agent is assigned its
+own Firecracker microVM. When the session finishes, the LLM&amp;rsquo;s state information is copied to
+long-term memory, and the microVM is destroyed.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-tool-calls-and-communication-protocols"&gt;🔗 Tool Calls and Communication Protocols
+&lt;/h2&gt;&lt;p&gt;![AgentCore Gateway](&lt;a class="link" href="https://assets.amazon.science/dims4/default/1df0f0b/2147483647/strip/true/crop/1038x584&amp;#43;0&amp;#43;0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazo" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/1df0f0b/2147483647/strip/true/crop/1038x584+0+0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazo&lt;/a&gt;
+naws.com%2Fscience%2Fe7%2F5e%2F7b3efa2447c2a1e24c2c15e0ed1e%2Fgateway.png)
+&lt;em&gt;AgentCore Gateway manages the tool calls issued by the agent.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Just as there are several existing development frameworks for agent creation, there are several
+existing standards for communication between agents and tools, the most popular of which is
+&lt;strong&gt;MCP (Model Context Protocol)&lt;/strong&gt;. MCP establishes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Standard format for passing data between the LLM and its server&lt;/li&gt;
+&lt;li&gt;A way for servers to describe available tools and data to the agent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In AgentCore, tool calls are handled by the &lt;strong&gt;AgentCore Gateway&lt;/strong&gt; service, which:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses MCP by default&lt;/li&gt;
+&lt;li&gt;Is configurable and supports a growing set of protocols&lt;/li&gt;
+&lt;li&gt;Manages translation between LLM output and tool input specifications&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-computer-use-capabilitie"&gt;🖥️ Computer Use Capabilitie
+&lt;/h3&gt;&lt;p&gt;Sometimes, the necessary tool lacks a public API. In such cases, the only way to retrieve data
+is by pointing and clicking on a website. &lt;strong&gt;Computer use&lt;/strong&gt; services like Amazon&amp;rsquo;s &lt;strong&gt;Nova Act&lt;/strong&gt;
+can be used with AgentCore&amp;rsquo;s secure Browser tool, making any website a potential tool for agents.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-memory-systems"&gt;🧠 Memory Systems
+&lt;/h2&gt;&lt;h3 id="short-term-memory"&gt;Short-term Memory
+&lt;/h3&gt;&lt;p&gt;LLMs are next-word prediction engines, with predictions based on long sequences of words they&amp;rsquo;ve
+seen, known as &lt;em&gt;context&lt;/em&gt;. However, agents need additional memory systems beyond just context.&lt;/p&gt;
+&lt;p&gt;For example, if an agent retrieves information about dozens of restaurants, it doesn&amp;rsquo;t want to
+dump all that data into the LLM&amp;rsquo;s context. Instead, it stores the complete list in &lt;strong&gt;short-term
+memory&lt;/strong&gt; and retrieves specific records based on user preferences and proximity.&lt;/p&gt;
+&lt;h3 id="long-term-memory"&gt;Long-term Memory
+&lt;/h3&gt;&lt;p&gt;Agents must remember prior interactions with clients. If a user previously specified food
+preferences, price tolerance, or ambiance preferences, the agent shouldn&amp;rsquo;t need to ask again.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Long-term memory&lt;/strong&gt; features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Storage of user preferences across sessions&lt;/li&gt;
+&lt;li&gt;LLM summarization and &amp;ldquo;chunking&amp;rdquo; of documents&lt;/li&gt;
+&lt;li&gt;Topic-based grouping for easier retrieval&lt;/li&gt;
+&lt;li&gt;Configurable strategies for summarization and information extraction&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-observability-and-monitoring"&gt;📊 Observability and Monitoring
+&lt;/h2&gt;&lt;p&gt;![AgentCore Observability](&lt;a class="link" href="https://assets.amazon.science/dims4/default/5ef3a72/2147483647/strip/true/crop/1023x615&amp;#43;0&amp;#43;0/resize/1200x721!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/5ef3a72/2147483647/strip/true/crop/1023x615+0+0/resize/1200x721!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3&lt;/a&gt;
+.amazonaws.com%2Fscience%2Fb7%2F8a%2F887ef82f4e0cbfa8a702eb7bac73%2Ftraces.png)
+&lt;em&gt;AgentCore Observability lets the customer track an agent&amp;rsquo;s execution.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Agents are a new kind of software system requiring new approaches to observation, monitoring,
+and auditing. Key questions include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Are agents running fast enough?&lt;/li&gt;
+&lt;li&gt;How much are they costing?&lt;/li&gt;
+&lt;li&gt;How many tool calls are they making?&lt;/li&gt;
+&lt;li&gt;Are users satisfied with the results?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In &lt;strong&gt;AgentCore Observability&lt;/strong&gt;, &lt;em&gt;traces&lt;/em&gt; provide an end-to-end view of session execution,
+breaking down step-by-step which actions were taken and why. These traces are essential for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Understanding agent performance&lt;/li&gt;
+&lt;li&gt;Providing data to improve agent effectiveness&lt;/li&gt;
+&lt;li&gt;Debugging and optimization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://www.amazon.science/blog/demystifying-agents" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/demystifying-agents&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;This explanation has demystified agentic AI by breaking down its core components: agent building
+frameworks, runtime infrastructure, tool communication protocols, memory systems, and
+observability tools. AWS&amp;rsquo;s &lt;strong&gt;AgentCore&lt;/strong&gt; provides a comprehensive platform implementing all
+these essential components, from &lt;strong&gt;Strands Agents&lt;/strong&gt; for development to &lt;strong&gt;Firecracker microVMs&lt;/strong&gt;
+for secure runtime isolation.&lt;/p&gt;
+&lt;p&gt;The future of AI lies in agents that can act autonomously on behalf of users, and understanding
+these fundamental building blocks is crucial for anyone looking to build or deploy agentic
+systems. Whether you&amp;rsquo;re booking restaurants, building software, or researching business trends,
+agents represent the next evolution of AI from passive chat interfaces to active, goal-oriented systems.&lt;/p&gt;
+&lt;p&gt;Ready to build your own agents? All the tools you need are available at the &lt;a class="link" href="https://aws.amazon.com/bedrock/agentcore/" target="_blank" rel="noopener"
+&gt;AgentCore
+website&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AWS #AI #AGENTS #BEDROCK #AGENTCORE #FIRECRACKER #CLOUDCOMPUTING #MACHINELEARNING #LLM
+#AGENTIC&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Google Cloud C4 Delivers 70% TCO Improvement with GPT OSS on Intel Xeon 6</title><link>https://shoubhikbanerjee.github.io/blog/p/google-cloud-c4-delivers-70-tco-improvement-with-gpt-oss-on-intel-xeon-6/</link><pubDate>Tue, 28 Oct 2025 01:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/google-cloud-c4-delivers-70-tco-improvement-with-gpt-oss-on-intel-xeon-6/</guid><description>&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/gpt_oss_expert.png" alt="Featured image of post Google Cloud C4 Delivers 70% TCO Improvement with GPT OSS on Intel Xeon 6" /&gt;&lt;h1 id="-google-cloud-c4-delivers-70-tco-improvement-with-gpt-oss-on-intel-xeon-6"&gt;🚀 Google Cloud C4 Delivers 70% TCO Improvement with GPT OSS on Intel Xeon 6
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/gpt_oss_expert.png"
+loading="lazy"
+alt="GPT OSS Expert Architecture"
+&gt;
+&lt;em&gt;Optimized expert execution in GPT OSS MoE architecture eliminates redundant computations&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Intel and Hugging Face collaborated to demonstrate the real-world value of upgrading to Google&amp;rsquo;s
+latest &lt;strong&gt;C4&lt;/strong&gt; Virtual Machine (VM) running on Intel® Xeon® 6 processors (codenamed Granite
+Rapids). The benchmark focused on text generation performance improvements with OpenAI&amp;rsquo;s GPT OSS
+Large Language Model (LLM).&lt;/p&gt;
+&lt;p&gt;The results showcase impressive gains with a &lt;strong&gt;1.7x improvement&lt;/strong&gt; in Total Cost of Ownership
+(TCO) over previous-generation Google &lt;strong&gt;C3&lt;/strong&gt; VM instances, delivering:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;1.4x to 1.7x&lt;/strong&gt; TPOT throughput/vCPU/dollar improvement&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lower hourly pricing&lt;/strong&gt; compared to C3 VMs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-introduction"&gt;🧩 Introduction
+&lt;/h2&gt;&lt;p&gt;GPT OSS represents an open-source Mixture of Experts (MoE) model from OpenAI. MoE architecture
+utilizes specialized &amp;ldquo;expert&amp;rdquo; sub-networks with a &amp;ldquo;gating network&amp;rdquo; that determines which experts
+process specific inputs. This design enables efficient model capacity scaling without linear
+compute cost increases, allowing different experts to develop specialized skills for diverse data distributions.&lt;/p&gt;
+&lt;p&gt;The architecture&amp;rsquo;s efficiency makes CPU inference viable even with large parameter counts, as
+only small expert subsets activate per token.&lt;/p&gt;
+&lt;p&gt;Intel and Hugging Face collaborated on expert execution optimization (PR #40304), eliminating
+redundant computations where every expert previously processed all tokens. The optimization
+directs each expert to process only routed tokens, removing FLOP waste and improving utilization.&lt;/p&gt;
+&lt;h2 id="-benchmark-scope--hardware"&gt;⚙️ Benchmark Scope &amp;amp; Hardware
+&lt;/h2&gt;&lt;p&gt;The benchmark evaluated GPT OSS under controlled, repeatable generation workloads to isolate
+architectural differences between GCP &lt;strong&gt;C4&lt;/strong&gt; VMs (Intel Xeon 6 processors) and GCP &lt;strong&gt;C3&lt;/strong&gt; VMs
+(4th Gen Intel Xeon Processors). Focus areas included steady-state decoding latency and
+end-to-end normalized throughput with increasing batch sizes while maintaining fixed sequence lengths.&lt;/p&gt;
+&lt;h3 id="-configuration-summary"&gt;📋 Configuration Summary
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model&lt;/strong&gt;: unsloth/gpt-oss-120b-BF16&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Precision&lt;/strong&gt;: bfloat16&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Task&lt;/strong&gt;: Text generation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Input length&lt;/strong&gt;: 1024 tokens (left-padded)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Output length&lt;/strong&gt;: 1024 tokens&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Batch sizes&lt;/strong&gt;: 1, 2, 4, 8, 16, 32, 64&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enabled features&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Static KV cache - SDPA attention backend&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metrics&lt;/strong&gt;: Throughput (total generated tokens per second across batch)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-hardware-under-tes"&gt;🖥️ Hardware Under Tes
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Instance&lt;/th&gt;
+&lt;th&gt;Architecture&lt;/th&gt;
+&lt;th&gt;vCPUs&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;C3&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;4th Gen Intel Xeon processor (SPR)&lt;/td&gt;
+&lt;td&gt;172&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;C4&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Intel Xeon 6 processor (GNR)&lt;/td&gt;
+&lt;td&gt;144&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-instance-creation"&gt;☁️ Instance Creation
+&lt;/h2&gt;&lt;h3 id="c3-configuration"&gt;C3 Configuration
+&lt;/h3&gt;&lt;p&gt;Visit &lt;strong&gt;Google Cloud Console&lt;/strong&gt; and create a VM under your project:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Select &lt;strong&gt;C3&lt;/strong&gt; in Machine configuration, specify &lt;strong&gt;c3-standard-176&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Set CPU platform and enable &lt;strong&gt;all-core turbo&lt;/strong&gt; for stable performance 3. Configure OS and storage as required&lt;/li&gt;
+&lt;li&gt;Maintain default configurations for other settings&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/spr.png"
+loading="lazy"
+alt="C3 Configuration"
+&gt;
+&lt;em&gt;C3 instance configuration with 176 vCPUs&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="c4-configuration"&gt;C4 Configuration
+&lt;/h3&gt;&lt;p&gt;Follow similar steps for &lt;strong&gt;C4&lt;/strong&gt; instance creation:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Select &lt;strong&gt;C4&lt;/strong&gt; in Machine configuration, specify &lt;strong&gt;c4-standard-144&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Configure CPU platform and enable all-core turbo 3. Apply same OS and storage configuration as C3&lt;/li&gt;
+&lt;li&gt;Create the 144 vCPU instance&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/gnr.png"
+loading="lazy"
+alt="C4 Configuration"
+&gt;
+&lt;em&gt;C4 instance configuration with 144 vCPUs&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-environment-setu"&gt;🛠️ Environment Setu
+&lt;/h2&gt;&lt;p&gt;SSH into the instance and install Docker. Follow these reproducible setup steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Clone repository&lt;/strong&gt;: &lt;code&gt;git clone https://github.com/huggingface/transformers.git&lt;/code&gt;2. &lt;strong&gt;Navigate and checkout&lt;/strong&gt;: &lt;code&gt;cd transformers/ &amp;amp;&amp;amp; git checkout 26b65fb5168f324277b85c558ef8209bfceae1fe&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Build Docker image&lt;/strong&gt;: &lt;code&gt;cd docker/transformers-intel-cpu/ &amp;amp;&amp;amp; sudo docker build . -t &amp;lt;your_docker_image_tag&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Run container&lt;/strong&gt;: &lt;code&gt;sudo docker run -it --rm --privileged -v /home/&amp;lt;your_home_folder&amp;gt;:/workspace &amp;lt;your_docker_image_tag&amp;gt; /bin/bash&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Inside the container:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Install transformers&lt;/strong&gt;: &lt;code&gt;pip install git+https://github.com/huggingface/transformers.git@26b65fb5168f324277b85c558ef8209bfceae1fe&lt;/code&gt;2. &lt;strong&gt;Install PyTorch&lt;/strong&gt;: &lt;code&gt;pip install torch==2.8.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-benchmark-procedure"&gt;📊 Benchmark Procedure
+&lt;/h2&gt;&lt;p&gt;For each batch size:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Build fixed-length 1024-token left-padded batch 2. Execute single warm-up round&lt;/li&gt;
+&lt;li&gt;Set &lt;code&gt;max_new_tokens=1024&lt;/code&gt; and measure total latency&lt;/li&gt;
+&lt;li&gt;Calculate: &lt;code&gt;throughput = (OUTPUT_TOKENS * batch_size) / total_latency&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Execute with: &lt;code&gt;numactl -l python benchmark.py&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;span class="lnt"&gt;24
+&lt;/span&gt;&lt;span class="lnt"&gt;25
+&lt;/span&gt;&lt;span class="lnt"&gt;26
+&lt;/span&gt;&lt;span class="lnt"&gt;27
+&lt;/span&gt;&lt;span class="lnt"&gt;28
+&lt;/span&gt;&lt;span class="lnt"&gt;29
+&lt;/span&gt;&lt;span class="lnt"&gt;30
+&lt;/span&gt;&lt;span class="lnt"&gt;31
+&lt;/span&gt;&lt;span class="lnt"&gt;32
+&lt;/span&gt;&lt;span class="lnt"&gt;33
+&lt;/span&gt;&lt;span class="lnt"&gt;34
+&lt;/span&gt;&lt;span class="lnt"&gt;35
+&lt;/span&gt;&lt;span class="lnt"&gt;36
+&lt;/span&gt;&lt;span class="lnt"&gt;37
+&lt;/span&gt;&lt;span class="lnt"&gt;38
+&lt;/span&gt;&lt;span class="lnt"&gt;39
+&lt;/span&gt;&lt;span class="lnt"&gt;40
+&lt;/span&gt;&lt;span class="lnt"&gt;41
+&lt;/span&gt;&lt;span class="lnt"&gt;42
+&lt;/span&gt;&lt;span class="lnt"&gt;43
+&lt;/span&gt;&lt;span class="lnt"&gt;44
+&lt;/span&gt;&lt;span class="lnt"&gt;45
+&lt;/span&gt;&lt;span class="lnt"&gt;46
+&lt;/span&gt;&lt;span class="lnt"&gt;47
+&lt;/span&gt;&lt;span class="lnt"&gt;48
+&lt;/span&gt;&lt;span class="lnt"&gt;49
+&lt;/span&gt;&lt;span class="lnt"&gt;50
+&lt;/span&gt;&lt;span class="lnt"&gt;51
+&lt;/span&gt;&lt;span class="lnt"&gt;52
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;torch&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;datasets&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;load_dataset&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;transformers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;AutoModelForCausalLM&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AutoTokenizer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;INPUT_TOKENS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt; &lt;span class="n"&gt;OUTPUT_TOKENS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_inputs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;dataset&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;load_dataset&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;ola13/small-the_pile&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;train&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;padding_side&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;left&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;selected_texts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;dataset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;input_ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;return_tensors&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;pt&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;input_ids&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;input_ids&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;INPUT_TOKENS&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;break&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;INPUT_TOKENS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;padding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;max_length&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;truncation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;return_tensors&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;pt&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;run_generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;generation_config&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# warm up&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;pre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;latency&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;benchmark&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;inputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_inputs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max_new_tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;min_new_tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;prefill_latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;run_generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max_new_tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OUTPUT_TOKENS&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;min_new_tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OUTPUT_TOKENS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;total_latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;run_generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;decoding_latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;total_latency&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;prefill_latency&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;OUTPUT_TOKENS&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;throughput&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OUTPUT_TOKENS&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;total_latency&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;prefill_latency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;decoding_latency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;throughput&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;unsloth/gpt-oss-120b-BF16&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoTokenizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model_kwargs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;dtype&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bfloat16&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoModelForCausalLM&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;model_kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_attn_implementation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;sdpa&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generation_config&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;do_sample&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache_implementation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;static&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;---------- Run generation with batch size = &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; ----------&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;prefill_latency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;decoding_latency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;throughput&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;benchmark&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;throughput = &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;throughput&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-results"&gt;📈 Results
+&lt;/h2&gt;&lt;h3 id="-normalized-throughput-per-vcpu"&gt;🎯 Normalized Throughput per vCPU
+&lt;/h3&gt;&lt;p&gt;Intel Xeon 6 processor-powered &lt;strong&gt;C4&lt;/strong&gt; consistently outperforms &lt;strong&gt;C3&lt;/strong&gt; with &lt;strong&gt;1.4x to 1.7×
+throughput per-vCPU&lt;/strong&gt; across batch sizes up to 64.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Formula&lt;/strong&gt;: &lt;code&gt;normalized_throughput_per_vCPU = (throughput_C4 / vCPUs_C4) / (throughput_C3 / vCPUs_C3)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/throughput-gpt-oss-per-vcpu.png"
+loading="lazy"
+alt="Throughput per vCPU"
+&gt;
+&lt;em&gt;C4 demonstrates consistent 1.4x-1.7x throughput advantage per vCPU across all batch sizes&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-cost--tco-analysis"&gt;💰 Cost &amp;amp; TCO Analysis
+&lt;/h3&gt;&lt;p&gt;At batch size 64, &lt;strong&gt;C4&lt;/strong&gt; delivers &lt;strong&gt;1.7× per-vCPU throughput&lt;/strong&gt; compared to &lt;strong&gt;C3&lt;/strong&gt;. With near
+price parity per vCPU, this yields a &lt;strong&gt;1.7× TCO advantage&lt;/strong&gt; - C3 would require 1.7× the spending
+for equivalent generated token volume.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;TCO Calculation&lt;/strong&gt;: &lt;code&gt;throughput_ratio = 1.7 ⇒ TCO_C3/TCO_C4 ≈ 1.7&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/throughput-gpt-oss-per-dollar.png"
+loading="lazy"
+alt="Throughput per Dollar"
+&gt;
+&lt;em&gt;Cost efficiency comparison shows C4&amp;rsquo;s superior performance per dollar invested&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/gpt-oss-on-intel-xeon" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/gpt-oss-on-intel-xeon&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Google Cloud &lt;strong&gt;C4&lt;/strong&gt; VMs powered by Intel Xeon 6 processors deliver impressive performance gains
+and superior cost efficiency for large MoE inference compared to previous-generation &lt;strong&gt;C3&lt;/strong&gt; VMs.
+The GPT OSS benchmarks demonstrate combined benefits of higher throughput, lower latency, and
+reduced operational costs.&lt;/p&gt;
+&lt;p&gt;These results highlight how targeted framework optimizations from Intel and Hugging Face enable
+efficient serving of large MoE models on next-generation general-purpose CPUs, making advanced
+AI capabilities more accessible and cost-effective for enterprises.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Takeaways&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;70% TCO improvement&lt;/strong&gt; with C4 over C3 instances&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;1.4x-1.7x performance gains&lt;/strong&gt; across different batch sizes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Framework optimizations&lt;/strong&gt; crucial for MoE model efficiency&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CPU inference viability&lt;/strong&gt; for large-scale AI workloads&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#GOOGLECLOUD #INTEL #CPU #AI #LLM #MOE #PERFORMANCE #TCO #HUGGINGFACE&lt;/em&gt;&lt;/p&gt;</description></item><item><title>A Decade of Database Innovation: The Amazon Aurora Story</title><link>https://shoubhikbanerjee.github.io/blog/p/a-decade-of-database-innovation-the-amazon-aurora-story/</link><pubDate>Tue, 28 Oct 2025 01:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/a-decade-of-database-innovation-the-amazon-aurora-story/</guid><description>&lt;img src="https://assets.amazon.science/dims4/default/16f2f5c/2147483647/strip/true/crop/2206x694+0+0/resize/1200x378!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Fee%2F98%2Fda80d68b4f2d853d23cacd76e592%2Fscreenshot-2025-08-20-at-12-10-55-pm.png" alt="Featured image of post A Decade of Database Innovation: The Amazon Aurora Story" /&gt;&lt;h1 id="-a-decade-of-database-innovation-the-amazon-aurora-story"&gt;🚀 A Decade of Database Innovation: The Amazon Aurora Story
+&lt;/h1&gt;&lt;p&gt;![Amazon Aurora Architecture](&lt;a class="link" href="https://assets.amazon.science/dims4/default/16f2f5c/2147483647/strip/true/crop/220" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/16f2f5c/2147483647/strip/true/crop/220&lt;/a&gt;
+6x694+0+0/resize/1200x378!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.co
+m%2Fscience%2Fee%2F98%2Fda80d68b4f2d853d23cacd76e592%2Fscreenshot-2025-08-20-at-12-10-55-pm.png)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Original screenshots of Aurora from Jeff Barr&amp;rsquo;s blog post&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-introduction-reimagining-databases-for-the-cloud-era"&gt;☁️ Introduction: Reimagining Databases for the Cloud Era
+&lt;/h2&gt;&lt;p&gt;When Andy Jassy announced Amazon Aurora in 2014, the promise was revolutionary yet practical: a
+relational database built specifically for the cloud that would combine MySQL&amp;rsquo;s
+cost-effectiveness with the performance of high-end commercial databases. The ambitious goal was
+&lt;strong&gt;five times the throughput of MySQL at one-tenth the price&lt;/strong&gt; of traditional commercial
+solutions.&lt;/p&gt;
+&lt;h2 id="-the-architecture-revolution-decoupling-storage-from-comput"&gt;🏗️ The Architecture Revolution: Decoupling Storage from Comput
+&lt;/h2&gt;&lt;p&gt;Aurora&amp;rsquo;s launch in 2015 marked a fundamental shift in database architecture. Unlike traditional
+databases where computation and storage are tightly coupled, Aurora &lt;strong&gt;decoupled these
+components&lt;/strong&gt;, enabling:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Independent scaling&lt;/strong&gt; of computational tasks and storage&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated backups and replication&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enhanced reliability&lt;/strong&gt; without performance sacrifice&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Easy adaptation&lt;/strong&gt; to variable workloads&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![Aurora Architecture
+Paper](&lt;a class="link" href="https://assets.amazon.science/dims4/default/0f3c103/2147483647/strip/true/crop/1402x1246&amp;#43;" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/0f3c103/2147483647/strip/true/crop/1402x1246+&lt;/a&gt;
+0+0/resize/1200x1066!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fs
+cience%2F68%2Fab%2F14d45f7840aea08c042889e0b38d%2Fscreenshot-2025-08-20-at-12-17-43-pm.png)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Amazon researchers describe Aurora&amp;rsquo;s innovative architecture in their 2017 SIGMOD paper&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-key-innovation-moving-beyond-network-constraints"&gt;💡 Key Innovation: Moving Beyond Network Constraints
+&lt;/h2&gt;&lt;p&gt;As Werner Vogels, Amazon&amp;rsquo;s CTO, explained in 2019:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;To start addressing the limitations of relational databases, we reconceptualized the stack by
+decomposing the system into its fundamental building blocks. We recognized that the caching and
+logging layers were ripe for innovation.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The team addressed the central constraint in high-throughput data processing: &lt;strong&gt;the network
+bottleneck&lt;/strong&gt;. Aurora&amp;rsquo;s novel service-oriented architecture provided:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Independent fault-tolerant storage&lt;/strong&gt; across multiple data centers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Self-healing capabilities&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Protection from performance variance&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Resilience against transient or permanent failures&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-unprecedented-growth-and-adoption"&gt;📈 Unprecedented Growth and Adoption
+&lt;/h2&gt;&lt;p&gt;Within just two years, Aurora became &lt;strong&gt;the fastest-growing service in AWS history&lt;/strong&gt;. The diverse
+customer base included:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Financial services companies&lt;/li&gt;
+&lt;li&gt;Gaming companies&lt;/li&gt;
+&lt;li&gt;Healthcare providers&lt;/li&gt;
+&lt;li&gt;Educational institutions&lt;/li&gt;
+&lt;li&gt;Startups of all sizes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-the-serverless-evolution"&gt;🔄 The Serverless Evolution
+&lt;/h2&gt;&lt;h3 id="aurora-serverless-2018"&gt;Aurora Serverless (2018)
+&lt;/h3&gt;&lt;p&gt;The introduction of Aurora Serverless marked another leap forward, providing:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;On-demand autoscaling configuration&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automatic capacity adjustment&lt;/strong&gt; based on workload&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pay-per-use pricing model&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Elimination of explicit capacity management&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![Aurora Serverless
+Paper](&lt;a class="link" href="https://assets.amazon.science/dims4/default/0fe5486/2147483647/strip/true/crop/1338x1242&amp;#43;" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/0fe5486/2147483647/strip/true/crop/1338x1242+&lt;/a&gt;
+0+0/resize/1200x1114!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fs
+cience%2Fc0%2F29%2Faa542fe14dee9fa07bb7d383f60e%2Fscreenshot-2025-08-20-at-12-21-00-pm.png)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The 2024 VLDB paper describes Aurora Serverless as a fully managed, autoscaling solution&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="complete-serverless-transformation-2025"&gt;Complete Serverless Transformation (2025)
+&lt;/h3&gt;&lt;p&gt;As of May 2025, &lt;strong&gt;all Aurora offerings are now serverless&lt;/strong&gt;, eliminating the need for customers
+to worry about:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Server type or size selection&lt;/li&gt;
+&lt;li&gt;Underlying hardware management&lt;/li&gt;
+&lt;li&gt;Operating system maintenance&lt;/li&gt;
+&lt;li&gt;Backup management&lt;/li&gt;
+&lt;li&gt;System patching&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-real-world-impact-arizona-state-university-case-study"&gt;🎓 Real-World Impact: Arizona State University Case Study
+&lt;/h2&gt;&lt;p&gt;John Rome, Deputy CIO at Arizona State University, exemplifies Aurora&amp;rsquo;s value proposition:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;We see Amazon Aurora Serverless as a next step in our cloud maturity to help us improve
+development agility while reducing costs on infrequently used systems.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ASU&amp;rsquo;s Challenge:&lt;/strong&gt; Managing data needs for 73,000+ students across multiple campuses with
+dramatic seasonal variations.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Aurora&amp;rsquo;s Solution:&lt;/strong&gt; Elastic scaling that allows ASU to pay only for resources used while
+maintaining performance during peak periods.&lt;/p&gt;
+&lt;h2 id="-measurable-business-value"&gt;📊 Measurable Business Value
+&lt;/h2&gt;&lt;p&gt;According to International Data Corporation (IDC) research, organizations using Aurora achieve:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;Improvement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;3-Year ROI&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;434%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Operational Cost Reduction&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;42%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Performance vs. MySQL&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;5x throughput&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Cost vs. Commercial DBs&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;90% reduction&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-future-innovations-on-the-horizon"&gt;🔮 Future Innovations on the Horizon
+&lt;/h2&gt;&lt;p&gt;The 2024 research paper outlined several exciting future directions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Predictive live migration techniques&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Statistical multiplexing for complementary resource needs&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advanced ML/RL-based workload prediction&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enhanced decision-making algorithms&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![AWS Team at re:Invent
+2024](&lt;a class="link" href="https://assets.amazon.science/dims4/default/f4d5553/2147483647/strip/true/crop/4032x3024&amp;#43;0" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/f4d5553/2147483647/strip/true/crop/4032x3024+0&lt;/a&gt;
++0/resize/1200x900!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fsci
+ence%2Ffe%2F63%2F7fb0eb7046ab97f2985054d545af%2Fswami-at-kiosk-aurora-10-year-tshirts.jpg)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Swami Sivasubramanian (center), VP of AWS Agentic AI, and the AWS databases team celebrating
+Aurora&amp;rsquo;s 10th anniversary at re:Invent 2024&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at:
+&lt;a class="link" href="https://www.amazon.science/blog/a-decade-of-database-innovation-the-amazon-aurora-story" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/a-decade-of-database-innovation-the-amazon-aurora-story&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;Aurora&amp;rsquo;s decade-long journey represents more than just technological evolution—it demonstrates
+how reimagining fundamental architectural constraints can create transformative solutions. From
+its initial promise of combining MySQL&amp;rsquo;s simplicity with enterprise-grade performance to its
+current fully serverless incarnation, Aurora has consistently pushed the boundaries of what&amp;rsquo;s
+possible in cloud-native database technology.&lt;/p&gt;
+&lt;p&gt;The transition from traditional coupled architectures to Aurora&amp;rsquo;s decoupled, service-oriented
+approach has not only delivered on its original performance and cost promises but has also
+enabled entirely new paradigms like serverless computing. As organizations continue their
+digital transformation journeys, Aurora&amp;rsquo;s evolution from a revolutionary idea to an
+industry-standard solution illustrates the power of customer-obsessed innovation in the cloud
+era.&lt;/p&gt;
+&lt;p&gt;Looking ahead, with advances in machine learning, predictive analytics, and automated resource
+management, Aurora is positioned to continue leading database innovation for the next decade and
+beyond.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AWS #AURORA #DATABASE #CLOUDCOMPUTING #SERVERLESS #MYSQL #POSTGRESQL #INNOVATION
+#MACHINELEARNING&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Nemotron's Open Secret: Accelerating AI Development with Open Models, Data, and Recipes</title><link>https://shoubhikbanerjee.github.io/blog/p/nemotrons-open-secret-accelerating-ai-development-with-open-models-data-and-recipes/</link><pubDate>Tue, 28 Oct 2025 01:03:26 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nemotrons-open-secret-accelerating-ai-development-with-open-models-data-and-recipes/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6311021788942700629e6247/dgIXaIexEM4yFWRzDHb_R.png" alt="Featured image of post Nemotron's Open Secret: Accelerating AI Development with Open Models, Data, and Recipes" /&gt;&lt;h1 id="-nemotrons-open-secret-accelerating-ai-development-with-open-models-data-and-recipes"&gt;🚀 Nemotron&amp;rsquo;s Open Secret: Accelerating AI Development with Open Models, Data, and Recipes
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;NVIDIA Nemotron isn&amp;rsquo;t just a family of models. It&amp;rsquo;s an open collection of models, datasets, and
+training recipes that anyone can use to build, customize, and deploy their own AI systems.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6311021788942700629e6247/dgIXaIexEM4yFWRzDHb_R.png"
+loading="lazy"
+alt="Nemotron Architecture"
+&gt;
+&lt;em&gt;Nemotron Nano V2 hybrid architecture combining Transformer and Mamba-2 layers for enhanced
+efficiency&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;From lightweight edge models to frontier-scale LLMs, Nemotron gives developers full visibility
+into how the models are trained, what data they use, and how to adapt them for new use cases. No black boxes.&lt;/p&gt;
+&lt;p&gt;NVIDIA also uses Nemotron internally to learn how to design the next generation of accelerated
+infrastructure, including GPUs, software, and networking, by experimenting in the open with the community.&lt;/p&gt;
+&lt;h2 id="-tldr"&gt;📋 TL;DR
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;What it is:&lt;/strong&gt; Nemotron is NVIDIA&amp;rsquo;s family of open models, datasets, recipes for training and
+deploying AI at any scale. Models come in three sizes: Nano, Super, and Ultra, covering
+everything from edge devices to data centers, including both text and multimodal variants.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Why it matters:&lt;/strong&gt; Because you can inspect the data, modify the models, and deploy them however
+you want.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key breakthroughs:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid Transformer + Mamba Architecture:&lt;/strong&gt; Nemotron Nano V2 fuses Transformers with Mamba-2
+state-space layers to deliver up to 20X faster inference and on-device reasoning without sacrificing accuracy&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Thinking budgets:&lt;/strong&gt; configurable reasoning depth to balance answer quality vs. cost in
+production&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FP4 pre-training:&lt;/strong&gt; 4-bit precision training on Blackwell GPUs, achieving world-class
+results at dramatically lower energy use&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data-centric optimization:&lt;/strong&gt; curated and synthetic datasets that cut pre-training time by up
+to 4× while improving model accuracy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;For developers:&lt;/strong&gt; Use Nemotron as your foundation for custom AI. From fine-tuning enterprise
+copilots to deploying agentic systems at the edge.&lt;/p&gt;
+&lt;p&gt;Run, adapt, and extend: everything you need including models and datasets, is open on huggingface.co/nvidia&lt;/p&gt;
+&lt;h3 id="-model-overview"&gt;🔧 Model Overview
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Parameters&lt;/th&gt;
+&lt;th&gt;Modality&lt;/th&gt;
+&lt;th&gt;Strengths&lt;/th&gt;
+&lt;th&gt;Ideal Use Cases&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NVIDIA-Nemotron-Nano-9B-v2&lt;/td&gt;
+&lt;td&gt;9B&lt;/td&gt;
+&lt;td&gt;Text&lt;/td&gt;
+&lt;td&gt;Hybrid Transformer–SSM architecture delivering 6–20×&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;faster inference with transformer-level accuracy. Optimized for speed and efficiency.&lt;/td&gt;
+&lt;td&gt;Edge and&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;near-edge AI agents, chatbots, and lightweight copilots.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Llama-3.1-Nemotron-Nano-VL-8B-V1&lt;/td&gt;
+&lt;td&gt;8B&lt;/td&gt;
+&lt;td&gt;Multimodal (Vision + Language)&lt;/td&gt;
+&lt;td&gt;Combines Nemotron&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;reasoning with Llama 3.1 vision-language capabilities for cross-modal understanding.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Multimodal document intelligence, OCR parsing, and AI assistants that &amp;ldquo;see and reason.&amp;rdquo;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Llama-3.3-Nemotron-Super-49B-v1.5&lt;/td&gt;
+&lt;td&gt;49B&lt;/td&gt;
+&lt;td&gt;Text&lt;/td&gt;
+&lt;td&gt;Balanced accuracy and performance for&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;enterprise-scale AI. Built with Nemotron datasets and reasoning recipes.&lt;/td&gt;
+&lt;td&gt;Enterprise copilots,&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RAG systems, workflow automation, and domain fine-tuning.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Llama-3.1-Nemotron-Ultra-253B-v1&lt;/td&gt;
+&lt;td&gt;253B&lt;/td&gt;
+&lt;td&gt;Text&lt;/td&gt;
+&lt;td&gt;Frontier-scale reasoning and alignment&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;optimized for research. Co-designed with NVIDIA&amp;rsquo;s full-stack hardware and data infrastructure.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Large-scale research, long-context reasoning, and infrastructure acceleration.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;License: Open model license and repo-specific terms are published per asset.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-why-nvidia-builds-nemotron"&gt;🎯 Why NVIDIA Builds Nemotron
+&lt;/h2&gt;&lt;p&gt;Nemotron advances a simple idea: &lt;strong&gt;openness accelerates progress&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;By releasing open weights, open datasets, and transparent training and alignment recipes,
+developers can reproduce, audit, and extend what NVIDIA builds, then tailor it to their data,
+compliance needs, and domain-specific use cases.&lt;/p&gt;
+&lt;p&gt;At the same time, Nemotron is part of NVIDIA&amp;rsquo;s strategy of &amp;ldquo;extreme co-design&amp;rdquo; that Jensen Huang
+discussed on the Bg2 Pod. This is where every layer of the stack, across chips, systems,
+software, algorithms, and data, is designed together as one unified system. Training and
+optimizing models in the open provides insights that shape NVIDIA&amp;rsquo;s hardware and software
+roadmap, from GPU architectures and networking to memory scheduling and kernel design.&lt;/p&gt;
+&lt;p&gt;That means every improvement discovered through Nemotron—faster reasoning, better convergence,
+lower energy—eventually flows back into the platform you use, whether you&amp;rsquo;re serving a small
+Nano model at the edge or scaling Ultra in the cloud.&lt;/p&gt;
+&lt;h2 id="-breakthroughs-in-efficiency-and-accuracy"&gt;⚡ Breakthroughs in Efficiency and Accuracy
+&lt;/h2&gt;&lt;p&gt;The latest Nemotron research brings together architectural innovation, precision advances, and
+intelligent reasoning controls—all designed to make models both smarter and faster.&lt;/p&gt;
+&lt;h3 id="-nemotron-nano-v2--hybrid-transformer--mamba-architecture"&gt;🧩 Nemotron Nano V2 — Hybrid Transformer + Mamba Architecture
+&lt;/h3&gt;&lt;p&gt;Nemotron Nano V2 introduces a hybrid Transformer–Mamba architecture that combines the long-range
+reasoning power of Transformers with the sequential efficiency of Mamba-2 state-space layers.
+Most attention layers are replaced with Mamba modules, which process sequences in linear time
+and constant memory per token, while a few key attention layers remain to preserve full-context reasoning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The result:&lt;/strong&gt; 6–20X higher inference throughput on the same hardware with minimal loss in
+accuracy across reasoning and generation benchmarks. This efficiency makes on-device and
+near-edge AI assistants practical for real-time decision-making and multimodal agents that need
+to think fast and act locally.&lt;/p&gt;
+&lt;h3 id="-fp4-pre-training--four-bit-precision-at-full-intelligence"&gt;🔬 FP4 Pre-Training — Four-Bit Precision at Full Intelligence
+&lt;/h3&gt;&lt;p&gt;Nemotron demonstrates energy-efficient FP4 training on Blackwell GPUs using NVIDIA&amp;rsquo;s Transformer
+Engine. This results in world-class accuracy at dramatically lower energy cost, proving that
+four-bit precision can train frontier-level models without sacrificing intelligence.&lt;/p&gt;
+&lt;p&gt;This breakthrough helps reduce the carbon footprint and infrastructure cost of large-scale AI development.&lt;/p&gt;
+&lt;h3 id="-thinking-budgets--reason-smarter-spend-less"&gt;💡 Thinking Budgets — Reason Smarter, Spend Less
+&lt;/h3&gt;&lt;p&gt;Reasoning quality often scales with how long a model &amp;ldquo;thinks.&amp;rdquo; Nemotron introduces
+&lt;strong&gt;configurable thinking budgets&lt;/strong&gt;, allowing developers and businesses to control reasoning
+depth, balancing answer quality and operational cost.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Shorter thinking&lt;/strong&gt; = faster, cheaper responses&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Longer thinking&lt;/strong&gt; = deeper reasoning and higher accuracy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now, you can tune reasoning the same way you tune batch size or context length.&lt;/p&gt;
+&lt;h2 id="-sizing-overview"&gt;📏 Sizing Overview
+&lt;/h2&gt;&lt;p&gt;Nemotron includes text and multimodal large language models across three weight classes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Nano&lt;/strong&gt; – small, fast, and edge-ready&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Super&lt;/strong&gt; – mid-range, balanced for enterprise tasks&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ultra&lt;/strong&gt; – frontier-scale for cutting-edge research&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All models are trained with shared open data recipes, offering reproducible baselines that anyone can extend.&lt;/p&gt;
+&lt;h2 id="-data-centric-efficiency"&gt;📊 Data-Centric Efficiency
+&lt;/h2&gt;&lt;p&gt;Smarter data, not just bigger data, drives Nemotron&amp;rsquo;s performance gains.&lt;/p&gt;
+&lt;p&gt;Refined pre-training datasets, curated and enhanced with synthetic data, accelerate convergence
+by up to 4X, producing more capable models on the same compute budget.&lt;/p&gt;
+&lt;p&gt;This &amp;ldquo;data flywheel&amp;rdquo; approach means developers can train faster, cheaper, and with higher
+accuracy, continuously improving performance through better data.&lt;/p&gt;
+&lt;h2 id="-open-datasets-for-ai-developmen"&gt;🗃️ Open Datasets for AI Developmen
+&lt;/h2&gt;&lt;p&gt;NVIDIA makes its pretraining and post-training datasets available on Hugging Face so developers
+can inspect the underlying data and use it to train their own models.&lt;/p&gt;
+&lt;p&gt;Nemotron datasets play a critical role in how efficiently models learn. Smarter data leads to
+smarter models with the same, or even less, compute. These datasets are optimized not just for
+size but for efficiency, diversity, and reasoning quality.&lt;/p&gt;
+&lt;h3 id="-available-datasets"&gt;📋 Available Datasets
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Dataset&lt;/th&gt;
+&lt;th&gt;Strengths&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Nemotron-Pretraining-Code-v1&lt;/td&gt;
+&lt;td&gt;Preserves high-value math and code while enriching it with&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;diverse multilingual Q&amp;amp;A, fueling the next generation of intelligent, globally-capable models.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nemotron-Post-Training-Dataset-v2&lt;/td&gt;
+&lt;td&gt;Post-training dataset with math, code, general reasoning,&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;and instruction following capabilities improvements.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Llama-Nemotron-VLM-Dataset-v1&lt;/td&gt;
+&lt;td&gt;High-quality annotations that support world class&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;vision-language understanding with permissive license for training.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nemotron-Personas-Datasets&lt;/td&gt;
+&lt;td&gt;Synthetically-generated personas grounded in real-world&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;demographic, geographic and personality trait distributions&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Projects like &lt;strong&gt;Nemotron-MIND&lt;/strong&gt; focus on structured math dialogue reasoning, while
+&lt;strong&gt;Nemotron-CrossThink&lt;/strong&gt; combines topics from science, math, and humanities to push reasoning
+beyond narrow domains.&lt;/p&gt;
+&lt;h2 id="-real-world-application"&gt;🛠️ Real-World Application
+&lt;/h2&gt;&lt;p&gt;Nemotron isn&amp;rsquo;t just a research effort—it&amp;rsquo;s the foundation behind practical, open-source
+workflows developers can deploy today:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;RAG Agent:&lt;/strong&gt; Use Nemotron with the NeMo framework to create retrieval-augmented generation
+(RAG) agents that pull from your private data and deliver context-aware answers in real time&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Computer Use Agent:&lt;/strong&gt; Build an agent that can autonomously execute multi-step tasks in the
+Bash shell, including navigating files, summarizing documents, and analyzing log files&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Report Generator AI Agent:&lt;/strong&gt; Learn how to build an agent that automatically compiles and
+summarizes reports using open Nemotron models, easily customizable for enterprise or research use&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI Coding Agent:&lt;/strong&gt; Build a powerful AI coding assistant directly on your workstation. Adjust
+the model&amp;rsquo;s thinking budget to balance reasoning depth, speed, and compute cost&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multimodal Document Intelligence:&lt;/strong&gt; Combine NVIDIA Llama Nemotron Nano VL with
+vision-language reasoning to parse, understand, and summarize complex documents containing text, charts, and images&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deep Researcher Blueprint:&lt;/strong&gt; Explore the AI-Q NVIDIA Blueprint, a reference design for
+building research-grade agentic workflows that plan, reason, and synthesize insights across multiple data sources&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With Nemotron, developers can start small, scale fast, and customize deeply, all while keeping
+data ownership, transparency, and control.&lt;/p&gt;
+&lt;h2 id="-transparency--openness"&gt;🔍 Transparency &amp;amp; Openness
+&lt;/h2&gt;&lt;p&gt;Nemotron commits to &lt;strong&gt;inspectable lineage&lt;/strong&gt; (models + data), &lt;strong&gt;shareable recipes&lt;/strong&gt;, and
+&lt;strong&gt;reproducible evaluation&lt;/strong&gt; so teams can audit, customize, and deploy safely. If your policies
+require changing the data mix, language balance, or alignment method, the artifacts and
+documentation are there so you can reproduce, and improve, our results.&lt;/p&gt;
+&lt;p&gt;We encourage forks, PRs, and benchmark reproductions. Bring your findings back—that&amp;rsquo;s how the
+whole community gets faster, safer, and smarter together.&lt;/p&gt;
+&lt;h2 id="-build-the-future-with-us"&gt;🤝 Build the Future With Us
+&lt;/h2&gt;&lt;p&gt;Every breakthrough in AI starts with collaboration. Nemotron, more than an NVIDIA project, is
+meant to be a platform for builders—from weekend hackers to enterprise developers.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re fine-tuning models, optimizing inference, or experimenting with different
+architectures, your insights directly shape how the next generation of AI applications and infrastructure will evolve.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;This is your invitation to:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Customize your model:&lt;/strong&gt; Fine-tune Nemotron with your own data using the NeMo framework&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Contribute back:&lt;/strong&gt; Fork models, improve datasets, or publish new recipes that make training
+faster and safer&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Experiment:&lt;/strong&gt; Use open weights to test new ideas in reasoning, alignment, or multimodal
+learning&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benchmark:&lt;/strong&gt; Share what works (and what doesn&amp;rsquo;t) so others can learn faster&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Influence our upcoming features:&lt;/strong&gt; Vote on what features we should prioritize for future
+versions of Nemotron&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Build together:&lt;/strong&gt; Join thousands of developers using open NVIDIA models to power everything
+from agentic AI to robotics and edge systems&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nemotron and NeMo are your building blocks for AI applications. Open, accelerated, and ready to customize.&lt;/p&gt;
+&lt;p&gt;Every pull request, dataset, or benchmark helps design the AI infrastructure of the future.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Let&amp;rsquo;s build it together.&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/nvidia/nemotron-open-models-data" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/nvidia/nemotron-open-models-data&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;NVIDIA&amp;rsquo;s Nemotron represents a paradigm shift in AI development—proving that openness and
+collaboration can accelerate innovation without compromising competitive advantage. By providing
+transparent access to models, datasets, and training recipes, Nemotron enables developers to
+build custom AI solutions while contributing to the broader advancement of artificial intelligence.&lt;/p&gt;
+&lt;p&gt;The breakthrough technologies showcased—from hybrid Transformer-Mamba architectures to FP4
+precision training and configurable thinking budgets—demonstrate that efficiency and
+intelligence aren&amp;rsquo;t mutually exclusive. As AI continues to evolve from research curiosity to
+production necessity, initiatives like Nemotron provide the foundation for sustainable,
+scalable, and customizable AI deployment across every industry and application.&lt;/p&gt;
+&lt;p&gt;The future of AI is open, collaborative, and built together.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#NVIDIA #AI #MACHINELEARNING #OPENAI #NEMOTRON #LLAMA #TRANSFORMERS #MAMBA #DEEPLEARNING
+#ARTIFICIALINTELLIGENCE #HUGGINGFACE #OPENSOURCE&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Three Challenges in Machine-Based Reasoning</title><link>https://shoubhikbanerjee.github.io/blog/p/three-challenges-in-machine-based-reasoning/</link><pubDate>Tue, 28 Oct 2025 00:48:05 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/three-challenges-in-machine-based-reasoning/</guid><description>&lt;img src="https://assets.amazon.science/dims4/default/de595be/2147483647/strip/true/crop/1200x675+0+0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Fc5%2Ff9%2Fb13bfa964b2e92b94b19ceccffd7%2Freasoningcheck-16x9.gif" alt="Featured image of post Three Challenges in Machine-Based Reasoning" /&gt;&lt;h1 id="-three-challenges-in-machine-based-reasoning"&gt;🧠 Three Challenges in Machine-Based Reasoning
+&lt;/h1&gt;&lt;p&gt;![Automated Reasoning Visual](&lt;a class="link" href="https://assets.amazon.science/dims4/default/de595be/2147483647/strip/true/crop/1200x675&amp;#43;0&amp;#43;0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/de595be/2147483647/strip/true/crop/1200x675+0+0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot&lt;/a&gt;
+.s3.amazonaws.com%2Fscience%2Fc5%2Ff9%2Fb13bfa964b2e92b94b19ceccffd7%2Freasoningcheck-16x9.gif)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Automated Reasoning checks use large language models to generate several possible translations
+of natural language into a formal language&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;The rise of generative AI has brought unprecedented excitement to the field of mechanized
+reasoning. After 30+ years in this space, concepts like logic, syntax, semantics, validity,
+soundness, and computational complexity are finally gaining mainstream attention. However, as we
+integrate correct reasoning into AI systems like chatbots, three fundamental challenges
+continue to pose significant obstacles.&lt;/p&gt;
+&lt;p&gt;Amazon Web Services&amp;rsquo; new Automated Reasoning checks capability in Bedrock Guardrails directly
+addresses these challenges, though the journey toward solving them will require years of
+continued innovation.&lt;/p&gt;
+&lt;h2 id="-challenge-1-translating-natural-to-structured-language"&gt;⚙️ Challenge #1: Translating Natural to Structured Language
+&lt;/h2&gt;&lt;p&gt;Human communication relies heavily on imprecise and ambiguous language. While we often infer
+meaning from context, misunderstandings frequently arise when precision matters most.&lt;/p&gt;
+&lt;h3 id="the-complexity-of-interpretation"&gt;The Complexity of Interpretation
+&lt;/h3&gt;&lt;p&gt;Consider this HR policy scenario: An employer defines benefit eligibility as &lt;em&gt;&amp;ldquo;having a contract
+of employment of 0.2 full-time equivalent (FTE) or greater.&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Now imagine an employee states: &lt;em&gt;&amp;ldquo;I spend 20% of my time at work, except when I took time off
+last year to help a family member recover from surgery.&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The challenge emerges&lt;/strong&gt;: Does this employee qualify for benefits? The statement has multiple
+reasonable interpretations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Does &amp;ldquo;20% of my time at work&amp;rdquo; refer to contractual working time?&lt;/li&gt;
+&lt;li&gt;How does the family leave impact the calculation?&lt;/li&gt;
+&lt;li&gt;What constitutes the baseline for the percentage?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="amazons-solution-approach"&gt;Amazon&amp;rsquo;s Solution Approach
+&lt;/h3&gt;&lt;p&gt;Automated Reasoning checks tackles this challenge through &lt;strong&gt;multi-translation methodology&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Multiple Translation Attempts&lt;/strong&gt;: Generate several interpretations of natural language
+queries using complementary approaches&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cross-Verification&lt;/strong&gt;: Apply the interview technique of asking for the same information in
+different ways&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Formal Logic Validation&lt;/strong&gt;: Use solvers to prove/disprove equivalence between different
+interpretations&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Clarification Requests&lt;/strong&gt;: When translations differ semantically, prompt for additional
+clarification&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;em&gt;Example clarification&lt;/em&gt;: &amp;ldquo;Can you confirm that you have a contract of employment for 20% of full
+time or greater?&amp;rdquo;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-challenge-2-defining-truth"&gt;🎯 Challenge #2: Defining Truth
+&lt;/h2&gt;&lt;p&gt;Establishing what constitutes &amp;ldquo;truth&amp;rdquo; in rule systems presents three distinct problems that
+consistently challenge even the most sophisticated reasoning systems.&lt;/p&gt;
+&lt;h3 id="the-contradiction-problem"&gt;The Contradiction Problem
+&lt;/h3&gt;&lt;p&gt;Complex rules often contain subtle contradictions that remain hidden until consensus is
+required. A striking example comes from the &lt;strong&gt;UK&amp;rsquo;s Copyrights, Designs, and Patents Act of 1988&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Contradiction&lt;/strong&gt;: Defines copyrightable works as stemming from &amp;ldquo;original intellectual
+creation&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Simultaneously&lt;/strong&gt;: Offers protection to works requiring &amp;ldquo;no creative human input&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Modern Impact&lt;/strong&gt;: This incoherence becomes particularly problematic in the age of
+AI-generated content&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="the-evolution-challenge"&gt;The Evolution Challenge
+&lt;/h3&gt;&lt;p&gt;Rule systems constantly change, requiring continuous maintenance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Example&lt;/strong&gt;: US federal government per-diem rates change annually&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Impact&lt;/strong&gt;: Any dependent system needs constant updates&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complexity&lt;/strong&gt;: Version control and historical accuracy become critical&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="the-comprehension-gap"&gt;The Comprehension Gap
+&lt;/h3&gt;&lt;p&gt;Most people don&amp;rsquo;t fully understand the rules they&amp;rsquo;re supposed to follow:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;State&lt;/th&gt;
+&lt;th&gt;Earphone Law While Driving&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Alaska&lt;/td&gt;
+&lt;td&gt;Illegal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Florida&lt;/td&gt;
+&lt;td&gt;Legal (one earphone only)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Texas&lt;/td&gt;
+&lt;td&gt;Legal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Reality Check&lt;/strong&gt;: In informal polls, very few people confidently knew their local
+earphone-while-driving laws.&lt;/p&gt;
+&lt;h3 id="automated-reasonings-response"&gt;Automated Reasoning&amp;rsquo;s Response
+&lt;/h3&gt;&lt;p&gt;The system addresses these challenges by:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Helping customers define domain-specific truth&lt;/strong&gt; (tax codes, HR policies, rule systems)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Providing refinement mechanisms&lt;/strong&gt; for evolving definitions&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Making complex rule systems accessible&lt;/strong&gt; through natural-language queries&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![Automated Reasoning Interface](&lt;a class="link" href="https://assets.amazon.science/dims4/default/4808201/2147483647/strip/true/crop/1200x6" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/4808201/2147483647/strip/true/crop/1200x6&lt;/a&gt;
+75+0+0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2
+Fscience%2F09%2F8c%2F9a605b214e488d3ceed0a7f36d58%2Freasoningcheckui-16x9.gif)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The user interface for Automated Reasoning checks&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-challenge-3-definitive-reasoning"&gt;🧩 Challenge #3: Definitive Reasoning
+&lt;/h2&gt;&lt;p&gt;The computational complexity of definitive reasoning presents perhaps the most mathematically
+challenging obstacle in machine-based reasoning.&lt;/p&gt;
+&lt;h3 id="the-exponential-problem"&gt;The Exponential Problem
+&lt;/h3&gt;&lt;p&gt;Consider a simple scenario:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Rule set (R)&lt;/strong&gt;: Singapore&amp;rsquo;s driving code&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Statement (S)&lt;/strong&gt;: Question about U-turns at intersections&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Encoding requirement&lt;/strong&gt;: Just 500 bits (≈63 characters)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;The computational reality&lt;/strong&gt;: To authoritatively verify the statement, we must consider &lt;strong&gt;2^500
+possible combinations&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="putting-scale-in-perspective"&gt;Putting Scale in Perspective
+&lt;/h3&gt;&lt;p&gt;Even with all computers worldwide running at maximum speed since the beginning of time, we
+wouldn&amp;rsquo;t approach checking all 2^500 possibilities today.&lt;/p&gt;
+&lt;h3 id="sat-solvers-the-game-changer"&gt;SAT Solvers: The Game Changer
+&lt;/h3&gt;&lt;p&gt;The automated-reasoning community has developed &lt;strong&gt;SAT solvers&lt;/strong&gt; - sophisticated tools that make
+combinatorial checking remarkably fast in many cases. Automated Reasoning checks leverages these
+tools for validity checking.&lt;/p&gt;
+&lt;h3 id="the-limitations"&gt;The Limitations
+&lt;/h3&gt;&lt;p&gt;Not all problems suit SAT solver strengths. Consider this hypothetical tax rule:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&amp;ldquo;If every even number greater than 2 is the sum of two prime numbers, then the tax
+withholding rate is 30%; otherwise it&amp;rsquo;s 40%.&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;The problem&lt;/strong&gt;: This depends on &lt;strong&gt;Goldbach&amp;rsquo;s conjecture&lt;/strong&gt; - unsolved since 1742.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The resolution&lt;/strong&gt;: While we can&amp;rsquo;t solve Goldbach&amp;rsquo;s conjecture, we know the tax rate must be
+either 30% or 40%.&lt;/p&gt;
+&lt;h3 id="gödels-fundamental-constraint"&gt;Gödel&amp;rsquo;s Fundamental Constraint
+&lt;/h3&gt;&lt;p&gt;The most profound limitation comes from &lt;strong&gt;Kurt Gödel&amp;rsquo;s 1931 incompleteness theorem&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Self-referential paradox example&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&amp;ldquo;Access is allowed if and only if Automated Reasoning checks say it is not allowed.&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Gödel&amp;rsquo;s insight&lt;/strong&gt;: Systems like Automated Reasoning checks cannot be both consistent and
+complete - they must choose one.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Amazon&amp;rsquo;s choice&lt;/strong&gt;: Consistency over completeness.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-amazons-integrated-approach"&gt;🚀 Amazon&amp;rsquo;s Integrated Approach
+&lt;/h2&gt;&lt;p&gt;With the August 6, 2025 launch of Automated Reasoning checks in Bedrock Guardrails, Amazon
+tackles these challenges through:&lt;/p&gt;
+&lt;h3 id="multi-faceted-strategy"&gt;Multi-Faceted Strategy
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Cross-checking translation methods&lt;/strong&gt; for natural-to-logical language conversion&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flexible frameworks&lt;/strong&gt; for developing and maintaining rule systems&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sophisticated SAT solvers&lt;/strong&gt; with careful handling of undecidable cases&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consistent system design&lt;/strong&gt; that prioritizes reliability over completeness&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="advancing-the-field"&gt;Advancing the Field
+&lt;/h3&gt;&lt;p&gt;This work represents more than technological advancement - it deepens our understanding of
+fundamental reasoning questions that span from Gödel&amp;rsquo;s incompleteness theorem to evolving legal frameworks.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at:
+&lt;a class="link" href="https://www.amazon.science/blog/three-challenges-in-machine-based-reasoning" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/three-challenges-in-machine-based-reasoning&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;The three challenges in machine-based reasoning - translating natural language to structured
+logic, defining truth in dynamic rule systems, and achieving definitive reasoning within
+computational constraints - represent fundamental obstacles that extend beyond mere technical
+hurdles. They embody the intersection of technological limitations and human complexity.&lt;/p&gt;
+&lt;p&gt;Amazon&amp;rsquo;s Automated Reasoning checks in Bedrock Guardrails demonstrates a comprehensive approach
+to these challenges, combining multiple translation methods, flexible rule frameworks, and
+sophisticated SAT solvers. However, as the field continues to evolve, these challenges will
+require ongoing innovation and collaboration across the reasoning community.&lt;/p&gt;
+&lt;p&gt;The commitment to sound reasoning in AI systems is not just about advancing technology - it&amp;rsquo;s
+about building reliable, trustworthy systems that can handle the nuanced complexity of
+real-world decision-making. As we move forward, the journey promises to be as challenging as it is rewarding.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#ARTIFICIALINTELLIGENCE #AUTOMATEDREASONING #MACHINELEARNING #AWS #BEDROCK #LOGICALREASONING
+#GENAI #AMAZONSCIENCE&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Introducing Chronos-2: From Univariate to Universal Forecasting</title><link>https://shoubhikbanerjee.github.io/blog/p/introducing-chronos-2-from-univariate-to-universal-forecasting/</link><pubDate>Tue, 28 Oct 2025 00:43:59 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introducing-chronos-2-from-univariate-to-universal-forecasting/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Introducing Chronos-2: From Univariate to Universal Forecasting" /&gt;&lt;h1 id="-introducing-chronos-2-from-univariate-to-universal-forecasting"&gt;🚀 Introducing Chronos-2: From Univariate to Universal Forecasting
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;Revolutionizing time series forecasting with in-context learning capabilities that enable
+zero-shot multivariate and covariate-informed predictions&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;![Chronos-2 Pipeline](&lt;a class="link" href="https://assets.amazon.science/dims4/default/7be7d4a/2147483647/strip/true/crop/7325x3025&amp;#43;0&amp;#43;0/resize/1200x496!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.ama" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/7be7d4a/2147483647/strip/true/crop/7325x3025+0+0/resize/1200x496!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.ama&lt;/a&gt;
+zonaws.com%2Fscience%2Ff0%2F98%2F930256dc45f48c0581d60964e867%2Ffig1.webp)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The complete Chronos-2 pipeline architecture showcasing its universal forecasting capabilities&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-evolution-of-time-series-foundation-models"&gt;🎯 The Evolution of Time Series Foundation Models
+&lt;/h2&gt;&lt;p&gt;Time series forecasting stands as a cornerstone technology across business, science, and
+engineering domains. The landscape has witnessed a paradigm shift with the emergence of
+foundation models, moving beyond traditional statistical approaches and task-specific deep
+learning models. Time series foundation models (TSFMs) represent this new era—trained once on
+large-scale data and then applied universally across diverse forecasting challenges.&lt;/p&gt;
+&lt;p&gt;Amazon&amp;rsquo;s pioneering TSFMs, &lt;strong&gt;Chronos&lt;/strong&gt; and &lt;strong&gt;Chronos-Bolt&lt;/strong&gt;, have achieved remarkable adoption
+with over &lt;strong&gt;600 million downloads&lt;/strong&gt; from Hugging Face, demonstrating the immense value and
+applicability of foundation models in real-world forecasting scenarios.&lt;/p&gt;
+&lt;h2 id="-addressing-critical-limitations"&gt;⚡ Addressing Critical Limitations
+&lt;/h2&gt;&lt;p&gt;Despite their success, existing TSFMs faced a significant constraint: &lt;strong&gt;univariate-only
+forecasting&lt;/strong&gt;. This limitation prevented them from addressing many real-world scenarios that
+require:&lt;/p&gt;
+&lt;h3 id="-multivariate-forecasting"&gt;🔗 Multivariate Forecasting
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Joint prediction&lt;/strong&gt; of multiple coevolving time series&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Capturing dependencies&lt;/strong&gt; between related metrics&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Example&lt;/strong&gt;: Cloud infrastructure monitoring (CPU usage, memory consumption, storage I/O)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-covariate-informed-forecasting"&gt;📊 Covariate-Informed Forecasting
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Integration of external factors&lt;/strong&gt; influencing predictions&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Support for past-only covariates&lt;/strong&gt; (historical traffic patterns)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Known future covariates&lt;/strong&gt; (promotional schedules, weather forecasts)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Categorical covariates&lt;/strong&gt; (holidays, promotion types)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-chronos-2-the-universal-solution"&gt;🧠 Chronos-2: The Universal Solution
+&lt;/h2&gt;&lt;p&gt;Chronos-2 emerges as a breakthrough foundation model designed to handle &lt;strong&gt;arbitrary forecasting
+tasks&lt;/strong&gt; through innovative &lt;strong&gt;in-context learning (ICL)&lt;/strong&gt; capabilities. This approach enables
+zero-shot performance across:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅ &lt;strong&gt;Univariate forecasting&lt;/strong&gt; with enhanced cross-learning&lt;/li&gt;
+&lt;li&gt;✅ &lt;strong&gt;Multivariate forecasting&lt;/strong&gt; with joint dependencies&lt;/li&gt;
+&lt;li&gt;✅ &lt;strong&gt;Covariate-informed forecasting&lt;/strong&gt; with external factors&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-key-innovations"&gt;💡 Key Innovations
+&lt;/h3&gt;&lt;h4 id="group-attention-mechanism"&gt;Group Attention Mechanism
+&lt;/h4&gt;&lt;p&gt;The revolutionary &lt;strong&gt;group attention&lt;/strong&gt; architecture enables information exchange within
+arbitrary-sized groups of time series. This allows the model to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Learn inter-series relationships dynamically&lt;/li&gt;
+&lt;li&gt;Incorporate covariate information effectively&lt;/li&gt;
+&lt;li&gt;Adapt to unseen task configurations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="enhanced-training-strategy"&gt;Enhanced Training Strategy
+&lt;/h4&gt;&lt;p&gt;Building a universal TSFM required innovation in training data generation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Synthetic multivariate structures&lt;/strong&gt; imposed on univariate base generators&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Heterogeneous task training&lt;/strong&gt; for robust generalization&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalable data synthesis&lt;/strong&gt; to overcome scarcity of high-quality multivariate datasets&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-real-world-applications"&gt;📈 Real-World Applications
+&lt;/h2&gt;&lt;h3 id="-cloud-operations"&gt;☁️ Cloud Operations
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;: Joint forecasting of infrastructure metrics
+&lt;strong&gt;Benefit&lt;/strong&gt;: Anticipate resource bottlenecks before they occur by modeling CPU, memory, and
+storage I/O interdependencies&lt;/p&gt;
+&lt;h3 id="-retail-optimization"&gt;🛒 Retail Optimization
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;: Demand forecasting with promotional activities
+&lt;strong&gt;Benefit&lt;/strong&gt;: Optimize inventory levels by incorporating planned campaigns and holiday schedules&lt;/p&gt;
+&lt;h3 id="-logistics-excellence"&gt;🚚 Logistics Excellence
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;: Cold-start forecasting for new facilities
+&lt;strong&gt;Benefit&lt;/strong&gt;: Leverage patterns from existing distribution centers to generate accurate
+predictions with minimal operational history&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-benchmark-performance"&gt;🏆 Benchmark Performance
+&lt;/h2&gt;&lt;h3 id="fev-bench-results"&gt;FEV-Bench Results
+&lt;/h3&gt;&lt;p&gt;![FEV-Bench Results](&lt;a class="link" href="https://assets.amazon.science/dims4/default/7b1fbb7/2147483647/strip/true/crop/5095x1979&amp;#43;0&amp;#43;0/resize/1200x466!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amaz" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/7b1fbb7/2147483647/strip/true/crop/5095x1979+0+0/resize/1200x466!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amaz&lt;/a&gt;
+onaws.com%2Fscience%2F3f%2Fcb%2Ff69ba0b7440583efc933900f328b%2Ffig2.webp)&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;Chronos-2 Performance&lt;/th&gt;
+&lt;th&gt;Key Achievement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Average Win Rate&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Market Leading&lt;/td&gt;
+&lt;td&gt;Outperforms all existing pretrained models&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Skill Score&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Highest Recorded&lt;/td&gt;
+&lt;td&gt;Substantial margin over competitors&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Task Coverage&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Universal&lt;/td&gt;
+&lt;td&gt;Univariate, multivariate, and covariate-informed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="gift-eval-benchmark"&gt;GIFT-Eval Benchmark
+&lt;/h3&gt;&lt;p&gt;![GIFT-Eval Results](&lt;a class="link" href="https://assets.amazon.science/dims4/default/0712ab2/2147483647/strip/true/crop/4941x1691&amp;#43;0&amp;#43;0/resize/1200x411!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amaz" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/0712ab2/2147483647/strip/true/crop/4941x1691+0+0/resize/1200x411!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amaz&lt;/a&gt;
+onaws.com%2Fscience%2Fe6%2F0b%2Fabd149f445059dc94b339541545c%2Ffig4.webp)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Performance Highlights:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🥇 &lt;strong&gt;#1 ranking&lt;/strong&gt; among pretrained models&lt;/li&gt;
+&lt;li&gt;📊 &lt;strong&gt;90%+ win rate&lt;/strong&gt; vs. Chronos-Bolt in head-to-head comparisons&lt;/li&gt;
+&lt;li&gt;⚡ Superior performance on both probabilistic and point forecasting metrics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-technical-architecture"&gt;🔧 Technical Architecture
+&lt;/h2&gt;&lt;p&gt;The Chronos-2 pipeline implements a sophisticated multi-stage approach:&lt;/p&gt;
+&lt;h3 id="data-processing-pipeline"&gt;Data Processing Pipeline
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Robust Normalization&lt;/strong&gt;: Advanced scaling schemes for heterogeneous data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Meta-Feature Engineering&lt;/strong&gt;: Time index and mask annotations&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Patch-Based Processing&lt;/strong&gt;: Non-overlapping sequence segmentation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;High-Dimensional Embedding&lt;/strong&gt;: Residual network mapping&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="transformer-architecture"&gt;Transformer Architecture
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dual Attention Layers&lt;/strong&gt;: Time and group attention alternation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi-Patch Output&lt;/strong&gt;: Quantile predictions for future segments&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalable Design&lt;/strong&gt;: Handles arbitrary numbers of targets and covariates&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-in-context-learning-advantages"&gt;🎯 In-Context Learning Advantages
+&lt;/h2&gt;&lt;h3 id="enhanced-univariate-performance"&gt;Enhanced Univariate Performance
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Cross-learning&lt;/strong&gt; capabilities enable information sharing across univariate series,
+particularly valuable for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cold-start scenarios&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Limited historical data&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pattern transfer&lt;/strong&gt; from similar contexts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="covariate-integration-excellence"&gt;Covariate Integration Excellence
+&lt;/h3&gt;&lt;p&gt;![Univariate Mode Results](&lt;a class="link" href="https://assets.amazon.science/dims4/default/86590b9/2147483647/strip/true/crop/2495x1466&amp;#43;0&amp;#43;0/resize/1200x705!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/86590b9/2147483647/strip/true/crop/2495x1466+0+0/resize/1200x705!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s&lt;/a&gt;
+3.amazonaws.com%2Fscience%2F97%2F4e%2Fa329b1ff40dfad29fe3ced970587%2Ffig3.webp)&lt;/p&gt;
+&lt;p&gt;The results demonstrate &lt;strong&gt;substantial gains&lt;/strong&gt; from in-context learning, especially on
+covariate-informed tasks, showcasing Chronos-2&amp;rsquo;s ability to effectively leverage external information.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-production-ready-deployment"&gt;🚀 Production-Ready Deployment
+&lt;/h2&gt;&lt;p&gt;Chronos-2&amp;rsquo;s ICL capabilities position it as a &lt;strong&gt;general-purpose forecasting solution&lt;/strong&gt; that can
+be deployed &amp;ldquo;as-is&amp;rdquo; in production environments, offering:&lt;/p&gt;
+&lt;h3 id="-simplified-integration"&gt;⚙️ Simplified Integration
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Zero-shot capability&lt;/strong&gt; eliminates task-specific training&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Universal interface&lt;/strong&gt; handles diverse forecasting requirements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Streamlined pipelines&lt;/strong&gt; reduce operational complexity&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-scalable-operations"&gt;🔄 Scalable Operations
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cloud-native architecture&lt;/strong&gt; for enterprise deployment&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Efficient resource utilization&lt;/strong&gt; through shared model infrastructure&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consistent performance&lt;/strong&gt; across varied use cases&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at:
+&lt;a class="link" href="https://www.amazon.science/blog/introducing-chronos-2-from-univariate-to-universal-forecasting" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/introducing-chronos-2-from-univariate-to-universal-forecasting&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;Chronos-2 represents a significant leap forward in time series foundation models, breaking
+through the univariate limitation that constrained previous generations. Its universal
+forecasting capabilities, powered by innovative in-context learning and group attention
+mechanisms, make it a game-changing tool for practitioners across industries.&lt;/p&gt;
+&lt;p&gt;The model&amp;rsquo;s ability to handle multivariate dependencies, incorporate external covariates, and
+deliver zero-shot performance positions it as the next standard for production forecasting
+systems. With proven superiority across comprehensive benchmarks and open-source availability,
+Chronos-2 opens new frontiers for time series research and real-world applications.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re optimizing cloud infrastructure, planning retail inventory, or launching new
+logistics operations, Chronos-2 provides the universal forecasting foundation needed to turn
+time series data into actionable business intelligence.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Resources for Further Exploration:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class="link" href="link-to-technical-report" &gt;Chronos-2 Technical Report&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;💻 &lt;a class="link" href="link-to-github-repo" &gt;Chronos GitHub Repository&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#MACHINELEARNING #TIMESERIES #FOUNDATIONMODELS #AWS #FORECASTING #AI #DEEPLEARNING
+#CLOUDCOMPUTING&lt;/em&gt;&lt;/p&gt;</description></item><item><title>🏥 Architecting Multi-Tenant FHIR Solutions with AWS HealthLake: Security &amp; Efficiency</title><link>https://shoubhikbanerjee.github.io/blog/p/architecting-multi-tenant-fhir-solutions-with-aws-healthlake-security-efficiency/</link><pubDate>Fri, 06 Jun 2025 20:51:44 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/architecting-multi-tenant-fhir-solutions-with-aws-healthlake-security-efficiency/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/c5b76da3e608d34edb07244cd9b875ee86906328/2025/05/21/Figure-1-%E2%80%93-Option-A-architecture-of-a-multi-tenant-AWS-HealthLake.png" alt="Featured image of post 🏥 Architecting Multi-Tenant FHIR Solutions with AWS HealthLake: Security &amp; Efficiency" /&gt;&lt;h1 id="-architecting-multi-tenant-fhir-solutions-with-aws-healthlake-security--efficiency"&gt;🏥 Architecting Multi-Tenant FHIR Solutions with AWS HealthLake: Security &amp;amp; Efficiency
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;SUMMARY:&lt;/strong&gt; &lt;em&gt;Discover how to build scalable multi-tenant healthcare applications using AWS HealthLake. This guide explores two architectural approaches—physically separated data stores versus logically separated tenants within a single store—with key considerations for security, cost-efficiency, and implementation complexity.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-the-balancing-act-of-healthcare-data-management"&gt;🔐 The Balancing Act of Healthcare Data Management
+&lt;/h2&gt;&lt;p&gt;In the rapidly evolving healthcare technology landscape, managing sensitive patient data across multiple organizations presents unique challenges. Healthcare solution providers often need to support numerous clients (tenants) while maintaining strict data isolation, security, and compliance with healthcare regulations.&lt;/p&gt;
+&lt;p&gt;AWS HealthLake offers a powerful foundation for building multi-tenant FHIR (Fast Healthcare Interoperability Resources) solutions. But architecting these systems requires careful consideration of trade-offs between security, cost, and complexity.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s explore how to build scalable, secure multi-tenant healthcare applications using AWS HealthLake&amp;rsquo;s capabilities.&lt;/p&gt;
+&lt;h2 id="-understanding-aws-healthlake--multi-tenancy-basics"&gt;📊 Understanding AWS HealthLake &amp;amp; Multi-Tenancy Basics
+&lt;/h2&gt;&lt;p&gt;Before diving into architectural patterns, let&amp;rsquo;s clarify some key concepts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;FHIR&lt;/strong&gt;: The healthcare data standard defining formats and REST APIs for exchanging healthcare information.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SMART on FHIR&lt;/strong&gt;: Extends FHIR by providing security and authorization frameworks based on OAuth 2.0.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS HealthLake&lt;/strong&gt;: A FHIR-native, fully-managed service with complete support for FHIR R4 transactions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS HealthLake Data Store&lt;/strong&gt;: A HIPAA-eligible transactional FHIR server that encrypts data and exposes it through a FHIR Base URL.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi-tenancy&lt;/strong&gt;: A solution architecture allowing data from multiple clients (tenants) to be stored while maintaining isolation and access controls.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In multi-tenant systems, a &amp;ldquo;tenant&amp;rdquo; typically represents healthcare organizations, enterprises, business units, clinics, or hospitals that need logical or physical separation of their FHIR resources.&lt;/p&gt;
+&lt;h2 id="-two-architectural-approaches-for-multi-tenancy"&gt;🏗️ Two Architectural Approaches for Multi-Tenancy
+&lt;/h2&gt;&lt;p&gt;AWS HealthLake offers flexibility in implementing multi-tenancy. Let&amp;rsquo;s examine two primary architectural patterns:&lt;/p&gt;
+&lt;h3 id="-option-a-full-tenant-separation-physical-isolation"&gt;🔒 Option A: Full Tenant Separation (Physical Isolation)
+&lt;/h3&gt;&lt;p&gt;This approach creates 𝘴𝘦𝘱𝘢𝘳𝘢𝘵𝘦 AWS HealthLake data stores for each tenant, each encrypted with unique AWS KMS keys.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🟢 Advantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Complete data isolation between tenants&lt;/li&gt;
+&lt;li&gt;Independent encryption boundaries with unique keys&lt;/li&gt;
+&lt;li&gt;No risk of one tenant&amp;rsquo;s usage impacting others&lt;/li&gt;
+&lt;li&gt;Highest level of security and compliance&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔴 Considerations:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Higher cost (separate data stores and KMS keys)&lt;/li&gt;
+&lt;li&gt;Requires maintaining lookup tables for tenant routing&lt;/li&gt;
+&lt;li&gt;Needs API Gateway and router logic for unified endpoint (if desired)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;✅ Recommended for:&lt;/strong&gt; Organizations requiring complete tenant isolation and different encryption for each tenant&amp;rsquo;s data.&lt;/p&gt;
+&lt;h3 id="-option-b-logical-separation-single-data-store"&gt;💻 Option B: Logical Separation (Single Data Store)
+&lt;/h3&gt;&lt;p&gt;This approach uses a 𝘴𝘪𝘯𝘨𝘭𝘦 AWS HealthLake data store containing data for all tenants, with application-level logic enforcing separation through FHIR tags and security labels.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🟢 Advantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cost-effective, especially with multiple smaller tenants&lt;/li&gt;
+&lt;li&gt;Reduced operational overhead and simplified management&lt;/li&gt;
+&lt;li&gt;More efficient resource utilization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔴 Considerations:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Broader security risk radius (shared encryption key)&lt;/li&gt;
+&lt;li&gt;Processing overhead for tenant-based filtering&lt;/li&gt;
+&lt;li&gt;Critical dependence on application-level security controls&lt;/li&gt;
+&lt;li&gt;Needs usage limits to prevent resource monopolization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;✅ Recommended for:&lt;/strong&gt; Organizations managing multiple smaller tenants where cost optimization takes priority over physical data isolation.&lt;/p&gt;
+&lt;h2 id="-implementing-routing-logic"&gt;🔀 Implementing Routing Logic
+&lt;/h2&gt;&lt;p&gt;When implementing Option A or adding sophisticated filtering to Option B, you&amp;rsquo;ll need a router component that:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Receives and validates incoming requests&lt;/li&gt;
+&lt;li&gt;Extracts tenant identifiers from the request&lt;/li&gt;
+&lt;li&gt;Routes to appropriate HealthLake data store&lt;/li&gt;
+&lt;li&gt;Processes responses before returning to clients&lt;/li&gt;
+&lt;li&gt;Applies tenant filtering when using logical separation&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This router can be implemented as an AWS Lambda function or container behind Amazon API Gateway, using DynamoDB as a lookup table for efficient routing decisions.&lt;/p&gt;
+&lt;p&gt;The sample code demonstrates how to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Extract tenant IDs from request paths&lt;/li&gt;
+&lt;li&gt;Look up the appropriate HealthLake endpoint&lt;/li&gt;
+&lt;li&gt;Add tenant tags for ownership tracking&lt;/li&gt;
+&lt;li&gt;Filter responses based on tenant ownership&lt;/li&gt;
+&lt;li&gt;Handle various FHIR operations securely&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-authentication-considerations-smart-vs-sigv4"&gt;🔑 Authentication Considerations: SMART vs. SigV4
+&lt;/h2&gt;&lt;p&gt;AWS HealthLake supports two authentication mechanisms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SMART on FHIR&lt;/strong&gt;: Industry-standard protocol built on OAuth 2.0, ideal for clinical applications requiring standardized resource-level permissions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Signature Version 4 (SigV4)&lt;/strong&gt;: AWS standard signing process, better suited for applications handling permissions outside the FHIR server.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Your choice depends on your application&amp;rsquo;s needs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Choose SMART for broader healthcare system compatibility&lt;/li&gt;
+&lt;li&gt;Choose SigV4 for tight AWS integration and programmatic access&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-final-thoughts-choosing-your-path"&gt;🚀 Final Thoughts: Choosing Your Path
+&lt;/h2&gt;&lt;p&gt;When building multi-tenant healthcare applications with AWS HealthLake, your architectural decisions should be guided by:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;𝗦𝗲𝗰𝘂𝗿𝗶𝘁𝘆 𝗿𝗲𝗾𝘂𝗶𝗿𝗲𝗺𝗲𝗻𝘁𝘀: Need for physical vs. logical isolation&lt;/li&gt;
+&lt;li&gt;𝗖𝗼𝘀𝘁 𝗰𝗼𝗻𝘀𝗶𝗱𝗲𝗿𝗮𝘁𝗶𝗼𝗻𝘀: Budget constraints and expected tenant scale&lt;/li&gt;
+&lt;li&gt;𝗖𝗼𝗺𝗽𝗹𝗲𝘅𝗶𝘁𝘆 𝘁𝗼𝗹𝗲𝗿𝗮𝗻𝗰𝗲: Available development resources and expertise&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The ideal architecture balances these factors while meeting your specific use cases. For organizations with strict isolation requirements and regulatory concerns, Option A provides the highest security. For those prioritizing cost efficiency with smaller tenants, Option B offers streamlined management.&lt;/p&gt;
+&lt;p&gt;What level of tenant isolation does your healthcare application truly require, and how might that requirement evolve as your organization grows? 🤔&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://aws.amazon.com/blogs/industries/building-a-multi-tenant-fhir-server-with-aws-healthlake/" target="_blank" rel="noopener"
+&gt;https://aws.amazon.com/blogs/industries/building-a-multi-tenant-fhir-server-with-aws-healthlake/&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#HealthTech #FHIR #AWSHealthLake #HealthcareIT #MultiTenancy #CloudArchitecture #HealthcareData #DataSecurity #HealthcareCompliance #HIPAA&lt;/p&gt;</description></item><item><title>🌊 Navigate the FinOps Wave: Your Ultimate Guide to AWS at FinOps X 2025</title><link>https://shoubhikbanerjee.github.io/blog/p/navigate-the-finops-wave-your-ultimate-guide-to-aws-at-finops-x-2025/</link><pubDate>Sat, 31 May 2025 11:47:02 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/navigate-the-finops-wave-your-ultimate-guide-to-aws-at-finops-x-2025/</guid><description>&lt;img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmAMiX1ln_obvaEh8GvsgWV1pqZuAacNyONg&amp;s" alt="Featured image of post 🌊 Navigate the FinOps Wave: Your Ultimate Guide to AWS at FinOps X 2025" /&gt;&lt;h1 id="-navigate-the-finops-wave-your-ultimate-guide-to-aws-at-finops-x-2025"&gt;🌊 Navigate the FinOps Wave: Your Ultimate Guide to AWS at FinOps X 2025
+&lt;/h1&gt;&lt;h2 id="-summary"&gt;📌 Summary
+&lt;/h2&gt;&lt;p&gt;Mark your calendars for an unmissable opportunity! This guide walks you through all the exciting AWS activities at FinOps X 2025 in San Diego (June 2-5). From executive keynotes to hands-on optimization workshops and exclusive networking events, discover how to maximize your conference experience while connecting with AWS experts to elevate your cloud financial management journey.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-why-finops-x-2025-matters-for-aws-users"&gt;🎯 Why FinOps X 2025 Matters for AWS Users
+&lt;/h2&gt;&lt;p&gt;The convergence of cloud financial management and technological innovation has never been more critical than now. As organizations worldwide grapple with optimizing their cloud spend while maximizing value, FinOps X 2025 emerges as the premier gathering for practitioners seeking to master this balance.&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;re leveraging AWS and want to enhance your cloud financial management strategy, this year&amp;rsquo;s conference in San Diego (June 2-5) offers unique opportunities to connect directly with AWS teams, discover cutting-edge optimization techniques, and network with industry leaders who&amp;rsquo;ve successfully navigated similar challenges.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;Imagine the San Diego waterfront setting where cloud financial experts will gather next month&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-your-day-by-day-aws-experience-planner"&gt;🗓️ Your Day-by-Day AWS Experience Planner
+&lt;/h2&gt;&lt;h3 id="𝗗𝗮𝘆-𝟬-𝗠𝗼𝗻𝗱𝗮𝘆-𝗝𝘂𝗻𝗲-𝟮"&gt;𝗗𝗮𝘆 𝟬: 𝗠𝗼𝗻𝗱𝗮𝘆, 𝗝𝘂𝗻𝗲 𝟮
+&lt;/h3&gt;&lt;p&gt;Start your conference journey with two essential touchpoints:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;AWS Booth Experience&lt;/strong&gt; (4:00PM – 7:00PM)
+Connect with the OPTICS team and Cloud Financial Management experts to discuss your specific challenges and learn about the latest developments.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;🍹 AWS Reception Party&lt;/strong&gt; (6:30-8:30PM, Coronado Terrace)
+Network in style at this exclusive social mixer! Enjoy refreshments and meaningful conversations with AWS team members and fellow FinOps leaders in a relaxed atmosphere. This is your chance to establish connections before the formal sessions begin.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Pro tip: Don&amp;rsquo;t forget to RSVP for the reception to secure your spot!&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="𝗗𝗮𝘆-𝟭-𝗧𝘂𝗲𝘀𝗱𝗮𝘆-𝗝𝘂𝗻𝗲-𝟯"&gt;𝗗𝗮𝘆 𝟭: 𝗧𝘂𝗲𝘀𝗱𝗮𝘆, 𝗝𝘂𝗻𝗲 𝟯
+&lt;/h3&gt;&lt;p&gt;Your day begins with industry-leading insights:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Leadership Keynote&lt;/strong&gt; (8:00-9:30AM, Keynote Stage)
+Don&amp;rsquo;t miss James Greenfield, VP of AWS Commerce Platform, participating in a high-level panel discussion with cloud industry leaders.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;𝙎𝙩𝙖𝙣𝙙𝙤𝙪𝙩 𝙎𝙚𝙨𝙨𝙞𝙤𝙣𝙨:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Lockheed Martin&amp;rsquo;s 30% Cost Savings Story&lt;/strong&gt; (11:00-11:45AM)
+Learn how this aerospace giant achieved remarkable cost efficiency through advanced FinOps practices.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;🔥 The Frugality Fest Workshop&lt;/strong&gt; (1:00-3:00PM)
+Form a team and compete in real-time cost optimization challenges! Bring your laptop for this hands-on experience with a pre-populated AWS account.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Adapting FinOps for Generative AI&lt;/strong&gt; (4:15-5:00PM)
+Discover how traditional CFM practices can be leveraged while addressing the unique cost considerations of GenAI workloads.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="𝗗𝗮𝘆-𝟮-𝗪𝗲𝗱𝗻𝗲𝘀𝗱𝗮𝘆-𝗝𝘂𝗻𝗲-𝟰"&gt;𝗗𝗮𝘆 𝟮: 𝗪𝗲𝗱𝗻𝗲𝘀𝗱𝗮𝘆, 𝗝𝘂𝗻𝗲 𝟰
+&lt;/h3&gt;&lt;p&gt;The innovation continues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Leadership Keynote&lt;/strong&gt; (8:00-9:30AM, Keynote Stage)
+John Phillips, Director of AWS Insights and Optimization, will unveil exciting new announcements you won&amp;rsquo;t want to miss.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;𝙏𝙚𝙘𝙝𝙣𝙞𝙘𝙖𝙡 𝙄𝙢𝙢𝙚𝙧𝙨𝙞𝙤𝙣:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;What&amp;rsquo;s New in Cost Optimization&lt;/strong&gt; (11:00-11:45AM)
+Get the latest on AWS cost optimization capabilities for monitoring performance, costs, and receiving actionable recommendations.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;🧮 Advanced CUR Analytics&lt;/strong&gt; (1:00-2:00PM)
+Master the art of querying AWS Cost and Usage Reports for deeper insights into service usage and optimization opportunities.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;New AWS FinOps Tools Revealed&lt;/strong&gt; (4:15-5:00PM)
+Explore recent enhancements designed to transform cost analysis workflows, improve estimation accuracy, and strengthen governance.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;Visualize the AWS Stage room where these in-depth technical sessions will take place&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-make-meaningful-connections"&gt;🤝 Make Meaningful Connections
+&lt;/h2&gt;&lt;p&gt;Beyond scheduled sessions, FinOps X 2025 offers valuable opportunities for personalized engagement:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;One-on-One Meetings&lt;/strong&gt;: Connect with AWS Cloud Financial Management product leaders to discuss your specific challenges and provide direct feedback that shapes future offerings.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;AWS Booth Consultations&lt;/strong&gt;: Available throughout Tuesday and Wednesday (7:00AM – 5:00PM), the booth serves as your hub for impromptu discussions with AWS experts who love &amp;ldquo;getting nerdy about FinOps.&amp;rdquo;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Group Discussions&lt;/strong&gt;: Coordinate with your account team to join focused conversations around particular aspects of cloud financial management.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-this-matters-beyond-just-another-conference"&gt;🚀 Why This Matters: Beyond Just Another Conference
+&lt;/h2&gt;&lt;p&gt;FinOps X 2025 represents more than just technical sessions—it&amp;rsquo;s a strategic opportunity to reshape your organization&amp;rsquo;s approach to cloud economics. With AWS showcasing new tools while featuring customer success stories like Lockheed Martin&amp;rsquo;s impressive 30% savings implementation, attendees gain practical frameworks they can apply immediately.&lt;/p&gt;
+&lt;p&gt;The emphasis on hands-on experiences—particularly the Frugality Fest Workshop—demonstrates AWS&amp;rsquo;s commitment to practical skill development rather than theoretical concepts alone. Additionally, the forward-looking sessions on Generative AI cost management highlight how FinOps practices must evolve alongside emerging technologies.&lt;/p&gt;
+&lt;p&gt;For organizations struggling to balance innovation with fiscal responsibility, these sessions provide the ideal blend of strategic vision and tactical implementation guidance from those who&amp;rsquo;ve successfully navigated these waters.&lt;/p&gt;
+&lt;h2 id="-final-thoughts-maximizing-your-finops-x-investment"&gt;💭 Final Thoughts: Maximizing Your FinOps X Investment
+&lt;/h2&gt;&lt;p&gt;The convergence of financial and technical expertise represented at FinOps X 2025 creates a unique learning environment. By strategically planning your schedule to include AWS keynotes, practical workshops, and networking opportunities, you position yourself to bring transformative insights back to your organization.&lt;/p&gt;
+&lt;p&gt;As cloud technologies continue evolving at breakneck speeds, will your organization&amp;rsquo;s financial governance keep pace? FinOps X 2025 might just provide the blueprint you need.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://aws.amazon.com/blogs/aws-cloud-financial-management/join-us-at-finops-x-2025-your-guide-to-all-things-aws/" target="_blank" rel="noopener"
+&gt;https://aws.amazon.com/blogs/aws-cloud-financial-management/join-us-at-finops-x-2025-your-guide-to-all-things-aws/&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#FinOpsX2025 #AWSFinOps #CloudFinancialManagement #CostOptimization #CloudEconomics #FinOpsCommunity #AWSEvents #CloudGovernance #GenerativeAICosts #TechConference&lt;/p&gt;</description></item></channel></rss>

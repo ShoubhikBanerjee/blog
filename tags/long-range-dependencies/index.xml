@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Long Range Dependencies on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/long-range-dependencies/</link><description>Recent content in Long Range Dependencies on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 06:46:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/long-range-dependencies/index.xml" rel="self" type="application/rss+xml"/><item><title>Introduction to State Space Models (SSM): A Complete Guide</title><link>https://shoubhikbanerjee.github.io/blog/p/introduction-to-state-space-models-ssm-a-complete-guide/</link><pubDate>Tue, 28 Oct 2025 06:46:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introduction-to-state-space-models-ssm-a-complete-guide/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/613b0a62a14099d5afed7830/G7icfkYoxIqHZcJGHM7UD.png" alt="Featured image of post Introduction to State Space Models (SSM): A Complete Guide" /&gt;&lt;h1 id="-introduction-to-state-space-models-ssm-a-complete-guide"&gt;🚀 Introduction to State Space Models (SSM): A Complete Guide
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/613b0a62a14099d5afed7830/G7icfkYoxIqHZcJGHM7UD.png"
+loading="lazy"
+alt="State Space Model Diagram"
+&gt;
+&lt;em&gt;Figure 1: View of a continuous, time-invariant SSM&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;A French version is available on my
+&lt;a class="link" href="https://huggingface.co/blog/lbourdois/get-on-the-ssm-train" target="_blank" rel="noopener"
+&gt;blog&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-table-of-contents"&gt;📋 Table of Contents
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Foreword&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Introduction&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Definition of an SSM in deep learning&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Discretization&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recursive view of an SSM&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Convolutive view of an SSM&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advantages and limitations of each of the three views&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Learning matrices&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Experimental results&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;To dig deeper&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;References&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-foreword"&gt;🙏 Foreword
+&lt;/h2&gt;&lt;p&gt;I&amp;rsquo;d like to extend my warmest thanks to Boris ALBAR, Pierre BEDU and Nicolas PREVOT for agreeing
+to set up a working group on the subject of SSMs and thus accompanying me in my discovery of
+this type of model. A special thanks to the former for taking the time to proofread this blog
+post.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-introduction"&gt;🎯 &lt;strong&gt;Introduction&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;The &lt;strong&gt;State Space Models&lt;/strong&gt; are traditionally used in control theory to model a dynamic system via state variables.&lt;/p&gt;
+&lt;p&gt;Aaron R. VOELKER and Chris ELIASMITH addressed the question of how the brain effectively
+represents temporal information. They discovered in 2018 in &amp;ldquo;&lt;a class="link" href="https://papers.nips.cc/paper/2018/hash/5f2e1a1e6966b54f6b6c3d2b5d6b9f1e-Paper.html" target="_blank" rel="noopener"
+&gt;Improving Spiking Dynamical
+Networks: Accurate Delays, Higher-Order Synapses, and Time
+Cells&lt;/a&gt;&amp;rdquo; that
+an SSM is an excellent model for describing the &amp;ldquo;&lt;a class="link" href="https://en.wikipedia.org/wiki/Time_cell" target="_blank" rel="noopener"
+&gt;time
+cells&lt;/a&gt;&amp;rdquo; present in the brain (hippocampus and cortex in particular).&lt;/p&gt;
+&lt;p&gt;From neuroscience, they applied their work to the field of deep learning and were thus (to our
+knowledge) the first to use SSMs in deep learning. For more details on this work, please refer
+to the &amp;ldquo;&lt;a class="link" href="#ssm-history" &gt;SSM history&lt;/a&gt;&amp;rdquo; section at the end of this blog post.&lt;/p&gt;
+&lt;p&gt;In this article, we will define the basics of a deep learning SSM. To do this, we will base on
+the S4 model introduced in &amp;ldquo;&lt;a class="link" href="https://arxiv.org/abs/2111.00396" target="_blank" rel="noopener"
+&gt;&lt;em&gt;Efficiently Modeling Long Sequences with Structured State
+Spaces&lt;/em&gt;&lt;/a&gt;&amp;rdquo; by Albert GU et al. in 2021. This is not a model
+that is used as is in practice (other SSMs with better performance or easier to implement are
+now available). We use it here for educational purposes. Released a week earlier than S4,
+&lt;a class="link" href="https://arxiv.org/abs/2110.13985" target="_blank" rel="noopener"
+&gt;LSSL&lt;/a&gt;, by the same authors, is also an important source of
+information on the subject. We&amp;rsquo;ll take a look at the various developments arising from S4 in a
+future &lt;a class="link" href="https://huggingface.co/blog/lbourdois/ssm-2022" target="_blank" rel="noopener"
+&gt;blog post&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-definition-of-an-ssm-in-deep-learning"&gt;⚙️ &lt;strong&gt;Definition of an SSM in deep learning&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://github.com/lbourdois/blog/assets/58078086/12bbe1cf-3911-4bad-9a3b-3f427bc6bc82"
+loading="lazy"
+alt="SSM Structure"
+&gt;
+&lt;em&gt;Figure 2: Image from blog post &amp;ldquo;Structured State Spaces: Combining Continuous-Time, Recurrent,
+and Convolutional Models&amp;rdquo; by Albert GU et al. (2022)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;An SSM is based on three variables that depend on time &lt;code&gt;t&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;x(t) ∈ ℂⁿ&lt;/code&gt; represents the &lt;code&gt;n&lt;/code&gt; state variables&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;u(t) ∈ ℂᵐ&lt;/code&gt; represents the &lt;code&gt;m&lt;/code&gt; state inputs&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;y(t) ∈ ℂᵖ&lt;/code&gt; represents the &lt;code&gt;p&lt;/code&gt; outputs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It&amp;rsquo;s made up of four learnable matrices: &lt;strong&gt;A&lt;/strong&gt;, &lt;strong&gt;B&lt;/strong&gt;, &lt;strong&gt;C&lt;/strong&gt; and &lt;strong&gt;D&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;A ∈ ℂⁿˣⁿ&lt;/code&gt; is the state matrix (controlling the latent state &lt;code&gt;x&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;B ∈ ℂⁿˣᵐ&lt;/code&gt; is the control matrix&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C ∈ ℂᵖˣⁿ&lt;/code&gt; is the output matrix&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;D ∈ ℂᵖˣᵐ&lt;/code&gt; is the command matrix&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This can be reduced to the following system of equations:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;x&amp;#39;(t) = Ax(t) + Bu(t) y(t) = Cx(t) + Du(t)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;In deep learning SSMs, &lt;code&gt;Du = 0&lt;/code&gt; is seen as an easily computable &lt;em&gt;skip connection&lt;/em&gt;, simplifying to:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;x&amp;#39;(t) = Ax(t) + Bu(t) y(t) = Cx(t)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;This system is continuous and must be discretized before being supplied to a computer.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-discretization"&gt;🔄 &lt;strong&gt;Discretization&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;Discretization is one of, if not the most important point in SSM. All the efficiency of this
+architecture lies in this step, since it enables us to pass from the continuous view of the SSM
+to its two other views: the &lt;strong&gt;recursive view&lt;/strong&gt; and the &lt;strong&gt;convolutive view&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;If there&amp;rsquo;s one thing to remember from this article, it&amp;rsquo;s this.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll see in later &lt;a class="link" href="https://huggingface.co/blog/lbourdois/ssm-2022" target="_blank" rel="noopener"
+&gt;articles&lt;/a&gt; that there are
+several possible discretizations. This is one of the main differences between the various existing SSM architectures.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-recursive-view-of-an-ssm"&gt;🔁 &lt;strong&gt;Recursive view of an SSM&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;To discretize the continuous case, let&amp;rsquo;s use the &lt;a class="link" href="https://en.wikipedia.org/wiki/Trapezoidal_rule" target="_blank" rel="noopener"
+&gt;trapezoid
+method&lt;/a&gt; where the principle is to assimilate the
+region under the representative curve of a function &lt;code&gt;f&lt;/code&gt; defined on a segment &lt;code&gt;[tₙ, tₙ₊₁]&lt;/code&gt; to a trapezoid.&lt;/p&gt;
+&lt;p&gt;Through mathematical derivation using the trapezoid method, we obtain our discretized SSM:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Ā = (I - Δ/2 A)⁻¹(I + Δ/2 A) B̄ = (I - Δ/2 A)⁻¹Δ
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;C̄ =
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;We then have:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;xₖ = Āxₖ₋₁ + B̄u yₖ = C̄x
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The notation of matrices with a bar was introduced in S4 to designate matrices in the discrete
+case and has since become a convention in the field of SSM applied to deep learning.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-convolutive-view-of-an-ssm"&gt;🌊 &lt;strong&gt;Convolutive view of an SSM&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;This recurrence can be written as a convolution. By iterating the equations of the system:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Step 0: `x₀ = B̄u₀&lt;/li&gt;
+&lt;li&gt;Step 1: `x₁ = ĀB̄u₀ + B̄u&lt;/li&gt;
+&lt;li&gt;Step 2: `x₂ = Ā²B̄u₀ + ĀB̄u₁ + B̄&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We can observe the convolution kernel:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;K̄ₖ = (C̄B̄, C̄ĀB̄, ...,
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;This convolution kernel is calculated by &lt;a class="link" href="https://en.wikipedia.org/wiki/Fast_Fourier_transform" target="_blank" rel="noopener"
+&gt;Fast Fourier
+Transform&lt;/a&gt; (FFT) and will be explained in future articles.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-advantages-and-limitations-of-each-of-the-three-views"&gt;⚖️ &lt;strong&gt;Advantages and limitations of each of the three views&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://github.com/lbourdois/blog/assets/58078086/cb2dca34-9a3e-481a-8773-2360a1ceaa1c"
+loading="lazy"
+alt="Three Views Comparison"
+&gt;
+&lt;em&gt;Figure 3: Image from the paper &amp;ldquo;Combining Recurrent, Convolutional, and Continuous-time Models
+with Linear State-Space Layers&amp;rdquo; by Albert GU et al.&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="continuous-view"&gt;&lt;strong&gt;Continuous View&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;✅ &lt;strong&gt;Advantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Automatically handles continuous data (audio signals, time series)&lt;/li&gt;
+&lt;li&gt;Mathematically feasible analysis&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;❌ &lt;strong&gt;Disadvantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Extremely slow for both training and inference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="recursive-view"&gt;&lt;strong&gt;Recursive View&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;✅ &lt;strong&gt;Advantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Natural inductive bias for sequential data&lt;/li&gt;
+&lt;li&gt;Efficient inference (constant-time state updates)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;❌ &lt;strong&gt;Disadvantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Slow learning (lack of parallelism)&lt;/li&gt;
+&lt;li&gt;Gradient disappearance or explosion with long sequences&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="convolutional-view"&gt;&lt;strong&gt;Convolutional View&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;✅ &lt;strong&gt;Advantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Local, interpretable features&lt;/li&gt;
+&lt;li&gt;Efficient (parallelizable) training&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;❌ &lt;strong&gt;Disadvantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Slow in online or autoregressive contexts&lt;/li&gt;
+&lt;li&gt;Fixed context size&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Key Insight:&lt;/strong&gt; We can switch between views depending on the stage (training vs inference) and
+data type to maximize model efficiency.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-learning-matrices"&gt;🧠 &lt;strong&gt;Learning matrices&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;In the convolution kernel, &lt;code&gt;C̄&lt;/code&gt; (row vector) and &lt;code&gt;B̄&lt;/code&gt; (column vector) are learnable. For &lt;code&gt;Ā&lt;/code&gt;, w
+need it to be efficiently computable as powers. The best option is to have it diagonal:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;A = [λ₁ 0 ⋯ 0 ] ⟹ Aᵏ = [λ₁ᵏ 0 ⋯ 0 ] [0 λ₂ ⋯ 0 ] [0 λ₂ᵏ ⋯ 0 ]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; [⋮ ⋮ ⋱ ⋮ ] [⋮ ⋮ ⋱ ⋮ ] [0 0 ⋯ λₙ] [0 0 ⋯ λₙᵏ]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="hippo-matrix"&gt;&lt;strong&gt;HiPPO Matrix&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;Empirically, an SSM initialized with a random &lt;code&gt;A&lt;/code&gt; matrix leads to poor results, whereas
+initialization based on the &lt;strong&gt;HiPPO&lt;/strong&gt; matrix (&lt;em&gt;High-Order Polynomial Projection Operator&lt;/em&gt;) gives
+excellent results (from 60% to 98% on the MNIST sequential benchmark).&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;HiPPO-LegT&lt;/strong&gt; matrix formula is:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Aₙₖ = { (-1)ⁿ⁻ᵏ(2k+1) if n &amp;gt; k
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; k+1 if n = k 0 if n &amp;lt; k
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;This matrix is not normal, but can be decomposed as a normal matrix plus a matrix of lower rank
+(NPLR for &lt;em&gt;Normal Plus Low Rank&lt;/em&gt;). The authors prove this can be computed efficiently via:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Truncated generating series&lt;/li&gt;
+&lt;li&gt;Cauchy kernels&lt;/li&gt;
+&lt;li&gt;Woodbury identity&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-experimental-results"&gt;📊 &lt;strong&gt;Experimental results&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;Let&amp;rsquo;s analyze S4&amp;rsquo;s performance across various benchmarks:&lt;/p&gt;
+&lt;h3 id="audio-speech-commands"&gt;&lt;strong&gt;Audio: Speech Commands&lt;/strong&gt;
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Parameters&lt;/th&gt;
+&lt;th&gt;Accuracy&lt;/th&gt;
+&lt;th&gt;16K→8K Transfer&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ConvNet&lt;/td&gt;
+&lt;td&gt;85M&lt;/td&gt;
+&lt;td&gt;95.4%&lt;/td&gt;
+&lt;td&gt;Poor&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;S4&lt;/td&gt;
+&lt;td&gt;1M&lt;/td&gt;
+&lt;td&gt;98.3%&lt;/td&gt;
+&lt;td&gt;95% retained&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Key Insights:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;S4 achieves +13% better performance with 85× fewer parameters&lt;/li&gt;
+&lt;li&gt;Excellent transfer learning due to continuous view (simply halve Δ)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="time-series-performance"&gt;&lt;strong&gt;Time Series Performance&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;S4 outperformed the Informer transformer on 40 of 50 configurations in univariate time series forecasting.&lt;/p&gt;
+&lt;h3 id="vision-scifar-10"&gt;&lt;strong&gt;Vision: sCIFAR-10&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;S4 established state-of-the-art on sCIFAR-10 with just 100,000 parameters.&lt;/p&gt;
+&lt;h3 id="text-long-range-arena"&gt;&lt;strong&gt;Text: Long Range Arena&lt;/strong&gt;
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Task&lt;/th&gt;
+&lt;th&gt;S4 Performance&lt;/th&gt;
+&lt;th&gt;Notes&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Path-X (16K)&lt;/td&gt;
+&lt;td&gt;First to succeed&lt;/td&gt;
+&lt;td&gt;Demonstrates long-sequence capability&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Overall LRA&lt;/td&gt;
+&lt;td&gt;Strong performance&lt;/td&gt;
+&lt;td&gt;6 task benchmark&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Notable Achievement:&lt;/strong&gt; S4 was the first model to solve Path-X with 16K tokens. It took over 2
+years before transformers could match this, and they still cannot handle PathX-256 (65K tokens).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Limitation:&lt;/strong&gt; Higher perplexity than transformers on WikiText-103, likely due to text&amp;rsquo;s
+non-continuous nature.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 &lt;strong&gt;Conclusion&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;SSMs are versatile models with three complementary views:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Continuous view&lt;/strong&gt; for mathematical analysis and irregular sampling&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recursive view&lt;/strong&gt; for efficient inference&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Convolutional view&lt;/strong&gt; for parallel training&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="key-strengths"&gt;&lt;strong&gt;Key Strengths:&lt;/strong&gt;
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;🚀 Handle very long sequences efficiently&lt;/li&gt;
+&lt;li&gt;💡 Lower parameter count than alternatives&lt;/li&gt;
+&lt;li&gt;🔄 Versatile across modalities (text, vision, audio, time-series)&lt;/li&gt;
+&lt;li&gt;⚡ Fast training and inference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="future-directions"&gt;&lt;strong&gt;Future Directions:&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;The main differences between SSM architectures lie in:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Discretization methods&lt;/li&gt;
+&lt;li&gt;Definition of the &lt;strong&gt;A&lt;/strong&gt; matrix&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As we&amp;rsquo;ll see in future articles, these fundamental concepts have evolved significantly, leading
+to even more powerful architectures.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/lbourdois/get-on-the-ssm-train" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/lbourdois/get-on-the-ssm-train&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;State Space Models represent a fundamental shift in sequence modeling, offering a mathematically
+principled approach that bridges continuous dynamical systems with discrete deep learning.
+Their ability to switch between different computational views makes them uniquely suited for
+modern AI applications requiring both efficiency and long-range dependencies.&lt;/p&gt;
+&lt;p&gt;The journey from neuroscience observations to practical deep learning architectures demonstrates
+the power of interdisciplinary research in advancing AI capabilities.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#STATESPACENODELS #DEEPLEARNING #SEQUENCEMODELING #S4 #LONGRANGEDEPENDENCIES #NEURALNETWORKS
+#AI #MACHINELEARNING&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;MCP Server used:&lt;/strong&gt; No MCP servers were utilized for this content conversion task, as it
+involved text processing and markdown formatting rather than tool-specific operations.&lt;/p&gt;</description></item></channel></rss>

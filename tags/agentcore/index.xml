@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AgentCore on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/agentcore/</link><description>Recent content in AgentCore on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 05 Sep 2026 22:02:16 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/agentcore/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore Adds Memory Lifecycle Policies for Long‑Running Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-memory-lifecycle-policies-for-longrunning-agents/</link><pubDate>Sat, 05 Sep 2026 22:02:16 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-memory-lifecycle-policies-for-longrunning-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Adds Memory Lifecycle Policies for Long‑Running Agents" /&gt;&lt;h1 id="amazon-bedrock-agentcore-adds-memory-lifecycle-policies-for-longrunning-agents"&gt;Amazon Bedrock AgentCore Adds Memory Lifecycle Policies for Long‑Running Agents
+&lt;/h1&gt;&lt;p&gt;Memory lifecycle policies help long‑running agents on Amazon Bedrock AgentCore stay effective by systematically managing what they remember and forget.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Agents generate memories from every conversation they conduct.&lt;/li&gt;
+&lt;li&gt;Without active management, agents accumulate outdated context, which can degrade response quality and create compliance risks.&lt;/li&gt;
+&lt;li&gt;Real‑world examples: a customer‑support agent referenced a billing dispute resolved four months earlier, and another agent repeated superseded deployment advice from an old runbook.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Memory storage&lt;/strong&gt;: AgentCore stores information using two primary strategies – &lt;strong&gt;Summary&lt;/strong&gt; and &lt;strong&gt;Episodic&lt;/strong&gt; – each as individual entries tied to specific agent‑user sessions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Additional categories&lt;/strong&gt;: Semantic and Procedural memories are also part of the model, with distinct retention needs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scoring formula&lt;/strong&gt;: A decay‑based score (0.0–1.0) balances three intuitions: recent memories matter, recently used memories matter more, and frequently retrieved memories add signal. Scores drop sharply in the first weeks then level off; an old memory accessed often can still score well.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-policy-mechanics"&gt;⚙️ Policy Mechanics
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;TTL expiration&lt;/strong&gt; runs first, automatically deleting records older than a configured time‑to‑live value.&lt;/li&gt;
+&lt;li&gt;AgentCore does not provide built‑in auto‑delete TTL, but it exposes system timestamp fields (&lt;code&gt;x‑amz‑agentcore‑memory‑createdAt&lt;/code&gt;) that support &lt;code&gt;BEFORE&lt;/code&gt; filters for pruning.&lt;/li&gt;
+&lt;li&gt;A pruner queries records with a &lt;code&gt;BEFORE&lt;/code&gt; filter, then deletes those beyond the TTL.&lt;/li&gt;
+&lt;li&gt;After TTL pruning, the scoring step flags records below a configurable threshold for consolidation or further pruning.&lt;/li&gt;
+&lt;li&gt;Default configuration: &lt;code&gt;pruneDays = 45&lt;/code&gt;, &lt;code&gt;threshold = 0.3&lt;/code&gt; → decay_rate ≈ 0.02676.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-memory-types--default-retention"&gt;📊 Memory Types &amp;amp; Default Retention
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Memory Type&lt;/th&gt;
+&lt;th&gt;Typical TTL (default)&lt;/th&gt;
+&lt;th&gt;Remarks&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Episodic&lt;/td&gt;
+&lt;td&gt;90 days&lt;/td&gt;
+&lt;td&gt;Stores raw session events&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Summary&lt;/td&gt;
+&lt;td&gt;30–60 days&lt;/td&gt;
+&lt;td&gt;Consolidated view of episodic data&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Semantic&lt;/td&gt;
+&lt;td&gt;6–12 months&lt;/td&gt;
+&lt;td&gt;Higher‑level concepts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Procedural&lt;/td&gt;
+&lt;td&gt;No TTL (retain indefinitely)&lt;/td&gt;
+&lt;td&gt;Reflections tied to episodic memory; lowest volume, highest value&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-deployment-guide"&gt;🚀 Deployment Guide
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A deployable architecture combines AgentCore memory, AWS Step Functions, and Amazon Bedrock to run a nightly lifecycle workflow.&lt;/li&gt;
+&lt;li&gt;By the end of the walkthrough you will have an AWS Cloud Development Kit (AWS CDK) stack and a framework for managing agent memory as a managed resource.&lt;/li&gt;
+&lt;li&gt;The complete code is available in the GitHub repository.&lt;/li&gt;
+&lt;li&gt;Targeted agents: high‑volume interaction bots such as customer‑support agents, sales advisors, and IT help‑desk bots.&lt;/li&gt;
+&lt;li&gt;For lower‑volume agents (e.g., personal assistants) you might start with simple TTL expiration and GDPR compliance alone.&lt;/li&gt;
+&lt;li&gt;All thresholds and TTLs are configurable to match the agent’s needs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Prevents outdated context from contaminating responses, protecting both quality and compliance.&lt;/li&gt;
+&lt;li&gt;Reduces unnecessary compute by pruning memories before scoring.&lt;/li&gt;
+&lt;li&gt;Provides a systematic, configurable approach to retain high‑value procedural knowledge while discarding stale information.&lt;/li&gt;
+&lt;li&gt;Enables long‑running agents to remain effective over weeks or months without manual intervention.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-3.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #AImemory #AWS #LLMops&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/designing-lifecycle-policies-for-agentcore-memory/" target="_blank" rel="noopener"
+&gt;Designing lifecycle policies for AgentCore memory | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS Expands Amazon Bedrock AgentCore with AI-DLC Reference Implementations</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-expands-amazon-bedrock-agentcore-with-ai-dlc-reference-implementations/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-expands-amazon-bedrock-agentcore-with-ai-dlc-reference-implementations/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-featured-image.png" alt="Featured image of post AWS Expands Amazon Bedrock AgentCore with AI-DLC Reference Implementations" /&gt;&lt;h1 id="aws-expands-amazon-bedrock-agentcore-with-ai-dlc-reference-implementations"&gt;AWS Expands Amazon Bedrock AgentCore with AI-DLC Reference Implementations
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore, a service for building, connecting, and optimizing agents at scale with any framework or model, now powers two new reference implementations that demonstrate AI-DLC construction phase patterns. AI-DLC positions AI as a central collaborator across the software development lifecycle, handling routine execution while humans retain oversight of critical decisions.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The two reference implementations cover:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Automated generation of Mermaid entity relationship diagrams from SQL schemas&lt;/li&gt;
+&lt;li&gt;Automated code security analysis through a multi-agent architecture&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Both implementations link to complete deployment instructions in their respective GitHub repositories.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;h3 id="mermaid-er-diagram-generator"&gt;Mermaid ER Diagram Generator
+&lt;/h3&gt;&lt;p&gt;This AWS Samples project auto-generates Mermaid ER diagrams from SQL schema files using an agentic AI workflow on Amazon Bedrock AgentCore.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Architecture components:&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;S3 event trigger&lt;/td&gt;
+&lt;td&gt;SQL files uploaded to Amazon S3 trigger an AWS Lambda function that initiates the analysis workflow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Cognito&lt;/td&gt;
+&lt;td&gt;Provides OAuth2 machine-to-machine (M2M) authentication&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS Systems Manager Parameter Store&lt;/td&gt;
+&lt;td&gt;Stores client credentials&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AgentCore runtime&lt;/td&gt;
+&lt;td&gt;Containerized agent built with the Strands framework&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AgentCore memory&lt;/td&gt;
+&lt;td&gt;Persistent session context with 90-day expiry, supports semantic search across previous analyses&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon S3&lt;/td&gt;
+&lt;td&gt;Output storage for generated .mmd files under dedicated prefix with metadata tracking&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Workflow:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQL file is uploaded to Amazon S3 (manually or through CI/CD pipeline)&lt;/li&gt;
+&lt;li&gt;Lambda trigger reads file content and authenticates through Cognito OAuth&lt;/li&gt;
+&lt;li&gt;Trigger invokes AgentCore runtime agent with SQL content as payload&lt;/li&gt;
+&lt;li&gt;Agent analyzes schema and identifies tables, columns, constraints, and foreign key relationships&lt;/li&gt;
+&lt;li&gt;Agent generates complete Mermaid erDiagram&lt;/li&gt;
+&lt;li&gt;Diagram is saved to Amazon S3 and analysis session is stored in AgentCore memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Key design decisions:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Chunked processing: Large SQL files split into manageable segments, analyzed independently, then consolidated&lt;/li&gt;
+&lt;li&gt;Structured prompting: Systematic analysis prompt extracts tables, columns, data types, primary keys, and foreign key relationships before generating diagram syntax&lt;/li&gt;
+&lt;li&gt;OpenTelemetry tracing: Every step instrumented with spans and attributes for observability into processing duration, chunk counts, and error attribution&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The agent uses Claude Sonnet 4 through Amazon Bedrock to parse SQL DDL statements. It reads only schema metadata (tables, constraints, and foreign keys), never row data.&lt;/p&gt;
+&lt;h3 id="automated-code-security-analysis"&gt;Automated Code Security Analysis
+&lt;/h3&gt;&lt;p&gt;The second implementation provides automated code security analysis through a multi-agent architecture that uses:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AgentCore Gateway&lt;/li&gt;
+&lt;li&gt;AgentCore memory&lt;/li&gt;
+&lt;li&gt;External tool integrations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This system analyzes code pushed through CI/CD pipelines, producing security assessments, Common Vulnerabilities and Exposures (CVE) checks, and policy compliance reports that inform human decision-making.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;Both systems share a common architectural foundation built on AgentCore, demonstrating how teams can compose AI-driven workflows from modular, manageable components.&lt;/p&gt;
+&lt;p&gt;The AI-DLC construction phase positions AI to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Propose architecture&lt;/li&gt;
+&lt;li&gt;Generate implementation plans&lt;/li&gt;
+&lt;li&gt;Produce code&lt;/li&gt;
+&lt;li&gt;Create deployment artifacts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Team members provide clarification on technical decisions in real time.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The complete implementation for the Mermaid ER diagram generator is available in its GitHub repository. The automated code security analysis implementation is also available with complete deployment instructions.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Database teams managing evolving SQL schemas need current entity relationship documentation. Manual creation of ER diagrams is time-intensive and documentation frequently drifts from the actual schema. When schema changes land through pull requests, teams need updated diagrams without adding manual documentation steps to the development workflow.&lt;/p&gt;
+&lt;p&gt;For security, continuous code quality enforcement through multi-agent systems ensures that assessments, CVE checks, and policy compliance reports inform human decision-making rather than replacing it.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-3.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #AIDLC #AIagents #DevOps #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/ai-driven-development-lifecycle-using-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;AI-driven development lifecycle using Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/set-up-openai-chatgpt-codex-with-litellm-on-amazon-ecs-and-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Set up OpenAI ChatGPT Codex with LiteLLM on Amazon ECS and Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/best-practices-for-building-agentic-automations-with-amazon-quick-automate/" target="_blank" rel="noopener"
+&gt;Best practices for building agentic automations with Amazon Quick Automate | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Bedrock AgentCore Payments Processes 20 Million Transactions Without Human Intervention</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-payments-processes-20-million-transactions-without-human-intervention/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-payments-processes-20-million-transactions-without-human-intervention/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21104-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Payments Processes 20 Million Transactions Without Human Intervention" /&gt;&lt;h1 id="amazon-bedrock-agentcore-payments-processes-20-million-transactions-without-human-intervention"&gt;Amazon Bedrock AgentCore Payments Processes 20 Million Transactions Without Human Intervention
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore payments, a capability of the Amazon Bedrock AgentCore platform, has processed over 20 million agent-initiated transactions without a single instance of human approval. Built in partnership with t54, the trust layer handles micropayments ranging from $0.001 to $0.01. These fast, high-volume calls occur at a rate that makes human review impossible, marking a significant step forward in autonomous agentic commerce.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock AgentCore is a platform designed to build, connect, and optimize agents at scale using any framework or model. To support transactions within this ecosystem, Amazon Bedrock AgentCore payments provides the underlying spending infrastructure, which manages session limits, credential isolation, and payment execution. Meanwhile, t54&amp;rsquo;s x402-secure provides trust intelligence through real-time endpoint and on-chain payment address scoring.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The underlying system relies on x402, an open payment standard that uses the HTTP 402 status code to let clients pay for APIs directly over HTTP.&lt;/p&gt;
+&lt;p&gt;When an agent calls a paid endpoint and receives a 402 response, Amazon Bedrock AgentCore payments handles the signing and settlement automatically. To ensure security, the agent does not handle private keys directly.&lt;/p&gt;
+&lt;p&gt;The end-to-end architecture is split across five lanes:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The application backend&lt;/li&gt;
+&lt;li&gt;The Amazon Bedrock AgentCore runtime (a capability of Amazon Bedrock AgentCore)&lt;/li&gt;
+&lt;li&gt;The Strands agent, featuring its deterministic trust gate&lt;/li&gt;
+&lt;li&gt;External paid services&lt;/li&gt;
+&lt;li&gt;Amazon Bedrock AgentCore payments&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Security and spending guardrails are enforced through strict role separation and real-time risk evaluations.&lt;/p&gt;
+&lt;h3 id="trustline-scoring-signals"&gt;Trustline Scoring Signals
+&lt;/h3&gt;&lt;p&gt;The scoring engine behind x402-secure, known as Trustline, evaluates five independent signals before any payment settles:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The blockchain history of the payment address&lt;/li&gt;
+&lt;li&gt;The legitimacy of the destination webpage&lt;/li&gt;
+&lt;li&gt;The service’s social media footprint&lt;/li&gt;
+&lt;li&gt;The API’s live health status&lt;/li&gt;
+&lt;li&gt;An aggregate risk score synthesized from the other four signals&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="role-separation-and-credentials"&gt;Role Separation and Credentials
+&lt;/h3&gt;&lt;p&gt;t54 enforces security through strict role separation using AWS Identity and Access Management (IAM), splitting the system across four roles. Under this configuration, the agent runtime can execute payments but cannot change its own limits, provision new wallets, or access credentials directly.&lt;/p&gt;
+&lt;p&gt;At invocation time, the agent receives only a session ID and an instrument ID. End-user wallet signing keys remain with the wallet provider, Coinbase, and the agent receives only a session-scoped token. Developer credentials are encrypted in AWS Secrets Manager through Amazon Bedrock AgentCore Identity (a capability of Amazon Bedrock AgentCore) and are never returned from APIs. If an agent exhausts its spending limit, it stops immediately.&lt;/p&gt;
+&lt;h3 id="core-system-components"&gt;Core System Components
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A platform to build, connect, and optimize agents at scale with any framework or model.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore payments&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A capability that provides session limits, credential isolation, and payment execution.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;t54&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Developer of trust infrastructure for agent payments.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;x402-secure&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A trust layer product that scores endpoints and on-chain payment addresses in real time.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;x402&lt;/td&gt;
+&lt;td style="text-align: left"&gt;An open payment standard allowing direct API payments over HTTP via 402 status codes.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Trustline&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The scoring engine behind x402-secure that evaluates five independent signals.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;ClawCredit&lt;/td&gt;
+&lt;td style="text-align: left"&gt;An agent-native credit facility that provides credit-backed funding within session limits.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore Identity&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A capability used to encrypt developer credentials in AWS Secrets Manager.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;For the full architecture, including IAM authentication, AWS Secrets Manager credential storage, and Amazon CloudWatch observability, see &amp;ldquo;Technical deep dive: AgentCore Payments and innovation in agentic commerce.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21104-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21104-2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21104-3-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #AgenticCommerce #Fintech #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-t54-built-a-trust-layer-with-amazon-bedrock-agentcore-payments/" target="_blank" rel="noopener"
+&gt;How t54 built a trust layer with Amazon Bedrock AgentCore payments | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Demystifying AI Agents: Understanding the Core Components of Agentic Systems</title><link>https://shoubhikbanerjee.github.io/blog/p/demystifying-ai-agents-understanding-the-core-components-of-agentic-systems/</link><pubDate>Tue, 28 Oct 2025 01:20:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/demystifying-ai-agents-understanding-the-core-components-of-agentic-systems/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Demystifying AI Agents: Understanding the Core Components of Agentic Systems" /&gt;&lt;h1 id="-demystifying-ai-agents-understanding-the-core-components-of-agentic-systems"&gt;🤖 Demystifying AI Agents: Understanding the Core Components of Agentic Systems
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;Amazon vice president and distinguished engineer Marc Brooker explains how agentic systems work
+under the hood — and how AWS&amp;rsquo;s new AgentCore framework implements their essential components.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/video-placeholder"
+loading="lazy"
+alt="Amazon Science Video"
+&gt;
+&lt;em&gt;Amazon vice president and distinguished engineer Marc Brooker on Amazon Bedrock AgentCore.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-rise-of-agentic-ai"&gt;🚀 The Rise of Agentic AI
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;&lt;a class="link" href="https://www.amazon.science/blog/agents" target="_blank" rel="noopener"
+&gt;Agents&lt;/a&gt;&lt;/strong&gt; are the trendiest topic in AI today, and
+with good reason. AI agents act on their users&amp;rsquo; behalf, autonomously doing things like making
+online purchases, building software, researching business trends, or booking travel. By taking
+generative AI out of the sandbox of the chat interface and allowing it to act directly on the
+world, agentic AI represents a leap forward in the power and utility of AI.&lt;/p&gt;
+&lt;p&gt;Agentic AI has been moving really fast: for example, one of the core building blocks of today&amp;rsquo;s
+agents, the &lt;strong&gt;model context protocol (MCP)&lt;/strong&gt;, is only a year old! As in any fast-moving field,
+there are many competing definitions, hot takes, and misleading opinions.&lt;/p&gt;
+&lt;p&gt;To cut through the noise, I&amp;rsquo;d like to describe the core components of an agentic AI system and
+how they fit together. Hopefully, when you&amp;rsquo;ve finished reading this post, agents won&amp;rsquo;t seem as
+mysterious. You&amp;rsquo;ll also understand why we made the choices we did in designing Amazon Web
+Services&amp;rsquo; &lt;strong&gt;Bedrock AgentCore&lt;/strong&gt;, a set of services and tools that lets customers quickly and
+easily design and build their own agentic AI systems.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-agentic-ecosystem"&gt;⚙️ The Agentic Ecosystem
+&lt;/h2&gt;&lt;p&gt;Definitions of the word &amp;ldquo;agent&amp;rdquo; abound, but I like a slight variation on the British programmer
+Simon Willison&amp;rsquo;s minimalist take:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;An agent runs models and tools in a loop to achieve a goal.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The user prompts an AI model (typically a large language model, or LLM) with the goal to be
+attained — say, booking a table at a restaurant near the theater where a movie is playing. Along
+with the goal, the model receives a list of the tools available to it, such as a database of
+restaurant locations or a record of the user&amp;rsquo;s food preferences. The model then plans how to
+achieve the goal and takes a first step by calling one of the tools. The tool provides a
+response, and based on that, the model calls a new tool. Through repetitions of this process,
+the agent ratchets toward accomplishment of the goal.&lt;/p&gt;
+&lt;h3 id="-core-components-of-an-agentic-system"&gt;🧩 Core Components of an Agentic System
+&lt;/h3&gt;&lt;p&gt;An agentic system needs a few core components:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A way to build the agent&lt;/strong&gt; - When you deploy an agent, you don&amp;rsquo;t want to have to code it
+from scratch. There are several agent development frameworks out there, but I&amp;rsquo;m partial to
+Amazon Web Services&amp;rsquo; own &lt;a class="link" href="https://github.com/awslabs/strands" target="_blank" rel="noopener"
+&gt;Strands Agents&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Somewhere to run the AI model&lt;/strong&gt; - A seasoned AI developer can download an open-weight LLM,
+but it takes expertise to do that right. It also takes expensive hardware that&amp;rsquo;s going to be
+poorly utilized for the average user.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Somewhere to run the agentic code&lt;/strong&gt; - With frameworks like Strands, the user creates code
+for an agent object with a defined set of functions. Most of those functions involve sending
+prompts to an AI model, but the code needs to run somewhere.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A mechanism for translating between the text-based LLM and tool calls&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A short-term memory&lt;/strong&gt; for tracking the content of agentic interactions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A long-term memory&lt;/strong&gt; for tracking the user&amp;rsquo;s preferences and affinities across sessions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A way to trace&lt;/strong&gt; the system&amp;rsquo;s execution, to evaluate the agent&amp;rsquo;s performance&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="-building-an-agent-the-react-model"&gt;🔧 Building an Agent: The ReAct Model
+&lt;/h2&gt;&lt;p&gt;It&amp;rsquo;s well known that asking an LLM to explain how it plans to approach a task improves its
+performance on that task. Such &amp;ldquo;chain-of-thought reasoning&amp;rdquo; is now ubiquitous in AI.&lt;/p&gt;
+&lt;p&gt;The analogue in agentic systems is the &lt;strong&gt;ReAct (reasoning + action) model&lt;/strong&gt;, in which the agent has:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;thought&lt;/strong&gt; (&amp;ldquo;I&amp;rsquo;ll use the map function to locate nearby restaurants&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;Performs an &lt;strong&gt;action&lt;/strong&gt; (issuing an API call to the map function)&lt;/li&gt;
+&lt;li&gt;Makes an &lt;strong&gt;observation&lt;/strong&gt; (&amp;ldquo;There are two pizza places and one Indian restaurant within two
+blocks of the movie theater&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![Agent Development Process](&lt;a class="link" href="https://assets.amazon.science/dims4/default/5f29cf3/2147483647/strip/true/crop/1080x1080&amp;#43;0&amp;#43;0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspo" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/5f29cf3/2147483647/strip/true/crop/1080x1080+0+0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspo&lt;/a&gt;
+t.s3.amazonaws.com%2Fscience%2F85%2F0b%2F3cd7bc80466c8ed52f56cd2cc5a8%2Fagent-development.gif)
+&lt;em&gt;AgentCore lets the developer use any agent development framework and any model.&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-tool-integration-and-code-generation"&gt;💡 Tool Integration and Code Generation
+&lt;/h3&gt;&lt;p&gt;The &lt;em&gt;tools&lt;/em&gt; available to the agent can include local tools and remote tools such as databases,
+microservices, and software as a service. A tool&amp;rsquo;s specification includes a natural-language
+explanation of how and when it&amp;rsquo;s used and the syntax of its API calls.&lt;/p&gt;
+&lt;p&gt;The developer can also tell the agent to build its own tools on the fly. For example, if a tool
+retrieves a table stored as comma-separated text and the agent needs to sort it, rather than
+waste resources sending it through an LLM repeatedly, the developer can instruct the agent to
+generate Python code for such repetitive tasks.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-runtime-architecture-firecracker-microvms"&gt;☁️ Runtime Architecture: Firecracker MicroVMs
+&lt;/h2&gt;&lt;p&gt;Historically, there were two main ways to isolate code running on shared servers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Containerization&lt;/strong&gt;: Efficient but offered lower security&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Virtual machines (VMs)&lt;/strong&gt;: Secure but came with computational overhead&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In 2018, Amazon Web Services&amp;rsquo; Lambda serverless-computing service deployed
+&lt;strong&gt;&lt;a class="link" href="https://firecracker-microvm.github.io/" target="_blank" rel="noopener"
+&gt;Firecracker&lt;/a&gt;&lt;/strong&gt;, a new paradigm offering the best of
+both worlds. Firecracker creates &amp;ldquo;microVMs&amp;rdquo; with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Complete hardware isolation&lt;/li&gt;
+&lt;li&gt;Their own Linux kernels&lt;/li&gt;
+&lt;li&gt;Reduced overhead (as low as a few megabytes)&lt;/li&gt;
+&lt;li&gt;Fast startup times (as low as a few milliseconds)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![AWS AgentCore Architecture](&lt;a class="link" href="https://assets.amazon.science/dims4/default/d90c4d6/2147483647/strip/true/crop/1080x1080&amp;#43;0&amp;#43;0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightsp" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/d90c4d6/2147483647/strip/true/crop/1080x1080+0+0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightsp&lt;/a&gt;
+ot.s3.amazonaws.com%2Fscience%2Fb4%2Fa5%2Ff5f50ee842a48ef1e9ea9c58e962%2Fadobe-express-agentcore
+-asw-scalable-10-16-toedit-11-45.gif)&lt;/p&gt;
+&lt;p&gt;AgentCore uses &lt;strong&gt;session-based isolation&lt;/strong&gt;, where every session with an agent is assigned its
+own Firecracker microVM. When the session finishes, the LLM&amp;rsquo;s state information is copied to
+long-term memory, and the microVM is destroyed.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-tool-calls-and-communication-protocols"&gt;🔗 Tool Calls and Communication Protocols
+&lt;/h2&gt;&lt;p&gt;![AgentCore Gateway](&lt;a class="link" href="https://assets.amazon.science/dims4/default/1df0f0b/2147483647/strip/true/crop/1038x584&amp;#43;0&amp;#43;0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazo" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/1df0f0b/2147483647/strip/true/crop/1038x584+0+0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazo&lt;/a&gt;
+naws.com%2Fscience%2Fe7%2F5e%2F7b3efa2447c2a1e24c2c15e0ed1e%2Fgateway.png)
+&lt;em&gt;AgentCore Gateway manages the tool calls issued by the agent.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Just as there are several existing development frameworks for agent creation, there are several
+existing standards for communication between agents and tools, the most popular of which is
+&lt;strong&gt;MCP (Model Context Protocol)&lt;/strong&gt;. MCP establishes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Standard format for passing data between the LLM and its server&lt;/li&gt;
+&lt;li&gt;A way for servers to describe available tools and data to the agent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In AgentCore, tool calls are handled by the &lt;strong&gt;AgentCore Gateway&lt;/strong&gt; service, which:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses MCP by default&lt;/li&gt;
+&lt;li&gt;Is configurable and supports a growing set of protocols&lt;/li&gt;
+&lt;li&gt;Manages translation between LLM output and tool input specifications&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-computer-use-capabilitie"&gt;🖥️ Computer Use Capabilitie
+&lt;/h3&gt;&lt;p&gt;Sometimes, the necessary tool lacks a public API. In such cases, the only way to retrieve data
+is by pointing and clicking on a website. &lt;strong&gt;Computer use&lt;/strong&gt; services like Amazon&amp;rsquo;s &lt;strong&gt;Nova Act&lt;/strong&gt;
+can be used with AgentCore&amp;rsquo;s secure Browser tool, making any website a potential tool for agents.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-memory-systems"&gt;🧠 Memory Systems
+&lt;/h2&gt;&lt;h3 id="short-term-memory"&gt;Short-term Memory
+&lt;/h3&gt;&lt;p&gt;LLMs are next-word prediction engines, with predictions based on long sequences of words they&amp;rsquo;ve
+seen, known as &lt;em&gt;context&lt;/em&gt;. However, agents need additional memory systems beyond just context.&lt;/p&gt;
+&lt;p&gt;For example, if an agent retrieves information about dozens of restaurants, it doesn&amp;rsquo;t want to
+dump all that data into the LLM&amp;rsquo;s context. Instead, it stores the complete list in &lt;strong&gt;short-term
+memory&lt;/strong&gt; and retrieves specific records based on user preferences and proximity.&lt;/p&gt;
+&lt;h3 id="long-term-memory"&gt;Long-term Memory
+&lt;/h3&gt;&lt;p&gt;Agents must remember prior interactions with clients. If a user previously specified food
+preferences, price tolerance, or ambiance preferences, the agent shouldn&amp;rsquo;t need to ask again.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Long-term memory&lt;/strong&gt; features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Storage of user preferences across sessions&lt;/li&gt;
+&lt;li&gt;LLM summarization and &amp;ldquo;chunking&amp;rdquo; of documents&lt;/li&gt;
+&lt;li&gt;Topic-based grouping for easier retrieval&lt;/li&gt;
+&lt;li&gt;Configurable strategies for summarization and information extraction&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-observability-and-monitoring"&gt;📊 Observability and Monitoring
+&lt;/h2&gt;&lt;p&gt;![AgentCore Observability](&lt;a class="link" href="https://assets.amazon.science/dims4/default/5ef3a72/2147483647/strip/true/crop/1023x615&amp;#43;0&amp;#43;0/resize/1200x721!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/5ef3a72/2147483647/strip/true/crop/1023x615+0+0/resize/1200x721!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3&lt;/a&gt;
+.amazonaws.com%2Fscience%2Fb7%2F8a%2F887ef82f4e0cbfa8a702eb7bac73%2Ftraces.png)
+&lt;em&gt;AgentCore Observability lets the customer track an agent&amp;rsquo;s execution.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Agents are a new kind of software system requiring new approaches to observation, monitoring,
+and auditing. Key questions include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Are agents running fast enough?&lt;/li&gt;
+&lt;li&gt;How much are they costing?&lt;/li&gt;
+&lt;li&gt;How many tool calls are they making?&lt;/li&gt;
+&lt;li&gt;Are users satisfied with the results?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In &lt;strong&gt;AgentCore Observability&lt;/strong&gt;, &lt;em&gt;traces&lt;/em&gt; provide an end-to-end view of session execution,
+breaking down step-by-step which actions were taken and why. These traces are essential for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Understanding agent performance&lt;/li&gt;
+&lt;li&gt;Providing data to improve agent effectiveness&lt;/li&gt;
+&lt;li&gt;Debugging and optimization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://www.amazon.science/blog/demystifying-agents" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/demystifying-agents&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;This explanation has demystified agentic AI by breaking down its core components: agent building
+frameworks, runtime infrastructure, tool communication protocols, memory systems, and
+observability tools. AWS&amp;rsquo;s &lt;strong&gt;AgentCore&lt;/strong&gt; provides a comprehensive platform implementing all
+these essential components, from &lt;strong&gt;Strands Agents&lt;/strong&gt; for development to &lt;strong&gt;Firecracker microVMs&lt;/strong&gt;
+for secure runtime isolation.&lt;/p&gt;
+&lt;p&gt;The future of AI lies in agents that can act autonomously on behalf of users, and understanding
+these fundamental building blocks is crucial for anyone looking to build or deploy agentic
+systems. Whether you&amp;rsquo;re booking restaurants, building software, or researching business trends,
+agents represent the next evolution of AI from passive chat interfaces to active, goal-oriented systems.&lt;/p&gt;
+&lt;p&gt;Ready to build your own agents? All the tools you need are available at the &lt;a class="link" href="https://aws.amazon.com/bedrock/agentcore/" target="_blank" rel="noopener"
+&gt;AgentCore
+website&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AWS #AI #AGENTS #BEDROCK #AGENTCORE #FIRECRACKER #CLOUDCOMPUTING #MACHINELEARNING #LLM
+#AGENTIC&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

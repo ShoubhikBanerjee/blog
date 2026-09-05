@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>FineTuning on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/finetuning/</link><description>Recent content in FineTuning on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 06 Jun 2025 21:06:08 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/finetuning/index.xml" rel="self" type="application/rss+xml"/><item><title>🤖 SmolVLA: Pushing Boundaries with Minimal Data—The Messy Reality of Robotics Model Fine-tuning</title><link>https://shoubhikbanerjee.github.io/blog/p/smolvla-pushing-boundaries-with-minimal-datathe-messy-reality-of-robotics-model-fine-tuning/</link><pubDate>Fri, 06 Jun 2025 21:06:08 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/smolvla-pushing-boundaries-with-minimal-datathe-messy-reality-of-robotics-model-fine-tuning/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/63ba99e3d90985e7acd820d8/GE2pqf3Hlj5G25kD-BnWg.png" alt="Featured image of post 🤖 SmolVLA: Pushing Boundaries with Minimal Data—The Messy Reality of Robotics Model Fine-tuning" /&gt;&lt;h1 id="-smolvla-pushing-boundaries-with-minimal-datathe-messy-reality-of-robotics-model-fine-tuning"&gt;🤖 SmolVLA: Pushing Boundaries with Minimal Data—The Messy Reality of Robotics Model Fine-tuning
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Summary&lt;/strong&gt;: Join me on day 2 of my practical journey with SmolVLA, where zero-shot inference hits roadblocks, leading to an experiment with minimal-data fine-tuning. This hands-on exploration reveals both the challenges and exciting possibilities of working with small-scale robotics models.&lt;/p&gt;
+&lt;h2 id="-from-theory-to-practice-the-smolvla-challenge"&gt;🧠 From Theory to Practice: The SmolVLA Challenge
+&lt;/h2&gt;&lt;p&gt;Yesterday, I was all theory and architectural diagrams. Today was supposed to be different—the day I&amp;rsquo;d finally see SmolVLA in action, performing zero-shot inference on a simple cube-stacking task. But as any seasoned AI practitioner knows, the gap between 𝘵𝘩𝘦𝘰𝘳𝘺 and 𝘱𝘳𝘢𝘤𝘵𝘪𝘤𝘦 often reveals itself in unexpected ways.&lt;/p&gt;
+&lt;p&gt;After setting up my test environment and preparing a straightforward prompt (&amp;ldquo;stack colored cubes&amp;rdquo;), I ran headfirst into a wall that many ML engineers will recognize: implementation friction.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Expectation: Model performs task zero-shot
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Reality: Library doesn&amp;#39;t support it yet 🤦‍♂️
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;It turns out the LeRobot library—while powerful—doesn&amp;rsquo;t currently expose the necessary configuration for zero-shot inference with the pre-trained SmolVLA model. Specifically, it needs access to the action and feature normalization statistics used during training, which remain hidden in the current implementation.&lt;/p&gt;
+&lt;p&gt;This is the unglamorous side of AI research that rarely makes headlines but occupies most of our time—technical limitations, library constraints, and the constant need to pivot.&lt;/p&gt;
+&lt;h2 id="-pivoting-to-plan-b-the-minimal-data-question"&gt;🔍 Pivoting to Plan B: The Minimal Data Question
+&lt;/h2&gt;&lt;p&gt;Rather than admitting defeat, I pivoted to an equally fascinating question:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;𝗛𝗼𝘄 𝗹𝗶𝘁𝘁𝗹𝗲 𝗱𝗮𝘁𝗮 𝗶𝘀 𝗲𝗻𝗼𝘂𝗴𝗵 𝗳𝗼𝗿 𝗦𝗺𝗼𝗹𝗩𝗟𝗔 𝘁𝗼 𝗽𝗲𝗿𝗳𝗼𝗿𝗺 𝗿𝗲𝗹𝗶𝗮𝗯𝗹𝘆?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This question touches on a core advantage of foundation models in robotics. Traditional policies might need dozens of trajectories to perform basic tasks reliably. But a pre-trained model like SmolVLA, having seen diverse tasks during pre-training, should theoretically require less task-specific data to adapt.&lt;/p&gt;
+&lt;p&gt;To test this hypothesis, I created a minimal dataset—just 10 trajectories of a robotic arm stacking a green cube on top of a blue one. For those interested in replicating or extending this work, I&amp;rsquo;ve made this dataset publicly available on my Hugging Face profile, along with dozens of other experimental datasets that might help you bootstrap your own models.&lt;/p&gt;
+&lt;p&gt;🔥 &lt;strong&gt;Key insight&lt;/strong&gt;: Data efficiency isn&amp;rsquo;t just about academic curiosity—it&amp;rsquo;s the practical difference between models that can quickly adapt to new tasks and those that require extensive retraining.&lt;/p&gt;
+&lt;h2 id="-the-fine-tuning-experiment-begins"&gt;🛠️ The Fine-tuning Experiment Begins
+&lt;/h2&gt;&lt;p&gt;With my micro-dataset prepared, I set up a fine-tuning pipeline to see if SmolVLA could learn consistent stacking behavior from just these few examples. This approach stands in stark contrast to traditional robotics programming, where each task would typically require explicit coding of movement sequences.&lt;/p&gt;
+&lt;p&gt;The process itself reveals several challenges worth noting:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Balancing transfer learning&lt;/strong&gt;: Too much adaptation to the new task risks catastrophic forgetting of the pre-trained knowledge&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Alignment issues&lt;/strong&gt;: Ensuring the model interprets prompts as intended when working with such limited data&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Evaluation complexity&lt;/strong&gt;: Determining meaningful success metrics beyond simple completion rates&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;While I don&amp;rsquo;t have results to share just yet—those will come in a follow-up post—the experimental design itself highlights how we&amp;rsquo;re pushing boundaries in low-resource robotics learning.&lt;/p&gt;
+&lt;h2 id="-whats-next-beyond-the-basics"&gt;🔮 What&amp;rsquo;s Next: Beyond the Basics
+&lt;/h2&gt;&lt;p&gt;Over the next several days, I&amp;rsquo;ll be running these fine-tuning experiments and analyzing the results in detail. My planned explorations include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Performance metrics&lt;/strong&gt;: How quickly does the model adapt? What&amp;rsquo;s the success rate after fine-tuning?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Failure analysis&lt;/strong&gt;: Identifying and categorizing interesting error cases that reveal model limitations&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Attention visualization&lt;/strong&gt;: Looking into the model&amp;rsquo;s &amp;ldquo;black box&amp;rdquo; by analyzing attention maps—what is it actually focused on during task execution?&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I&amp;rsquo;m particularly excited about this last point. Understanding what visual features drive the model&amp;rsquo;s decisions could provide invaluable insights for improving both model architecture and training approaches.&lt;/p&gt;
+&lt;h2 id="-final-thoughts-embracing-the-messy-reality"&gt;🌟 Final Thoughts: Embracing the Messy Reality
+&lt;/h2&gt;&lt;p&gt;Today&amp;rsquo;s work perfectly encapsulates the reality of cutting-edge AI research—plans change, libraries have limitations, and sometimes the most interesting questions emerge from initial failures.&lt;/p&gt;
+&lt;p&gt;While I didn&amp;rsquo;t get the zero-shot performance I&amp;rsquo;d hoped for, I&amp;rsquo;ve set up what might be an even more interesting experiment in extreme data efficiency. This shift from &amp;ldquo;can it do zero-shot?&amp;rdquo; to &amp;ldquo;how little data does it need?&amp;rdquo; represents the kind of adaptive thinking that drives real progress in AI.&lt;/p&gt;
+&lt;p&gt;As researchers and engineers working in this space, we&amp;rsquo;re constantly balancing theoretical ideals against practical constraints. It&amp;rsquo;s in navigating these tensions—not avoiding them—that we make meaningful advances.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll be back with results and deeper analysis in a few days. Until then, I&amp;rsquo;m curious: 𝘞𝘩𝘢𝘵 𝘥𝘰 𝘺𝘰𝘶 𝘵𝘩𝘪𝘯𝘬 𝘪𝘴 𝘵𝘩𝘦 𝘵𝘩𝘦𝘰𝘳𝘦𝘵𝘪𝘤𝘢𝘭 𝘮𝘪𝘯𝘪𝘮𝘶𝘮 𝘯𝘶𝘮𝘣𝘦𝘳 𝘰𝘧 𝘵𝘳𝘢𝘫𝘦𝘤𝘵𝘰𝘳𝘪𝘦𝘴 𝘯𝘦𝘦𝘥𝘦𝘥 𝘧𝘰𝘳 𝘢 𝘧𝘰𝘶𝘯𝘥𝘢𝘵𝘪𝘰𝘯 𝘮𝘰𝘥𝘦𝘭 𝘵𝘰 𝘢𝘥𝘢𝘱𝘵 𝘵𝘰 𝘢 𝘯𝘦𝘸 𝘵𝘢𝘴𝘬?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits : Originally posted here : &lt;a class="link" href="https://huggingface.co/blog/Beegbrain/daily-robotics-june-2" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/Beegbrain/daily-robotics-june-2&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#RoboticsAI #SmolVLA #TransferLearning #DataEfficiency #FoundationModels #AI #MachineLearning #RoboticVision #ZeroShotLearning #FineTuning #HuggingFace&lt;/p&gt;</description></item><item><title>Slashing Memory by 40%: How Liger GRPO Revolutionizes Language Model Fine-Tuning</title><link>https://shoubhikbanerjee.github.io/blog/p/slashing-memory-by-40-how-liger-grpo-revolutionizes-language-model-fine-tuning/</link><pubDate>Thu, 29 May 2025 18:57:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/slashing-memory-by-40-how-liger-grpo-revolutionizes-language-model-fine-tuning/</guid><description>&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/liger-grpo/image5.png" alt="Featured image of post Slashing Memory by 40%: How Liger GRPO Revolutionizes Language Model Fine-Tuning" /&gt;&lt;h1 id="-slashing-memory-by-40-how-liger-grpo-revolutionizes-language-model-fine-tuning"&gt;🐯 Slashing Memory by 40%: How Liger GRPO Revolutionizes Language Model Fine-Tuning
+&lt;/h1&gt;&lt;h3 id="-𝙎𝙪𝙢𝙢𝙖𝙧𝙮"&gt;📌 𝙎𝙪𝙢𝙢𝙖𝙧𝙮
+&lt;/h3&gt;&lt;p&gt;Liger now supercharges TRL&amp;rsquo;s Group Relative Policy Optimization (GRPO) Trainer with a remarkable 40% reduction in memory usage without sacrificing model quality. This technical breakthrough also brings full FSDP and PEFT support, making it easier than ever to scale reinforcement learning across multiple GPUs for language model fine-tuning.&lt;/p&gt;
+&lt;h2 id="-reinforcement-learning-for-language-models-evolution-not-revolution"&gt;🚀 Reinforcement Learning for Language Models: Evolution Not Revolution
+&lt;/h2&gt;&lt;p&gt;Fine-tuning language models with reinforcement learning has traditionally been a resource-intensive endeavor. The standard approach—Reinforcement Learning from Human Feedback (RLHF) with Proximal Policy Optimization (PPO)—demands significant computational resources, requiring multiple models to be loaded into memory simultaneously: policy, value, reward, and reference models.&lt;/p&gt;
+&lt;p&gt;The emergence of Group Relative Policy Optimization (GRPO) has been a game-changer, particularly with DeepSeek&amp;rsquo;s R1 model demonstrating its effectiveness. Unlike traditional RLHF, GRPO eliminates the need for pre-trained reward and value models, instead leveraging 𝘃𝗲𝗿𝗶𝗳𝗶𝗮𝗯𝗹𝗲 𝗿𝗲𝘄𝗮𝗿𝗱 𝗳𝘂𝗻𝗰𝘁𝗶𝗼𝗻𝘀 that can directly check output correctness without external reward models.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration above comparing GRPO vs PPO training pipelines&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;However, even with these improvements, reinforcement learning for language models remained memory-hungry—until now.&lt;/p&gt;
+&lt;h2 id="-the-memory-optimization-magic-how-liger-kernel-works"&gt;💾 The Memory Optimization Magic: How Liger Kernel Works
+&lt;/h2&gt;&lt;p&gt;The breakthrough lies in extending Liger&amp;rsquo;s Chunked Loss approach to the GRPO Loss calculation. This elegant solution avoids storing full logits in memory during each training step, which is typically a major contributor to peak memory usage when dealing with large vocabularies, extensive sequence lengths, or substantial batch sizes.&lt;/p&gt;
+&lt;p&gt;𝗛𝗼𝘄 𝗶𝘁 𝘄𝗼𝗿𝗸𝘀:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The input to the &lt;code&gt;lm_head&lt;/code&gt; is chunked across the batch dimension&lt;/li&gt;
+&lt;li&gt;Forward pass is executed one chunk at a time&lt;/li&gt;
+&lt;li&gt;Gradients for each loss chunk are calculated during the forward pass&lt;/li&gt;
+&lt;li&gt;These gradients are accumulated progressively through each chunk&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This isn&amp;rsquo;t just a minor optimization—it&amp;rsquo;s a fundamental rethinking of how memory is managed during training. The typical approach would still require all logits to be stored in GPU memory for the backward pass, but Liger&amp;rsquo;s implementation calculates gradients with respect to input chunks and &lt;code&gt;lm_head&lt;/code&gt; weights during the forward pass itself.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See visualization of the optimization process in the diagram above&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-plug-and-play-integration-with-trl"&gt;🔌 Plug-and-Play Integration with TRL
+&lt;/h2&gt;&lt;p&gt;The best part? Implementation is remarkably straightforward. With the integration of Liger GRPO into TRL (PR #3184), enabling these memory savings requires just a single parameter change:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;training_args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GRPOConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Qwen3-0.6B-GRPO&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;use_liger_loss&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Once you&amp;rsquo;ve installed TRL from source using:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install &amp;#34;trl[liger] @ git+https://github.com/huggingface/trl.git&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The full implementation is just a few lines of code away:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;trl&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;GRPOConfig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;GRPOTrainer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;datasets&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;load_dataset&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;train_dataset&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;load_dataset&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;trl-lib/tldr&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;train&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;training_args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GRPOConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Qwen3-0.6B-GRPO&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;use_liger_loss&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;reward_len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;completions&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nb"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;completion&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;completion&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;completions&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;trainer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GRPOTrainer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Qwen/Qwen3-0.6B-Instruct&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;reward_funcs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;reward_len&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;training_args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;train_dataset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;train_dataset&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;trainer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;train&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-impressive-results-memory-savings-without-compromise"&gt;📊 Impressive Results: Memory Savings Without Compromise
+&lt;/h2&gt;&lt;p&gt;The benchmarks speak volumes. Using Qwen3-0.6B as the policy model across various batch sizes with the gsm8k dataset:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Memory savings increase dramatically with larger batch sizes&lt;/li&gt;
+&lt;li&gt;Up to 40% reduction in peak memory usage compared to standard implementation&lt;/li&gt;
+&lt;li&gt;Rewards over training steps remain consistent with the standard TRL implementation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔥 𝗧𝗵𝗲 𝗸𝗲𝘆 𝘁𝗮𝗸𝗲𝗮𝘄𝗮𝘆: You get substantial memory savings with zero loss in model quality or training effectiveness.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See the peak memory usage comparison graphs for FP32 and BF16 training&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-scaling-to-new-heights-fsdp-peft-and-vllm-integration"&gt;🚂 Scaling to New Heights: FSDP, PEFT, and vLLM Integration
+&lt;/h2&gt;&lt;p&gt;Taking things further, Liger GRPO Loss now supports Fully Sharded Data Parallelism (FSDP) and Parameter-Efficient Fine-Tuning (PEFT), opening doors to distributed training across multiple GPUs or nodes.&lt;/p&gt;
+&lt;p&gt;The PEFT integration is particularly clever, as techniques like LoRA and QLoRA reduce memory requirements by only tuning smaller adapter weights. An added bonus: using PEFT with GRPO eliminates the need to load a separate reference model—you can access the original, unmodified model during training by simply disabling the LoRA adapters.&lt;/p&gt;
+&lt;p&gt;𝗧𝗵𝗲 𝗿𝗲𝘀𝘂𝗹𝘁𝘀 𝗮𝗿𝗲 𝗶𝗺𝗽𝗿𝗲𝘀𝘀𝗶𝘃𝗲:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.5x to 1.8x increase in maximum possible batch size&lt;/li&gt;
+&lt;li&gt;Seamless scaling across different Qwen3 model sizes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For even greater acceleration, Liger Loss integrates with TRL&amp;rsquo;s vLLM server for faster text generation during training. This three-step setup process is straightforward:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;🚀 Start the vLLM server on a dedicated GPU&lt;/li&gt;
+&lt;li&gt;🔧 Configure your training script with &lt;code&gt;use_vllm=True&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;🏃‍♂️ Launch training on a different GPU&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-the-future-of-efficient-rl-fine-tuning"&gt;🔮 The Future of Efficient RL Fine-Tuning
+&lt;/h2&gt;&lt;p&gt;With the memory efficiency of Liger-GRPO, combined with FSDP and PEFT support, fine-tuning language models using reinforcement learning is finally becoming accessible to researchers and developers with limited GPU resources. The 40% memory reduction means you can train larger models, use larger batch sizes, or run on less powerful hardware—all without sacrificing quality.&lt;/p&gt;
+&lt;p&gt;The implications are significant: more efficient model development cycles, lower cloud computing costs, and the ability to experiment with RL-based fine-tuning even without access to high-end hardware.&lt;/p&gt;
+&lt;p&gt;What might we achieve when reinforcement learning techniques become truly democratized across the AI community? As memory optimization techniques continue to evolve, will we see RL fine-tuning become as commonplace as supervised learning is today?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/liger-grpo" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/liger-grpo&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#ReinforcementLearning #LanguageModels #MachineLearning #GRPO #MemoryOptimization #FineTuning #LLMs #TRL #Liger #ML #AI #HuggingFace&lt;/p&gt;</description></item></channel></rss>

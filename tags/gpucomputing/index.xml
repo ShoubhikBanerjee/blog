@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPUComputing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/gpucomputing/</link><description>Recent content in GPUComputing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 31 May 2025 11:50:03 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/gpucomputing/index.xml" rel="self" type="application/rss+xml"/><item><title>🔥 Unlocking the Invisible: How LLMs Process Concurrent Requests Behind the Scenes</title><link>https://shoubhikbanerjee.github.io/blog/p/unlocking-the-invisible-how-llms-process-concurrent-requests-behind-the-scenes/</link><pubDate>Sat, 31 May 2025 11:50:03 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/unlocking-the-invisible-how-llms-process-concurrent-requests-behind-the-scenes/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/65263bfb3177c2a794997821/OiBhSOlKQCI2LCAJkZWa1.png" alt="Featured image of post 🔥 Unlocking the Invisible: How LLMs Process Concurrent Requests Behind the Scenes" /&gt;&lt;h1 id="-unlocking-the-invisible-how-llms-process-concurrent-requests-behind-the-scenes"&gt;🔥 Unlocking the Invisible: How LLMs Process Concurrent Requests Behind the Scenes
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;𝙎𝙪𝙢𝙢𝙖𝙧𝙮:&lt;/strong&gt; This deep dive explores the critical distinction between prefill and decode phases in LLM token generation—revealing how different batching strategies dramatically impact performance metrics. Learn why chunked prefill can boost throughput by 50% and how to balance the inherent tradeoffs between responsiveness and efficiency in production LLM systems.&lt;/p&gt;
+&lt;h2 id="-the-hidden-duality-of-llm-processing"&gt;🧠 The Hidden Duality of LLM Processing
+&lt;/h2&gt;&lt;p&gt;Ever wonder why your LLM chat sometimes pauses mid-sentence when another user joins? Or why the first response takes so much longer than subsequent tokens? The answer lies in understanding a fundamental duality in how Large Language Models process text.&lt;/p&gt;
+&lt;p&gt;At TNG, we manage a substantial LLM infrastructure—24 H100 GPUs supporting 50 applications, handling 5,000+ inferences hourly and generating over ten million tokens daily. This scale has taught us that performance optimization requires understanding what happens 𝘣𝘦𝘩𝘪𝘯𝘥 the scenes when multiple users interact with these models simultaneously.&lt;/p&gt;
+&lt;p&gt;When an LLM generates text, it operates in two distinct phases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;𝗣𝗿𝗲𝗳𝗶𝗹𝗹 𝗣𝗵𝗮𝘀𝗲:&lt;/strong&gt; Processing the entire prompt to generate the first output token&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;𝗗𝗲𝗰𝗼𝗱𝗲 𝗣𝗵𝗮𝘀𝗲:&lt;/strong&gt; Generating each subsequent token one by one&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration comparing prefill (parallel processing) versus decode (sequential processing) phases&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This distinction is far more consequential than most developers realize. It shapes everything from user experience to resource utilization to overall system throughput.&lt;/p&gt;
+&lt;h2 id="-metrics-that-matter-unpacking-latency-and-throughput"&gt;⏱️ Metrics That Matter: Unpacking Latency and Throughput
+&lt;/h2&gt;&lt;p&gt;The prefill/decode split directly impacts two critical performance metrics:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;𝙏𝙞𝙢𝙚 𝙩𝙤 𝙛𝙞𝙧𝙨𝙩 𝙩𝙤𝙠𝙚𝙣&lt;/strong&gt; (prefill latency) - The initial response time&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;𝙏𝙞𝙢𝙚 𝙥𝙚𝙧 𝙤𝙪𝙩𝙥𝙪𝙩 𝙩𝙤𝙠𝙚𝙣&lt;/strong&gt; (decode latency) - The cadence of subsequent tokens&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For interactive applications, users get frustrated if the first token takes more than 3 seconds to appear (they might think the system is broken) or if tokens generate slower than 3-10 tokens per second (slower than comfortable reading speed).&lt;/p&gt;
+&lt;p&gt;But there&amp;rsquo;s always a tradeoff. Some non-interactive applications might prioritize total token throughput over per-request latency—like when batch-processing translations or generating summaries for an entire code repository.&lt;/p&gt;
+&lt;p&gt;🔍 &lt;strong&gt;Resource Utilization Reality:&lt;/strong&gt; Prefill is compute-intensive (utilizing parallel processing across all input tokens), while decode is memory-bandwidth-limited (processing just one token at a time).&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See graph showing how throughput increases with concurrency until GPU compute power saturates&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This fundamental difference creates fascinating dynamics when multiple requests compete for resources.&lt;/p&gt;
+&lt;h2 id="-batching-strategies-static-vs-continuous"&gt;🚀 Batching Strategies: Static vs. Continuous
+&lt;/h2&gt;&lt;p&gt;When multiple users hit an LLM service simultaneously, the inference engine must decide how to process these concurrent requests. Two primary approaches exist:&lt;/p&gt;
+&lt;h3 id="1-static-batching-simple-but-inefficient"&gt;1. Static Batching: Simple But Inefficient
+&lt;/h3&gt;&lt;p&gt;Static batching processes requests in rigid groups—waiting for the entire batch to complete before starting the next one.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing how static batching processes batches in sequence&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This approach optimizes &amp;ldquo;time per output token&amp;rdquo; since decode phases run uninterrupted, but it creates terrible user experiences for anyone waiting for the next batch. Even worse, it wastes GPU resources since prefill (compute-intensive) and decode (memory-bound) operations can&amp;rsquo;t run concurrently to maximize hardware utilization.&lt;/p&gt;
+&lt;h3 id="2-continuous-batching-more-complex-but-smarter"&gt;2. Continuous Batching: More Complex But Smarter
+&lt;/h3&gt;&lt;p&gt;Most modern inference engines like vLLM implement continuous batching, where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Completed requests immediately free up batch slots&lt;/li&gt;
+&lt;li&gt;New requests enter as soon as space becomes available&lt;/li&gt;
+&lt;li&gt;Prefill and decode operations can run simultaneously&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But this creates a new challenge: 𝘩𝘰𝘸 should prefill and decode operations share resources when running concurrently?&lt;/p&gt;
+&lt;h2 id="-the-breakthrough-chunked-prefill"&gt;🧩 The Breakthrough: Chunked Prefill
+&lt;/h2&gt;&lt;p&gt;The default &amp;ldquo;prefill-first&amp;rdquo; strategy prioritizes new requests, minimizing time to first token. However, this creates an unfortunate side effect: whenever a new request arrives, ongoing decode operations get interrupted—users experience this as sudden pauses in their text generation.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing how prefill operations interrupt decode operations&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The elegant solution? &lt;strong&gt;𝗖𝗵𝘂𝗻𝗸𝗲𝗱 𝗽𝗿𝗲𝗳𝗶𝗹𝗹&lt;/strong&gt; 🔥&lt;/p&gt;
+&lt;p&gt;Rather than processing an entire prompt in one massive operation, we break it into smaller chunks. This creates multiple benefits:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Concurrent decode operations can progress between prefill chunks&lt;/li&gt;
+&lt;li&gt;Users experience slowdowns rather than complete pauses&lt;/li&gt;
+&lt;li&gt;𝗧𝗼𝘁𝗮𝗹 𝘁𝗵𝗿𝗼𝘂𝗴𝗵𝗽𝘂𝘁 𝗶𝗻𝗰𝗿𝗲𝗮𝘀𝗲𝘀 𝗯𝘆 𝟱𝟬% by better balancing compute and memory resources&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing how chunked prefill allows more decode operations to proceed&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Chunk size becomes a tunable parameter to balance competing priorities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;𝘚𝘮𝘢𝘭𝘭𝘦𝘳 chunks → Better decode performance (smoother token generation)&lt;/li&gt;
+&lt;li&gt;𝘓𝘢𝘳𝘨𝘦𝘳 chunks → Faster time to first token&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Default chunk sizes typically range from 512 to 8192 tokens, but the optimal value depends on your specific workload patterns.&lt;/p&gt;
+&lt;h2 id="-key-insights-for-llm-engineers"&gt;🌟 Key Insights for LLM Engineers
+&lt;/h2&gt;&lt;p&gt;This exploration of prefill and decode phases reveals several practical insights:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Measure the right metrics&lt;/strong&gt; - Track both time-to-first-token and time-per-output-token to get a complete performance picture&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Consider your application type&lt;/strong&gt; - Interactive applications need to optimize for latency; batch applications should focus on throughput&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Enable chunked prefill&lt;/strong&gt; - This single optimization can boost throughput by 50% while improving user experience&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Tune chunk size thoughtfully&lt;/strong&gt; - Balance responsiveness against smoothness based on your users&amp;rsquo; needs&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The journey to optimized LLM performance doesn&amp;rsquo;t end here. In environments with unpredictable load patterns, finding the perfect chunk size remains challenging—which is why many practitioners stick with defaults that work well across diverse workloads.&lt;/p&gt;
+&lt;p&gt;What performance bottlenecks are you facing in your LLM deployments? Understanding the prefill/decode dynamic might just hold the key to solving them.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/tngtech/llm-performance-prefill-decode-concurrent-requests" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/tngtech/llm-performance-prefill-decode-concurrent-requests&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#LLMPerformance #AIOptimization #ConcurrentProcessing #MachineLearningInfrastructure #GPUComputing #TokenGeneration #BatchProcessing #AIEngineering #ModelInference #LLMScaling&lt;/p&gt;</description></item></channel></rss>

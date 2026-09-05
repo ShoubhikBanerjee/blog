@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AImemory on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/aimemory/</link><description>Recent content in AImemory on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 05 Sep 2026 22:02:16 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/aimemory/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore Adds Memory Lifecycle Policies for Long‑Running Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-memory-lifecycle-policies-for-longrunning-agents/</link><pubDate>Sat, 05 Sep 2026 22:02:16 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-memory-lifecycle-policies-for-longrunning-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Adds Memory Lifecycle Policies for Long‑Running Agents" /&gt;&lt;h1 id="amazon-bedrock-agentcore-adds-memory-lifecycle-policies-for-longrunning-agents"&gt;Amazon Bedrock AgentCore Adds Memory Lifecycle Policies for Long‑Running Agents
+&lt;/h1&gt;&lt;p&gt;Memory lifecycle policies help long‑running agents on Amazon Bedrock AgentCore stay effective by systematically managing what they remember and forget.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Agents generate memories from every conversation they conduct.&lt;/li&gt;
+&lt;li&gt;Without active management, agents accumulate outdated context, which can degrade response quality and create compliance risks.&lt;/li&gt;
+&lt;li&gt;Real‑world examples: a customer‑support agent referenced a billing dispute resolved four months earlier, and another agent repeated superseded deployment advice from an old runbook.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Memory storage&lt;/strong&gt;: AgentCore stores information using two primary strategies – &lt;strong&gt;Summary&lt;/strong&gt; and &lt;strong&gt;Episodic&lt;/strong&gt; – each as individual entries tied to specific agent‑user sessions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Additional categories&lt;/strong&gt;: Semantic and Procedural memories are also part of the model, with distinct retention needs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scoring formula&lt;/strong&gt;: A decay‑based score (0.0–1.0) balances three intuitions: recent memories matter, recently used memories matter more, and frequently retrieved memories add signal. Scores drop sharply in the first weeks then level off; an old memory accessed often can still score well.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-policy-mechanics"&gt;⚙️ Policy Mechanics
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;TTL expiration&lt;/strong&gt; runs first, automatically deleting records older than a configured time‑to‑live value.&lt;/li&gt;
+&lt;li&gt;AgentCore does not provide built‑in auto‑delete TTL, but it exposes system timestamp fields (&lt;code&gt;x‑amz‑agentcore‑memory‑createdAt&lt;/code&gt;) that support &lt;code&gt;BEFORE&lt;/code&gt; filters for pruning.&lt;/li&gt;
+&lt;li&gt;A pruner queries records with a &lt;code&gt;BEFORE&lt;/code&gt; filter, then deletes those beyond the TTL.&lt;/li&gt;
+&lt;li&gt;After TTL pruning, the scoring step flags records below a configurable threshold for consolidation or further pruning.&lt;/li&gt;
+&lt;li&gt;Default configuration: &lt;code&gt;pruneDays = 45&lt;/code&gt;, &lt;code&gt;threshold = 0.3&lt;/code&gt; → decay_rate ≈ 0.02676.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-memory-types--default-retention"&gt;📊 Memory Types &amp;amp; Default Retention
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Memory Type&lt;/th&gt;
+&lt;th&gt;Typical TTL (default)&lt;/th&gt;
+&lt;th&gt;Remarks&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Episodic&lt;/td&gt;
+&lt;td&gt;90 days&lt;/td&gt;
+&lt;td&gt;Stores raw session events&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Summary&lt;/td&gt;
+&lt;td&gt;30–60 days&lt;/td&gt;
+&lt;td&gt;Consolidated view of episodic data&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Semantic&lt;/td&gt;
+&lt;td&gt;6–12 months&lt;/td&gt;
+&lt;td&gt;Higher‑level concepts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Procedural&lt;/td&gt;
+&lt;td&gt;No TTL (retain indefinitely)&lt;/td&gt;
+&lt;td&gt;Reflections tied to episodic memory; lowest volume, highest value&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-deployment-guide"&gt;🚀 Deployment Guide
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A deployable architecture combines AgentCore memory, AWS Step Functions, and Amazon Bedrock to run a nightly lifecycle workflow.&lt;/li&gt;
+&lt;li&gt;By the end of the walkthrough you will have an AWS Cloud Development Kit (AWS CDK) stack and a framework for managing agent memory as a managed resource.&lt;/li&gt;
+&lt;li&gt;The complete code is available in the GitHub repository.&lt;/li&gt;
+&lt;li&gt;Targeted agents: high‑volume interaction bots such as customer‑support agents, sales advisors, and IT help‑desk bots.&lt;/li&gt;
+&lt;li&gt;For lower‑volume agents (e.g., personal assistants) you might start with simple TTL expiration and GDPR compliance alone.&lt;/li&gt;
+&lt;li&gt;All thresholds and TTLs are configurable to match the agent’s needs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Prevents outdated context from contaminating responses, protecting both quality and compliance.&lt;/li&gt;
+&lt;li&gt;Reduces unnecessary compute by pruning memories before scoring.&lt;/li&gt;
+&lt;li&gt;Provides a systematic, configurable approach to retain high‑value procedural knowledge while discarding stale information.&lt;/li&gt;
+&lt;li&gt;Enables long‑running agents to remain effective over weeks or months without manual intervention.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-3.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #AImemory #AWS #LLMops&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/designing-lifecycle-policies-for-agentcore-memory/" target="_blank" rel="noopener"
+&gt;Designing lifecycle policies for AgentCore memory | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

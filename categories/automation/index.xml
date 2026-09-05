@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Automation on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/automation/</link><description>Recent content in Automation on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 02:11:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/automation/index.xml" rel="self" type="application/rss+xml"/><item><title>Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards</title><link>https://shoubhikbanerjee.github.io/blog/p/lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards/</link><pubDate>Tue, 28 Oct 2025 02:11:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards" /&gt;&lt;h1 id="lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards-"&gt;Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards 🛠️🏆
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Repo:&lt;/strong&gt; &lt;a class="link" href="https://github.com/yifanzhang-pro/lanser-cli" target="_blank" rel="noopener"
+&gt;https://github.com/yifanzhang-pro/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Project Page:&lt;/strong&gt; &lt;a class="link" href="https://yifanzhang-pro.github.io/lanser-cli" target="_blank" rel="noopener"
+&gt;https://yifanzhang-pro.github.io/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-tldr-aka-the-elevator-pitch-with-bass"&gt;🎯 TL;DR (a.k.a. the elevator pitch with bass)
+&lt;/h2&gt;&lt;p&gt;LLMs guess. Language servers &lt;strong&gt;check&lt;/strong&gt;. &lt;strong&gt;Lanser-CLI&lt;/strong&gt; is the official implementation of
+&lt;em&gt;Language Server CLI Empowers Language Agents with Process Rewards&lt;/em&gt; — a CLI-first bridge between
+your coding agent and an LSP (e.g., Pyright). It turns IDE-grade facts (defs, refs, types,
+diagnostics, safe edits) into &lt;strong&gt;deterministic, replayable artifacts&lt;/strong&gt; and a &lt;strong&gt;process reward&lt;/strong&gt;
+that tells your agent it&amp;rsquo;s actually getting somewhere.&lt;/p&gt;
+&lt;p&gt;Less &amp;ldquo;trust me bro,&amp;rdquo; more &amp;ldquo;here are the receipts.&amp;rdquo;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-why-this-exists-and-why-your-agent-will-thank-you"&gt;🤔 Why this exists (and why your agent will thank you)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hallucinated APIs&lt;/strong&gt; and &lt;strong&gt;mislocalized edits&lt;/strong&gt; are the jump-scares of agent coding.&lt;/li&gt;
+&lt;li&gt;Language servers already compute &lt;em&gt;verifiable&lt;/em&gt; answers.&lt;/li&gt;
+&lt;li&gt;Agents need those answers in a form that&amp;rsquo;s &lt;strong&gt;deterministic, auditable, and safe to apply&lt;/strong&gt;
+—and they need &lt;strong&gt;shaped feedback&lt;/strong&gt; (XP!) on every step, not just the final diff.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Lanser-CLI&lt;/strong&gt; is the orchestration layer that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pins and speaks LSP like a pro&lt;/li&gt;
+&lt;li&gt;Emits byte-stable, hash-addressed &lt;strong&gt;Analysis Bundles&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Provides &lt;strong&gt;robust selectors&lt;/strong&gt; that survive edits&lt;/li&gt;
+&lt;li&gt;Wraps edits in a &lt;strong&gt;safety envelope&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Computes a &lt;strong&gt;process reward&lt;/strong&gt; so your agent stops flailing and starts leveling up&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-meme-level-overview"&gt;😂 Meme-level overview
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Language Agent:&lt;/strong&gt; &amp;ldquo;I renamed it.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Language Server:&lt;/strong&gt; &amp;ldquo;No you didn&amp;rsquo;t.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Lanser-CLI:&lt;/strong&gt; &amp;ldquo;Here&amp;rsquo;s the diff, the diagnostics delta, the safety check, and the hash. You&amp;rsquo;re
+welcome.&amp;rdquo;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-features-you-actually-want"&gt;⚙️ The features you actually want
+&lt;/h2&gt;&lt;h3 id="1-robust-selectors-goodbye-filelinecol-fragility"&gt;1) Robust Selectors (goodbye &lt;code&gt;file:line:col&lt;/code&gt; fragility)
+&lt;/h3&gt;&lt;p&gt;Address code by &lt;strong&gt;intent&lt;/strong&gt;, not just coordinates:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Symbolic&lt;/strong&gt;: &lt;code&gt;py://pkg.mod#Class.method:body&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AST path&lt;/strong&gt;: &lt;code&gt;ast://[module=pkg.mod]/[class=Class]/[def=method]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Content anchor&lt;/strong&gt;: &lt;code&gt;anchor://src/app.py#&amp;quot;def load_data(&amp;quot;?ctx=24&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;They &lt;strong&gt;relocate deterministically&lt;/strong&gt; as code changes. No more off-by-one chaos.&lt;/p&gt;
+&lt;h3 id="2-analysis-bundles-the-auditable-artifact"&gt;2) Analysis Bundles (the auditable artifact)
+&lt;/h3&gt;&lt;p&gt;Every command emits a JSON bundle that includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Resolved target + facts (defs/refs/hover/diags)&lt;/li&gt;
+&lt;li&gt;Environment capture (server version, position encoding, interpreter, config digest)&lt;/li&gt;
+&lt;li&gt;Stable &lt;strong&gt;&lt;code&gt;bundleId&lt;/code&gt;&lt;/strong&gt; (hash over canonicalized JSON)&lt;/li&gt;
+&lt;li&gt;Optional trace for &lt;strong&gt;offline replay&lt;/strong&gt; and CI audits&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-safety-envelope-because-prod-still-matters"&gt;3) Safety Envelope (because prod still matters)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Preview-first&lt;/strong&gt; for mutations (rename/code actions)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workspace jail&lt;/strong&gt; prevents writes outside project root&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Git-aware&lt;/strong&gt;: clean tree required unless overridden&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transactional apply&lt;/strong&gt; (atomic writes) + conflict reporting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4-process-rewards-xp-for-agents"&gt;4) Process Rewards (XP for agents)
+&lt;/h3&gt;&lt;p&gt;When your agent takes a step, it gets a &lt;strong&gt;score&lt;/strong&gt; shaped by:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Diagnostics going down&lt;/li&gt;
+&lt;li&gt;Safety checks passing&lt;/li&gt;
+&lt;li&gt;Selector ambiguity shrinking&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That&amp;rsquo;s feedback your planner can actually use—online and &lt;strong&gt;replayable&lt;/strong&gt; offline.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-60-second-tour-copypaste-these"&gt;🚀 60-second tour (copy/paste these)
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 0) Clone &amp;amp; explore&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone https://github.com/yifanzhang-pro/lanser-cliuv venv --python 3.12 .venv &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;source&lt;/span&gt; .venv/bin/activate
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uv pip install -e &lt;span class="s2"&gt;&amp;#34;.[dev]&amp;#34;&lt;/span&gt; lanser --help
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Inspect the environment and verify the orchestrator is healthy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser doctor
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Resolve a symbol definition via the selector DSL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser def py://lanser.cli#definition:def --json
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Run document diagnostics with deterministic bundles&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser diag src/lanser/cli.py@L1:C1 --json
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Preview a rename before applying workspace edits&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser rename py://lanser.cli#definition:def new_definition --json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Pro tip:&lt;/strong&gt; Everything above emits &lt;strong&gt;deterministic bundles&lt;/strong&gt; you can stash, diff, replay, and
+score.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-what-deterministic-actually-means-plain-english-edition"&gt;📊 What &amp;ldquo;deterministic&amp;rdquo; actually means (plain-English edition)
+&lt;/h2&gt;&lt;p&gt;When you freeze the workspace + server version + config, the same query yields the &lt;strong&gt;same
+bundle&lt;/strong&gt; with the &lt;strong&gt;same hash&lt;/strong&gt;. Lists are sorted deterministically; JSON is canonicalized
+before hashing. That&amp;rsquo;s why CI can trust it, and why offline replay works without re-running the server.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-under-the-hood-the-short-nerd-bit"&gt;🔧 Under the hood (the short nerd bit)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LSP lifecycle orchestration&lt;/strong&gt;: start/stop, capability negotiation, restarts with backoff&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single-flight cache&lt;/strong&gt;: dedup identical in-flight queries&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Position encoding sanity&lt;/strong&gt;: negotiates UTF-16 per LSP, handles UTF-8/&amp;ldquo;codepoint&amp;rdquo; IO
+correctly&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trace &amp;amp; replay&lt;/strong&gt;: optional JSON-RPC frame capture; regenerate byte-stable bundles offline&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Currently instantiated with Pyright for Python&lt;/strong&gt;; design is LSP-agnostic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-who-this-is-for"&gt;👥 Who this is for
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Agent developers&lt;/strong&gt; who want planning on &lt;strong&gt;facts&lt;/strong&gt; (not &amp;ldquo;hopefully correct&amp;rdquo; heuristics)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infra/CI owners&lt;/strong&gt; who want &lt;strong&gt;reproducible&lt;/strong&gt; static checks and safe automated edits&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Refactor wranglers&lt;/strong&gt; doing large-scale code moves with auditability&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-a-tiny-beforeafter-to-vibe-check-the-reward"&gt;📈 A tiny before/after to vibe-check the reward
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Before:&lt;/strong&gt; Agent renames function, diagnostics unchanged, selector ambiguous → low/negative
+reward.
+&lt;strong&gt;After:&lt;/strong&gt; Diagnostics drop, &lt;code&gt;prepareRename&lt;/code&gt; passes, ambiguity shrinks → &lt;strong&gt;positive reward&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The signal is simple on purpose: it&amp;rsquo;s &lt;strong&gt;shaping&lt;/strong&gt;, not a research paper in disguise. Your
+trainer/evaluator will thank you.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-faq-fast-and-slightly-feral"&gt;❓ FAQ (fast and slightly feral)
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Is this an IDE?&lt;/strong&gt; No. This is a &lt;strong&gt;CLI-first orchestrator&lt;/strong&gt; that makes language-server power
+usable by agents and CI.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Will it break my repo?&lt;/strong&gt; Mutations are preview-by-default, jailed, git-aware, and
+transactional. You&amp;rsquo;d have to try to make it spicy.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Does it only do Python?&lt;/strong&gt; Today&amp;rsquo;s demo rides with &lt;strong&gt;Pyright&lt;/strong&gt;. The design is &lt;strong&gt;LSP-agnostic&lt;/strong&gt;.
+Bring your favorite server via PRs.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Do I need to publish anything to use process rewards?&lt;/strong&gt; Nope. Rewards are computed from
+bundles you already produced. They&amp;rsquo;re replayable offline for evals.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-roadmap-ish-community-flavored"&gt;🗺️ Roadmap-ish (community-flavored
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;More LSP servers + language flavors&lt;/li&gt;
+&lt;li&gt;Richer selectors and ambiguity evidence&lt;/li&gt;
+&lt;li&gt;Expanded batch SDK for high-throughput agent farms&lt;/li&gt;
+&lt;li&gt;First-class eval harness using replayed bundles&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Want a thing? Open an issue. Even better: open a PR.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-try-it-on-your-codebase-today"&gt;🧪 Try it on your codebase today
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Clone the repo 2. Install Lanser-CLI&lt;/li&gt;
+&lt;li&gt;Point Lanser-CLI at a project 4. Run &lt;code&gt;lanser def&lt;/code&gt;, &lt;code&gt;lanser refs&lt;/code&gt;, &lt;code&gt;lanser diag&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Preview a &lt;code&gt;rename&lt;/code&gt; and watch the bundle + reward kick in&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;👉 &lt;strong&gt;Repo:&lt;/strong&gt; &lt;a class="link" href="https://github.com/yifanzhang-pro/lanser-cli" target="_blank" rel="noopener"
+&gt;https://github.com/yifanzhang-pro/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;⭐ &lt;strong&gt;Star it so your agent gets gains.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;🙌 &lt;strong&gt;Contribute memes, ideas, and code.&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Final punchline:&lt;/strong&gt; Tool-use shouldn&amp;rsquo;t be theatrical. With &lt;strong&gt;Lanser-CLI&lt;/strong&gt;, language servers
+become a &lt;strong&gt;ground truth API&lt;/strong&gt;, edits come with &lt;strong&gt;guardrails&lt;/strong&gt;, and agents get a &lt;strong&gt;scoreboard&lt;/strong&gt;
+for every step they take. Ship confidently; leave the guesswork to the ghosts.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/yifAI/lanser-cli" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/yifAI/lanser-cli&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Lanser-CLI represents a significant leap forward in bridging the gap between language servers
+and AI agents. By providing deterministic, auditable artifacts and process rewards, it
+transforms how agents interact with code - moving from guesswork to ground truth. The tool&amp;rsquo;s
+focus on safety, reproducibility, and shaped feedback makes it an essential addition to any
+serious agent development workflow.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re building coding agents, managing CI/CD pipelines, or conducting large-scale
+refactoring operations, Lanser-CLI offers the reliability and insight needed to operate
+confidently in production environments.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#LANGUAGESERVERS #AI #AGENTS #DEVTOOLS #CLI #PYTHON #LSP #AUTOMATION #REFACTORING #CICD&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Revolutionizing Warehouse Automation with Scientific Simulation</title><link>https://shoubhikbanerjee.github.io/blog/p/revolutionizing-warehouse-automation-with-scientific-simulation/</link><pubDate>Tue, 28 Oct 2025 00:57:43 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/revolutionizing-warehouse-automation-with-scientific-simulation/</guid><description>&lt;img src="https://assets.amazon.science/dims4/default/74f34e8/2147483647/strip/true/crop/200x200+0+0/resize/295x295!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2F5c%2F9c%2Fc55d484e6a1c2f088494895776c1%2Frevolutionizing-warehouse-automation-with-scientific-simulationqrcode" alt="Featured image of post Revolutionizing Warehouse Automation with Scientific Simulation" /&gt;&lt;h1 id="-revolutionizing-warehouse-automation-with-scientific-simulation"&gt;🏭 Revolutionizing Warehouse Automation with Scientific Simulation
+&lt;/h1&gt;&lt;p&gt;![Warehouse Automation Banner](&lt;a class="link" href="https://assets.amazon.science/dims4/default/74f34e8/2147483647/strip/true/crop/200x200&amp;#43;0&amp;#43;0/resize/295x295!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/74f34e8/2147483647/strip/true/crop/200x200+0+0/resize/295x295!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot&lt;/a&gt;.
+s3.amazonaws.com%2Fscience%2F5c%2F9c%2Fc55d484e6a1c2f088494895776c1%2Frevolutionizing-warehouse-
+automation-with-scientific-simulationqrcode)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Advanced sensor simulation platform enabling rapid warehouse optimization&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Modern warehouses operate as complex ecosystems of sensors, robots, and automated systems that
+must work in perfect harmony. The challenge of optimizing sensor placement and configuration has
+traditionally required weeks or months of physical prototyping - until now.&lt;/p&gt;
+&lt;h2 id="-the-challenge"&gt;🎯 The Challenge
+&lt;/h2&gt;&lt;p&gt;Modern warehouses rely on intricate networks of sensors to enable safe and efficient operations.
+These sensors must detect everything from packages and containers to robots and vehicles, often
+in changing environments with varying lighting conditions. For Amazon, the ability to detect
+barcodes efficiently is particularly crucial.&lt;/p&gt;
+&lt;p&gt;The Amazon Robotics ID (AR-ID) team faced a significant bottleneck: optimizing sensor placement
+required extensive physical prototyping and real-world testing, severely limiting their ability
+to explore innovative solutions rapidly.&lt;/p&gt;
+&lt;h2 id="-the-solution-sensor-workbench-swb"&gt;🚀 The Solution: Sensor Workbench (SWB)
+&lt;/h2&gt;&lt;p&gt;To transform this process, Amazon developed &lt;strong&gt;Sensor Workbench (SWB)&lt;/strong&gt;, a revolutionary sensor
+simulation platform built on NVIDIA&amp;rsquo;s Isaac Sim. This platform combines:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Parallel processing capabilities&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Physics-based sensor modeling&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;High-fidelity 3D environments&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SWB provides virtual testing environments that mirror real-world conditions with unprecedented
+accuracy, allowing teams to explore hundreds of configurations in the time it previously took to
+test just a few physical setups.&lt;/p&gt;
+&lt;h2 id="-three-key-innovations"&gt;⚙️ Three Key Innovations
+&lt;/h2&gt;&lt;h3 id="1-specialized-parallel-computing-architecture"&gt;1. Specialized Parallel-Computing Architecture
+&lt;/h3&gt;&lt;p&gt;The platform leverages NVIDIA&amp;rsquo;s Warp library with custom computation kernels to maximize GPU
+utilization. Key features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Persistent 3D objects&lt;/strong&gt; maintained in GPU memory&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transform updates&lt;/strong&gt; only when objects move&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;On-demand computations&lt;/strong&gt; triggered by parameter changes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Real-time performance&lt;/strong&gt; for immediate feedback&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This architecture enables complex calculations for multiple sensors simultaneously, providing
+instant feedback through immersive 3D visuals that represent the metrics barcode-detection
+machine-learning models need to function effectively.&lt;/p&gt;
+&lt;h3 id="2-custom-cad-to-openusd-pipeline"&gt;2. Custom CAD-to-OpenUSD Pipeline
+&lt;/h3&gt;&lt;p&gt;The second breakthrough involved developing a custom pipeline that automatically converts
+detailed warehouse models into optimized 3D assets:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;1:1 mapping&lt;/strong&gt; from SolidWorks models to USD stages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complete data extraction&lt;/strong&gt; including world transforms, mesh geometry, material properties,
+and joint information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Preserved hierarchy&lt;/strong&gt; maintaining the full assembly-and-part structure&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Modular organization&lt;/strong&gt; with separate USD layers for mesh, materials, joints, and transforms&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This approach ensures the converted USD file faithfully retains the asset structure, geometry,
+and visual fidelity of the original CAD model.&lt;/p&gt;
+&lt;h3 id="3-openusd-as-ground-truth"&gt;3. OpenUSD as Ground Truth
+&lt;/h3&gt;&lt;p&gt;The platform uses OpenUSD as the definitive source of truth throughout the entire simulation process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Custom schemas&lt;/strong&gt; extending beyond basic 3D-asset information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Real-time recording&lt;/strong&gt; of all scene activities directly into the USD stage&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complete state capture&lt;/strong&gt; including user interface elements and states&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Live synchronization&lt;/strong&gt; between simulation state and USD representation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This architecture ensures automatic adaptation when USD configurations change, creating a
+reliable source of truth that captures the complete simulation environment state.&lt;/p&gt;
+&lt;h2 id="-real-world-applications"&gt;🎬 Real-World Applications
+&lt;/h2&gt;&lt;p&gt;SWB has transformed how Amazon approaches warehouse sensor optimization:&lt;/p&gt;
+&lt;h3 id="rapid-evaluation-capabilities"&gt;Rapid Evaluation Capabilities
+&lt;/h3&gt;&lt;p&gt;Teams can now quickly evaluate sensor mounting positions and verify overall concepts in a
+fraction of the time previously required.&lt;/p&gt;
+&lt;h3 id="cross-functional-collaboration"&gt;Cross-Functional Collaboration
+&lt;/h3&gt;&lt;p&gt;The platform has become a powerful tool for collaboration, allowing engineers, scientists, and
+operational teams to work together in real time, visualizing and adjusting sensor configurations
+while immediately seeing the impact of their changes.&lt;/p&gt;
+&lt;h3 id="expanded-lighting-simulations"&gt;Expanded Lighting Simulations
+&lt;/h3&gt;&lt;p&gt;Due to initial success in barcode-reading scenarios, SWB&amp;rsquo;s capabilities have expanded to
+incorporate high-fidelity lighting simulations, enabling teams to iterate on new baffle and
+light designs while ensuring conditions remain safe for human eyes.&lt;/p&gt;
+&lt;h2 id="-future-enhancements"&gt;🔮 Future Enhancements
+&lt;/h2&gt;&lt;p&gt;Amazon is actively working on several exciting improvements:&lt;/p&gt;
+&lt;h3 id="advanced-sensor-integration"&gt;Advanced Sensor Integration
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Analytical models&lt;/strong&gt; combined with real-world measurement feedback&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Increased accuracy&lt;/strong&gt; and practical utility&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enhanced sensor simulation&lt;/strong&gt; capabilities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="ai-powered-optimization"&gt;AI-Powered Optimization
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AI-suggested sensor placements&lt;/strong&gt; for new station designs&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Novel configuration identification&lt;/strong&gt; that users might not consider&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated optimization&lt;/strong&gt; recommendations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="synthetic-data-generation-platform"&gt;Synthetic Data Generation Platform
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Comprehensive digital environment&lt;/strong&gt; for testing sensors and algorithms&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Diverse dataset generation&lt;/strong&gt; capturing full range of real-world conditions&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated validation&lt;/strong&gt; and training capabilities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at:
+&lt;a class="link" href="https://www.amazon.science/blog/revolutionizing-warehouse-automation-with-scientific-simulation" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/revolutionizing-warehouse-automation-with-scientific-simulation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Sensor Workbench represents a significant leap forward in warehouse automation development,
+demonstrating how sophisticated simulation tools can dramatically accelerate innovation in
+complex industrial systems. By combining advanced scientific computing with practical industrial
+applications, SWB has transformed sensor optimization from a months-long physical process into
+a rapid, iterative virtual experience.&lt;/p&gt;
+&lt;p&gt;The platform&amp;rsquo;s three core innovations - parallel-computing architecture, CAD-to-USD pipeline,
+and OpenUSD as ground truth - work together to create an unprecedented level of accuracy and
+efficiency in warehouse sensor simulation. As Amazon continues to enhance the system with new
+capabilities, SWB is poised to set new standards for warehouse automation and serve as a
+comprehensive platform for the future of industrial sensor optimization.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#WAREHOUSE #AUTOMATION #SIMULATION #ROBOTICS #AI #MACHINELEARNING #3DMODELING #NVIDIA
+#OPENSOURCEDATA #COMPUTERVISION&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Note: MCP servers were not utilized for this task as it involved converting provided HTML
+content to markdown format, which did not require additional data retrieval or external tool usage.&lt;/em&gt;&lt;/p&gt;</description></item><item><title>🚀 Unlocking AI Design Automation: How to Use Figma's MCP Server</title><link>https://shoubhikbanerjee.github.io/blog/p/unlocking-ai-design-automation-how-to-use-figmas-mcp-server/</link><pubDate>Fri, 06 Jun 2025 21:10:18 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/unlocking-ai-design-automation-how-to-use-figmas-mcp-server/</guid><description>&lt;img src="https://assets.apidog.com/blog-next/2025/03/Phi-4--2-.png" alt="Featured image of post 🚀 Unlocking AI Design Automation: How to Use Figma's MCP Server" /&gt;&lt;h1 id="-unlocking-ai-design-automation-how-to-use-figmas-mcp-server"&gt;🚀 Unlocking AI Design Automation: How to Use Figma&amp;rsquo;s MCP Server
+&lt;/h1&gt;&lt;h2 id="-summary"&gt;📊 Summary
+&lt;/h2&gt;&lt;p&gt;Discover how the Model Context Protocol (MCP) is revolutionizing design workflows by connecting Figma to AI tools. Learn to set up Figma-MCP in minutes and automate your design process with practical implementation steps and expert tips.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-ai-design-connection-understanding-mcp"&gt;🧠 The AI-Design Connection: Understanding MCP
+&lt;/h2&gt;&lt;p&gt;The line between design tools and artificial intelligence is blurring faster than most of us can keep up with. At the intersection of this exciting frontier sits the Model Context Protocol (MCP) – a technological bridge that&amp;rsquo;s fundamentally changing how designers interact with their tools.&lt;/p&gt;
+&lt;p&gt;𝗠𝗖𝗣 enables seamless communication between design platforms like Figma and large language models (LLMs), creating opportunities for automation that were science fiction just months ago. Rather than just creating static mockups, designers can now leverage AI to generate variations, implement components, and even create code – all from within their familiar design environment.&lt;/p&gt;
+&lt;p&gt;But what exactly makes this possible? 🤔&lt;/p&gt;
+&lt;h2 id="-what-is-figma-mcp-and-how-does-it-work"&gt;🔌 What is Figma-MCP and How Does It Work?
+&lt;/h2&gt;&lt;p&gt;Figma-MCP is an open-source server that implements the Model Context Protocol, essentially acting as a translator between your Figma designs and AI tools. Think of it as giving AI &amp;ldquo;eyes&amp;rdquo; to see and understand your design files.&lt;/p&gt;
+&lt;p&gt;The workflow functions through three key components:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;🔄 &lt;strong&gt;MCP Protocol&lt;/strong&gt; – The universal standard that structures how external applications connect to LLMs, allowing AI to read and manipulate design resources&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🎨 &lt;strong&gt;Figma API Integration&lt;/strong&gt; – The connection that provides AI tools access to your files, components, styles, and design elements&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🤖 &lt;strong&gt;AI-Driven Automation&lt;/strong&gt; – The resulting capability that enables everything from reading design data to generating components and code&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;𝑊ℎ𝑎𝑡 𝑚𝑎𝑘𝑒𝑠 𝑡ℎ𝑖𝑠 𝑠𝑜 𝑝𝑜𝑤𝑒𝑟𝑓𝑢𝑙 is that rather than AI merely suggesting changes, it can actually understand the context and structure of your designs. This means the AI can interpret complex relationships between components, recognize design patterns, and generate appropriate code that respects your design system.&lt;/p&gt;
+&lt;h2 id="-setting-up-figma-mcp-in-4-simple-steps"&gt;⚙️ Setting Up Figma-MCP in 4 Simple Steps
+&lt;/h2&gt;&lt;p&gt;Getting started with Figma-MCP is surprisingly straightforward. Let&amp;rsquo;s break it down into manageable steps:&lt;/p&gt;
+&lt;h3 id="1-gather-your-prerequisites"&gt;1️⃣ Gather Your Prerequisites
+&lt;/h3&gt;&lt;p&gt;Before diving in, make sure you have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Node.js (v16+)&lt;/li&gt;
+&lt;li&gt;npm (v7+) or pnpm (v8+)&lt;/li&gt;
+&lt;li&gt;A Figma account (Professional or Enterprise recommended)&lt;/li&gt;
+&lt;li&gt;A bit of patience 😉&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-obtain-your-figma-api-access-token"&gt;2️⃣ Obtain Your Figma API Access Token
+&lt;/h3&gt;&lt;p&gt;Your API token is your key to connecting Figma with the MCP server:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Sign up for Figma and log in&lt;/li&gt;
+&lt;li&gt;Install the Figma desktop app&lt;/li&gt;
+&lt;li&gt;Click your profile icon → Settings → Security → Personal Access Tokens&lt;/li&gt;
+&lt;li&gt;Generate a new token and give it a name (e.g., &lt;code&gt;Figma_MCP&lt;/code&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;🔒 &lt;strong&gt;Security Tip:&lt;/strong&gt; Never hardcode your token! Store it in an environment variable:
+&lt;code&gt;export FIGMA_API_TOKEN=&amp;quot;your_token_here&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="3-install-and-run-the-figma-mcp-server"&gt;3️⃣ Install and Run the Figma-MCP Server
+&lt;/h3&gt;&lt;p&gt;This is where the magic happens! The server acts as the middleware between Figma and your AI tools.&lt;/p&gt;
+&lt;h3 id="4-connect-to-ai-powered-tools"&gt;4️⃣ Connect to AI-Powered Tools
+&lt;/h3&gt;&lt;p&gt;Once your server is running (default port 3333), you can connect to AI tools like Cursor:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;In Cursor, navigate to Settings → MCP → Add New MCP Server&lt;/li&gt;
+&lt;li&gt;Choose SSE and enter your server URL (e.g., &lt;code&gt;http://localhost:3333&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;For other tools, add the config to your &lt;code&gt;mcpServers&lt;/code&gt; config file:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;mcpServers&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;figma-developer-mcp&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;command&amp;#34;: &amp;#34;npx&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;args&amp;#34;: [&amp;#34;-y&amp;#34;, &amp;#34;figma-developer-mcp&amp;#34;, &amp;#34;--stdio&amp;#34;],
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;env&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;FIGMA_API_KEY&amp;#34;: &amp;#34;&amp;lt;your-figma-api-key&amp;gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start="4"&gt;
+&lt;li&gt;Look for a green dot indicating successful connection&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;𝗡𝗼𝘄 𝗳𝗼𝗿 𝘁𝗵𝗲 𝗳𝘂𝗻 𝗽𝗮𝗿𝘁! With your connection established, you can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Select designs in Figma and copy links to them&lt;/li&gt;
+&lt;li&gt;In Cursor Composer, enable Agent Mode and paste your Figma link&lt;/li&gt;
+&lt;li&gt;Ask the AI to &amp;ldquo;Implement this Figma design in React&amp;rdquo; or &amp;ldquo;Convert this design into reusable UI components&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-pro-tips-for-maximizing-figma-mcp"&gt;💡 Pro Tips for Maximizing Figma-MCP
+&lt;/h2&gt;&lt;p&gt;To take your AI-design workflow to the next level:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔍 Use the MCP Inspector (&lt;code&gt;pnpm inspect&lt;/code&gt;) to debug server responses&lt;/li&gt;
+&lt;li&gt;📁 Leverage &lt;code&gt;get_file&lt;/code&gt; and &lt;code&gt;get_node&lt;/code&gt; commands to fetch specific Figma information&lt;/li&gt;
+&lt;li&gt;🔄 Take advantage of batch operations for more efficient workflows&lt;/li&gt;
+&lt;li&gt;🧩 Group components properly in Figma before sharing with AI for better results&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-beyond-design-apidog-mcp-server-for-api-workflows"&gt;🌐 Beyond Design: Apidog MCP Server for API Workflows
+&lt;/h2&gt;&lt;p&gt;The same MCP technology transforming design workflows is also revolutionizing API development through Apidog MCP Server. This parallel tool connects your API specifications to AI-powered IDEs, enabling you to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📝 Generate code, DTOs, and documentation directly from API specs&lt;/li&gt;
+&lt;li&gt;🔍 Use AI to search and analyze API structures&lt;/li&gt;
+&lt;li&gt;🔄 Maintain synchronization between your API and tests&lt;/li&gt;
+&lt;li&gt;🧩 Support multiple data sources simultaneously&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;𝙏𝙝𝙚 𝙗𝙚𝙖𝙪𝙩𝙮 𝙤𝙛 𝙩𝙝𝙚 𝙈𝘾𝙋 𝙚𝙘𝙤𝙨𝙮𝙨𝙩𝙚𝙢 is how it bridges the traditional gaps between design, development, and testing – creating a more unified workflow powered by AI.&lt;/p&gt;
+&lt;h2 id="-the-future-of-ai-powered-design"&gt;🔮 The Future of AI-Powered Design
+&lt;/h2&gt;&lt;p&gt;Figma-MCP and similar tools are just the beginning of what&amp;rsquo;s possible when we connect design tools to AI. The implications are profound:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Design systems that evolve and adapt based on usage patterns&lt;/li&gt;
+&lt;li&gt;Code that updates automatically when designs change&lt;/li&gt;
+&lt;li&gt;Accessibility improvements suggested and implemented through AI&lt;/li&gt;
+&lt;li&gt;Cross-platform compatibility handled through intelligent automation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The most exciting aspect isn&amp;rsquo;t just the time saved on repetitive tasks – it&amp;rsquo;s the creative possibilities that emerge when designers can focus on innovation while AI handles implementation details.&lt;/p&gt;
+&lt;p&gt;What creative challenges will you tackle when AI becomes your design partner? How might your workflow transform when the boundary between design and development blurs completely? 🤔&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/lynn-mikami/figma-mcp-server" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/lynn-mikami/figma-mcp-server&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#AIDesign #FigmaAutomation #ModelContextProtocol #DesignAutomation #APIWorkflows #AITools #TechInnovation #DesignWorkflow #DeveloperTools #DesignSystems&lt;/p&gt;</description></item><item><title>Breaking Barriers: How Holo1 Models Are Revolutionizing Web Automation Through Visual Understanding</title><link>https://shoubhikbanerjee.github.io/blog/p/breaking-barriers-how-holo1-models-are-revolutionizing-web-automation-through-visual-understanding/</link><pubDate>Fri, 06 Jun 2025 21:00:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/breaking-barriers-how-holo1-models-are-revolutionizing-web-automation-through-visual-understanding/</guid><description>&lt;img src="https://cdn-thumbnails.huggingface.co/social-thumbnails/blog/Hcompany/holo1.png" alt="Featured image of post Breaking Barriers: How Holo1 Models Are Revolutionizing Web Automation Through Visual Understanding" /&gt;&lt;h1 id="-breaking-barriers-how-holo1-models-are-revolutionizing-web-automation-through-visual-understanding"&gt;🌐 Breaking Barriers: How Holo1 Models Are Revolutionizing Web Automation Through Visual Understanding
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;𝗦𝘂𝗺𝗺𝗮𝗿𝘆&lt;/strong&gt;: H Company unveils Holo1, a groundbreaking family of open-source Action Vision Language Models specifically engineered for GUI automation. With unprecedented localization accuracy and cost-efficiency, these models power Surfer-H, a web-native agent that navigates browsers like humans do—all at a fraction of the cost of comparable solutions. This release represents a significant leap forward in making sophisticated web automation accessible to everyone.&lt;/p&gt;
+&lt;h2 id="-the-dawn-of-accessible-gui-automation"&gt;🚀 The Dawn of Accessible GUI Automation
+&lt;/h2&gt;&lt;p&gt;The gap between what humans can easily do on a screen and what machines can reliably automate has been frustratingly wide for years. While we effortlessly select dates on calendars, click specific buttons, or navigate complex web interfaces, teaching machines to do the same has remained surprisingly difficult—until now.&lt;/p&gt;
+&lt;p&gt;H Company has launched Holo1, a revolutionary family of Action Vision Language Models (VLMs) that finally bridges this gap with remarkable precision. These models—available in 3B and 7B parameter versions—are specifically designed for deep web UI understanding and precise element localization, achieving unprecedented accuracy in identifying and interacting with screen elements.&lt;/p&gt;
+&lt;p&gt;The larger Holo1-7B model achieves an impressive 76.2% average accuracy on common UI localization benchmarks, establishing it as the most capable small-size model in this domain. What makes this release particularly noteworthy is that both models are completely open-source and available on Hugging Face, democratizing access to these powerful capabilities.&lt;/p&gt;
+&lt;h2 id="-understanding-holo1-technical-architecture-and-capabilities"&gt;🧠 Understanding Holo1: Technical Architecture and Capabilities
+&lt;/h2&gt;&lt;p&gt;Holo1 builds on the Qwen2.5-VL architecture, making it fully compatible with the hugely popular Transformers library. This means implementing these powerful models into your existing workflows requires minimal adaptation.&lt;/p&gt;
+&lt;p&gt;The model excels at a critical task: understanding visual interfaces and precisely locating elements for interaction. Here&amp;rsquo;s how easy it is to implement:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;transformers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;AutoModelForImageTextToText&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AutoProcessor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;torch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Load the model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoModelForImageTextToText&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;Hcompany/Holo1-3B&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;torch_dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bfloat16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;attn_implementation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;flash_attention_2&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;device_map&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;auto&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Load the processor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;processor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoProcessor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Hcompany/Holo1-3B&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;What makes Holo1 particularly valuable is its ability to understand natural language instructions about GUI elements and translate them into precise pixel coordinates. For example, given an image of a calendar and the instruction &amp;ldquo;Select July 14th as the check-out date,&amp;rdquo; the model can identify exactly where to click.&lt;/p&gt;
+&lt;p&gt;To facilitate evaluation and further research, H Company has also released the 𝗪𝗲𝗯𝗖𝗹𝗶𝗰𝗸 benchmark, containing 1,639 human-like UI tasks that test a model&amp;rsquo;s ability to understand and interact with web interfaces.&lt;/p&gt;
+&lt;h2 id="-surfer-h-riding-the-web-like-a-human"&gt;🌊 Surfer-H: Riding the Web Like a Human
+&lt;/h2&gt;&lt;p&gt;While Holo1 provides the visual understanding component, Surfer-H brings everything together as a complete web automation agent. What sets Surfer-H apart is its approach to web interaction—it operates through the browser just like a human would, without relying on custom APIs or brittle wrapper libraries.&lt;/p&gt;
+&lt;p&gt;𝙎𝙪𝙧𝙛𝙚𝙧-𝙃 𝙞𝙨 𝙗𝙪𝙞𝙡𝙩 𝙖𝙧𝙤𝙪𝙣𝙙 𝙩𝙝𝙧𝙚𝙚 𝙠𝙚𝙮 𝙘𝙤𝙢𝙥𝙤𝙣𝙚𝙣𝙩𝙨:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;🧭 &lt;strong&gt;Policy Model&lt;/strong&gt; - Plans and orchestrates the agent&amp;rsquo;s behavior&lt;/li&gt;
+&lt;li&gt;🎯 &lt;strong&gt;Localizer Model&lt;/strong&gt; - Powered by Holo1, understands visual UIs for precise interactions&lt;/li&gt;
+&lt;li&gt;✅ &lt;strong&gt;Validator Model&lt;/strong&gt; - Confirms whether tasks are completed successfully&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This modular architecture performs the complete range of human-like web interactions: reading, thinking, clicking, scrolling, typing, and validating. The agent achieves an impressive 92.2% accuracy on real-world web tasks at only $0.13 per task—setting a new Pareto frontier in cost-efficient web navigation on the WebVoyager benchmark.&lt;/p&gt;
+&lt;h2 id="-the-economics-of-ai-automation"&gt;💰 The Economics of AI Automation
+&lt;/h2&gt;&lt;p&gt;The economic implications of Holo1 and Surfer-H are profound. Web automation has been one of AI&amp;rsquo;s most practical business applications, but until now, solutions have typically required a choice between affordability and performance.&lt;/p&gt;
+&lt;p&gt;By making Holo1 Action Models available as open-source on Hugging Face, H Company has dramatically shifted this equation. At $0.13 per task with over 92% accuracy, businesses can now implement automation solutions that were previously available only to those with deep pockets or extensive technical resources.&lt;/p&gt;
+&lt;p&gt;Consider the applications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🏢 Customer service teams automating repetitive web tasks&lt;/li&gt;
+&lt;li&gt;🛒 E-commerce businesses monitoring competitors and managing inventory&lt;/li&gt;
+&lt;li&gt;🔍 Research teams gathering data from multiple web sources&lt;/li&gt;
+&lt;li&gt;🧪 QA engineers testing web applications at scale&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The open-source nature of these models means that the community can continue to improve them, potentially closing the remaining accuracy gap while maintaining cost efficiency.&lt;/p&gt;
+&lt;h2 id="-what-this-means-for-the-future"&gt;🔮 What This Means for the Future
+&lt;/h2&gt;&lt;p&gt;The release of Holo1 and Surfer-H represents a significant milestone in the journey toward truly accessible AI-powered web automation. By combining high accuracy with low cost and open accessibility, H Company has created technologies that could fundamentally change how businesses interact with the web.&lt;/p&gt;
+&lt;p&gt;As these models continue to evolve through community contributions, we can expect to see increasingly sophisticated automation capabilities become available to an even wider audience. The days of painfully scripting web automation or paying premium prices for proprietary solutions may soon be behind us.&lt;/p&gt;
+&lt;p&gt;What&amp;rsquo;s particularly exciting is the potential for domain-specific fine-tuning. Imagine versions of Holo1 specially adapted for healthcare systems, educational platforms, or industry-specific web applications—each bringing the power of AI automation to specialized contexts.&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;🤔 Final Thoughts
+&lt;/h2&gt;&lt;p&gt;The Holo1 family of models and Surfer-H agent demonstrate that we&amp;rsquo;re entering a new era of AI-powered web automation—one where sophisticated visual understanding meets practical, affordable implementation. With open-source access and impressive performance metrics, these tools put previously elite capabilities into the hands of developers everywhere.&lt;/p&gt;
+&lt;p&gt;What will you build with these powerful new tools? How might your organization transform its approach to web automation with models that can see and understand interfaces just like humans do?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/Hcompany/holo1" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/Hcompany/holo1&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#WebAutomation #AIAgents #OpenSourceAI #ComputerVision #HumanlikeAI #GUIAutomation #MLOps #ActionVLMs #WebScraping #AutomationTechnology #Holo1 #SurferH #HuggingFace&lt;/p&gt;</description></item></channel></rss>

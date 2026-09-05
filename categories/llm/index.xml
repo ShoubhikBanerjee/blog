@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LLM on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/llm/</link><description>Recent content in LLM on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 06 Jun 2025 20:58:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/llm/index.xml" rel="self" type="application/rss+xml"/><item><title>🚀 PipelineRL: Breaking the Speed-Stability Tradeoff in LLM Reinforcement Learning</title><link>https://shoubhikbanerjee.github.io/blog/p/pipelinerl-breaking-the-speed-stability-tradeoff-in-llm-reinforcement-learning/</link><pubDate>Fri, 06 Jun 2025 20:58:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/pipelinerl-breaking-the-speed-stability-tradeoff-in-llm-reinforcement-learning/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6338a9f676421c054312d8c1/sBXLyV1PHAj-Uy5Uk1FRP.jpeg" alt="Featured image of post 🚀 PipelineRL: Breaking the Speed-Stability Tradeoff in LLM Reinforcement Learning" /&gt;&lt;h1 id="-pipelinerl-breaking-the-speed-stability-tradeoff-in-llm-reinforcement-learning"&gt;🚀 PipelineRL: Breaking the Speed-Stability Tradeoff in LLM Reinforcement Learning
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;𝙎𝙪𝙢𝙢𝙖𝙧𝙮: PipelineRL introduces a groundbreaking approach to LLM reinforcement learning through &amp;ldquo;inflight weight updates&amp;rdquo; - continuously updating model weights during inference without stopping generation. This technique elegantly solves the traditional throughput vs. on-policy data collection tradeoff, enabling faster, more stable RL training for large language models.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="-revolutionizing-rl-training-for-llms"&gt;🔄 Revolutionizing RL Training for LLMs
+&lt;/h2&gt;&lt;p&gt;Reinforcement Learning (RL) with Large Language Models presents a fundamental challenge: how do you balance high inference throughput with on-policy data collection? Traditional approaches force an uncomfortable choice between efficiency and effectiveness. Either you maximize throughput but suffer from stale, off-policy data, or you maintain on-policy learning at the cost of GPU efficiency.&lt;/p&gt;
+&lt;p&gt;Enter PipelineRL, an experimental open-source implementation that elegantly solves this problem through a surprisingly simple innovation: 𝗶𝗻𝗳𝗹𝗶𝗴𝗵𝘁 𝘄𝗲𝗶𝗴𝗵𝘁 𝘂𝗽𝗱𝗮𝘁𝗲𝘀.&lt;/p&gt;
+&lt;h2 id="-how-pipelinerl-works-inflight-weight-updates-explained"&gt;🧠 How PipelineRL Works: Inflight Weight Updates Explained
+&lt;/h2&gt;&lt;h3 id="𝘛𝘩𝘦-𝘛𝘳𝘢𝘥𝘪𝘵𝘪𝘰𝘯𝘢𝘭-𝘋𝘪𝘭𝘦𝘮𝘮𝘢"&gt;𝘛𝘩𝘦 𝘛𝘳𝘢𝘥𝘪𝘵𝘪𝘰𝘯𝘢𝘭 𝘋𝘪𝘭𝘦𝘮𝘮𝘢
+&lt;/h3&gt;&lt;p&gt;In conventional RL approaches, the process unfolds linearly:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Generate data using the current policy&lt;/li&gt;
+&lt;li&gt;Update the policy based on this data&lt;/li&gt;
+&lt;li&gt;Generate new data with the updated policy&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This creates significant inefficiencies. To maintain high throughput, inference servers need large batch sizes, generating data for multiple optimization steps at once. But each step increases the lag between the current policy and the inference policy, making collected data progressively less effective.&lt;/p&gt;
+&lt;h3 id="𝗧𝗵𝗲-𝗣𝗶𝗽𝗲𝗹𝗶𝗻𝗲𝗥𝗟-𝗦𝗼𝗹𝘂𝘁𝗶𝗼𝗻-"&gt;𝗧𝗵𝗲 𝗣𝗶𝗽𝗲𝗹𝗶𝗻𝗲𝗥𝗟 𝗦𝗼𝗹𝘂𝘁𝗶𝗼𝗻 🔥
+&lt;/h3&gt;&lt;p&gt;PipelineRL&amp;rsquo;s genius lies in its continuous operation model:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Inference servers maintain optimal batch sizes for high throughput&lt;/li&gt;
+&lt;li&gt;Model weights update after each optimizer step 𝘸𝘪𝘵𝘩𝘰𝘶𝘵 𝘴𝘵𝘰𝘱𝘱𝘪𝘯𝘨 𝘪𝘯𝘧𝘦𝘳𝘦𝘯𝘤𝘦&lt;/li&gt;
+&lt;li&gt;Inference pauses just briefly to receive new weights&lt;/li&gt;
+&lt;li&gt;Sequence generation continues with updated weights, even with &amp;ldquo;stale&amp;rdquo; KV caches&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The surprising finding? This approach works remarkably well despite theoretical concerns about mixing old KV caches with new model weights!&lt;/p&gt;
+&lt;h2 id="-empirical-results-simplicity-beats-complexity"&gt;📊 Empirical Results: Simplicity Beats Complexity
+&lt;/h2&gt;&lt;p&gt;The proof is in the performance. PipelineRL matches or exceeds Open-Reasoner-Zero&amp;rsquo;s results on reasoning benchmarks like AIME 2024 and MATH 500.&lt;/p&gt;
+&lt;p&gt;What&amp;rsquo;s truly impressive is that PipelineRL achieves this with a dramatically simpler implementation. While Open-Reasoner-Zero employs value functions and various stabilization techniques, PipelineRL uses a simplified version of GRPO (Gradient-based Reinforcement Policy Optimization) with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;No trust region importance weight clamping&lt;/li&gt;
+&lt;li&gt;No overlong sequence filtering&lt;/li&gt;
+&lt;li&gt;No reward shaping&lt;/li&gt;
+&lt;li&gt;No KL penalty or entropy bonus&lt;/li&gt;
+&lt;li&gt;Simple loss normalization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Despite (or perhaps because of) this simplicity, training remains stable throughout.&lt;/p&gt;
+&lt;h2 id="-modular-architecture-built-for-innovation"&gt;🧩 Modular Architecture: Built for Innovation
+&lt;/h2&gt;&lt;p&gt;PipelineRL&amp;rsquo;s architecture emphasizes modularity, enabling researchers to leverage specialized inference and training software innovations. The system defines clear contracts between components:&lt;/p&gt;
+&lt;h3 id="𝗜𝗻𝗳𝗲𝗿𝗲𝗻𝗰𝗲-𝗖𝗼𝗻𝘁𝗿𝗮𝗰𝘁"&gt;𝗜𝗻𝗳𝗲𝗿𝗲𝗻𝗰𝗲 𝗖𝗼𝗻𝘁𝗿𝗮𝗰𝘁
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Process group initialization&lt;/li&gt;
+&lt;li&gt;Weight update trigger&lt;/li&gt;
+&lt;li&gt;Chat completion API&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="𝙏𝙧𝙖𝙞𝙣𝙚𝙧-𝘾𝙤𝙣𝙩𝙧𝙖𝙘𝙩"&gt;𝙏𝙧𝙖𝙞𝙣𝙚𝙧 𝘾𝙤𝙣𝙩𝙧𝙖𝙘𝙩
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Worker initialization&lt;/li&gt;
+&lt;li&gt;Forward pass&lt;/li&gt;
+&lt;li&gt;Backward step&lt;/li&gt;
+&lt;li&gt;Optimizer step&lt;/li&gt;
+&lt;li&gt;Weight gathering and broadcasting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This plug-and-play approach allows researchers to experiment with different inference implementations while maintaining the core PipelineRL advantages.&lt;/p&gt;
+&lt;h2 id="-future-directions--implications"&gt;🔮 Future Directions &amp;amp; Implications
+&lt;/h2&gt;&lt;p&gt;While still experimental, PipelineRL has ambitious plans:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🚀 Implementing coroutines for more precise batch size control&lt;/li&gt;
+&lt;li&gt;🖼️ Adding multi-modal support&lt;/li&gt;
+&lt;li&gt;⚡ Developing sequence parallel training&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The team emphasizes that PipelineRL aims to be a hackable, fast reference implementation rather than an all-encompassing framework. This philosophy encourages researchers to fork the repository and adapt it to their specific needs.&lt;/p&gt;
+&lt;p&gt;A forthcoming research paper will provide deeper analysis of how inflight weight updates affect training dynamics and quantify the speed improvements PipelineRL delivers.&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;🤔 Final Thoughts
+&lt;/h2&gt;&lt;p&gt;PipelineRL represents an elegant solution to a fundamental challenge in RL for LLMs. By updating weights during inference rather than stopping and restarting, it achieves the best of both worlds: high throughput and on-policy learning.&lt;/p&gt;
+&lt;p&gt;What&amp;rsquo;s perhaps most interesting is how this approach challenges our assumptions about what &amp;ldquo;should&amp;rdquo; work in machine learning. The team found that mixing old KV caches with newly updated weights doesn&amp;rsquo;t destabilize training as conventional wisdom might suggest.&lt;/p&gt;
+&lt;p&gt;As LLM training continues to evolve, will we see more innovations that challenge the established &amp;ldquo;rules&amp;rdquo; of deep learning? What other tradeoffs might be eliminated through similarly unconventional approaches?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/ServiceNow/pipelinerl" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/ServiceNow/pipelinerl&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#ReinforcementLearning #LLM #MachineLearning #PipelineRL #AIResearch #DeepLearning #ModelTraining #AIEngineering #ComputationalEfficiency&lt;/p&gt;</description></item><item><title>🔥 Unlocking the Invisible: How LLMs Process Concurrent Requests Behind the Scenes</title><link>https://shoubhikbanerjee.github.io/blog/p/unlocking-the-invisible-how-llms-process-concurrent-requests-behind-the-scenes/</link><pubDate>Sat, 31 May 2025 11:50:03 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/unlocking-the-invisible-how-llms-process-concurrent-requests-behind-the-scenes/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/65263bfb3177c2a794997821/OiBhSOlKQCI2LCAJkZWa1.png" alt="Featured image of post 🔥 Unlocking the Invisible: How LLMs Process Concurrent Requests Behind the Scenes" /&gt;&lt;h1 id="-unlocking-the-invisible-how-llms-process-concurrent-requests-behind-the-scenes"&gt;🔥 Unlocking the Invisible: How LLMs Process Concurrent Requests Behind the Scenes
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;𝙎𝙪𝙢𝙢𝙖𝙧𝙮:&lt;/strong&gt; This deep dive explores the critical distinction between prefill and decode phases in LLM token generation—revealing how different batching strategies dramatically impact performance metrics. Learn why chunked prefill can boost throughput by 50% and how to balance the inherent tradeoffs between responsiveness and efficiency in production LLM systems.&lt;/p&gt;
+&lt;h2 id="-the-hidden-duality-of-llm-processing"&gt;🧠 The Hidden Duality of LLM Processing
+&lt;/h2&gt;&lt;p&gt;Ever wonder why your LLM chat sometimes pauses mid-sentence when another user joins? Or why the first response takes so much longer than subsequent tokens? The answer lies in understanding a fundamental duality in how Large Language Models process text.&lt;/p&gt;
+&lt;p&gt;At TNG, we manage a substantial LLM infrastructure—24 H100 GPUs supporting 50 applications, handling 5,000+ inferences hourly and generating over ten million tokens daily. This scale has taught us that performance optimization requires understanding what happens 𝘣𝘦𝘩𝘪𝘯𝘥 the scenes when multiple users interact with these models simultaneously.&lt;/p&gt;
+&lt;p&gt;When an LLM generates text, it operates in two distinct phases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;𝗣𝗿𝗲𝗳𝗶𝗹𝗹 𝗣𝗵𝗮𝘀𝗲:&lt;/strong&gt; Processing the entire prompt to generate the first output token&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;𝗗𝗲𝗰𝗼𝗱𝗲 𝗣𝗵𝗮𝘀𝗲:&lt;/strong&gt; Generating each subsequent token one by one&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration comparing prefill (parallel processing) versus decode (sequential processing) phases&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This distinction is far more consequential than most developers realize. It shapes everything from user experience to resource utilization to overall system throughput.&lt;/p&gt;
+&lt;h2 id="-metrics-that-matter-unpacking-latency-and-throughput"&gt;⏱️ Metrics That Matter: Unpacking Latency and Throughput
+&lt;/h2&gt;&lt;p&gt;The prefill/decode split directly impacts two critical performance metrics:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;𝙏𝙞𝙢𝙚 𝙩𝙤 𝙛𝙞𝙧𝙨𝙩 𝙩𝙤𝙠𝙚𝙣&lt;/strong&gt; (prefill latency) - The initial response time&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;𝙏𝙞𝙢𝙚 𝙥𝙚𝙧 𝙤𝙪𝙩𝙥𝙪𝙩 𝙩𝙤𝙠𝙚𝙣&lt;/strong&gt; (decode latency) - The cadence of subsequent tokens&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For interactive applications, users get frustrated if the first token takes more than 3 seconds to appear (they might think the system is broken) or if tokens generate slower than 3-10 tokens per second (slower than comfortable reading speed).&lt;/p&gt;
+&lt;p&gt;But there&amp;rsquo;s always a tradeoff. Some non-interactive applications might prioritize total token throughput over per-request latency—like when batch-processing translations or generating summaries for an entire code repository.&lt;/p&gt;
+&lt;p&gt;🔍 &lt;strong&gt;Resource Utilization Reality:&lt;/strong&gt; Prefill is compute-intensive (utilizing parallel processing across all input tokens), while decode is memory-bandwidth-limited (processing just one token at a time).&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See graph showing how throughput increases with concurrency until GPU compute power saturates&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This fundamental difference creates fascinating dynamics when multiple requests compete for resources.&lt;/p&gt;
+&lt;h2 id="-batching-strategies-static-vs-continuous"&gt;🚀 Batching Strategies: Static vs. Continuous
+&lt;/h2&gt;&lt;p&gt;When multiple users hit an LLM service simultaneously, the inference engine must decide how to process these concurrent requests. Two primary approaches exist:&lt;/p&gt;
+&lt;h3 id="1-static-batching-simple-but-inefficient"&gt;1. Static Batching: Simple But Inefficient
+&lt;/h3&gt;&lt;p&gt;Static batching processes requests in rigid groups—waiting for the entire batch to complete before starting the next one.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing how static batching processes batches in sequence&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This approach optimizes &amp;ldquo;time per output token&amp;rdquo; since decode phases run uninterrupted, but it creates terrible user experiences for anyone waiting for the next batch. Even worse, it wastes GPU resources since prefill (compute-intensive) and decode (memory-bound) operations can&amp;rsquo;t run concurrently to maximize hardware utilization.&lt;/p&gt;
+&lt;h3 id="2-continuous-batching-more-complex-but-smarter"&gt;2. Continuous Batching: More Complex But Smarter
+&lt;/h3&gt;&lt;p&gt;Most modern inference engines like vLLM implement continuous batching, where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Completed requests immediately free up batch slots&lt;/li&gt;
+&lt;li&gt;New requests enter as soon as space becomes available&lt;/li&gt;
+&lt;li&gt;Prefill and decode operations can run simultaneously&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But this creates a new challenge: 𝘩𝘰𝘸 should prefill and decode operations share resources when running concurrently?&lt;/p&gt;
+&lt;h2 id="-the-breakthrough-chunked-prefill"&gt;🧩 The Breakthrough: Chunked Prefill
+&lt;/h2&gt;&lt;p&gt;The default &amp;ldquo;prefill-first&amp;rdquo; strategy prioritizes new requests, minimizing time to first token. However, this creates an unfortunate side effect: whenever a new request arrives, ongoing decode operations get interrupted—users experience this as sudden pauses in their text generation.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing how prefill operations interrupt decode operations&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The elegant solution? &lt;strong&gt;𝗖𝗵𝘂𝗻𝗸𝗲𝗱 𝗽𝗿𝗲𝗳𝗶𝗹𝗹&lt;/strong&gt; 🔥&lt;/p&gt;
+&lt;p&gt;Rather than processing an entire prompt in one massive operation, we break it into smaller chunks. This creates multiple benefits:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Concurrent decode operations can progress between prefill chunks&lt;/li&gt;
+&lt;li&gt;Users experience slowdowns rather than complete pauses&lt;/li&gt;
+&lt;li&gt;𝗧𝗼𝘁𝗮𝗹 𝘁𝗵𝗿𝗼𝘂𝗴𝗵𝗽𝘂𝘁 𝗶𝗻𝗰𝗿𝗲𝗮𝘀𝗲𝘀 𝗯𝘆 𝟱𝟬% by better balancing compute and memory resources&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing how chunked prefill allows more decode operations to proceed&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Chunk size becomes a tunable parameter to balance competing priorities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;𝘚𝘮𝘢𝘭𝘭𝘦𝘳 chunks → Better decode performance (smoother token generation)&lt;/li&gt;
+&lt;li&gt;𝘓𝘢𝘳𝘨𝘦𝘳 chunks → Faster time to first token&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Default chunk sizes typically range from 512 to 8192 tokens, but the optimal value depends on your specific workload patterns.&lt;/p&gt;
+&lt;h2 id="-key-insights-for-llm-engineers"&gt;🌟 Key Insights for LLM Engineers
+&lt;/h2&gt;&lt;p&gt;This exploration of prefill and decode phases reveals several practical insights:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Measure the right metrics&lt;/strong&gt; - Track both time-to-first-token and time-per-output-token to get a complete performance picture&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Consider your application type&lt;/strong&gt; - Interactive applications need to optimize for latency; batch applications should focus on throughput&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Enable chunked prefill&lt;/strong&gt; - This single optimization can boost throughput by 50% while improving user experience&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Tune chunk size thoughtfully&lt;/strong&gt; - Balance responsiveness against smoothness based on your users&amp;rsquo; needs&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The journey to optimized LLM performance doesn&amp;rsquo;t end here. In environments with unpredictable load patterns, finding the perfect chunk size remains challenging—which is why many practitioners stick with defaults that work well across diverse workloads.&lt;/p&gt;
+&lt;p&gt;What performance bottlenecks are you facing in your LLM deployments? Understanding the prefill/decode dynamic might just hold the key to solving them.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/tngtech/llm-performance-prefill-decode-concurrent-requests" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/tngtech/llm-performance-prefill-decode-concurrent-requests&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#LLMPerformance #AIOptimization #ConcurrentProcessing #MachineLearningInfrastructure #GPUComputing #TokenGeneration #BatchProcessing #AIEngineering #ModelInference #LLMScaling&lt;/p&gt;</description></item></channel></rss>

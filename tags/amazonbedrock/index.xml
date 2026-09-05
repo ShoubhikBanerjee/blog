@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AmazonBedrock on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/amazonbedrock/</link><description>Recent content in AmazonBedrock on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 05 Sep 2026 22:02:16 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/amazonbedrock/index.xml" rel="self" type="application/rss+xml"/><item><title>AI Assistant for WhatsApp Ordering Powered by Amazon Bedrock AgentCore and Nova Models</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-assistant-for-whatsapp-ordering-powered-by-amazon-bedrock-agentcore-and-nova-models/</link><pubDate>Sat, 05 Sep 2026 22:02:16 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-assistant-for-whatsapp-ordering-powered-by-amazon-bedrock-agentcore-and-nova-models/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-featured-image.png" alt="Featured image of post AI Assistant for WhatsApp Ordering Powered by Amazon Bedrock AgentCore and Nova Models" /&gt;&lt;h1 id="ai-assistant-for-whatsapp-ordering-powered-by-amazon-bedrock-agentcore-and-nova-models"&gt;AI Assistant for WhatsApp Ordering Powered by Amazon Bedrock AgentCore and Nova Models
+&lt;/h1&gt;&lt;p&gt;A new end-to-end AI ordering assistant has been developed for WhatsApp, utilizing Amazon Bedrock AgentCore and Amazon Nova models to manage customer interactions. The system allows users to place restaurant orders from greeting to confirmation through a single WhatsApp Business number.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Customers can interact with the assistant using three distinct channels that share one backend and cross-channel memory:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Text messages&lt;/li&gt;
+&lt;li&gt;Voice notes&lt;/li&gt;
+&lt;li&gt;Voice calls&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The solution uses the Meta WhatsApp Business Platform as the customer front door, which reaches more than two billion people. Because of the shared memory system, a customer who texts one day and calls the next is recognized as the same person.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Role in the System&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Meta WhatsApp Business Platform&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Acts as the front door, exposing the Cloud API, Messages API, Media API, and Calling API.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Hosts the AI agents and manages cross-channel memory and gateway functions.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Nova 2 Lite&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Processes text through the Amazon Bedrock Converse API.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Nova 2 Sonic&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles real-time speech for both voice notes and calls.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore Gateway&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A managed MCP server that exposes the backend REST API as tools for agents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore Memory&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A shared record keyed by hashed customer ID to maintain state across channels.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Model Context Protocol (MCP)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enables agents to reach the restaurant backend.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon SQS&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides an inbound queue to decouple quick acknowledgment from asynchronous processing.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AWS Lambda&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Runs the webhook ingest, worker, message sender, and ordering logic.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The infrastructure is deployed and managed with specific architectural controls:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Deployment&lt;/strong&gt;: The AWS Cloud Development Kit (AWS CDK) provisions the AWS side of the solution and emits the webhook URL for Meta registration.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Processing&lt;/strong&gt;: Inbound traffic arrives at a single HTTPS webhook provided by Amazon API Gateway. It is acknowledged immediately with a 200 status and processed asynchronously so no request blocks the response.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security and Isolation&lt;/strong&gt;: Each conversation runs in its own microVM within the AgentCore runtime to keep sessions isolated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API Architecture&lt;/strong&gt;: The system uses two REST APIs. The first is a public, regional HTTPS webhook. The second is an IAM-authorized backend API that sits in front of the ordering business logic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-2.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-5.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #AmazonBedrock #WhatsApp #AIagents #AmazonNova&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploy-a-multimodal-whatsapp-ordering-assistant-with-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Deploy a multimodal WhatsApp ordering assistant with Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Bedrock AgentCore Adds Memory Lifecycle Policies for Long‑Running Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-memory-lifecycle-policies-for-longrunning-agents/</link><pubDate>Sat, 05 Sep 2026 22:02:16 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-memory-lifecycle-policies-for-longrunning-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Adds Memory Lifecycle Policies for Long‑Running Agents" /&gt;&lt;h1 id="amazon-bedrock-agentcore-adds-memory-lifecycle-policies-for-longrunning-agents"&gt;Amazon Bedrock AgentCore Adds Memory Lifecycle Policies for Long‑Running Agents
+&lt;/h1&gt;&lt;p&gt;Memory lifecycle policies help long‑running agents on Amazon Bedrock AgentCore stay effective by systematically managing what they remember and forget.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Agents generate memories from every conversation they conduct.&lt;/li&gt;
+&lt;li&gt;Without active management, agents accumulate outdated context, which can degrade response quality and create compliance risks.&lt;/li&gt;
+&lt;li&gt;Real‑world examples: a customer‑support agent referenced a billing dispute resolved four months earlier, and another agent repeated superseded deployment advice from an old runbook.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Memory storage&lt;/strong&gt;: AgentCore stores information using two primary strategies – &lt;strong&gt;Summary&lt;/strong&gt; and &lt;strong&gt;Episodic&lt;/strong&gt; – each as individual entries tied to specific agent‑user sessions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Additional categories&lt;/strong&gt;: Semantic and Procedural memories are also part of the model, with distinct retention needs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scoring formula&lt;/strong&gt;: A decay‑based score (0.0–1.0) balances three intuitions: recent memories matter, recently used memories matter more, and frequently retrieved memories add signal. Scores drop sharply in the first weeks then level off; an old memory accessed often can still score well.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-policy-mechanics"&gt;⚙️ Policy Mechanics
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;TTL expiration&lt;/strong&gt; runs first, automatically deleting records older than a configured time‑to‑live value.&lt;/li&gt;
+&lt;li&gt;AgentCore does not provide built‑in auto‑delete TTL, but it exposes system timestamp fields (&lt;code&gt;x‑amz‑agentcore‑memory‑createdAt&lt;/code&gt;) that support &lt;code&gt;BEFORE&lt;/code&gt; filters for pruning.&lt;/li&gt;
+&lt;li&gt;A pruner queries records with a &lt;code&gt;BEFORE&lt;/code&gt; filter, then deletes those beyond the TTL.&lt;/li&gt;
+&lt;li&gt;After TTL pruning, the scoring step flags records below a configurable threshold for consolidation or further pruning.&lt;/li&gt;
+&lt;li&gt;Default configuration: &lt;code&gt;pruneDays = 45&lt;/code&gt;, &lt;code&gt;threshold = 0.3&lt;/code&gt; → decay_rate ≈ 0.02676.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-memory-types--default-retention"&gt;📊 Memory Types &amp;amp; Default Retention
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Memory Type&lt;/th&gt;
+&lt;th&gt;Typical TTL (default)&lt;/th&gt;
+&lt;th&gt;Remarks&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Episodic&lt;/td&gt;
+&lt;td&gt;90 days&lt;/td&gt;
+&lt;td&gt;Stores raw session events&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Summary&lt;/td&gt;
+&lt;td&gt;30–60 days&lt;/td&gt;
+&lt;td&gt;Consolidated view of episodic data&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Semantic&lt;/td&gt;
+&lt;td&gt;6–12 months&lt;/td&gt;
+&lt;td&gt;Higher‑level concepts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Procedural&lt;/td&gt;
+&lt;td&gt;No TTL (retain indefinitely)&lt;/td&gt;
+&lt;td&gt;Reflections tied to episodic memory; lowest volume, highest value&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-deployment-guide"&gt;🚀 Deployment Guide
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A deployable architecture combines AgentCore memory, AWS Step Functions, and Amazon Bedrock to run a nightly lifecycle workflow.&lt;/li&gt;
+&lt;li&gt;By the end of the walkthrough you will have an AWS Cloud Development Kit (AWS CDK) stack and a framework for managing agent memory as a managed resource.&lt;/li&gt;
+&lt;li&gt;The complete code is available in the GitHub repository.&lt;/li&gt;
+&lt;li&gt;Targeted agents: high‑volume interaction bots such as customer‑support agents, sales advisors, and IT help‑desk bots.&lt;/li&gt;
+&lt;li&gt;For lower‑volume agents (e.g., personal assistants) you might start with simple TTL expiration and GDPR compliance alone.&lt;/li&gt;
+&lt;li&gt;All thresholds and TTLs are configurable to match the agent’s needs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Prevents outdated context from contaminating responses, protecting both quality and compliance.&lt;/li&gt;
+&lt;li&gt;Reduces unnecessary compute by pruning memories before scoring.&lt;/li&gt;
+&lt;li&gt;Provides a systematic, configurable approach to retain high‑value procedural knowledge while discarding stale information.&lt;/li&gt;
+&lt;li&gt;Enables long‑running agents to remain effective over weeks or months without manual intervention.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-20851-3.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #AImemory #AWS #LLMops&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/designing-lifecycle-policies-for-agentcore-memory/" target="_blank" rel="noopener"
+&gt;Designing lifecycle policies for AgentCore memory | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Intuit Deploys EWOK Agent, an AI‑Powered Disaster Recovery Tool Built on Amazon Bedrock</title><link>https://shoubhikbanerjee.github.io/blog/p/intuit-deploys-ewok-agent-an-aipowered-disaster-recovery-tool-built-on-amazon-bedrock/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/intuit-deploys-ewok-agent-an-aipowered-disaster-recovery-tool-built-on-amazon-bedrock/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/ML-21646-featured-image.png" alt="Featured image of post Intuit Deploys EWOK Agent, an AI‑Powered Disaster Recovery Tool Built on Amazon Bedrock" /&gt;&lt;h1 id="intuit-deploys-ewok-agent-an-aipowered-disaster-recovery-tool-built-on-amazon-bedrock"&gt;Intuit Deploys EWOK Agent, an AI‑Powered Disaster Recovery Tool Built on Amazon Bedrock
+&lt;/h1&gt;&lt;p&gt;Intuit has released EWOK Agent, an AI‑powered disaster‑recovery assistant that runs on Amazon Bedrock and extends the existing EWOK system.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Supports products that millions rely on: TurboTax, QuickBooks, Mailchimp, and Credit Karma.&lt;/li&gt;
+&lt;li&gt;Extends the &lt;strong&gt;Ecosystem Wide Orchestrator Kit (EWOK)&lt;/strong&gt;, Intuit’s centralized internal disaster‑recovery system.&lt;/li&gt;
+&lt;li&gt;Delivered as a plug‑in that engineers can install and invoke from Intuit’s Engineering portal or any IDE.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-existing-ewok-platform"&gt;⚙️ Existing EWOK Platform
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Standardizes failover execution&lt;/strong&gt; across compute, databases, networking, caches, and asynchronous workloads.&lt;/li&gt;
+&lt;li&gt;Service owners declare recovery intent in &lt;strong&gt;YAML&lt;/strong&gt;; EWOK orchestrates the underlying infrastructure actions.&lt;/li&gt;
+&lt;li&gt;Reduced recovery time from &lt;strong&gt;several hours to ~20 minutes&lt;/strong&gt; for supported workloads.&lt;/li&gt;
+&lt;li&gt;Prior to EWOK Agent, choosing the correct workflow and handling mid‑recovery exceptions relied on tribal knowledge of experienced on‑call engineers.&lt;/li&gt;
+&lt;li&gt;Failover requests during tightly‑restricted deployment windows (e.g., tax season) were rejected unless the engineer followed a detailed emergency‑override procedure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-ewok-agent--aipowered-extension"&gt;🤖 EWOK Agent – AI‑Powered Extension
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Built with &lt;strong&gt;Amazon Bedrock&lt;/strong&gt;, leveraging hundreds of foundation models through a single API.&lt;/li&gt;
+&lt;li&gt;Teams across Intuit have used the agent to run failovers for the &lt;strong&gt;past eight months&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model flexibility:&lt;/strong&gt; Ability to evaluate and select the right model for failover reasoning and switch models later without re‑architecting the agent.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security &amp;amp; privacy:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Built‑in Amazon Bedrock Guardrails.&lt;/li&gt;
+&lt;li&gt;Data is &lt;strong&gt;not used to train models&lt;/strong&gt; and remains encrypted in transit and at rest.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Because Amazon Bedrock is fully managed, the reasoning layer was added &lt;strong&gt;without provisioning or managing model infrastructure&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture--design-principles"&gt;🧩 Architecture &amp;amp; Design Principles
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;EWOK (internal)&lt;/td&gt;
+&lt;td&gt;Deterministic executor of failover actions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;EWOK Agent&lt;/td&gt;
+&lt;td&gt;Bounded agentic loop that queries foundation models&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Bedrock layer&lt;/td&gt;
+&lt;td&gt;Thin integration that maps model output (skills) to EWOK commands&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Failover knowledge is encoded as typed skills&lt;/strong&gt;; the model decides &lt;em&gt;what&lt;/em&gt; to do, EWOK executes &lt;em&gt;how&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;The boundary between model reasoning and deterministic execution is kept crisp to ensure auditability and reliability.&lt;/li&gt;
+&lt;li&gt;The pattern (typed skills + thin Bedrock layer + deterministic executor) is &lt;strong&gt;not specific to EWOK&lt;/strong&gt; and can be applied to other systems exposing authenticated, auditable APIs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-benefits"&gt;🚀 Benefits
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Speed:&lt;/strong&gt; Recovery times reduced to about 20 minutes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consistency:&lt;/strong&gt; Eliminates reliance on tribal knowledge for workflow selection and exception handling.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flexibility:&lt;/strong&gt; Ability to swap foundation models as needs evolve.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security:&lt;/strong&gt; Guardrails, encryption, and no model‑training data leakage.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ease of adoption:&lt;/strong&gt; Engineers install the plug‑in and run failovers directly from familiar tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a &lt;strong&gt;scalable, AI‑assisted&lt;/strong&gt; approach to disaster recovery for services that power millions of users.&lt;/li&gt;
+&lt;li&gt;Demonstrates a reusable pattern for coupling foundation‑model reasoning with deterministic internal systems.&lt;/li&gt;
+&lt;li&gt;Enhances service availability during critical business periods, such as tax season, by reducing manual overhead and error‑prone processes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/ML-21646-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/ML-21646-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/ML-21646-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Intuit #AmazonBedrock #DisasterRecovery #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-intuit-built-an-agentic-disaster-recovery-assistant-with-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;How Intuit built an agentic disaster recovery assistant with Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS Expands Amazon Bedrock AgentCore with AI-DLC Reference Implementations</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-expands-amazon-bedrock-agentcore-with-ai-dlc-reference-implementations/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-expands-amazon-bedrock-agentcore-with-ai-dlc-reference-implementations/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-featured-image.png" alt="Featured image of post AWS Expands Amazon Bedrock AgentCore with AI-DLC Reference Implementations" /&gt;&lt;h1 id="aws-expands-amazon-bedrock-agentcore-with-ai-dlc-reference-implementations"&gt;AWS Expands Amazon Bedrock AgentCore with AI-DLC Reference Implementations
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore, a service for building, connecting, and optimizing agents at scale with any framework or model, now powers two new reference implementations that demonstrate AI-DLC construction phase patterns. AI-DLC positions AI as a central collaborator across the software development lifecycle, handling routine execution while humans retain oversight of critical decisions.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The two reference implementations cover:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Automated generation of Mermaid entity relationship diagrams from SQL schemas&lt;/li&gt;
+&lt;li&gt;Automated code security analysis through a multi-agent architecture&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Both implementations link to complete deployment instructions in their respective GitHub repositories.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;h3 id="mermaid-er-diagram-generator"&gt;Mermaid ER Diagram Generator
+&lt;/h3&gt;&lt;p&gt;This AWS Samples project auto-generates Mermaid ER diagrams from SQL schema files using an agentic AI workflow on Amazon Bedrock AgentCore.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Architecture components:&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;S3 event trigger&lt;/td&gt;
+&lt;td&gt;SQL files uploaded to Amazon S3 trigger an AWS Lambda function that initiates the analysis workflow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Cognito&lt;/td&gt;
+&lt;td&gt;Provides OAuth2 machine-to-machine (M2M) authentication&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS Systems Manager Parameter Store&lt;/td&gt;
+&lt;td&gt;Stores client credentials&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AgentCore runtime&lt;/td&gt;
+&lt;td&gt;Containerized agent built with the Strands framework&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AgentCore memory&lt;/td&gt;
+&lt;td&gt;Persistent session context with 90-day expiry, supports semantic search across previous analyses&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon S3&lt;/td&gt;
+&lt;td&gt;Output storage for generated .mmd files under dedicated prefix with metadata tracking&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Workflow:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQL file is uploaded to Amazon S3 (manually or through CI/CD pipeline)&lt;/li&gt;
+&lt;li&gt;Lambda trigger reads file content and authenticates through Cognito OAuth&lt;/li&gt;
+&lt;li&gt;Trigger invokes AgentCore runtime agent with SQL content as payload&lt;/li&gt;
+&lt;li&gt;Agent analyzes schema and identifies tables, columns, constraints, and foreign key relationships&lt;/li&gt;
+&lt;li&gt;Agent generates complete Mermaid erDiagram&lt;/li&gt;
+&lt;li&gt;Diagram is saved to Amazon S3 and analysis session is stored in AgentCore memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Key design decisions:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Chunked processing: Large SQL files split into manageable segments, analyzed independently, then consolidated&lt;/li&gt;
+&lt;li&gt;Structured prompting: Systematic analysis prompt extracts tables, columns, data types, primary keys, and foreign key relationships before generating diagram syntax&lt;/li&gt;
+&lt;li&gt;OpenTelemetry tracing: Every step instrumented with spans and attributes for observability into processing duration, chunk counts, and error attribution&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The agent uses Claude Sonnet 4 through Amazon Bedrock to parse SQL DDL statements. It reads only schema metadata (tables, constraints, and foreign keys), never row data.&lt;/p&gt;
+&lt;h3 id="automated-code-security-analysis"&gt;Automated Code Security Analysis
+&lt;/h3&gt;&lt;p&gt;The second implementation provides automated code security analysis through a multi-agent architecture that uses:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AgentCore Gateway&lt;/li&gt;
+&lt;li&gt;AgentCore memory&lt;/li&gt;
+&lt;li&gt;External tool integrations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This system analyzes code pushed through CI/CD pipelines, producing security assessments, Common Vulnerabilities and Exposures (CVE) checks, and policy compliance reports that inform human decision-making.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;Both systems share a common architectural foundation built on AgentCore, demonstrating how teams can compose AI-driven workflows from modular, manageable components.&lt;/p&gt;
+&lt;p&gt;The AI-DLC construction phase positions AI to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Propose architecture&lt;/li&gt;
+&lt;li&gt;Generate implementation plans&lt;/li&gt;
+&lt;li&gt;Produce code&lt;/li&gt;
+&lt;li&gt;Create deployment artifacts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Team members provide clarification on technical decisions in real time.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The complete implementation for the Mermaid ER diagram generator is available in its GitHub repository. The automated code security analysis implementation is also available with complete deployment instructions.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Database teams managing evolving SQL schemas need current entity relationship documentation. Manual creation of ER diagrams is time-intensive and documentation frequently drifts from the actual schema. When schema changes land through pull requests, teams need updated diagrams without adding manual documentation steps to the development workflow.&lt;/p&gt;
+&lt;p&gt;For security, continuous code quality enforcement through multi-agent systems ensures that assessments, CVE checks, and policy compliance reports inform human decision-making rather than replacing it.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-3.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #AIDLC #AIagents #DevOps #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/ai-driven-development-lifecycle-using-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;AI-driven development lifecycle using Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/set-up-openai-chatgpt-codex-with-litellm-on-amazon-ecs-and-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Set up OpenAI ChatGPT Codex with LiteLLM on Amazon ECS and Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/best-practices-for-building-agentic-automations-with-amazon-quick-automate/" target="_blank" rel="noopener"
+&gt;Best practices for building agentic automations with Amazon Quick Automate | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New automated AI solution monitors dashboard content failures</title><link>https://shoubhikbanerjee.github.io/blog/p/new-automated-ai-solution-monitors-dashboard-content-failures/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-automated-ai-solution-monitors-dashboard-content-failures/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21432-featured-image.png" alt="Featured image of post New automated AI solution monitors dashboard content failures" /&gt;&lt;h1 id="new-automated-ai-solution-monitors-dashboard-content-failures"&gt;New automated AI solution monitors dashboard content failures
+&lt;/h1&gt;&lt;p&gt;A new automated solution now monitors dashboards and visually analyzes them using large language models (LLMs) on Amazon Bedrock. The system detects visual content failures and provides proactive alerts, significantly reducing the mean time to detection.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The solution utilizes a five-stage architecture built on serverless and managed AWS services:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Visual checks are triggered hourly by Amazon EventBridge.&lt;/li&gt;
+&lt;li&gt;AWS Lambda functions orchestrate headless browser sessions to render dashboard sections as a user would see them.&lt;/li&gt;
+&lt;li&gt;The system analyzes these renderings using LLMs on Amazon Bedrock.&lt;/li&gt;
+&lt;li&gt;A configuration registry in Amazon Redshift manages section identifiers, owner assignments, and scheduling.&lt;/li&gt;
+&lt;li&gt;When a failure is detected, owners receive a Slack notification containing the section name, a screenshot, the AI confidence score, and a link to the dashboard.&lt;/li&gt;
+&lt;li&gt;Weekly data refreshes trigger separate numeric validation cycles that produce human-readable reports.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Mean time to detection was reduced from up to 72 hours to less than 1 hour.&lt;/li&gt;
+&lt;li&gt;The system successfully detected 802 content failure instances, including row-level data permission errors, filters skipping records, and rendering issues.&lt;/li&gt;
+&lt;li&gt;Instrumentation indicates that fewer than 1 percent of these failures had a corresponding user report.&lt;/li&gt;
+&lt;li&gt;The architecture scales to zero between validation cycles to keep costs proportional to usage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21432-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21432-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #AmazonBedrock #ArtificialIntelligence #Monitoring #Serverless&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-an-aws-team-detects-dashboard-content-failures-at-scale-using-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;How an AWS team detects dashboard content failures at scale using Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>OpenAI GPT-5.6 Models Now Available on Amazon Bedrock in Australia</title><link>https://shoubhikbanerjee.github.io/blog/p/openai-gpt-5.6-models-now-available-on-amazon-bedrock-in-australia/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/openai-gpt-5.6-models-now-available-on-amazon-bedrock-in-australia/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/Accessing-OpenAI-models-on-Amazon-Bedrock-from-Australia-with-global-cross-Region-inference.png" alt="Featured image of post OpenAI GPT-5.6 Models Now Available on Amazon Bedrock in Australia" /&gt;&lt;h1 id="openai-gpt-56-models-now-available-on-amazon-bedrock-in-australia"&gt;OpenAI GPT-5.6 Models Now Available on Amazon Bedrock in Australia
+&lt;/h1&gt;&lt;p&gt;Australian development teams can now access OpenAI GPT-5.6 models through Amazon Bedrock by utilizing infrastructure located in the Asia Pacific (Sydney) and Asia Pacific (Melbourne) AWS regions. This update allows for global cross-region inference, routing requests to supported commercial AWS regions for processing without manual configuration.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Applications interact with the Amazon Bedrock Runtime endpoint using either the OpenAI-compatible APIs (Responses, Chat Completions) or the Amazon Bedrock Converse API. Authentication is supported via AWS Signature Version 4 (SigV4) or an Amazon Bedrock model inference API key. Python developers can utilize the &lt;code&gt;boto3&lt;/code&gt; and &lt;code&gt;aws-bedrock-token-generator&lt;/code&gt; packages to facilitate these connections.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock offers three variants of the GPT-5.6 model to suit different operational requirements:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Primary Use Case&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Sol&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Demanding reasoning, coding, and agentic workloads&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Terra&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Balancing performance and cost for everyday production&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Luna&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Fast, affordable inference for high-volume and latency-sensitive applications&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;All models support text and image inputs, generate text, and feature context windows of up to 1 million tokens. Additionally, GPT-5.6 includes support for prompt caching, offering both implicit and explicit caching modes.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;These models are accessible through the Amazon Bedrock Runtime endpoint from the Asia Pacific (Sydney) and Asia Pacific (Melbourne) regions. Users should ensure their AWS Identity and Access Management (IAM) roles have the proper permissions and that any service control policies (SCP) allow for global inference profiles. Codex integration is also available using the latest Codex CLI.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21760-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21760-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21760-3.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #OpenAI #AmazonBedrock #CloudComputing #GenerativeAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/accessing-openai-gpt-5-6-models-on-amazon-bedrock-from-australia-with-global-cross-region-inference/" target="_blank" rel="noopener"
+&gt;Accessing OpenAI models on Amazon Bedrock from Australia with global cross-Region inference | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Bedrock AgentCore Payments Processes 20 Million Transactions Without Human Intervention</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-payments-processes-20-million-transactions-without-human-intervention/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-payments-processes-20-million-transactions-without-human-intervention/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21104-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Payments Processes 20 Million Transactions Without Human Intervention" /&gt;&lt;h1 id="amazon-bedrock-agentcore-payments-processes-20-million-transactions-without-human-intervention"&gt;Amazon Bedrock AgentCore Payments Processes 20 Million Transactions Without Human Intervention
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore payments, a capability of the Amazon Bedrock AgentCore platform, has processed over 20 million agent-initiated transactions without a single instance of human approval. Built in partnership with t54, the trust layer handles micropayments ranging from $0.001 to $0.01. These fast, high-volume calls occur at a rate that makes human review impossible, marking a significant step forward in autonomous agentic commerce.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock AgentCore is a platform designed to build, connect, and optimize agents at scale using any framework or model. To support transactions within this ecosystem, Amazon Bedrock AgentCore payments provides the underlying spending infrastructure, which manages session limits, credential isolation, and payment execution. Meanwhile, t54&amp;rsquo;s x402-secure provides trust intelligence through real-time endpoint and on-chain payment address scoring.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The underlying system relies on x402, an open payment standard that uses the HTTP 402 status code to let clients pay for APIs directly over HTTP.&lt;/p&gt;
+&lt;p&gt;When an agent calls a paid endpoint and receives a 402 response, Amazon Bedrock AgentCore payments handles the signing and settlement automatically. To ensure security, the agent does not handle private keys directly.&lt;/p&gt;
+&lt;p&gt;The end-to-end architecture is split across five lanes:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The application backend&lt;/li&gt;
+&lt;li&gt;The Amazon Bedrock AgentCore runtime (a capability of Amazon Bedrock AgentCore)&lt;/li&gt;
+&lt;li&gt;The Strands agent, featuring its deterministic trust gate&lt;/li&gt;
+&lt;li&gt;External paid services&lt;/li&gt;
+&lt;li&gt;Amazon Bedrock AgentCore payments&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Security and spending guardrails are enforced through strict role separation and real-time risk evaluations.&lt;/p&gt;
+&lt;h3 id="trustline-scoring-signals"&gt;Trustline Scoring Signals
+&lt;/h3&gt;&lt;p&gt;The scoring engine behind x402-secure, known as Trustline, evaluates five independent signals before any payment settles:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The blockchain history of the payment address&lt;/li&gt;
+&lt;li&gt;The legitimacy of the destination webpage&lt;/li&gt;
+&lt;li&gt;The service’s social media footprint&lt;/li&gt;
+&lt;li&gt;The API’s live health status&lt;/li&gt;
+&lt;li&gt;An aggregate risk score synthesized from the other four signals&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="role-separation-and-credentials"&gt;Role Separation and Credentials
+&lt;/h3&gt;&lt;p&gt;t54 enforces security through strict role separation using AWS Identity and Access Management (IAM), splitting the system across four roles. Under this configuration, the agent runtime can execute payments but cannot change its own limits, provision new wallets, or access credentials directly.&lt;/p&gt;
+&lt;p&gt;At invocation time, the agent receives only a session ID and an instrument ID. End-user wallet signing keys remain with the wallet provider, Coinbase, and the agent receives only a session-scoped token. Developer credentials are encrypted in AWS Secrets Manager through Amazon Bedrock AgentCore Identity (a capability of Amazon Bedrock AgentCore) and are never returned from APIs. If an agent exhausts its spending limit, it stops immediately.&lt;/p&gt;
+&lt;h3 id="core-system-components"&gt;Core System Components
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A platform to build, connect, and optimize agents at scale with any framework or model.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore payments&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A capability that provides session limits, credential isolation, and payment execution.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;t54&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Developer of trust infrastructure for agent payments.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;x402-secure&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A trust layer product that scores endpoints and on-chain payment addresses in real time.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;x402&lt;/td&gt;
+&lt;td style="text-align: left"&gt;An open payment standard allowing direct API payments over HTTP via 402 status codes.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Trustline&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The scoring engine behind x402-secure that evaluates five independent signals.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;ClawCredit&lt;/td&gt;
+&lt;td style="text-align: left"&gt;An agent-native credit facility that provides credit-backed funding within session limits.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore Identity&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A capability used to encrypt developer credentials in AWS Secrets Manager.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;For the full architecture, including IAM authentication, AWS Secrets Manager credential storage, and Amazon CloudWatch observability, see &amp;ldquo;Technical deep dive: AgentCore Payments and innovation in agentic commerce.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21104-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21104-2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21104-3-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #AgenticCommerce #Fintech #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-t54-built-a-trust-layer-with-amazon-bedrock-agentcore-payments/" target="_blank" rel="noopener"
+&gt;How t54 built a trust layer with Amazon Bedrock AgentCore payments | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Bedrock Launches Managed Knowledge Bases with Agentic Retrieval</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-launches-managed-knowledge-bases-with-agentic-retrieval/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-launches-managed-knowledge-bases-with-agentic-retrieval/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/27/ML-21427-featured-image.png" alt="Featured image of post Amazon Bedrock Launches Managed Knowledge Bases with Agentic Retrieval" /&gt;&lt;h1 id="amazon-bedrock-launches-managed-knowledge-bases-with-agentic-retrieval"&gt;Amazon Bedrock Launches Managed Knowledge Bases with Agentic Retrieval
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock Knowledge Bases has introduced managed knowledge bases, evolving from traditional RAG to agentic retrieval. This new capability enables multi-turn planning, iterative retrieval, and grounded answers with citations, all managed by Amazon Bedrock.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Amazon Bedrock now offers a Managed Knowledge Base (Type: MANAGED) that handles ingestion, storage, indexing, and retrieval, including embedding and reranking with service-managed models.&lt;/li&gt;
+&lt;li&gt;The solution eliminates the need to provision, scale, or patch a vector database.&lt;/li&gt;
+&lt;li&gt;It supports multimodal content, including text, vectors, metadata, and structured content like CSV and Excel files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A user sends a question to an agent hosted on the Amazon Bedrock AgentCore runtime.&lt;/li&gt;
+&lt;li&gt;The runtime auto-instruments every step with OpenTelemetry spans, making the reason-and-act loop observable from the first call.&lt;/li&gt;
+&lt;li&gt;The agent’s reasoning model plans the task and performs cross-knowledge-base routing, selecting the tool (e.g., financial or weather) whose topic matches the question.&lt;/li&gt;
+&lt;li&gt;The selected tool call is brokered by the Amazon Bedrock AgentCore Gateway over the Model Context Protocol (MCP), invoking the knowledge base’s &lt;code&gt;AgenticRetrieveStream&lt;/code&gt; API.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AgenticRetrieveStream&lt;/code&gt; decomposes the question into sub-queries, retrieves iteratively from the managed datastore (ingested from corpora in Amazon S3), and synthesizes a grounded, cited answer that streams back through the Gateway.&lt;/li&gt;
+&lt;li&gt;The runtime emits spans, token usage, and metrics to Amazon CloudWatch and AWS X-Ray, populating seven observability layers and feeding evaluation scores.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Classic RAG performs one retrieval and one generation, while agentic retrieval uses a reasoning agent to decide whether and what to retrieve, refine through multiple retrievals, choose relevant knowledge bases (semantic routing), and compose a grounded answer with citations.&lt;/li&gt;
+&lt;li&gt;The solution deploys as four native AWS CloudFormation stacks, each wiring its outputs into the next:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;01-knowledge-bases&lt;/code&gt;: Creates an Amazon S3 bucket, two Managed Knowledge Bases (financial and weather corpora), their data sources, IAM, and an ingestion custom resource.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;02-agentic-gateway&lt;/code&gt;: Stands up an Amazon Bedrock AgentCore Gateway with AWS_IAM auth and MCP.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The solution includes two CloudWatch dashboards spanning seven layers of telemetry, plus on-demand and continuous evaluation, all provisioned by the same templates.&lt;/li&gt;
+&lt;li&gt;Direct ingestion via a custom connector allows documents to become retrievable within seconds.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;AgenticRetrieveStream&lt;/code&gt; API runs an agentic workflow that decides how to respond to a question, performing single or multi-hop retrievals as needed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The service manages ingestion, storage, embedding, and ranking, with no infrastructure to provision or capacity to monitor.&lt;/li&gt;
+&lt;li&gt;Built-in agentic retrieval uses iterative planning and multi-hop retrievals to answer complex questions while honoring access permissions on every hop.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Agentic retrieval introduces reasoning agents that refine retrievals, route across knowledge bases, and produce grounded, cited answers.&lt;/li&gt;
+&lt;li&gt;Observability and evaluation are built in from the start, with telemetry and metrics integrated into AWS CloudWatch and AWS X-Ray.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/architecture_v2-Page-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/27/ML-21427-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/27/ML-21427-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgenticRetrieval #KnowledgeBases #AWS #RAG #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-observable-enterprise-agentic-retrieval-using-managed-amazon-bedrock-knowledge-base-with-aws-cloudformation/" target="_blank" rel="noopener"
+&gt;Build observable enterprise agentic retrieval using Managed Amazon Bedrock Knowledge Base with AWS CloudFormation | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-multi-tenant-agentic-chat-applications-on-enterprise-data-with-amazon-bedrock-managed-knowledge-base/" target="_blank" rel="noopener"
+&gt;Build multi-tenant agentic chat applications on enterprise data with Amazon Bedrock Managed Knowledge Base | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Boomi Introduces Boomi Scribe AI Agent for Automated Integration Documentation</title><link>https://shoubhikbanerjee.github.io/blog/p/boomi-introduces-boomi-scribe-ai-agent-for-automated-integration-documentation/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/boomi-introduces-boomi-scribe-ai-agent-for-automated-integration-documentation/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/11/ML-19052-featured-image.png" alt="Featured image of post Boomi Introduces Boomi Scribe AI Agent for Automated Integration Documentation" /&gt;&lt;h1 id="boomi-introduces-boomi-scribe-ai-agent-for-automated-integration-documentation"&gt;Boomi Introduces Boomi Scribe AI Agent for Automated Integration Documentation
+&lt;/h1&gt;&lt;p&gt;Boomi has developed Boomi Scribe, an AI-powered agent running on AWS designed to automate and streamline the documentation process for enterprise development teams.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Enterprise developers often struggle to maintain documentation for workflows involving integrations across multiple applications and data sources. This presents several challenges:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Technical Debt:&lt;/strong&gt; Documentation is a persistent source of technical debt for enterprise teams.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Readability:&lt;/strong&gt; Without accurate documentation, workflows can be unreadable to anyone other than the original creator, complicating debugging and handoffs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Operational Risks:&lt;/strong&gt; Manual documentation is time-consuming and prone to inconsistencies, which can lead to rework, lost time, and gaps in auditing for compliance needs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version Control:&lt;/strong&gt; Comparing changes between process versions manually is tedious and error-prone.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Boomi Scribe uses a multi-step approach to transform technical metadata into user-friendly documentation:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Parsing:&lt;/strong&gt; The agent parses XML files containing integration process metadata to extract relevant features.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transformation:&lt;/strong&gt; These features are converted into a Directed Acyclic Graph (DAG) dot notation format, representing the workflow as nodes and edges.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Generation:&lt;/strong&gt; The parsed DAG is passed to AI models via Amazon Bedrock to generate natural language documentation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comparison:&lt;/strong&gt; The agent compares different versions of DAGs to highlight component differences and changes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Storage:&lt;/strong&gt; The results are stored in Amazon S3.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Boomi Scribe leverages several AWS services and AI models to function:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Claude Haiku 4.5&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A few-shot learning model used to process DAGs and generate natural language documentation and summaries.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Amazon Bedrock&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides the foundational LLMs used for documentation generation.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Amazon SageMaker AI&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used to build and maintain models for classifying user intents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;AWS Lambda&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Orchestrates the entire pipeline from parsing to comparison.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Amazon S3&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Stores DAG files, generated documentation, and metadata.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Amazon DynamoDB&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Serves as the internal backend datastore for service operations.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The generated documentation includes the following sections:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;High-level Overview:&lt;/strong&gt; A summary of the workflow for stakeholders and a process diagram.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Process Metadata:&lt;/strong&gt; Details including name, version, dates, paths, and the number of steps and components.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Business Context:&lt;/strong&gt; Information regarding the purpose of the process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Process Steps and Functions:&lt;/strong&gt; Concise, step-by-step descriptions for each workflow step.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This documentation and metadata are available for contextual reference within Boomi GPT and the Boomi Integration Canvas.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/11/ML-19052-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/11/ML-19052-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Boomi #AWS #AmazonBedrock #AIagents #EnterpriseSoftware&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-boomi-scribe-streamlines-documentation-using-aws/" target="_blank" rel="noopener"
+&gt;How Boomi Scribe streamlines documentation using AWS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Integrating Model Context Protocol Servers with Amazon Quick</title><link>https://shoubhikbanerjee.github.io/blog/p/integrating-model-context-protocol-servers-with-amazon-quick/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/integrating-model-context-protocol-servers-with-amazon-quick/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/08/20742.png" alt="Featured image of post Integrating Model Context Protocol Servers with Amazon Quick" /&gt;&lt;h1 id="integrating-model-context-protocol-servers-with-amazon-quick"&gt;Integrating Model Context Protocol Servers with Amazon Quick
+&lt;/h1&gt;&lt;p&gt;Amazon Quick now supports Model Context Protocol (MCP) integrations, enabling autonomous execution, real-time data access, and specialized AI sub-agent integrations. This integration allows AI agents to interact with real-world applications, reducing hallucinations while providing stateful, multi-turn capabilities.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The integration relies on specific components within Amazon Bedrock AgentCore to bridge the gap between user-facing interfaces and backend tools:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Quick&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides chat agents and workflow capabilities in web or desktop apps.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore Gateway&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Manages connections and handles the flow between clients and servers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore Runtime&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Hosts MCP server containers with support for session isolation and persistent file systems.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The authorization framework for these integrations is split into two flows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Inbound Auth&lt;/strong&gt;: Handles user authentication for access to the MCP server, typically using Amazon Cognito.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Outbound Auth&lt;/strong&gt;: Uses OAuth 2.0 for machine-to-machine authentication between the Gateway and the Runtime, leveraging AgentCore Identity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To implement this, you must satisfy several prerequisites:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An AWS account with configured credentials.&lt;/li&gt;
+&lt;li&gt;Amazon Quick with an Author or higher subscription.&lt;/li&gt;
+&lt;li&gt;Access to Amazon Bedrock with Anthropic models enabled.&lt;/li&gt;
+&lt;li&gt;Python 3.10+ and a command-line environment with the AWS SDK.&lt;/li&gt;
+&lt;li&gt;A running Docker daemon.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Using this pattern promotes reusability and avoids the duplication of AI tools. Customers can leverage products within Amazon Quick chat agents and workflows without the need to build custom connectors for every unique use case. By deploying MCP servers on AgentCore Runtime, developers gain access to built-in observability, bidirectional streaming, and evaluation tools.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/07/ML-20742-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/07/ML-20742-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #AmazonBedrock #MCP #AIAgents #CloudComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/connect-an-agentcore-runtime-hosted-mcp-server-to-amazon-quick/" target="_blank" rel="noopener"
+&gt;Connect an AgentCore Runtime hosted MCP server to Amazon Quick | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Jamf Builds Real-Time Per-Engineer AI Spend Controls on Amazon Bedrock</title><link>https://shoubhikbanerjee.github.io/blog/p/jamf-builds-real-time-per-engineer-ai-spend-controls-on-amazon-bedrock/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/jamf-builds-real-time-per-engineer-ai-spend-controls-on-amazon-bedrock/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21656-featured-image.png" alt="Featured image of post Jamf Builds Real-Time Per-Engineer AI Spend Controls on Amazon Bedrock" /&gt;&lt;h1 id="jamf-builds-real-time-per-engineer-ai-spend-controls-on-amazon-bedrock"&gt;Jamf Builds Real-Time Per-Engineer AI Spend Controls on Amazon Bedrock
+&lt;/h1&gt;&lt;p&gt;Jamf, an Apple device management company serving more than 76,000 organizations, has deployed a production system that tracks individual engineers&amp;rsquo; daily Amazon Bedrock spending and enforces tiered model restrictions based on budget thresholds. The solution addresses what the company calls the &amp;ldquo;tokenomics problem&amp;rdquo;: generative AI spend scales with behavior rather than provisioned capacity, making costs invisible until the bill arrives and complicating both cost control and ROI proof.&lt;/p&gt;
+&lt;h2 id="-the-challenge"&gt;🔍 The Challenge
+&lt;/h2&gt;&lt;p&gt;Generative AI spend behaves unlike traditional compute costs in several ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Traditional compute scales with provisioned capacity&lt;/li&gt;
+&lt;li&gt;AI spend scales with behavior: a single engineer running an agentic coding loop against a premium model can burn more tokens in a few hours than a team does in a week&lt;/li&gt;
+&lt;li&gt;Usage is invisible until the bill arrives&lt;/li&gt;
+&lt;li&gt;Leadership wants three answers before expanding AI access: What do we spend per person? Can we cap it without slowing engineers down? And do the productivity gains justify the cost?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Jamf gave its engineering organization broad access to Amazon Bedrock to accelerate AI-assisted development. Productivity climbed, but so did the need for AI FinOps: per-user visibility and cost accountability.&lt;/p&gt;
+&lt;h2 id="-how-the-enforcement-works"&gt;⚙️ How the Enforcement Works
+&lt;/h2&gt;&lt;p&gt;Jamf&amp;rsquo;s solution tracks each engineer&amp;rsquo;s daily Amazon Bedrock spending and applies tiered model restrictions as they approach their budget:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Threshold&lt;/th&gt;
+&lt;th&gt;Action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;80% of daily budget&lt;/td&gt;
+&lt;td&gt;Denies Anthropic Claude Opus access&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;100% of daily budget&lt;/td&gt;
+&lt;td&gt;Denies Anthropic Claude Sonnet access&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Always allowed&lt;/td&gt;
+&lt;td&gt;Anthropic Claude Haiku (low-cost model remains available)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Key operational characteristics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Restrictions take effect within minutes&lt;/li&gt;
+&lt;li&gt;No re-authentication required&lt;/li&gt;
+&lt;li&gt;Restrictions revert automatically at the next daily reset&lt;/li&gt;
+&lt;li&gt;Documented exception process grants time-boxed higher limits for engineers who legitimately need more&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-technical-architecture"&gt;🧩 Technical Architecture
+&lt;/h2&gt;&lt;p&gt;The system uses multiple AWS services in a serverless pipeline:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Data collection and calculation:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;When an engineer calls Amazon Bedrock (&lt;code&gt;bedrock:InvokeModel&lt;/code&gt;) through their AWS IAM Identity Center SSO session, Amazon Bedrock logs invocations (including model ID, input and output token counts, and user identity) to an Amazon S3 bucket&lt;/li&gt;
+&lt;li&gt;An Amazon Athena view (&lt;code&gt;bedrock_cost_today&lt;/code&gt;) reads those logs and computes per-user daily spend by multiplying token counts against published model rates&lt;/li&gt;
+&lt;li&gt;Athena queries raw logs in place, avoiding a separate data pipeline&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Enforcement cycle:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An AWS Lambda enforcement handler runs every 15 minutes, triggered by Amazon EventBridge&lt;/li&gt;
+&lt;li&gt;It reads current day spend from the Athena view&lt;/li&gt;
+&lt;li&gt;Cross-references an Amazon DynamoDB exceptions table holding custom, time-boxed limits&lt;/li&gt;
+&lt;li&gt;Reads each user&amp;rsquo;s previous state from an Amazon DynamoDB state table&lt;/li&gt;
+&lt;li&gt;When spend crosses a new threshold, sends a one-time Slack direct message for that tier&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Policy application:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For each engineer over threshold, Lambda publishes a new Customer Managed Policy version using &lt;code&gt;iam:CreatePolicyVersion&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Policy targets specific users through a &lt;code&gt;saml:sub&lt;/code&gt; condition key&lt;/li&gt;
+&lt;li&gt;CMPs attach to the IAM permission set&lt;/li&gt;
+&lt;li&gt;On next Amazon Bedrock call, IAM evaluates the updated policy and allows or denies accordingly&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Pricing configuration:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Amazon Bedrock invocation logs land on S3 as JSON&lt;/li&gt;
+&lt;li&gt;Athena table created over log location, with view translating token counts to dollars&lt;/li&gt;
+&lt;li&gt;View multiplies input and output tokens by published per-token rate for each model, grouped by user identity and current date&lt;/li&gt;
+&lt;li&gt;Each model family needs explicit pricing branch&lt;/li&gt;
+&lt;li&gt;Unmapped models priced at highest tier as fail-safe (not $0)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment-requirements"&gt;🚀 Deployment Requirements
+&lt;/h2&gt;&lt;p&gt;To deploy this solution, you need:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS account with permissions to create IAM roles, Customer Managed Policies, AWS Lambda functions, Amazon Athena workgroups, Amazon S3 buckets, and Amazon DynamoDB tables&lt;/li&gt;
+&lt;li&gt;AWS IAM Identity Center with a configured permission set assigned to users&lt;/li&gt;
+&lt;li&gt;Amazon Bedrock model invocation logging configured to deliver logs to S3&lt;/li&gt;
+&lt;li&gt;AWS CLI configured with appropriate credentials&lt;/li&gt;
+&lt;li&gt;Slack workspace with app configured for slash commands, interactivity, and bot messages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-implementation-resources"&gt;💡 Implementation Resources
+&lt;/h2&gt;&lt;p&gt;The code for this solution is available at: &lt;a class="link" href="https://github.com/aws-samples/sample-bedrock-spend-enforcement" target="_blank" rel="noopener"
+&gt;https://github.com/aws-samples/sample-bedrock-spend-enforcement&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;When implementing, replace rate constants with current Amazon Bedrock pricing for your Region.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21656-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21656-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21656-3.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIFinOps #AmazonBedrock #costcontrol #generativeAI #IAMIdentityCenter #tokenomics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/tokenomics-at-scale-how-jamf-built-real-time-spend-enforcement-for-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Tokenomics at scale: How Jamf built real-time spend enforcement for Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>🧬 AI Agents Transforming Life Sciences: How Data is Powering the Next Healthcare Revolution</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-agents-transforming-life-sciences-how-data-is-powering-the-next-healthcare-revolution/</link><pubDate>Sat, 31 May 2025 11:48:31 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-agents-transforming-life-sciences-how-data-is-powering-the-next-healthcare-revolution/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/c5b76da3e608d34edb07244cd9b875ee86906328/2025/05/19/Dan-Sheeran-GM-Healthcare-and-Life-Sciences-presenting-the-AWS-Healthcare-and-Life-Sciences-Agent-Toolkit.jpg" alt="Featured image of post 🧬 AI Agents Transforming Life Sciences: How Data is Powering the Next Healthcare Revolution" /&gt;&lt;h1 id="-ai-agents-transforming-life-sciences-how-data-is-powering-the-next-healthcare-revolution"&gt;🧬 AI Agents Transforming Life Sciences: How Data is Powering the Next Healthcare Revolution
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;𝗦𝘂𝗺𝗺𝗮𝗿𝘆&lt;/strong&gt;: At the 7th Annual AWS Life Sciences Symposium, industry leaders revealed how generative and agentic AI are revolutionizing healthcare innovation. This article explores how leading companies are unifying data silos, deploying real-world evidence, and implementing AI agents that accomplish in minutes what previously took days—while highlighting practical tools any organization can leverage today.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-ai-revolution-in-life-sciences-has-arrived"&gt;🔬 The AI Revolution in Life Sciences Has Arrived
+&lt;/h2&gt;&lt;p&gt;When over 1,000 life sciences industry leaders converge to discuss technology&amp;rsquo;s future, patterns emerge. At the recent AWS Life Sciences Symposium in New York City, one message resonated across all 26 sessions: generative AI has moved beyond experimentation into delivering tangible results, with the life sciences sector leading this transformation.&lt;/p&gt;
+&lt;p&gt;The symposium revealed a pivotal shift—organizations are no longer pursuing AI initiatives for innovation&amp;rsquo;s sake. Instead, they&amp;rsquo;re strategically scaling proven solutions that deliver measurable outcomes in research, clinical trials, manufacturing, and commercial operations.&lt;/p&gt;
+&lt;p&gt;But what&amp;rsquo;s the secret ingredient behind successful AI implementation? The answer was unanimous: 𝙙𝙖𝙩𝙖.&lt;/p&gt;
+&lt;h2 id="-data-as-the-ultimate-differentiator"&gt;📊 Data as the Ultimate Differentiator
+&lt;/h2&gt;&lt;p&gt;&amp;ldquo;Your AI is only as smart—and as strategic—as the data behind it.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;This statement encapsulates perhaps the most critical insight from the symposium. Companies achieving breakthroughs aren&amp;rsquo;t necessarily those with the most sophisticated AI algorithms, but rather those who&amp;rsquo;ve successfully transformed fragmented data into unified strategic assets.&lt;/p&gt;
+&lt;p&gt;AWS categorizes this data into three critical buckets:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Your existing data&lt;/li&gt;
+&lt;li&gt;New data you create&lt;/li&gt;
+&lt;li&gt;Third-party data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The symposium showcased how Merck Research Labs exemplifies this approach. Their team created a clinical data layer on AWS that consolidates clinical and operational information across studies onto a single platform, enabling automation that dramatically accelerates processes.&lt;/p&gt;
+&lt;p&gt;Another game-changing element is real-world data (RWD). Consider this striking statistic: &lt;strong&gt;85% of FDA drug approvals&lt;/strong&gt; between 2019-2021 leveraged real-world evidence. Despite its proven value, working with RWD has historically been slow and frustrating—taking up to four months to process. AWS partnerships have reduced this timeline to as little as two weeks.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;Imagine a data pipeline visualization showing the transformation from months-long processes to weeks&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The collaboration between AWS, the Broad Institute, and Manifold AI further illustrates this data revolution. This partnership combines seamless data access with advanced analysis capabilities using AWS HealthOmics, Amazon Bedrock, and Anthropic&amp;rsquo;s Claude to power AI-driven research at unprecedented scales.&lt;/p&gt;
+&lt;h2 id="-from-experiments-to-excellence-scaling-what-works"&gt;🤖 From Experiments to Excellence: Scaling What Works
+&lt;/h2&gt;&lt;p&gt;A clear trend emerged from the symposium: forward-thinking organizations have moved beyond random AI experiments to strategically scaling successful use cases.&lt;/p&gt;
+&lt;p&gt;Johnson &amp;amp; Johnson&amp;rsquo;s approach exemplifies this shift. The company has pivoted to focus exclusively on their highest-value AI applications—a strategy that enables faster ROI, better resource allocation, and sustainable innovation.&lt;/p&gt;
+&lt;p&gt;Sanofi provided another compelling case study. Their AI-powered assistant &amp;ldquo;Concierge&amp;rdquo; delivers contextual answers about company policies and procedures. The impressive adoption rate—&lt;strong&gt;over 80% of Sanofi employees&lt;/strong&gt;—demonstrates how deeply AI can integrate when it solves genuine daily challenges.&lt;/p&gt;
+&lt;p&gt;The most successful implementations target specific high-impact challenges. Working with PwC, AWS identified several use cases delivering significant value:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔍 &lt;strong&gt;Biomarker Discovery&lt;/strong&gt;: AI agents mining literature and first-party data&lt;/li&gt;
+&lt;li&gt;📋 &lt;strong&gt;Regulatory Amendment Analysis&lt;/strong&gt;: Reducing costly protocol amendments through AI-powered feedback analysis&lt;/li&gt;
+&lt;li&gt;🧪 &lt;strong&gt;Clinical Trial Analysis&lt;/strong&gt;: AI-guided exploration accelerating insights&lt;/li&gt;
+&lt;li&gt;🏭 &lt;strong&gt;Manufacturing Execution System Chat&lt;/strong&gt;: Natural language interfaces extracting actionable intelligence&lt;/li&gt;
+&lt;li&gt;💼 &lt;strong&gt;Sales Concierge&lt;/strong&gt;: Supporting commercial teams with timely, relevant data&lt;/li&gt;
+&lt;li&gt;🔐 &lt;strong&gt;Fraud Detection&lt;/strong&gt;: AI-driven anomaly detection in drug pricing programs&lt;/li&gt;
+&lt;li&gt;📈 &lt;strong&gt;Protocol Generation&lt;/strong&gt;: Accelerating clinical trial design through AI-assisted drafting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To facilitate adoption, AWS has created the Life Sciences Generative AI Portal—a curated collection of over 40 generative AI demos and customizable prototypes already delivering value across R&amp;amp;D, clinical development, manufacturing, and commercial operations.&lt;/p&gt;
+&lt;h2 id="-the-next-frontier-agentic-ai-in-action"&gt;🧠 The Next Frontier: Agentic AI in Action
+&lt;/h2&gt;&lt;p&gt;Perhaps the most exciting developments centered around 𝙖𝙜𝙚𝙣𝙩𝙞𝙘 𝘼𝙄—AI systems that can independently perform complex sequences of tasks to achieve specific goals.&lt;/p&gt;
+&lt;p&gt;Genentech showcased this potential with a striking example: A distinguished scientist completed a complex analysis of cell surface receptors in &lt;strong&gt;just 10 minutes&lt;/strong&gt; using agentic AI—a task that previously required two full days of work.&lt;/p&gt;
+&lt;p&gt;To accelerate adoption across the industry, AWS recently introduced an open-source agentic AI toolkit built on Amazon Bedrock. This toolkit includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Research Agents&lt;/strong&gt;: For target identification, biomarker discovery, and experimental design&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Clinical Agents&lt;/strong&gt;: Supporting trial analysis, protocol optimization, and patient stratification&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Commercial Agents&lt;/strong&gt;: Generating competitive intelligence and market insights&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;Conceptual illustration of multiple AI agents working together to solve complex research problems&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Publisher Wiley collaborated on an agent capable of searching full-text articles published under creative commons licenses. This agent delivers reliable, cited insights in minutes rather than the hours or days typically required for literature review—a transformational time-saving tool for researchers.&lt;/p&gt;
+&lt;p&gt;The toolkit&amp;rsquo;s architecture allows individual agents to connect with multi-agent supervisors using Amazon Bedrock&amp;rsquo;s collaboration capabilities, enabling developers to orchestrate across agents and build sophisticated workflows.&lt;/p&gt;
+&lt;h2 id="-building-on-a-foundation-for-future-innovation"&gt;🚀 Building on a Foundation for Future Innovation
+&lt;/h2&gt;&lt;p&gt;The symposium made clear that while technology continues advancing at breakneck speed, success depends on establishing a scalable, secure data foundation. This foundation enables organizations to adapt and evolve regardless of what innovations emerge next.&lt;/p&gt;
+&lt;p&gt;The life sciences industry stands at an inflection point where AI is transitioning from experimental to essential. Organizations that unify their data, implement strategic AI use cases, and embrace agentic capabilities are positioned to lead the next wave of healthcare breakthroughs.&lt;/p&gt;
+&lt;p&gt;What will your organization&amp;rsquo;s AI strategy prioritize in this rapidly evolving landscape? Will you focus on data integration, specific use case implementation, or exploring agentic capabilities?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://aws.amazon.com/blogs/industries/7th-annual-aws-life-sciences-symposium/" target="_blank" rel="noopener"
+&gt;https://aws.amazon.com/blogs/industries/7th-annual-aws-life-sciences-symposium/&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#AWSSymposium #LifeSciences #AgenticAI #GenerativeAI #HealthcareInnovation #ArtificialIntelligence #AWS #DataStrategy #BioPharma #RealWorldEvidence #ClinicalTrials #AIAgents #HealthOmics #DrugDiscovery #AmazonBedrock #HealthTech&lt;/p&gt;</description></item></channel></rss>

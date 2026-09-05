@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Software Architecture on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/software-architecture/</link><description>Recent content in Software Architecture on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 00:43:58 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/software-architecture/index.xml" rel="self" type="application/rss+xml"/><item><title>Building a Game AI Commander: A Low-Cost LLM-Unity Communication Pipeline for Independent Game Developers</title><link>https://shoubhikbanerjee.github.io/blog/p/building-a-game-ai-commander-a-low-cost-llm-unity-communication-pipeline-for-independent-game-developers/</link><pubDate>Tue, 28 Oct 2025 00:43:58 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/building-a-game-ai-commander-a-low-cost-llm-unity-communication-pipeline-for-independent-game-developers/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68fb0399fee74d154b69abb5/i3Qdlusu19tHtJe2mJBqt.png" alt="Featured image of post Building a Game AI Commander: A Low-Cost LLM-Unity Communication Pipeline for Independent Game Developers" /&gt;&lt;h1 id="-building-a-game-ai-commander-a-low-cost-llm-unity-communication-pipeline-for-independent"&gt;🎮 Building a Game AI Commander: A Low-Cost LLM-Unity Communication Pipeline for Independent
+&lt;/h1&gt;&lt;p&gt;Game Developers&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68fb0399fee74d154b69abb5/i3Qdlusu19tHtJe2mJBqt.png"
+loading="lazy"
+alt="9-grid testbed in unity"
+&gt;
+&lt;em&gt;Testing environment showcasing the AI Commander system in Unity&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;re an indie game developer, you&amp;rsquo;ve probably felt the tension: you want to create enemies
+with smart, unpredictable, strategic behavior, but the complexity and cost of advanced AI feel
+out of reach. Traditional behavior trees can become predictable, and integrating a Large
+Language Model (LLM) for every NPC&amp;rsquo;s decision seems like a quick way to empty your bank account.&lt;/p&gt;
+&lt;p&gt;For my Master&amp;rsquo;s research at RMIT University, I explored a different approach: What if an LLM
+wasn&amp;rsquo;t a pawn, but a commander?&lt;/p&gt;
+&lt;p&gt;This post walks through the &amp;ldquo;AI Commander,&amp;rdquo; a practice-based research project where I built a
+low-cost communication pipeline between Unity and an external LLM. I&amp;rsquo;ll cover the architecture,
+the prompt engineering, and the surprising results—including how 454 API test calls cost me just $0.58 USD.&lt;/p&gt;
+&lt;h2 id="-the-problem-intelligence-vs-cost"&gt;⚠️ The Problem: Intelligence vs. Cost
+&lt;/h2&gt;&lt;p&gt;Traditional game AI, like State Machines and Behavior Trees, is reliable but deterministic.
+Players are incredibly good at learning and exploiting patterns, which can reduce a game&amp;rsquo;s long-term replayability.&lt;/p&gt;
+&lt;p&gt;LLMs offer a solution with their incredible reasoning capabilities. However, for a small
+developer, direct real-time control of NPCs via API calls introduces three critical problems:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;High Latency&lt;/strong&gt;: Round-trip API calls can take hundreds of milliseconds, which is unacceptable
+for a real-time game.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Prohibitive Cost&lt;/strong&gt;: LLMs are priced per token. Constant API calls from multiple NPCs would be
+economically unsustainable.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Lack of Controllability&lt;/strong&gt;: LLMs can &amp;ldquo;hallucinate,&amp;rdquo; producing inconsistent or nonsensical
+output, making stable NPC behavior difficult to guarantee.&lt;/p&gt;
+&lt;h2 id="-our-solution-a-two-layer-ai-commander-architecture"&gt;🧩 Our Solution: A Two-Layer &amp;ldquo;AI Commander&amp;rdquo; Architecture
+&lt;/h2&gt;&lt;p&gt;To solve this, I designed a hierarchical system that separates high-level strategy from low-level execution.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Strategic Reasoning Layer (The LLM)&lt;/strong&gt;: An external LLM (I used DeepSeek) acts as the
+&amp;ldquo;brain.&amp;rdquo; It operates asynchronously, receiving a simplified, high-level snapshot of the
+battlefield every few seconds. Its only job is to analyze the situation and issue a strategic
+command, like &amp;ldquo;Unit 3, move to Zone 5.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Tactical Execution Layer (Unity)&lt;/strong&gt;: The game&amp;rsquo;s NPCs run on simple, traditional,
+locally-run state machines—the &amp;ldquo;muscles.&amp;rdquo; Their only job is to receive a concrete command from
+the commander and execute it immediately and reliably.&lt;/p&gt;
+&lt;p&gt;This separation is the key to solving the cost and latency issues. The LLM is only called
+periodically for major tactical decisions, not for every frame or every small action.&lt;/p&gt;
+&lt;p&gt;To bridge these two layers, I used the Command Pattern. The LLM&amp;rsquo;s output is a simple, structured
+JSON object that represents a command. A Command Processor in Unity parses this JSON and
+dispatches the order to the correct NPC.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68fb0399fee74d154b69abb5/7oaNS-MG866dGA1nCgtSY.png"
+loading="lazy"
+alt="complete communication pipeline architecture"
+&gt;
+&lt;em&gt;Complete communication pipeline architecture diagram&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-making-it-work-natural-language-programming-in-unity"&gt;⚙️ Making it Work: &amp;ldquo;Natural Language Programming&amp;rdquo; in Unity
+&lt;/h2&gt;&lt;p&gt;The core of the pipeline is its Prompt Engineering system. I used Unity&amp;rsquo;s ScriptableObject to
+create highly configurable prompt templates. A dedicated PromptBuilder class then injects
+real-time game data (like squad status and enemy locations) into these templates before sending them to the API.&lt;/p&gt;
+&lt;p&gt;This modular approach treats prompt construction as a form of &amp;ldquo;natural language programming.&amp;rdquo;
+Here&amp;rsquo;s a look at the core logic of the PromptBuilder:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PromptBuilder&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="n"&gt;BuildSquadState&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PromptProfileSO&lt;/span&gt; &lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Dictionary&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// 1. Start with the main template from the ScriptableObject&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;StringBuilder&lt;/span&gt; &lt;span class="n"&gt;promptBuilder&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;StringBuilder&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;promptTemplate&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// 2. Populate the rules section first StringBuilder rulesBuilder = new StringBuilder(profile.rulesSection);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// ... (Inject dynamic rules like min/max IDs) promptBuilder.Replace(&amp;#34;{rules}&amp;#34;, rulesBuilder.ToString());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// 3. Replace all data placeholders (e.g., {squad_state}, {enemy_data}) foreach (var kvp in data) {&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;promptBuilder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;$&amp;#34;{{{kvp.Key}}}&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kvp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Value&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// 4. Append the schema for clear instructions promptBuilder.Append(&amp;#34;\n\n--- REQUIRED OUTPUT FORMAT ---\n&amp;#34;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;promptBuilder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;You must strictly return a JSON object that adheres to the following schema:&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;promptBuilder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;schemaJson&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;promptBuilder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ToString&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-key-observations-from-4-months-of-testing"&gt;📊 Key Observations from 4 Months of Testing
+&lt;/h2&gt;&lt;p&gt;After building the prototype in a simplified 9-grid testbed, I ran tests over four months. Here
+are the most important findings:&lt;/p&gt;
+&lt;h3 id="1-the-pipeline-is-functional-and-remarkably-cheap-"&gt;1. The Pipeline is Functional and Remarkably Cheap 💰
+&lt;/h3&gt;&lt;p&gt;The system consistently executed the core loop: abstracting game state, sending it to the LLM,
+and parsing the JSON command in return. The total operational cost for 454 API calls and over
+430k tokens was just ¥0.67 CNY (about $0.58 USD).&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68fb0399fee74d154b69abb5/sxRYc1GE7qaWiWUblSDEI.png"
+loading="lazy"
+alt="Cost Analysis"
+&gt;
+&lt;em&gt;Cost breakdown showing exceptional affordability&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="2-the-ai-demonstrated-emergent-unscripted-behavior-"&gt;2. The AI Demonstrated Emergent, Unscripted Behavior 🤖
+&lt;/h3&gt;&lt;p&gt;This was the most intriguing finding. The LLM repeatedly issued &amp;ldquo;Hold&amp;rdquo; commands—telling a unit
+to stay in its current position. This was likely a conservative strategy when it was uncertain
+about the player&amp;rsquo;s location. Critically, the &amp;ldquo;hold&amp;rdquo; command was never pre-programmed or
+explicitly defined in the prompts. The AI reasoned that sometimes the best move is no move at all.&lt;/p&gt;
+&lt;h3 id="3-it-showcased-glimpses-of-genuine-tactical-reasoning-"&gt;3. It Showcased Glimpses of Genuine Tactical Reasoning 🎯
+&lt;/h3&gt;&lt;p&gt;When a unit was lost while the player&amp;rsquo;s location was unknown, the LLM generated commands to
+consolidate forces around a key defensive area. When the player&amp;rsquo;s location was inferred, it
+issued a series of &amp;ldquo;Move&amp;rdquo; commands to encircle that area. These were logical, non-scripted conservative tactics.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68fb0399fee74d154b69abb5/BiOpdokg-rDgy-QghgFdt.png"
+loading="lazy"
+alt="Hold Command"
+&gt;
+&lt;em&gt;&amp;ldquo;Hold&amp;rdquo; Command demonstration&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68fb0399fee74d154b69abb5/CRLxBG412hGkxpzjj-NOc.png"
+loading="lazy"
+alt="Surround Command"
+&gt;
+&lt;em&gt;&amp;ldquo;Surround&amp;rdquo; Command tactical execution&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-limitations"&gt;⚠️ Limitations
+&lt;/h2&gt;&lt;p&gt;It&amp;rsquo;s important to be clear: this was an exploratory study, not a production-ready system. The
+test environment was highly simplified, and there was no direct comparative analysis against a
+traditionally scripted AI. The goal was to investigate the practical feasibility and observe initial phenomena.&lt;/p&gt;
+&lt;h2 id="-resources-and-links"&gt;💻 Resources and Links
+&lt;/h2&gt;&lt;p&gt;For a deeper dive into the methodology, data, and full discussion, check out these resources:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;💻 Explore the Core Code and Read the Full Paper on GitHub:&lt;/strong&gt;
+[https://github.com/AlexMercerDUODUO/AI-Commander-Unity-LLM-Exploratory-Research-RMIT-MAGI]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🎮 Play the Demo on Itch.io:&lt;/strong&gt;
+[https://alexduo.itch.io/humanexe-ai-commander]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;▶️ Watch the Full Video Essay on YouTube:&lt;/strong&gt;
+[https://www.youtube.com/watch?v=tYeDCry3vtY]&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/AlexDuo/llm-unity-ai-commander" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/AlexDuo/llm-unity-ai-commander&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;The &amp;ldquo;AI Commander&amp;rdquo; model appears to be a promising and economically viable approach for
+developers with limited budgets. It suggests that the future of dynamic game AI may not lie in
+raw computational power, but in clever, accessible architectures that facilitate a creative
+dialogue between game engines and the emergent power of Large Language Models.&lt;/p&gt;
+&lt;p&gt;This research demonstrates that indie developers can harness the strategic intelligence of LLMs
+without breaking the bank, opening new possibilities for creating more engaging, unpredictable,
+and tactically sophisticated game experiences. The key lies in smart architectural decisions
+that separate strategic reasoning from tactical execution, creating a cost-effective bridge
+between cutting-edge AI and practical game development.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#GAMEDEV #UNITY #LLM #AI #INDIEGAMES #MACHINELEARNING #GAMEAI #RESEARCH #ARCHITECTURE #LOWCOST&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

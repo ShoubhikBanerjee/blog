@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Developer Tools on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/developer-tools/</link><description>Recent content in Developer Tools on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 02:11:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/developer-tools/index.xml" rel="self" type="application/rss+xml"/><item><title>Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards</title><link>https://shoubhikbanerjee.github.io/blog/p/lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards/</link><pubDate>Tue, 28 Oct 2025 02:11:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards" /&gt;&lt;h1 id="lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards-"&gt;Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards 🛠️🏆
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Repo:&lt;/strong&gt; &lt;a class="link" href="https://github.com/yifanzhang-pro/lanser-cli" target="_blank" rel="noopener"
+&gt;https://github.com/yifanzhang-pro/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Project Page:&lt;/strong&gt; &lt;a class="link" href="https://yifanzhang-pro.github.io/lanser-cli" target="_blank" rel="noopener"
+&gt;https://yifanzhang-pro.github.io/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-tldr-aka-the-elevator-pitch-with-bass"&gt;🎯 TL;DR (a.k.a. the elevator pitch with bass)
+&lt;/h2&gt;&lt;p&gt;LLMs guess. Language servers &lt;strong&gt;check&lt;/strong&gt;. &lt;strong&gt;Lanser-CLI&lt;/strong&gt; is the official implementation of
+&lt;em&gt;Language Server CLI Empowers Language Agents with Process Rewards&lt;/em&gt; — a CLI-first bridge between
+your coding agent and an LSP (e.g., Pyright). It turns IDE-grade facts (defs, refs, types,
+diagnostics, safe edits) into &lt;strong&gt;deterministic, replayable artifacts&lt;/strong&gt; and a &lt;strong&gt;process reward&lt;/strong&gt;
+that tells your agent it&amp;rsquo;s actually getting somewhere.&lt;/p&gt;
+&lt;p&gt;Less &amp;ldquo;trust me bro,&amp;rdquo; more &amp;ldquo;here are the receipts.&amp;rdquo;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-why-this-exists-and-why-your-agent-will-thank-you"&gt;🤔 Why this exists (and why your agent will thank you)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hallucinated APIs&lt;/strong&gt; and &lt;strong&gt;mislocalized edits&lt;/strong&gt; are the jump-scares of agent coding.&lt;/li&gt;
+&lt;li&gt;Language servers already compute &lt;em&gt;verifiable&lt;/em&gt; answers.&lt;/li&gt;
+&lt;li&gt;Agents need those answers in a form that&amp;rsquo;s &lt;strong&gt;deterministic, auditable, and safe to apply&lt;/strong&gt;
+—and they need &lt;strong&gt;shaped feedback&lt;/strong&gt; (XP!) on every step, not just the final diff.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Lanser-CLI&lt;/strong&gt; is the orchestration layer that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pins and speaks LSP like a pro&lt;/li&gt;
+&lt;li&gt;Emits byte-stable, hash-addressed &lt;strong&gt;Analysis Bundles&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Provides &lt;strong&gt;robust selectors&lt;/strong&gt; that survive edits&lt;/li&gt;
+&lt;li&gt;Wraps edits in a &lt;strong&gt;safety envelope&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Computes a &lt;strong&gt;process reward&lt;/strong&gt; so your agent stops flailing and starts leveling up&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-meme-level-overview"&gt;😂 Meme-level overview
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Language Agent:&lt;/strong&gt; &amp;ldquo;I renamed it.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Language Server:&lt;/strong&gt; &amp;ldquo;No you didn&amp;rsquo;t.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Lanser-CLI:&lt;/strong&gt; &amp;ldquo;Here&amp;rsquo;s the diff, the diagnostics delta, the safety check, and the hash. You&amp;rsquo;re
+welcome.&amp;rdquo;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-features-you-actually-want"&gt;⚙️ The features you actually want
+&lt;/h2&gt;&lt;h3 id="1-robust-selectors-goodbye-filelinecol-fragility"&gt;1) Robust Selectors (goodbye &lt;code&gt;file:line:col&lt;/code&gt; fragility)
+&lt;/h3&gt;&lt;p&gt;Address code by &lt;strong&gt;intent&lt;/strong&gt;, not just coordinates:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Symbolic&lt;/strong&gt;: &lt;code&gt;py://pkg.mod#Class.method:body&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AST path&lt;/strong&gt;: &lt;code&gt;ast://[module=pkg.mod]/[class=Class]/[def=method]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Content anchor&lt;/strong&gt;: &lt;code&gt;anchor://src/app.py#&amp;quot;def load_data(&amp;quot;?ctx=24&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;They &lt;strong&gt;relocate deterministically&lt;/strong&gt; as code changes. No more off-by-one chaos.&lt;/p&gt;
+&lt;h3 id="2-analysis-bundles-the-auditable-artifact"&gt;2) Analysis Bundles (the auditable artifact)
+&lt;/h3&gt;&lt;p&gt;Every command emits a JSON bundle that includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Resolved target + facts (defs/refs/hover/diags)&lt;/li&gt;
+&lt;li&gt;Environment capture (server version, position encoding, interpreter, config digest)&lt;/li&gt;
+&lt;li&gt;Stable &lt;strong&gt;&lt;code&gt;bundleId&lt;/code&gt;&lt;/strong&gt; (hash over canonicalized JSON)&lt;/li&gt;
+&lt;li&gt;Optional trace for &lt;strong&gt;offline replay&lt;/strong&gt; and CI audits&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-safety-envelope-because-prod-still-matters"&gt;3) Safety Envelope (because prod still matters)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Preview-first&lt;/strong&gt; for mutations (rename/code actions)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workspace jail&lt;/strong&gt; prevents writes outside project root&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Git-aware&lt;/strong&gt;: clean tree required unless overridden&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transactional apply&lt;/strong&gt; (atomic writes) + conflict reporting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4-process-rewards-xp-for-agents"&gt;4) Process Rewards (XP for agents)
+&lt;/h3&gt;&lt;p&gt;When your agent takes a step, it gets a &lt;strong&gt;score&lt;/strong&gt; shaped by:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Diagnostics going down&lt;/li&gt;
+&lt;li&gt;Safety checks passing&lt;/li&gt;
+&lt;li&gt;Selector ambiguity shrinking&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That&amp;rsquo;s feedback your planner can actually use—online and &lt;strong&gt;replayable&lt;/strong&gt; offline.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-60-second-tour-copypaste-these"&gt;🚀 60-second tour (copy/paste these)
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 0) Clone &amp;amp; explore&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone https://github.com/yifanzhang-pro/lanser-cliuv venv --python 3.12 .venv &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;source&lt;/span&gt; .venv/bin/activate
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uv pip install -e &lt;span class="s2"&gt;&amp;#34;.[dev]&amp;#34;&lt;/span&gt; lanser --help
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Inspect the environment and verify the orchestrator is healthy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser doctor
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Resolve a symbol definition via the selector DSL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser def py://lanser.cli#definition:def --json
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Run document diagnostics with deterministic bundles&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser diag src/lanser/cli.py@L1:C1 --json
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Preview a rename before applying workspace edits&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser rename py://lanser.cli#definition:def new_definition --json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Pro tip:&lt;/strong&gt; Everything above emits &lt;strong&gt;deterministic bundles&lt;/strong&gt; you can stash, diff, replay, and
+score.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-what-deterministic-actually-means-plain-english-edition"&gt;📊 What &amp;ldquo;deterministic&amp;rdquo; actually means (plain-English edition)
+&lt;/h2&gt;&lt;p&gt;When you freeze the workspace + server version + config, the same query yields the &lt;strong&gt;same
+bundle&lt;/strong&gt; with the &lt;strong&gt;same hash&lt;/strong&gt;. Lists are sorted deterministically; JSON is canonicalized
+before hashing. That&amp;rsquo;s why CI can trust it, and why offline replay works without re-running the server.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-under-the-hood-the-short-nerd-bit"&gt;🔧 Under the hood (the short nerd bit)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LSP lifecycle orchestration&lt;/strong&gt;: start/stop, capability negotiation, restarts with backoff&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single-flight cache&lt;/strong&gt;: dedup identical in-flight queries&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Position encoding sanity&lt;/strong&gt;: negotiates UTF-16 per LSP, handles UTF-8/&amp;ldquo;codepoint&amp;rdquo; IO
+correctly&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trace &amp;amp; replay&lt;/strong&gt;: optional JSON-RPC frame capture; regenerate byte-stable bundles offline&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Currently instantiated with Pyright for Python&lt;/strong&gt;; design is LSP-agnostic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-who-this-is-for"&gt;👥 Who this is for
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Agent developers&lt;/strong&gt; who want planning on &lt;strong&gt;facts&lt;/strong&gt; (not &amp;ldquo;hopefully correct&amp;rdquo; heuristics)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infra/CI owners&lt;/strong&gt; who want &lt;strong&gt;reproducible&lt;/strong&gt; static checks and safe automated edits&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Refactor wranglers&lt;/strong&gt; doing large-scale code moves with auditability&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-a-tiny-beforeafter-to-vibe-check-the-reward"&gt;📈 A tiny before/after to vibe-check the reward
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Before:&lt;/strong&gt; Agent renames function, diagnostics unchanged, selector ambiguous → low/negative
+reward.
+&lt;strong&gt;After:&lt;/strong&gt; Diagnostics drop, &lt;code&gt;prepareRename&lt;/code&gt; passes, ambiguity shrinks → &lt;strong&gt;positive reward&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The signal is simple on purpose: it&amp;rsquo;s &lt;strong&gt;shaping&lt;/strong&gt;, not a research paper in disguise. Your
+trainer/evaluator will thank you.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-faq-fast-and-slightly-feral"&gt;❓ FAQ (fast and slightly feral)
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Is this an IDE?&lt;/strong&gt; No. This is a &lt;strong&gt;CLI-first orchestrator&lt;/strong&gt; that makes language-server power
+usable by agents and CI.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Will it break my repo?&lt;/strong&gt; Mutations are preview-by-default, jailed, git-aware, and
+transactional. You&amp;rsquo;d have to try to make it spicy.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Does it only do Python?&lt;/strong&gt; Today&amp;rsquo;s demo rides with &lt;strong&gt;Pyright&lt;/strong&gt;. The design is &lt;strong&gt;LSP-agnostic&lt;/strong&gt;.
+Bring your favorite server via PRs.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Do I need to publish anything to use process rewards?&lt;/strong&gt; Nope. Rewards are computed from
+bundles you already produced. They&amp;rsquo;re replayable offline for evals.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-roadmap-ish-community-flavored"&gt;🗺️ Roadmap-ish (community-flavored
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;More LSP servers + language flavors&lt;/li&gt;
+&lt;li&gt;Richer selectors and ambiguity evidence&lt;/li&gt;
+&lt;li&gt;Expanded batch SDK for high-throughput agent farms&lt;/li&gt;
+&lt;li&gt;First-class eval harness using replayed bundles&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Want a thing? Open an issue. Even better: open a PR.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-try-it-on-your-codebase-today"&gt;🧪 Try it on your codebase today
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Clone the repo 2. Install Lanser-CLI&lt;/li&gt;
+&lt;li&gt;Point Lanser-CLI at a project 4. Run &lt;code&gt;lanser def&lt;/code&gt;, &lt;code&gt;lanser refs&lt;/code&gt;, &lt;code&gt;lanser diag&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Preview a &lt;code&gt;rename&lt;/code&gt; and watch the bundle + reward kick in&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;👉 &lt;strong&gt;Repo:&lt;/strong&gt; &lt;a class="link" href="https://github.com/yifanzhang-pro/lanser-cli" target="_blank" rel="noopener"
+&gt;https://github.com/yifanzhang-pro/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;⭐ &lt;strong&gt;Star it so your agent gets gains.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;🙌 &lt;strong&gt;Contribute memes, ideas, and code.&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Final punchline:&lt;/strong&gt; Tool-use shouldn&amp;rsquo;t be theatrical. With &lt;strong&gt;Lanser-CLI&lt;/strong&gt;, language servers
+become a &lt;strong&gt;ground truth API&lt;/strong&gt;, edits come with &lt;strong&gt;guardrails&lt;/strong&gt;, and agents get a &lt;strong&gt;scoreboard&lt;/strong&gt;
+for every step they take. Ship confidently; leave the guesswork to the ghosts.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/yifAI/lanser-cli" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/yifAI/lanser-cli&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Lanser-CLI represents a significant leap forward in bridging the gap between language servers
+and AI agents. By providing deterministic, auditable artifacts and process rewards, it
+transforms how agents interact with code - moving from guesswork to ground truth. The tool&amp;rsquo;s
+focus on safety, reproducibility, and shaped feedback makes it an essential addition to any
+serious agent development workflow.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re building coding agents, managing CI/CD pipelines, or conducting large-scale
+refactoring operations, Lanser-CLI offers the reliability and insight needed to operate
+confidently in production environments.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#LANGUAGESERVERS #AI #AGENTS #DEVTOOLS #CLI #PYTHON #LSP #AUTOMATION #REFACTORING #CICD&lt;/em&gt;&lt;/p&gt;</description></item><item><title>🚀 Devstral-Small-2505: The Open-Source Lightweight Coding Agent That Outperforms GPT-4.1 Mini</title><link>https://shoubhikbanerjee.github.io/blog/p/devstral-small-2505-the-open-source-lightweight-coding-agent-that-outperforms-gpt-4.1-mini/</link><pubDate>Thu, 29 May 2025 19:03:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/devstral-small-2505-the-open-source-lightweight-coding-agent-that-outperforms-gpt-4.1-mini/</guid><description>&lt;img src="https://huggingface.co/mistralai/Devstral-Small-2505/resolve/main/assets/swe_bench.png" alt="Featured image of post 🚀 Devstral-Small-2505: The Open-Source Lightweight Coding Agent That Outperforms GPT-4.1 Mini" /&gt;&lt;h1 id="-devstral-small-2505-the-open-source-lightweight-coding-agent-that-outperforms-gpt-41-mini"&gt;🚀 Devstral-Small-2505: The Open-Source Lightweight Coding Agent That Outperforms GPT-4.1 Mini
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Discover Mistral AI and All Hands AI&amp;rsquo;s groundbreaking collaborative creation - Devstral-Small-2505. This compact 24B parameter model runs locally on consumer hardware yet crushes SWE-Bench benchmarks with 46.8% verified score, making it the #1 open-source model for software engineering tasks. Learn how to deploy and use this Apache 2.0 licensed coding assistant with multiple deployment options.&lt;/p&gt;
+&lt;h2 id="-meet-devstral-a-new-champion-in-agentic-coding"&gt;🤖 Meet Devstral: A New Champion in Agentic Coding
+&lt;/h2&gt;&lt;p&gt;The software development landscape has just shifted dramatically with the release of Devstral-Small-2505, a revolutionary lightweight model that punches far above its weight class. As a collaboration between Mistral AI and All Hands AI, this specialized model represents a significant milestone in accessible, powerful coding assistance.&lt;/p&gt;
+&lt;p&gt;What makes Devstral particularly exciting is its focus on 𝗮𝗴𝗲𝗻𝘁𝗶𝗰 𝗰𝗼𝗱𝗶𝗻𝗴 - the ability to actively explore codebases, edit multiple files simultaneously, and power sophisticated software engineering workflows. Unlike general-purpose LLMs, Devstral was specifically fine-tuned from Mistral-Small-3.1 with software engineering tasks in mind.&lt;/p&gt;
+&lt;p&gt;The results speak for themselves: Devstral achieves a remarkable 46.8% score on SWE-Bench Verified, outperforming the previous open-source state-of-the-art by 6%. More impressively, it beats GPT-4.1-mini by a massive margin (46.8% vs 23.6%) and even edges out Claude 3.5 Haiku (40.6%).&lt;/p&gt;
+&lt;h2 id="-small-size-big-capabilities"&gt;💻 Small Size, Big Capabilities
+&lt;/h2&gt;&lt;p&gt;Perhaps the most compelling aspect of Devstral is its accessibility. With just 24 billion parameters, you can run this model locally on:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A single RTX 4090&lt;/li&gt;
+&lt;li&gt;A Mac with 32GB RAM&lt;/li&gt;
+&lt;li&gt;Other consumer-grade hardware&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This lightweight profile doesn&amp;rsquo;t come at the expense of capabilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔍 &lt;strong&gt;Massive Context Window&lt;/strong&gt;: 128k tokens let Devstral understand large codebases&lt;/li&gt;
+&lt;li&gt;🔤 &lt;strong&gt;Advanced Tokenizer&lt;/strong&gt;: Tekken tokenizer with 131k vocabulary for efficient code representation&lt;/li&gt;
+&lt;li&gt;📜 &lt;strong&gt;Apache 2.0 License&lt;/strong&gt;: Full commercial and non-commercial use permissions&lt;/li&gt;
+&lt;li&gt;🛠️ &lt;strong&gt;Tool Usage&lt;/strong&gt;: Built specifically to excel at using software tools for exploration and modification&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The removal of the vision encoder from the base Mistral-Small-3.1 model focuses Devstral entirely on text-based software engineering tasks, resulting in more efficient performance for its intended purpose.&lt;/p&gt;
+&lt;h2 id="-getting-started-with-devstral"&gt;🔧 Getting Started with Devstral
+&lt;/h2&gt;&lt;p&gt;There are several ways to use Devstral in your development workflow. Let&amp;rsquo;s explore the most accessible approaches.&lt;/p&gt;
+&lt;h3 id="𝗕𝗲𝘀𝘁-𝗢𝗽𝘁𝗶𝗼𝗻-𝗢𝗽𝗲𝗻𝗛𝗮𝗻𝗱𝘀-𝗦𝗰𝗮𝗳𝗳𝗼𝗹𝗱"&gt;𝗕𝗲𝘀𝘁 𝗢𝗽𝘁𝗶𝗼𝗻: 𝗢𝗽𝗲𝗻𝗛𝗮𝗻𝗱𝘀 𝗦𝗰𝗮𝗳𝗳𝗼𝗹𝗱
+&lt;/h3&gt;&lt;p&gt;For the optimal experience with Devstral, the OpenHands scaffold is recommended. You can use it through Mistral&amp;rsquo;s API or by running it locally.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Using Mistral&amp;rsquo;s API&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Create a Mistral account and obtain an API key&lt;/li&gt;
+&lt;li&gt;Set up OpenHands through a Docker container:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-gdscript3" data-lang="gdscript3"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;export&lt;/span&gt; &lt;span class="n"&gt;MISTRAL_API_KEY&lt;/span&gt;&lt;span class="o"&gt;=&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;MY_KEY&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;pull&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;hands&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;hands&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ai&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;runtime&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;0.39&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;nikolaik&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Additional setup commands...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Running Locally&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Launch a vLLM server:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-gdscript3" data-lang="gdscript3"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;vllm&lt;/span&gt; &lt;span class="n"&gt;serve&lt;/span&gt; &lt;span class="n"&gt;mistralai&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Devstral&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Small&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2505&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;tokenizer_mode&lt;/span&gt; &lt;span class="n"&gt;mistral&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;config_format&lt;/span&gt; &lt;span class="n"&gt;mistral&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;load_format&lt;/span&gt; &lt;span class="n"&gt;mistral&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="k"&gt;tool&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;parser&lt;/span&gt; &lt;span class="n"&gt;mistral&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;auto&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="k"&gt;tool&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;choice&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;tensor&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;parallel&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start="2"&gt;
+&lt;li&gt;Set up OpenHands Docker container&lt;/li&gt;
+&lt;li&gt;Connect via localhost:3000 and configure with your server URL&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;📸 &lt;em&gt;See the code examples in the original documentation for exact Docker commands and configuration.&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="𝗔𝗹𝘁𝗲𝗿𝗻𝗮𝘁𝗶𝘃𝗲-𝗗𝗲𝗽𝗹𝗼𝘆𝗺𝗲𝗻𝘁-𝗢𝗽𝘁𝗶𝗼𝗻𝘀"&gt;𝗔𝗹𝘁𝗲𝗿𝗻𝗮𝘁𝗶𝘃𝗲 𝗗𝗲𝗽𝗹𝗼𝘆𝗺𝗲𝗻𝘁 𝗢𝗽𝘁𝗶𝗼𝗻𝘀
+&lt;/h3&gt;&lt;p&gt;If OpenHands isn&amp;rsquo;t your preferred workflow, several other deployment options are available:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;vLLM&lt;/strong&gt;: Recommended for production-ready inference pipelines&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;mistral-inference&lt;/strong&gt;: Best for quick &amp;ldquo;vibe checks&amp;rdquo; and experimentation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transformers Library&lt;/strong&gt;: For custom Python integration&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LM Studio&lt;/strong&gt;: For a GUI-based local deployment&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;llama.cpp&lt;/strong&gt;: For optimized CPU inference&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ollama&lt;/strong&gt;: For simplified deployment with &lt;code&gt;ollama run devstral&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Each integration method provides different trade-offs between ease of setup, performance, and customization options.&lt;/p&gt;
+&lt;h2 id="-practical-example-building-a-todo-app"&gt;🏆 Practical Example: Building a Todo App
+&lt;/h2&gt;&lt;p&gt;Let&amp;rsquo;s see Devstral in action with a practical example - building a Todo list application from scratch.&lt;/p&gt;
+&lt;p&gt;When prompted to build a Todo app with specific requirements (FastAPI backend, React frontend, SQLite database), Devstral can:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Generate the complete application architecture&lt;/li&gt;
+&lt;li&gt;Create backend API endpoints with proper data models&lt;/li&gt;
+&lt;li&gt;Implement the React frontend components&lt;/li&gt;
+&lt;li&gt;Set up database connections and migrations&lt;/li&gt;
+&lt;li&gt;Provide deployment instructions&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The remarkable aspect is how Devstral can handle multi-file projects coherently, understanding the relationships between different components and maintaining consistency across the codebase.&lt;/p&gt;
+&lt;p&gt;Once the initial app is generated, you can iterate on it through natural language requests:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Add checkbox UI elements instead of click-to-mark&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Implement filtering by task status&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Add task editing functionality&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;See the Todo app example in action through the OpenHands scaffold.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-real-world-use-case-test-coverage-analysis"&gt;🧠 Real-World Use Case: Test Coverage Analysis
+&lt;/h2&gt;&lt;p&gt;Another impressive demonstration of Devstral&amp;rsquo;s capabilities is its ability to analyze test coverage in existing codebases.&lt;/p&gt;
+&lt;p&gt;In the example provided, Devstral was connected to the mistral-common repository and instructed to check test coverage and create visualizations. The agent:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Browsed the codebase to understand test configuration&lt;/li&gt;
+&lt;li&gt;Set up testing dependencies&lt;/li&gt;
+&lt;li&gt;Launched coverage tests&lt;/li&gt;
+&lt;li&gt;Wrote code to visualize the results&lt;/li&gt;
+&lt;li&gt;Generated multiple plot types showing coverage metrics&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This type of analysis typically requires significant domain knowledge and coding skill, yet Devstral handled it smoothly through natural language instructions.&lt;/p&gt;
+&lt;h2 id="-why-devstral-matters"&gt;🚀 Why Devstral Matters
+&lt;/h2&gt;&lt;p&gt;What makes Devstral truly groundbreaking is how it democratizes access to elite AI coding assistance. While models like GPT-4 and Claude 3.5 Opus offer impressive capabilities, they remain accessible only through APIs with usage costs and potential privacy concerns.&lt;/p&gt;
+&lt;p&gt;Devstral brings competitive performance to local environments with its Apache 2.0 license, making advanced coding assistance available to individual developers, small teams, and organizations with limited resources.&lt;/p&gt;
+&lt;p&gt;The gap between Devstral&amp;rsquo;s 46.8% SWE-Bench score and GPT-4.1-mini&amp;rsquo;s 23.6% demonstrates that open-source models can not just compete with but significantly outperform some commercial offerings.&lt;/p&gt;
+&lt;p&gt;As software development continues to grow in complexity, tools like Devstral will play an increasingly vital role in boosting developer productivity, reducing barriers to entry, and democratizing access to AI assistance.&lt;/p&gt;
+&lt;p&gt;What coding challenges will you tackle with Devstral?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/mistralai/Devstral-Small-2505" target="_blank" rel="noopener"
+&gt;https://huggingface.co/mistralai/Devstral-Small-2505&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#DevstralAI #CodingAssistant #LocalLLM #MistralAI #OpenSourceAI #SoftwareDevelopment #AIAgent #DeveloperTools #TechInnovation&lt;/p&gt;</description></item></channel></rss>
