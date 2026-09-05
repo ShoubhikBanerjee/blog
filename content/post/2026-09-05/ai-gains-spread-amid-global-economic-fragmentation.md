@@ -1,7 +1,7 @@
 ---
 title: "AI Gains Spread Amid Global Economic Fragmentation"
 description: "New research shows that AI breakthroughs remain clustered in a few economies, yet the productivity gains can diffuse worldwide; the extent of that diffusion depends on how fragmented the global..."
-date: 2026-09-05T06:05:23+05:30
+date: 2026-09-05T12:02:47+05:30
 tags: [AI, globaltrade, economicfragmentation, productivity]
 categories: [AI]
 author: "Shoubhik Banerjee"

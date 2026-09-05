@@ -1,7 +1,7 @@
 ---
 title: "CrewAI vs LangGraph: Different Philosophies and Trade‑offs for Agent Systems"
 description: "'It's two different answers to “what is an agent system, anyway.”'"
-date: 2026-09-05T06:05:23+05:30
+date: 2026-09-05T12:02:47+05:30
 tags: [CrewAI, LangGraph, AgentSystems]
 categories: [AI]
 image: "https://www.scaler.com/topics/images/tech_card-crewai-vs-langgraph-techcard_surprise-1788430194.webp"
