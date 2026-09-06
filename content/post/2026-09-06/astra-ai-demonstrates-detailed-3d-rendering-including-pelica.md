@@ -1,7 +1,7 @@
 ---
 title: "Astra AI demonstrates detailed 3D rendering, including pelican on bicycle"
 description: "A new generative AI model called Astra showed an ability to produce highly detailed 3D models, as highlighted in a recent video."
-date: 2026-09-06T06:02:49+05:30
+date: 2026-09-06T12:01:36+05:30
 tags: [Astra, 3DModeling, AIArt, GenerativeAI]
 categories: [AI]
 author: "Shoubhik Banerjee"
