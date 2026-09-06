@@ -1,7 +1,7 @@
 ---
 title: "Advanced Anthropic AI Models Raise New Risks for Nuclear Deterrence"
 description: "Artificial intelligence is seeping steadily into strategic nuclear affairs. Recent breakthroughs from Anthropic’s Claude models – especially Fable 5 and the higher‑capability Mythos – are prompting..."
-date: 2026-09-06T12:01:36+05:30
+date: 2026-09-06T18:14:37+05:30
 tags: [AI, NuclearDeterrence, Anthropic, StrategicStability, Cybersecurity]
 categories: [AI]
 image: "https://orionpolicy.org/wp-content/uploads/2026/09/shutterstock_2760060277-2-1024x576.jpg"
