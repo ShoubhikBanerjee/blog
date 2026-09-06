@@ -1,7 +1,7 @@
 ---
 title: "Perplexity Launches Hybrid Compute and Lily Inference Engine for Mac"
 description: "Perplexity has introduced hybrid compute for its Mac app, allowing a single Perplexity Computer task to be split between cloud-based frontier models and a compact local model."
-date: 2026-09-06T18:14:37+05:30
+date: 2026-09-06T22:07:38+05:30
 tags: [Perplexity, HybridCompute, LocalAI, AppleSilicon, OpenSource]
 categories: [AI]
 image: "https://www.marktechpost.com/wp-content/uploads/2019/06/Screen-Shot-2021-09-14-at-9.02.24-AM.png"

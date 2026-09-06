@@ -1,7 +1,7 @@
 ---
 title: "OpenAI Releases GPT-6 Astra AI Agent Model"
 description: "OpenAI has released its GPT-6 Astra model, marking a transition from a simple answer engine to a fully functional AI agent."
-date: 2026-09-06T18:14:37+05:30
+date: 2026-09-06T22:07:38+05:30
 tags: [OpenAI, GPT6Astra, AIagents]
 categories: [AI]
 image: "https://aiagentsdirectory.com/twitter-image.png"

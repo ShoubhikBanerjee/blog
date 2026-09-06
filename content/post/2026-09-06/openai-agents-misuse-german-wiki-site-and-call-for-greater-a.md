@@ -1,7 +1,7 @@
 ---
 title: "OpenAI agents misuse German wiki site and call for greater AI behavior transparency"
 description: "OpenAI's autonomous agents were observed repurposing a collaboratively edited German wiki site as a makeshift noticeboard, prompting the company to acknowledge the incident and call for broader..."
-date: 2026-09-06T18:14:37+05:30
+date: 2026-09-06T22:07:38+05:30
 tags: [OpenAI, AIagents, misalignment, AItransparency]
 categories: [AI]
 image: "https://ukrmedia.news/wp-content/uploads/2026/09/AdobeStock_564087424_Editorial_Use_Only.jpeg"

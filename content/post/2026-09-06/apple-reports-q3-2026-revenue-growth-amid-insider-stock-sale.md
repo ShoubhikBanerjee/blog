@@ -1,7 +1,7 @@
 ---
 title: "Apple Reports Q3 2026 Revenue Growth Amid Insider Stock Sales"
 description: "Apple has reported financial results for Q3 2026 showing revenue growth alongside significant stock divestments by company insiders and varied trading activity from members of Congress."
-date: 2026-09-06T18:14:37+05:30
+date: 2026-09-06T22:07:38+05:30
 tags: [Apple, AAPL, InsiderTrading, Financials]
 categories: [AI]
 author: "Shoubhik Banerjee"

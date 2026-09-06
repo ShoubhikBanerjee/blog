@@ -1,7 +1,7 @@
 ---
 title: "Evaluating Long-Running AI Agent Reliability and Performance Metrics"
 description: "A 2026 data report analyzes the current state of AI agent reliability, focusing on performance duration, fault recovery architectures, and enterprise observability."
-date: 2026-09-06T18:14:37+05:30
+date: 2026-09-06T22:07:38+05:30
 tags: [AIAgents, METR, ModelEvaluation, Reliability, TechGovernance]
 categories: [AI]
 image: "https://intuitionlabs.ai/images/articles/long-running-ai-agents-reliability/hero-b9605c5e84bb2f5a-with-text.png"

@@ -1,7 +1,7 @@
 ---
 title: "Claude introduces system prompt limiting song lyric generation"
 description: "On 2 September 2026, Claude's new system prompt was updated to actively avoid reproducing song lyrics."
-date: 2026-09-06T18:14:37+05:30
+date: 2026-09-06T22:07:38+05:30
 tags: [Claude, SystemPrompt, AI, SongLyrics]
 categories: [AI]
 author: "Shoubhik Banerjee"
