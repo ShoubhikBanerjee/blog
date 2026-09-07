@@ -1,7 +1,7 @@
 ---
 title: "Penn researchers develop hybrid light-matter particle for energy-efficient AI computing"
 description: "Researchers at Penn have created a hybrid light-matter particle that could dramatically speed up AI computing while using far less energy."
-date: 2026-09-07T06:03:17+05:30
+date: 2026-09-07T12:02:41+05:30
 tags: [AI, Penn, Hardware, Computing, EnergyEfficiency]
 categories: [AI]
 image: "https://www.sciencedaily.com/images/scidaily-icon.png"
