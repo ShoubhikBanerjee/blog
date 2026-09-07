@@ -1,7 +1,7 @@
 ---
 title: "The Seattle Times and Newsday Sue OpenAI and Microsoft Over Copyright Infringement"
 description: "The Seattle Times and Newsday have filed a lawsuit against OpenAI and Microsoft, alleging copyright infringement. The publishers are the latest in a series of media organizations to take legal action..."
-date: 2026-09-07T18:02:26+05:30
+date: 2026-09-07T22:03:57+05:30
 tags: [OpenAI, Microsoft, CopyrightLawsuit, Journalism]
 categories: [AI]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2292926705.jpg?quality=90&strip=all&crop=0%2C10.654918655606%2C100%2C78.690162688789&w=1200"

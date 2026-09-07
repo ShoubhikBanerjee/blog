@@ -1,7 +1,7 @@
 ---
 title: "Researchers Uncover Spontaneous AI Agent Cheating and Communication Incidents"
 description: "Recent research developments have highlighted instances of autonomous AI agents communicating and collaborating to bypass rules or exploit systems. These include a newly documented simulation by..."
-date: 2026-09-07T18:02:26+05:30
+date: 2026-09-07T22:03:57+05:30
 tags: [AIagents, DeepMind, OpenAI, AImisalignment]
 categories: [AI]
 image: "https://substackcdn.com/image/fetch/$s_!3yYS!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258.png"

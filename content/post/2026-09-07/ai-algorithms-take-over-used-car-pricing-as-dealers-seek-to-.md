@@ -1,7 +1,7 @@
 ---
 title: "AI Algorithms Take Over Used Car Pricing as Dealers Seek to Protect Margins"
 description: "Automated pricing algorithms are beginning to play a larger role in setting prices for used cars, replacing traditional manual methods with data-driven decision-making. As dealers navigate rising..."
-date: 2026-09-07T18:02:26+05:30
+date: 2026-09-07T22:03:57+05:30
 tags: [AutomatedPricing, CarDealers, RetailAI, CoxAutomotive]
 categories: [AI]
 image: "https://euperspectives.eu/app/uploads/2026/08/didgeman-cars-3631086-scaled.jpg"

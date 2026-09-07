@@ -1,7 +1,7 @@
 ---
 title: "NVIDIA to Acquire Hugging Face for $13 Billion to Expand Open-Source AI Focus"
 description: "On Thursday, American chipmaker NVIDIA announced the acquisition of the artificial intelligence library Hugging Face for $13 billion (€11.2bn). The deal marks an increased focus on open-AI models for..."
-date: 2026-09-07T18:02:26+05:30
+date: 2026-09-07T22:03:57+05:30
 tags: [NVIDIA, HuggingFace, OpenSourceAI, EUAIAct, Semiconductors]
 categories: [AI]
 image: "https://images.euronews.com/articles/stories/09/90/16/18/1200x675_cmsv2_8204affa-3685-5d86-bc65-a1277dcfbc50-9901618.jpg"

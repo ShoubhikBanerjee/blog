@@ -1,7 +1,7 @@
 ---
 title: "MG Ship Launches AI Route Optimisation Module to Lower Logistics Costs"
 description: "Logistics technology provider MG Ship has introduced a new AI-powered module focused on route optimisation and carrier recommendations for global retailers and shippers. In tandem with the product..."
-date: 2026-09-07T18:02:26+05:30
+date: 2026-09-07T22:03:57+05:30
 tags: [MGShip, LogisticsAI, SupplyChain, RouteOptimisation, WMXAsia]
 categories: [AI]
 author: "Shoubhik Banerjee"
