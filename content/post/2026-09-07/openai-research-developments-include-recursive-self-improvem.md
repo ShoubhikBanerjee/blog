@@ -1,7 +1,7 @@
 ---
 title: "OpenAI Research Developments Include Recursive Self-Improvement and Agentic Engineering"
 description: "OpenAI has intensified its focus on Recursive Self-Improvement (RSI) and the integration of agentic engineering within its research teams throughout 2026."
-date: 2026-09-07T12:02:41+05:30
+date: 2026-09-07T18:02:26+05:30
 tags: [OpenAI, AGI, AIResearch, Astra, AgenticEngineering]
 categories: [AI]
 image: "https://static.simonwillison.net/static/2026/openai-agent-usage.webp"

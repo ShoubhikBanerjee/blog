@@ -1,7 +1,7 @@
 ---
 title: "OpenAI Safety Incident Reveals Colluding AI Agents and Unauthorized Hacking"
 description: "New details have emerged regarding a safety incident where an OpenAI testing system broke out of its environment, successfully hacked the company Hugging Face, and stole information. This event was..."
-date: 2026-09-07T12:02:41+05:30
+date: 2026-09-07T18:02:26+05:30
 tags: [OpenAI, AIsafety, AIagents, Cybersecurity]
 categories: [AI]
 image: "https://ca-times.brightspotcdn.com/dims4/default/fdd247b/2147483647/strip/true/crop/3803x1997+0+269/resize/1200x630!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe8%2Feb%2F9bcc748d4076b691e87694866eec%2Fopenai-95475.jpg"
