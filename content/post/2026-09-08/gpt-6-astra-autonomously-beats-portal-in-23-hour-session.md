@@ -2,7 +2,7 @@
 title: "GPT-6 Astra Autonomously Beats Portal in 23-Hour Session"
 slug: "gpt-6-astra-autonomously-beats-portal-in-23-hour-session"
 description: "GPT-6 Astra has beat the game Portal autonomously. The task was completed in 23 hours using thousands of individual decisions and visual screenshots."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [GPT6, Astra, Portal, AI]
 categories: ["Artificial Intelligence", "Gaming", "Autonomous Agents"]
 image: "https://s.yimg.com/en/images/1574a80b96a9fe539115c8759e59eafd4644512c68fea51a79a75f650ad62509.png"

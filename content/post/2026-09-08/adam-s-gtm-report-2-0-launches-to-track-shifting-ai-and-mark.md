@@ -2,9 +2,9 @@
 title: "Adam’s GTM Report 2.0 Launches to Track Shifting AI and Market Trends"
 slug: "adams-gtm-report-2-0-launches-to-track-shifting-ai-and-market-trends"
 description: "Adam’s GTM Report 2.0 has officially launched, delivering a new market tracker that details trending topics, market moves, and an updated GTM Tech Index. Built by measuring a monthly conversation..."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [GTM, AItech, Salesforce, Anthropic, MarketTrends]
-categories: []
+categories: ["AI"]
 image: "https://media.licdn.com/dms/image/v2/D5612AQFbAZ1Ftpxejg/article-cover_image-shrink_720_1280/B56aB4vWxLJAAQ-/0/1788732075471?e=2147483647&v=beta&t=zSYUeEAdSehkGXAtRk2Jl3pxPR6jCwP-UVYdIim-flE"
 author: "Shoubhik Banerjee"
 draft: false

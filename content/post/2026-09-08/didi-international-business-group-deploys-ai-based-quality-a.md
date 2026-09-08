@@ -2,9 +2,9 @@
 title: "DiDi International Business Group deploys AI-based quality assurance on Amazon Bedrock"
 slug: "didi-international-business-group-deploys-ai-based-quality-assurance-on-amazon-bedrock"
 description: "DiDi’s International Business Group has partnered with AWS to transition its Customer Experience (CX) department’s quality assurance (QA) system from a third-party solution to a self-owned AI..."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [DiDi, AWS, AmazonBedrock, ArtificialIntelligence, CustomerExperience]
-categories: []
+categories: ["AI"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21371-featured-image.png"
 author: "Shoubhik Banerjee"
 draft: false

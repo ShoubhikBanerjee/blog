@@ -2,7 +2,7 @@
 title: "Enhanced ChatGPT Clone Introduces Advanced Agent Controls and Multi-Model Integration"
 slug: "enhanced-chatgpt-clone-introduces-advanced-agent-controls-and-multi-model-integration"
 description: "An enhanced ChatGPT clone has been released as an open-source project for self-hosting, featuring extensive agent orchestration, multi-model support, and advanced security integrations."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [AIagents, OpenSource, LLM, ChatGPTClone]
 categories: ["AI Agents", "Software Development", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/110412045?v=4"

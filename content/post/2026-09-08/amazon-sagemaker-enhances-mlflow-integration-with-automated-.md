@@ -2,7 +2,7 @@
 title: "Amazon SageMaker Enhances MLflow Integration with Automated Model Registry Sync"
 slug: "amazon-sagemaker-enhances-mlflow-integration-with-automated-model-registry-sync"
 description: "Amazon SageMaker has introduced an enhanced synchronization capability between Managed MLflow and the SageMaker Model Registry. This update automates the transfer of critical model metadata,..."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [MLflow, SageMaker, MLOps, ModelGovernance, AWS]
 categories: ["Machine Learning", "MLOps", "Cloud AI", "Model Governance"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-featured-image-1.png"

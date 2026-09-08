@@ -2,7 +2,7 @@
 title: "Understand Anything: A Multi-Agent Tool for Visualizing Codebases as Interactive Knowledge Graphs"
 slug: "understand-anything-a-multi-agent-tool-for-visualizing-codebases-as-interactive-knowledge-graphs"
 description: "Understand Anything is an open-source project from Egonex, originally created by Lum1104, that transforms codebases into interactive knowledge graphs. The tool uses a multi-agent pipeline to analyze..."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [Egonex, OpenSource, ClaudeCode, KnowledgeGraph, AIagents]
 categories: ["Software Development", "Artificial Intelligence", "Data Visualization"]
 image: "https://avatars.githubusercontent.com/u/257477979?v=4"

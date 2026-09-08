@@ -2,7 +2,7 @@
 title: "Multiplayer Agent Harness for Collaborative Work in Slack and Web"
 slug: "multiplayer-agent-harness-for-collaborative-work-in-slack-and-web"
 description: "A new multiplayer agent harness for work has been introduced, enabling employees to work independently in isolated workspaces or collaborate with an agent in projects, group messages, and Slack..."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [AIagents, Slack, TypeScript, Productivity, SoftwareDevelopment]
 categories: ["AI Agents", "Software Engineering", "Enterprise Software"]
 image: "https://avatars.githubusercontent.com/u/153323858?v=4"

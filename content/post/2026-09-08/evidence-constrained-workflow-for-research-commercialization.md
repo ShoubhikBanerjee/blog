@@ -2,7 +2,7 @@
 title: "Evidence‑Constrained Workflow for Research Commercialization Assessment Launched"
 slug: "evidenceconstrained-workflow-for-research-commercialization-assessment-launched"
 description: "A new system that assesses the commercial potential of research papers using an evidence‑constrained workflow has been released."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [AIWorkflow, ResearchAutomation, EvidenceBasedAI]
 categories: ["Artificial Intelligence", "Machine Learning", "Software Engineering", "Research Tools"]
 image: "https://avatars.githubusercontent.com/u/264747650?v=4"

@@ -2,7 +2,7 @@
 title: "Paper-Agent 2.0 Released as a Full Rewrite for Academic Research"
 slug: "paper-agent-2-0-released-as-a-full-rewrite-for-academic-research"
 description: "Paper-Agent is an intelligent paper retrieval and research tool designed for researchers and students. Version 2.0 is a complete rewrite of the 1.x version, upgrading the engineering implementation..."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [PaperAgent, AIagents, AcademicResearch, LangGraph, NLP]
 categories: ["AI Agents", "Academic Tools", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/94357205?v=4"

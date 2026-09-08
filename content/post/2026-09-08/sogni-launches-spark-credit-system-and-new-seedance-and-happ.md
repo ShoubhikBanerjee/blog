@@ -2,9 +2,9 @@
 title: "Sogni Launches Spark Credit System and New Seedance and HappyHorse Models"
 slug: "sogni-launches-spark-credit-system-and-new-seedance-and-happyhorse-models"
 description: "Sogni has introduced a unified credit system called Spark to power its suite of SuperApps, SDK, and creative workflows. Alongside this new payment infrastructure, Sogni has released several upgraded..."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [Sogni, AI, GenerativeAI, SparkCredits, VideoGeneration]
-categories: []
+categories: ["AI"]
 image: "https://docs.sogni.ai/assets/sogni-docs-og.jpg"
 author: "Shoubhik Banerjee"
 draft: false

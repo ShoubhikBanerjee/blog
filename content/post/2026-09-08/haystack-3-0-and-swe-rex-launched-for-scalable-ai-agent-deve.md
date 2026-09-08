@@ -2,7 +2,7 @@
 title: "Haystack 3.0 and SWE-ReX Launched for Scalable AI Agent Development"
 slug: "haystack-3-0-and-swe-rex-launched-for-scalable-ai-agent-development"
 description: "Deepset has released Haystack 3.0, an open-source AI orchestration framework for building production-ready LLM applications in Python, alongside SWE-ReX, a runtime interface for sandboxed AI agent..."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [OpenSourceAI, AIAgents, RAG, LLMs, DeveloperTools]
 categories: ["AI Frameworks", "Software Development", "Large Language Models", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/51827949?v=4"

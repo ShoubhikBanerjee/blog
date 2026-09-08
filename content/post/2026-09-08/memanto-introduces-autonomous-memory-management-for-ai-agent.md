@@ -2,7 +2,7 @@
 title: "Memanto introduces autonomous memory management for AI agent fleets"
 slug: "memanto-introduces-autonomous-memory-management-for-ai-agent-fleets"
 description: "Memanto, a companion Memory Agent, runs alongside a fleet of AI agents to manage their memories automatically."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [AIAgents, MemoryManagement, OpenKnowledgeFormat]
 categories: ["Artificial Intelligence", "AI Agents", "Machine Learning", "Software Tools"]
 image: "https://avatars.githubusercontent.com/u/220075209?v=4"

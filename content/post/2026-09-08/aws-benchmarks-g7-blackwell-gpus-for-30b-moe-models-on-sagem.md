@@ -2,9 +2,9 @@
 title: "AWS benchmarks G7 Blackwell GPUs for 30B MoE models on SageMaker"
 slug: "aws-benchmarks-g7-blackwell-gpus-for-30b-moe-models-on-sagemaker"
 description: "Amazon Web Services (AWS) has published new benchmarks comparing NVIDIA Blackwell-powered G7 GPU instances against G5 and G6 families for deploying 30B-parameter Mixture-of-Experts (MoE) models on..."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [AWS, SageMaker, NVIDIA, Blackwell, MoE, AIInference]
-categories: []
+categories: ["AI"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/ML-21730-featured-image.png"
 author: "Shoubhik Banerjee"
 draft: false

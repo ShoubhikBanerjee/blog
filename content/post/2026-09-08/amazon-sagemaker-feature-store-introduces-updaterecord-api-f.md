@@ -2,7 +2,7 @@
 title: "Amazon SageMaker Feature Store introduces UpdateRecord API for feature-level writes"
 slug: "amazon-sagemaker-feature-store-introduces-updaterecord-api-for-feature-level-writes"
 description: "Amazon SageMaker Feature Store has introduced the UpdateRecord API, allowing users to update specific feature values without reading or rewriting entire records."
-date: 2026-09-09T00:31:26+05:30
+date: 2026-09-09T00:51:34+05:30
 tags: [AmazonSageMaker, MachineLearning, MLOps, AWS]
 categories: ["Machine Learning", "Cloud Computing", "Data Management"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/Amazon-SageMaker-Feature-Store-introduces-UpdateRecord-for-feature-level-writes.png"
