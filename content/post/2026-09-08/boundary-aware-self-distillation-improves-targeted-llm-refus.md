@@ -1,7 +1,8 @@
 ---
 title: "Boundary-Aware Self-Distillation Improves Targeted LLM Refusal for Political Persuasion"
+slug: "boundary-aware-self-distillation-improves-targeted-llm-refusal-for-political-persuasion"
 description: "A new paper, *Safety for Whom? Boundary‑Aware Self‑Distillation for Controlled LLM Safety Refusal*, shows how to train language models to refuse only the harmful subset of political prompts while..."
-date: 2026-09-09T00:16:34+05:30
+date: 2026-09-09T00:31:26+05:30
 tags: [LLMSafety, SelfDistillation, AIAlignment, PoliticalAI]
 categories: []
 image: "https://cdn-uploads.huggingface.co/production/uploads/668e37fd9c9aa124a3c867e8/HuauFbdznYW4fNQh8j4Tp.png"

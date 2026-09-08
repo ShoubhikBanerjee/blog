@@ -1,7 +1,8 @@
 ---
 title: "Overview of Amazon Bedrock AgentCore Runtime and Evaluation Capabilities"
+slug: "overview-of-amazon-bedrock-agentcore-runtime-and-evaluation-capabilities"
 description: "Amazon Bedrock AgentCore provides a managed environment for developing, hosting, and evaluating AI agents throughout their lifecycle. The platform integrates agent runtime, observability, and..."
-date: 2026-09-09T00:16:34+05:30
+date: 2026-09-09T00:31:26+05:30
 tags: [AmazonBedrock, AgentCore, AIAgents, LLM, OpenTelemetry]
 categories: []
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-20711-featured-image.png"

@@ -1,7 +1,8 @@
 ---
 title: "AG2 v1.0 Releases Protocol-Driven Framework and Splits from AutoGen Classic"
+slug: "ag2-v1-0-releases-protocol-driven-framework-and-splits-from-autogen-classic"
 description: "AG2 (formerly AutoGen) has updated its development structure, introducing a protocol-driven framework as the top-level package in v1.0 while moving the original AutoGen-derived framework to a..."
-date: 2026-09-09T00:16:34+05:30
+date: 2026-09-09T00:31:26+05:30
 tags: [AG2, AutoGen, AIagents, OpenSource]
 categories: ["AI Agents", "Software Development", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/188122941?v=4"

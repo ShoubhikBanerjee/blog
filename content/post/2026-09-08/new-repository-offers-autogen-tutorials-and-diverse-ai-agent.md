@@ -1,7 +1,8 @@
 ---
 title: "New Repository Offers AutoGen Tutorials and Diverse AI Agent Examples"
+slug: "new-repository-offers-autogen-tutorials-and-diverse-ai-agent-examples"
 description: "A new GitHub repository has been released that bundles a variety of AutoGen projects, tutorials, and example agents for SaaS products, along with related resources for other agent frameworks."
-date: 2026-09-09T00:16:34+05:30
+date: 2026-09-09T00:31:26+05:30
 tags: [AutoGen, AIagents, OpenSource]
 categories: ["Artificial Intelligence", "AI Agents", "Open Source Software", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/71527334?v=4"

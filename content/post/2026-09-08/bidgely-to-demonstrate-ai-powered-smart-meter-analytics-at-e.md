@@ -1,7 +1,8 @@
 ---
 title: "Bidgely to Demonstrate AI-Powered Smart Meter Analytics at Enlit Asia 2026"
+slug: "bidgely-to-demonstrate-ai-powered-smart-meter-analytics-at-enlit-asia-2026"
 description: "Bidgely will showcase its behind-the-meter AI solutions at Enlit Asia 2026, taking place from 22–24 September in Jakarta. The company aims to demonstrate how its technology unlocks the potential of..."
-date: 2026-09-09T00:16:34+05:30
+date: 2026-09-09T00:31:26+05:30
 tags: [EnergyAI, SmartGrid, UtilityTech, EnlitAsia]
 categories: []
 author: "Shoubhik Banerjee"

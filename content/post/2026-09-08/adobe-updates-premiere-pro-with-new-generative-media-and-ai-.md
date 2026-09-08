@@ -1,7 +1,8 @@
 ---
 title: "Adobe Updates Premiere Pro with New Generative Media and AI Audio Tools"
+slug: "adobe-updates-premiere-pro-with-new-generative-media-and-ai-audio-tools"
 description: "Adobe is overhauling how editors interact with AI in its Premiere professional video editing software, introducing a dedicated interface for generative media directly within the project timeline."
-date: 2026-09-09T00:16:34+05:30
+date: 2026-09-09T00:31:26+05:30
 tags: [Adobe, PremierePro, GenerativeAI, VideoEditing, AfterEffects]
 categories: []
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Premiere_Gen-Media-Tool-2.jpg?quality=90&strip=all&crop=2.25%2C0%2C95.5%2C100&w=1200"

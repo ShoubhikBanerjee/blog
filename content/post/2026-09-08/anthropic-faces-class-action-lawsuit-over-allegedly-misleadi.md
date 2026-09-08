@@ -1,7 +1,8 @@
 ---
 title: "Anthropic Faces Class Action Lawsuit Over Allegedly Misleading Claude Max Subscription Limits"
+slug: "anthropic-faces-class-action-lawsuit-over-allegedly-misleading-claude-max-subscription-limits"
 description: "Anthropic is facing legal scrutiny after subscribers accused the company of deceptively marketing its premium Claude Max AI subscription tier. The expanded class action lawsuit alleges that Anthropic..."
-date: 2026-09-09T00:16:34+05:30
+date: 2026-09-09T00:31:26+05:30
 tags: [Anthropic, ClaudeAI, Lawsuit, AIEthics, ConsumerRights]
 categories: ["Artificial Intelligence", "Legal", "Consumer Technology", "Subscription Services"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/03/STK202_DARIO_AMODEI_CVIRGINIA_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

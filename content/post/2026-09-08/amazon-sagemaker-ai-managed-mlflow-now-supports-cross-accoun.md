@@ -1,7 +1,8 @@
 ---
 title: "Amazon SageMaker AI Managed MLflow Now Supports Cross-Account Governance Topologies"
+slug: "amazon-sagemaker-ai-managed-mlflow-now-supports-cross-account-governance-topologies"
 description: "Amazon SageMaker AI has expanded the capabilities of managed MLflow to support cross-account governance. This update allows larger organizations to separate development and production environments at..."
-date: 2026-09-09T00:16:34+05:30
+date: 2026-09-09T00:31:26+05:30
 tags: [SageMaker, MLflow, AWS, MLOps, CloudGovernance]
 categories: ["Machine Learning", "Cloud Computing", "Data Governance"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-featured-image.png"

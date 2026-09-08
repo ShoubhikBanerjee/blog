@@ -1,7 +1,8 @@
 ---
 title: "Garry Tan Releases gstack to Transform Claude Code into Virtual Engineering Team"
+slug: "garry-tan-releases-gstack-to-transform-claude-code-into-virtual-engineering-team"
 description: "Garry Tan, President & CEO of Y Combinator, has released gstack, a tool designed to turn Claude Code into a virtual engineering team consisting of 23 specialists and eight power tools."
-date: 2026-09-09T00:16:34+05:30
+date: 2026-09-09T00:31:26+05:30
 tags: [gstack, ClaudeCode, AIagents, SoftwareEngineering, DeveloperTools]
 categories: ["AI Agents", "Software Development", "Developer Productivity"]
 image: "https://avatars.githubusercontent.com/u/19957?v=4"
