@@ -1,9 +1,9 @@
 ---
 title: "Using Claude and n8n to Query Ghost Content via API"
 description: "I built a workflow that lets me query my Ghost‑hosted posts beyond the built‑in search."
-date: 2026-09-08T22:06:20+05:30
+date: 2026-09-09T00:16:34+05:30
 tags: [Ghost, Claude, n8n, AIworkflow]
-categories: [AI]
+categories: []
 author: "Shoubhik Banerjee"
 draft: false
 ---

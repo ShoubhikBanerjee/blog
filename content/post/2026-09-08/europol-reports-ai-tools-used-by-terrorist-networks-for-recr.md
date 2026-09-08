@@ -1,9 +1,9 @@
 ---
 title: "Europol Reports AI Tools Used by Terrorist Networks for Recruitment and Attack Planning"
 description: "European law enforcement agencies have identified a growing trend of terrorist groups utilizing AI technologies to facilitate propaganda, recruitment, and attack preparation. According to Europol,..."
-date: 2026-09-08T22:06:20+05:30
+date: 2026-09-09T00:16:34+05:30
 tags: [AI, Europol, Cybersecurity, DigitalSafety]
-categories: [AI]
+categories: []
 image: "https://images.euronews.com/articles/stories/09/90/51/66/1200x675_cmsv2_cbdaece7-3026-59b9-907e-c29a8b7da96d-9905166.jpg"
 author: "Shoubhik Banerjee"
 draft: false

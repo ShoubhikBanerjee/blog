@@ -1,9 +1,9 @@
 ---
 title: "Google DeepMind Launches AlphaGenome Atlas to Map Genetic Variants"
 description: "Google DeepMind has introduced AlphaGenome Atlas, an AI-powered platform that provides a predictive map of every possible single-letter DNA change in the human genome. This dataset is designed to..."
-date: 2026-09-08T22:06:20+05:30
+date: 2026-09-09T00:16:34+05:30
 tags: [GoogleDeepMind, Genomics, AlphaGenome, ArtificialIntelligence]
-categories: [AI]
+categories: []
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/alphagenome-atlas-cover__background.jpg?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"
 author: "Shoubhik Banerjee"
 draft: false

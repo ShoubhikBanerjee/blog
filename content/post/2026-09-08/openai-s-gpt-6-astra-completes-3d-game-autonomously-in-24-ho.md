@@ -1,9 +1,9 @@
 ---
 title: "OpenAI's GPT‑6 Astra Completes 3D Game Autonomously in 24 Hours"
 description: "OpenAI’s latest model, GPT‑6 Astra, demonstrated a notable milestone by navigating a full 3D game from start to finish without any human intervention, completing the task in just 24 hours."
-date: 2026-09-08T22:06:20+05:30
+date: 2026-09-09T00:16:34+05:30
 tags: [OpenAI, GPT6, AIbenchmark]
-categories: [AI]
+categories: []
 image: "https://artwork.captivate.fm/d2a5dd5a-c6f4-42af-b2f9-eb989dbebd81/5minuteAINewsLogo-3000x3000.jpg"
 author: "Shoubhik Banerjee"
 draft: false

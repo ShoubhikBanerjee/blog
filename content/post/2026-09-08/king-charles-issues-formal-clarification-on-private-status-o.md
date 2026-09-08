@@ -1,9 +1,9 @@
 ---
 title: "King Charles Issues Formal Clarification on Private Status of Duke and Duchess of Sussex"
 description: "King Charles has issued a formal letter clarifying that the Duke and Duchess of Sussex will not carry out official engagements or act as working royals following their return to the UK. The message,..."
-date: 2026-09-08T22:06:20+05:30
+date: 2026-09-09T00:16:34+05:30
 tags: [RoyalFamily, PrinceHarry, KingCharles, BuckinghamPalace]
-categories: [AI]
+categories: []
 image: "https://ichef.bbci.co.uk/news/1024/branded_news/1cd1/live/6e721f30-aac8-11f1-8881-75c1b8a858c8.jpg"
 author: "Shoubhik Banerjee"
 draft: false

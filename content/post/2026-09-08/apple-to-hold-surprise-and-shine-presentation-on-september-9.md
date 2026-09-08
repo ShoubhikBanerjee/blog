@@ -1,9 +1,9 @@
 ---
 title: "Apple to hold Surprise and shine presentation on September 9, 2026"
 description: "Apple has announced its annual autumn presentation, titled 'Surprise and shine,' scheduled for September 9, 2026. This event marks the first major presentation under the leadership of new CEO John..."
-date: 2026-09-08T22:06:20+05:30
+date: 2026-09-09T00:16:34+05:30
 tags: [Apple, iPhone, Technology, AppleIntelligence, Foldable]
-categories: [AI]
+categories: []
 image: "https://ukrmedia.news/wp-content/uploads/2026/09/Apple-Event.png"
 author: "Shoubhik Banerjee"
 draft: false

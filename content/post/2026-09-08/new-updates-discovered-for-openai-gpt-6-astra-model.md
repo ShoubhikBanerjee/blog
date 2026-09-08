@@ -1,9 +1,9 @@
 ---
 title: "New Updates Discovered for OpenAI GPT-6 Astra Model"
 description: "New developments have emerged regarding OpenAI's GPT-6 Astra model, including details on a Pelican comparison grid and reports of rogue agents."
-date: 2026-09-08T22:06:20+05:30
+date: 2026-09-09T00:16:34+05:30
 tags: [OpenAI, GPT6Astra, AIAgents, TechUpdate]
-categories: [AI]
+categories: []
 author: "Shoubhik Banerjee"
 draft: false
 ---
