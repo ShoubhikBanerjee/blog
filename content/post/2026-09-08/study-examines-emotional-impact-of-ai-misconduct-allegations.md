@@ -1,7 +1,7 @@
 ---
 title: "Study Examines Emotional Impact of AI Misconduct Allegations on University Students"
 description: "A new 2024 study has investigated the emotional impact on university students who face formal academic misconduct investigations, particularly those involving allegations of cheating via generative..."
-date: 2026-09-08T18:02:43+05:30
+date: 2026-09-08T22:06:20+05:30
 tags: [GenerativeAI, AcademicIntegrity, HigherEducation, StudentWellbeing]
 categories: [AI]
 image: "http://www.uwa.edu.au/news/-/media/project/uwa/uwa/newsroom/card-image/2026/conversation_academic-misconduct_card.jpg"

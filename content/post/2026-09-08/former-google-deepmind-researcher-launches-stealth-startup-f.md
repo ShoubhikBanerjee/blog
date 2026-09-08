@@ -1,7 +1,7 @@
 ---
 title: "Former Google DeepMind Researcher Launches Stealth Startup for Humanoid Robot Training"
 description: "Former Google DeepMind researcher Danijar Hafner has launched a new startup in San Francisco's SoMa district to build AI that enables humanoid robots to navigate unfamiliar environments. Currently..."
-date: 2026-09-08T18:02:43+05:30
+date: 2026-09-08T22:06:20+05:30
 tags: [Robotics, DeepMind, WorldModels, AIagents]
 categories: [AI]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/08/Danijar-0G6A8052-2.jpg?resize=1200,600"

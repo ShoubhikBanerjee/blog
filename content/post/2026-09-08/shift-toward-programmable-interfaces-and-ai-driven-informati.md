@@ -1,7 +1,7 @@
 ---
 title: "Shift Toward Programmable Interfaces and AI-Driven Information Interpretation"
 description: "Large Language Models (LLMs) are increasingly using code to interact with the world, as technical progress in coding models has shown astounding growth over the last year. This shift toward a more..."
-date: 2026-09-08T18:02:43+05:30
+date: 2026-09-08T22:06:20+05:30
 tags: [LLM, SoftwareDevelopment, Automation, AI]
 categories: [AI]
 image: "https://static.licdn.com/scds/common/u/images/email/artdeco/logos/96/linkedin-bug-color.png"
