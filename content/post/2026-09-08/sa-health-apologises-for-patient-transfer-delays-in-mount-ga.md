@@ -1,7 +1,7 @@
 ---
 title: "SA Health Apologises for Patient Transfer Delays in Mount Gambier"
 description: "SA Health has issued an apology for significant delays experienced by a patient during a transfer from Mount Gambier to Adelaide."
-date: 2026-09-08T12:02:36+05:30
+date: 2026-09-08T18:02:43+05:30
 tags: [Healthcare, PatientTransfer, SAHealth]
 categories: [AI]
 image: "https://live-production.wcms.abc-cdn.net.au/c385ab1121848981ea56b8bab51a7710?impolicy=wcms_watermark_news&cropH=1125&cropW=2000&xPos=0&yPos=0&width=862&height=485&imformat=generic"

@@ -1,7 +1,7 @@
 ---
 title: "Istanbul to Host Inaugural GITEX AI Türkiye 2026 Conference in September"
 description: "The Investment and Finance Office of the Presidency of Türkiye has announced that Istanbul will host the inaugural GITEX AI Türkiye 2026 conference from September 9-10 at the Istanbul Expo Center...."
-date: 2026-09-08T12:02:36+05:30
+date: 2026-09-08T18:02:43+05:30
 tags: [AI, Türkiye, GITEX, TechInvestment, Startups]
 categories: [AI]
 image: "https://img.piri.net/piri/upload/3/2026/9/8/c8ed1473-gitex-ai-turkiye-2026-to-gather-global-investors-in-istanbul.webp"

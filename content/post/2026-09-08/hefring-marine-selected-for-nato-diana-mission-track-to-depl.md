@@ -1,7 +1,7 @@
 ---
 title: "Hefring Marine Selected for NATO DIANA Mission Track to Deploy Maritime AI"
 description: "Icelandic tech company Hefring Marine has been selected as one of only 15 companies to advance to the Mission Track of NATO's Defence Innovation Accelerator for the North Atlantic (DIANA). Chosen..."
-date: 2026-09-08T12:02:36+05:30
+date: 2026-09-08T18:02:43+05:30
 tags: [HefringMarine, NATODIANA, MaritimeAI, EdgeAI]
 categories: [AI]
 author: "Shoubhik Banerjee"
