@@ -2,7 +2,7 @@
 title: "DeepCode Launches Open Agentic Coding with Multi-Agent Orchestration"
 slug: "deepcode-launches-open-agentic-coding-with-multi-agent-orchestration"
 description: "DeepCode has introduced an open agentic coding system designed to advance code generation through the use of multi-agent systems. The development focuses on streamlining developer workflows through..."
-date: 2026-09-09T12:04:45+05:30
+date: 2026-09-09T18:04:04+05:30
 tags: [DeepCode, AIAgents, CodeGeneration, OpenSource, MultiAgentSystems]
 categories: ["AI", "Software Development", "AI Agents", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/118165258?v=4"

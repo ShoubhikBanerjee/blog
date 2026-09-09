@@ -2,7 +2,7 @@
 title: "AI Edge Gallery adds support for Gemma 4 and Thinking Mode"
 slug: "ai-edge-gallery-adds-support-for-gemma-4-and-thinking-mode"
 description: "The AI Edge Gallery has been updated to provide official support for the newly released Gemma 4 family of models, enabling users to run powerful open-source Large Language Models (LLMs) locally on..."
-date: 2026-09-09T12:04:45+05:30
+date: 2026-09-09T18:04:04+05:30
 tags: [Gemma4, AIEdgeGallery, OnDeviceAI, LLM, OpenSource]
 categories: ["AI", "Machine Learning", "Mobile Development", "Generative AI"]
 image: "https://avatars.githubusercontent.com/u/150697620?v=4"

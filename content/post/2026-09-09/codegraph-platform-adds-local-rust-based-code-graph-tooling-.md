@@ -2,7 +2,7 @@
 title: "CodeGraph platform adds local Rust-based code graph tooling for AI agents"
 slug: "codegraph-platform-adds-local-rust-based-code-graph-tooling-for-ai-agents"
 description: "CodeGraph announced an update that introduces a pre‑indexed code knowledge graph that syncs automatically on code changes and works locally with a range of AI coding assistants."
-date: 2026-09-09T12:04:45+05:30
+date: 2026-09-09T18:04:04+05:30
 tags: [CodeGraph, AItools, DeveloperTools]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/18431132?v=4"

@@ -2,7 +2,7 @@
 title: "OpenAI introduces ChatGPT Images 2.5"
 slug: "openai-introduces-chatgpt-images-2-5"
 description: "OpenAI has released ChatGPT Images 2.5, an update to image generation models that have been used for more than 3 billion images across ChatGPT Images and the GPT‑Image models in the API."
-date: 2026-09-09T12:04:45+05:30
+date: 2026-09-09T18:04:04+05:30
 tags: [OpenAI, ChatGPT, ImageGeneration, API]
 categories: ["AI", "Artificial Intelligence", "Computer Vision", "Software Development"]
 author: "Shoubhik Banerjee"
