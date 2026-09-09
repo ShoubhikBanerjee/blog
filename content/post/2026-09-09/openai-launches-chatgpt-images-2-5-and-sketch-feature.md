@@ -2,7 +2,7 @@
 title: "OpenAI Launches ChatGPT Images 2.5 and Sketch Feature"
 slug: "openai-launches-chatgpt-images-2-5-and-sketch-feature"
 description: "OpenAI announced ChatGPT Images 2.5 on Tuesday, introducing updated image generation tools and a new feature called Sketch that allows users to use doodles as part of their prompts."
-date: 2026-09-09T06:03:42+05:30
+date: 2026-09-09T12:04:45+05:30
 tags: [OpenAI, ChatGPT, AIimages, ImageGeneration]
 categories: ["AI", "Artificial Intelligence", "Computer Vision", "Generative AI"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/ai-label-1.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

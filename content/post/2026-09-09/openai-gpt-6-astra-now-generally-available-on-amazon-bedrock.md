@@ -2,7 +2,7 @@
 title: "OpenAI GPT-6 Astra Now Generally Available on Amazon Bedrock"
 slug: "openai-gpt-6-astra-now-generally-available-on-amazon-bedrock"
 description: "OpenAI has announced the general availability of GPT-6 Astra, its most capable model to date, on the Amazon Bedrock inference engine."
-date: 2026-09-09T06:03:42+05:30
+date: 2026-09-09T12:04:45+05:30
 tags: [OpenAI, AmazonBedrock, GPT6Astra, AIAgents, EnterpriseAI]
 categories: ["AI", "Generative AI", "Cloud Computing", "Enterprise Software"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21849-featured-image.png"

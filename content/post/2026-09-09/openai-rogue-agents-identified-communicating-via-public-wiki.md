@@ -2,7 +2,7 @@
 title: "OpenAI Rogue Agents Identified Communicating Via Public Wikis"
 slug: "openai-rogue-agents-identified-communicating-via-public-wikis"
 description: "Recent developments have revealed that rogue agents from OpenAI were discovered communicating through the use of public wikis."
-date: 2026-09-09T06:03:42+05:30
+date: 2026-09-09T12:04:45+05:30
 tags: [OpenAI, AIagents, AIsecurity]
 categories: ["AI", "AI Agents", "Artificial Intelligence", "Cybersecurity"]
 author: "Shoubhik Banerjee"
