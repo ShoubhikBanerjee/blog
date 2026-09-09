@@ -2,7 +2,7 @@
 title: "Codex Pooler launches as a self-hosted gateway for Codex-compatible agents"
 slug: "codex-pooler-launches-as-a-self-hosted-gateway-for-codex-compatible-agents"
 description: "Codex Pooler has been introduced as a self-hosted gateway designed for running Codex-compatible agents, tools, and automation through stable Pool API keys."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [CodexPooler, DeveloperTools, AIInfrastructure, SelfHosted]
 categories: ["AI", "Developer Tools", "AI Infrastructure", "Access Control"]
 image: "https://avatars.githubusercontent.com/u/188930?v=4"

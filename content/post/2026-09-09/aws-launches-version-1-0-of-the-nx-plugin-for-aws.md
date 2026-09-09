@@ -2,7 +2,7 @@
 title: "AWS Launches Version 1.0 of the Nx Plugin for AWS"
 slug: "aws-launches-version-1-0-of-the-nx-plugin-for-aws"
 description: "AWS has released version 1.0 of the Nx Plugin for AWS, an open source toolkit designed to scaffold applications on AWS and bridge the gap between initial AI-generated prototypes and production-ready..."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [AWS, Nx, AIassistants, OpenSource, InfrastructureAsCode]
 categories: ["AI", "Cloud Computing", "AI Development", "Software Engineering"]
 image: "https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2026/09/08/Screenshot-2026-09-08-at-2.22.36 PM-1132x630.png"

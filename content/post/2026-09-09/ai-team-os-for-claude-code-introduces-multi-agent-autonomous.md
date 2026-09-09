@@ -2,7 +2,7 @@
 title: "AI Team OS for Claude Code introduces multi-agent autonomous operations"
 slug: "ai-team-os-for-claude-code-introduces-multi-agent-autonomous-operations"
 description: "A new multi-agent team operating system for Claude Code has been released, designed to turn Claude Code into a self-driving AI company where the user acts as Chairman and the AI acts as CEO."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [ClaudeCode, AIAgents, MultiAgentSystems, SoftwareDevelopment]
 categories: ["AI", "AI Agents", "Software Engineering", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/219117599?v=4"

@@ -2,7 +2,7 @@
 title: "Asqav Releases Python and TypeScript SDKs for AI Agent Evidence"
 slug: "asqav-releases-python-and-typescript-sdks-for-ai-agent-evidence"
 description: "Asqav has released Python and TypeScript SDKs to provide verifiable evidence of AI agent actions through an evidence layer."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [AIagents, SDK, Cryptography, Compliance, PostQuantum]
 categories: ["AI", "AI Agents", "Software Development", "Cybersecurity"]
 image: "https://avatars.githubusercontent.com/u/32335502?v=4"

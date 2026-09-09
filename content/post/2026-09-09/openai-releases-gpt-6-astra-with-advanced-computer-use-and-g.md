@@ -2,7 +2,7 @@
 title: "OpenAI Releases GPT-6 Astra with Advanced Computer Use and Graphical Capabilities"
 slug: "openai-releases-gpt-6-astra-with-advanced-computer-use-and-graphical-capabilities"
 description: "OpenAI has released GPT-6 Astra, a new model that significantly improves upon its predecessor, GPT-5.6, across multiple categories. While the model shows progress in writing, math, and coding, it is..."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [OpenAI, GPT6, Astra, AIagents, ComputerUse]
 categories: ["AI", "Artificial Intelligence", "Product Release", "Generative AI"]
 image: "https://substackcdn.com/image/fetch/$s_!bGKc!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3d2ac2ec-ab80-43a8-aa93-a33a846dda43_1564x874.png"

@@ -2,7 +2,7 @@
 title: "OpenHands Cloud Deployment Helm Charts Released Under Polyform License"
 slug: "openhands-cloud-deployment-helm-charts-released-under-polyform-license"
 description: "A repository containing Helm charts for installing OpenHands Cloud in Kubernetes clusters has been released. This software is licensed under the Polyform Free Trial License, rather than an..."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [OpenHands, Kubernetes, HelmCharts, DevOps]
 categories: ["AI", "Cloud Computing", "Software Deployment", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/225919603?v=4"

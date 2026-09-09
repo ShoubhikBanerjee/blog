@@ -2,7 +2,7 @@
 title: "AIWriteX Updates Content Creation Tool with Multi-Agent Framework and Expanded Platform Support"
 slug: "aiwritex-updates-content-creation-tool-with-multi-agent-framework-and-expanded-platform-support"
 description: "AIWriteX has introduced a significant update to its content generation and management platform, integrating a multi-agent framework and expanding automation capabilities across various social media..."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [AIWriteX, CrewAI, ContentAutomation, MultiAgentSystems, SocialMedia]
 categories: ["AI", "AI Agents", "Content Management", "Automation"]
 image: "https://avatars.githubusercontent.com/u/2370334?v=4"

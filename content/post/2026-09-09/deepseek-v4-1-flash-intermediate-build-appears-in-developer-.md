@@ -2,7 +2,7 @@
 title: "DeepSeek V4.1 Flash Intermediate Build Appears in Developer Beta"
 slug: "deepseek-v4-1-flash-intermediate-build-appears-in-developer-beta"
 description: "An internal beta notice for DeepSeek V4.1 Flash has been reproduced by developers on Reddit and Hacker News, suggesting a test build for the next iteration of DeepSeek's speed-oriented V4 model."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [DeepSeek, LLM, AI, MachineLearning]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Software Development"]
 image: "https://oss-us.gptproto.com/growth/blog/bae1652a-04ce-40e9-95fc-c61a96f80a01.jpg"

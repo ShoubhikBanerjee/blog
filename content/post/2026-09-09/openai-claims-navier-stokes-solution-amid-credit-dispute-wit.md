@@ -2,7 +2,7 @@
 title: "OpenAI claims Navier–Stokes solution amid credit dispute with NYU and Anthropic"
 slug: "openai-claims-navierstokes-solution-amid-credit-dispute-with-nyu-and-anthropic"
 description: "Today OpenAI announced that its agents have produced a proof that the full Navier–Stokes equations can break down, a result that would solve one of the seven Millennium Prize Problems."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [OpenAI, NavierStokes, MillenniumPrize, AIethics]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "Machine Learning", "Ethics"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/math-2c.jpg?resize=1200,600"

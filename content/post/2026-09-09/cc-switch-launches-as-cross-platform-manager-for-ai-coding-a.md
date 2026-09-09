@@ -2,7 +2,7 @@
 title: "CC Switch Launches as Cross-Platform Manager for AI Coding Agents"
 slug: "cc-switch-launches-as-cross-platform-manager-for-ai-coding-agents"
 description: "CC Switch is a newly released cross-platform desktop manager designed to configure and switch between various AI coding agents and tools. Built with Tauri 2, it supports Windows, macOS, and Linux..."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [CCSwitch, AIAgents, CodingTools, Tauri]
 categories: ["AI", "Artificial Intelligence", "Developer Tools", "Software Updates"]
 image: "https://avatars.githubusercontent.com/u/44939412?v=4"

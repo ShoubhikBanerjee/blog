@@ -2,7 +2,7 @@
 title: "Anthropic Safety Researchers Warn That AI Could Kill All Humans Within a Decade"
 slug: "anthropic-safety-researchers-warn-that-ai-could-kill-all-humans-within-a-decade"
 description: "An Anthropic safety researcher has warned that there is a greater than 10 percent chance artificial intelligence could kill all humans by the end of the decade, following the high-profile resignation..."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [Anthropic, AISafety, OpenAI, ArtificialIntelligence]
 categories: ["AI", "AI Safety", "Machine Learning", "Tech Industry"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK269_ANTHROPIC_2_A-1.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

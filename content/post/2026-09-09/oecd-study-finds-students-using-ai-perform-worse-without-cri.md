@@ -2,7 +2,7 @@
 title: "OECD Study Finds Students Using AI Perform Worse Without Critical Assessment Training"
 slug: "oecd-study-finds-students-using-ai-perform-worse-without-critical-assessment-training"
 description: "According to newly released data from the OECD's Programme for International Student Assessment (PISA), students who use artificial intelligence to help them study tend to perform worse at school..."
-date: 2026-09-09T18:04:04+05:30
+date: 2026-09-09T22:05:26+05:30
 tags: [PISA, OECD, EdTech, AIinEducation]
 categories: ["AI", "Education", "Artificial Intelligence", "Academic Research"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25584700/STK483_EDUCATION_C.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"
