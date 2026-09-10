@@ -2,7 +2,7 @@
 title: "Microsoft agrees to enforceable AI privacy and safety principles for school districts"
 slug: "microsoft-agrees-to-enforceable-ai-privacy-and-safety-principles-for-school-districts"
 description: "Microsoft has reached a new agreement regarding AI privacy and safety rules for schools, establishing legally enforceable principles for districts that adopt them. The commitment follows a week after..."
-date: 2026-09-10T06:05:28+05:30
+date: 2026-09-10T12:09:25+05:30
 tags: [Microsoft, EdTech, AFT, AIPrivacy, Education]
 categories: ["AI", "Data Privacy", "Education Technology", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25332715/STK419_DEEPFAKE_CVIRGINIA_J.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
