@@ -2,7 +2,7 @@
 title: "Google Gemini 3.0 Pro Detection Rates Collapse in Large Batch Processing"
 slug: "google-gemini-3-0-pro-detection-rates-collapse-in-large-batch-processing"
 description: "Researchers tested the ability of Google Gemini 3.0 Pro to recover known contaminants from a corpus of 150 academic papers in the fields of medical research and supply chain management."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [GoogleGemini, LLM, AIEvaluation, DataContamination]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

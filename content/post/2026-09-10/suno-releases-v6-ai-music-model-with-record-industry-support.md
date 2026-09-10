@@ -2,7 +2,7 @@
 title: "Suno Releases v6 AI Music Model with Record Industry Support"
 slug: "suno-releases-v6-ai-music-model-with-record-industry-support"
 description: "Suno has launched v6, its first AI music model developed with support from the record industry. The model is being rolled out starting today, and Suno intends to eventually retire its previous models."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [Suno, AImusic, GenerativeAI, MusicIndustry]
 categories: ["AI", "Artificial Intelligence", "Music Technology", "Generative Media"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Suno_v6_Main.jpg?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

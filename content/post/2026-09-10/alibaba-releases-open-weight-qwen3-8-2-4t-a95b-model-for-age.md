@@ -2,7 +2,7 @@
 title: "Alibaba Releases Open-Weight Qwen3.8-2.4T-A95B Model for Agentic Workloads"
 slug: "alibaba-releases-open-weight-qwen3-8-2-4t-a95b-model-for-agentic-workloads"
 description: "On August 12, 2026, Alibaba’s Qwen team released Qwen3.8-2.4T-A95B, marking the first time a Qwen-Max-class model has been made available as open weights. This model is the largest and most capable..."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [Qwen, OpenWeights, LLM, AmazonSageMaker, AIagents]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Infrastructure"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/09/ML-21725-featured-image.png"

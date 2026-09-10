@@ -2,7 +2,7 @@
 title: "Two-Stage LLM Pipeline for Product Attribute Extraction"
 slug: "two-stage-llm-pipeline-for-product-attribute-extraction"
 description: "A new two-stage LLM pipeline has been introduced to extract purchase-discriminative attributes from product catalog text."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [LLM, ProductDiscovery, Qwen3, DataExtraction]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "E-commerce Technology"]
 author: "Shoubhik Banerjee"

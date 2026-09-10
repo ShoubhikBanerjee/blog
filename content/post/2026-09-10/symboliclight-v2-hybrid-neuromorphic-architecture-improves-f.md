@@ -2,7 +2,7 @@
 title: "SymbolicLight V2 Hybrid Neuromorphic Architecture Improves FPGA Decode Throughput"
 slug: "symboliclight-v2-hybrid-neuromorphic-architecture-improves-fpga-decode-throughput"
 description: "SymbolicLight V2 is a new hybrid neuromorphic language architecture that combines continuous-state processing with sparse event computation."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [NeuromorphicComputing, FPGA, LLM, EnergyEfficiency]
 categories: ["AI", "Machine Learning", "Hardware Acceleration", "Computer Architecture"]
 author: "Shoubhik Banerjee"

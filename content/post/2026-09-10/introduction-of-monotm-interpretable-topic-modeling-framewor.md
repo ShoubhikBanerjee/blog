@@ -2,7 +2,7 @@
 title: "Introduction of MonoTM Interpretable Topic Modeling Framework"
 slug: "introduction-of-monotm-interpretable-topic-modeling-framework"
 description: "Researchers have introduced MonoTM, an interpretable topic modeling framework designed to decouple document-topic mixture estimation from semantic interpretation."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [MonoTM, TopicModeling, MachineLearning, NLP]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Research"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Introduction of CARRE Framework for Counterfactual Churn Action Retrieval"
 slug: "introduction-of-carre-framework-for-counterfactual-churn-action-retrieval"
 description: "Researchers have introduced CARRE (Counterfactual Action Retrieval and Reason Evaluation), a three-stage framework designed to address the limitations of traditional churn models, which identify..."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [CARRE, ChurnPrediction, LLM, Counterfactuals, CustomerRetention]
 categories: ["AI", "Machine Learning", "Data Science", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

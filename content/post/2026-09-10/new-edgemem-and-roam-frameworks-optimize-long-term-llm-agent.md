@@ -2,7 +2,7 @@
 title: "New EdgeMem and ROAM Frameworks Optimize Long-Term LLM Agent Memory Management"
 slug: "new-edgemem-and-roam-frameworks-optimize-long-term-llm-agent-memory-management"
 description: "New developments in long-term language-model agent memory have emerged with the introduction of EdgeMem and ROAM, two distinct frameworks designed to improve how agents store, organize, and retrieve..."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [AIAgents, LLM, EdgeMem, ROAM, ArtificialIntelligence]
 categories: ["AI", "Machine Learning", "AI Agents", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

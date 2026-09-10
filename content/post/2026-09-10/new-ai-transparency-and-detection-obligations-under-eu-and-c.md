@@ -2,7 +2,7 @@
 title: "New AI Transparency and Detection Obligations Under EU and California Law"
 slug: "new-ai-transparency-and-detection-obligations-under-eu-and-california-law"
 description: "Since 2 August, AI providers and deployers have been subject to new obligations under California’s Artificial Intelligence Transparency Act (CAITA) and Article 50 of the EU AI Act."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [EUAIAct, CAITA, AITransparency, Anthropic, Disinformation]
 categories: ["AI", "AI Regulation", "Artificial Intelligence", "Digital Policy"]
 image: "https://www.disinfo.eu/wp-content/uploads/2026/04/20260401-Newsletter-Image-Mailman.webp"

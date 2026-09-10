@@ -2,7 +2,7 @@
 title: "Apple Introduces Reference Image Authentication for iPhone 18 Pro Lineup"
 slug: "apple-introduces-reference-image-authentication-for-iphone-18-pro-lineup"
 description: "Apple is launching a new 'Reference Image' feature for the iPhone 18 Pro lineup later this month. This technology utilizes a new camera sensor designed to 'sign every pixel it sees,' providing a..."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [iPhone18Pro, ReferenceImage, DigitalAuthenticity]
 categories: ["AI", "Mobile Technology", "Computer Vision", "Digital Privacy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/268734_iPhone_2026_event_handson_ADiBenedetto_0023.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

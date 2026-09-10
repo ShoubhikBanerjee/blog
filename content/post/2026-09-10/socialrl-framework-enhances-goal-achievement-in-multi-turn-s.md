@@ -2,7 +2,7 @@
 title: "SocialRL Framework Enhances Goal Achievement in Multi-Turn Social Dialogue"
 slug: "socialrl-framework-enhances-goal-achievement-in-multi-turn-social-dialogue"
 description: "SocialRL is a new multi-turn reinforcement learning framework designed to address challenges in long-horizon planning and the trade-off between goals and relationships in social interactions."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [SocialRL, ReinforcementLearning, AIagents, NaturalLanguageProcessing]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Agents"]
 author: "Shoubhik Banerjee"

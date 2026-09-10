@@ -2,7 +2,7 @@
 title: "BuzzASR Introduces Fine-Tuned Whisper Models for 102 Languages"
 slug: "buzzasr-introduces-fine-tuned-whisper-models-for-102-languages"
 description: "Researchers have introduced BuzzASR, a collection of language-specialized fine-tuned Whisper models designed for automatic speech recognition (ASR) across 102 languages."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [ASR, Whisper, MachineLearning, OpenSource]
 categories: ["AI", "Machine Learning", "Speech Recognition", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

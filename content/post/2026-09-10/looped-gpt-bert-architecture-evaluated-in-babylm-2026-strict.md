@@ -2,7 +2,7 @@
 title: "Looped GPT-BERT Architecture Evaluated in BabyLM 2026 Strict-small Setting"
 slug: "looped-gpt-bert-architecture-evaluated-in-babylm-2026-strict-small-setting"
 description: "Researchers have updated the study of Looped GPT-BERT within the BabyLM 2026 Strict-small setting. This development combines masked next-token and causal language-modeling objectives with depth-wise..."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [BabyLM, GPTBERT, NLP, MachineLearning, AIResearch]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Model Architecture"]
 author: "Shoubhik Banerjee"

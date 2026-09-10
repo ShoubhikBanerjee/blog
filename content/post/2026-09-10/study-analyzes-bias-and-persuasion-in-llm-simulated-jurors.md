@@ -2,7 +2,7 @@
 title: "Study Analyzes Bias and Persuasion in LLM-Simulated Jurors"
 slug: "study-analyzes-bias-and-persuasion-in-llm-simulated-jurors"
 description: "Researchers have explored how large language models (LLMs) simulate human decision-making in common-law jury trials, specifically examining the impact of defendant statements on verdict severity."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [LLM, LegalAI, JuryBench, AIBias]
 categories: ["AI", "Computation and Language", "Artificial Intelligence", "Legal Technology"]
 author: "Shoubhik Banerjee"

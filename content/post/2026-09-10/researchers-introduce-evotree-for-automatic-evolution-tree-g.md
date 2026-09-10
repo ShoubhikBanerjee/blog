@@ -2,7 +2,7 @@
 title: "Researchers Introduce EvoTree for Automatic Evolution Tree Generation from Citation Graphs"
 slug: "researchers-introduce-evotree-for-automatic-evolution-tree-generation-from-citation-graphs"
 description: "Researchers have proposed EvoTree, a staged framework designed to automatically generate evolution trees from citation graphs to help researchers grasp the lineage of methods within AI subfields."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [EvoTree, CitationGraphs, AIResearch, TaxonomyInduction]
 categories: ["AI", "Computer Science", "Computation and Language", "Machine Learning"]
 author: "Shoubhik Banerjee"

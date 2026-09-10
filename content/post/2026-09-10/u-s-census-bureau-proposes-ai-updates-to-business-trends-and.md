@@ -2,7 +2,7 @@
 title: "U.S. Census Bureau Proposes AI Updates to Business Trends and Outlook Survey"
 slug: "u-s-census-bureau-proposes-ai-updates-to-business-trends-and-outlook-survey"
 description: "The U.S. Census Bureau is seeking comment by October 9, 2026, on revisions to the Business Trends and Outlook Survey (BTOS), which include updates to how the agency collects data on artificial..."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [USCensusBureau, BTOS, EconomicData, GenerativeAI]
 categories: ["AI", "Government", "Economic Statistics", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

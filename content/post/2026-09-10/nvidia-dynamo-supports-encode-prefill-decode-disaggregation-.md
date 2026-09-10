@@ -2,7 +2,7 @@
 title: "NVIDIA Dynamo Supports Encode-Prefill-Decode Disaggregation for Multimodal Model Inference"
 slug: "nvidia-dynamo-supports-encode-prefill-decode-disaggregation-for-multimodal-model-inference"
 description: "NVIDIA Dynamo, an open source inference framework for distributed environments, now supports Encode-Prefill-Decode (EPD) disaggregation. This optimization technique improves multimodal model..."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [NVIDIA, Dynamo, LLM, MultimodalAI, Inference]
 categories: ["AI", "Machine Learning", "Computer Vision", "AI Infrastructure"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/multimodal-dynamo-660x370.jpg"

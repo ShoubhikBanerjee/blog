@@ -2,7 +2,7 @@
 title: "Go Micro Released as Agent Harness and Service Framework for Go"
 slug: "go-micro-released-as-agent-harness-and-service-framework-for-go"
 description: "Go Micro has been introduced as an agent harness and service framework for the Go programming language. It provides a runtime environment that treats agents as distributed systems, allowing..."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [GoLang, AIagents, SoftwareDevelopment, DistributedSystems]
 categories: ["AI", "AI Agents", "Software Engineering", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/5161210?v=4"

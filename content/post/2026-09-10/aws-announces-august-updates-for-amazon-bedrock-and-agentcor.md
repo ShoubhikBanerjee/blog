@@ -2,7 +2,7 @@
 title: "AWS Announces August Updates for Amazon Bedrock and AgentCore"
 slug: "aws-announces-august-updates-for-amazon-bedrock-and-agentcore"
 description: "AWS has introduced a series of updates to Amazon Bedrock and AgentCore, expanding the infrastructure and tools available for building, scaling, and managing agentic AI applications."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [AWS, AmazonBedrock, AIAgents, CloudComputing, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21781-featured-image.png"

@@ -2,7 +2,7 @@
 title: "NVIDIA Releases CUDA Toolkit 13.4 with Windows on Arm and Rubin GPU Support"
 slug: "nvidia-releases-cuda-toolkit-13-4-with-windows-on-arm-and-rubin-gpu-support"
 description: "NVIDIA has released CUDA Toolkit 13.4, introducing support for Windows on Arm and early developer preview support for the next-generation Rubin GPU architecture. This update focuses on enhancing GPU..."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [CUDA, NVIDIA, WindowsOnArm, Rubin, GPU]
 categories: ["AI", "Parallel Computing", "Software Development", "GPU Architecture"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/cuda-python-660x370.png"

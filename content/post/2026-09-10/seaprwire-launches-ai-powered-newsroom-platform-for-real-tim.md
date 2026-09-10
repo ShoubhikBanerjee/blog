@@ -2,7 +2,7 @@
 title: "SeaPRwire Launches AI‑Powered Newsroom Platform for Real‑Time PR Targeting"
 slug: "seaprwire-launches-aipowered-newsroom-platform-for-realtime-pr-targeting"
 description: "SeaPRwire, Asia’s leading AI‑driven earned media management platform, announced that its smart “AI Newsroom” platform is now online."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [AI, PR, MediaTech, Asia]
 categories: ["AI", "Artificial Intelligence", "Public Relations", "Media Technology", "Asia Tech"]
 image: "https://static.tradingview.com/static/images/logo-preview.png"

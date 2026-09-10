@@ -2,7 +2,7 @@
 title: "TEFM introduces token-efficient and faithful modeling for structured data"
 slug: "tefm-introduces-token-efficient-and-faithful-modeling-for-structured-data"
 description: "A new paper presents TEFM (Token‑Efficient Faithful Modeling), a framework that tackles token efficiency and faithfulness when applying large language models to critical domains."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [TEFM, TokenEfficiency, FaithfulAI, StructuredData]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Safety"]
 author: "Shoubhik Banerjee"

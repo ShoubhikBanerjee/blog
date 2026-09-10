@@ -2,7 +2,7 @@
 title: "Heurist leverages Amazon Bedrock AgentCore for retail financial intelligence"
 slug: "heurist-leverages-amazon-bedrock-agentcore-for-retail-financial-intelligence"
 description: "Heurist is using Amazon Bedrock AgentCore to develop AI-powered financial intelligence for retail investors through its flagship product, Heurist Finance."
-date: 2026-09-10T12:09:25+05:30
+date: 2026-09-10T18:05:32+05:30
 tags: [AmazonBedrock, Heurist, FinancialAI, AIAgents, FinTech]
 categories: ["AI", "AI Agents", "Financial Technology", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/27/ML-21623-featured-image.png"
