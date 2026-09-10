@@ -2,7 +2,7 @@
 title: "NVIDIA Partners with Palantir to Optimize Global Supply Chain Decisions"
 slug: "nvidia-partners-with-palantir-to-optimize-global-supply-chain-decisions"
 description: "NVIDIA's supply chain operations team has collaborated with Palantir to build a unified Digital Supply Chain Intelligence command center. By linking Palantir Foundry's Ontology with NVIDIA cuOpt..."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [NVIDIA, Palantir, SupplyChain, cuOpt, Foundry]
 categories: ["AI", "Supply Chain", "Enterprise Software", "Artificial Intelligence"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image1-4-660x370.jpg"

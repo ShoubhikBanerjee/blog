@@ -2,7 +2,7 @@
 title: "Researchers release demo of first zero-click WeChat worm"
 slug: "researchers-release-demo-of-first-zero-click-wechat-worm"
 description: "A demo has been released for WeWorm, identified as the first zero-click worm capable of spreading through WeChat calls on both iOS and Android platforms."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [WeChat, CyberSecurity, Worm, Exploit, ZeroClick]
 categories: ["AI", "Cybersecurity", "Software Development", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

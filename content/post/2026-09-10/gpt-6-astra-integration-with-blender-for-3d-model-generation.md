@@ -2,7 +2,7 @@
 title: "GPT-6 Astra Integration with Blender for 3D Model Generation"
 slug: "gpt-6-astra-integration-with-blender-for-3d-model-generation"
 description: "A user has demonstrated the ability to generate 3D .blend files by combining ChatGPT Images 2.5 and GPT-6 Astra running in Codex."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [GPT6Astra, Blender, Codex, 3DModeling]
 categories: ["AI", "Artificial Intelligence", "3D Modeling", "Generative AI"]
 image: "https://static.simonwillison.net/static/2026/pluribus-blender-viewer.webp"

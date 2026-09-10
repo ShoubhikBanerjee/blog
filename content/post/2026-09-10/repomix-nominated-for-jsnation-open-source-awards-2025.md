@@ -2,7 +2,7 @@
 title: "Repomix Nominated for JSNation Open Source Awards 2025"
 slug: "repomix-nominated-for-jsnation-open-source-awards-2025"
 description: "Repomix, a developer tool designed to pack entire repositories into a single AI-friendly file, has been nominated for the Powered by AI category at the JSNation Open Source Awards 2025."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [Repomix, JSNation2025, OpenSource, DeveloperTools, LLMs]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/5019072?v=4"

@@ -2,7 +2,7 @@
 title: "AfD Wins Saxony-Anhalt State Election"
 slug: "afd-wins-saxony-anhalt-state-election"
 description: "The Alternative for Germany (AfD) party has won the Saxony-Anhalt state election."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [AfD, SaxonyAnhalt, Germany]
 categories: ["AI", "Politics", "Current Events", "Government"]
 author: "Shoubhik Banerjee"

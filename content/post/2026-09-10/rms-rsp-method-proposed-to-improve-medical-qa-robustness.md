@@ -2,7 +2,7 @@
 title: "RMS-RSP Method Proposed to Improve Medical QA Robustness"
 slug: "rms-rsp-method-proposed-to-improve-medical-qa-robustness"
 description: "Researchers have proposed root-mean-square Robustness-based Sample Prioritization (RMS-RSP), a method designed to identify high-quality supervision for medical question-answering datasets where..."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [MedicalAI, MedGemma, MachineLearning, NLP]
 categories: ["AI", "Machine Learning", "Healthcare AI", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

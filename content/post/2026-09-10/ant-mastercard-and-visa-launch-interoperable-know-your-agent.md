@@ -2,7 +2,7 @@
 title: "Ant, Mastercard, and Visa launch interoperable Know-Your-Agent framework"
 slug: "ant-mastercard-and-visa-launch-interoperable-know-your-agent-framework"
 description: "Ant International, Mastercard, and Visa have announced a collaboration to build a Know‑Your‑Agent (KYA) interoperability framework that will let card networks, digital wallets, agent platforms and..."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [AIagents, PaymentNetworks, KYA, AgenticCommerce]
 categories: ["AI", "Artificial Intelligence", "Financial Technology", "Payments", "Digital Commerce"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Google to Invest €13 Billion in AI Infrastructure and Nuclear Power in Finland"
 slug: "google-to-invest-13-billion-in-ai-infrastructure-and-nuclear-power-in-finland"
 description: "Google has announced a €13 billion ($15.1 billion) investment in AI infrastructure in Finland, marking the company's largest single investment in the EU to date. This initiative includes a massive..."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [Google, Finland, AIInfrastructure, NuclearEnergy, DataCenters]
 categories: ["AI", "Artificial Intelligence", "Cloud Infrastructure", "Energy"]
 image: "https://static.dw.com/image/79207581_6.jpg"

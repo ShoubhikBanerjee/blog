@@ -2,7 +2,7 @@
 title: "New Medium-Voltage Power Architecture Successfully Clears Testing for AI-Scale Grid Swings"
 slug: "new-medium-voltage-power-architecture-successfully-clears-testing-for-ai-scale-grid-swings"
 description: "A new medium-voltage power architecture designed for gigawatt-scale AI data centers has successfully cleared testing at the National Laboratory of the Rockies, proving it can mitigate severe load..."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [GridStability, DataCenters, AIFactories, EnergyInfrastructure]
 categories: ["AI", "AI Infrastructure", "Energy Technology", "Grid Management"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/08/ON-contributed-image.jpg?resize=1200,600"

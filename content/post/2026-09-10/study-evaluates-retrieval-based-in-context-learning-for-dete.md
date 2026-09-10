@@ -2,7 +2,7 @@
 title: "Study Evaluates Retrieval-Based In-Context Learning for Detecting Defamatory Hate Speech"
 slug: "study-evaluates-retrieval-based-in-context-learning-for-detecting-defamatory-hate-speech"
 description: "With hate speech pervasive online, automatic detection of criminally relevant posts is essential. A new study examines retrieval‑based in‑context learning (RetICL) strategies for detecting defamatory..."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [AI, HateSpeechDetection, InContextLearning, LegalAI]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Legal Technology", "AI Ethics"]
 author: "Shoubhik Banerjee"

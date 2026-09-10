@@ -2,7 +2,7 @@
 title: "Yuxi Launched as a Multi-Tenant Private Knowledge Intelligent Agent Platform"
 slug: "yuxi-launched-as-a-multi-tenant-private-knowledge-intelligent-agent-platform"
 description: "Yuxi is a multi-tenant knowledge intelligent agent platform designed for private deployment. It integrates knowledge base retrieval, knowledge graphs, LangGraph multi-agent orchestration, MCP/Skills,..."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [Yuxi, AIagents, RAG, KnowledgeGraph, PrivateDeployment]
 categories: ["AI", "AI Agents", "Knowledge Management", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/35524243?v=4"

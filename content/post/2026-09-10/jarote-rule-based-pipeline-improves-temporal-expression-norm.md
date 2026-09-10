@@ -2,7 +2,7 @@
 title: "jaROTE Rule-Based Pipeline Improves Temporal Expression Normalization for Japanese News"
 slug: "jarote-rule-based-pipeline-improves-temporal-expression-normalization-for-japanese-news"
 description: "Researchers have developed jaROTE, a rule-based pipeline designed to reproduce omitted temporal expressions in Japanese news articles using publication dates as external context."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [jaROTE, JapaneseNLP, RAG, TemporalNormalization]
 categories: ["AI", "Natural Language Processing", "Information Retrieval", "Machine Learning"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "OpenAI faces new criticism over possible use of unpublished math research"
 slug: "openai-faces-new-criticism-over-possible-use-of-unpublished-math-research"
 description: "OpenAI’s recent announcement of a result on non‑sofic groups has drawn fresh criticism from mathematicians who say the company may have used unpublished research in its training data."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [OpenAI, Mathematics, AIEthics, TrainingData]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Mathematics", "Ethics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2236544323.jpg?quality=90&strip=all&crop=0%2C10.54557577814%2C100%2C78.90884844372&w=1200"

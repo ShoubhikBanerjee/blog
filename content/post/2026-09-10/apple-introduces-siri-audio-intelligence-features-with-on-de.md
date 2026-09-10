@@ -2,7 +2,7 @@
 title: "Apple Introduces Siri Audio Intelligence Features with On‑Device Privacy Protections"
 slug: "apple-introduces-siri-audio-intelligence-features-with-ondevice-privacy-protections"
 description: "Apple announced a handful of new Siri AI Audio Intelligence features — Siri Recap, Live Rewind, Sound Recognition, and Music Recognition — at the iPhone Duo launch event, accompanied by a..."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [Apple, Siri, AudioIntelligence, Privacy]
 categories: ["AI", "Artificial Intelligence", "Consumer Electronics", "Privacy Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/apple-audio-intelligence-recap-wide.jpeg?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

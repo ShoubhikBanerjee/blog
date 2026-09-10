@@ -2,7 +2,7 @@
 title: "OpenHands Launches Public Extensions Registry for Agent Skills and Plugins"
 slug: "openhands-launches-public-extensions-registry-for-agent-skills-and-plugins"
 description: "OpenHands has introduced a public extensions registry containing reusable skills and plugins designed to customize agent behavior."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [OpenHands, AIagents, SoftwareDevelopment, OpenSource]
 categories: ["AI", "AI Agents", "Software Engineering", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/225919603?v=4"

@@ -2,7 +2,7 @@
 title: "Workflow1111: A Gradio graph unifying eleven media pipelines with 73 nodes"
 slug: "workflow1111-a-gradio-graph-unifying-eleven-media-pipelines-with-73-nodes"
 description: "A new Gradio workflow called **Workflow1111** connects eleven media pipelines using a graph of seventy‑three nodes. It combines state‑of‑the‑art text‑to‑image, hi‑resolution fix, image‑to‑image,..."
-date: 2026-09-10T18:05:32+05:30
+date: 2026-09-10T22:04:27+05:30
 tags: [Gradio, Workflow1111, AIpipelines, ComputerVision]
 categories: ["AI", "Machine Learning", "Computer Vision", "AI Tools"]
 image: "https://huggingface.co/blog/assets/gradio-workflow1111/thumbnail.png"
