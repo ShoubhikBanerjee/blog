@@ -2,7 +2,7 @@
 title: "LLM Leaderboard 2026 Update Ranks Over 300 AI Models"
 slug: "llm-leaderboard-2026-update-ranks-over-300-ai-models"
 description: "The LLM Leaderboard has updated its rankings for 2026, evaluating and comparing more than 300 AI models. The ranking aggregates performance across intelligence, output speed, latency, and per-token..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [LLMLeaderboard, AIModels, OpenAI, Anthropic, Mistral, DeepSeek]
 categories: ["AI", "Artificial Intelligence", "Large Language Models", "Benchmarks"]
 image: "https://llm-stats.com/api/og/leaderboard/llm-leaderboard"

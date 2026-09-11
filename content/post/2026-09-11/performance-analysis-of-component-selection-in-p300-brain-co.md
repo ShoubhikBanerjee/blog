@@ -2,7 +2,7 @@
 title: "Performance Analysis of Component Selection in P300 Brain-Computer Interface Spellers"
 slug: "performance-analysis-of-component-selection-in-p300-brain-computer-interface-spellers"
 description: "A four-component full-factorial experiment using a public P300 dataset has identified that the effectiveness of brain-computer interface (BCI) speller components is conditional rather than additive...."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [BCI, Neurotechnology, MachineLearning, EEG, P300]
 categories: ["AI", "Brain-Computer Interfaces", "Machine Learning", "Signal Processing"]
 author: "Shoubhik Banerjee"

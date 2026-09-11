@@ -2,7 +2,7 @@
 title: "New Model for Segment-Level Simultaneous Interpreting Evaluation"
 slug: "new-model-for-segment-level-simultaneous-interpreting-evaluation"
 description: "Researchers have developed a new approach for the automatic evaluation of simultaneous interpreting (SI) designed to align with professional analytic rubrics."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [SimultaneousInterpreting, NLP, COMETKIWI, LLM]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Translation Technology"]
 author: "Shoubhik Banerjee"

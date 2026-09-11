@@ -2,7 +2,7 @@
 title: "OpenCode Go Offers $10/month Access to Reliable Open Coding Models"
 slug: "opencode-go-offers-10-month-access-to-reliable-open-coding-models"
 description: "OpenCode has launched OpenCode Go, a $10‑per‑month subscription that provides reliable, low‑latency access to popular open‑source coding models."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [OpenCode, OpenSourceAI, CodingModels]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Open Source", "Cloud Services"]
 image: "https://social-cards.sst.dev/opencode-docs/R28%3D.png?desc=Low%20cost%20subscription%20for%20open%20coding%20models."

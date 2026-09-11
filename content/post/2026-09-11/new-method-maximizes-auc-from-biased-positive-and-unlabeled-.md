@@ -2,7 +2,7 @@
 title: "New Method Maximizes AUC from Biased Positive and Unlabeled Data"
 slug: "new-method-maximizes-auc-from-biased-positive-and-unlabeled-data"
 description: "Researchers have proposed a new method to maximize the area under the receiver operating characteristic curve (AUC) using biased positive and unlabeled (PU) data."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [AUC, BinaryClassification, MachineLearning, PUData]
 categories: ["AI", "Machine Learning", "Data Science", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

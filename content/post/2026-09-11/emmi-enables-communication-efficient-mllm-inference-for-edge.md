@@ -2,7 +2,7 @@
 title: "EMMI Enables Communication-Efficient MLLM Inference for Edge Intelligence"
 slug: "emmi-enables-communication-efficient-mllm-inference-for-edge-intelligence"
 description: "Edge Multi-Modal Intelligence (EMMI) has been developed to enable multimodal large language model (MLLM) reasoning on resource-constrained edge platforms by utilizing fused representation compression."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [EMMI, MLLM, EdgeIntelligence, MachineLearning]
 categories: ["AI", "Machine Learning", "Edge Computing", "Multimodal AI"]
 author: "Shoubhik Banerjee"

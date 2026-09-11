@@ -2,7 +2,7 @@
 title: "Slack introduces AI-powered Slackforce Surfaces for building interactive tools in chat"
 slug: "slack-introduces-ai-powered-slackforce-surfaces-for-building-interactive-tools-in-chat"
 description: "Slack is launching a new feature called Slackforce Surfaces that allows users to create interactive reports, dashboards, and other tools directly within a chat using AI."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [Slack, AI, Productivity, SlackforceSurfaces]
 categories: ["AI", "Enterprise Software", "Artificial Intelligence", "Collaboration Tools"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/IMG_2464.png?quality=90&strip=all&crop=0%2C9.8234763765205%2C100%2C80.353047246959&w=1200"

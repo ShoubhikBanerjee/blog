@@ -2,7 +2,7 @@
 title: "Nous Research Releases Hermes AI Agent Featuring Built-In Learning Loop and Cross-Platform Integration"
 slug: "nous-research-releases-hermes-ai-agent-featuring-built-in-learning-loop-and-cross-platform-integration"
 description: "Nous Research has developed Hermes, a self-improving AI agent designed with a built-in learning loop. The system creates skills from experience, improves them during use, and builds a deepening model..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [NousResearch, AIAgents, OpenSource, MachineLearning, Hermes]
 categories: ["AI", "AI Agents", "Software Development", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/134168893?v=4"

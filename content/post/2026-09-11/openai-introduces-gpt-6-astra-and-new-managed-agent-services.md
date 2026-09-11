@@ -2,7 +2,7 @@
 title: "OpenAI Introduces GPT-6 Astra and New Managed Agent Services"
 slug: "openai-introduces-gpt-6-astra-and-new-managed-agent-services"
 description: "OpenAI has released GPT-6 Astra, a model designed for business use, alongside new tools for building and launching cloud agents."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [OpenAI, GPT6Astra, AIAgents, AgentsAPI]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Enterprise Software"]
 image: "https://lh3.googleusercontent.com/d/1N3ReljghsP8BRViOGM1uBiu-kfcRGHBA=w1200-h630-p-k-no-nu"

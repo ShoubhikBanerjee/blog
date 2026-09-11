@@ -2,7 +2,7 @@
 title: "Study Releases Open-Source Text-to-Speech Voices for Kurdish"
 slug: "study-releases-open-source-text-to-speech-voices-for-kurdish"
 description: "A recent study has released three Kurdish voices, 35 hours of recorded speech, and a descriptive paper, all available for free download to address the lack of technology capable of reading Kurdish..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [Kurdish, TextToSpeech, OpenSource, AI]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Speech Synthesis"]
 author: "Shoubhik Banerjee"

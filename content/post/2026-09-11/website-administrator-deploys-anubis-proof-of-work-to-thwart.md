@@ -2,7 +2,7 @@
 title: "Website Administrator Deploys Anubis Proof‑of‑Work to Thwart AI Scrapers"
 slug: "website-administrator-deploys-anubis-proofofwork-to-thwart-ai-scrapers"
 description: "The administrator of a website has set up Anubis to protect the server against the scourge of AI companies aggressively scraping websites."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [Anubis, ProofOfWork, WebScraping, JSPrivacy, BotDetection]
 categories: ["AI", "Security", "Web Technologies", "Anti‑Bot Measures", "JavaScript"]
 author: "Shoubhik Banerjee"

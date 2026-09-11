@@ -2,7 +2,7 @@
 title: "Amazon SageMaker Inference on HyperPod Launches Model Caching"
 slug: "amazon-sagemaker-inference-on-hyperpod-launches-model-caching"
 description: "Amazon SageMaker Inference on HyperPod has launched model caching, a feature that pre-loads model weights and container images onto cluster nodes before pods require them."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [AmazonSageMaker, HyperPod, ModelCaching, MachineLearning, MLOps]
 categories: ["AI", "Machine Learning", "Cloud Computing", "AI Infrastructure"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21820-featured-image.png"

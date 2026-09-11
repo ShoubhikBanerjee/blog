@@ -2,7 +2,7 @@
 title: "Qwen3.8 Max Leads September 2026 Open‑Weight LLM Ranking"
 slug: "qwen3-8-max-leads-september-2026-openweight-llm-ranking"
 description: "The latest open‑weight benchmark shows Qwen3.8 Max as the top‑scoring open‑source large language model."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [OpenWeight, LLM, BenchAlign, AIranking]
 categories: ["AI", "Machine Learning", "Large Language Models", "Open Source AI"]
 image: "https://benchlm.ai/api/og?type=best&category=Best%20Open%20Source%20LLMs&winner=Qwen3.8%20Max&winnerScore=71.6"

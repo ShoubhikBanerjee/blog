@@ -2,7 +2,7 @@
 title: "State-Path Tool Menus Improve Online Agent Success on ToolBench"
 slug: "state-path-tool-menus-improve-online-agent-success-on-toolbench"
 description: "Researchers have introduced the State-Path Tool Menu, a framework designed to improve how online agents interact with large tool libraries by providing a short, ordered subset of tools prior to..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [AIagents, ToolBench, LargeLanguageModels, SoftwareEngineering]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents"]
 author: "Shoubhik Banerjee"

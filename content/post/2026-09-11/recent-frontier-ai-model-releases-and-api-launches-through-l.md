@@ -2,7 +2,7 @@
 title: "Recent frontier AI model releases and API launches through late 2026"
 slug: "recent-frontier-ai-model-releases-and-api-launches-through-late-2026"
 description: "Several major AI model families, including OpenAI's GPT-6 Astra, Anthropic's Claude Fable 5.1, and Google's Gemini 3.8 Flash, have launched on public APIs. This updated timeline follows first public..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [OpenAI, Anthropic, LargeLanguageModels]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing"]
 image: "https://promptzone.com/og-default.png"

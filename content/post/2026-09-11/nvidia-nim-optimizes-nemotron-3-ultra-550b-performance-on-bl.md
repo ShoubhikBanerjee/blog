@@ -2,7 +2,7 @@
 title: "NVIDIA NIM Optimizes Nemotron-3-Ultra-550B Performance on Blackwell GPUs"
 slug: "nvidia-nim-optimizes-nemotron-3-ultra-550b-performance-on-blackwell-gpus"
 description: "NVIDIA NIM provides model- and GPU-aware serving choices packaged into a deployable microservice, offering validated performance engineering alongside an enterprise-ready container lifecycle."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [NVIDIA, NIM, Blackwell, LLM, Inference]
 categories: ["AI", "Machine Learning", "AI Infrastructure", "Enterprise Software"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image4_1480x833-660x370.jpg"

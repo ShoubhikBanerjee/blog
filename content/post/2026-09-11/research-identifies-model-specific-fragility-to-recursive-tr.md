@@ -2,7 +2,7 @@
 title: "Research Identifies Model-Specific Fragility to Recursive Training Collapse"
 slug: "research-identifies-model-specific-fragility-to-recursive-training-collapse"
 description: "Researchers have examined how model-generated text returning to training corpora causes output diversity to collapse, discovering that the susceptibility to this degeneration is a property of the..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [LLM, MachineLearning, ModelCollapse, AIResearch]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Large Language Models"]
 author: "Shoubhik Banerjee"

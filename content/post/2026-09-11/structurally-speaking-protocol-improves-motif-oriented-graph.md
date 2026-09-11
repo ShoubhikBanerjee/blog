@@ -2,7 +2,7 @@
 title: "Structurally Speaking Protocol Improves Motif-Oriented Graph Captioning in LLMs"
 slug: "structurally-speaking-protocol-improves-motif-oriented-graph-captioning-in-llms"
 description: "Researchers have introduced Structurally Speaking, a structured prompting protocol designed to improve how large language models generate captions for graphs by focusing on motif-level abstractions..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [LLM, GraphCaptioning, PromptEngineering, GraphTheory]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Data Visualization"]
 author: "Shoubhik Banerjee"

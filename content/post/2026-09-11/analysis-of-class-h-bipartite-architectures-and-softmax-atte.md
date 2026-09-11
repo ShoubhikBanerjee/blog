@@ -2,7 +2,7 @@
 title: "Analysis of Class H Bipartite Architectures and Softmax Attention in Hopfield Networks"
 slug: "analysis-of-class-h-bipartite-architectures-and-softmax-attention-in-hopfield-networks"
 description: "A study of the bipartite architecture of Krotov and Hopfield, referred to as class H, has identified how higher-order and exponential extensions of Hopfield networks transform retrieval updates into..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [HopfieldNetworks, MachineLearning, SoftmaxAttention, NeuralNetworks, Thermodynamics]
 categories: ["AI", "Machine Learning", "Neural Networks", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

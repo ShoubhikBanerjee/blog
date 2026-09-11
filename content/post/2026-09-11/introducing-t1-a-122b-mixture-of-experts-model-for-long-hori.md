@@ -2,7 +2,7 @@
 title: "Introducing T1: A 122B Mixture-of-Experts Model for Long-Horizon Terminal Tasks"
 slug: "introducing-t1-a-122b-mixture-of-experts-model-for-long-horizon-terminal-tasks"
 description: "As AI agent usage shifts toward long-horizon tasks such as coding and scientific discovery, terminal tasks have become especially important. To address this, researchers have introduced T1, a..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [MachineLearning, AIAgents, ReinforcementLearning, MoE]
 categories: ["AI", "Machine Learning", "AI Agents", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

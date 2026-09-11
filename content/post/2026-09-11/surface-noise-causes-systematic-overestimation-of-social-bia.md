@@ -2,7 +2,7 @@
 title: "Surface Noise Causes Systematic Overestimation of Social Bias in LLM Judgments"
 slug: "surface-noise-causes-systematic-overestimation-of-social-bias-in-llm-judgments"
 description: "New research shows that surface noise in text leads large language models to systematically overestimate social bias when acting as judges. While these models are increasingly used to measure bias,..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [LLM, SocialBias, MachineLearning, AIFairness]
 categories: ["AI", "Natural Language Processing", "AI Fairness", "Machine Learning"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Unsupervised Framework Developed to Identify Competing Political Narratives on Social Media"
 slug: "unsupervised-framework-developed-to-identify-competing-political-narratives-on-social-media"
 description: "A new unsupervised framework has been presented for identifying and characterizing competing narratives in political discourse on social media, specifically focusing on tweets from German politicians."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [NLP, SocialMediaAnalysis, PoliticalDiscourse, TopicModeling]
 categories: ["AI", "Natural Language Processing", "Social Media Analysis", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

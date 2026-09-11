@@ -2,7 +2,7 @@
 title: "K/V-Cache Interventions for Persona Control in Llama-3.1-8B"
 slug: "k-v-cache-interventions-for-persona-control-in-llama-3-1-8b"
 description: "Researchers have studied K/V-cache interventions as a structured surface for persona control in decoder-only language models, specifically by transplanting a target-conditioned K/V trajectory into a..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [LLM, KVcache, Llama31, PersonaControl, MachineLearning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Research"]
 author: "Shoubhik Banerjee"

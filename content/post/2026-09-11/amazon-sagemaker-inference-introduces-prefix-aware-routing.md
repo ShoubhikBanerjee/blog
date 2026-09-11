@@ -2,7 +2,7 @@
 title: "Amazon SageMaker Inference Introduces Prefix-Aware Routing"
 slug: "amazon-sagemaker-inference-introduces-prefix-aware-routing"
 description: "Amazon SageMaker Inference has introduced prefix-aware routing, a new routing strategy designed to optimize how requests are handled by instances."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [AmazonSageMaker, LLM, Inference, MachineLearning]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/10/ML-21885-featured-image.png"

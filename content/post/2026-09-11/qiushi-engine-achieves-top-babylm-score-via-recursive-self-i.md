@@ -2,7 +2,7 @@
 title: "Qiushi Engine Achieves Top BabyLM Score via Recursive Self-Improvement"
 slug: "qiushi-engine-achieves-top-babylm-score-via-recursive-self-improvement"
 description: "Qiushi Engine has conducted a long-horizon, end-to-end autonomous research program on BabyLM 2026 Strict-Small. Designed to operate within 10 million corpus words and 100 million cumulative word..."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [QiushiEngine, BabyLM, RecursiveSelfImprovement, DataEfficiency]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

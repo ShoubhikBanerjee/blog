@@ -2,7 +2,7 @@
 title: "ProMediConv Benchmarking Framework and Dataset for Mediation Dialogues"
 slug: "promediconv-benchmarking-framework-and-dataset-for-mediation-dialogues"
 description: "A new benchmarking framework called ProMediConv has been introduced to evaluate mediation‑oriented dialogue models."
-date: 2026-09-11T18:06:00+05:30
+date: 2026-09-11T22:04:55+05:30
 tags: [MediationAI, Benchmarking, DialogueSystems, Dataset]
 categories: ["AI", "Artificial Intelligence", "Natural Language Processing", "Dialogue Systems"]
 author: "Shoubhik Banerjee"
