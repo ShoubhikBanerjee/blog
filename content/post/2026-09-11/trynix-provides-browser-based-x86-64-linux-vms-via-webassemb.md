@@ -2,7 +2,7 @@
 title: "Trynix Provides Browser-Based x86_64 Linux VMs via WebAssembly"
 slug: "trynix-provides-browser-based-x86-64-linux-vms-via-webassembly"
 description: "trynix.dev has launched a service that allows users to run an x86_64 Linux virtual machine entirely within a web browser using WebAssembly."
-date: 2026-09-11T06:05:05+05:30
+date: 2026-09-11T12:15:38+05:30
 tags: [WebAssembly, Linux, Nix, VirtualMachine, GitHubActions]
 categories: ["AI", "Virtualization", "Web Development", "Cloud Computing"]
 author: "Shoubhik Banerjee"

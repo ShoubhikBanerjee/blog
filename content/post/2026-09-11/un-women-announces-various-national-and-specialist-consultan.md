@@ -2,7 +2,7 @@
 title: "UN Women Announces Various National and Specialist Consultancy Vacancies Globally"
 slug: "un-women-announces-various-national-and-specialist-consultancy-vacancies-globally"
 description: "UN Women has announced several open positions for consultants and specialists across multiple international locations and home-based arrangements."
-date: 2026-09-11T06:05:05+05:30
+date: 2026-09-11T12:15:38+05:30
 tags: [UNWomen, Consultancy, JobVacancies, GenderEquality]
 categories: ["AI", "Employment", "International Development", "Human Resources"]
 image: "https://www.unwomen.org/sites/default/files/UN%20Women%20Logos/UN-Women-logo-social-media-1024x512-en.png"

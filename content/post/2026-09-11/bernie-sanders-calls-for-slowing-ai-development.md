@@ -2,7 +2,7 @@
 title: "Bernie Sanders Calls for Slowing AI Development"
 slug: "bernie-sanders-calls-for-slowing-ai-development"
 description: "Bernie Sanders has expressed concerns regarding the pace of artificial intelligence development, stating that the existence of all humanity is at stake."
-date: 2026-09-11T06:05:05+05:30
+date: 2026-09-11T12:15:38+05:30
 tags: [AI, BernieSanders, AISafety]
 categories: ["AI", "Artificial Intelligence", "Public Policy", "Current Events"]
 image: "https://ichef.bbci.co.uk/images/ic/1200x675/p01tqv8z.png"

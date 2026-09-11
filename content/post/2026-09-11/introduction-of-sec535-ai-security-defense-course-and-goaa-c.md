@@ -2,7 +2,7 @@
 title: "Introduction of SEC535 AI Security Defense Course and GOAA Certification"
 slug: "introduction-of-sec535-ai-security-defense-course-and-goaa-certification"
 description: "A new training path centered on AI security has been introduced, featuring the SEC535 course and the GIAC Offensive AI Analyst (GOAA) certification to address threats leveraging artificial..."
-date: 2026-09-11T06:05:05+05:30
+date: 2026-09-11T12:15:38+05:30
 tags: [AIsecurity, Cybersecurity, GOAA, SEC535]
 categories: ["AI", "Cybersecurity Training", "Artificial Intelligence", "Professional Certification"]
 image: "https://images.contentstack.io/v3/assets/bltabe50a4554f8e97f/blt1ffb095261c6cb94/67fd01fb259f5b1751ae6bc9/course_social_SEC535_1514_x_792.png"

@@ -2,7 +2,7 @@
 title: "Shopify Returns to Swift and Kotlin Codebases for Native Apps"
 slug: "shopify-returns-to-swift-and-kotlin-codebases-for-native-apps"
 description: "Shopify is moving from React Native back to separate Swift and Kotlin codebases for its native applications."
-date: 2026-09-11T06:05:05+05:30
+date: 2026-09-11T12:15:38+05:30
 tags: [Shopify, ReactNative, Swift, Kotlin, AIagents]
 categories: ["AI", "Software Development", "Mobile Applications", "AI Agents"]
 author: "Shoubhik Banerjee"

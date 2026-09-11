@@ -2,7 +2,7 @@
 title: "Amazon Bedrock Knowledge Bases Now Supports TwelveLabs Marengo Embed 3.0"
 slug: "amazon-bedrock-knowledge-bases-now-supports-twelvelabs-marengo-embed-3-0"
 description: "Amazon Bedrock Knowledge Bases has announced the general availability of TwelveLabs Marengo Embed 3.0 as an embedding model. This integration allows for a fully managed Retrieval Augmented Generation..."
-date: 2026-09-11T06:05:05+05:30
+date: 2026-09-11T12:15:38+05:30
 tags: [AmazonBedrock, TwelveLabs, MultimodalAI, RAG, AWS]
 categories: ["AI", "Machine Learning", "Computer Vision", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/10/ML-21835-featured-image.png"
