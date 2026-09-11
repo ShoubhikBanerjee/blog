@@ -2,7 +2,7 @@
 title: "Amazon Quick Desktop Now Generally Available with New Mobile Activity Feed"
 slug: "amazon-quick-desktop-now-generally-available-with-new-mobile-activity-feed"
 description: "Amazon Quick is now generally available as a desktop application for macOS and Windows, following a preview period used by customers in healthcare, sports, and manufacturing."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [AmazonQuick, AWS, AIAgents, EnterpriseAI]
 categories: ["AI", "AI Agents", "Cloud Computing", "Enterprise Software"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/10/Amazon-Quick-is-now-generally-available-on-desktop.png"

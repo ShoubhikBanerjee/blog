@@ -2,7 +2,7 @@
 title: "Experience Manager Update Delivery and Support Lifecycle Details"
 slug: "experience-manager-update-delivery-and-support-lifecycle-details"
 description: "Adobe provides different update mechanisms and support timelines for Experience Manager depending on the deployment model."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [ExperienceManager, Adobe, CloudService, SoftwareUpdates]
 categories: ["AI", "Enterprise Software", "Cloud Computing", "Software Lifecycle Management"]
 author: "Shoubhik Banerjee"

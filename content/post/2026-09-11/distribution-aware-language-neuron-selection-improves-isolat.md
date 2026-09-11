@@ -2,7 +2,7 @@
 title: "Distribution-aware Language Neuron selection improves isolation of language-specific effects in mLLMs"
 slug: "distribution-aware-language-neuron-selection-improves-isolation-of-language-specific-effects-in-mllms"
 description: "Researchers have developed a new method called Distribution-aware Language Neuron selection to better identify language-specific neurons within multilingual large language models (mLLMs)."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [mLLM, LanguageModels, NeuralNetworks, NLP]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

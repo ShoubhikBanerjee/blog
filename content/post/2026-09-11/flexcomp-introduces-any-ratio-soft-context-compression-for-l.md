@@ -2,7 +2,7 @@
 title: "FlexComp Introduces Any-Ratio Soft Context Compression for Large Language Models"
 slug: "flexcomp-introduces-any-ratio-soft-context-compression-for-large-language-models"
 description: "A new method-agnostic framework called FlexComp has been developed to decouple the compression ratio from the training and deployment of soft context compressors."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [LLM, ContextCompression, FlexComp, MachineLearning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Infrastructure"]
 author: "Shoubhik Banerjee"

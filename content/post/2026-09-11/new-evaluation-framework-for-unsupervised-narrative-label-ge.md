@@ -2,7 +2,7 @@
 title: "New Evaluation Framework for Unsupervised Narrative Label Generation"
 slug: "new-evaluation-framework-for-unsupervised-narrative-label-generation"
 description: "Researchers have introduced a three-tier evaluation framework designed for unsupervised narrative label generation and tested it across seven disinformation datasets."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [Disinformation, NarrativeLabeling, UnsupervisedLearning, DataEvaluation]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Information Security"]
 author: "Shoubhik Banerjee"

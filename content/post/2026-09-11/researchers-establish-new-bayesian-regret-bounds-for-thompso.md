@@ -2,7 +2,7 @@
 title: "Researchers Establish New Bayesian Regret Bounds for Thompson Sampling in Bandit Convex Optimization"
 slug: "researchers-establish-new-bayesian-regret-bounds-for-thompson-sampling-in-bandit-convex-optimization"
 description: "Researchers Bakhtiari, Lattimore, and Szepesvári (COLT 2025) have established new Bayesian regret bounds for Thompson sampling (TS) applied to bandit convex optimization problems."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [ThompsonSampling, BanditOptimization, COLT2025, MachineLearningTheory]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Mathematics"]
 author: "Shoubhik Banerjee"

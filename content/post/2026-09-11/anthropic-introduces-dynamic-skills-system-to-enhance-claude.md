@@ -2,7 +2,7 @@
 title: "Anthropic Introduces Dynamic Skills System to Enhance Claude Performance"
 slug: "anthropic-introduces-dynamic-skills-system-to-enhance-claude-performance"
 description: "Anthropic has released an implementation of 'skills' for Claude, allowing the AI model to dynamically load folders of instructions, scripts, and resources to improve its performance on specialized..."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [Anthropic, Claude, AISkills, SoftwareDevelopment]
 categories: ["AI", "Artificial Intelligence", "Software Development", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/76263028?v=4"

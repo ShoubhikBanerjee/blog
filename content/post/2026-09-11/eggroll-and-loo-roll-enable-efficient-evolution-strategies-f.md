@@ -2,7 +2,7 @@
 title: "EGGROLL and LOO-ROLL Enable Efficient Evolution Strategies for Large Language Models"
 slug: "eggroll-and-loo-roll-enable-efficient-evolution-strategies-for-large-language-models"
 description: "EGGROLL introduces low‑rank Gaussian perturbations to make evolution strategies (ES) practical for large language models (LLMs), and LOO‑ROLL refines the estimator to cut variance and improve..."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [EvolutionStrategies, LLMOptimization, LowRankMethods]
 categories: ["AI", "Machine Learning", "Optimization", "Large Language Models", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

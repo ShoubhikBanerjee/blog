@@ -2,7 +2,7 @@
 title: "Using Semantic Uncertainty to Estimate Transition Relevance in Turn-taking"
 slug: "using-semantic-uncertainty-to-estimate-transition-relevance-in-turn-taking"
 description: "Researchers have developed a method to improve turn-taking in Spoken Dialogue Systems (SDS) by using semantic uncertainty to identify opportunities for listeners to take the floor."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [LLM, SpokenDialogueSystems, TurnTaking, SemanticUncertainty]
 categories: ["AI", "Computation and Language", "Computer Science", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "New Benchmark Evaluates LLM Agents in Enterprise Environments"
 slug: "new-benchmark-evaluates-llm-agents-in-enterprise-environments"
 description: "LLM agents for enterprise systems of record cannot be evaluated on customer production data, and no existing substitute provides ground truth. To address this, researchers present the Era by Eon..."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [A, I, A, g, e, n, t, s, B, e, n, c, h, m, a, r, k, E, n, t, e, r, p, r, i, s, e, D, a, t, a, b, a, s, e, L, L, M]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "D", "a", "t", "a", "b", "a", "s", "e", "M", "a", "n", "a", "g", "e", "m", "e", "n", "t", ",", "S", "o", "f", "t", "w", "a", "r", "e", "E", "n", "g", "i", "n", "e", "e", "r", "i", "n", "g"]
 author: "Shoubhik Banerjee"

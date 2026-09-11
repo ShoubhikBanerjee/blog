@@ -2,7 +2,7 @@
 title: "Introduction of the Fork Ledger for Evaluating Deployment Stream Updates"
 slug: "introduction-of-the-fork-ledger-for-evaluating-deployment-stream-updates"
 description: "Researchers have introduced the fork ledger, a mechanism designed to branch deployment streams at pre-registered decision points into matched update and hold continuations using common random numbers."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [AI, MachineLearning, SimulatedControl, DeploymentStreams]
 categories: ["AI", "Machine Learning", "AI Development", "Reinforcement Learning"]
 author: "Shoubhik Banerjee"

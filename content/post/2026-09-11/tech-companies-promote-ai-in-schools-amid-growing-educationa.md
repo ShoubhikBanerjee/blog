@@ -2,7 +2,7 @@
 title: "Tech Companies Promote AI in Schools Amid Growing Educational Scrutiny"
 slug: "tech-companies-promote-ai-in-schools-amid-growing-educational-scrutiny"
 description: "AI companies are currently pitching schools on the necessity of generative AI, providing resources and curricula—often pro bono—to ensure students do not fall behind in a competitive job market."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [AI, Education, EdTech, ComputerScience]
 categories: ["AI", "Education Technology", "Artificial Intelligence", "Corporate Influence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/09/STK483_EDUCATION_D.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

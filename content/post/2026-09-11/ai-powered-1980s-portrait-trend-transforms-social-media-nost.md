@@ -2,7 +2,7 @@
 title: "AI-Powered 1980s Portrait Trend Transforms Social Media Nostalgia"
 slug: "ai-powered-1980s-portrait-trend-transforms-social-media-nostalgia"
 description: "Users are utilizing AI to transform ordinary selfies and family photographs into polished 1980s-era portraits, characterized by voluminous hair, oversized silhouettes, analogue textures, and dramatic..."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [AI, GenerativeAI, SocialMediaTrends, DigitalNostalgia, ChatGPT]
 categories: ["AI", "Artificial Intelligence", "Digital Culture", "Generative Media"]
 author: "Shoubhik Banerjee"

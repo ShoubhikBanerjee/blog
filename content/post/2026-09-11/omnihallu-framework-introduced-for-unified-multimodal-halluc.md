@@ -2,7 +2,7 @@
 title: "OmniHallu Framework Introduced for Unified Multimodal Hallucination Detection"
 slug: "omnihallu-framework-introduced-for-unified-multimodal-hallucination-detection"
 description: "A new unified hallucination detection framework called OmniHallu has been proposed to detect when Multimodal Large Language Models (MLLMs) generate outputs that contradict or misrepresent input..."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [OmniHallu, MLLM, HallucinationDetection]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Multimodal AI"]
 author: "Shoubhik Banerjee"

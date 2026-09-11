@@ -2,7 +2,7 @@
 title: "Compatibility Shift Identified in Soft-Scoring Mechanisms for Contemporary LLM Judges"
 slug: "compatibility-shift-identified-in-soft-scoring-mechanisms-for-contemporary-llm-judges"
 description: "A recent evaluation of LLM-as-a-Judge methodologies identifies a compatibility shift in top-tier proprietary models. Verbalized confidence, previously dismissed for overconfidence and round-number..."
-date: 2026-09-11T12:15:38+05:30
+date: 2026-09-11T18:06:00+05:30
 tags: [LLM, AIResearch, MachineLearning]
 categories: ["AI", "Large Language Models", "AI Evaluation", "Machine Learning"]
 author: "Shoubhik Banerjee"
