@@ -2,7 +2,7 @@
 title: "Deploying MCP Apps with Interactive HTML Widgets on Amazon Bedrock AgentCore"
 slug: "deploying-mcp-apps-with-interactive-html-widgets-on-amazon-bedrock-agentcore"
 description: "Amazon Bedrock AgentCore now enables the deployment of MCP Apps, which extend the Model Context Protocol (MCP) by rendering interactive HTML widgets directly inside AI hosts."
-date: 2026-09-12T12:03:17+05:30
+date: 2026-09-12T18:03:09+05:30
 tags: [AmazonBedrock, MCP, AIagents, AWS]
 categories: ["AI", "AI Agents", "Cloud Computing", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/09/ML-20314-featured-image.png"

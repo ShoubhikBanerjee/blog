@@ -2,7 +2,7 @@
 title: "OpenRouter Model Routing and Provider Control Features"
 slug: "openrouter-model-routing-and-provider-control-features"
 description: "OpenRouter provides an API endpoint that automatically handles fallbacks and selects the most cost-effective option for model requests."
-date: 2026-09-12T12:03:17+05:30
+date: 2026-09-12T18:03:09+05:30
 tags: [OpenRouter, API, LLM, ModelRouting]
 categories: ["AI", "Artificial Intelligence", "Software Development", "API Management"]
 author: "Shoubhik Banerjee"

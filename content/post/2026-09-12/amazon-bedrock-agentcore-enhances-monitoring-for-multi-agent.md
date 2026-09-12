@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore Enhances Monitoring for Multi-Agent AI Systems"
 slug: "amazon-bedrock-agentcore-enhances-monitoring-for-multi-agent-ai-systems"
 description: "Amazon has introduced developments to Amazon Bedrock AgentCore to address the specific monitoring challenges of multi-agent systems in production, where traditional infrastructure metrics often fail..."
-date: 2026-09-12T12:03:17+05:30
+date: 2026-09-12T18:03:09+05:30
 tags: [AmazonBedrock, AgentCore, AIAgents, Observability, AWS]
 categories: ["AI", "AI Agents", "Cloud Computing", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-20434-featured-image.png"

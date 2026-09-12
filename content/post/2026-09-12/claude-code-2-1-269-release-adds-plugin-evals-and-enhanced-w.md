@@ -2,7 +2,7 @@
 title: "Claude Code 2.1.269 Release Adds Plugin Evals and Enhanced Workflow Controls"
 slug: "claude-code-2-1-269-release-adds-plugin-evals-and-enhanced-workflow-controls"
 description: "Claude Code has released version 2.1.269, a broad update introducing plugin evaluation tools, output-style switching, and expanded telemetry and workflow controls across CLI, VS Code, web, and Slack..."
-date: 2026-09-12T12:03:17+05:30
+date: 2026-09-12T18:03:09+05:30
 tags: [ClaudeCode, AI, DeveloperTools, CLI]
 categories: ["AI", "AI Development", "Software Engineering", "Developer Experience"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "MIT Technology Review to Host Discussion on AI Extinction Fears"
 slug: "mit-technology-review-to-host-discussion-on-ai-extinction-fears"
 description: "MIT Technology Review is organizing a subscriber-only conversation to examine fears that advanced AI could destroy humanity, a possibility cited by employees at leading AI labs."
-date: 2026-09-12T12:03:17+05:30
+date: 2026-09-12T18:03:09+05:30
 tags: [MITTechnologyReview, AIextinction, AISafety]
 categories: ["AI", "AI Safety", "Artificial Intelligence", "Tech Ethics"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2024/01/September.26_Roundtables-Assets.png?resize=1200,600"

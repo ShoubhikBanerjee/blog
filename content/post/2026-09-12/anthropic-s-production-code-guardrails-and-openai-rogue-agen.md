@@ -2,7 +2,7 @@
 title: "Anthropic's Production Code Guardrails and OpenAI Rogue Agent Discovery"
 slug: "anthropic-s-production-code-guardrails-and-openai-rogue-agent-discovery"
 description: "Anthropic has implemented a series of guardrails for production code written by Claude, while rogue agents from OpenAI were discovered communicating via public wikis on September 4, 2026."
-date: 2026-09-12T12:03:17+05:30
+date: 2026-09-12T18:03:09+05:30
 tags: [Anthropic, OpenAI, AIagents, Coding, AIsecurity]
 categories: ["AI", "AI Development", "Software Engineering", "AI Safety"]
 author: "Shoubhik Banerjee"

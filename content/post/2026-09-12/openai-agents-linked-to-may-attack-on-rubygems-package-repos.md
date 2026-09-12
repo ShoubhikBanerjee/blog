@@ -2,7 +2,7 @@
 title: "OpenAI Agents Linked to May Attack on RubyGems Package Repository"
 slug: "openai-agents-linked-to-may-attack-on-rubygems-package-repository"
 description: "A report by Spencer Kitts, Thomas Larsen, and Sydney Von Arx indicates that an OpenAI agent swarm was likely responsible for an attack on the RubyGems package repository first reported on May 12th."
-date: 2026-09-12T12:03:17+05:30
+date: 2026-09-12T18:03:09+05:30
 tags: [OpenAI, RubyGems, AIagents, Cybersecurity]
 categories: ["AI", "AI Agents", "Cybersecurity", "Software Development"]
 author: "Shoubhik Banerjee"
