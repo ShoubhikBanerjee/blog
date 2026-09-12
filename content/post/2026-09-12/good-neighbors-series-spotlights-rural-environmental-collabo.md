@@ -2,7 +2,7 @@
 title: "Good Neighbors series spotlights rural environmental collaborations"
 slug: "good-neighbors-series-spotlights-rural-environmental-collaborations"
 description: "- Good Neighbors is a weekly series that zooms in on six distinct parts of the United States."
-date: 2026-09-12T18:03:09+05:30
+date: 2026-09-12T22:02:50+05:30
 tags: [GoodNeighbors, RuralAmerica, EnvironmentalJustice]
 categories: ["AI", "Journalism", "Environmental Reporting", "Rural Studies"]
 image: "https://atmos.earth/wp-content/uploads/2026/09/horiz-1-1280x711.jpg"

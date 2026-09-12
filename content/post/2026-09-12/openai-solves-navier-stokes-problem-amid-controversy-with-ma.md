@@ -2,7 +2,7 @@
 title: "OpenAI Solves Navier-Stokes Problem Amid Controversy With Mathematicians"
 slug: "openai-solves-navier-stokes-problem-amid-controversy-with-mathematicians"
 description: "OpenAI has announced a solution to the Navier-Stokes problem, one of the seven Millennium Prize problems established by the Clay Mathematics Institute in 2000. The development has been accompanied by..."
-date: 2026-09-12T18:03:09+05:30
+date: 2026-09-12T22:02:50+05:30
 tags: [OpenAI, Mathematics, NavierStokes, AIagents, MillenniumPrize]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "AI Research"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/268745_OpenAI_just_wants_to_win-_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

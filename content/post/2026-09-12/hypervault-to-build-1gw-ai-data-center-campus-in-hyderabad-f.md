@@ -2,7 +2,7 @@
 title: "HyperVault to Build 1GW AI Data Center Campus in Hyderabad for TCS"
 slug: "hypervault-to-build-1gw-ai-data-center-campus-in-hyderabad-for-tcs"
 description: "HyperVault, the AI infrastructure subsidiary of Tata Consultancy Services, has secured 264 acres of land in Hyderabad to build a campus with a capacity of up to 1GW. Deepesh Kiran Nanda, CEO and MD..."
-date: 2026-09-12T18:03:09+05:30
+date: 2026-09-12T22:02:50+05:30
 tags: [HyperVault, TCS, AIDataCenter, Hyderabad, GPUCompute]
 categories: ["AI", "AI Infrastructure", "Data Centers", "Cloud Computing"]
 image: "https://assets.bizclikmedia.net/1200/8b4b6fe2ffc51e7ba93134ec7f5bb7f3:c7032fa945a5673d569afc0c1544dbb9/1788775451821.jpg.jpg"

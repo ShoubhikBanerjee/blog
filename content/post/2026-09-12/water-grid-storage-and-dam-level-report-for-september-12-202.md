@@ -2,7 +2,7 @@
 title: "Water Grid Storage and Dam Level Report for September 12 2026"
 slug: "water-grid-storage-and-dam-level-report-for-september-12-2026"
 description: "As of 9:03am on 12 September 2026, the water grid storage capacity is at 81.4%, reflecting a 0.4% decrease over the last 7 days. Catchment average rainfall was 8.6mm, and average daily usage per..."
-date: 2026-09-12T18:03:09+05:30
+date: 2026-09-12T22:02:50+05:30
 tags: [waterstorage, damlevels, waterusage]
 categories: ["AI", "Infrastructure", "Environmental Monitoring", "Resource Management"]
 image: "https://www.seqwater.com.au/sites/default/files/2019-08/Lake%20Dyer%201.jpg"

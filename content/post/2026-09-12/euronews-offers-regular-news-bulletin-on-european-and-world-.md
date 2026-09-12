@@ -2,7 +2,7 @@
 title: "Euronews Offers Regular News Bulletin on European and World Affairs"
 slug: "euronews-offers-regular-news-bulletin-on-european-and-world-affairs"
 description: "Euronews provides a regular news bulletin designed to help viewers catch up on the most important stories from across Europe and beyond."
-date: 2026-09-12T18:03:09+05:30
+date: 2026-09-12T22:02:50+05:30
 tags: [Euronews, GlobalNews, EuropeanPerspective]
 categories: ["AI", "Media", "News Bulletins", "World Affairs"]
 image: "https://images.euronews.com/articles/stories/09/91/08/58/1200x675_cmsv2_bab52d16-7ba8-57eb-869b-7cab5af2383a-9910858.jpg"

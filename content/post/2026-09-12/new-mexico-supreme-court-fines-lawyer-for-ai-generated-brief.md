@@ -2,7 +2,7 @@
 title: "New Mexico Supreme Court Fines Lawyer for AI-Generated Brief with Fake Testimony"
 slug: "new-mexico-supreme-court-fines-lawyer-for-ai-generated-brief-with-fake-testimony"
 description: "The New Mexico Supreme Court has penalized lawyer Stephen Aarons for submitting an appeal for a client's murder conviction that contained AI-fabricated witnesses and false police testimony."
-date: 2026-09-12T18:03:09+05:30
+date: 2026-09-12T22:02:50+05:30
 tags: [ChatGPT, LegalTech, AIHallucinations, NewMexico]
 categories: ["AI", "Artificial Intelligence", "Law", "Legal Ethics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25384193/STK470_AI_LAW_CVIRGINIA_C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

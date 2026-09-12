@@ -2,7 +2,7 @@
 title: "MIT AI Gateway Updates with Expanded Provider Catalog and Token Compression"
 slug: "mit-ai-gateway-updates-with-expanded-provider-catalog-and-token-compression"
 description: "The MIT AI gateway has provided updates to its single-endpoint access system, which connects users to a vast array of AI providers and models."
-date: 2026-09-12T18:03:09+05:30
+date: 2026-09-12T22:02:50+05:30
 tags: [MIT, AIGateway, LLM, OpenSource]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Cloud Infrastructure"]
 image: "https://avatars.githubusercontent.com/u/8016841?v=4"

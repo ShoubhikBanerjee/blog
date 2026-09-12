@@ -2,7 +2,7 @@
 title: "Trump Defends US AI Guardrails and Anthropic Blacklist in FOX Interview"
 slug: "trump-defends-us-ai-guardrails-and-anthropic-blacklist-in-fox-interview"
 description: "In a FOX News interview published Friday, President Donald Trump defended his administration's approach to artificial intelligence regulation."
-date: 2026-09-12T18:03:09+05:30
+date: 2026-09-12T22:02:50+05:30
 tags: [AIRegulation, Trump, Anthropic, USChinaAI]
 categories: ["AI", "Artificial Intelligence", "Government Policy", "International Relations"]
 image: "https://img.piri.net/piri/upload/3/2026/9/12/547db4c4-trump-defends-us-ai-guardrails-cites-anthropic-blacklist.webp"
