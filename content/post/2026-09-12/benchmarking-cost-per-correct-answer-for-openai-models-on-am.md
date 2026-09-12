@@ -2,7 +2,7 @@
 title: "Benchmarking Cost Per Correct Answer for OpenAI Models on Amazon Bedrock"
 slug: "benchmarking-cost-per-correct-answer-for-openai-models-on-amazon-bedrock"
 description: "New results from an open-source benchmarking harness evaluate the practical deployment costs and accuracy of several OpenAI models, comparing those hosted on Amazon Bedrock against those on the..."
-date: 2026-09-12T06:05:27+05:30
+date: 2026-09-12T12:03:17+05:30
 tags: [OpenAI, AmazonBedrock, LLMbenchmarks, AICosts]
 categories: ["AI", "Machine Learning", "Cloud Computing", "AI Agents"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/09/ML-21634-featured-image.png"

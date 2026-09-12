@@ -2,7 +2,7 @@
 title: "Zimmer Biomet Partners with NAACP to Support Diversity and Equality"
 slug: "zimmer-biomet-partners-with-naacp-to-support-diversity-and-equality"
 description: "Zimmer Biomet has partnered with the National Association for the Advancement of Colored People (NAACP) to end racial injustice and advance diversity and equality."
-date: 2026-09-12T06:05:27+05:30
+date: 2026-09-12T12:03:17+05:30
 tags: [ZimmerBiomet, NAACP, Diversity, Equality]
 categories: ["AI", "Corporate Social Responsibility", "Partnerships", "Healthcare"]
 author: "Shoubhik Banerjee"

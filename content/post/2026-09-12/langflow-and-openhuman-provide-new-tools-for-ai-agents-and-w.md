@@ -2,7 +2,7 @@
 title: "Langflow and OpenHuman Provide New Tools for AI Agents and Workflows"
 slug: "langflow-and-openhuman-provide-new-tools-for-ai-agents-and-workflows"
 description: "Recent developments in AI orchestration include the available tools Langflow and OpenHuman, both of which focus on building, deploying, and managing AI-powered agents and workflows."
-date: 2026-09-12T06:05:27+05:30
+date: 2026-09-12T12:03:17+05:30
 tags: [Langflow, OpenHuman, AIagents, OpenSource, LLM]
 categories: ["AI", "AI Agents", "Software Development", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/85702467?v=4"
