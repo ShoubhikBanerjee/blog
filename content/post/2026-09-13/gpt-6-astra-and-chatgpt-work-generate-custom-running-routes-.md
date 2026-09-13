@@ -2,7 +2,7 @@
 title: "GPT-6 Astra and ChatGPT Work Generate Custom Running Routes Using OSM Data"
 slug: "gpt-6-astra-and-chatgpt-work-generate-custom-running-routes-using-osm-data"
 description: "A user demonstrated the ability of ChatGPT Work with GPT-6 Astra (Max) to generate specific 5K and 10K running routes that loop from a provided home address using OpenStreetMap (OSM) data."
-date: 2026-09-13T06:06:36+05:30
+date: 2026-09-13T12:02:11+05:30
 tags: [GPT6, ChatGPTWork, OpenStreetMap, AIAgents]
 categories: ["AI", "Artificial Intelligence", "Software Development", "AI Agents"]
 image: "https://static.simonwillison.net/static/2026/5k-route.webp"

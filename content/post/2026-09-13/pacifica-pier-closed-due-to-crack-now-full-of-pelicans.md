@@ -2,7 +2,7 @@
 title: "Pacifica Pier Closed Due to Crack, Now Full of Pelicans"
 slug: "pacifica-pier-closed-due-to-crack-now-full-of-pelicans"
 description: "The Pacifica Pier shut down at the start of June after a crack in the concrete walkway made access to the pier unsafe."
-date: 2026-09-13T06:06:36+05:30
+date: 2026-09-13T12:02:11+05:30
 tags: [P, a, c, i, f, i, c, a, P, i, e, r, P, e, l, i, c, a, n, s, N, a, t, u, r, e, I, n, f, r, a, s, t, r, u, c, t, u, r, e, C, a, l, i, f, o, r, n, i, a]
 categories: ["AI", "I", "n", "f", "r", "a", "s", "t", "r", "u", "c", "t", "u", "r", "e", ",", "W", "i", "l", "d", "l", "i", "f", "e", ",", "N", "e", "w", "s", ",", "C", "a", "l", "i", "f", "o", "r", "n", "i", "a"]
 author: "Shoubhik Banerjee"

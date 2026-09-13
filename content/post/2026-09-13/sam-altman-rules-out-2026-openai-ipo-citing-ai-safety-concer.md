@@ -2,7 +2,7 @@
 title: "Sam Altman Rules Out 2026 OpenAI IPO Citing AI Safety Concerns"
 slug: "sam-altman-rules-out-2026-openai-ipo-citing-ai-safety-concerns"
 description: "OpenAI Chief Executive Officer Sam Altman has confirmed that the company will not go public in 2026, citing critical concerns regarding artificial intelligence safety and alignment. The announcement..."
-date: 2026-09-13T06:06:36+05:30
+date: 2026-09-13T12:02:11+05:30
 tags: [OpenAI, AISafety, SamAltman, Anthropic, IPO]
 categories: ["AI", "AI Safety", "Corporate Finance", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK201_SAM_ALTMAN_CVIRGINIA2D-1.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
