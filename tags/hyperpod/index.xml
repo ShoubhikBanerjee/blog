@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HyperPod on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/hyperpod/</link><description>Recent content in HyperPod on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 11 Sep 2026 22:04:55 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/hyperpod/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker Inference on HyperPod Launches Model Caching</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-inference-on-hyperpod-launches-model-caching/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-inference-on-hyperpod-launches-model-caching/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21820-featured-image.png" alt="Featured image of post Amazon SageMaker Inference on HyperPod Launches Model Caching" /&gt;&lt;h1 id="amazon-sagemaker-inference-on-hyperpod-launches-model-caching"&gt;Amazon SageMaker Inference on HyperPod Launches Model Caching
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker Inference on HyperPod has launched model caching, a feature that pre-loads model weights and container images onto cluster nodes before pods require them.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Model caching eliminates latency sources associated with downloading data over the network. Without caching, start times can take tens of minutes due to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Container Images:&lt;/strong&gt; Multi-gigabyte inference server images (such as LMI or vLLM) typically take 5–7 minutes to pull.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Weights:&lt;/strong&gt; A 145 GB model on Amazon S3 can take 20+ minutes, while a 600+ GB model like DeepSeek-R1 can take upwards of 30 minutes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With model caching enabled, pods can typically start serving traffic in seconds, reading from local NVMe storage at approximately 7 GB/s.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Model caching is managed via two Custom Resource Definitions (CRDs) introduced by the operator:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Mechanism&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Weights Cache&lt;/td&gt;
+&lt;td style="text-align: left"&gt;ModelDataCacheConfig&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Downloads model weights to local NVMe on target nodes from sources including Amazon S3, Amazon FSx for Lustre, HuggingFace Hub, or JumpStart.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Image Cache&lt;/td&gt;
+&lt;td style="text-align: left"&gt;DaemonSet&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Pre-pulls inference server container images onto nodes to avoid ECR downloads.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="deployment-process"&gt;Deployment Process
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Users add &lt;code&gt;modelCacheConfig&lt;/code&gt; with &lt;code&gt;weightsCache&lt;/code&gt; or &lt;code&gt;imageCache&lt;/code&gt; enabled to their &lt;code&gt;InferenceEndpointConfig&lt;/code&gt; or &lt;code&gt;JumpStartModel&lt;/code&gt; resource.&lt;/li&gt;
+&lt;li&gt;For weights, the HyperPod Inference Operator creates a &lt;code&gt;ModelDataCacheConfig&lt;/code&gt; resource and downloads weights to local NVMe. Once complete, the node is labeled as cache-ready.&lt;/li&gt;
+&lt;li&gt;The operator waits for all target nodes to be cache-ready before creating the inference deployment.&lt;/li&gt;
+&lt;li&gt;For images, the operator creates a DaemonSet to pull the image. Multiple deployments using the same image share a single image cache resource.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Persistence:&lt;/strong&gt; Configured caches remain available across pod restarts on the same node.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scheduling:&lt;/strong&gt; Caching uses preferred scheduling rather than required scheduling. If a pod is placed on a node without a warm cache—such as during rapid scale-out—it pulls the image from Amazon ECR and reads weights from the original Amazon S3/Amazon FSx source.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fallback:&lt;/strong&gt; Pods started before the image cache is complete on a node will pull from ECR normally.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonSageMaker #HyperPod #ModelCaching #MachineLearning #MLOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/reduce-inference-cold-starts-on-amazon-sagemaker-hyperpod-with-model-caching/" target="_blank" rel="noopener"
+&gt;Reduce inference cold starts on Amazon SageMaker HyperPod with model caching | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

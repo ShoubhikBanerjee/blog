@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AmazonNova on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/amazonnova/</link><description>Recent content in AmazonNova on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 05 Sep 2026 22:02:16 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/amazonnova/index.xml" rel="self" type="application/rss+xml"/><item><title>AI Assistant for WhatsApp Ordering Powered by Amazon Bedrock AgentCore and Nova Models</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-assistant-for-whatsapp-ordering-powered-by-amazon-bedrock-agentcore-and-nova-models/</link><pubDate>Sat, 05 Sep 2026 22:02:16 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-assistant-for-whatsapp-ordering-powered-by-amazon-bedrock-agentcore-and-nova-models/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-featured-image.png" alt="Featured image of post AI Assistant for WhatsApp Ordering Powered by Amazon Bedrock AgentCore and Nova Models" /&gt;&lt;h1 id="ai-assistant-for-whatsapp-ordering-powered-by-amazon-bedrock-agentcore-and-nova-models"&gt;AI Assistant for WhatsApp Ordering Powered by Amazon Bedrock AgentCore and Nova Models
+&lt;/h1&gt;&lt;p&gt;A new end-to-end AI ordering assistant has been developed for WhatsApp, utilizing Amazon Bedrock AgentCore and Amazon Nova models to manage customer interactions. The system allows users to place restaurant orders from greeting to confirmation through a single WhatsApp Business number.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Customers can interact with the assistant using three distinct channels that share one backend and cross-channel memory:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Text messages&lt;/li&gt;
+&lt;li&gt;Voice notes&lt;/li&gt;
+&lt;li&gt;Voice calls&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The solution uses the Meta WhatsApp Business Platform as the customer front door, which reaches more than two billion people. Because of the shared memory system, a customer who texts one day and calls the next is recognized as the same person.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Role in the System&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Meta WhatsApp Business Platform&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Acts as the front door, exposing the Cloud API, Messages API, Media API, and Calling API.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Hosts the AI agents and manages cross-channel memory and gateway functions.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Nova 2 Lite&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Processes text through the Amazon Bedrock Converse API.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Nova 2 Sonic&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles real-time speech for both voice notes and calls.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore Gateway&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A managed MCP server that exposes the backend REST API as tools for agents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore Memory&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A shared record keyed by hashed customer ID to maintain state across channels.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Model Context Protocol (MCP)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enables agents to reach the restaurant backend.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon SQS&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides an inbound queue to decouple quick acknowledgment from asynchronous processing.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AWS Lambda&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Runs the webhook ingest, worker, message sender, and ordering logic.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The infrastructure is deployed and managed with specific architectural controls:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Deployment&lt;/strong&gt;: The AWS Cloud Development Kit (AWS CDK) provisions the AWS side of the solution and emits the webhook URL for Meta registration.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Processing&lt;/strong&gt;: Inbound traffic arrives at a single HTTPS webhook provided by Amazon API Gateway. It is acknowledged immediately with a 200 status and processed asynchronously so no request blocks the response.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security and Isolation&lt;/strong&gt;: Each conversation runs in its own microVM within the AgentCore runtime to keep sessions isolated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API Architecture&lt;/strong&gt;: The system uses two REST APIs. The first is a public, regional HTTPS webhook. The second is an IAM-authorized backend API that sits in front of the ordering business logic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-2.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-5.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #AmazonBedrock #WhatsApp #AIagents #AmazonNova&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploy-a-multimodal-whatsapp-ordering-assistant-with-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Deploy a multimodal WhatsApp ordering assistant with Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Beyond Guardrails: How Nova Premier Won the AI Safety Showdown</title><link>https://shoubhikbanerjee.github.io/blog/p/beyond-guardrails-how-nova-premier-won-the-ai-safety-showdown/</link><pubDate>Sat, 31 May 2025 11:49:16 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/beyond-guardrails-how-nova-premier-won-the-ai-safety-showdown/</guid><description>&lt;img src="https://assets.amazon.science/dims4/default/38cb209/2147483647/strip/true/crop/1920x1080+0+0/resize/1200x675!/format/webp/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Ffa%2F6d%2F996320a043919f0596c002b6e840%2Fbadactor-02-16x9.png" alt="Featured image of post Beyond Guardrails: How Nova Premier Won the AI Safety Showdown" /&gt;&lt;h1 id="-beyond-guardrails-how-nova-premier-won-the-ai-safety-showdown"&gt;🛡️ Beyond Guardrails: How Nova Premier Won the AI Safety Showdown
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Summary&lt;/strong&gt;: Amazon&amp;rsquo;s Nova Premier model has demonstrated superior safety performance in third-party evaluations by PRISM AI and ActiveFence, outperforming competitors like Claude and GPT models. With Nova Premier requiring an average of 43 adversarial prompting steps to break its safety measures (compared to fewer than 12 for some competitors), this blog explores the evaluation methodologies and what these results mean for enterprise AI adoption.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-the-safety-imperative-in-frontier-ai-models"&gt;🔍 The Safety Imperative in Frontier AI Models
+&lt;/h2&gt;&lt;p&gt;In today&amp;rsquo;s AI landscape, capability advancements often grab headlines, but safety remains the cornerstone of responsible deployment. As large language models become increasingly powerful, their potential misuse poses significant risks—from generating harmful content to aiding malicious activities.&lt;/p&gt;
+&lt;p&gt;Amazon has positioned itself at the forefront of responsible AI development, collaborating with organizations like the Frontier Model Forum and government agencies like NIST. They&amp;rsquo;ve embraced global initiatives such as the Korea Frontier AI Safety Commitments and published their Frontier Model Safety Framework earlier this year.&lt;/p&gt;
+&lt;p&gt;But talk is cheap. The real question is: 𝗵𝗼𝘄 𝗱𝗼 𝘁𝗵𝗲𝘀𝗲 𝗺𝗼𝗱𝗲𝗹𝘀 𝗽𝗲𝗿𝗳𝗼𝗿𝗺 𝘄𝗵𝗲𝗻 𝗽𝘂𝘁 𝘁𝗼 𝘁𝗵𝗲 𝘁𝗲𝘀𝘁?&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;Amazon Nova Premier&amp;rsquo;s guardrails are designed to prevent generation of unsafe content across multiple risk dimensions.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-prism-ais-stress-test-breaking-the-unbreakable"&gt;🧪 PRISM AI&amp;rsquo;s Stress Test: Breaking the Unbreakable
+&lt;/h2&gt;&lt;p&gt;PRISM AI&amp;rsquo;s Behavior Elicitation Tool (BET) represents a fascinating approach to AI safety evaluation. Rather than using static prompts, BET employs increasingly sophisticated adversarial techniques to circumvent a model&amp;rsquo;s safety guardrails.&lt;/p&gt;
+&lt;p&gt;The methodology measures &amp;ldquo;steps to elicit&amp;rdquo;—essentially, 𝙝𝙤𝙬 𝙢𝙖𝙣𝙮 𝙞𝙣𝙘𝙧𝙚𝙖𝙨𝙞𝙣𝙜𝙡𝙮 𝙙𝙚𝙫𝙞𝙤𝙪𝙨 𝙖𝙩𝙩𝙚𝙢𝙥𝙩𝙨 it takes to make a model generate harmful content. The higher the number, the stronger the model&amp;rsquo;s safety measures.&lt;/p&gt;
+&lt;p&gt;The evaluation used BET Eval MAX, PRISM&amp;rsquo;s most aggressive testing suite, and the results were striking:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🏆 Nova Premier: 43 steps (average)&lt;/li&gt;
+&lt;li&gt;🥈 Nova Pro: 52 steps (average)&lt;/li&gt;
+&lt;li&gt;🥉 Claude 3.5 v2: 37.7 steps&lt;/li&gt;
+&lt;li&gt;⚠️ Claude 3.7: 9.9 steps&lt;/li&gt;
+&lt;li&gt;⚠️ Claude 3.7 thinking: 11.5 steps&lt;/li&gt;
+&lt;li&gt;⚠️ Llama4 Maverick: 6.5 steps&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This means that Nova Premier&amp;rsquo;s safety guardrails required significantly more sophisticated attempts to bypass compared to competitors. The model showed particular strength in resisting prompts related to hate speech and defamation.&lt;/p&gt;
+&lt;p&gt;As Nicolas Miailhe, CEO of PRISM Eval, noted: &amp;ldquo;It&amp;rsquo;s incredibly rewarding for us to see Nova outperforming strong baselines using the BET Eval MAX; our aim is to build a long-term partnership toward safer-by-design models.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;Results chart showing Nova&amp;rsquo;s performance across various harm categories in PRISM&amp;rsquo;s BET Eval MAX testing suite.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-activefences-manual-red-teaming-the-human-element"&gt;🕵️ ActiveFence&amp;rsquo;s Manual Red Teaming: The Human Element
+&lt;/h2&gt;&lt;p&gt;While automated testing provides valuable benchmarks, human ingenuity remains unmatched in finding creative ways to circumvent AI guardrails. This is where ActiveFence&amp;rsquo;s manual red teaming comes in.&lt;/p&gt;
+&lt;p&gt;ActiveFence benchmarked Nova Premier against Claude 3.7 (non-reasoning mode) and GPT-4.1 API using prompts across Amazon&amp;rsquo;s eight core RAI categories. The results were measured in &amp;ldquo;flag rate&amp;rdquo;—the percentage of harmful content successfully generated.&lt;/p&gt;
+&lt;p&gt;The findings reinforced Nova Premier&amp;rsquo;s safety advantage:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;𝗠𝗼𝗱𝗲𝗹&lt;/th&gt;
+&lt;th&gt;𝟯𝗣 𝗙𝗹𝗮𝗴 𝗥𝗮𝘁𝗲 [↓ 𝗶𝘀 𝗯𝗲𝘁𝘁𝗲𝗿]&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Nova Premier&lt;/td&gt;
+&lt;td&gt;12.0%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude 3.7 (non-reasoning)&lt;/td&gt;
+&lt;td&gt;20.6%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPT-4.1 API&lt;/td&gt;
+&lt;td&gt;22.4%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Guy Paltieli from ActiveFence emphasized their role: &amp;ldquo;Our job is to think like an adversary but act in service of safety. By conducting a blind stress test of Nova Premier under realistic threat scenarios, we helped evaluate its security posture.&amp;rdquo;&lt;/p&gt;
+&lt;h2 id="-what-these-results-mean-for-enterprise-ai-adoption"&gt;🔐 What These Results Mean for Enterprise AI Adoption
+&lt;/h2&gt;&lt;p&gt;These evaluations reveal three critical insights for organizations deploying AI systems:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Safety Varies Dramatically&lt;/strong&gt;: The substantial performance gap between models (6.5 steps vs. 52 steps in the PRISM evaluation) highlights that not all models offer equal protection.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Independent Verification Matters&lt;/strong&gt;: Third-party evaluations provide unbiased assessment of safety claims, cutting through marketing hype.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Safety is Multi-dimensional&lt;/strong&gt;: Different models show strengths and weaknesses across harm categories—Nova&amp;rsquo;s specific strength in hate speech and defamation resistance may be particularly valuable for customer-facing applications.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For enterprises navigating the frontier AI landscape, these metrics should be core considerations when selecting models. A model&amp;rsquo;s capabilities are only valuable if they can be safely deployed in production environments.&lt;/p&gt;
+&lt;h2 id="-the-road-ahead-safety-as-an-ongoing-journey"&gt;🚀 The Road Ahead: Safety as an Ongoing Journey
+&lt;/h2&gt;&lt;p&gt;While these results demonstrate strong safety performance for Nova Premier, Amazon acknowledges that AI safety is an ongoing challenge requiring continuous improvement. These evaluations represent a point-in-time snapshot, and no AI system can guarantee perfect safety in all scenarios.&lt;/p&gt;
+&lt;p&gt;The company&amp;rsquo;s commitment to regular testing, monitoring, and enhancement of safety measures reflects the reality that safety isn&amp;rsquo;t a static achievement but a continuous process.&lt;/p&gt;
+&lt;p&gt;As frontier models continue to evolve in capability, so too must our approaches to securing them. Frameworks like BET and methodologies from organizations like ActiveFence will play increasingly important roles in benchmarking and improving AI safety.&lt;/p&gt;
+&lt;p&gt;For AI practitioners and enterprise leaders, the message is clear: safety metrics deserve equal consideration alongside capability benchmarks when evaluating frontier models. After all, the most powerful AI is of little use if it can&amp;rsquo;t be deployed safely.&lt;/p&gt;
+&lt;p&gt;What guardrail testing methodologies does your organization currently employ? Are they sufficient for the increasing sophistication of adversarial prompting techniques?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://www.amazon.science/blog/independent-evaluations-demonstrate-nova-premiers-safety" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/independent-evaluations-demonstrate-nova-premiers-safety&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#AIEthics #MachineLearning #ResponsibleAI #AIGuardrails #ModelSafety #AmazonNova #AISecurityTesting #FrontierAI #AISafety #RedTeaming #LLMSafety #AIBenchmarking&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AutonomousVehicles on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/autonomousvehicles/</link><description>Recent content in AutonomousVehicles on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 31 Aug 2026 22:56:10 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/autonomousvehicles/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Omniverse NuRec Enables Carline Adaptation for Autonomous Vehicle Perception Software</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-omniverse-nurec-enables-carline-adaptation-for-autonomous-vehicle-perception-software/</link><pubDate>Mon, 31 Aug 2026 22:56:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-omniverse-nurec-enables-carline-adaptation-for-autonomous-vehicle-perception-software/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/NuRec-AV.gif" alt="Featured image of post NVIDIA Omniverse NuRec Enables Carline Adaptation for Autonomous Vehicle Perception Software" /&gt;&lt;h1 id="nvidia-omniverse-nurec-enables-carline-adaptation-for-autonomous-vehicle-perception-software"&gt;NVIDIA Omniverse NuRec Enables Carline Adaptation for Autonomous Vehicle Perception Software
+&lt;/h1&gt;&lt;p&gt;NVIDIA Omniverse NuRec addresses the carline adaptation challenge by allowing developers to reconstruct real-world drives and render them for new vehicle configurations. This development makes it practical to prepare perception software for vehicles that may not yet exist and scale software across different platform variants without collecting and labeling new real-world datasets for every carline.&lt;/p&gt;
+&lt;h2 id="-the-carline-adaptation-challenge"&gt;🔍 The Carline Adaptation Challenge
+&lt;/h2&gt;&lt;p&gt;A perception stack is shaped by the vehicle that carries it. When the same software is moved to a new carline—such as from an SUV to a sedan—its perception of the world changes. These shifts are caused by differences in sensor placement, calibration, fields of view, occlusions, body geometry, timing, and coverage.&lt;/p&gt;
+&lt;p&gt;Consequences of changing vehicle configurations include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Traffic lights appearing in different parts of the frame.&lt;/li&gt;
+&lt;li&gt;Curbs becoming harder to see.&lt;/li&gt;
+&lt;li&gt;Pedestrians near the edge of coverage becoming ambiguous.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;While real-world data remains essential for grounding performance, collecting and labeling new datasets for every variant is expensive and often impossible early in development when fleets are unavailable.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;p&gt;NuRec uses 3D Gaussian splatting to reconstruct real-world environments from sensor data and render them for simulation. The process enables developers to reuse real-world data to determine how scenarios would look from a target vehicle rig.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Neural Reconstruction:&lt;/strong&gt; NuRec reconstructs a real-world drive captured by an existing vehicle.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Novel-View Synthesis:&lt;/strong&gt; The system renders the scene with gsplat, which projects Gaussians through a specified camera model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Camera Customization:&lt;/strong&gt; Users can change camera extrinsics, intrinsics, fields of view, and lens models, including pinhole, fisheye, and f-theta configurations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Reuse:&lt;/strong&gt; Reconstructed scenes retain original rig trajectories, per-camera calibration, dynamic object tracks, and map data. These assets are used to adapt labels for objects, lanes, traffic lights, and road boundaries in the newly rendered views.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;The system uses specific rig configuration files where each sensor entry defines a camera name, image resolution, lens model, intrinsic parameters, and camera-to-rig pose.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Dataset Name&lt;/td&gt;
+&lt;td style="text-align: left"&gt;NVIDIA Physical AI NuRec Dataset&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Scene Count&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,500+ neural-reconstructed driving scenes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Scene Duration&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Approximately 20 seconds each&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Reconstruction Method&lt;/td&gt;
+&lt;td style="text-align: left"&gt;3D Gaussian splatting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Camera View Types&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Front-wide (120°), front-telephoto (30°), cross-left/right (120°), rear-left/right (70°)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In the rig file, NRE converts colon-delimited names to logical camera IDs. For example, a camera named &lt;code&gt;camera:front:synthetic:120fov&lt;/code&gt; is converted to &lt;code&gt;camera_front_synthetic_120fov&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The NVIDIA Physical AI NuRec Dataset is available on Hugging Face. The dataset is gated, requiring users to accept a license and authenticate with a Hugging Face token before downloading scenes.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/07/nvidia-omniverse-rtx-sensor-ximulation.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/figure-2-optimized.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/figure-3-1.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Omniverse #AutonomousVehicles #NuRec #GaussianSplatting #Simulation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/scale-av-perception-across-vehicle-platforms-with-nvidia-omniverse-nurec/" target="_blank" rel="noopener"
+&gt;Scale AV Perception Across Vehicle Platforms with NVIDIA Omniverse NuRec | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

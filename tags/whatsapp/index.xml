@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>WhatsApp on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/whatsapp/</link><description>Recent content in WhatsApp on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 05 Sep 2026 22:02:16 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/whatsapp/index.xml" rel="self" type="application/rss+xml"/><item><title>AI Assistant for WhatsApp Ordering Powered by Amazon Bedrock AgentCore and Nova Models</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-assistant-for-whatsapp-ordering-powered-by-amazon-bedrock-agentcore-and-nova-models/</link><pubDate>Sat, 05 Sep 2026 22:02:16 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-assistant-for-whatsapp-ordering-powered-by-amazon-bedrock-agentcore-and-nova-models/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-featured-image.png" alt="Featured image of post AI Assistant for WhatsApp Ordering Powered by Amazon Bedrock AgentCore and Nova Models" /&gt;&lt;h1 id="ai-assistant-for-whatsapp-ordering-powered-by-amazon-bedrock-agentcore-and-nova-models"&gt;AI Assistant for WhatsApp Ordering Powered by Amazon Bedrock AgentCore and Nova Models
+&lt;/h1&gt;&lt;p&gt;A new end-to-end AI ordering assistant has been developed for WhatsApp, utilizing Amazon Bedrock AgentCore and Amazon Nova models to manage customer interactions. The system allows users to place restaurant orders from greeting to confirmation through a single WhatsApp Business number.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Customers can interact with the assistant using three distinct channels that share one backend and cross-channel memory:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Text messages&lt;/li&gt;
+&lt;li&gt;Voice notes&lt;/li&gt;
+&lt;li&gt;Voice calls&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The solution uses the Meta WhatsApp Business Platform as the customer front door, which reaches more than two billion people. Because of the shared memory system, a customer who texts one day and calls the next is recognized as the same person.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Role in the System&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Meta WhatsApp Business Platform&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Acts as the front door, exposing the Cloud API, Messages API, Media API, and Calling API.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Hosts the AI agents and manages cross-channel memory and gateway functions.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Nova 2 Lite&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Processes text through the Amazon Bedrock Converse API.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Nova 2 Sonic&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles real-time speech for both voice notes and calls.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore Gateway&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A managed MCP server that exposes the backend REST API as tools for agents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore Memory&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A shared record keyed by hashed customer ID to maintain state across channels.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Model Context Protocol (MCP)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enables agents to reach the restaurant backend.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon SQS&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides an inbound queue to decouple quick acknowledgment from asynchronous processing.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AWS Lambda&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Runs the webhook ingest, worker, message sender, and ordering logic.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The infrastructure is deployed and managed with specific architectural controls:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Deployment&lt;/strong&gt;: The AWS Cloud Development Kit (AWS CDK) provisions the AWS side of the solution and emits the webhook URL for Meta registration.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Processing&lt;/strong&gt;: Inbound traffic arrives at a single HTTPS webhook provided by Amazon API Gateway. It is acknowledged immediately with a 200 status and processed asynchronously so no request blocks the response.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security and Isolation&lt;/strong&gt;: Each conversation runs in its own microVM within the AgentCore runtime to keep sessions isolated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API Architecture&lt;/strong&gt;: The system uses two REST APIs. The first is a public, regional HTTPS webhook. The second is an IAM-authorized backend API that sits in front of the ordering business logic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-2.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21164-5.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #AmazonBedrock #WhatsApp #AIagents #AmazonNova&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploy-a-multimodal-whatsapp-ordering-assistant-with-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Deploy a multimodal WhatsApp ordering assistant with Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

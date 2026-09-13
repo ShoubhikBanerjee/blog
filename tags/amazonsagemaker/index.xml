@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AmazonSageMaker on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/amazonsagemaker/</link><description>Recent content in AmazonSageMaker on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 11 Sep 2026 22:04:55 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/amazonsagemaker/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker Inference Introduces Prefix-Aware Routing</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-inference-introduces-prefix-aware-routing/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-inference-introduces-prefix-aware-routing/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/10/ML-21885-featured-image.png" alt="Featured image of post Amazon SageMaker Inference Introduces Prefix-Aware Routing" /&gt;&lt;h1 id="amazon-sagemaker-inference-introduces-prefix-aware-routing"&gt;Amazon SageMaker Inference Introduces Prefix-Aware Routing
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker Inference has introduced prefix-aware routing, a new routing strategy designed to optimize how requests are handled by instances.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Prefix-aware routing analyzes the beginning of each request payload to determine which instance should handle it. Its primary functions include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Consistency&lt;/strong&gt;: Requests with the same beginning are consistently sent to the same instance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Distribution&lt;/strong&gt;: Different beginnings are spread across different instances.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cache Optimization&lt;/strong&gt;: If multiple requests share a prefix, they are routed to the same machine to keep that machine&amp;rsquo;s cache warm.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated Management&lt;/strong&gt;: The endpoint handles routing based on request content; users do not need to manage affinity or tag requests.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Load Balancing&lt;/strong&gt;: If a target instance is at capacity due to a popular prefix, the endpoint routes the request to a less busy instance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stability&lt;/strong&gt;: Most requests continue going to the same instance when instances are added or removed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Amazon SageMaker Inference now offers three routing strategies for real-time endpoints:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Strategy&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;RANDOM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The default routing strategy.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LEAST_OUTSTANDING_REQUESTS&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Routes based on outstanding requests.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;PREFIX_AWARE&lt;/td&gt;
+&lt;td style="text-align: left"&gt;New strategy that routes based on the request beginning.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Users can set the strategy per production variant in the endpoint configuration and switch between strategies without redeploying the model.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;In benchmarks using Llama 3.1 70B Instruct on 7 ml.p5.48xlarge instances with vLLM (prefix caching enabled), prefix-aware routing showed the following results compared to the random routing baseline:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;General Impact&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;P50 TTFT reduced by up to 77 percent.&lt;/li&gt;
+&lt;li&gt;Throughput increased by up to 16 percent.&lt;/li&gt;
+&lt;li&gt;KV cache hit rates increased from roughly 25 percent to over 80 percent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Specific Test Scenarios&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;8,000-token shared prefixes (sustained over 1 hour)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;P50 TTFT: Reduced by 71–77 percent.&lt;/li&gt;
+&lt;li&gt;P90 TTFT: Reduced by 33–37 percent.&lt;/li&gt;
+&lt;li&gt;Throughput: Increased 15–16 percent.&lt;/li&gt;
+&lt;li&gt;KV cache hit rate: Increased from approximately 25 to 82 percent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Variable-length ShareGPT-style conversations (30 minutes)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;P50 TTFT: Reduced by 13–16 percent.&lt;/li&gt;
+&lt;li&gt;P90 TTFT: Reduced by 24–37 percent.&lt;/li&gt;
+&lt;li&gt;Throughput: Increased 1.7–2.0 percent.&lt;/li&gt;
+&lt;li&gt;KV cache hit rate: Increased from approximately 30 to 80 percent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Performance Overhead&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The routing logic adds 1.3–1.9 milliseconds per request, while model TTFT in tests ranged from 63–280 milliseconds.&lt;/li&gt;
+&lt;li&gt;Traffic distribution remained balanced, with each of the 7 instances receiving 13.3–15.4 percent of requests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonSageMaker #LLM #Inference #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/reduce-llm-latency-with-prefix-aware-routing-on-amazon-sagemaker-inference/" target="_blank" rel="noopener"
+&gt;Reduce LLM latency with prefix-aware routing on Amazon SageMaker Inference | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker Inference on HyperPod Launches Model Caching</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-inference-on-hyperpod-launches-model-caching/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-inference-on-hyperpod-launches-model-caching/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21820-featured-image.png" alt="Featured image of post Amazon SageMaker Inference on HyperPod Launches Model Caching" /&gt;&lt;h1 id="amazon-sagemaker-inference-on-hyperpod-launches-model-caching"&gt;Amazon SageMaker Inference on HyperPod Launches Model Caching
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker Inference on HyperPod has launched model caching, a feature that pre-loads model weights and container images onto cluster nodes before pods require them.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Model caching eliminates latency sources associated with downloading data over the network. Without caching, start times can take tens of minutes due to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Container Images:&lt;/strong&gt; Multi-gigabyte inference server images (such as LMI or vLLM) typically take 5–7 minutes to pull.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Weights:&lt;/strong&gt; A 145 GB model on Amazon S3 can take 20+ minutes, while a 600+ GB model like DeepSeek-R1 can take upwards of 30 minutes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With model caching enabled, pods can typically start serving traffic in seconds, reading from local NVMe storage at approximately 7 GB/s.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Model caching is managed via two Custom Resource Definitions (CRDs) introduced by the operator:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Mechanism&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Weights Cache&lt;/td&gt;
+&lt;td style="text-align: left"&gt;ModelDataCacheConfig&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Downloads model weights to local NVMe on target nodes from sources including Amazon S3, Amazon FSx for Lustre, HuggingFace Hub, or JumpStart.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Image Cache&lt;/td&gt;
+&lt;td style="text-align: left"&gt;DaemonSet&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Pre-pulls inference server container images onto nodes to avoid ECR downloads.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="deployment-process"&gt;Deployment Process
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Users add &lt;code&gt;modelCacheConfig&lt;/code&gt; with &lt;code&gt;weightsCache&lt;/code&gt; or &lt;code&gt;imageCache&lt;/code&gt; enabled to their &lt;code&gt;InferenceEndpointConfig&lt;/code&gt; or &lt;code&gt;JumpStartModel&lt;/code&gt; resource.&lt;/li&gt;
+&lt;li&gt;For weights, the HyperPod Inference Operator creates a &lt;code&gt;ModelDataCacheConfig&lt;/code&gt; resource and downloads weights to local NVMe. Once complete, the node is labeled as cache-ready.&lt;/li&gt;
+&lt;li&gt;The operator waits for all target nodes to be cache-ready before creating the inference deployment.&lt;/li&gt;
+&lt;li&gt;For images, the operator creates a DaemonSet to pull the image. Multiple deployments using the same image share a single image cache resource.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Persistence:&lt;/strong&gt; Configured caches remain available across pod restarts on the same node.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scheduling:&lt;/strong&gt; Caching uses preferred scheduling rather than required scheduling. If a pod is placed on a node without a warm cache—such as during rapid scale-out—it pulls the image from Amazon ECR and reads weights from the original Amazon S3/Amazon FSx source.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fallback:&lt;/strong&gt; Pods started before the image cache is complete on a node will pull from ECR normally.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonSageMaker #HyperPod #ModelCaching #MachineLearning #MLOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/reduce-inference-cold-starts-on-amazon-sagemaker-hyperpod-with-model-caching/" target="_blank" rel="noopener"
+&gt;Reduce inference cold starts on Amazon SageMaker HyperPod with model caching | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Alibaba Releases Open-Weight Qwen3.8-2.4T-A95B Model for Agentic Workloads</title><link>https://shoubhikbanerjee.github.io/blog/p/alibaba-releases-open-weight-qwen3-8-2-4t-a95b-model-for-agentic-workloads/</link><pubDate>Thu, 10 Sep 2026 22:04:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/alibaba-releases-open-weight-qwen3-8-2-4t-a95b-model-for-agentic-workloads/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/09/ML-21725-featured-image.png" alt="Featured image of post Alibaba Releases Open-Weight Qwen3.8-2.4T-A95B Model for Agentic Workloads" /&gt;&lt;h1 id="alibaba-releases-open-weight-qwen38-24t-a95b-model-for-agentic-workloads"&gt;Alibaba Releases Open-Weight Qwen3.8-2.4T-A95B Model for Agentic Workloads
+&lt;/h1&gt;&lt;p&gt;On August 12, 2026, Alibaba’s Qwen team released Qwen3.8-2.4T-A95B, marking the first time a Qwen-Max-class model has been made available as open weights. This model is the largest and most capable in the Qwen family, designed for the most demanding reasoning and agentic workloads.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Qwen3.8-2.4T-A95B utilizes a hybrid linear-plus-full-attention architecture to enable efficient long-context inference:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Gated DeltaNet layers:&lt;/strong&gt; 69 of 92 layers use linear attention with a bounded recurrent state, replacing the growing KV-cache with fixed-size memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Gated Attention layers:&lt;/strong&gt; 23 of 92 layers use full quadratic attention for high-fidelity token interactions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fine-grained MoE:&lt;/strong&gt; Capacity is distributed across 512 small experts to improve specialization and routing efficiency.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This 3:1 ratio of linear to full attention keeps compute and memory bounded as context scales toward 1M tokens.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Specification&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Total Parameters&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.4 Trillion&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Activated Parameters&lt;/td&gt;
+&lt;td style="text-align: left"&gt;95 Billion per token&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Native Context&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Up to 262K tokens (extensible to 1M)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Formats&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Standard Transformers (Hugging Face)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Quantizations&lt;/td&gt;
+&lt;td style="text-align: left"&gt;MXFP4 and NVFP4 (W4A4)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Designed for agentic execution, the model targets capabilities including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Multi-step coding&lt;/li&gt;
+&lt;li&gt;Long-horizon planning&lt;/li&gt;
+&lt;li&gt;Autonomous tool use&lt;/li&gt;
+&lt;li&gt;Complex research workflows&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Developers can use the &lt;code&gt;reasoning_effort&lt;/code&gt; parameter (low, medium, high) to trade compute for reasoning depth per request. According to vendor benchmarking, the model shows strength in terminal-based coding (86.6), instruction following (IFBench 82.8), and research workflows (PaperBench 93.0).&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;While the open weights allow data to stay within an organization&amp;rsquo;s infrastructure and eliminate per-token API fees, hosting requires purpose-built GPU infrastructure. Deployment is supported on Amazon SageMaker HyperPod using vLLM on ml.p6-b300 instances (8× NVIDIA B300 Blackwell Ultra GPUs).&lt;/p&gt;
+&lt;p&gt;HyperPod utilizes Amazon Elastic Kubernetes Service (Amazon EKS) as the control plane and provides an Inference Operator with an &lt;code&gt;InferenceEndpointConfig&lt;/code&gt; CRD to specify model and GPU resource requests. The ml.p6-b300.48xlarge instance type requires reserved capacity via Flexible Training Plans.&lt;/p&gt;
+&lt;p&gt;#Qwen #OpenWeights #LLM #AmazonSageMaker #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploying-qwen3-8-2-4t-a95b-on-amazon-sagemaker-hyperpod-with-vllm/" target="_blank" rel="noopener"
+&gt;Deploying Qwen3.8-2.4T-A95B on Amazon SageMaker HyperPod with vLLM | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker Feature Store introduces UpdateRecord API for feature-level writes</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-feature-store-introduces-updaterecord-api-for-feature-level-writes/</link><pubDate>Wed, 09 Sep 2026 00:51:34 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-feature-store-introduces-updaterecord-api-for-feature-level-writes/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/Amazon-SageMaker-Feature-Store-introduces-UpdateRecord-for-feature-level-writes.png" alt="Featured image of post Amazon SageMaker Feature Store introduces UpdateRecord API for feature-level writes" /&gt;&lt;h1 id="amazon-sagemaker-feature-store-introduces-updaterecord-api-for-feature-level-writes"&gt;Amazon SageMaker Feature Store introduces UpdateRecord API for feature-level writes
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker Feature Store has introduced the UpdateRecord API, allowing users to update specific feature values without reading or rewriting entire records.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon SageMaker Feature Store is a fully managed repository used to store, share, and manage machine learning (ML) features, which are the processed data used for generating predictions and training models. Features are organized into Feature Groups, which are logical collections of related features used by one or more ML models.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Until now, updating a single feature value within a feature group required a full read-modify-write cycle using PutRecord. The UpdateRecord API removes this cycle, as the client application only needs to call the API with the changed features. Features not included in the request are preserved as-is.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The Feature Store service performs the following steps during an UpdateRecord call:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Validates AWS Identity and Access Management (IAM) permissions.&lt;/li&gt;
+&lt;li&gt;Checks EventTime ordering to reject stale writes.&lt;/li&gt;
+&lt;li&gt;Performs an atomic merge of the provided features.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To ensure training datasets remain accurate, a full record snapshot is automatically replicated to the offline store.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The UpdateRecord API requires the following parameters:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Parameter&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;FeatureGroupName&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The target feature group&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;RecordIdentifierValueAsString&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The primary key of the record to update&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Features&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A list of one or more feature values to set (up to 100 per call)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;EventTime&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Must be newer than the existing stored EventTime or the call is rejected with an HTTP 409 error&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;TtlDuration (optional)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Override or set a per-record time-to-live (TTL)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Note: UpdateRecord is not an upsert; the record must already exist.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;This capability is available for both online store tiers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;In-Memory Tier (Amazon ElastiCache-backed):&lt;/strong&gt; Feature-level writes work on all existing In-Memory feature groups out of the box.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Standard Tier (Amazon DynamoDB-backed):&lt;/strong&gt; Requires a new storage format named Standard_V2 to support feature-level writes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Users of the Standard Tier can transition to Standard_V2 by:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Using the Feature Processor SDK to read records from an existing Standard feature group and re-ingesting them into a new Standard_V2 feature group.&lt;/li&gt;
+&lt;li&gt;Calling UpdateFeatureGroup with &lt;code&gt;OnlineStoreConfig.StorageType = “Standard_V2”&lt;/code&gt; to flip the format in place. Once declared as Standard_V2, calls to PutRecord or BatchWriteRecord will update the underlying format to Standard_V2.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;#AmazonSageMaker #MachineLearning #MLOps #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-feature-store-introduces-updaterecord-for-feature-level-writes/" target="_blank" rel="noopener"
+&gt;Amazon SageMaker Feature Store introduces UpdateRecord for feature-level writes | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker</title><link>https://shoubhikbanerjee.github.io/blog/p/building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-featured-image.png" alt="Featured image of post Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker" /&gt;&lt;h1 id="building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker"&gt;Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker
+&lt;/h1&gt;&lt;p&gt;Developing a Physical AI system, such as a robot or autonomous vehicle (AV) that translates real-world data into physical actions, cannot be achieved in a single training job. Instead, it requires a continuous pipeline that generates synthetic data, performs post-training on perception and policy models so the system can understand its surroundings and act, and evaluates both in a closed-loop simulation. A Physical AI model factory continuously runs this loop to turn streams of real-world data into improved models.&lt;/p&gt;
+&lt;p&gt;This development outlines how to build a Physical AI model factory using NVIDIA Cosmos 3 on Amazon SageMaker HyperPod with Amazon Elastic Kubernetes Service (Amazon EKS).&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NVIDIA Cosmos 3 is an open omnimodal world foundation model that treats video, image, action, and sound as a single token stream. Unlike common patterns that pair a diffusion-transformer video generator with a separate vision-language model for text conditioning, Cosmos 3 integrates both capabilities into a single trunk at every layer.&lt;/p&gt;
+&lt;p&gt;Key architectural aspects of Cosmos 3 include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mixture-of-Transformers (MoT) Design:&lt;/strong&gt; Features per-layer joint attention and a deliberate train-versus-inference asymmetry.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single Shared Sequence:&lt;/strong&gt; Every modality feeds into a single shared sequence, enabling one model to both read and generate across different modalities.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sequential Processing:&lt;/strong&gt; The model sequence positions an autoregressive (AR) zone (for the text and vision it reads) ahead of a diffusion zone (for the video, audio, and action it produces).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Cosmos 3 runs the same transformer trunk in three distinct modes and processes input modalities with specialized encoders:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component / Mode&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function / Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Forward-dynamics world model&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used for synthetic video generation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Inverse-dynamics action labeler&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used for labeling actions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Deployable action policy&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Acts as the final policy for system deployment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Vision Transformer (ViT)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles image understanding for the images the model reads&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Frozen Wan2.2 video VAE&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles pixel generation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Per-embodiment vector&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Encodes pose deltas and grasp state, allowing the same model to drive both an AV and a robot arm&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Because one model family covers generation, post-training, and evaluation, separate GPU capacity for each stage is unnecessary. Instead of provisioning isolated nodes for each stage, these workloads are scheduled onto a single persistent, resilient GPU node pool under a single cluster control plane using time-shared capacity.&lt;/p&gt;
+&lt;h3 id="capacity-and-cost-metrics"&gt;Capacity and Cost Metrics
+&lt;/h3&gt;&lt;p&gt;Running a continuous pipeline requires a committed capacity plan. Acquiring GPUs stage by stage introduces availability and lead-time variability, and risks landing capacity in an Availability Zone or AWS Region away from your data. Committing to the entire loop—either through a flexible training plan for bounded campaigns or a capacity reservation for open-ended ones—avoids this churn.&lt;/p&gt;
+&lt;p&gt;Since you pay for capacity continuously, the primary metric governing cost is not the peak throughput of any individual job. Instead, the system is optimized for &lt;strong&gt;GPU goodput&lt;/strong&gt;: the useful pipeline progress per reserved GPU-hour across the entire loop.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;NVIDIA has released Cosmos 3 under the Linux Foundation’s OpenMDW-1.1 license. Detailed architectural information can be found in the Cosmos 3 technical report.&lt;/p&gt;
+&lt;p&gt;To help developers get started, the &lt;code&gt;awsome-distributed-ai&lt;/code&gt; GitHub repository contains the runnable code, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Infrastructure templates and job manifests to set up the working cluster.&lt;/li&gt;
+&lt;li&gt;Deployment configurations for Amazon SageMaker HyperPod and Amazon EKS.&lt;/li&gt;
+&lt;li&gt;A shared multi-terabyte storage layer setup.&lt;/li&gt;
+&lt;li&gt;Distributed post-training setups for three representative workloads, featuring an end-to-end walkthrough of the robot-policy stage using the public DROID dataset.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AmazonSageMaker #PhysicalAI #Cosmos3 #Robotics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-sagemaker-hyperpod/" target="_blank" rel="noopener"
+&gt;Build a Physical AI model factory with NVIDIA Cosmos 3 on SageMaker HyperPod | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>ZS Associates Deploys Enterprise ML Operations Platform Using Amazon SageMaker Studio</title><link>https://shoubhikbanerjee.github.io/blog/p/zs-associates-deploys-enterprise-ml-operations-platform-using-amazon-sagemaker-studio/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/zs-associates-deploys-enterprise-ml-operations-platform-using-amazon-sagemaker-studio/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/21/ML-20828-featured-image.png" alt="Featured image of post ZS Associates Deploys Enterprise ML Operations Platform Using Amazon SageMaker Studio" /&gt;&lt;h1 id="zs-associates-deploys-enterprise-ml-operations-platform-using-amazon-sagemaker-studio"&gt;ZS Associates Deploys Enterprise ML Operations Platform Using Amazon SageMaker Studio
+&lt;/h1&gt;&lt;p&gt;This blog post is co-written with Kiran Dhamane, Abhishek I S, and Mayur Ghodekar from ZS Associates. ZS has selected Amazon SageMaker Studio as the foundation for its enterprise ML operations, establishing it as the primary ad-hoc analytics tool for most application team members.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;ZS implemented a comprehensive security framework to allow data scientists and analysts to access ML capabilities while maintaining compliance with healthcare sector requirements. The platform currently operates at scale with the following metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;200+ SageMaker domains deployed across multiple AWS accounts&lt;/li&gt;
+&lt;li&gt;500+ to 1,000+ daily active users&lt;/li&gt;
+&lt;li&gt;Monthly SageMaker spend exceeding $50K&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The platform utilizes a multi-tenant architecture where each tenant has a separate Amazon SageMaker domain. Each domain maintains isolated AWS Identity and Access Management (IAM) roles, controllable network settings, and isolated Amazon Elastic File System (Amazon EFS) volumes.&lt;/p&gt;
+&lt;h3 id="security-and-network-architecture"&gt;Security and Network Architecture
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Internet-Free Mode&lt;/strong&gt;: The solution runs in internet-free mode by default, using Amazon Virtual Private Cloud (Amazon VPC) endpoints for controlled communication with AWS services.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Package Management&lt;/strong&gt;: ZS integrated JFrog Artifactory with real-time package scanning and upward repository linking to prevent tampered or unauthorized code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Encryption&lt;/strong&gt;: AWS Key Management Service (AWS KMS) encryption is enabled by default for Amazon EFS volumes, Amazon Simple Storage Service (Amazon S3) buckets, Amazon Elastic Container Registry (Amazon ECR), and AWS CodeCommit repositories.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Threat Detection and Auditing&lt;/strong&gt;: The platform integrates CrowdStrike for OS-level threat detection, Splunk for log aggregation, and AWS CloudTrail for API call logging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="access-control"&gt;Access Control
+&lt;/h3&gt;&lt;p&gt;ZS uses a three-tier IAM role structure to manage permissions:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Role Type&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Domain Execution Roles&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Serve as defaults for users&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Studio User Roles&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Override domain defaults for fine-grained control&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Space Execution Roles&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Govern shared workspaces&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Additionally, IAM policies restrict access to Amazon SageMaker JumpStart, Amazon SageMaker Autopilot, and Amazon SageMaker Data Wrangler based on user roles. Notebook Jobs require explicit IAM Role ARNs for execution.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;To address specific operational needs, ZS developed custom implementations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Backup Strategy&lt;/strong&gt;: Because SageMaker lacks native backup, ZS built a custom lifecycle configuration to sync user data and scripts to Amazon S3. They also use AWS Backup with tag-based automation for Amazon EFS volumes tagged &amp;ldquo;ZS_Backup,&amp;rdquo; which are stored in dedicated backup vaults.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost Management&lt;/strong&gt;: IAM policies restrict users to smaller, pre-approved instance types. Every resource is tagged by project and team, allowing AWS Cost Explorer to provide visibility. Lifecycle policies automatically shut down inactive resources, and SageMaker Savings Plans reduce monthly spend by approximately $10K.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Self-Service&lt;/strong&gt;: Streamlit-based tooling and automated lifecycle configurations have reduced dependency on the AWS Management Console and manual compliance overhead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/21/ML-20828-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/21/ML-20828-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonSageMaker #MLOps #AWS #EnterpriseAI #HealthcareCompliance&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-zs-democratized-secure-ad-hoc-analytics-with-amazon-sagemaker/" target="_blank" rel="noopener"
+&gt;How ZS democratized secure ad-hoc analytics with Amazon SageMaker | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

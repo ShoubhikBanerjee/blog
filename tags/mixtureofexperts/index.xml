@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MixtureOfExperts on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/mixtureofexperts/</link><description>Recent content in MixtureOfExperts on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 02 Sep 2026 22:08:32 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/mixtureofexperts/index.xml" rel="self" type="application/rss+xml"/><item><title>Optimizing Speculative Decoding Draft Length for LLM Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/optimizing-speculative-decoding-draft-length-for-llm-inference/</link><pubDate>Wed, 02 Sep 2026 22:08:32 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/optimizing-speculative-decoding-draft-length-for-llm-inference/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/llm-optimize-deploy-660x370.png" alt="Featured image of post Optimizing Speculative Decoding Draft Length for LLM Inference" /&gt;&lt;h1 id="optimizing-speculative-decoding-draft-length-for-llm-inference"&gt;Optimizing Speculative Decoding Draft Length for LLM Inference
+&lt;/h1&gt;&lt;p&gt;Speculative decoding is a technique for accelerating the autoregressive decoding phase of LLM inference by predicting multiple tokens per iteration. New guidelines detail how to optimize draft length based on workload characteristics and hardware constraints, particularly for mixture-of-experts models and attention-heavy workloads.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Speculative decoding works by using a small draft model to predict several likely next tokens, which are then verified in parallel with a single pass through the larger target model. This approach reduces the total number of decoding iterations while increasing the arithmetic intensity of the target model, without requiring higher concurrency.&lt;/p&gt;
+&lt;p&gt;The target model accepts the proposed tokens in sequence until it encounters the first mismatch. The next prediction cycle then resumes from that position. Because only tokens accepted by the target model are retained, speculative decoding produces the same output sequence as standard decoding, unless the acceptance criteria are deliberately relaxed.&lt;/p&gt;
+&lt;h2 id="-key-metrics"&gt;🧩 Key Metrics
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Draft length (\(D\))&lt;/strong&gt;: The number of proposed tokens per target iteration&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Acceptance length (\(AL\))&lt;/strong&gt;: The number of tokens produced (accepted) per target iteration&lt;/li&gt;
+&lt;li&gt;\(AL\) ranges from \(1\) to \((1 + D)\) because the target can always produce one new ground-truth token in addition to the accepted draft tokens&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-compute-and-memory-dynamics"&gt;⚙️ Compute and Memory Dynamics
+&lt;/h2&gt;&lt;p&gt;During verification, compute scales with \((1 + D)\), but memory access remains unchanged. The goal is to increase \(D\) until \(T_{\mathrm{verif}}\) remains constant, typically up to the point where verification transitions from memory bound to compute bound.&lt;/p&gt;
+&lt;p&gt;With speculation, the GEMM-\(M\) for each target linear layer GEMM grows from \(M\) to \(M \times (1 + D)\), where \(M\) is the GEMM-\(M\) with no speculation.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Draft length&lt;/th&gt;
+&lt;th&gt;Batch size reduction for compute-bound&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;\(D=7\)&lt;/td&gt;
+&lt;td&gt;One-eighth of batch size needed vs. \(D=0\)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;As mixture-of-experts (MoE) models become sparser and long-context workloads increase KV capacity pressure, the effective concurrency per expert decreases, making larger draft lengths attractive across the Pareto frontier.&lt;/p&gt;
+&lt;h2 id="-three-guidelines-for-draft-length-selection"&gt;📐 Three Guidelines for Draft Length Selection
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Guideline 1&lt;/strong&gt;: Increase speculative decoding draft length to push GEMMs into the compute-bound region without increasing KV cache capacity pressure.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Guideline 2&lt;/strong&gt;: When attention dominates decode time, choose \(D = \frac{128}{G} – 1\).&lt;/p&gt;
+&lt;p&gt;For reasoning and agentic workloads, attention tends to dominate the execution time in the throughput-oriented region. On current GPU devices, attention kernels achieve good hardware utilization at GEMM-\(M=128\). The \(G = 32\) variant reaches throughput saturation at a lower value of \(D\). Beyond the throughput saturation point, attention is no longer DRAM bandwidth bound, and its runtime scales with \(D\).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Guideline 3&lt;/strong&gt;: If you choose \(D &gt; \frac{128}{G} – 1\), prefer values where \(G \times (1 + D)\) is a multiple of 128 to avoid tile underutilization.&lt;/p&gt;
+&lt;p&gt;Attention runtime also depends on tile size. Runtime increases in steps as \(G \times (1 + D)\) crosses a multiple of 128, the software tile size for the benchmarked attention kernel. If \(G \times (1 + D)\) falls between two tile boundaries, the last tile is only partially utilized but still costs about as much as a full tile.&lt;/p&gt;
+&lt;h2 id="-performance-characteristics"&gt;📊 Performance Characteristics
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;With \(D=7\), one-eighth of the batch size is needed to become compute bound compared to \(D=0\)&lt;/li&gt;
+&lt;li&gt;Normalized attention throughput varies with \(D\) for different \(G\) values across 32K and 128K KV sequence lengths&lt;/li&gt;
+&lt;li&gt;Attention kernel tile size is 128&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/speculative-decoding-flow.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/gemm-throughput-spec-decode.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/normalized-attention-tflops.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#speculativedecoding #LLMinference #mixtureofexperts #GPUoptimization #attentionmechanism #GEMMoptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/co-designing-ai-models-using-speculative-decoding-for-faster-llm-inference/" target="_blank" rel="noopener"
+&gt;Co-Designing AI Models Using Speculative Decoding for Faster LLM Inference | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Tencent open-sources 770B parameter Hy4 preview MoE model under Apache 2.0</title><link>https://shoubhikbanerjee.github.io/blog/p/tencent-open-sources-770b-parameter-hy4-preview-moe-model-under-apache-2.0/</link><pubDate>Mon, 31 Aug 2026 22:56:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/tencent-open-sources-770b-parameter-hy4-preview-moe-model-under-apache-2.0/</guid><description>&lt;img src="https://oukdqujzonxvqhiefdsv.supabase.co/storage/v1/object/public/blogs/3f0b19f5-4aad-45d7-a724-c5f22fd85742.png" alt="Featured image of post Tencent open-sources 770B parameter Hy4 preview MoE model under Apache 2.0" /&gt;&lt;h1 id="tencent-open-sources-770b-parameter-hy4-preview-moe-model-under-apache-20"&gt;Tencent open-sources 770B parameter Hy4 preview MoE model under Apache 2.0
+&lt;/h1&gt;&lt;p&gt;Tencent&amp;rsquo;s Hunyuan team open-sourced Hy4 preview, a 770 billion parameter mixture-of-experts (MoE) model, on August 28, 2026. The release marks a significant development in accessible large-scale AI.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Hy4 preview activates 49 billion parameters per token across 256 routed experts plus one shared expert, while maintaining a 1 million token context window. It is optimized for engineering tasks, as demonstrated through benchmark performance and human evaluations.&lt;/p&gt;
+&lt;h2 id="-model-architecture"&gt;🧩 Model Architecture
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Total parameters&lt;/strong&gt;: 770 billion&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Active parameters per token&lt;/strong&gt;: 49 billion&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Experts&lt;/strong&gt;: 256 routed + 1 shared&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Context window&lt;/strong&gt;: 1 million tokens&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Precision variants&lt;/strong&gt;: FP8 (quantized) available alongside base weights&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-technical-details"&gt;⚙️ Key Technical Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;License&lt;/strong&gt;: Apache 2.0 (no commercial restrictions)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benchmarks&lt;/strong&gt;: Scores 92.3 on GPQA Diamond and 65.7 on SWE-bench Pro&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API Pricing&lt;/strong&gt;: $0.834 per million input tokens, $2.501 per million output tokens&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Human Evaluation&lt;/strong&gt;: Scored 2.99/4 in Tencent&amp;rsquo;s blind assessment by 163 experts across 203 engineering tasks, outperforming GLM-5.3 (2.92) and Kimi K3 (2.94)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Weights hosted on Hugging Face with FP8 quantized version&lt;/li&gt;
+&lt;li&gt;Pre-built Docker recipes for vLLM and SGLang inference&lt;/li&gt;
+&lt;li&gt;Immediate accessibility eliminates typical community porting delays&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Unprecedented licensing&lt;/strong&gt;: First 700B+ parameter model under permissive Apache 2.0&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Efficiency&lt;/strong&gt;: FP8 optimization enables deployment on single high-memory servers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: Matches specialized models in blind engineering evaluations&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Contrast with competitors&lt;/strong&gt;: Released alongside Ant Group&amp;rsquo;s Ling-3.0-Flash (MIT license, 124B params, 5.1B active per token) but offers significantly higher activation density&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-comparative-open-source-models"&gt;🌐 Comparative Open-Source Models
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Total Parameters&lt;/th&gt;
+&lt;th&gt;Active per Token&lt;/th&gt;
+&lt;th&gt;Context Window&lt;/th&gt;
+&lt;th&gt;License&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Hy4 Preview&lt;/td&gt;
+&lt;td&gt;770B&lt;/td&gt;
+&lt;td&gt;49B&lt;/td&gt;
+&lt;td&gt;1M tokens&lt;/td&gt;
+&lt;td&gt;Apache 2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ling-3.0-Flash&lt;/td&gt;
+&lt;td&gt;124B&lt;/td&gt;
+&lt;td&gt;5.1B&lt;/td&gt;
+&lt;td&gt;256K tokens&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#Tencent #Hy4 #OpenSource #AIModels #MixtureOfExperts&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.buildfastwithai.com/blogs/tencent-opens-a-770b-model-under-apache-2-0-ai-news-aug-31" target="_blank" rel="noopener"
+&gt;Tencent Opens a 770B Model Under Apache 2.0: AI News Aug 31&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

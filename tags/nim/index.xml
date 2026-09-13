@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>NIM on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/nim/</link><description>Recent content in NIM on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 11 Sep 2026 22:04:55 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/nim/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA NIM Optimizes Nemotron-3-Ultra-550B Performance on Blackwell GPUs</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-nim-optimizes-nemotron-3-ultra-550b-performance-on-blackwell-gpus/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-nim-optimizes-nemotron-3-ultra-550b-performance-on-blackwell-gpus/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image4_1480x833-660x370.jpg" alt="Featured image of post NVIDIA NIM Optimizes Nemotron-3-Ultra-550B Performance on Blackwell GPUs" /&gt;&lt;h1 id="nvidia-nim-optimizes-nemotron-3-ultra-550b-performance-on-blackwell-gpus"&gt;NVIDIA NIM Optimizes Nemotron-3-Ultra-550B Performance on Blackwell GPUs
+&lt;/h1&gt;&lt;p&gt;NVIDIA NIM provides model- and GPU-aware serving choices packaged into a deployable microservice, offering validated performance engineering alongside an enterprise-ready container lifecycle.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;NIM allows for the deployment of models like &lt;code&gt;nvidia/nemotron-3-ultra-550b-a55b&lt;/code&gt;. For production environments, NIM Certified provides commercial support through NVIDIA AI Enterprise, CVE handling, regular inference-stack updates, and broader hardware validation.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The optimized NIM stack employs several technical strategies to improve efficiency:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hardware Mapping:&lt;/strong&gt; Autotuned Mamba and mixture-of-experts kernels map hybrid architectures to NVIDIA Blackwell GPUs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Parallelism:&lt;/strong&gt; Tensor parallelism distributes the model across four GPUs, while expert-aware execution improves utilization for mixture-of-experts layers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory and Cache:&lt;/strong&gt; Prefix caching prevents the recomputation of repeated context, while partial-prefix matching recovers reuse when only part of a prefix matches. Mamba state-cache settings are tuned for the model architecture.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workload Management:&lt;/strong&gt; The system uses batched-token limits, concurrent-sequence limits, GPU-memory allocation, and block size to maintain work in flight without exceeding latency targets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Decoding:&lt;/strong&gt; The stack utilizes MTP speculative decoding and associated fixes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Performance benchmarks for agentic workloads (64K/400/76% KV reuse/50 TPS/user with 20 ms ITL) on 4xB200 hardware are as follows:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Configuration&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Throughput&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Notes&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;NIM Off baseline&lt;/td&gt;
+&lt;td style="text-align: left"&gt;718 tok/s&lt;/td&gt;
+&lt;td style="text-align: left"&gt;No NIM optimizations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;NIM On (2.0.12)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,997 tok/s&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.5x v. Baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Users can deploy this via the Nemotron 3 Ultra NIM page by accepting governing terms and selecting the NIM 2.0.12 tag or published digest. Implementation details include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Tag:&lt;/strong&gt; &lt;code&gt;export NIM_TAG=2.0.12&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Image:&lt;/strong&gt; &lt;code&gt;nvcr.io/nim/nvidia/nemotron-3-ultra-550b-a55b:$NIM_TAG&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Optimized Profile:&lt;/strong&gt; For agentic workloads on a four-GPU B200 system, use &lt;code&gt;vllm-nvidia-b200-nvfp4-tp4-pp1-throughput-90.0&lt;/code&gt; and enable speculative decoding.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benchmarking:&lt;/strong&gt; NVIDIA AIPerf can be used to replay representative traffic, utilizing Mooncake-format JSONL traces or captured NIM requests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2024/07/nim-visual-featured-660x370.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #NIM #Blackwell #LLM #Inference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/how-full-stack-nim-optimizations-deliver-2-5x-more-users-on-nemotron-3-ultra/" target="_blank" rel="noopener"
+&gt;How Full-Stack NIM Optimizations Deliver 2.5x More Users on Nemotron 3 Ultra | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
