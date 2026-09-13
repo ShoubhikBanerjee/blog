@@ -2,7 +2,7 @@
 title: "Agent Development Kit Updates and SkillNote Registry Introduction"
 slug: "agent-development-kit-updates-and-skillnote-registry-introduction"
 description: "The Agent Development Kit (ADK) has released version 2.0, introducing breaking changes to its agent API, event model, and session schema. Simultaneously, the new open-source SkillNote registry has..."
-date: 2026-09-13T12:02:11+05:30
+date: 2026-09-13T18:02:33+05:30
 tags: [AI, Python, Agents, OpenSource, DeveloperTools]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/1342004?v=4"
