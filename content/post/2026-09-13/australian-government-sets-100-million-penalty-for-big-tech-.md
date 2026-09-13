@@ -2,7 +2,7 @@
 title: "Australian Government Sets $100 Million Penalty for Big Tech Digital Duty of Care"
 slug: "australian-government-sets-100-million-penalty-for-big-tech-digital-duty-of-care"
 description: "The Australian government has established a $100 million penalty for big tech companies that breach their digital duty of care."
-date: 2026-09-13T18:02:33+05:30
+date: 2026-09-13T22:03:50+05:30
 tags: [BigTech, Australia, DigitalRegulation, TechPolicy]
 categories: ["AI", "Government Regulation", "Digital Policy", "Technology Law"]
 image: "https://static.ffx.io/images/$zoom_0.3343%2C$multiply_3%2C$ratio_1.777778%2C$width_1059%2C$x_33%2C$y_0/t_crop_custom/c_scale%2Cw_800%2Cq_88%2Cf_jpg/t_afr_live_no_age_social_wm/4e9d986b3c155ed556ed568c4b4a8371a0767fb2"

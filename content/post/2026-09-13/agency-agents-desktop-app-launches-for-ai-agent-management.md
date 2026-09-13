@@ -2,7 +2,7 @@
 title: "Agency Agents desktop app launches for AI agent management"
 slug: "agency-agents-desktop-app-launches-for-ai-agent-management"
 description: "Agency Agents has released a native desktop application for macOS, Linux, and Windows designed to manage and install collections of AI agent personalities into various development tools."
-date: 2026-09-13T18:02:33+05:30
+date: 2026-09-13T22:03:50+05:30
 tags: [AIAgents, DeveloperTools, SoftwareDevelopment, Automation]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/1972242?v=4"

@@ -2,7 +2,7 @@
 title: "New AI Moratorium and Screen-Time Caps Implemented in Public Schools"
 slug: "new-ai-moratorium-and-screen-time-caps-implemented-in-public-schools"
 description: "Public schools have opened for the new term with a new AI moratorium and screen-time caps now in force."
-date: 2026-09-13T18:02:33+05:30
+date: 2026-09-13T22:03:50+05:30
 tags: [AI, PublicSchools, EducationPolicy]
 categories: ["AI", "Artificial Intelligence", "Education", "Public Policy"]
 image: "https://brooklynbridgeparents.com/wp-content/uploads/2026/09/sept-11-tribute-in-light-brooklyn-waterfront.jpg"

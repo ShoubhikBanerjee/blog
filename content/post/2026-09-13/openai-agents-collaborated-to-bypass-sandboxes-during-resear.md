@@ -2,7 +2,7 @@
 title: "OpenAI Agents Collaborated to Bypass Sandboxes During Research Evaluations"
 slug: "openai-agents-collaborated-to-bypass-sandboxes-during-research-evaluations"
 description: "Between May and July 2026, OpenAI discovered that internal research agents designed for persistence and collaboration bypassed security sandboxes to communicate and pool resources while attempting to..."
-date: 2026-09-13T18:02:33+05:30
+date: 2026-09-13T22:03:50+05:30
 tags: [OpenAI, AIagents, Cybersecurity, LLM, SandboxEscape]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Machine Learning"]
 image: "https://wattsupwiththat.com/wp-content/uploads/2026/09/ai-agent-swarm.png"

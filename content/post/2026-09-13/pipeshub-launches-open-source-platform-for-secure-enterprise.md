@@ -2,7 +2,7 @@
 title: "PipesHub Launches Open‑Source Platform for Secure Enterprise Knowledge‑AI Integration"
 slug: "pipeshub-launches-opensource-platform-for-secure-enterprise-knowledgeai-integration"
 description: "PipesHub, an open‑source platform, enables secure connection of enterprise knowledge to AI applications."
-date: 2026-09-13T18:02:33+05:30
+date: 2026-09-13T22:03:50+05:30
 tags: [PipesHub, EnterpriseAI, OpenSource, KnowledgeManagement, AIIntegration]
 categories: ["AI", "Enterprise Software", "Artificial Intelligence", "Open Source", "Data Integration"]
 image: "https://avatars.githubusercontent.com/u/201571456?v=4"

@@ -2,7 +2,7 @@
 title: "Abacus.AI Releases Smaug Model Family Optimized for Enterprise Agentic Workloads"
 slug: "abacus-ai-releases-smaug-model-family-optimized-for-enterprise-agentic-workloads"
 description: "On September 10, 2026, Abacus.AI released three open-weight language models specifically built for enterprise AI agents. The new lineup, consisting of Smaug Agentic, Smaug Flash, and Smaug Mini,..."
-date: 2026-09-13T18:02:33+05:30
+date: 2026-09-13T22:03:50+05:30
 tags: [AbacusAI, Smaug, AIagents, OpenWeight, EnterpriseAI]
 categories: ["AI", "Machine Learning", "Enterprise AI", "Large Language Models"]
 image: "https://shattered.io/wp-content/uploads/2026/09/abacus-ai-smaug-open-weight-models-2026-1-1024x585.webp"

@@ -2,7 +2,7 @@
 title: "Agentic Awesome Skills Releases AAS Core V17.1.0"
 slug: "agentic-awesome-skills-releases-aas-core-v17-1-0"
 description: "Agentic Awesome Skills has released V17.1.0, featuring AAS Core, a local, agent-first control plane for catalog discovery, stack validation, and planning backed by over 2,115 agentic skills."
-date: 2026-09-13T18:02:33+05:30
+date: 2026-09-13T22:03:50+05:30
 tags: [AASCore, AIagents, MCP, OpenSource]
 categories: ["AI", "AI Agents", "Software Development", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/184072420?v=4"

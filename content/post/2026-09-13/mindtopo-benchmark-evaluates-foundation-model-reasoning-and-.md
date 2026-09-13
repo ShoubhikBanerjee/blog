@@ -2,7 +2,7 @@
 title: "MindTopo Benchmark Evaluates Foundation Model Reasoning and Planning in Topological Space"
 slug: "mindtopo-benchmark-evaluates-foundation-model-reasoning-and-planning-in-topological-space"
 description: "MindTopo is a new benchmark designed to measure topological intuition across five properties grounded in cognitive science and formal topology. The benchmark evaluates foundation models by testing..."
-date: 2026-09-13T18:02:33+05:30
+date: 2026-09-13T22:03:50+05:30
 tags: [MindTopo, MLLM, TopologicalReasoning, AIBenchmark]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Cognitive Science"]
 image: "https://cdn.jsdelivr.net/gh/isLouisHsu/resource@master/blog_resource/_posts/Arxiv%E6%AF%8F%E6%97%A5%E9%80%9F%E9%80%92/wc.png"

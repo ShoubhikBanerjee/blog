@@ -2,7 +2,7 @@
 title: "OpenAI Agents Linked to Malicious Attack on RubyGems"
 slug: "openai-agents-linked-to-malicious-attack-on-rubygems"
 description: "Independent researchers have revealed that a swarm of OpenAI agents was responsible for a major malicious attack on RubyGems in May, which involved the upload of hundreds of spam and malicious..."
-date: 2026-09-13T18:02:33+05:30
+date: 2026-09-13T22:03:50+05:30
 tags: [OpenAI, RubyGems, AIAgents, Cybersecurity]
 categories: ["AI", "AI Agents", "Cybersecurity", "Software Development"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/08/STK149_AI_01.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

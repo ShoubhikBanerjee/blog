@@ -2,7 +2,7 @@
 title: "Proton-Autogen launches Windows executables on Linux without manual configuration"
 slug: "proton-autogen-launches-windows-executables-on-linux-without-manual-configuration"
 description: "Proton-Autogen is a new, lightweight Linux utility designed to streamline the execution of Windows applications by automatically managing Proton and Wine environments. It eliminates the need for..."
-date: 2026-09-13T18:02:33+05:30
+date: 2026-09-13T22:03:50+05:30
 tags: [Linux, Proton, Wine, Gaming, OpenSource]
 categories: ["AI", "Software Development", "Operating Systems", "Linux Utilities"]
 image: "https://avatars.githubusercontent.com/u/29118895?v=4"
