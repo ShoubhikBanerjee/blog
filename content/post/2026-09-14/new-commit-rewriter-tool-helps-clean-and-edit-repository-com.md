@@ -2,7 +2,7 @@
 title: "New commit-rewriter Tool Helps Clean and Edit Repository Commit Messages"
 slug: "new-commit-rewriter-tool-helps-clean-and-edit-repository-commit-messages"
 description: "A new web application tool called `commit-rewriter` has been created to assist developers in editing repository commit messages. The tool was developed to clean up commits that are unfit for public..."
-date: 2026-09-14T18:04:24+05:30
+date: 2026-09-14T22:04:39+05:30
 tags: [Git, DeveloperTools, OpenSource]
 categories: ["AI", "Developer Tools", "Software Development", "Open Source"]
 image: "https://static.simonwillison/static/2026/commit-rewriter.webp"

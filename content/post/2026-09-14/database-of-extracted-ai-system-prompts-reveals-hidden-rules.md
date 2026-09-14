@@ -2,7 +2,7 @@
 title: "Database of Extracted AI System Prompts Reveals Hidden Rules for Major Chatbots"
 slug: "database-of-extracted-ai-system-prompts-reveals-hidden-rules-for-major-chatbots"
 description: "A repository of extracted system prompts from prominent AI developers has documented the verbatim instructions and rules that chatbots receive before interacting with users. This collection includes..."
-date: 2026-09-14T18:04:24+05:30
+date: 2026-09-14T22:04:39+05:30
 tags: [AISystemPrompts, LargeLanguageModels, AIGovernance]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/27446620?v=4"

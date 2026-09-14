@@ -2,7 +2,7 @@
 title: "Comparing Open Source and Proprietary AI Agent Frameworks"
 slug: "comparing-open-source-and-proprietary-ai-agent-frameworks"
 description: "The landscape of AI agent development continues to evolve with several frameworks offering different approaches to orchestration, type safety, and agent collaboration."
-date: 2026-09-14T18:04:24+05:30
+date: 2026-09-14T22:04:39+05:30
 tags: [AIAgents, OpenSource, Python, SoftwareDevelopment]
 categories: ["AI", "AI Agents", "Software Development", "Machine Learning"]
 image: "https://cdn.prod.website-files.com/6295808d44499cde2ba36c71/6aa6ef4bc81d5cd55b8f441e_Screenshot%202026-09-14%20at%2012.15.28%E2%80%AFAM.png"

@@ -2,7 +2,7 @@
 title: "Persistent Memory Tool agentmemory Launches for AI Coding Agents"
 slug: "persistent-memory-tool-agentmemory-launches-for-ai-coding-agents"
 description: "The agentmemory implementation has been released to provide persistent memory for coding agents, ensuring they remember historical context across sessions and eliminating the need for constant..."
-date: 2026-09-14T18:04:24+05:30
+date: 2026-09-14T22:04:39+05:30
 tags: [AICoding, LLM, agentmemory, DeveloperTools, AIagents]
 categories: ["AI", "Software Development", "Artificial Intelligence", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/48523873?v=4"

@@ -2,7 +2,7 @@
 title: "AI Agent Skill 'Ponytail' Reduces Code by 54% While Staying Safe"
 slug: "ai-agent-skill-ponytail-reduces-code-by-54-while-staying-safe"
 description: "A new AI agent skill, 'ponytail,' is designed to make an AI agent think like the laziest senior developer in the room. The philosophy behind the development is that the best code is the code you..."
-date: 2026-09-14T18:04:24+05:30
+date: 2026-09-14T22:04:39+05:30
 tags: [A, I, A, g, e, n, t, s, C, o, d, e, O, p, t, i, m, i, z, a, t, i, o, n, S, e, n, i, o, r, D, e, v, e, l, o, p, e, r, Y, A, G, N, I, C, l, a, u, d, e, C, o, d, e, F, a, s, t, A, P, I]
 categories: ["AI", "A", "r", "t", "i", "f", "i", "c", "i", "a", "l", "I", "n", "t", "e", "l", "l", "i", "g", "e", "n", "c", "e", ",", "S", "o", "f", "t", "w", "a", "r", "e", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "C", "o", "d", "e", "O", "p", "t", "i", "m", "i", "z", "a", "t", "i", "o", "n"]
 image: "https://avatars.githubusercontent.com/u/137048761?v=4"
