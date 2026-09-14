@@ -2,7 +2,7 @@
 title: "WebP Support Added to shot-scraper Screenshot Automation Tool"
 slug: "webp-support-added-to-shot-scraper-screenshot-automation-tool"
 description: "The screenshot automation tool shot-scraper has been updated to support the WebP image format. This new capability allows users to capture web page screenshots directly as WebP files."
-date: 2026-09-14T12:02:44+05:30
+date: 2026-09-14T18:04:24+05:30
 tags: [shotscraper, WebP, WebPerformance, DeveloperTools]
 categories: ["AI", "Developer Tools", "Software Development", "Web Development"]
 author: "Shoubhik Banerjee"
