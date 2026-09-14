@@ -2,7 +2,7 @@
 title: "AI Executives Call for Development Pace Slowdown Amid Safety Concerns"
 slug: "ai-executives-call-for-development-pace-slowdown-amid-safety-concerns"
 description: "Anthropic CEO Dario Amodei has published an open letter calling for the industry to 'pace the frontier' and slow down AI development. This proposal has received public support from OpenAI's Sam..."
-date: 2026-09-14T06:02:52+05:30
+date: 2026-09-14T12:02:44+05:30
 tags: [Anthropic, OpenAI, AISafety, AIRegulation]
 categories: ["AI", "Artificial Intelligence", "AI Governance", "Technology Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/09/STK466_ELECTION_2024_CVirginia_E.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

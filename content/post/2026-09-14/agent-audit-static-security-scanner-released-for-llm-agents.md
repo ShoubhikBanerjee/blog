@@ -2,7 +2,7 @@
 title: "Agent Audit Static Security Scanner Released for LLM Agents"
 slug: "agent-audit-static-security-scanner-released-for-llm-agents"
 description: "Agent Audit is a new static security scanner designed to find security vulnerabilities in AI agent code before they reach production."
-date: 2026-09-14T06:02:52+05:30
+date: 2026-09-14T12:02:44+05:30
 tags: [AIagents, Cybersecurity, LLM, OWASP, StaticAnalysis]
 categories: ["AI", "AI Agents", "Cybersecurity", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/181223267?v=4"
