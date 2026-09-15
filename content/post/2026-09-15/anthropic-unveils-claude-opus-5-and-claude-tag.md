@@ -2,7 +2,7 @@
 title: "Anthropic Unveils Claude Opus 5 and Claude Tag"
 slug: "anthropic-unveils-claude-opus-5-and-claude-tag"
 description: "Anthropic has released Claude Opus 5, a new flagship model designed for long-running agents, alongside Claude Tag, an internal tool for proactive coding work."
-date: 2026-09-15T12:03:19+05:30
+date: 2026-09-15T18:06:07+05:30
 tags: [Anthropic, ClaudeOpus5, AIAgents, CodingAI]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Software Development"]
 image: "https://opengraph.githubassets.com/7ea7a660fa256554a94b19bbbf3c77d09f8ad9852b82061b80086aa1ce1cd6b6/sikm-lqs/agents-radar/issues/206"

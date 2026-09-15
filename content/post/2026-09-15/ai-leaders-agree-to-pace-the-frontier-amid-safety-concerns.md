@@ -2,7 +2,7 @@
 title: "AI leaders agree to “pace the frontier” amid safety concerns"
 slug: "ai-leaders-agree-to-pace-the-frontier-amid-safety-concerns"
 description: "When OpenAI CEO Sam Altman, Anthropic CEO Dario Amodei, Google DeepMind cofounder Demis Hassabis, and SpaceX head Elon Musk loosely agreed over the weekend to slow down AI development, skeptics..."
-date: 2026-09-15T12:03:19+05:30
+date: 2026-09-15T18:06:07+05:30
 tags: [AISafety, OpenAI, Anthropic, AIGovernance]
 categories: ["AI", "Artificial Intelligence", "AI Governance", "Technology Policy", "Industry News"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/11/STKS522_AGI_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

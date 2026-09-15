@@ -2,7 +2,7 @@
 title: "AI CLI Landscape Converges to Seven Active Tools"
 slug: "ai-cli-landscape-converges-to-seven-active-tools"
 description: "The AI CLI tool landscape has converged into seven active competing products, spanning both major tech giants and independent developers."
-date: 2026-09-15T12:03:19+05:30
+date: 2026-09-15T18:06:07+05:30
 tags: [OpenAI, CLITools, AIDevelopment, GitHub, Rust]
 categories: ["AI", "Software Development", "AI Tools", "Developer Tools", "Open Source"]
 image: "https://opengraph.githubassets.com/de00fd1be42da28eee18145211e22a9f3bfbe8429dbab3e1cf747186d8f9657f/sikm-lqs/agents-radar/issues/193"

@@ -2,7 +2,7 @@
 title: "Optimizing Mixture of Experts Training with JAX and NVIDIA Transformer Engine"
 slug: "optimizing-mixture-of-experts-training-with-jax-and-nvidia-transformer-engine"
 description: "NVIDIA Transformer Engine, a library for accelerating Transformer models on NVIDIA GPUs, combined with the JAX Python library, has delivered significant performance improvements in Mixture of Experts..."
-date: 2026-09-15T12:03:19+05:30
+date: 2026-09-15T18:06:07+05:30
 tags: [NVIDIA, JAX, MixtureOfExperts, TransformerEngine, DeepSeekV3]
 categories: ["AI", "Machine Learning", "GPU Acceleration", "Deep Learning"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/green-cube-660x370.png"

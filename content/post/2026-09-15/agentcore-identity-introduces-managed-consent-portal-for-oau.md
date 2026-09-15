@@ -2,7 +2,7 @@
 title: "AgentCore Identity Introduces Managed Consent Portal for OAuth Session Binding"
 slug: "agentcore-identity-introduces-managed-consent-portal-for-oauth-session-binding"
 description: "AgentCore Identity, a capability of Amazon Bedrock AgentCore, now offers a Consent portal to provide a managed web experience and session binding endpoint for AgentCore Gateway."
-date: 2026-09-15T12:03:19+05:30
+date: 2026-09-15T18:06:07+05:30
 tags: [AmazonBedrock, AgentCore, OAuth, AIagents, AWS]
 categories: ["AI", "AI Agents", "Cloud Computing", "Cybersecurity"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/14/ML-21874-featured-image.png"

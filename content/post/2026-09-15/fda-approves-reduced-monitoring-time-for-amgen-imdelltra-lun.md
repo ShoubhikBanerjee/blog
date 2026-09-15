@@ -2,7 +2,7 @@
 title: "FDA Approves Reduced Monitoring Time for Amgen IMDELLTRA Lung Cancer Treatment"
 slug: "fda-approves-reduced-monitoring-time-for-amgen-imdelltra-lung-cancer-treatment"
 description: "Amgen has announced that the U.S. Food and Drug Administration (FDA) approved an update to the prescribing information for IMDELLTRA (tarlatamab-dlle). The update significantly reduces the..."
-date: 2026-09-15T12:03:19+05:30
+date: 2026-09-15T18:06:07+05:30
 tags: [Oncology, Biotech, FDA, Immunotherapy, LungCancer]
 categories: ["AI", "Biotechnology", "Oncology", "Pharmaceutical Research"]
 image: "https://mmx.prnewswire.com/media/MS352354/AMGEN-LOGO-V2.jpg?id=OA2944996&p=facebook"

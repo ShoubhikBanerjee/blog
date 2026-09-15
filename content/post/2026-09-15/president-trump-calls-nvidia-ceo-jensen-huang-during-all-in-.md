@@ -2,7 +2,7 @@
 title: "President Trump Calls Nvidia CEO Jensen Huang During All-In Summit"
 slug: "president-trump-calls-nvidia-ceo-jensen-huang-during-all-in-summit"
 description: "Nvidia CEO Jensen Huang received a phone call from President Trump while onstage at the All-In Podcast’s All-In Summit on Monday. Huang placed the president on speakerphone to address the live..."
-date: 2026-09-15T12:03:19+05:30
+date: 2026-09-15T18:06:07+05:30
 tags: [Nvidia, AI, JensenHuang, TechPolicy, AllInSummit]
 categories: ["AI", "Artificial Intelligence", "Technology Policy", "Industry News"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2292612804.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
