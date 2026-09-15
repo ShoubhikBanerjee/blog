@@ -2,7 +2,7 @@
 title: "Improving AI Agent Performance Through Context and Priority-Based Prompting"
 slug: "improving-ai-agent-performance-through-context-and-priority-based-prompting"
 description: "Recent advancements in frontier AI models have shifted how agents fail; rather than being confused by instructions, modern agents typically make incorrect assumptions about a user's goals or..."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [AIagents, PromptEngineering, GPT6Astra, LLM]
 categories: ["AI", "AI Agents", "Machine Learning", "Software Development"]
 author: "Shoubhik Banerjee"

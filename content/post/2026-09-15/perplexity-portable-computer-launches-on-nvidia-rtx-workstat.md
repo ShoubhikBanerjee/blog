@@ -2,7 +2,7 @@
 title: "Perplexity Portable Computer Launches on NVIDIA RTX Workstations"
 slug: "perplexity-portable-computer-launches-on-nvidia-rtx-workstations"
 description: "Perplexity has released its Portable Computer agent for Windows PCs equipped with NVIDIA GeForce RTX and NVIDIA RTX PRO Workstations. This update brings multistep AI workflows to local hardware,..."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [Perplexity, NVIDIA, AIAgents, LocalAI, Workstations]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Hardware"]
 image: "https://www.aichatdaily.com/_next/image?url=https%3A%2F%2Fqswerazrpejkkgemjrfu.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Farticle-hero-images%2Flibrary%2F9d396529-7e51-4e55-9abc-6d328074ffdc%2Fd3d46ac4-30bf-4f9b-ad4e-3165bc604c7c.png&w=1200&q=75"

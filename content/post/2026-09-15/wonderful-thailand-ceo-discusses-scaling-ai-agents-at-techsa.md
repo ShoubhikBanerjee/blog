@@ -2,7 +2,7 @@
 title: "Wonderful Thailand CEO Discusses Scaling AI Agents at Techsauce 2026"
 slug: "wonderful-thailand-ceo-discusses-scaling-ai-agents-at-techsauce-2026"
 description: "Ariya Banomyong, President of Wonderful Thailand, addressed the challenge of moving AI from pilots to production at the Techsauce Global Summit 2026."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [A, I, A, g, e, n, t, s, E, n, t, e, r, p, r, i, s, e, A, I, T, e, c, h, s, a, u, c, e, S, c, a, l, i, n, g, W, o, n, d, e, r, f, u, l, T, h, a, i, l, a, n, d]
 categories: ["AI", "E", "n", "t", "e", "r", "p", "r", "i", "s", "e", "A", "I", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "B", "u", "s", "i", "n", "e", "s", "s", "O", "p", "e", "r", "a", "t", "i", "o", "n", "s", ",", "T", "e", "c", "h", "n", "o", "l", "o", "g", "y"]
 image: "https://storage.googleapis.com/techsauce-prod/ugc/uploads/2026/9/1200_630_1789457792_Wonderful_TH_630_%284%29.webp"

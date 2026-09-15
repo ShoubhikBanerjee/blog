@@ -2,7 +2,7 @@
 title: "Unified Knowledge Graph RAG Stack Brings GraphRAG and LightRAG to AWS"
 slug: "unified-knowledge-graph-rag-stack-brings-graphrag-and-lightrag-to-aws"
 description: "A new open-source project named `unified-kg-rag-on-aws` (licensed under Apache-2.0) integrates two distinct knowledge-graph Retrieval-Augmented Generation (RAG) methodologies—Microsoft's GraphRAG and..."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [RAG, AWS, KnowledgeGraph, GraphRAG, LightRAG]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2026/09/08/Screenshot-2026-09-08-at-2.36.24 PM-1139x630.png"

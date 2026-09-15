@@ -2,7 +2,7 @@
 title: "Trump Asserts Federal Oversight Authority and Opposes Restrictive AI Guardrails"
 slug: "trump-asserts-federal-oversight-authority-and-opposes-restrictive-ai-guardrails"
 description: "US President Donald Trump stated Monday that his administration holds extensive oversight and regulatory power over artificial intelligence companies, rejecting calls for restrictive guardrails as a..."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [AIRegulation, NationalSecurity, Anthropic, OpenAI, TechPolicy]
 categories: ["AI", "Artificial Intelligence", "Government Policy", "Technology Regulation"]
 image: "https://img.piri.net/piri/upload/3/2026/9/14/397f499c-trump-claims-sick-conspiracy-on-ai-benefits-china-touts.webp"

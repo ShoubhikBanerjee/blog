@@ -2,7 +2,7 @@
 title: "Former Anthropic Employee Reports Researcher Fears of AI Existential Risk"
 slug: "former-anthropic-employee-reports-researcher-fears-of-ai-existential-risk"
 description: "Jacob Coxon, a former Anthropic employee, recently confirmed that many researchers at the company believe artificial intelligence could lead to an extinction-level event by the end of the decade...."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [Anthropic, AISafety, Biosecurity]
 categories: ["AI", "Artificial Intelligence", "AI Safety", "Cybersecurity"]
 author: "Shoubhik Banerjee"

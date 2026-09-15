@@ -2,7 +2,7 @@
 title: "TU Delft Invites Applications for Fully Funded Sustainable Engineering PhD Positions"
 slug: "tu-delft-invites-applications-for-fully-funded-sustainable-engineering-phd-positions"
 description: "Delft University of Technology (TU Delft) in the Netherlands has opened online applications for multiple fully funded PhD positions across various departments. These roles focus on advancing..."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [TUDelft, PhDPositions, GreenSteel, SustainableConstruction]
 categories: ["AI", "Higher Education", "Sustainable Engineering", "Civil Engineering"]
 image: "https://vacancyedu.com/wp-content/uploads/2021/08/Untitled-design-2021-06-02T182607.460-1-1024x536-1.png"

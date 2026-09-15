@@ -2,7 +2,7 @@
 title: "Understanding the Transition from Generative Chatbots to AI Agents"
 slug: "understanding-the-transition-from-generative-chatbots-to-ai-agents"
 description: "AI agents represent a step forward from generative chatbots, marking a transition from reactive AI to AI that takes action by independently pursuing goals and developing solutions."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [AIAgents, GenerativeAI, ITSM, AgenticAI, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Machine Learning"]
 image: "https://otrs.com/wp-content/uploads/AI-Agents-vs.-Chatbots.jpg"

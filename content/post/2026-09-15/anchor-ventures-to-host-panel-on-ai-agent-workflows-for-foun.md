@@ -2,7 +2,7 @@
 title: "Anchor Ventures to Host Panel on AI Agent Workflows for Founders"
 slug: "anchor-ventures-to-host-panel-on-ai-agent-workflows-for-founders"
 description: "Anchor Ventures is hosting a two-part session featuring a panel of founders who have spent the past year building with specialized AI agents to increase shipping pace with lean teams."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [AIAgents, Founders, AnchorVentures, AIWorkflows]
 categories: ["AI", "AI Agents", "Software Development", "Entrepreneurship"]
 image: "https://api.hub.jhu.edu/factory/sites/default/files/styles/soft_crop_1300/public/2026-09/Anchor%20Ventures-Sept%2017.png"

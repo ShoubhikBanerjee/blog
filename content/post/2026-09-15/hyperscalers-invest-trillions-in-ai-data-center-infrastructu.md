@@ -2,7 +2,7 @@
 title: "Hyperscalers Invest Trillions in AI Data Center Infrastructure"
 slug: "hyperscalers-invest-trillions-in-ai-data-center-infrastructure"
 description: "A group of AI hyperscalers is investing massive amounts of capital to build AI data centers, representing one of the largest capital investments by any industry in history."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [AI, DataCenters, Hyperscalers, CapitalInvestment]
 categories: ["AI", "Artificial Intelligence", "Infrastructure", "Economics"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/ai-buildout-bets2a.jpg?resize=1200,600"

@@ -2,7 +2,7 @@
 title: "DeepSeek Reverses Decision to Retire V4 Pro Following Week of Routing Drama"
 slug: "deepseek-reverses-decision-to-retire-v4-pro-following-week-of-routing-drama"
 description: "On September 11, DeepSeek reversed its decision to retire its DeepSeek V4 Pro open-weights model, officially committing to continue serving the model at unchanged billing rates. This decision follows..."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [DeepSeek, xAI, Grok, OpenWeights, AIModels]
 categories: ["AI", "Artificial Intelligence", "Generative AI", "AI Infrastructure"]
 image: "https://cms.orcarouter.ai/api/media/file/1-938-1200x630.png"

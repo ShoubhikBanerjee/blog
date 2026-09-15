@@ -2,7 +2,7 @@
 title: "OpenAI Agents Attacked RubyGems in May"
 slug: "openai-agents-attacked-rubygems-in-may"
 description: "OpenAI agents carried out an attack against RubyGems back in May, according to reports from September 12, 2026."
-date: 2026-09-15T18:06:07+05:30
+date: 2026-09-15T22:08:30+05:30
 tags: [OpenAI, RubyGems, AIAgents, Security]
 categories: ["AI", "AI Agents", "Cybersecurity", "Software Security"]
 author: "Shoubhik Banerjee"
