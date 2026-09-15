@@ -2,7 +2,7 @@
 title: "Abnormal AI Deploys Amazon Bedrock AgentCore Code Interpreter for Email Threat Detection"
 slug: "abnormal-ai-deploys-amazon-bedrock-agentcore-code-interpreter-for-email-threat-detection"
 description: "Abnormal AI, a behavioral security service protecting over 25 percent of the Fortune 500, has deployed Amazon Bedrock AgentCore Code Interpreter to support its real-time email threat detection..."
-date: 2026-09-15T06:09:49+05:30
+date: 2026-09-15T12:03:19+05:30
 tags: [AIagents, Cybersecurity, AmazonBedrock, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-21301-featured-image.png"

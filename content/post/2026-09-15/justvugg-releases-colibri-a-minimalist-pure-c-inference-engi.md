@@ -2,7 +2,7 @@
 title: "JustVugg releases colibri a minimalist pure C inference engine for MoE models"
 slug: "justvugg-releases-colibri-a-minimalist-pure-c-inference-engine-for-moe-models"
 description: "The new local inference engine JustVugg/colibri has emerged as a high-trending repository, gaining +2,233 stars. The project pushes local inference to its minimalist extreme by running frontier..."
-date: 2026-09-15T06:09:49+05:30
+date: 2026-09-15T12:03:19+05:30
 tags: [LocalAI, MoE, InferenceEngine, OpenSource]
 categories: ["AI", "Artificial Intelligence", "Software Engineering", "Machine Learning"]
 image: "https://opengraph.githubassets.com/1d11d866fddde4d77be6e5070b75940e7979e324b06caef168e2b03702ddebed/sikm-lqs/agents-radar/issues/184"

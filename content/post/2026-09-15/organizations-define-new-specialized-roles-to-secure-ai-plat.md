@@ -2,7 +2,7 @@
 title: "Organizations define new specialized roles to secure AI platforms and manage cyber risks"
 slug: "organizations-define-new-specialized-roles-to-secure-ai-platforms-and-manage-cyber-risks"
 description: "Organizations are establishing new technical roles to manage the intersection of artificial intelligence and cybersecurity, focusing on secure platform design and threat mitigation. These positions..."
-date: 2026-09-15T06:09:49+05:30
+date: 2026-09-15T12:03:19+05:30
 tags: [CyberSecurity, AISecurity, GenAI, CloudSecurity, RiskManagement]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Enterprise Technology"]
 image: "https://img.helpnetsecurity.com/wp-content/uploads/2024/03/11140413/cybersecurity_jobs-2-1500.webp"
