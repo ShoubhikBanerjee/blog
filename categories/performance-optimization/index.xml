@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Performance Optimization on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/performance-optimization/</link><description>Recent content in Performance Optimization on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 01:34:26 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/performance-optimization/index.xml" rel="self" type="application/rss+xml"/><item><title>Art of Focus: Page-Aware Sparse Attention and Ling 2.0's Quest for Efficient Context Length Scaling</title><link>https://shoubhikbanerjee.github.io/blog/p/art-of-focus-page-aware-sparse-attention-and-ling-2.0s-quest-for-efficient-context-length-scaling/</link><pubDate>Tue, 28 Oct 2025 01:34:26 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/art-of-focus-page-aware-sparse-attention-and-ling-2.0s-quest-for-efficient-context-length-scaling/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/67bc580ab51d4dc52f08d280/-fblWaXADG8F_3jAbY_uk.png" alt="Featured image of post Art of Focus: Page-Aware Sparse Attention and Ling 2.0's Quest for Efficient Context Length Scaling" /&gt;&lt;h1 id="-art-of-focus-page-aware-sparse-attention-and-ling-20s-quest-for-efficient-context-length"&gt;🚀 Art of Focus: Page-Aware Sparse Attention and Ling 2.0&amp;rsquo;s Quest for Efficient Context Length
+&lt;/h1&gt;&lt;p&gt;Scaling&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/67bc580ab51d4dc52f08d280/-fblWaXADG8F_3jAbY_uk.png"
+loading="lazy"
+alt="Ling Sparse Architecture"
+&gt;
+&lt;em&gt;Ling 2.0 Sparse architecture overview showcasing the innovative sparse attention mechanism&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Test-Time Scaling (TTS) has emerged as a crucial technological trend for enhancing the
+capability ceiling of large models. However, the computational and storage overhead associated
+with ultra-long context inference grows exponentially, a challenge particularly pronounced in
+Attention computation and I/O bottlenecks.&lt;/p&gt;
+&lt;p&gt;To overcome this limitation, researchers have innovatively integrated a high-sparsity Mixture of
+Expert (MoE) structure with a sparse attention mechanism, based on the Ling 2.0 architecture,
+to design a sparse attention architecture specifically &lt;strong&gt;optimized for long-sequence decoding&lt;/strong&gt;.
+Today marks the official open-sourcing of the high-efficiency inference model under this
+architecture, &lt;strong&gt;Ring-mini-sparse-2.0-exp&lt;/strong&gt;, along with its high-performance implementation on the SGLang framework.&lt;/p&gt;
+&lt;p&gt;Thanks to the deep synergistic optimization between the architecture and the inference
+framework, this model achieves nearly a 3x increase in throughput compared to the original
+Ring-mini-2.0 implementation in complex, long-sequence inference scenarios, while continuously
+maintaining SOTA (State-of-the-Art) performance across multiple high-difficulty reasoning
+benchmarks. This achievement provides the open-source community with a lightweight solution that
+balances efficient inference with powerful context processing capabilities.&lt;/p&gt;
+&lt;h2 id="-ling-20-sparse-a-more-efficient-sparse-attention-architecture"&gt;⚙️ Ling 2.0 Sparse: A More Efficient Sparse Attention Architecture
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/67bc580ab51d4dc52f08d280/rgjwRrvbnZbdc0fm6sAkE.png"
+loading="lazy"
+alt="Ling Sparse Implementation"
+&gt;
+&lt;em&gt;Detailed view of the Ling 2.0 Sparse attention mechanism components&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ling 2.0 Sparse is an efficient sparse attention mechanism specifically engineered to address
+two major future trends in large language models: &lt;strong&gt;Context Length Scaling&lt;/strong&gt; and &lt;strong&gt;Test-Time Scaling&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The architecture draws inspiration from the &lt;strong&gt;Mixture of Block Attention (MoBA)&lt;/strong&gt;, employing
+block-wise sparse attention. This involves partitioning the input Key and Value into blocks.
+Each query then performs a top-k block selection along the head dimension, &lt;strong&gt;executing the
+softmax attention calculation only on the selected blocks&lt;/strong&gt;, which significantly reduces computational overhead.&lt;/p&gt;
+&lt;p&gt;Concurrently, the design combines the MoBA approach with &lt;strong&gt;Grouped Query Attention (GQA)&lt;/strong&gt;,
+allowing query heads within the same group to share the top-k block selection results. This
+means a single block read can serve the attention calculation for multiple query heads, further
+mitigating I/O overhead.&lt;/p&gt;
+&lt;h3 id="-addressing-decode-stage-limitations"&gt;🔧 Addressing Decode Stage Limitations
+&lt;/h3&gt;&lt;p&gt;However, while the open-source MoBA method effectively accelerates the pre-fill stage, it has
+been unable to achieve acceleration during the decode stage. This limitation stems from the
+block-wise sparse attention mechanism used in MoBA: after the Key and Value are partitioned into
+blocks, an aggregation operation (such as mean pooling) is required to generate the block representations.&lt;/p&gt;
+&lt;p&gt;For this method to be effective in the decode stage, the block token representations generated
+during the pre-fill stage must be cached (similar to KV Cache). Yet, current mainstream
+inference frameworks (like vLLM, SGLang) only support standard KV Cache storage and do not
+natively support additional block token caching.&lt;/p&gt;
+&lt;p&gt;To enable MoBA to achieve effective acceleration even in the decode stage, the team introduces
+the page-aware block cache in conjunction with SGLang.&lt;/p&gt;
+&lt;h2 id="-page-aware-block-cache"&gt;🧩 Page-aware Block Cache
+&lt;/h2&gt;&lt;p&gt;Based on the SGLang/vLLM page-attention architecture, researchers construct a dedicated Block
+Cache for each KV cache page. The specific implementation follows these principles:&lt;/p&gt;
+&lt;h3 id="implementation-strategy"&gt;Implementation Strategy
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pre-fill Stage&lt;/strong&gt;: The token sequence within each page is treated as a block. Its aggregate
+representation (e.g., mean-pooled vector) is computed in real-time and stored in the Block Cache.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Decode Stage&lt;/strong&gt;: The system queries the Block Cache (instead of the original KV cache) to
+retrieve the pre-computed block representations. Combined with the current query&amp;rsquo;s head-wise
+top-k routing, only the top-k associated pages are activated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Unified Memory Management&lt;/strong&gt;: The Block Cache and KV cache share the same page-table indexing
+mechanism. This ensures consistency in sparse routing, memory allocation, and eviction
+strategies at the system level, avoiding additional metadata overhead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/67bc580ab51d4dc52f08d280/dbcwrcZodSIQ7rj-3lGYG.png"
+loading="lazy"
+alt="Page-aware Block Cache Architecture"
+&gt;
+&lt;em&gt;Visual representation of the page-aware block cache system&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/67bc580ab51d4dc52f08d280/RDo3vETVW3BITFyUhCxFV.png"
+loading="lazy"
+alt="Performance Comparison"
+&gt;
+&lt;em&gt;Performance metrics showing the efficiency gains&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-key-advantages"&gt;💡 Key Advantages
+&lt;/h3&gt;&lt;p&gt;This design effectively resolves the I/O bottleneck of MoBA in the decode stage:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;By reusing the &lt;strong&gt;pre-computed block representations&lt;/strong&gt;, it eliminates the redundant memory
+access caused by dynamic re-computation.&lt;/li&gt;
+&lt;li&gt;By utilizing the &lt;strong&gt;page-table to dynamically mask out unactivated pages&lt;/strong&gt;, it ensures that
+only sparsely relevant data is loaded, perfectly matching the page-sparsity characteristic of
+block-wise sparse attention.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Thanks to the SGLang implementation, the overall advantage of Ring-mini-sparse-2.0-exp over the
+previous full softmax attention implementation &lt;strong&gt;increases drastically&lt;/strong&gt; as the input and output
+lengths grow in both the pre-fill and decode stages, leading to an inference speed that can be
+&lt;strong&gt;3x faster during ultra-long output sequences!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/67bc580ab51d4dc52f08d280/Aj6sjHR0Eg6PpFCXhYSBp.png"
+loading="lazy"
+alt="Performance Scaling"
+&gt;
+&lt;em&gt;Scaling performance demonstrating 3x speedup improvements&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-where-to-find-us"&gt;🔗 Where to Find Us
+&lt;/h2&gt;&lt;p&gt;The research team welcomes you to visit their open-source repositories to download and use the model.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ring-mini-sparse-2.0-exp&lt;/strong&gt;
+🤗 Hugging Face: &lt;a class="link" href="https://huggingface.co/inclusionAI/Ring-mini-sparse-2.0-exp" target="_blank" rel="noopener"
+&gt;https://huggingface.co/inclusionAI/Ring-mini-sparse-2.0-exp&lt;/a&gt;🤖 ModelScope: &lt;a class="link" href="https://modelscope.cn/models/inclusionAI/Ring-mini-sparse-2.0-exp" target="_blank" rel="noopener"
+&gt;https://modelscope.cn/models/inclusionAI/Ring-mini-sparse-2.0-exp&lt;/a&gt;
+GitHub: &lt;a class="link" href="https://github.com/inclusionAI/Ring-V2/tree/main/mobaSGLang" target="_blank" rel="noopener"
+&gt;https://github.com/inclusionAI/Ring-V2/tree/main/mobaSGLang&lt;/a&gt; PR: WIP&lt;/p&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/RichardBian/ring-mini-sparse-2-moe-release" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/RichardBian/ring-mini-sparse-2-moe-release&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;The introduction of Ling 2.0 Sparse represents a significant breakthrough in addressing the
+computational challenges of ultra-long context inference in large language models. By cleverly
+combining sparse attention mechanisms with innovative caching strategies, this architecture
+achieves remarkable efficiency gains without sacrificing performance quality.&lt;/p&gt;
+&lt;p&gt;The 3x throughput improvement demonstrates the practical value of this approach for real-world
+applications requiring extensive context processing. The open-source availability of
+Ring-mini-sparse-2.0-exp, coupled with its SGLang framework integration, provides the AI
+community with a powerful tool for efficient long-sequence processing.&lt;/p&gt;
+&lt;p&gt;This work sets a new standard for balancing computational efficiency with model capability,
+paving the way for more accessible and practical deployment of advanced language models in
+resource-constrained environments.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#MACHINELEARNING #AI #SPARSEATTENTION #LONGCONTEXT #OPENSOURCE #EFFICIENCY #INFERENCE
+#DEEPLEARNING&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Accelerating Qwen3-8B Agent on Intel Core Ultra with Depth-Pruned Draft Models</title><link>https://shoubhikbanerjee.github.io/blog/p/accelerating-qwen3-8b-agent-on-intel-core-ultra-with-depth-pruned-draft-models/</link><pubDate>Tue, 28 Oct 2025 01:08:28 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/accelerating-qwen3-8b-agent-on-intel-core-ultra-with-depth-pruned-draft-models/</guid><description>&lt;img src="https://huggingface.co/blog/assets/intel-qwen3-agent/smolagents-1300-650.png" alt="Featured image of post Accelerating Qwen3-8B Agent on Intel Core Ultra with Depth-Pruned Draft Models" /&gt;&lt;h1 id="-accelerating-qwen3-8b-agent-on-intel-core-ultra-with-depth-pruned-draft-models"&gt;🚀 Accelerating Qwen3-8B Agent on Intel® Core™ Ultra with Depth-Pruned Draft Models
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/intel-qwen3-agent/smolagents-1300-650.png"
+loading="lazy"
+alt="Banner Image"
+&gt;
+&lt;em&gt;Optimizing AI agents with speculative decoding and pruned models&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-tldr"&gt;📋 TL;DR
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Qwen/Qwen3-8B" target="_blank" rel="noopener"
+&gt;Qwen3-8B&lt;/a&gt;&lt;/strong&gt; is one of the most exciting recent
+releases—a model with native agentic capabilities, making it a natural fit for the AIPC.&lt;/li&gt;
+&lt;li&gt;With &lt;strong&gt;&lt;a class="link" href="https://github.com/openvinotoolkit/openvino.genai" target="_blank" rel="noopener"
+&gt;OpenVINO.GenAI&lt;/a&gt;&lt;/strong&gt;, we&amp;rsquo;ve been able
+to accelerate generation by ~1.3× using speculative decoding with a lightweight Qwen3-0.6B draft.&lt;/li&gt;
+&lt;li&gt;By using speculative decoding and applying a simple pruning process to the draft, we pushed
+the speedup even further to &lt;strong&gt;~1.4×&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;We wrapped this up by showing how these improvements can be used to run a fast, local AI Agent
+with 🤗 &lt;strong&gt;&lt;a class="link" href="https://github.com/huggingface/smolagents" target="_blank" rel="noopener"
+&gt;smolagents&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-qwen3"&gt;🧠 Qwen3
+&lt;/h2&gt;&lt;p&gt;Qwen3-8B is part of the latest Qwen family, trained with explicit agentic behaviors. It supports
+tool invocation, multi-step reasoning, and long-context handling capabilities, that make it
+well-suited for complex agent workflows. When integrated with frameworks like Hugging Face
+🤗smolagents, QwenAgent, or AutoGen, it enables a wide range of agentic applications built
+around tool use and reasoning.&lt;/p&gt;
+&lt;p&gt;Unlike single-turn chatbots, agentic applications rely on reasoning models that produce
+&amp;ldquo;thinking aloud&amp;rdquo; traces, intermediate steps that expand token usage, making inference speed
+critical to responsiveness. The combination of optimized inference and built-in agentic
+intelligence makes Qwen3-8B a compelling foundation for next-gen AI agents.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-accelerating-qwen3-8b-on-intel-core-ultra-with-speculative-decoding"&gt;⚡ Accelerating Qwen3-8B on Intel® Core™ Ultra with Speculative Decoding
+&lt;/h2&gt;&lt;p&gt;We started by benchmarking the 4-bit optimized OpenVINO version of Qwen3-8B on an Intel Lunar
+Lake integrated GPU, establishing this as our baseline for further acceleration.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a class="link" href="https://arxiv.org/abs/2211.17192" target="_blank" rel="noopener"
+&gt;Speculative decoding&lt;/a&gt;&lt;/strong&gt; is a method to speed up
+auto-regressive generation. It works by using a smaller, faster model as a draft to propose
+multiple tokens in a single forward pass, which are then validated by the larger target model in
+one forward pass. In our setup, &lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Qwen/Qwen3-8B" target="_blank" rel="noopener"
+&gt;Qwen3-8B&lt;/a&gt;&lt;/strong&gt; served as
+the target model while &lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Qwen/Qwen3-0.6B" target="_blank" rel="noopener"
+&gt;Qwen3-0.6B&lt;/a&gt;&lt;/strong&gt; was used as the
+draft. This approach delivered an average of &lt;strong&gt;1.3× speedup&lt;/strong&gt; over the baseline.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;openvino_genai&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;LLMPipeline&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;draft_model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;target_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;/path/to/target/Qwen3-8B-int4-ov&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;draft_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;/path/to/draft/Qwen3-0.6B-int8-ov&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;device&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;GPU&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LLMPipeline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;draft_model&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;draft_model&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;draft_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;streamer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;What is speculative decoding and how does it improve inference speed?&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_new_tokens&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;streamer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;streamer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;💡 &lt;strong&gt;Note:&lt;/strong&gt; Before initializing the &lt;code&gt;LLMPipeline&lt;/code&gt;, make sure both the target and draft models
+are converted to OpenVINO. You can either download pre-converted models from the provided links
+or follow these &lt;strong&gt;&lt;a class="link" href="https://docs.openvino.ai/2024/learn-openvino/llm_inference_guide/genai-guide.html" target="_blank" rel="noopener"
+&gt;instructions&lt;/a&gt;&lt;/strong&gt; to convert your own.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="-pushing-performance-further"&gt;🔧 Pushing Performance Further
+&lt;/h2&gt;&lt;p&gt;The speculative decoding speedup depends on the average number of generated tokens per forward
+step of the target, &lt;strong&gt;γ&lt;/strong&gt;, the speculation window size, and the ratio between the target and
+draft models&amp;rsquo; latency &lt;strong&gt;c&lt;/strong&gt;. A smaller, faster (though less accurate) draft can often deliver
+greater acceleration. This inspired us to shrink the draft model while still preserving its
+quality, i.e. &lt;strong&gt;E(# generated_tokens)&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Speedup = E(# generated_tokens) / (γc + 1)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Our &lt;strong&gt;&lt;a class="link" href="https://arxiv.org/abs/2403.17887" target="_blank" rel="noopener"
+&gt;recent work&lt;/a&gt;&lt;/strong&gt; shows that model depth (number of
+layers) is a major contributor to inference latency. We drew inspiration from recent work on
+layer-wise compression[1]. In our approach, we identify blocks of layers that contribute little,
+measured using angular distance, and remove them. After pruning, we apply fine-tuning to recover accuracy.&lt;/p&gt;
+&lt;p&gt;Using this method, we pruned &lt;strong&gt;6 out of 28 layers&lt;/strong&gt; from the Qwen3-0.6B draft model. To recover
+the quality of the pruned draft model, we further finetuned it using synthetic data generated by
+Qwen3-8B. The data was produced by generating responses to 500k prompts from
+&lt;strong&gt;&lt;a class="link" href="https://huggingface.co/datasets/BAAI/Infinity-Instruct" target="_blank" rel="noopener"
+&gt;BAAI/Infinity-Instruct dataset&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The resulting pruned draft model delivered &lt;strong&gt;~1.4x speedup&lt;/strong&gt; compared to the baseline, an
+improvement over the ~1.3× gain achieved with the original draft. This outcome aligns with
+theoretical expectations - reducing draft latency improves the over-all speedup, enabling faster
+and more efficient inference.&lt;/p&gt;
+&lt;p&gt;This demonstrates how pruning + speculative decoding can unlock faster and more efficient
+inference—making local AI agents even more practical.&lt;/p&gt;
+&lt;p&gt;Check out the &lt;strong&gt;&lt;a class="link" href="https://github.com/intel/intel-extension-for-transformers/tree/main/examples/huggingface/pytorch/text-generation/inference" target="_blank" rel="noopener"
+&gt;notebook&lt;/a&gt;&lt;/strong&gt; and the Qwen3-0.6B depth-pruned
+&lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Intel/Qwen3-0.6B-pruned-draft" target="_blank" rel="noopener"
+&gt;draft model&lt;/a&gt;&lt;/strong&gt; to reproduce our results
+step by step.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-integration-with-smolagents"&gt;🤗 Integration with 🤗smolagents
+&lt;/h2&gt;&lt;p&gt;To showcase the real-world potential, we deployed our optimized setup with the 🤗smolagents
+library. With this integration, developers can plug in Qwen3-8B (paired with our pruned draft)
+to build agents that call APIs and external tools, write and execute code, handle long-context
+reasoning and run efficiently on Intel® Core™ Ultra.&lt;/p&gt;
+&lt;p&gt;The benefits aren&amp;rsquo;t limited to Hugging Face, this model pairing can also be used seamlessly with
+frameworks like AutoGen or QwenAgent, further strengthening the agentic ecosystem.&lt;/p&gt;
+&lt;p&gt;In our demo, we assigned the accelerated Qwen3-based agent a task: 👉 &lt;strong&gt;Summarize the key
+features of the Qwen3 model series and present them in a slide deck.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s how it worked:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The agent used a web search tool to gather up-to-date information.&lt;/li&gt;
+&lt;li&gt;It then switched to the Python interpreter to generate slides with the &lt;code&gt;python-pptx&lt;/code&gt; library.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This simple workflow highlights just a fraction of the possibilities unlocked when accelerated
+Qwen3 models meet frameworks like 🤗smolagents, bringing practical, efficient AI agents to life
+on AI PC. Try it &lt;strong&gt;&lt;a class="link" href="https://huggingface.co/spaces/Intel/Qwen3-8B-Agent-Demo" target="_blank" rel="noopener"
+&gt;here&lt;/a&gt;&lt;/strong&gt; 🚀&lt;/p&gt;
+&lt;h3 id="-references"&gt;📚 References
+&lt;/h3&gt;&lt;p&gt;[1] Gromov, A., Tirumala, K., Shapourian, H., Glorioso, P., &amp;amp; Roberts, D. A. (2025, January 22).
+The unreasonable ineffectiveness of the deeper layers. Poster presented at ICLR 2025.
+&lt;strong&gt;&lt;a class="link" href="https://arxiv.org/abs/2403.17887" target="_blank" rel="noopener"
+&gt;https://arxiv.org/abs/2403.17887&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/intel-qwen3-agent" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/intel-qwen3-agent&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;The integration of depth-pruned draft models with speculative decoding represents a significant
+advancement in accelerating AI inference on consumer hardware. By achieving a &lt;strong&gt;1.4× speedup&lt;/strong&gt;
+with Qwen3-8B on Intel® Core™ Ultra processors, this approach makes sophisticated AI agents
+more accessible and practical for local deployment.&lt;/p&gt;
+&lt;p&gt;The combination of OpenVINO optimization, intelligent layer pruning, and speculative decoding
+demonstrates how multiple optimization techniques can be synergistically combined to unlock
+better performance. The seamless integration with 🤗smolagents further validates the real-world
+applicability of these optimizations, enabling developers to build responsive, capable AI agents
+that run efficiently on edge devices.&lt;/p&gt;
+&lt;p&gt;This work opens new possibilities for deploying advanced agentic AI systems locally, reducing
+latency, improving privacy, and making AI more accessible across various applications and use cases.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Performance and Legal Notices:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Performance results are based on internal benchmarking with OpenVINO™ 2025.2 as of September
+2025, using a configuration with an Intel® Core™ Ultra 7 268V 2.20 GHz processor with an
+integrated Intel® Arc™ 140V GPU, paired with 32 GB of DDR5 memory.&lt;/li&gt;
+&lt;li&gt;Performance varies by use, configuration and other factors. Learn more at
+&lt;strong&gt;&lt;a class="link" href="http://www.Intel.com/PerformanceIndex" target="_blank" rel="noopener"
+&gt;www.Intel.com/PerformanceIndex&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;No product or component can be absolutely secure.&lt;/li&gt;
+&lt;li&gt;Your costs and results may vary.&lt;/li&gt;
+&lt;li&gt;Intel technologies may require enabled hardware, software, or service activation.&lt;/li&gt;
+&lt;li&gt;© Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel
+Corporation or its subsidiaries.&lt;/li&gt;
+&lt;li&gt;Other names and brands may be claimed as the property of others.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#QWEN3 #INTEL #AI #SPECULATIVE_DECODING #OPENVINO #AGENTS #INFERENCE_OPTIMIZATION #AIPC&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Google Cloud C4 Delivers 70% TCO Improvement with GPT OSS on Intel Xeon 6</title><link>https://shoubhikbanerjee.github.io/blog/p/google-cloud-c4-delivers-70-tco-improvement-with-gpt-oss-on-intel-xeon-6/</link><pubDate>Tue, 28 Oct 2025 01:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/google-cloud-c4-delivers-70-tco-improvement-with-gpt-oss-on-intel-xeon-6/</guid><description>&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/gpt_oss_expert.png" alt="Featured image of post Google Cloud C4 Delivers 70% TCO Improvement with GPT OSS on Intel Xeon 6" /&gt;&lt;h1 id="-google-cloud-c4-delivers-70-tco-improvement-with-gpt-oss-on-intel-xeon-6"&gt;🚀 Google Cloud C4 Delivers 70% TCO Improvement with GPT OSS on Intel Xeon 6
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/gpt_oss_expert.png"
+loading="lazy"
+alt="GPT OSS Expert Architecture"
+&gt;
+&lt;em&gt;Optimized expert execution in GPT OSS MoE architecture eliminates redundant computations&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Intel and Hugging Face collaborated to demonstrate the real-world value of upgrading to Google&amp;rsquo;s
+latest &lt;strong&gt;C4&lt;/strong&gt; Virtual Machine (VM) running on Intel® Xeon® 6 processors (codenamed Granite
+Rapids). The benchmark focused on text generation performance improvements with OpenAI&amp;rsquo;s GPT OSS
+Large Language Model (LLM).&lt;/p&gt;
+&lt;p&gt;The results showcase impressive gains with a &lt;strong&gt;1.7x improvement&lt;/strong&gt; in Total Cost of Ownership
+(TCO) over previous-generation Google &lt;strong&gt;C3&lt;/strong&gt; VM instances, delivering:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;1.4x to 1.7x&lt;/strong&gt; TPOT throughput/vCPU/dollar improvement&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lower hourly pricing&lt;/strong&gt; compared to C3 VMs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-introduction"&gt;🧩 Introduction
+&lt;/h2&gt;&lt;p&gt;GPT OSS represents an open-source Mixture of Experts (MoE) model from OpenAI. MoE architecture
+utilizes specialized &amp;ldquo;expert&amp;rdquo; sub-networks with a &amp;ldquo;gating network&amp;rdquo; that determines which experts
+process specific inputs. This design enables efficient model capacity scaling without linear
+compute cost increases, allowing different experts to develop specialized skills for diverse data distributions.&lt;/p&gt;
+&lt;p&gt;The architecture&amp;rsquo;s efficiency makes CPU inference viable even with large parameter counts, as
+only small expert subsets activate per token.&lt;/p&gt;
+&lt;p&gt;Intel and Hugging Face collaborated on expert execution optimization (PR #40304), eliminating
+redundant computations where every expert previously processed all tokens. The optimization
+directs each expert to process only routed tokens, removing FLOP waste and improving utilization.&lt;/p&gt;
+&lt;h2 id="-benchmark-scope--hardware"&gt;⚙️ Benchmark Scope &amp;amp; Hardware
+&lt;/h2&gt;&lt;p&gt;The benchmark evaluated GPT OSS under controlled, repeatable generation workloads to isolate
+architectural differences between GCP &lt;strong&gt;C4&lt;/strong&gt; VMs (Intel Xeon 6 processors) and GCP &lt;strong&gt;C3&lt;/strong&gt; VMs
+(4th Gen Intel Xeon Processors). Focus areas included steady-state decoding latency and
+end-to-end normalized throughput with increasing batch sizes while maintaining fixed sequence lengths.&lt;/p&gt;
+&lt;h3 id="-configuration-summary"&gt;📋 Configuration Summary
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model&lt;/strong&gt;: unsloth/gpt-oss-120b-BF16&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Precision&lt;/strong&gt;: bfloat16&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Task&lt;/strong&gt;: Text generation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Input length&lt;/strong&gt;: 1024 tokens (left-padded)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Output length&lt;/strong&gt;: 1024 tokens&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Batch sizes&lt;/strong&gt;: 1, 2, 4, 8, 16, 32, 64&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enabled features&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Static KV cache - SDPA attention backend&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metrics&lt;/strong&gt;: Throughput (total generated tokens per second across batch)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-hardware-under-tes"&gt;🖥️ Hardware Under Tes
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Instance&lt;/th&gt;
+&lt;th&gt;Architecture&lt;/th&gt;
+&lt;th&gt;vCPUs&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;C3&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;4th Gen Intel Xeon processor (SPR)&lt;/td&gt;
+&lt;td&gt;172&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;C4&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Intel Xeon 6 processor (GNR)&lt;/td&gt;
+&lt;td&gt;144&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-instance-creation"&gt;☁️ Instance Creation
+&lt;/h2&gt;&lt;h3 id="c3-configuration"&gt;C3 Configuration
+&lt;/h3&gt;&lt;p&gt;Visit &lt;strong&gt;Google Cloud Console&lt;/strong&gt; and create a VM under your project:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Select &lt;strong&gt;C3&lt;/strong&gt; in Machine configuration, specify &lt;strong&gt;c3-standard-176&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Set CPU platform and enable &lt;strong&gt;all-core turbo&lt;/strong&gt; for stable performance 3. Configure OS and storage as required&lt;/li&gt;
+&lt;li&gt;Maintain default configurations for other settings&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/spr.png"
+loading="lazy"
+alt="C3 Configuration"
+&gt;
+&lt;em&gt;C3 instance configuration with 176 vCPUs&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="c4-configuration"&gt;C4 Configuration
+&lt;/h3&gt;&lt;p&gt;Follow similar steps for &lt;strong&gt;C4&lt;/strong&gt; instance creation:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Select &lt;strong&gt;C4&lt;/strong&gt; in Machine configuration, specify &lt;strong&gt;c4-standard-144&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Configure CPU platform and enable all-core turbo 3. Apply same OS and storage configuration as C3&lt;/li&gt;
+&lt;li&gt;Create the 144 vCPU instance&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/gnr.png"
+loading="lazy"
+alt="C4 Configuration"
+&gt;
+&lt;em&gt;C4 instance configuration with 144 vCPUs&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-environment-setu"&gt;🛠️ Environment Setu
+&lt;/h2&gt;&lt;p&gt;SSH into the instance and install Docker. Follow these reproducible setup steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Clone repository&lt;/strong&gt;: &lt;code&gt;git clone https://github.com/huggingface/transformers.git&lt;/code&gt;2. &lt;strong&gt;Navigate and checkout&lt;/strong&gt;: &lt;code&gt;cd transformers/ &amp;amp;&amp;amp; git checkout 26b65fb5168f324277b85c558ef8209bfceae1fe&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Build Docker image&lt;/strong&gt;: &lt;code&gt;cd docker/transformers-intel-cpu/ &amp;amp;&amp;amp; sudo docker build . -t &amp;lt;your_docker_image_tag&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Run container&lt;/strong&gt;: &lt;code&gt;sudo docker run -it --rm --privileged -v /home/&amp;lt;your_home_folder&amp;gt;:/workspace &amp;lt;your_docker_image_tag&amp;gt; /bin/bash&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Inside the container:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Install transformers&lt;/strong&gt;: &lt;code&gt;pip install git+https://github.com/huggingface/transformers.git@26b65fb5168f324277b85c558ef8209bfceae1fe&lt;/code&gt;2. &lt;strong&gt;Install PyTorch&lt;/strong&gt;: &lt;code&gt;pip install torch==2.8.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-benchmark-procedure"&gt;📊 Benchmark Procedure
+&lt;/h2&gt;&lt;p&gt;For each batch size:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Build fixed-length 1024-token left-padded batch 2. Execute single warm-up round&lt;/li&gt;
+&lt;li&gt;Set &lt;code&gt;max_new_tokens=1024&lt;/code&gt; and measure total latency&lt;/li&gt;
+&lt;li&gt;Calculate: &lt;code&gt;throughput = (OUTPUT_TOKENS * batch_size) / total_latency&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Execute with: &lt;code&gt;numactl -l python benchmark.py&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;span class="lnt"&gt;24
+&lt;/span&gt;&lt;span class="lnt"&gt;25
+&lt;/span&gt;&lt;span class="lnt"&gt;26
+&lt;/span&gt;&lt;span class="lnt"&gt;27
+&lt;/span&gt;&lt;span class="lnt"&gt;28
+&lt;/span&gt;&lt;span class="lnt"&gt;29
+&lt;/span&gt;&lt;span class="lnt"&gt;30
+&lt;/span&gt;&lt;span class="lnt"&gt;31
+&lt;/span&gt;&lt;span class="lnt"&gt;32
+&lt;/span&gt;&lt;span class="lnt"&gt;33
+&lt;/span&gt;&lt;span class="lnt"&gt;34
+&lt;/span&gt;&lt;span class="lnt"&gt;35
+&lt;/span&gt;&lt;span class="lnt"&gt;36
+&lt;/span&gt;&lt;span class="lnt"&gt;37
+&lt;/span&gt;&lt;span class="lnt"&gt;38
+&lt;/span&gt;&lt;span class="lnt"&gt;39
+&lt;/span&gt;&lt;span class="lnt"&gt;40
+&lt;/span&gt;&lt;span class="lnt"&gt;41
+&lt;/span&gt;&lt;span class="lnt"&gt;42
+&lt;/span&gt;&lt;span class="lnt"&gt;43
+&lt;/span&gt;&lt;span class="lnt"&gt;44
+&lt;/span&gt;&lt;span class="lnt"&gt;45
+&lt;/span&gt;&lt;span class="lnt"&gt;46
+&lt;/span&gt;&lt;span class="lnt"&gt;47
+&lt;/span&gt;&lt;span class="lnt"&gt;48
+&lt;/span&gt;&lt;span class="lnt"&gt;49
+&lt;/span&gt;&lt;span class="lnt"&gt;50
+&lt;/span&gt;&lt;span class="lnt"&gt;51
+&lt;/span&gt;&lt;span class="lnt"&gt;52
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;torch&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;datasets&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;load_dataset&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;transformers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;AutoModelForCausalLM&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AutoTokenizer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;INPUT_TOKENS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt; &lt;span class="n"&gt;OUTPUT_TOKENS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_inputs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;dataset&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;load_dataset&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;ola13/small-the_pile&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;train&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;padding_side&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;left&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;selected_texts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;dataset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;input_ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;return_tensors&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;pt&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;input_ids&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;input_ids&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;INPUT_TOKENS&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;break&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;selected_texts&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;INPUT_TOKENS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;padding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;max_length&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;truncation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;return_tensors&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;pt&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;run_generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;generation_config&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# warm up&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;pre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;latency&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;benchmark&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;inputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_inputs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max_new_tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;min_new_tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;prefill_latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;run_generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max_new_tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OUTPUT_TOKENS&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;min_new_tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OUTPUT_TOKENS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;total_latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;run_generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;decoding_latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;total_latency&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;prefill_latency&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;OUTPUT_TOKENS&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;throughput&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OUTPUT_TOKENS&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;total_latency&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;prefill_latency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;decoding_latency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;throughput&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;unsloth/gpt-oss-120b-BF16&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoTokenizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model_kwargs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;dtype&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bfloat16&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoModelForCausalLM&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;model_kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_attn_implementation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;sdpa&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generation_config&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;do_sample&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache_implementation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;static&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;---------- Run generation with batch size = &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; ----------&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;prefill_latency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;decoding_latency&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;throughput&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;benchmark&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;batch_size&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generation_config&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;throughput = &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;throughput&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-results"&gt;📈 Results
+&lt;/h2&gt;&lt;h3 id="-normalized-throughput-per-vcpu"&gt;🎯 Normalized Throughput per vCPU
+&lt;/h3&gt;&lt;p&gt;Intel Xeon 6 processor-powered &lt;strong&gt;C4&lt;/strong&gt; consistently outperforms &lt;strong&gt;C3&lt;/strong&gt; with &lt;strong&gt;1.4x to 1.7×
+throughput per-vCPU&lt;/strong&gt; across batch sizes up to 64.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Formula&lt;/strong&gt;: &lt;code&gt;normalized_throughput_per_vCPU = (throughput_C4 / vCPUs_C4) / (throughput_C3 / vCPUs_C3)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/throughput-gpt-oss-per-vcpu.png"
+loading="lazy"
+alt="Throughput per vCPU"
+&gt;
+&lt;em&gt;C4 demonstrates consistent 1.4x-1.7x throughput advantage per vCPU across all batch sizes&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-cost--tco-analysis"&gt;💰 Cost &amp;amp; TCO Analysis
+&lt;/h3&gt;&lt;p&gt;At batch size 64, &lt;strong&gt;C4&lt;/strong&gt; delivers &lt;strong&gt;1.7× per-vCPU throughput&lt;/strong&gt; compared to &lt;strong&gt;C3&lt;/strong&gt;. With near
+price parity per vCPU, this yields a &lt;strong&gt;1.7× TCO advantage&lt;/strong&gt; - C3 would require 1.7× the spending
+for equivalent generated token volume.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;TCO Calculation&lt;/strong&gt;: &lt;code&gt;throughput_ratio = 1.7 ⇒ TCO_C3/TCO_C4 ≈ 1.7&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/Intel/blog/resolve/main/gpt-oss-on-intel-xeon/throughput-gpt-oss-per-dollar.png"
+loading="lazy"
+alt="Throughput per Dollar"
+&gt;
+&lt;em&gt;Cost efficiency comparison shows C4&amp;rsquo;s superior performance per dollar invested&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/gpt-oss-on-intel-xeon" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/gpt-oss-on-intel-xeon&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Google Cloud &lt;strong&gt;C4&lt;/strong&gt; VMs powered by Intel Xeon 6 processors deliver impressive performance gains
+and superior cost efficiency for large MoE inference compared to previous-generation &lt;strong&gt;C3&lt;/strong&gt; VMs.
+The GPT OSS benchmarks demonstrate combined benefits of higher throughput, lower latency, and
+reduced operational costs.&lt;/p&gt;
+&lt;p&gt;These results highlight how targeted framework optimizations from Intel and Hugging Face enable
+efficient serving of large MoE models on next-generation general-purpose CPUs, making advanced
+AI capabilities more accessible and cost-effective for enterprises.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Takeaways&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;70% TCO improvement&lt;/strong&gt; with C4 over C3 instances&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;1.4x-1.7x performance gains&lt;/strong&gt; across different batch sizes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Framework optimizations&lt;/strong&gt; crucial for MoE model efficiency&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CPU inference viability&lt;/strong&gt; for large-scale AI workloads&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#GOOGLECLOUD #INTEL #CPU #AI #LLM #MOE #PERFORMANCE #TCO #HUGGINGFACE&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

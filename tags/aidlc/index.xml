@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AIDLC on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/aidlc/</link><description>Recent content in AIDLC on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 03 Sep 2026 22:06:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/aidlc/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Expands Amazon Bedrock AgentCore with AI-DLC Reference Implementations</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-expands-amazon-bedrock-agentcore-with-ai-dlc-reference-implementations/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-expands-amazon-bedrock-agentcore-with-ai-dlc-reference-implementations/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-featured-image.png" alt="Featured image of post AWS Expands Amazon Bedrock AgentCore with AI-DLC Reference Implementations" /&gt;&lt;h1 id="aws-expands-amazon-bedrock-agentcore-with-ai-dlc-reference-implementations"&gt;AWS Expands Amazon Bedrock AgentCore with AI-DLC Reference Implementations
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore, a service for building, connecting, and optimizing agents at scale with any framework or model, now powers two new reference implementations that demonstrate AI-DLC construction phase patterns. AI-DLC positions AI as a central collaborator across the software development lifecycle, handling routine execution while humans retain oversight of critical decisions.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The two reference implementations cover:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Automated generation of Mermaid entity relationship diagrams from SQL schemas&lt;/li&gt;
+&lt;li&gt;Automated code security analysis through a multi-agent architecture&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Both implementations link to complete deployment instructions in their respective GitHub repositories.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;h3 id="mermaid-er-diagram-generator"&gt;Mermaid ER Diagram Generator
+&lt;/h3&gt;&lt;p&gt;This AWS Samples project auto-generates Mermaid ER diagrams from SQL schema files using an agentic AI workflow on Amazon Bedrock AgentCore.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Architecture components:&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;S3 event trigger&lt;/td&gt;
+&lt;td&gt;SQL files uploaded to Amazon S3 trigger an AWS Lambda function that initiates the analysis workflow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Cognito&lt;/td&gt;
+&lt;td&gt;Provides OAuth2 machine-to-machine (M2M) authentication&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS Systems Manager Parameter Store&lt;/td&gt;
+&lt;td&gt;Stores client credentials&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AgentCore runtime&lt;/td&gt;
+&lt;td&gt;Containerized agent built with the Strands framework&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AgentCore memory&lt;/td&gt;
+&lt;td&gt;Persistent session context with 90-day expiry, supports semantic search across previous analyses&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon S3&lt;/td&gt;
+&lt;td&gt;Output storage for generated .mmd files under dedicated prefix with metadata tracking&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Workflow:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQL file is uploaded to Amazon S3 (manually or through CI/CD pipeline)&lt;/li&gt;
+&lt;li&gt;Lambda trigger reads file content and authenticates through Cognito OAuth&lt;/li&gt;
+&lt;li&gt;Trigger invokes AgentCore runtime agent with SQL content as payload&lt;/li&gt;
+&lt;li&gt;Agent analyzes schema and identifies tables, columns, constraints, and foreign key relationships&lt;/li&gt;
+&lt;li&gt;Agent generates complete Mermaid erDiagram&lt;/li&gt;
+&lt;li&gt;Diagram is saved to Amazon S3 and analysis session is stored in AgentCore memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Key design decisions:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Chunked processing: Large SQL files split into manageable segments, analyzed independently, then consolidated&lt;/li&gt;
+&lt;li&gt;Structured prompting: Systematic analysis prompt extracts tables, columns, data types, primary keys, and foreign key relationships before generating diagram syntax&lt;/li&gt;
+&lt;li&gt;OpenTelemetry tracing: Every step instrumented with spans and attributes for observability into processing duration, chunk counts, and error attribution&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The agent uses Claude Sonnet 4 through Amazon Bedrock to parse SQL DDL statements. It reads only schema metadata (tables, constraints, and foreign keys), never row data.&lt;/p&gt;
+&lt;h3 id="automated-code-security-analysis"&gt;Automated Code Security Analysis
+&lt;/h3&gt;&lt;p&gt;The second implementation provides automated code security analysis through a multi-agent architecture that uses:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AgentCore Gateway&lt;/li&gt;
+&lt;li&gt;AgentCore memory&lt;/li&gt;
+&lt;li&gt;External tool integrations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This system analyzes code pushed through CI/CD pipelines, producing security assessments, Common Vulnerabilities and Exposures (CVE) checks, and policy compliance reports that inform human decision-making.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;Both systems share a common architectural foundation built on AgentCore, demonstrating how teams can compose AI-driven workflows from modular, manageable components.&lt;/p&gt;
+&lt;p&gt;The AI-DLC construction phase positions AI to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Propose architecture&lt;/li&gt;
+&lt;li&gt;Generate implementation plans&lt;/li&gt;
+&lt;li&gt;Produce code&lt;/li&gt;
+&lt;li&gt;Create deployment artifacts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Team members provide clarification on technical decisions in real time.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The complete implementation for the Mermaid ER diagram generator is available in its GitHub repository. The automated code security analysis implementation is also available with complete deployment instructions.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Database teams managing evolving SQL schemas need current entity relationship documentation. Manual creation of ER diagrams is time-intensive and documentation frequently drifts from the actual schema. When schema changes land through pull requests, teams need updated diagrams without adding manual documentation steps to the development workflow.&lt;/p&gt;
+&lt;p&gt;For security, continuous code quality enforcement through multi-agent systems ensures that assessments, CVE checks, and policy compliance reports inform human decision-making rather than replacing it.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21366-3.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #AIDLC #AIagents #DevOps #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/ai-driven-development-lifecycle-using-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;AI-driven development lifecycle using Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/set-up-openai-chatgpt-codex-with-litellm-on-amazon-ecs-and-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Set up OpenAI ChatGPT Codex with LiteLLM on Amazon ECS and Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/best-practices-for-building-agentic-automations-with-amazon-quick-automate/" target="_blank" rel="noopener"
+&gt;Best practices for building agentic automations with Amazon Quick Automate | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

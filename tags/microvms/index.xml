@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MicroVMs on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/microvms/</link><description>Recent content in MicroVMs on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 01:20:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/microvms/index.xml" rel="self" type="application/rss+xml"/><item><title>Demystifying AI Agents: Understanding the Core Components of Agentic Systems</title><link>https://shoubhikbanerjee.github.io/blog/p/demystifying-ai-agents-understanding-the-core-components-of-agentic-systems/</link><pubDate>Tue, 28 Oct 2025 01:20:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/demystifying-ai-agents-understanding-the-core-components-of-agentic-systems/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Demystifying AI Agents: Understanding the Core Components of Agentic Systems" /&gt;&lt;h1 id="-demystifying-ai-agents-understanding-the-core-components-of-agentic-systems"&gt;🤖 Demystifying AI Agents: Understanding the Core Components of Agentic Systems
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;Amazon vice president and distinguished engineer Marc Brooker explains how agentic systems work
+under the hood — and how AWS&amp;rsquo;s new AgentCore framework implements their essential components.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/video-placeholder"
+loading="lazy"
+alt="Amazon Science Video"
+&gt;
+&lt;em&gt;Amazon vice president and distinguished engineer Marc Brooker on Amazon Bedrock AgentCore.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-rise-of-agentic-ai"&gt;🚀 The Rise of Agentic AI
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;&lt;a class="link" href="https://www.amazon.science/blog/agents" target="_blank" rel="noopener"
+&gt;Agents&lt;/a&gt;&lt;/strong&gt; are the trendiest topic in AI today, and
+with good reason. AI agents act on their users&amp;rsquo; behalf, autonomously doing things like making
+online purchases, building software, researching business trends, or booking travel. By taking
+generative AI out of the sandbox of the chat interface and allowing it to act directly on the
+world, agentic AI represents a leap forward in the power and utility of AI.&lt;/p&gt;
+&lt;p&gt;Agentic AI has been moving really fast: for example, one of the core building blocks of today&amp;rsquo;s
+agents, the &lt;strong&gt;model context protocol (MCP)&lt;/strong&gt;, is only a year old! As in any fast-moving field,
+there are many competing definitions, hot takes, and misleading opinions.&lt;/p&gt;
+&lt;p&gt;To cut through the noise, I&amp;rsquo;d like to describe the core components of an agentic AI system and
+how they fit together. Hopefully, when you&amp;rsquo;ve finished reading this post, agents won&amp;rsquo;t seem as
+mysterious. You&amp;rsquo;ll also understand why we made the choices we did in designing Amazon Web
+Services&amp;rsquo; &lt;strong&gt;Bedrock AgentCore&lt;/strong&gt;, a set of services and tools that lets customers quickly and
+easily design and build their own agentic AI systems.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-agentic-ecosystem"&gt;⚙️ The Agentic Ecosystem
+&lt;/h2&gt;&lt;p&gt;Definitions of the word &amp;ldquo;agent&amp;rdquo; abound, but I like a slight variation on the British programmer
+Simon Willison&amp;rsquo;s minimalist take:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;An agent runs models and tools in a loop to achieve a goal.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The user prompts an AI model (typically a large language model, or LLM) with the goal to be
+attained — say, booking a table at a restaurant near the theater where a movie is playing. Along
+with the goal, the model receives a list of the tools available to it, such as a database of
+restaurant locations or a record of the user&amp;rsquo;s food preferences. The model then plans how to
+achieve the goal and takes a first step by calling one of the tools. The tool provides a
+response, and based on that, the model calls a new tool. Through repetitions of this process,
+the agent ratchets toward accomplishment of the goal.&lt;/p&gt;
+&lt;h3 id="-core-components-of-an-agentic-system"&gt;🧩 Core Components of an Agentic System
+&lt;/h3&gt;&lt;p&gt;An agentic system needs a few core components:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A way to build the agent&lt;/strong&gt; - When you deploy an agent, you don&amp;rsquo;t want to have to code it
+from scratch. There are several agent development frameworks out there, but I&amp;rsquo;m partial to
+Amazon Web Services&amp;rsquo; own &lt;a class="link" href="https://github.com/awslabs/strands" target="_blank" rel="noopener"
+&gt;Strands Agents&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Somewhere to run the AI model&lt;/strong&gt; - A seasoned AI developer can download an open-weight LLM,
+but it takes expertise to do that right. It also takes expensive hardware that&amp;rsquo;s going to be
+poorly utilized for the average user.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Somewhere to run the agentic code&lt;/strong&gt; - With frameworks like Strands, the user creates code
+for an agent object with a defined set of functions. Most of those functions involve sending
+prompts to an AI model, but the code needs to run somewhere.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A mechanism for translating between the text-based LLM and tool calls&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A short-term memory&lt;/strong&gt; for tracking the content of agentic interactions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A long-term memory&lt;/strong&gt; for tracking the user&amp;rsquo;s preferences and affinities across sessions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A way to trace&lt;/strong&gt; the system&amp;rsquo;s execution, to evaluate the agent&amp;rsquo;s performance&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="-building-an-agent-the-react-model"&gt;🔧 Building an Agent: The ReAct Model
+&lt;/h2&gt;&lt;p&gt;It&amp;rsquo;s well known that asking an LLM to explain how it plans to approach a task improves its
+performance on that task. Such &amp;ldquo;chain-of-thought reasoning&amp;rdquo; is now ubiquitous in AI.&lt;/p&gt;
+&lt;p&gt;The analogue in agentic systems is the &lt;strong&gt;ReAct (reasoning + action) model&lt;/strong&gt;, in which the agent has:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;thought&lt;/strong&gt; (&amp;ldquo;I&amp;rsquo;ll use the map function to locate nearby restaurants&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;Performs an &lt;strong&gt;action&lt;/strong&gt; (issuing an API call to the map function)&lt;/li&gt;
+&lt;li&gt;Makes an &lt;strong&gt;observation&lt;/strong&gt; (&amp;ldquo;There are two pizza places and one Indian restaurant within two
+blocks of the movie theater&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![Agent Development Process](&lt;a class="link" href="https://assets.amazon.science/dims4/default/5f29cf3/2147483647/strip/true/crop/1080x1080&amp;#43;0&amp;#43;0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspo" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/5f29cf3/2147483647/strip/true/crop/1080x1080+0+0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspo&lt;/a&gt;
+t.s3.amazonaws.com%2Fscience%2F85%2F0b%2F3cd7bc80466c8ed52f56cd2cc5a8%2Fagent-development.gif)
+&lt;em&gt;AgentCore lets the developer use any agent development framework and any model.&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-tool-integration-and-code-generation"&gt;💡 Tool Integration and Code Generation
+&lt;/h3&gt;&lt;p&gt;The &lt;em&gt;tools&lt;/em&gt; available to the agent can include local tools and remote tools such as databases,
+microservices, and software as a service. A tool&amp;rsquo;s specification includes a natural-language
+explanation of how and when it&amp;rsquo;s used and the syntax of its API calls.&lt;/p&gt;
+&lt;p&gt;The developer can also tell the agent to build its own tools on the fly. For example, if a tool
+retrieves a table stored as comma-separated text and the agent needs to sort it, rather than
+waste resources sending it through an LLM repeatedly, the developer can instruct the agent to
+generate Python code for such repetitive tasks.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-runtime-architecture-firecracker-microvms"&gt;☁️ Runtime Architecture: Firecracker MicroVMs
+&lt;/h2&gt;&lt;p&gt;Historically, there were two main ways to isolate code running on shared servers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Containerization&lt;/strong&gt;: Efficient but offered lower security&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Virtual machines (VMs)&lt;/strong&gt;: Secure but came with computational overhead&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In 2018, Amazon Web Services&amp;rsquo; Lambda serverless-computing service deployed
+&lt;strong&gt;&lt;a class="link" href="https://firecracker-microvm.github.io/" target="_blank" rel="noopener"
+&gt;Firecracker&lt;/a&gt;&lt;/strong&gt;, a new paradigm offering the best of
+both worlds. Firecracker creates &amp;ldquo;microVMs&amp;rdquo; with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Complete hardware isolation&lt;/li&gt;
+&lt;li&gt;Their own Linux kernels&lt;/li&gt;
+&lt;li&gt;Reduced overhead (as low as a few megabytes)&lt;/li&gt;
+&lt;li&gt;Fast startup times (as low as a few milliseconds)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![AWS AgentCore Architecture](&lt;a class="link" href="https://assets.amazon.science/dims4/default/d90c4d6/2147483647/strip/true/crop/1080x1080&amp;#43;0&amp;#43;0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightsp" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/d90c4d6/2147483647/strip/true/crop/1080x1080+0+0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightsp&lt;/a&gt;
+ot.s3.amazonaws.com%2Fscience%2Fb4%2Fa5%2Ff5f50ee842a48ef1e9ea9c58e962%2Fadobe-express-agentcore
+-asw-scalable-10-16-toedit-11-45.gif)&lt;/p&gt;
+&lt;p&gt;AgentCore uses &lt;strong&gt;session-based isolation&lt;/strong&gt;, where every session with an agent is assigned its
+own Firecracker microVM. When the session finishes, the LLM&amp;rsquo;s state information is copied to
+long-term memory, and the microVM is destroyed.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-tool-calls-and-communication-protocols"&gt;🔗 Tool Calls and Communication Protocols
+&lt;/h2&gt;&lt;p&gt;![AgentCore Gateway](&lt;a class="link" href="https://assets.amazon.science/dims4/default/1df0f0b/2147483647/strip/true/crop/1038x584&amp;#43;0&amp;#43;0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazo" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/1df0f0b/2147483647/strip/true/crop/1038x584+0+0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazo&lt;/a&gt;
+naws.com%2Fscience%2Fe7%2F5e%2F7b3efa2447c2a1e24c2c15e0ed1e%2Fgateway.png)
+&lt;em&gt;AgentCore Gateway manages the tool calls issued by the agent.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Just as there are several existing development frameworks for agent creation, there are several
+existing standards for communication between agents and tools, the most popular of which is
+&lt;strong&gt;MCP (Model Context Protocol)&lt;/strong&gt;. MCP establishes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Standard format for passing data between the LLM and its server&lt;/li&gt;
+&lt;li&gt;A way for servers to describe available tools and data to the agent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In AgentCore, tool calls are handled by the &lt;strong&gt;AgentCore Gateway&lt;/strong&gt; service, which:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses MCP by default&lt;/li&gt;
+&lt;li&gt;Is configurable and supports a growing set of protocols&lt;/li&gt;
+&lt;li&gt;Manages translation between LLM output and tool input specifications&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-computer-use-capabilitie"&gt;🖥️ Computer Use Capabilitie
+&lt;/h3&gt;&lt;p&gt;Sometimes, the necessary tool lacks a public API. In such cases, the only way to retrieve data
+is by pointing and clicking on a website. &lt;strong&gt;Computer use&lt;/strong&gt; services like Amazon&amp;rsquo;s &lt;strong&gt;Nova Act&lt;/strong&gt;
+can be used with AgentCore&amp;rsquo;s secure Browser tool, making any website a potential tool for agents.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-memory-systems"&gt;🧠 Memory Systems
+&lt;/h2&gt;&lt;h3 id="short-term-memory"&gt;Short-term Memory
+&lt;/h3&gt;&lt;p&gt;LLMs are next-word prediction engines, with predictions based on long sequences of words they&amp;rsquo;ve
+seen, known as &lt;em&gt;context&lt;/em&gt;. However, agents need additional memory systems beyond just context.&lt;/p&gt;
+&lt;p&gt;For example, if an agent retrieves information about dozens of restaurants, it doesn&amp;rsquo;t want to
+dump all that data into the LLM&amp;rsquo;s context. Instead, it stores the complete list in &lt;strong&gt;short-term
+memory&lt;/strong&gt; and retrieves specific records based on user preferences and proximity.&lt;/p&gt;
+&lt;h3 id="long-term-memory"&gt;Long-term Memory
+&lt;/h3&gt;&lt;p&gt;Agents must remember prior interactions with clients. If a user previously specified food
+preferences, price tolerance, or ambiance preferences, the agent shouldn&amp;rsquo;t need to ask again.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Long-term memory&lt;/strong&gt; features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Storage of user preferences across sessions&lt;/li&gt;
+&lt;li&gt;LLM summarization and &amp;ldquo;chunking&amp;rdquo; of documents&lt;/li&gt;
+&lt;li&gt;Topic-based grouping for easier retrieval&lt;/li&gt;
+&lt;li&gt;Configurable strategies for summarization and information extraction&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-observability-and-monitoring"&gt;📊 Observability and Monitoring
+&lt;/h2&gt;&lt;p&gt;![AgentCore Observability](&lt;a class="link" href="https://assets.amazon.science/dims4/default/5ef3a72/2147483647/strip/true/crop/1023x615&amp;#43;0&amp;#43;0/resize/1200x721!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/5ef3a72/2147483647/strip/true/crop/1023x615+0+0/resize/1200x721!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3&lt;/a&gt;
+.amazonaws.com%2Fscience%2Fb7%2F8a%2F887ef82f4e0cbfa8a702eb7bac73%2Ftraces.png)
+&lt;em&gt;AgentCore Observability lets the customer track an agent&amp;rsquo;s execution.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Agents are a new kind of software system requiring new approaches to observation, monitoring,
+and auditing. Key questions include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Are agents running fast enough?&lt;/li&gt;
+&lt;li&gt;How much are they costing?&lt;/li&gt;
+&lt;li&gt;How many tool calls are they making?&lt;/li&gt;
+&lt;li&gt;Are users satisfied with the results?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In &lt;strong&gt;AgentCore Observability&lt;/strong&gt;, &lt;em&gt;traces&lt;/em&gt; provide an end-to-end view of session execution,
+breaking down step-by-step which actions were taken and why. These traces are essential for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Understanding agent performance&lt;/li&gt;
+&lt;li&gt;Providing data to improve agent effectiveness&lt;/li&gt;
+&lt;li&gt;Debugging and optimization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://www.amazon.science/blog/demystifying-agents" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/demystifying-agents&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;This explanation has demystified agentic AI by breaking down its core components: agent building
+frameworks, runtime infrastructure, tool communication protocols, memory systems, and
+observability tools. AWS&amp;rsquo;s &lt;strong&gt;AgentCore&lt;/strong&gt; provides a comprehensive platform implementing all
+these essential components, from &lt;strong&gt;Strands Agents&lt;/strong&gt; for development to &lt;strong&gt;Firecracker microVMs&lt;/strong&gt;
+for secure runtime isolation.&lt;/p&gt;
+&lt;p&gt;The future of AI lies in agents that can act autonomously on behalf of users, and understanding
+these fundamental building blocks is crucial for anyone looking to build or deploy agentic
+systems. Whether you&amp;rsquo;re booking restaurants, building software, or researching business trends,
+agents represent the next evolution of AI from passive chat interfaces to active, goal-oriented systems.&lt;/p&gt;
+&lt;p&gt;Ready to build your own agents? All the tools you need are available at the &lt;a class="link" href="https://aws.amazon.com/bedrock/agentcore/" target="_blank" rel="noopener"
+&gt;AgentCore
+website&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AWS #AI #AGENTS #BEDROCK #AGENTCORE #FIRECRACKER #CLOUDCOMPUTING #MACHINELEARNING #LLM
+#AGENTIC&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

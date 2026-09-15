@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenTelemetry on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/opentelemetry/</link><description>Recent content in OpenTelemetry on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 09 Sep 2026 00:51:34 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/opentelemetry/index.xml" rel="self" type="application/rss+xml"/><item><title>Overview of Amazon Bedrock AgentCore Runtime and Evaluation Capabilities</title><link>https://shoubhikbanerjee.github.io/blog/p/overview-of-amazon-bedrock-agentcore-runtime-and-evaluation-capabilities/</link><pubDate>Wed, 09 Sep 2026 00:51:34 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/overview-of-amazon-bedrock-agentcore-runtime-and-evaluation-capabilities/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-20711-featured-image.png" alt="Featured image of post Overview of Amazon Bedrock AgentCore Runtime and Evaluation Capabilities" /&gt;&lt;h1 id="overview-of-amazon-bedrock-agentcore-runtime-and-evaluation-capabilities"&gt;Overview of Amazon Bedrock AgentCore Runtime and Evaluation Capabilities
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore provides a managed environment for developing, hosting, and evaluating AI agents throughout their lifecycle. The platform integrates agent runtime, observability, and evaluation features to support development workflows.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;AgentCore runtime acts as a managed hosting platform that handles scaling, infrastructure, and session isolation for agent code written in Python or other frameworks. Agents can connect to MCP (Model Context Protocol) servers, which provide a standardized interface for discovering and calling external tools. The development lifecycle is supported by GitHub Actions, which uses OIDC federation to assume AWS IAM roles without requiring long-lived credentials.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;AgentCore Evaluations functions as the platform&amp;rsquo;s quality measurement layer. It operates by scoring agent interactions using LLM-as-a-judge or code-based evaluation via AWS Lambda, utilizing OpenTelemetry traces captured by AgentCore Observability.&lt;/p&gt;
+&lt;p&gt;Evaluation methods include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;On-demand: Evaluates specific sessions by providing span data directly in the API call.&lt;/li&gt;
+&lt;li&gt;Online: Monitors production traffic continuously with configurable sampling rates, feeding results into CloudWatch.&lt;/li&gt;
+&lt;li&gt;Batch: Scores multiple sessions asynchronously by pointing to CloudWatch Logs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-built-in-evaluators"&gt;🔍 Built-in Evaluators
+&lt;/h2&gt;&lt;p&gt;The platform includes pre-built evaluators to measure agent performance across several quality dimensions:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Evaluator&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Scope&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Helpfulness&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Session/Trace/Tool-call&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Correctness&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Session/Trace/Tool-call&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GoalSuccessRate&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Session/Trace/Tool-call&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;ToolSelectionAccuracy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Session/Trace/Tool-call&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;ToolParameterAccuracy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Session/Trace/Tool-call&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;TrajectoryExactOrderMatch&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tool-call sequence&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;TrajectoryInOrderMatch&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tool-call sequence&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;TrajectoryAnyOrderMatch&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tool-call sequence&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-20711-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-20711-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-20711-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #AIAgents #LLM #OpenTelemetry&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/automated-agent-evaluation-with-amazon-bedrock-agentcore-and-github-actions/" target="_blank" rel="noopener"
+&gt;Automated agent evaluation with Amazon Bedrock AgentCore and GitHub Actions | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Graham Dumpleton releases Wrapture library for Python tracing and testing</title><link>https://shoubhikbanerjee.github.io/blog/p/graham-dumpleton-releases-wrapture-library-for-python-tracing-and-testing/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/graham-dumpleton-releases-wrapture-library-for-python-tracing-and-testing/</guid><description>&lt;h1 id="graham-dumpleton-releases-wrapture-library-for-python-tracing-and-testing"&gt;Graham Dumpleton releases Wrapture library for Python tracing and testing
+&lt;/h1&gt;&lt;p&gt;Graham Dumpleton, creator of wrapt and mod_wsgi, has released a new project called Wrapture. The library extends monkeypatching concepts to provide a unified approach for testing and tracing within Python applications.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Wrapture is a tool designed to wrap functions or methods, allowing developers to trace access or override return values. It serves as an alternative to unittest.mock and facilitates tracing in existing projects.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enables function and method wrapping for tracing and value overriding.&lt;/li&gt;
+&lt;li&gt;Provides support for OpenTelemetry.&lt;/li&gt;
+&lt;li&gt;Includes a configuration-based mechanism for adding tracing to existing Python projects.&lt;/li&gt;
+&lt;li&gt;Supports various testing patterns for complex call chains, such as an OrderService calling a Gateway.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Wrapture represents a shift in development methodology for the creator. It is an agent-driven project where every line of code and documentation was written by an AI assistant under the direction of the author. The author notes that while the AI produced the output, the design was engineered specifically based on his long experience in this area of Python.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Wrapture is a young project, currently a few weeks old.&lt;/p&gt;
+&lt;p&gt;#Python #OpenTelemetry #AI #Testing #Tracing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Aug/31/introducing-wrapture/" target="_blank" rel="noopener"
+&gt;Introducing wrapture&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ReACT Architecture on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/react-architecture/</link><description>Recent content in ReACT Architecture on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 00:51:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/react-architecture/index.xml" rel="self" type="application/rss+xml"/><item><title>Practical Advice for Building AI Agents: Lessons from the GAIA Benchmark Challenge</title><link>https://shoubhikbanerjee.github.io/blog/p/practical-advice-for-building-ai-agents-lessons-from-the-gaia-benchmark-challenge/</link><pubDate>Tue, 28 Oct 2025 00:51:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/practical-advice-for-building-ai-agents-lessons-from-the-gaia-benchmark-challenge/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62d1687ee748e12e04e042e8/ScCZb2zq4EGhUOJZnofYz.png" alt="Featured image of post Practical Advice for Building AI Agents: Lessons from the GAIA Benchmark Challenge" /&gt;&lt;h1 id="-practical-advice-for-building-ai-agents-lessons-from-the-gaia-benchmark-challenge"&gt;🚀 Practical Advice for Building AI Agents: Lessons from the GAIA Benchmark Challenge
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62d1687ee748e12e04e042e8/ScCZb2zq4EGhUOJZnofYz.png"
+loading="lazy"
+alt="GAIA Benchmark Challenge"
+&gt;
+&lt;em&gt;Distribution of cognitive abilities required in the GAIA benchmark&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Hello! This is my first blog post on Hugging Face. My name is Charlie, and I&amp;rsquo;ll be using this
+space to share my experience solving the GAIA benchmark challenge from Hugging Face&amp;rsquo;s Agents
+course—what I learned along the way, and a few insights that I think are useful for AI agent design in general.&lt;/p&gt;
+&lt;p&gt;The main goal of this article is to walk through the technical decisions I had to make: the
+concepts I revisited, the trade-offs I encountered, and the new ideas I had to explore. My
+objective wasn&amp;rsquo;t to achieve a perfect solution, but rather to put into practice some of the
+theoretical knowledge I had accumulated and see how it held up in a real challenge.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll focus more on the &lt;strong&gt;why&lt;/strong&gt; than the &lt;strong&gt;how&lt;/strong&gt;. While I&amp;rsquo;ll explain my process in as much detail
+as needed, this is not intended to be a LangGraph tutorial. Instead, think of it as a &amp;ldquo;lessons
+learned for building better agents&amp;rdquo; post—zooming out from the implementation details to
+highlight the reasoning behind them.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-biggest-lessons"&gt;⚡ The Biggest Lessons
+&lt;/h2&gt;&lt;p&gt;Adding this as a quick summary of the findings:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Choosing the most powerful model does not always lead to the best results&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reasoning models can be a game changer at certain use cases, but sometimes non-reasoning
+ones show better results in simple tasks&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Your tools definition and behaviors can boost or kill the overall performance of your
+agent&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Every model has its own style to solve tasks, knowing this can help you on using the most
+out of each model&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="-about-the-challenge"&gt;📊 About the Challenge
+&lt;/h2&gt;&lt;p&gt;Some of you might have probably done the &lt;a class="link" href="https://huggingface.co/learn/cookbook/agents" target="_blank" rel="noopener"
+&gt;Hugging Face&amp;rsquo;s Agents
+Course&lt;/a&gt;, but if you don&amp;rsquo;t, I encourage you to give
+it a try. This course presents a final challenge consisting on creating an AI agent that could
+solve questions present in the GAIA benchmark. For fairness to the challenge, I&amp;rsquo;m not going to
+disclose the full code or the prompt used in this post.&lt;/p&gt;
+&lt;p&gt;To solve the challenge I had to understand what I was facing, so I started reading the GAIA
+benchmark paper: &lt;a class="link" href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener"
+&gt;GAIA: A benchmark for General AI
+Assistants&lt;/a&gt;. I&amp;rsquo;m not going to deep dive in it, but I&amp;rsquo;ll remark
+the most relevant points for this problem:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GAIA presents auto-contained questions&lt;/strong&gt; that require a certain level of understanding,
+reasoning and in some cases capabilities to read files, search information, perform calculations
+or to write code to be solved&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Questions presented are easy in general&lt;/strong&gt;, they can be easily answered by a human and
+provide a clear ground-truth against AI&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;It is focused on the final answer&lt;/strong&gt;, it does not evaluate how the agent got there, but
+whether the answer is right or wrong&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Good! This actually gives us valuable insights to proceed: the kind of cognitive abilities our
+AI agent should have, and the extended capabilities given by tools.&lt;/p&gt;
+&lt;p&gt;With that in mind, I decided to frame my process around five main phases:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Selecting the best foundation model for the task 2. Designing a simple agent architecture&lt;/li&gt;
+&lt;li&gt;Choosing the right tools to face the challenge 4. Implementing the solution&lt;/li&gt;
+&lt;li&gt;Evaluating results and identifying improvements&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;With this roadmap in place, the first question I had to answer was: which foundation model
+should I rely on to tackle GAIA? That choice would shape everything else that followed.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-selecting-the-foundation-model"&gt;🧠 Selecting the Foundation Model
+&lt;/h2&gt;&lt;p&gt;Selecting the right foundation model for a problem is far from trivial. For this challenge, I
+considered a few guiding criteria:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Performance on the required cognitive tasks&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference speed&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Other aspects such as security, privacy, or infrastructure constraints could also play a role in
+real-world deployments, but for the scope of this experiment I set them aside. To approach
+GAIA, we need a broad basis to compare models&amp;rsquo; cognitive capabilities. The core skills required are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reasoning&lt;/li&gt;
+&lt;li&gt;Multimodality&lt;/li&gt;
+&lt;li&gt;Code generation&lt;/li&gt;
+&lt;li&gt;Tool usage&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A natural first step is to look at established benchmarks, since they provide a general snapshot
+of model capabilities. But it&amp;rsquo;s important to keep perspective: benchmarks measure performance
+in controlled settings and don&amp;rsquo;t guarantee superiority in real-world tasks.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Here comes the little twist:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As I stated at the beginning of this post, my objective here was not nailing the challenge, but
+to put in practice some ideas, hence, I&amp;rsquo;m going to compare two types of foundation models:
+&lt;a class="link" href="https://openai.com/o1/" target="_blank" rel="noopener"
+&gt;reasoning-oriented models&lt;/a&gt; vs non-reasoning models. Why? Well. I really
+want to put in perspective how much using one technique versus another turns out in a real scenario.&lt;/p&gt;
+&lt;p&gt;Below a table with a summary of the benchmarks I used to compare the models&amp;rsquo; capabilities:&lt;/p&gt;
+&lt;p&gt;| Benchmark | GPT-5 | Gemini 2.5 Pro | Grok 4 | Claude Opus 4.1 | Llama 4 Maverick | GPT-4o |&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Gemini-2.5-flash&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ARC AGI&lt;/td&gt;
+&lt;td&gt;9.9&lt;/td&gt;
+&lt;td&gt;4.9&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;15.9&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;8.6&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MATH&lt;/td&gt;
+&lt;td&gt;93.4&lt;/td&gt;
+&lt;td&gt;85.8&lt;/td&gt;
+&lt;td&gt;90.6&lt;/td&gt;
+&lt;td&gt;78.2&lt;/td&gt;
+&lt;td&gt;25.2&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MMMU&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;84.2&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;82&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;77.1&lt;/td&gt;
+&lt;td&gt;73.4&lt;/td&gt;
+&lt;td&gt;70.7&lt;/td&gt;
+&lt;td&gt;79.7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SWE-bench&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;74.9&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;67.2&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;74.5&lt;/td&gt;
+&lt;td&gt;21.1&lt;/td&gt;
+&lt;td&gt;21.62&lt;/td&gt;
+&lt;td&gt;28.73&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MMLU&lt;/td&gt;
+&lt;td&gt;87&lt;/td&gt;
+&lt;td&gt;86&lt;/td&gt;
+&lt;td&gt;87&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;89.5&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;80.5&lt;/td&gt;
+&lt;td&gt;77.9&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TAU-bench&lt;/td&gt;
+&lt;td&gt;81.1&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;82.4&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;71&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Input price (1M tokens)&lt;/td&gt;
+&lt;td&gt;1.25&lt;/td&gt;
+&lt;td&gt;1.25&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;0.19-0.49&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;0.30&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Output price (1M tokens)&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;75&lt;/td&gt;
+&lt;td&gt;0.19-0.49&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;2.50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Context window&lt;/td&gt;
+&lt;td&gt;400k&lt;/td&gt;
+&lt;td&gt;1M&lt;/td&gt;
+&lt;td&gt;256k&lt;/td&gt;
+&lt;td&gt;200k&lt;/td&gt;
+&lt;td&gt;10M&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Let&amp;rsquo;s analyze the three models that top at least one of the considered benchmarks:&lt;/p&gt;
+&lt;h3 id="-gpt-5"&gt;🔥 GPT-5
+&lt;/h3&gt;&lt;p&gt;This is a reasoning-oriented model created by OpenAI and launched recently compared to other
+models in the list. GPT-5 introduced some changes in the implementation according to &lt;a class="link" href="https://platform.openai.com/docs/" target="_blank" rel="noopener"
+&gt;OpenAI&amp;rsquo;s
+developer documentation&lt;/a&gt;. But the most important one is that
+unlike GPT-4o (for instance) it is a reasoning model by default, more on the line of o1 and o3.
+We can see it excels on multimodality (MMMU) and code generation (SWE-bench), and despite not
+being the best in ARC AGI it is pretty good on all the benchmarks, considering also tool-usage
+(TAU-bench). Strong candidate.&lt;/p&gt;
+&lt;h3 id="-grok-4"&gt;⚡ Grok 4
+&lt;/h3&gt;&lt;p&gt;This one absolutely beats ARC AGI as the best model at reasoning in the market, additionally
+being pretty solid at MATH and language understanding (MMLU). However, there is a consideration.
+The input pricing is not too far from GPT-5&amp;rsquo;s but it is actually more expensive. However,
+there&amp;rsquo;s not much information on the performance on the other benchmarks.&lt;/p&gt;
+&lt;h3 id="-claude-opus-41"&gt;🤖 Claude Opus 4.1
+&lt;/h3&gt;&lt;p&gt;Anthropic&amp;rsquo;s most advanced model at the time of writing. It leads in language understanding
+(MMLU) and tool usage (TAU-bench), and comes very close to GPT-5 in code generation (SWE-bench),
+making it a strong technical candidate. The main drawback is cost—particularly on output
+tokens, which are 7.5× more expensive than GPT-5 and 5× more expensive than Grok 4.&lt;/p&gt;
+&lt;p&gt;Before I said I would use a reasoning-oriented model vs a non-reasoning one. So for the
+comparison, &lt;strong&gt;I&amp;rsquo;ll go for GPT-5 and GPT-4o.&lt;/strong&gt; Still, as you&amp;rsquo;ll see in the next sections, there&amp;rsquo;s
+an interesting twist coming ;)&lt;/p&gt;
+&lt;p&gt;Also, as we expect to process audio files in the challenge, I decided to opt for gpt-4o-audio-preview.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-setting-up-the-agent-architectur"&gt;🏗️ Setting Up the Agent Architectur
+&lt;/h2&gt;&lt;p&gt;So, after the selection of the cognitive engine for our agent, I need to choose the overall
+architecture. Anthropic launched a blog post discussing about some patterns to &lt;a class="link" href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener"
+&gt;build effective
+agent workflows&lt;/a&gt; I recommend you
+to read. When solving problems with AI agents in mind, we need to consider many aspects such as
+the expected tasks to solve, whether a single agent can solve the problem or a multi-agent
+approach could present better performance.&lt;/p&gt;
+&lt;p&gt;For the sake of simplicity, I decided to go for a simple ReACT-like architecture using only one
+agent. If you want to learn more about how it works you can read the original &lt;a class="link" href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener"
+&gt;Yao&amp;rsquo;s
+paper&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To implement in code the agent I went for LangGraph due to its simplicity and power. Thus, I
+generated the graph structure for the agent, considering two nodes: the agent itself and the tools.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62d1687ee748e12e04e042e8/SARD6lfTyPR-UqDOHnE9S.png"
+loading="lazy"
+alt="Agent Architecture"
+&gt;
+&lt;em&gt;Simple ReACT-like agent architecture using LangGraph&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-prompt-engineerin"&gt;🛠️ Prompt Engineerin
+&lt;/h2&gt;&lt;p&gt;In general, I did not an extensive craft of my system prompt for this first attempt, though it
+is highly recommended for you to solve the challenge. I just tried with a simple prompt stating
+the nature of the tasks, the expected behavior of the agent, the format for the answers and the
+tools at hand. It is important to iterate over different prompts and measure the impact using
+tools such as Langfuse or MLflow to select the best one.&lt;/p&gt;
+&lt;h3 id="-the-tools-used"&gt;🔧 The Tools Used
+&lt;/h3&gt;&lt;p&gt;An important component for agentic AI architectures are the tools you implement. In this case,
+just as I did with the model election, I listed the actions that the agent should have as
+capabilities to answer the questions in the benchmark.&lt;/p&gt;
+&lt;p&gt;As we can see, web browsing is one of the most common abilities required to solve the questions,
+followed by coding. Also, we know that we need to read files to support multimodality in our
+agent. However, after a glance in the questions contained in the benchmark, we see more
+capabilities are going to be needed, such as YouTube video processing.&lt;/p&gt;
+&lt;p&gt;There are diverse options to add web-browsing capabilities to the agent, we can directly
+implement calls to Bing or the Google APIs for example, but in this case, I chose &lt;strong&gt;Tavily&lt;/strong&gt; as
+my service for web-browsing, the main reason behind this is the simplicity of integration.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nd"&gt;@tool&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;web_search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;Provides web search to retrieve information outside of LLMs knowledge &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tavily_client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;include_answer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;answer&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Some questions require youtube video processing to answer visual questions. This tool is a
+little more tricky, as it could be approached from different ways, and cannot be &amp;ldquo;browsed&amp;rdquo; by
+Tavily, which means we require an additional component.&lt;/p&gt;
+&lt;p&gt;At the end, after evaluating carefully, I decided to go for the simpler option as I could have a
+baseline to identify potential improvements later.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nd"&gt;@tool&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;youtube_search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;link&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;Search for youtube videos. Input must be only the youtube video URL &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;transcript&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;loader&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;YoutubeLoaderDL&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_youtube_url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;link&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;add_video_info&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;documents&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;loader&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;load&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="n"&gt;video_metadata&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;documents&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;metadata&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;video_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;video_metadata&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;source&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;ytt_api&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;YouTubeTranscriptApi&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;fetched_transcript&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ytt_api&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;video_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;snippet&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;fetched_transcript&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;transcript&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;transcript&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;snippet&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="n"&gt;TranscriptsDisabled&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;transcript&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;No description of video content available&amp;#34;&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;transcript&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-code-writing-and-execution-tool"&gt;💻 Code Writing and Execution Tool
+&lt;/h3&gt;&lt;p&gt;One of the most important abilities for our agent is the one of writing code and executing it
+safely. Actually, there is a complete guide here in Hugging Face about safe code execution for
+AI agents that you can visit here for additional details: &lt;a class="link" href="https://huggingface.co/learn/cookbook/en/agent_code_execution" target="_blank" rel="noopener"
+&gt;Secure code
+execution&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I decided to go for &lt;strong&gt;E2B&lt;/strong&gt; as the sandbox for code execution. Also, there is relevant to note
+that GAIA questions would need code execution in two manners:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A question that provides explicitly a Python file to execute&lt;/li&gt;
+&lt;li&gt;A question that could be answered by writing code, so the LLM produces this by itself&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nd"&gt;@tool&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;python_code_write_and_execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;Let&amp;#39;s the LLM to write and execute code if needed for a task &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;messages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="n"&gt;SystemMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prompt_coding&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;HumanMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;assistant_model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;invoke&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;code&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;content&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;code&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;extract_python&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;Sandbox&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;sandbox&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;execution&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sandbox&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run_code&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;execution&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;execution&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;logs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;There was an error while trying to execute code&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-adding-compatibility-with-multiple-modalities"&gt;🎨 Adding Compatibility with Multiple Modalities
+&lt;/h3&gt;&lt;p&gt;Finally, the agent must be compatible with different modalities. In general, GAIA paper
+establishes that the agent must be able to process Python code files, PDF, excel, audio, images
+and video. At the beginning of the article I stated the use of gpt-4o-audio as a model to accept the audio inputs.&lt;/p&gt;
+&lt;p&gt;For those wondering about how the state for my agent is defined, let me explain a bit. My
+assistant had three things to keep track of: the messages list, and to support multimodality I
+decided to add a filename and the extension of the uploaded files.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;AssistantState&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TypedDict&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Annotated&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;AnyMessage&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;add_messages&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt; &lt;span class="n"&gt;file_extension&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-evaluation-and-comparison-in-langfuse-of-our-two-models"&gt;📊 Evaluation and Comparison in Langfuse of Our Two Models
+&lt;/h3&gt;&lt;p&gt;I reserved many of the different findings of the mini-project to this section. So I could
+explain them with detail and elaborate conclusions from here. At the beginning of the post it
+was defined the use of two LLMs to compare: GPT-5 and GPT-4o.&lt;/p&gt;
+&lt;p&gt;There is an option for the configuration in LangGraph when running a graph called
+&lt;strong&gt;recursion_limit&lt;/strong&gt; which controls the depth of the recursion allowed for the graph to execute,
+for this experiment, the value for that parameter was 10. If this limit is reached, then the
+graph fails and prevents an infinite execution. Well, this was exactly the problem in my case.
+It seems the reasoning capabilities of GPT-5 led the graph to execute multiple times, further
+than my recursion_limit. Never reaching an output.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62d1687ee748e12e04e042e8/brNXk073IHX6XF94CCo-L.png"
+loading="lazy"
+alt="Graph Execution Failure"
+&gt;
+&lt;em&gt;Graph execution failure due to recursion limit&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;From here, I decided to lower the &lt;strong&gt;reasoning_effort&lt;/strong&gt; to &amp;ldquo;minimal&amp;rdquo; which according to some of
+the documentation also could make the model to work more like a non-reasoning one, and even
+though this let the graph finish almost all the tasks, it was also more expensive (around 2x per
+question), had a worse latency (around 3.5x times) and in many cases, produced more steps than
+the needed to solve a question.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62d1687ee748e12e04e042e8/a8KoGiOE6q-ZGWGX3ehZv.png"
+loading="lazy"
+alt="Performance Comparison"
+&gt;
+&lt;em&gt;Performance comparison between GPT-4o and GPT-5&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This is truly insightful, as for some cases we might be tempted to use the best model out there,
+or we can think that a given task required a level of reasoning that actually is not needed.
+For the case of GAIA, the questions are very straightforward and require good instruction
+following capabilities and very light reasoning than other types of tasks. Hence, a
+non-reasoning model could be a better fit here.&lt;/p&gt;
+&lt;p&gt;Following that comment, I decided to try with non-reasoning models: &lt;strong&gt;GPT-4o&lt;/strong&gt; and &lt;strong&gt;Gemini 2.5 Flash&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;In the table below general dimensions for comparison can be seen. For reference, the challenge
+evaluates the agents with 20 different questions.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Category&lt;/th&gt;
+&lt;th&gt;GPT-4o&lt;/th&gt;
+&lt;th&gt;Gemini 2.5 Flash&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Total latency (s)&lt;/td&gt;
+&lt;td&gt;103.28&lt;/td&gt;
+&lt;td&gt;414.79&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;p95 latency (s)&lt;/td&gt;
+&lt;td&gt;70.18&lt;/td&gt;
+&lt;td&gt;153.5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Price for all tasks (USD)&lt;/td&gt;
+&lt;td&gt;0.079&lt;/td&gt;
+&lt;td&gt;0.19&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Avg price per task (USD)&lt;/td&gt;
+&lt;td&gt;0.0043&lt;/td&gt;
+&lt;td&gt;0.0095&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Total tokens used&lt;/td&gt;
+&lt;td&gt;27,611&lt;/td&gt;
+&lt;td&gt;106,019&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Avg tokens per task&lt;/td&gt;
+&lt;td&gt;1,380&lt;/td&gt;
+&lt;td&gt;5,300&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Completed answers (%)&lt;/td&gt;
+&lt;td&gt;90&lt;/td&gt;
+&lt;td&gt;80&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Accuracy (right answers) (%)&lt;/td&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;40&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Effectivity - Right answers over total responses (%)&lt;/td&gt;
+&lt;td&gt;22&lt;/td&gt;
+&lt;td&gt;50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Most called tool&lt;/td&gt;
+&lt;td&gt;web_search&lt;/td&gt;
+&lt;td&gt;python_code_execution&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;As we can see, GPT-4o seems to be the fastest and cheaper model. We can also see that Gemini 2.5
+Flash got twice more right answers than GPT-4o and in overall is more effective. Given the rest
+of comparison categories is it worth the trade-off? Let&amp;rsquo;s see.&lt;/p&gt;
+&lt;h4 id="-comparing-how-each-agent-decided-to-proceed-on-the-same-questions"&gt;🔍 Comparing How Each Agent Decided to Proceed on the Same Questions
+&lt;/h4&gt;&lt;p&gt;Part of the things I wanted to understand on this challenge was how different models would
+behave to the same input, prompt and tools given, to understand better how each approached a
+problem, just like humans do.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Question: The attached Excel file contains the sales of menu items for a local fast-food
+chain. What were the total sales that the chain made from food (not including drinks)?&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;GPT-4o&lt;/strong&gt;: This model read the file and decided to redact all its content as plain text. And
+choose to solve all by itself &lt;strong&gt;without calling tools&lt;/strong&gt;. The model did the math but it failed
+the answer (even though it was close).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Gemini 2.5 Flash&lt;/strong&gt;: Gemini decided to make a tool call to solve this:
+&lt;strong&gt;python_code_executer&lt;/strong&gt;. In general, Gemini decided to write Python code to read the Excel
+file, convert it into a pandas dataframe and execute the operations needed to answer. This
+approached led to the right answer to this question, using more time and tokens to solve it than
+GPT-4o. Gemini wins here.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This insight is truly important and unveiling, as it is a good example that when working with
+agents the model is not the only thing we should care about. Tools are equally important. We
+need to audit them, test them and ensure the behavior is the one we expect.&lt;/p&gt;
+&lt;h3 id="-final-conclusions"&gt;💡 Final Conclusions
+&lt;/h3&gt;&lt;p&gt;Many important lessons have been discussed during the whole post, for this section, let me make
+a quick summary on this and future directions that I could follow to improve my agent&amp;rsquo;s performance.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Selecting the right model for the task can be challenging.&lt;/strong&gt; You can start by comparing
+benchmarks and other characteristics that are important trade-offs for your use case, but
+remember that these will be only general guides, the only way to make sure you&amp;rsquo;re choosing the
+right one is by testing on your use case and comparing results.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Each model has a tendency to solve problems in a unique way&lt;/strong&gt;, if you know these nuances it
+might be easier to choose each in a case where it is better suited.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Creating or integrating the right tools is as important as your model selection&lt;/strong&gt;, and in
+many cases you could use a less powerful model and make it shine with the right tools.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;You must evaluate your agent performance considering what&amp;rsquo;s important to you&lt;/strong&gt;: cost,
+latency, correctness, etc. For your domain you should select or build mini-benchmarks to
+evaluate how well your agent is doing.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Never underestimate the power of observability tools.&lt;/strong&gt; In this case I used Langfuse, and
+some weird behaviors would not have been spotted without its observability capabilities.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Evaluating your tools might become as important as evaluating the final performance of your
+agent.&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Directions to improve&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Finally, about some things that I could try in the future after this 15-hours adventure are the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Iterate more over the system prompt, adapting it to the recommendations from each lab and
+measuring the impact using an observability tool.&lt;/li&gt;
+&lt;li&gt;Compare the performance on web search and code execution tools between my open implementation
+and the official tools given by OpenAI and Gemini Platforms, to understand whether the results
+can be better if sticking to the official integrations.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Thanks for reading so far! It was really great to solve the challenge, register my observations
+and writing this post for you. I hope you can find something interesting here and we can keep
+talking. If you have experience in building agents and have faced these or other challenges and
+want to discuss feel free to leave a comment.&lt;/p&gt;
+&lt;p&gt;Have a great day!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/hetline/lessons-learned-on-gaia-agents" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/hetline/lessons-learned-on-gaia-agents&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;This exploration of the GAIA benchmark challenge provides valuable insights into the practical
+considerations of building AI agents. The key takeaways demonstrate that success in agent
+development goes beyond simply choosing the most powerful model—it requires thoughtful
+consideration of the specific use case, careful tool selection and implementation, and thorough
+evaluation of different approaches.&lt;/p&gt;
+&lt;p&gt;The comparison between reasoning-oriented and non-reasoning models reveals that complexity isn&amp;rsquo;t
+always better, especially for straightforward tasks where simpler models can achieve better
+results with lower latency and cost. The importance of observability tools like Langfuse cannot
+be overstated, as they provide crucial insights into agent behavior that would otherwise go unnoticed.&lt;/p&gt;
+&lt;p&gt;Most importantly, this work highlights that building effective AI agents is a holistic endeavor
+where model selection, tool design, prompt engineering, and evaluation methodology all play
+equally critical roles in determining success.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AIAGENTS #GAIA #HUGGINGFACE #MACHINELEARNING #LANGGRAPH #PROMPT_ENGINEERING #BENCHMARKING
+#OBSERVABILITY&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

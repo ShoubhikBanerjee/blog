@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Embedding on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/embedding/</link><description>Recent content in Embedding on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 03 Sep 2026 22:06:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/embedding/index.xml" rel="self" type="application/rss+xml"/><item><title>Embedding Amazon QuickSight Visuals in React with Cognito‑Based Per‑User Access</title><link>https://shoubhikbanerjee.github.io/blog/p/embedding-amazon-quicksight-visuals-in-react-with-cognitobased-peruser-access/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/embedding-amazon-quicksight-visuals-in-react-with-cognitobased-peruser-access/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/27/ML-20784-featured-image.png" alt="Featured image of post Embedding Amazon QuickSight Visuals in React with Cognito‑Based Per‑User Access" /&gt;&lt;h1 id="embedding-amazon-quicksight-visuals-in-react-with-cognitobased-peruser-access"&gt;Embedding Amazon QuickSight Visuals in React with Cognito‑Based Per‑User Access
+&lt;/h1&gt;&lt;p&gt;This post demonstrates how to embed individual Amazon QuickSight visuals into a React application while enforcing per‑user authentication through Amazon Cognito.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Quick&lt;/strong&gt; is the unified analytics service from AWS that combines business intelligence, advanced analytics, and enterprise search.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon QuickSight&lt;/strong&gt; is the business‑intelligence engine within Amazon Quick that powers the embedded analytics experience.&lt;/li&gt;
+&lt;li&gt;Embedding at the visual level, rather than full dashboards, gives granular control over layout and user experience.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Front‑end&lt;/strong&gt;: A React application served through Amazon CloudFront, which delivers static files stored in an Amazon S3 bucket.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security edge&lt;/strong&gt;: AWS WAF sits in front of CloudFront to filter malicious requests.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Authentication layer&lt;/strong&gt;: Amazon Cognito User Pools handle sign‑in and issue JSON Web Tokens (JWTs) that are validated by the API tier.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API layer&lt;/strong&gt;: An Amazon API Gateway endpoint protected by a Cognito Authorizer routes authenticated calls to an AWS Lambda function.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Backend processing&lt;/strong&gt;: The Lambda function assumes a dedicated IAM role and calls the Amazon QuickSight &lt;code&gt;GenerateEmbedUrlForRegisteredUser&lt;/code&gt; API to produce a time‑scoped embed URL for the requested visual.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Analytics layer&lt;/strong&gt;: Amazon QuickSight renders the individual visual inside the React app using the Embedding SDK running entirely in the browser.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Observability&lt;/strong&gt;: Amazon CloudWatch captures logs and metrics from the Lambda function throughout the process.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A dedicated identity layer bridges Amazon Cognito and Amazon QuickSight, enabling fine‑grained access governance for every embedded visual.&lt;/li&gt;
+&lt;li&gt;The Lambda function generates scoped embed URLs quickly and handles first‑time user provisioning.&lt;/li&gt;
+&lt;li&gt;Each embed URL remains valid for an extended period, reducing re‑authentication friction during sessions.&lt;/li&gt;
+&lt;li&gt;Deployment can be performed rapidly with a single AWS CloudFormation stack.&lt;/li&gt;
+&lt;li&gt;The QuickSight account must have the application’s CloudFront domain registered in the embedding allowlist; otherwise the browser blocks the embedded iframe.&lt;/li&gt;
+&lt;li&gt;Every Cognito user who needs to view an embedded visual must also exist as a registered user in Amazon QuickSight.&lt;/li&gt;
+&lt;li&gt;On each embed request, the Lambda function:
+&lt;ol&gt;
+&lt;li&gt;Extracts the user’s email from the validated JWT.&lt;/li&gt;
+&lt;li&gt;Calls &lt;code&gt;describe_user&lt;/code&gt; to check for an existing QuickSight user.&lt;/li&gt;
+&lt;li&gt;If a &lt;code&gt;ResourceNotFoundException&lt;/code&gt; is raised, calls &lt;code&gt;register_user&lt;/code&gt; to create the user as a &lt;strong&gt;READER&lt;/strong&gt;, the least‑privileged role that supports visual embedding.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;This approach provisions new Cognito users in QuickSight automatically on first access, with no manual intervention.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;🚀 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides per‑user access control for embedded analytics without building separate dashboards for each use case.&lt;/li&gt;
+&lt;li&gt;Keeps the solution lightweight by embedding individual visuals rather than full dashboards.&lt;/li&gt;
+&lt;li&gt;Enables rapid, repeatable deployments using standard AWS infrastructure as code.&lt;/li&gt;
+&lt;li&gt;Centralizes authentication and authorization, reducing complexity that many tutorials skip.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/arch_diag.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #QuickSight #React #Cognito #Embedding&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/embed-quick-sight-visuals-using-cognito-user-authentication/" target="_blank" rel="noopener"
+&gt;Embed Quick Sight visuals using Cognito user authentication | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Vision Tokens vs Text Tokens: Understanding the 10× Compression</title><link>https://shoubhikbanerjee.github.io/blog/p/vision-tokens-vs-text-tokens-understanding-the-10-compression/</link><pubDate>Tue, 28 Oct 2025 01:35:19 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/vision-tokens-vs-text-tokens-understanding-the-10-compression/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Vision Tokens vs Text Tokens: Understanding the 10× Compression" /&gt;&lt;h1 id="-vision-tokens-vs-text-tokens-understanding-the-10-compression"&gt;🔍 Vision Tokens vs Text Tokens: Understanding the 10× Compression
+&lt;/h1&gt;&lt;p&gt;The revolutionary breakthrough in AI document processing has arrived with DeepSeek-OCR&amp;rsquo;s
+demonstration that &lt;strong&gt;100 vision tokens can represent approximately 1000 text tokens&lt;/strong&gt; with 97%+
+accuracy. While this appears to be a simple 10× compression ratio, the underlying mechanics
+reveal profound differences in how vision and text tokens operate—and why this compression is
+not just possible, but inevitable.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-claim"&gt;📢 The Claim
+&lt;/h2&gt;&lt;p&gt;DeepSeek-OCR demonstrates that &lt;strong&gt;100 vision tokens can represent approximately 1000 text
+tokens&lt;/strong&gt; with 97%+ accuracy. At first glance, this seems like a simple 10× compression ratio.
+But what most people miss is &lt;em&gt;why&lt;/em&gt; this is possible—and it reveals fundamental differences in
+how these two types of tokens work.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-one-vision-token-contains-way-more-information"&gt;🎯 One Vision Token Contains Way More Information
+&lt;/h2&gt;&lt;h3 id="-a-concrete-example"&gt;💡 A Concrete Example
+&lt;/h3&gt;&lt;p&gt;Let&amp;rsquo;s examine what&amp;rsquo;s actually contained within each type of token:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Text Token&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Token: &amp;#34;Annual&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Information: One word (or subword)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Representation: Token ID → Embedding (4096-dim vector)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Vision Token&lt;/strong&gt; (from DeepSeek-OCR):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;After encoding a 1024×1024 document image:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Initial patches: 1024/16 × 1024/16 = 4096 patches (16×16 pixels each)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- After 16× compression: 4096/16 = 256 vision tokens
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Each vision token represents: 64×64 pixels
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;At typical document DPI (150-200), in a 64×64 pixel region:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Characters: ~6-8 chars wide × 4-5 lines tall
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Words: approximately 5-8 words
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Plus: font style, size, layout, spacing information
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-visualizing-a-vision-token"&gt;🔍 Visualizing a Vision Token
+&lt;/h3&gt;&lt;p&gt;Here&amp;rsquo;s what one vision token might contain in a document:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ← 64 pixels wide
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Annual Revenue Growth ← Line 1 (3 words) Q4 2024: $2.1M ← Line 2 (3 words)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Increase: 15.3% ← Line 3 (2 words)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓ (Vision Encoder) One 4096-dim vector
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vs. Text tokens:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[&amp;#34;Annual&amp;#34;, &amp;#34;Revenue&amp;#34;, &amp;#34;Growth&amp;#34;, &amp;#34;Q4&amp;#34;, &amp;#34;2024&amp;#34;, &amp;#34;:&amp;#34;, &amp;#34;$&amp;#34;, &amp;#34;2&amp;#34;, &amp;#34;.&amp;#34;, &amp;#34;1&amp;#34;, &amp;#34;M&amp;#34;, ...]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;~12 separate tokens for the same content
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-the-information-density-gap"&gt;📊 The Information Density Gap
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Type&lt;/th&gt;
+&lt;th&gt;Coverage&lt;/th&gt;
+&lt;th&gt;Information Content&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Text Token&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;1 word&lt;/td&gt;
+&lt;td&gt;~1 word of text&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Vision Token&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;64×64 pixels&lt;/td&gt;
+&lt;td&gt;~5-8 words + layout + formatting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;A vision token contains 5-10× more information than a text token&lt;/strong&gt;, yet they both get mapped
+to the same embedding dimension (4096-dim).&lt;/p&gt;
+&lt;p&gt;This is why 100 vision tokens can effectively represent 1000 text tokens—the information density
+is fundamentally different.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-why-do-they-end-up-the-same-embedding-size"&gt;⚙️ Why Do They End Up the Same Embedding Size?
+&lt;/h2&gt;&lt;p&gt;Despite containing vastly different amounts of information, both token types end up as
+4096-dimensional vectors. But they get there very differently.&lt;/p&gt;
+&lt;h3 id="-the-4096-dim-latent-space"&gt;🧠 The 4096-Dim Latent Space
+&lt;/h3&gt;&lt;p&gt;The embedding dimension is chosen for &lt;strong&gt;representation richness&lt;/strong&gt;: enough dimensions to capture
+semantic relationships and allow attention mechanisms to work. This is a learned, dense, continuous space.&lt;/p&gt;
+&lt;h3 id="-different-journeys-to-4096-di"&gt;🛤️ Different Journeys to 4096-Di
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Text Tokens: Through the Vocabulary&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Token ID: 42 (&amp;#34;Annual&amp;#34;) ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[Implicitly: 129K-dimensional vocabulary space] ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Embedding lookup → 4096-dim ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;LLM processing (4096-dim) ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Output projection → 129K logits ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Softmax → next token ID
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Vision Tokens: Direct Compression&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Raw pixels: 64×64×3 = 12,288 values ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Vision encoder → 4096-dim ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;LLM processing (4096-dim) ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[No output - vision tokens are input only]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Vision tokens are &lt;strong&gt;already continuous&lt;/strong&gt;—they compress directly into the latent space and stay
+there. No vocabulary, no blowup, seamless.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/onekq/behind-each-token" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/onekq/behind-each-token&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;The 10× compression ratio between vision and text tokens isn&amp;rsquo;t just a mathematical
+curiosity—it&amp;rsquo;s a fundamental reflection of information density differences. Vision tokens
+inherently capture spatial, semantic, and formatting information in a single representation,
+while text tokens operate at the granular level of individual words or subwords.&lt;/p&gt;
+&lt;p&gt;This breakthrough has profound implications for multimodal AI systems, suggesting that
+vision-language models can achieve unprecedented efficiency by leveraging the natural
+information density of visual representations. As we move toward more sophisticated document
+understanding and multimodal AI applications, understanding these token dynamics becomes crucial
+for optimizing both performance and computational resources.&lt;/p&gt;
+&lt;p&gt;The future of AI lies not just in scaling models, but in understanding and exploiting the
+inherent information structures of different modalities.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-references"&gt;📚 References
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;DeepSeek-OCR Paper: &amp;ldquo;DeepSeek-OCR: Contexts Optical Compression&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Fox benchmark compression results (Table 2, page 10)&lt;/li&gt;
+&lt;li&gt;DeepEncoder architecture (Section 3.2, pages 5-7)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#DEEPSEEK #OCR #VISIONTOKENS #TEXTTOKENS #MULTIMODAL #AI #MACHINELEARNING #DOCUMENTPROCESSING
+#COMPRESSION #EMBEDDING&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Introducing RTEB: A New Standard for Retrieval Evaluation</title><link>https://shoubhikbanerjee.github.io/blog/p/introducing-rteb-a-new-standard-for-retrieval-evaluation/</link><pubDate>Tue, 28 Oct 2025 00:55:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introducing-rteb-a-new-standard-for-retrieval-evaluation/</guid><description>&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/rteb/rteb-public-vs-closed.png" alt="Featured image of post Introducing RTEB: A New Standard for Retrieval Evaluation" /&gt;&lt;h1 id="-introducing-rteb-a-new-standard-for-retrieval-evaluation"&gt;🚀 Introducing RTEB: A New Standard for Retrieval Evaluation
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/rteb/rteb-public-vs-closed.png"
+loading="lazy"
+alt="Performance Discrepancy"
+&gt;
+&lt;em&gt;Performance discrepancy between public and closed datasets highlights the need for better
+evaluation standards&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; – We&amp;rsquo;re excited to introduce the beta version of the &lt;strong&gt;Retrieval Embedding Benchmark
+(RTEB)&lt;/strong&gt;, a new benchmark designed to reliably evaluate the retrieval accuracy of embedding
+models for real-world applications. Existing benchmarks struggle to measure true generalization,
+while RTEB addresses this with a hybrid strategy of open and private datasets. Its goal is
+simple: to create a fair, transparent, and application-focused standard for measuring how models
+perform on data they haven&amp;rsquo;t seen before.&lt;/p&gt;
+&lt;p&gt;The performance of many AI applications, from RAG and agents to recommendation systems, is
+fundamentally limited by the quality of search and retrieval. As such, accurately measuring the
+retrieval quality of embedding models is a common pain point for developers. How do you &lt;em&gt;really&lt;/em&gt;
+know how well a model will perform in the wild?&lt;/p&gt;
+&lt;p&gt;This is where things get tricky. The current standard for evaluation often relies on a model&amp;rsquo;s
+&amp;ldquo;zero-shot&amp;rdquo; performance on public benchmarks. However, this is, at best, an approximation of a
+model&amp;rsquo;s true generalization capabilities. When models are repeatedly evaluated against the same
+public datasets, a gap emerges between their reported scores and their actual performance on new, unseen data.&lt;/p&gt;
+&lt;p&gt;To address these challenges, we developed RTEB, a benchmark built to provide a reliable standard
+for evaluating retrieval models.&lt;/p&gt;
+&lt;h2 id="-why-existing-benchmarks-fall-short"&gt;⚠️ Why Existing Benchmarks Fall Short
+&lt;/h2&gt;&lt;p&gt;While the underlying evaluation methodology and metrics (such as NDCG@10) are well-known and
+robust, the integrity of existing benchmarks is often set back by the following issues:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Generalization Gap&lt;/strong&gt; 📊. The current benchmark ecosystem inadvertently encourages
+&amp;ldquo;teaching to the test.&amp;rdquo; When training data sources overlap with evaluation datasets, a model&amp;rsquo;s
+score can become inflated, undermining a benchmark&amp;rsquo;s integrity. This practice, whether
+intentional or not, is evident in the training datasets of several models. This creates a
+feedback loop where models are rewarded for memorizing test data rather than developing robust,
+generalizable capabilities.&lt;/p&gt;
+&lt;p&gt;Because of the above, models with a lower zero-shot score may perform very well on the
+benchmark, without generalizing to new problems. For this reason, models with slightly lower
+benchmark performance and a higher zero-shot score are often recommended instead.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/rteb/mteb-zero-shot-models.png"
+loading="lazy"
+alt="Zero-shot Models"
+&gt;
+&lt;em&gt;From Chung et al. (2025)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Misalignment with Today&amp;rsquo;s AI Applications&lt;/strong&gt; 🎯. Many benchmarks are poorly aligned with the
+enterprise use cases that developers are building today. They often rely on academic datasets or
+on retrieval tasks derived from QA datasets, which, while useful in their own right, were not
+designed to evaluate retrieval and can fail to capture the distributional biases and
+complexities encountered in real-world retrieval scenarios. Benchmarks which do not possess
+these issues are often too narrow, focusing on a single domain like code retrieval, making them
+unsuitable for evaluating general-purpose models.&lt;/p&gt;
+&lt;h2 id="-introducing-rteb"&gt;🧩 Introducing RTEB
+&lt;/h2&gt;&lt;p&gt;Today, we&amp;rsquo;re excited to introduce the &lt;strong&gt;Retrieval Embedding Benchmark (RTEB)&lt;/strong&gt;. Its goal is to
+create a new, reliable, high-quality benchmark that measures the true retrieval accuracy of embedding models.&lt;/p&gt;
+&lt;h3 id="-a-hybrid-strategy-for-true-generalization"&gt;⚙️ A Hybrid Strategy for True Generalization
+&lt;/h3&gt;&lt;p&gt;To combat benchmark overfitting, RTEB implements a hybrid strategy using both open and private datasets:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Open Datasets&lt;/strong&gt;: The corpus, queries, and relevance labels are fully public. This ensures
+transparency and allows any user to reproduce the results.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Private Datasets&lt;/strong&gt;: These datasets are kept private, and evaluation is handled by the MTEB
+maintainers to ensure impartiality. This setup provides a clear, unbiased measure of a model&amp;rsquo;s
+ability to generalize to unseen data. For transparency, we provide descriptive statistics, a
+dataset description, and sample &lt;code&gt;(query, document, relevance)&lt;/code&gt; triplets for each private dataset.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This hybrid approach encourages the development of models with broad, robust generalization. A
+model with a significant performance drop between the open and the private datasets would
+suggest overfitting, providing a clear signal to the community. This is already apparent with
+some models, which show a notable drop in performance on RTEB&amp;rsquo;s private datasets.&lt;/p&gt;
+&lt;h3 id="-built-for-real-world-domains"&gt;🌍 Built for Real-World Domains
+&lt;/h3&gt;&lt;p&gt;RTEB is designed with a particular emphasis on enterprise use cases. Instead of a complex
+hierarchy, it uses simple groups for clarity. A single dataset can belong to multiple groups
+(e.g., a German law dataset exists in both the &amp;ldquo;law&amp;rdquo; and &amp;ldquo;German&amp;rdquo; groups).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multilingual in Nature&lt;/strong&gt;: The benchmark datasets cover 20 languages, from common ones like
+English or Japanese to rarer languages such as Bengali or Finnish.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Domain-Specific Focus&lt;/strong&gt;: The benchmark includes datasets from critical enterprise domains
+like law, healthcare, code, and finance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Efficient Dataset Sizes&lt;/strong&gt;: Datasets are large enough to be meaningful (at least 1k documents
+and 50 queries) without being so large that they make evaluation time-consuming and expensive.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval-First Metric&lt;/strong&gt;: The default leaderboard metric is &lt;strong&gt;NDCG@10&lt;/strong&gt;, a gold-standard
+measure for the quality of ranked search results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A complete list of the datasets can be found in the comprehensive tables below, covering both
+open and private datasets across multiple domains and languages.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Dataset&lt;/th&gt;
+&lt;th&gt;Domain&lt;/th&gt;
+&lt;th&gt;Language&lt;/th&gt;
+&lt;th&gt;Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;AILACasedocs&lt;/td&gt;
+&lt;td&gt;Legal&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Supreme Court of India case documents for legal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;precedent retrieval&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AILAStatutes&lt;/td&gt;
+&lt;td&gt;Legal&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Supreme Court of India statutes for legal situation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;matching&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LegalSummarization&lt;/td&gt;
+&lt;td&gt;Legal&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Legal text excerpts with plain English summaries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LegalQuAD&lt;/td&gt;
+&lt;td&gt;Legal&lt;/td&gt;
+&lt;td&gt;German&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Real-world German legal documents with questions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FinanceBench&lt;/td&gt;
+&lt;td&gt;Finance&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Financial domain Q&amp;amp;A from PatronusAI dataset&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HC3Finance&lt;/td&gt;
+&lt;td&gt;Finance&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Financial expert responses vs ChatGPT comparisons&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HumanEval&lt;/td&gt;
+&lt;td&gt;Code&lt;/td&gt;
+&lt;td&gt;Multi&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;OpenAI programming problems with unit tests&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MBPP&lt;/td&gt;
+&lt;td&gt;Code&lt;/td&gt;
+&lt;td&gt;Multi&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Crowd-sourced Python programming fundamentals&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ChatDoctor_HealthCareMagic&lt;/td&gt;
+&lt;td&gt;Healthcare&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Real-world medical Q&amp;amp;A pairs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;JaQuAD&lt;/td&gt;
+&lt;td&gt;General&lt;/td&gt;
+&lt;td&gt;Japanese&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Japanese Wikipedia-based Q&amp;amp;A dataset&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;Note: This table shows a subset of the available datasets. The full benchmark includes
+additional open and private datasets across all supported domains and languages.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-launching-rteb-a-community-effort"&gt;🚀 Launching RTEB: A Community Effort
+&lt;/h2&gt;&lt;p&gt;RTEB is launching today in beta. We believe building a robust benchmark is a community effort,
+and we plan to evolve RTEB based on feedback from developers and researchers alike. We encourage
+you to share your thoughts, suggest new datasets, find issues in existing datasets and help us
+build a more reliable standard for everyone.&lt;/p&gt;
+&lt;h2 id="-limitations-and-future-work"&gt;🔬 Limitations and Future Work
+&lt;/h2&gt;&lt;p&gt;To highlight areas for improvement we want to be transparent about RTEB&amp;rsquo;s current limitations
+and our plans for the future.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Benchmark Scope&lt;/strong&gt;: RTEB is focused on realistic, retrieval-first use cases. Highly
+challenging synthetic datasets are not a current goal but could be added in the future.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Modality&lt;/strong&gt;: The benchmark currently evaluates text-only retrieval. We plan to incorporate
+text-image and other multimodal retrieval tasks in future releases.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Language Coverage&lt;/strong&gt;: We are actively working to expand our language coverage, particularly
+for major languages like Chinese and Arabic, as well as more low-resource languages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repurposing of QA dataset&lt;/strong&gt;: About 50% of the current retrieval datasets are repurposed from
+QA datasets, which might lead to issues such as a strong lexical overlap between the question
+and the context, favoring models that rely on keyword matching over true semantic understanding.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Private datasets&lt;/strong&gt;: To test for generalization, we utilize private datasets that are only
+accessible to MTEB maintainers. To maintain fairness, all maintainers commit to not publishing
+models trained on these datasets and only testing on these private datasets through public
+channels, ensuring no company or individual receives unfair advantages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Our goal is for RTEB to become a community-trusted standard for retrieval evaluation.&lt;/p&gt;
+&lt;p&gt;The RTEB leaderboard is available today on Hugging Face as a part of the new Retrieval section
+on the MTEB leaderboard. We invite you to check it out, evaluate your models, and join us in
+building a better, more reliable benchmark for the entire AI community.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/rteb" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/rteb&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;RTEB represents a significant step forward in creating more reliable and practical evaluation
+standards for retrieval models. By combining open and private datasets, focusing on real-world
+enterprise use cases, and maintaining transparency while preventing overfitting, RTEB addresses
+critical gaps in current benchmarking practices.&lt;/p&gt;
+&lt;p&gt;The hybrid approach of open and private datasets provides a unique solution to the
+generalization problem that has plagued existing benchmarks. With its emphasis on multilingual
+support, domain-specific focus, and retrieval-first methodology, RTEB is positioned to become
+the new gold standard for evaluating embedding models in production environments.&lt;/p&gt;
+&lt;p&gt;As the AI community continues to build more sophisticated retrieval systems, having a benchmark
+that truly measures real-world performance rather than memorization capabilities becomes
+increasingly crucial. RTEB&amp;rsquo;s community-driven approach ensures it will evolve with the needs of
+developers and researchers, making it a valuable long-term resource for the field.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#RTEB #EMBEDDING #RETRIEVAL #BENCHMARK #AI #NLP #MACHINELEARNING #HUGGINGFACE&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Llama-Embed-Nemotron-8B Text Embedding Model Ranks First on Multilingual MTEB Leaderboard</title><link>https://shoubhikbanerjee.github.io/blog/p/llama-embed-nemotron-8b-text-embedding-model-ranks-first-on-multilingual-mteb-leaderboard/</link><pubDate>Tue, 28 Oct 2025 00:54:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/llama-embed-nemotron-8b-text-embedding-model-ranks-first-on-multilingual-mteb-leaderboard/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Llama-Embed-Nemotron-8B Text Embedding Model Ranks First on Multilingual MTEB Leaderboard" /&gt;&lt;h1 id="-llama-embed-nemotron-8b-text-embedding-model-ranks-first-on-multilingual-mteb-leaderboard"&gt;🚀 Llama-Embed-Nemotron-8B Text Embedding Model Ranks First on Multilingual MTEB Leaderboard
+&lt;/h1&gt;&lt;h2 id="-build-smarter-language-aware-search-and-retrieval-systems"&gt;🌍 Build Smarter, Language-Aware Search and Retrieval Systems
+&lt;/h2&gt;&lt;p&gt;As global information continues to expand across languages, developers face a growing challenge:
+how to make models understand text in dozens of languages with the same precision, nuance, and
+semantic clarity. Traditional multilingual embedding models often struggle with alignment,
+scalability, and consistent performance.&lt;/p&gt;
+&lt;p&gt;The NVIDIA Llama-Embed-Nemotron-8B model changes this. Built by fine-tuning the Llama-3.1-8B
+foundation model, this embedding model applies cross-lingual representation learning to deliver
+unified, high-fidelity embeddings across linguistically diverse content. Whether you&amp;rsquo;re building
+cross-language retrieval systems, search engines, or conversational AI, this model helps close
+the comprehension gap between languages – high-resource or low-resource alike.&lt;/p&gt;
+&lt;p&gt;This article provides an overview of the model&amp;rsquo;s architecture, training methodology and
+evaluation results, highlighting how it empowers developers to build more intelligent and
+inclusive multilingual applications.&lt;/p&gt;
+&lt;h2 id="-architectural-highlights"&gt;⚙️ Architectural Highlights
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Base model:&lt;/strong&gt; 7.5B parameters, consisting of 32 hidden layers (hidden size dimension =
+4,096).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Key innovation:&lt;/strong&gt; Replaces uni-directional causal attention with bi-directional
+self-attention, enabling richer semantic understanding across the full token context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Embedding output:&lt;/strong&gt; Global average pooling compresses token information into a
+4,096-dimensional dense vector, optimized for semantic search and cross-lingual tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This design allows the model to generate consistent embeddings regardless of input language or
+structure — a crucial step when tackling multilingual retrieval or alignment problems.&lt;/p&gt;
+&lt;h2 id="-training-methodology"&gt;🧠 Training Methodology
+&lt;/h2&gt;&lt;p&gt;The model is trained using a bi-encoder architecture, independently encoding a pair of sentences
+(for example, query and passage) using the embedding model. Using contrastive learning, it
+maximizes similarity between the query and the passage that contains the answer, while
+minimizing it between the query and sampled negative passages that are not useful for answering the question.&lt;/p&gt;
+&lt;h3 id="training-data-mix-16m-pairs"&gt;Training Data Mix (16M pairs):
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;8M from publicly available datasets: Nemotron-CC-v2, MIRACL, HotpotQA, MS MARCO, Natural
+Questions, SQuAD, and more.&lt;/li&gt;
+&lt;li&gt;8M from synthetic datasets: Generated from open-source LLMs covering retrieval, semantic
+similarity and classification problem types.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="two-stage-training-pipeline"&gt;Two-stage Training Pipeline:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pre-training:&lt;/strong&gt; 11.5M query, document pairs curated from Nemotron-CC-v2 – NVIDIA&amp;rsquo;s
+state-of-the-art LLM pre-training dataset.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fine-tuning:&lt;/strong&gt; 4.5M pairs combining public and high-quality synthetic datasets to refine
+semantic precision.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We plan to open-source our multilingual data mix soon, and publish a detailed technical report
+covering training dynamics and multilingual alignment.&lt;/p&gt;
+&lt;h2 id="-performance-evaluation"&gt;📊 Performance Evaluation
+&lt;/h2&gt;&lt;p&gt;We evaluate our model on the MMTEB Benchmark, specifically, on the main &lt;code&gt;MTEB (Multilingual, v2)&lt;/code&gt; split. It consists of 131 tasks across 9 task types and 1,038 languages. Ranking on the
+MMTEB Leaderboards is performed based on the Borda rank. Each task is treated as a preference
+voter, which gives votes on the models per their relative performance on the task. The best
+model obtains the highest number of votes. The model with the highest number of votes across
+tasks obtains the highest rank. The Borda rank tends to prefer models that perform well broadly across tasks.&lt;/p&gt;
+&lt;p&gt;Our model achieves &lt;strong&gt;state-of-the-art performance&lt;/strong&gt; on the MMTEB Benchmark (as of October 21,
+2025). Ranking list is presented below:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Borda Rank&lt;/th&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Borda Votes&lt;/th&gt;
+&lt;th&gt;Mean (Task)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;1.&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;llama-embed-nemotron-8b&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;39,573&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;69.46&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2.&lt;/td&gt;
+&lt;td&gt;gemini-embedding-001&lt;/td&gt;
+&lt;td&gt;39,368&lt;/td&gt;
+&lt;td&gt;68.37&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3.&lt;/td&gt;
+&lt;td&gt;Qwen3-Embedding-8B&lt;/td&gt;
+&lt;td&gt;39,364&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;70.58&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4.&lt;/td&gt;
+&lt;td&gt;Qwen3-Embedding-4B&lt;/td&gt;
+&lt;td&gt;39,099&lt;/td&gt;
+&lt;td&gt;69.45&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5.&lt;/td&gt;
+&lt;td&gt;Qwen3-Embedding-0.6B&lt;/td&gt;
+&lt;td&gt;37,419&lt;/td&gt;
+&lt;td&gt;64.34&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6.&lt;/td&gt;
+&lt;td&gt;gte-Qwen2-7B-instruct&lt;/td&gt;
+&lt;td&gt;37,167&lt;/td&gt;
+&lt;td&gt;62.51&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;7.&lt;/td&gt;
+&lt;td&gt;Linq-Embed-Mistral&lt;/td&gt;
+&lt;td&gt;37,149&lt;/td&gt;
+&lt;td&gt;61.47&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Modern applications — from document search to coding assistants — require embeddings that scale
+and generalize. With Llama-Embed-Nemotron-8B, developers can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Build cross-language retrieval systems that align semantically across diverse alphabets and
+syntax.&lt;/li&gt;
+&lt;li&gt;Power multi-lingual QA and semantic similarity tasks without compromising accuracy.&lt;/li&gt;
+&lt;li&gt;Leverage an open, high-performing model that integrates easily with existing Hugging Face
+pipelines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-try-it-yourself"&gt;🔧 Try it Yourself
+&lt;/h2&gt;&lt;p&gt;Deploy Llama-Embed-Nemotron-8B, or learn more about the NVIDIA NeMo Retriever family of Nemotron
+RAG models on the product page.&lt;/p&gt;
+&lt;p&gt;Stay up to date on NVIDIA Nemotron by subscribing to NVIDIA news and following NVIDIA AI on
+LinkedIn, X, YouTube and the Nemotron channel on Discord.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/nvidia/llama-embed-nemotron-8b" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/nvidia/llama-embed-nemotron-8b&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;The Llama-Embed-Nemotron-8B model represents a significant breakthrough in multilingual text
+understanding, achieving top rankings on the MMTEB benchmark through innovative architectural
+design and comprehensive training methodology. Its bi-directional attention mechanism and
+extensive multilingual training data make it an ideal choice for developers building
+next-generation search and retrieval systems that need to operate seamlessly across language barriers.&lt;/p&gt;
+&lt;p&gt;The model&amp;rsquo;s open availability on Hugging Face, combined with NVIDIA&amp;rsquo;s commitment to releasing
+the training data mix, positions it as a valuable resource for the broader AI community working
+on multilingual applications.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#NVIDIA #AI #NLP #EMBEDDING #MULTILINGUAL #MACHINELEARNING #HUGGINGFACE #RETRIEVAL
+#SEMANTICSEARCH&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

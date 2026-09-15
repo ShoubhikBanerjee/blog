@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AIAudio on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/aiaudio/</link><description>Recent content in AIAudio on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 06 Jun 2025 21:25:32 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/aiaudio/index.xml" rel="self" type="application/rss+xml"/><item><title>🎭 PlayDiffusion: Fixing the Broken Words in AI Speech</title><link>https://shoubhikbanerjee.github.io/blog/p/playdiffusion-fixing-the-broken-words-in-ai-speech/</link><pubDate>Fri, 06 Jun 2025 21:25:32 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/playdiffusion-fixing-the-broken-words-in-ai-speech/</guid><description>&lt;img src="https://github.com/user-attachments/assets/16f783cd-c9c5-4c60-aabc-c57dc4b1f894" alt="Featured image of post 🎭 PlayDiffusion: Fixing the Broken Words in AI Speech" /&gt;&lt;h1 id="-playdiffusion-fixing-the-broken-words-in-ai-speech"&gt;🎭 PlayDiffusion: Fixing the Broken Words in AI Speech
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Discover how Play.AI&amp;rsquo;s innovative diffusion model solves one of the most frustrating limitations in AI speech synthesis—the inability to edit specific words without compromising audio quality. This breakthrough approach maintains prosody and speaker characteristics across edits, enabling seamless audio modifications that were previously impossible with traditional autoregressive models.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-speech-editing-problem"&gt;🔊 The Speech Editing Problem
+&lt;/h2&gt;&lt;p&gt;Imagine you&amp;rsquo;ve just generated a beautifully synthesized voice clip saying &amp;ldquo;The answer is out there, Neo. Go grab it!&amp;rdquo; But then you realize—you need the name to be &amp;ldquo;Trinity&amp;rdquo; instead. With traditional text-to-speech systems, you&amp;rsquo;re stuck with unpleasant choices:&lt;/p&gt;
+&lt;p&gt;🔄 Regenerate the entire sentence (risking different prosody throughout)
+✂️ Replace just &amp;ldquo;Neo&amp;rdquo; (creating obvious audio discontinuities)
+↩️ Regenerate from the edit point (potentially changing the rhythm of what follows)&lt;/p&gt;
+&lt;p&gt;This frustrating limitation stems from the fundamentally linear way conventional autoregressive transformer models work—they generate audio left-to-right, making isolated edits nearly impossible without compromising naturalness and coherence.&lt;/p&gt;
+&lt;p&gt;As developers or content creators, this is more than a minor inconvenience. It&amp;rsquo;s a significant workflow barrier that forces us to accept imperfect audio or spend excessive time regenerating and fine-tuning output.&lt;/p&gt;
+&lt;h2 id="-enter-playdiffusion-non-autoregressive-speech-magic"&gt;🧠 Enter PlayDiffusion: Non-Autoregressive Speech Magic
+&lt;/h2&gt;&lt;p&gt;Play.AI has tackled this problem head-on with PlayDiffusion, leveraging a 𝗻𝗼𝗻-𝗮𝘂𝘁𝗼𝗿𝗲𝗴𝗿𝗲𝘀𝘀𝗶𝘃𝗲 𝗱𝗶𝗳𝗳𝘂𝘀𝗶𝗼𝗻 𝗺𝗼𝗱𝗲𝗹 that makes precise audio edits possible while preserving surrounding context.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s how the PlayDiffusion process works:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;🎵 &lt;strong&gt;Tokenization&lt;/strong&gt; - The audio waveform gets encoded into discrete tokens, creating a compact representation of the speech&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🎭 &lt;strong&gt;Masking&lt;/strong&gt; - Only the portion that needs editing (like the word &amp;ldquo;Neo&amp;rdquo;) gets masked out&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;✨ &lt;strong&gt;Diffusion-Based Denoising&lt;/strong&gt; - A specialized diffusion model, conditioned on the revised text, denoises just the masked region&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Decoding&lt;/strong&gt; - The resulting token sequence gets transformed back into speech using a BigVGAN decoder model, maintaining the original speaker&amp;rsquo;s voice characteristics&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This approach differs fundamentally from traditional models by allowing the algorithm to simultaneously consider both past and future context when generating the edited segment—something that&amp;rsquo;s impossible with the one-directional nature of autoregressive models.&lt;/p&gt;
+&lt;h2 id="-technical-innovations-behind-the-magic"&gt;🛠️ Technical Innovations Behind the Magic
+&lt;/h2&gt;&lt;p&gt;What makes PlayDiffusion particularly clever is the architecture modifications necessary to achieve this capability:&lt;/p&gt;
+&lt;h3 id="𝗡𝗼𝗻-𝗖𝗮𝘂𝘀𝗮𝗹-𝗔𝘁𝘁𝗲𝗻𝘁𝗶𝗼𝗻"&gt;𝗡𝗼𝗻-𝗖𝗮𝘂𝘀𝗮𝗹 𝗔𝘁𝘁𝗲𝗻𝘁𝗶𝗼𝗻
+&lt;/h3&gt;&lt;p&gt;Unlike standard decoder-only language models (think GPT), which can only see &amp;ldquo;backward&amp;rdquo; in a sequence, PlayDiffusion implements 𝘯𝘰𝘯-𝘤𝘢𝘶𝘴𝘢𝘭 𝘢𝘵𝘵𝘦𝘯𝘵𝘪𝘰𝘯 𝘩𝘦𝘢𝘥𝘴. This architectural choice allows tokens to attend to past, present, 𝘢𝘯𝘥 future tokens—critical for maintaining coherent transitions when editing mid-sequence.&lt;/p&gt;
+&lt;h3 id="-𝗦𝗽𝗲𝗮𝗸𝗲𝗿-𝗖𝗼𝗻𝗱𝗶𝘁𝗶𝗼𝗻𝗶𝗻𝗴"&gt;🗣️ 𝗦𝗽𝗲𝗮𝗸𝗲𝗿 𝗖𝗼𝗻𝗱𝗶𝘁𝗶𝗼𝗻𝗶𝗻𝗴
+&lt;/h3&gt;&lt;p&gt;The model incorporates speaker embeddings derived from a pre-trained model that maps waveforms to fixed-size vectors. This ensures the edited segments maintain the original voice&amp;rsquo;s unique characteristics—tone, timbre, accent and all.&lt;/p&gt;
+&lt;h3 id="-𝗢𝗽𝘁𝗶𝗺𝗶𝘇𝗲𝗱-𝗧𝗼𝗸𝗲𝗻𝗶𝘇𝗮𝘁𝗶𝗼𝗻"&gt;📊 𝗢𝗽𝘁𝗶𝗺𝗶𝘇𝗲𝗱 𝗧𝗼𝗸𝗲𝗻𝗶𝘇𝗮𝘁𝗶𝗼𝗻
+&lt;/h3&gt;&lt;p&gt;To boost computational efficiency, PlayDiffusion uses a custom BPE (Byte Pair Encoding) tokenizer with only 10,000 text tokens. This significantly reduces embedding table size while maintaining high audio quality.&lt;/p&gt;
+&lt;h2 id="-inside-the-training-process"&gt;🔍 Inside the Training Process
+&lt;/h2&gt;&lt;p&gt;The training approach is particularly fascinating, built on a masking strategy similar to MaskGCT [3]. During training:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Random percentages of audio tokens get masked&lt;/li&gt;
+&lt;li&gt;The model learns to predict these masked tokens using:
+&lt;ul&gt;
+&lt;li&gt;Surrounding unmasked audio context&lt;/li&gt;
+&lt;li&gt;Text input&lt;/li&gt;
+&lt;li&gt;Speaker embedding information&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This is formalized in their training loss function:&lt;/p&gt;
+&lt;p&gt;L𝘮𝘢𝘴𝘬 = −∑(m𝘵,𝘪 ⋅ log pθ(x𝘪|X𝘵,C))&lt;/p&gt;
+&lt;p&gt;Where m𝘵,𝘪 equals 1 for masked tokens and 0 otherwise, essentially focusing the learning exclusively on predicting the masked portions.&lt;/p&gt;
+&lt;h2 id="-iterative-inference-for-quality-results"&gt;🚀 Iterative Inference for Quality Results
+&lt;/h2&gt;&lt;p&gt;The inference process is equally clever, using an iterative approach:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;🎯 Start with a fully masked token sequence&lt;/li&gt;
+&lt;li&gt;🧩 Generate initial predictions for all tokens&lt;/li&gt;
+&lt;li&gt;📊 Assign confidence scores based on prediction probabilities&lt;/li&gt;
+&lt;li&gt;🔄 Adaptively remask tokens with the lowest confidence&lt;/li&gt;
+&lt;li&gt;🔁 Repeat the process, gradually decreasing the number of masked tokens&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This iterative refinement ensures the model focuses its efforts on areas of highest uncertainty first, gradually building a coherent, natural-sounding edit that blends seamlessly with the surrounding audio.&lt;/p&gt;
+&lt;h2 id="-why-this-matters"&gt;💭 Why This Matters
+&lt;/h2&gt;&lt;p&gt;PlayDiffusion represents a significant leap forward in speech synthesis technology. Previously, the rigid nature of autoregressive models meant that any change, no matter how small, often required regenerating entire audio segments—wasting computation resources and creating workflow bottlenecks.&lt;/p&gt;
+&lt;p&gt;With this approach, we&amp;rsquo;re seeing the beginnings of truly 𝗲𝗱𝗶𝘁𝗮𝗯𝗹𝗲 𝘀𝘆𝗻𝘁𝗵𝗲𝘁𝗶𝗰 𝘀𝗽𝗲𝗲𝗰𝗵, where modifications can be made with the same granularity and ease as text editing. The implications extend beyond simple word replacements—this technology enables:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎬 More efficient voiceover workflows with rapid iteration&lt;/li&gt;
+&lt;li&gt;🌐 Localization projects that can selectively modify proper nouns&lt;/li&gt;
+&lt;li&gt;🎮 Dynamic game content with consistent voice character&lt;/li&gt;
+&lt;li&gt;📱 More responsive voice assistants and audio interfaces&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The next time you need to change &amp;ldquo;Neo&amp;rdquo; to &amp;ldquo;Trinity&amp;rdquo; in your synthesized audio, you won&amp;rsquo;t need to regenerate everything—just the part that needs changing, seamlessly integrated with the surrounding context. Isn&amp;rsquo;t that the future of speech synthesis we&amp;rsquo;ve all been waiting for?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/PlayHT/PlayDiffusion" target="_blank" rel="noopener"
+&gt;https://huggingface.co/PlayHT/PlayDiffusion&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#AIAudio #SpeechSynthesis #DiffusionModels #TTS #AudioEditing #MachineLearning #VoiceAI #GenerativeAI #SpeechTechnology #PlayAI&lt;/p&gt;</description></item><item><title>🎵 AI Sound Generation at Your Fingertips: Building a Real-Time Audio Creator on Arm CPUs</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-sound-generation-at-your-fingertips-building-a-real-time-audio-creator-on-arm-cpus/</link><pubDate>Fri, 06 Jun 2025 21:16:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-sound-generation-at-your-fingertips-building-a-real-time-audio-creator-on-arm-cpus/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6682a9252200824e2ddc667f/MaH3l1Ox9OZ7c8mIG_mtS.png" alt="Featured image of post 🎵 AI Sound Generation at Your Fingertips: Building a Real-Time Audio Creator on Arm CPUs" /&gt;&lt;h1 id="-ai-sound-generation-at-your-fingertips-building-a-real-time-audio-creator-on-arm-cpus"&gt;🎵 AI Sound Generation at Your Fingertips: Building a Real-Time Audio Creator on Arm CPUs
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Discover how a software engineer built a personal AI sound generator that creates unique audio samples in seconds—running entirely on Arm CPUs without cloud dependencies. This on-device solution integrates seamlessly with music production workflows, showing how efficient computing architectures can power creative AI tools locally.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-from-imagination-to-sound-in-seconds"&gt;🚀 From Imagination to Sound in Seconds
+&lt;/h2&gt;&lt;p&gt;Have you ever been in the flow of creation when suddenly you need &lt;em&gt;that perfect sound&lt;/em&gt;—but searching through libraries breaks your momentum? 𝗧𝗵𝗶𝘀 𝗶𝘀 𝘁𝗵𝗲 𝗽𝗿𝗼𝗯𝗹𝗲𝗺 I set out to solve as both a software engineer and music producer.&lt;/p&gt;
+&lt;p&gt;The result? A personal tool that generates unique, studio-ready sounds from simple text prompts—running 𝘤𝘰𝘮𝘱𝘭𝘦𝘵𝘦𝘭𝘺 on-device with an Arm-based CPU. No cloud services, no waiting, no interruptions to the creative process.&lt;/p&gt;
+&lt;p&gt;This isn&amp;rsquo;t just another AI demo. It&amp;rsquo;s a glimpse into how efficient computing architectures can transform creative workflows by bringing AI capabilities directly to the tools we already use.&lt;/p&gt;
+&lt;h2 id="-the-technical-stack-power-meets-efficiency"&gt;🧠 The Technical Stack: Power Meets Efficiency
+&lt;/h2&gt;&lt;p&gt;The magic behind this sound generator comes from combining several powerful technologies:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔊 &lt;strong&gt;Stable Audio Open model&lt;/strong&gt; from Stability AI (via Hugging Face)&lt;/li&gt;
+&lt;li&gt;⚙️ &lt;strong&gt;PyTorch and TorchAudio&lt;/strong&gt; for the inference engine&lt;/li&gt;
+&lt;li&gt;💻 &lt;strong&gt;Arm-based CPUs&lt;/strong&gt; providing the computational muscle&lt;/li&gt;
+&lt;li&gt;🎛️ &lt;strong&gt;Ableton Live integration&lt;/strong&gt; for seamless creative handoff&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What makes this approach different is that it runs 𝘄𝗶𝘁𝗵𝗼𝘂𝘁 dedicated GPUs or cloud connections, proving that today&amp;rsquo;s efficient CPUs can handle complex generative tasks when the pipeline is properly optimized.&lt;/p&gt;
+&lt;h3 id="𝗢𝗽𝘁𝗶𝗺𝗶𝘇𝗶𝗻𝗴-𝗳𝗼𝗿-𝗖𝗣𝗨-𝗣𝗲𝗿𝗳𝗼𝗿𝗺𝗮𝗻𝗰𝗲"&gt;𝗢𝗽𝘁𝗶𝗺𝗶𝘇𝗶𝗻𝗴 𝗳𝗼𝗿 𝗖𝗣𝗨 𝗣𝗲𝗿𝗳𝗼𝗿𝗺𝗮𝗻𝗰𝗲
+&lt;/h3&gt;&lt;p&gt;The key to achieving responsive performance was maximizing thread utilization while managing memory carefully:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Use all available CPU threads&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_num_threads&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cpu_count&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Periodic garbage collection to maintain performance&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;gen_count&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;gc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;collect&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Memory cleared at generation &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;gen_count&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;For the diffusion process itself, I tuned the parameters for speed without sacrificing quality:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;generate_diffusion_cond&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;cfg_scale&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;conditioning&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;conditioning&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sample_size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;sample_size&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sigma_min&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sigma_max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sampler_type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;dpmpp-3m-sde&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;device&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The system is also flexible enough to utilize hardware acceleration when available:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;device&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;mps&amp;#34;&lt;/span&gt; &lt;span class="c1"&gt;# For Apple Silicon&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# or &amp;#34;cuda&amp;#34; for NVIDIA GPUs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# or &amp;#34;cpu&amp;#34; for any system&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;float32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-seamless-creative-integration"&gt;🎹 Seamless Creative Integration
+&lt;/h2&gt;&lt;p&gt;What truly makes this tool valuable is how it integrates into existing workflows. Instead of switching between applications or browser tabs, the generated sounds appear directly in Ableton Live&amp;rsquo;s browser.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s what the interaction looks like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Enter a prompt for generating audio:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Ambient texture
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Enter a tempo for the audio:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;100
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Generated audio saved to: Ambient texture.wav
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Seconds later, that uniquely generated sound is ready to be dragged into a track, manipulated, and incorporated into a composition. No downloading files from cloud services, no copying between folders—just seamless creation.&lt;/p&gt;
+&lt;p&gt;The difference between this and other AI audio tools? 𝙏𝙝𝙚 𝙘𝙧𝙚𝙖𝙩𝙞𝙫𝙚 𝙛𝙡𝙤𝙬 𝙣𝙚𝙫𝙚𝙧 𝙨𝙩𝙤𝙥𝙨.&lt;/p&gt;
+&lt;h2 id="-why-on-device-ai-matters-for-creators"&gt;🔮 Why On-Device AI Matters for Creators
+&lt;/h2&gt;&lt;p&gt;This project demonstrates something powerful about the future of creative tools:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Flow preservation&lt;/strong&gt; 🌊 - When AI runs locally, there&amp;rsquo;s no waiting that disrupts creativity&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Data privacy&lt;/strong&gt; 🛡️ - Your creative prompts and outputs never leave your machine&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Ownership&lt;/strong&gt; 🔐 - Complete control over your generated content&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reliability&lt;/strong&gt; ⚡ - No dependency on internet connections or cloud service availability&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;As Arm-based processors continue to evolve, we&amp;rsquo;ll see more AI workloads shifting from cloud to local execution. This isn&amp;rsquo;t just about technical efficiency—it&amp;rsquo;s about removing barriers between imagination and creation.&lt;/p&gt;
+&lt;h3 id="𝗧𝗵𝗲-𝗣𝗼𝘄𝗲𝗿-𝗼𝗳-𝗣𝗲𝗿𝘀𝗼𝗻𝗮𝗹𝗶𝘇𝗮𝘁𝗶𝗼𝗻"&gt;𝗧𝗵𝗲 𝗣𝗼𝘄𝗲𝗿 𝗼𝗳 𝗣𝗲𝗿𝘀𝗼𝗻𝗮𝗹𝗶𝘇𝗮𝘁𝗶𝗼𝗻
+&lt;/h3&gt;&lt;p&gt;Perhaps the most exciting aspect of this tool is that every generated sound is unique. The exact same prompt will produce different results each time, giving creators a sense of ownership over what they generate. This contrasts sharply with the sample packs and presets that lead to homogenized sounds across different artists&amp;rsquo; work.&lt;/p&gt;
+&lt;p&gt;With on-device generation, you&amp;rsquo;re not just selecting from a menu—you&amp;rsquo;re describing what doesn&amp;rsquo;t yet exist and bringing it into being.&lt;/p&gt;
+&lt;h2 id="-looking-forward-local-ai-as-creative-companion"&gt;🌟 Looking Forward: Local AI as Creative Companion
+&lt;/h2&gt;&lt;p&gt;While this project is a personal prototype, it points toward a future where AI becomes less of a remote service and more of an integrated creative companion. Imagine musical instruments with built-in sound generation, video editors with on-device visual effect creation, or design tools that generate textures and patterns in real-time.&lt;/p&gt;
+&lt;p&gt;The combination of efficient computing architectures like Arm and optimized AI models is making this future possible sooner than many expected. For developers and creators alike, this opens new possibilities for tools that enhance rather than interrupt the creative process.&lt;/p&gt;
+&lt;p&gt;What would your creative workflow look like if you could generate exactly what you imagine, right when you need it, without leaving your primary creative environment?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/Arm/ai-sound-gen-on-arm" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/Arm/ai-sound-gen-on-arm&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#AIAudio #GenerativeAI #ArmCPU #MusicProduction #CreativeTech #OnDeviceAI #AblelonLive #AIForCreators #EdgeComputing #AudioGeneration&lt;/p&gt;</description></item><item><title>🎵 TIGER AI: The Sound Separation Revolution That Content Creators Have Been Waiting For</title><link>https://shoubhikbanerjee.github.io/blog/p/tiger-ai-the-sound-separation-revolution-that-content-creators-have-been-waiting-for/</link><pubDate>Thu, 29 May 2025 19:09:39 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/tiger-ai-the-sound-separation-revolution-that-content-creators-have-been-waiting-for/</guid><description>&lt;img src="https://resonic.at/img/docs/extract-drag-wave" alt="Featured image of post 🎵 TIGER AI: The Sound Separation Revolution That Content Creators Have Been Waiting For" /&gt;&lt;h1 id="-tiger-ai-the-sound-separation-revolution-that-content-creators-have-been-waiting-for"&gt;🎵 TIGER AI: The Sound Separation Revolution That Content Creators Have Been Waiting For
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;A 5-minute deep dive into how this groundbreaking AI technology is transforming audio editing&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-summary"&gt;📝 Summary
+&lt;/h2&gt;&lt;p&gt;TIGER AI represents a breakthrough in audio separation technology, offering content creators unprecedented control over sound elements in mixed recordings. This tool can isolate vocals, instruments, and sound effects with remarkable precision, opening new possibilities for music production, podcast editing, and video content creation.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-audio-separation-renaissance-has-arrived"&gt;🔊 The Audio Separation Renaissance Has Arrived
+&lt;/h2&gt;&lt;p&gt;For years, content creators have struggled with a seemingly impossible challenge: cleanly extracting individual sound elements from mixed audio recordings. That frustrating limitation has finally met its match with TIGER AI, a revolutionary audio separation technology that&amp;rsquo;s changing how we think about sound editing.&lt;/p&gt;
+&lt;p&gt;Imagine taking any song and perfectly isolating just the vocals, or extracting only the bass line without affecting other instruments. Picture removing unwanted background noise from your podcast recording while preserving the natural timbre of voices. TIGER AI makes these scenarios not just possible, but surprisingly accessible.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration below showing TIGER&amp;rsquo;s separation capability demonstration&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-how-tiger-ai-works-its-magic"&gt;🧠 How TIGER AI Works Its Magic
+&lt;/h2&gt;&lt;p&gt;TIGER (Tonal-Instrument-voice-General audio Extraction and Recognition) employs sophisticated deep learning algorithms specifically trained to understand and separate the complex acoustic patterns that make up mixed audio signals.&lt;/p&gt;
+&lt;p&gt;𝗪𝗵𝗮𝘁 𝘀𝗲𝘁𝘀 𝗧𝗜𝗚𝗘𝗥 𝗮𝗽𝗮𝗿𝘁 from previous separation technologies is its remarkable ability to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎯 Identify and isolate multiple audio sources simultaneously&lt;/li&gt;
+&lt;li&gt;🔍 Preserve audio quality with minimal artifacts&lt;/li&gt;
+&lt;li&gt;🎚️ Handle complex overlapping frequencies&lt;/li&gt;
+&lt;li&gt;🌐 Process diverse audio types beyond just music&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The neural network architecture behind TIGER uses a combination of convolutional layers and attention mechanisms to create a sophisticated understanding of sound characteristics. The model has been trained on thousands of hours of diverse audio recordings, enabling it to recognize patterns that would be impossible for traditional signal processing methods.&lt;/p&gt;
+&lt;p&gt;𝙏𝙚𝙘𝙝𝙣𝙞𝙘𝙖𝙡 𝙣𝙤𝙩𝙚: TIGER&amp;rsquo;s architecture implements a novel approach to the spectrogram transformation process, treating audio separation as both a classification and regression problem simultaneously, which contributes to its exceptional performance.&lt;/p&gt;
+&lt;h2 id="-practical-applications-that-will-transform-content-creation"&gt;💡 Practical Applications That Will Transform Content Creation
+&lt;/h2&gt;&lt;p&gt;The implications of TIGER AI extend far beyond simple audio tricks. Content creators across multiple disciplines are finding game-changing applications:&lt;/p&gt;
+&lt;h3 id="𝗠𝘂𝘀𝗶𝗰-𝗣𝗿𝗼𝗱𝘂𝗰𝘁𝗶𝗼𝗻-"&gt;𝗠𝘂𝘀𝗶𝗰 𝗣𝗿𝗼𝗱𝘂𝗰𝘁𝗶𝗼𝗻 🎸
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Create cleaner remixes by isolating exact instrumental elements&lt;/li&gt;
+&lt;li&gt;Sample specific sounds from existing recordings without background interference&lt;/li&gt;
+&lt;li&gt;Fix problematic recordings by adjusting individual instruments post-recording&lt;/li&gt;
+&lt;li&gt;Create acapella versions or instrumental tracks from complete songs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="𝗣𝗼𝗱𝗰𝗮𝘀𝘁-𝗘𝗱𝗶𝘁𝗶𝗻𝗴-"&gt;𝗣𝗼𝗱𝗰𝗮𝘀𝘁 𝗘𝗱𝗶𝘁𝗶𝗻𝗴 🎙️
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Remove unwanted ambient noise while preserving voice quality&lt;/li&gt;
+&lt;li&gt;Separate overlapping voices for clearer conversation editing&lt;/li&gt;
+&lt;li&gt;Enhance specific voice elements without affecting overall audio balance&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="𝗩𝗶𝗱𝗲𝗼-𝗖𝗼𝗻𝘁𝗲𝗻𝘁-"&gt;𝗩𝗶𝗱𝗲𝗼 𝗖𝗼𝗻𝘁𝗲𝗻𝘁 🎬
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Extract clean dialogue from scenes with background music or effects&lt;/li&gt;
+&lt;li&gt;Create custom sound effects libraries from existing recordings&lt;/li&gt;
+&lt;li&gt;Repurpose audio elements from original content for derivative works&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;See example workflow diagram showing the TIGER AI interface&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;One particularly exciting application is the ability to create &amp;ldquo;stems&amp;rdquo; (separate audio tracks) from finished songs. This capability, previously limited to those with access to original multi-track recordings, democratizes remixing and educational opportunities for aspiring producers and musicians.&lt;/p&gt;
+&lt;h2 id="-the-future-implications-of-advanced-audio-separation"&gt;🔮 The Future Implications of Advanced Audio Separation
+&lt;/h2&gt;&lt;p&gt;The widespread availability of tools like TIGER AI represents more than just a technical achievement—it potentially reshapes the creative landscape for content creators:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;🚀 &lt;strong&gt;Democratization of Advanced Audio Editing&lt;/strong&gt;: Capabilities once requiring expensive studio equipment become accessible to creators at all levels.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Transformation of Remix Culture&lt;/strong&gt;: With easier access to high-quality stems, we may see an explosion of creative reinterpretations and collaborations.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🧩 &lt;strong&gt;New Preservation Techniques&lt;/strong&gt;: Historical recordings with technical limitations could be restored and separated into components never before accessible.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🤔 &lt;strong&gt;Ethical Considerations&lt;/strong&gt;: As with any powerful technology, questions arise about copyright implications, potential misuse for creating deepfakes, and attribution requirements.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;𝑇ℎ𝑒 𝑒𝑡ℎ𝑖𝑐𝑎𝑙 𝑓𝑟𝑎𝑚𝑒𝑤𝑜𝑟𝑘 around these technologies is still evolving, and responsible use guidelines will be crucial as adoption increases. Content creators should familiarize themselves with both the capabilities and the appropriate contexts for using audio separation technology.&lt;/p&gt;
+&lt;h2 id="-conclusion-a-new-era-of-sound-control"&gt;🌟 Conclusion: A New Era of Sound Control
+&lt;/h2&gt;&lt;p&gt;TIGER AI represents a watershed moment in audio technology—a point where the previously impossible becomes routine. For content creators who have long struggled with the limitations of mixed audio, this technology offers unprecedented creative freedom and technical control.&lt;/p&gt;
+&lt;p&gt;As these tools continue to evolve, we&amp;rsquo;ll likely see entire new genres of content and creative techniques emerge. The ability to deconstruct, analyze, and rebuild audio opens doors not just to better technical outcomes, but to entirely new ways of thinking about sound itself.&lt;/p&gt;
+&lt;p&gt;What would you create if you could perfectly separate any sound from any recording? The answer to that question might just define the next evolution of audio content creation.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/posts/fdaudens/323840314242853" target="_blank" rel="noopener"
+&gt;https://huggingface.co/posts/fdaudens/323840314242853&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#AudioAI #ContentCreation #TIGERAi #AudioSeparation #AITech #MusicProduction #SoundEngineering #CreativeTech #AIAudio #MediaProduction&lt;/p&gt;</description></item></channel></rss>
