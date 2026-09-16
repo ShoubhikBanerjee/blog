@@ -2,7 +2,7 @@
 title: "Autodesk Previews Next-Generation Agentic AI for Autodesk Assistant"
 slug: "autodesk-previews-next-generation-agentic-ai-for-autodesk-assistant"
 description: "At Autodesk University 2026, Autodesk previewed new agentic AI capabilities designed to shape the next generation of Autodesk Assistant. This updated experience extends agentic AI across products,..."
-date: 2026-09-16T06:07:24+05:30
+date: 2026-09-16T12:08:47+05:30
 tags: [Autodesk, AutodeskAssistant, AgenticAI, DesignAndMake]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Design and Manufacturing"]
 image: "https://mmx.prnewswire.com/media/MS971117/autodesk-logo.jpg?id=OA2946968&p=facebook"

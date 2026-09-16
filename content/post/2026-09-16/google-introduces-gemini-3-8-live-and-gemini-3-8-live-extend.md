@@ -2,7 +2,7 @@
 title: "Google Introduces Gemini 3.8 Live and Gemini 3.8 Live Extended Thinking Models"
 slug: "google-introduces-gemini-3-8-live-and-gemini-3-8-live-extended-thinking-models"
 description: "Google has introduced two new AI models, Gemini 3.8 Live and Gemini 3.8 Live Extended Thinking, designed to bring advancements in near real-time reasoning to voice agents. These models make speaking..."
-date: 2026-09-16T06:07:24+05:30
+date: 2026-09-16T12:08:47+05:30
 tags: [Gemini, VoiceAgents, GoogleAI, SpeechToSpeech]
 categories: ["AI", "Artificial Intelligence", "Voice Technology", "AI Agents"]
 image: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini_3-8_live___keyword__blog-social.width-1300.png"

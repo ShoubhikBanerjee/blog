@@ -2,7 +2,7 @@
 title: "New Poll Shows Strong Public Opposition to AI Data Centers"
 slug: "new-poll-shows-strong-public-opposition-to-ai-data-centers"
 description: "A new poll released Tuesday by the New York Times and Siena University confirms that AI and data centers are highly unpopular among voters. In the survey of 1,503 likely voters conducted in early..."
-date: 2026-09-16T06:07:24+05:30
+date: 2026-09-16T12:08:47+05:30
 tags: [AIDataCenters, PublicOpinion, TechPolicy, ArtificialIntelligence]
 categories: ["AI", "Artificial Intelligence", "Public Policy", "Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/STKS528_DATA_CENTERS2_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

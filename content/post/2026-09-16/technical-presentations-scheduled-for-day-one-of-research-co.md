@@ -2,7 +2,7 @@
 title: "Technical Presentations Scheduled for Day One of Research Conference"
 slug: "technical-presentations-scheduled-for-day-one-of-research-conference"
 description: "On 16 September 2026, the first day of the technical program commenced with a structured schedule starting with an inauguration and keynote address, followed by Session 1 and Session 2. The event..."
-date: 2026-09-16T06:07:24+05:30
+date: 2026-09-16T12:08:47+05:30
 tags: [ArtificialIntelligence, DeepLearning, MachineLearning, TechConference]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Deep Learning"]
 author: "Shoubhik Banerjee"

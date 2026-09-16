@@ -2,7 +2,7 @@
 title: "Nemotron 3.5 Lightning Architecture Uses Mixture-of-Experts and Mamba-2 Hybrid Design"
 slug: "nemotron-3-5-lightning-architecture-uses-mixture-of-experts-and-mamba-2-hybrid-design"
 description: "Nemotron 3.5 Lightning illustrates how a 30B-parameter model can activate only 3B parameters per token while utilizing the capacity of a larger model. This is achieved through a Mixture-of-Experts..."
-date: 2026-09-16T06:07:24+05:30
+date: 2026-09-16T12:08:47+05:30
 tags: [Nemotron, MixtureOfExperts, Mamba2, NVIDIA, ModelArchitecture]
 categories: ["AI", "Machine Learning", "Model Architecture", "Deep Learning"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image2-8-660x370.png"

@@ -2,7 +2,7 @@
 title: "Thrush Desktop 2.1.1 Released as a Local Workbench for AI Coding"
 slug: "thrush-desktop-2-1-1-released-as-a-local-workbench-for-ai-coding"
 description: "Thrush Desktop 2.1.1 has been released as a local desktop workbench for AI coding. The application combines projects, conversations, file review, and coding agents into a single desktop application."
-date: 2026-09-16T06:07:24+05:30
+date: 2026-09-16T12:08:47+05:30
 tags: [AICoding, Docker, Git, ThrushDesktop, AIAgents]
 categories: ["AI", "AI Agents", "Software Development", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/165009858?v=4"

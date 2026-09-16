@@ -2,7 +2,7 @@
 title: "Experian Study Finds Consumers Comfortably Delegating Financial Tasks to AI Agents"
 slug: "experian-study-finds-consumers-comfortably-delegating-financial-tasks-to-ai-agents"
 description: "A new study released by data and technology company Experian reveals that consumers are ready to transition from using artificial intelligence for information gathering to allowing AI agents to..."
-date: 2026-09-16T06:07:24+05:30
+date: 2026-09-16T12:08:47+05:30
 tags: [Experian, AIagents, Fintech, AgenticCommerce]
 categories: ["AI", "AI Agents", "Financial Technology", "Consumer Research"]
 image: "https://www.experian.com/content/dam/marketing/na/social/experian-og-image.png"
