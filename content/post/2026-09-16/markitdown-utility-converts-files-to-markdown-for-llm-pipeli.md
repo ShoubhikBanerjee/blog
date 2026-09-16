@@ -2,7 +2,7 @@
 title: "MarkItDown utility converts files to Markdown for LLM pipelines"
 slug: "markitdown-utility-converts-files-to-markdown-for-llm-pipelines"
 description: "MarkItDown, a lightweight Python utility, enables conversion of many file types into Markdown for use with large language models and text‑analysis pipelines.\n\n## 🔍 Overview\n- Lightweight Python..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [MarkItDown, Python, LLM, DataProcessing]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Data Processing", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/6154722?v=4"

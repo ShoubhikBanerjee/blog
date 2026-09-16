@@ -2,7 +2,7 @@
 title: "Redacting PII Using Amazon Bedrock Data Automation and Serverless Architecture"
 slug: "redacting-pii-using-amazon-bedrock-data-automation-and-serverless-architecture"
 description: "Amazon Bedrock Data Automation (BDA) is a service that extracts structured information from unstructured documents, images, audio, and video. A new serverless batch architecture utilizes BDA..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AmazonBedrock, PII, AWS, Serverless, DataAutomation]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Data Privacy"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-20554-featured-image.png"

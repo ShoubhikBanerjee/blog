@@ -2,7 +2,7 @@
 title: "LightRAG Integrates RAG-Anything for Multimodal Data Handling"
 slug: "lightrag-integrates-rag-anything-for-multimodal-data-handling"
 description: "LightRAG has merged with RAG-Anything, an all-in-one multimodal RAG system, to enable seamless processing and RAG capabilities for text, images, tables, and equations."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [LightRAG, RAG, MultimodalAI, OpenSearch, LLM]
 categories: ["AI", "Machine Learning", "Information Retrieval", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/118165258?v=4"

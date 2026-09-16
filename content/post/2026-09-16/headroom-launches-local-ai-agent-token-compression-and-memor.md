@@ -2,7 +2,7 @@
 title: "Headroom Launches Local AI Agent Token Compression and Memory Tool"
 slug: "headroom-launches-local-ai-agent-token-compression-and-memory-tool"
 description: "Headroom is a new tool that compresses data read by AI agents—including tool outputs, logs, RAG chunks, files, and conversation history—before it reaches the LLM. The compression process runs locally..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [LLM, AIagents, TokenCompression, Headroom]
 categories: ["AI", "AI Agents", "Software Development", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/294291659?v=4"

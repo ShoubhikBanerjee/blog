@@ -2,7 +2,7 @@
 title: "Introduction of ReDraft for Reference-Driven Revision and Fine-Tuning"
 slug: "introduction-of-redraft-for-reference-driven-revision-and-fine-tuning"
 description: "Researchers have introduced ReDraft (Reference-Driven Revision and Fine-Tuning), a method that leverages a model's own failures to improve performance through self-revision and fine-tuning."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [ReDraft, FineTuning, Qwen25VL, MachineLearning]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Model Optimization"]
 author: "Shoubhik Banerjee"

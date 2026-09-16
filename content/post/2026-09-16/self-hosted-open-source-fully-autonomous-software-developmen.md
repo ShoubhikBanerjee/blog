@@ -2,7 +2,7 @@
 title: "Self-Hosted Open-Source Fully Autonomous Software Development AI Agent on AWS"
 slug: "self-hosted-open-source-fully-autonomous-software-development-ai-agent-on-aws"
 description: "A new example implementation of a fully autonomous software development AI agent has been released. This self-hosted, open-source solution runs on AWS and provides an experience similar to..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AWS, AIagents, OpenSource, SoftwareDevelopment]
 categories: ["AI", "AI Agents", "Cloud Computing", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/8931462?v=4"

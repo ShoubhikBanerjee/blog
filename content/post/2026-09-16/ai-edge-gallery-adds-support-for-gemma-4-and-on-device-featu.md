@@ -2,7 +2,7 @@
 title: "AI Edge Gallery Adds Support for Gemma 4 and On-Device Features"
 slug: "ai-edge-gallery-adds-support-for-gemma-4-and-on-device-features"
 description: "AI Edge Gallery is a destination for running open-source Large Language Models (LLMs) directly on mobile hardware. The latest version introduces official support for the Gemma 4 family of models,..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AIEdgeGallery, Gemma4, OnDeviceAI, LLM, MobileAI]
 categories: ["AI", "Machine Learning", "Mobile Development", "Generative AI"]
 image: "https://avatars.githubusercontent.com/u/150697620?v=4"

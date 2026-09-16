@@ -2,7 +2,7 @@
 title: "QueryFormer Wins KDD Cup 2026 Tencent UniRec Challenge Industrial Track"
 slug: "queryformer-wins-kdd-cup-2026-tencent-unirec-challenge-industrial-track"
 description: "Researchers have introduced QueryFormer, a unified architecture designed for post-click conversion rate (pCVR) prediction that addresses the need to jointly model sequential user behaviors and..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [QueryFormer, KDDCup, pCVR, MachineLearning, TencentUniRec]
 categories: ["AI", "Machine Learning", "Recommendation Systems", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

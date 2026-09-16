@@ -2,7 +2,7 @@
 title: "CrewAI Launches Open-Source Framework for Multi-Agent AI Orchestration"
 slug: "crewai-launches-open-source-framework-for-multi-agent-ai-orchestration"
 description: "CrewAI has introduced an open-source Python framework designed for orchestrating role-playing, autonomous AI agents to tackle complex tasks through collaborative intelligence."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [CrewAI, AIagents, OpenSource, Python, Automation]
 categories: ["AI", "AI Agents", "Software Development", "Enterprise Automation"]
 image: "https://avatars.githubusercontent.com/u/170677839?v=4"

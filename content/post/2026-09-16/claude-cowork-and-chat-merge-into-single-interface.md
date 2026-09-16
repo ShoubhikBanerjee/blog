@@ -2,7 +2,7 @@
 title: "Claude Cowork and Chat Merge Into Single Interface"
 slug: "claude-cowork-and-chat-merge-into-single-interface"
 description: "Claude Cowork and chat are merging into one Claude starting today."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Claude, AI, ProductUpdate]
 categories: ["AI", "Artificial Intelligence", "Software Updates", "Productivity Tools"]
 author: "Shoubhik Banerjee"

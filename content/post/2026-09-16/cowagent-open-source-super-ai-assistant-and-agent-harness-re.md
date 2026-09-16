@@ -2,7 +2,7 @@
 title: "CowAgent Open-Source Super AI Assistant and Agent Harness Released"
 slug: "cowagent-open-source-super-ai-assistant-and-agent-harness-released"
 description: "CowAgent (formerly chatgpt-on-wechat) is an open-source super AI assistant and reference implementation of Agent Harness engineering designed to plan tasks, control computers and external services,..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [CowAgent, OpenSource, AIAgents, LLM, AgentHarness]
 categories: ["AI", "AI Agents", "Open Source Software", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/26161723?v=4"

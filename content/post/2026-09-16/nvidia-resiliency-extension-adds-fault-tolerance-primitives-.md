@@ -2,7 +2,7 @@
 title: "NVIDIA Resiliency Extension Adds Fault-Tolerance Primitives to PyTorch"
 slug: "nvidia-resiliency-extension-adds-fault-tolerance-primitives-to-pytorch"
 description: "The NVIDIA Resiliency Extension (NVRx) has been introduced as a pip-installable Python layer (`pip install nvidia-resiliency-ext`) that provides fault-tolerance primitives for PyTorch without..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [NVIDIA, PyTorch, AWS, FaultTolerance, MachineLearning]
 categories: ["AI", "Machine Learning", "Cloud Infrastructure", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-20900-featured-image.png"

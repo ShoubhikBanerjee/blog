@@ -2,7 +2,7 @@
 title: "OpenDesign Launches Local-First Open-Source Alternative to Claude Design"
 slug: "opendesign-launches-local-first-open-source-alternative-to-claude-design"
 description: "OpenDesign has launched as an open-source, local-first desktop application for macOS and Windows that serves as an alternative to Claude Design."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [OpenDesign, DeepSeek, OpenSource, AIagents, UIUX]
 categories: ["AI", "AI Agents", "Software Development", "Design Tools"]
 image: "https://avatars.githubusercontent.com/u/263625318?v=4"

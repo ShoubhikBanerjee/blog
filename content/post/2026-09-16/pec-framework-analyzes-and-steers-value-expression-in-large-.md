@@ -2,7 +2,7 @@
 title: "PEC Framework Analyzes and Steers Value Expression in Large Language Models"
 slug: "pec-framework-analyzes-and-steers-value-expression-in-large-language-models"
 description: "Researchers have developed the Prior-Environment-Cognition (PEC) framework to verify and steer the values expressed by Large Language Models (LLMs)."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [LLM, AIAlignment, MachineLearning, PECFramework]
 categories: ["AI", "Machine Learning", "AI Safety", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

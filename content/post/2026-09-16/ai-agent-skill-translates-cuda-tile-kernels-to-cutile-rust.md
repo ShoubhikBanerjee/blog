@@ -2,7 +2,7 @@
 title: "AI Agent Skill Translates CUDA Tile Kernels to cuTile Rust"
 slug: "ai-agent-skill-translates-cuda-tile-kernels-to-cutile-rust"
 description: "A new AI agent skill has been developed to translate GPU kernels from cuTile Python and Triton-TileIR into cuTile Rust, a tile-based system designed for safe and idiomatic GPU kernel authoring in the..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Rust, CUDA, GPU, AIagents, TileGym]
 categories: ["AI", "Software Development", "AI Agents", "GPU Programming"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2025/07/neon-green-cube-660x370.png"

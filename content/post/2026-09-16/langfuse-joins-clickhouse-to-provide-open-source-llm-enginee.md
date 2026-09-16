@@ -2,7 +2,7 @@
 title: "Langfuse joins ClickHouse to provide open source LLM engineering platform"
 slug: "langfuse-joins-clickhouse-to-provide-open-source-llm-engineering-platform"
 description: "Langfuse, an open source LLM engineering platform, has become part of ClickHouse as of January 2026. The platform is designed to help teams collaboratively develop, monitor, evaluate, and debug AI..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Langfuse, ClickHouse, LLMOps, OpenSource]
 categories: ["AI", "LLM Engineering", "Software Development", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/134601687?v=4"

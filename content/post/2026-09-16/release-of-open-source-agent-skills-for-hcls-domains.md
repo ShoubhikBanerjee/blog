@@ -2,7 +2,7 @@
 title: "Release of Open Source Agent Skills for HCLS Domains"
 slug: "release-of-open-source-agent-skills-for-hcls-domains"
 description: "A collection of 38 open source agent skills spanning 11 Health Care and Life Sciences (HCLS) domains has been released to help close the methodology gap for AI agents."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AIagents, HCLS, OpenSource, AWS, Genomics]
 categories: ["AI", "AI Agents", "Health Care and Life Sciences", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-21213-featured-image.png"

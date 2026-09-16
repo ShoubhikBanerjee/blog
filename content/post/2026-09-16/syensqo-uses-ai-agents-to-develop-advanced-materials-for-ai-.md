@@ -2,7 +2,7 @@
 title: "Syensqo Uses AI Agents to Develop Advanced Materials for AI Infrastructure"
 slug: "syensqo-uses-ai-agents-to-develop-advanced-materials-for-ai-infrastructure"
 description: "Syensqo, a global leader in specialty materials, is employing AI agents to accelerate the discovery and development of materials designed to support semiconductor and data center infrastructure."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Syensqo, AIagents, Semiconductors, MaterialsScience, DataCenters]
 categories: ["AI", "AI Infrastructure", "Materials Science", "Specialty Chemistry"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/Mike-Finelli-business-lab.png?resize=1200,600"

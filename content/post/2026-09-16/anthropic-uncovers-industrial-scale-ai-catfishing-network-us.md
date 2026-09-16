@@ -2,7 +2,7 @@
 title: "Anthropic Uncovers Industrial-Scale AI Catfishing Network Using Fraudulent Dating Apps"
 slug: "anthropic-uncovers-industrial-scale-ai-catfishing-network-using-fraudulent-dating-apps"
 description: "Anthropic has revealed a network of approximately 28 fraudulent dating apps that use autonomous AI personas to catfish thousands of users. The company discovered the operation after identifying a..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Anthropic, AI, Cybersecurity, Catfishing, Fraud]
 categories: ["AI", "AI Safety", "Cybersecurity", "Fraud Detection"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/268744_Inside_romance_AI_scam_apps_CVirginia2.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore Introduces AgentCore Optimization and Reflector Agents"
 slug: "amazon-bedrock-agentcore-introduces-agentcore-optimization-and-reflector-agents"
 description: "Amazon Bedrock AgentCore has introduced AgentCore optimization, a capability designed to help improve the quality of agents through the use of production traces and automated configuration changes."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AmazonBedrock, AgentCore, AIAgents, LLMOps]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/09/ML-21426-featured-image.png"

@@ -2,7 +2,7 @@
 title: "Firecrawl Launches Web Context API for AI Agents and Data Extraction"
 slug: "firecrawl-launches-web-context-api-for-ai-agents-and-data-extraction"
 description: "Firecrawl has released a web context API designed to search, scrape, and interact with the web at scale to provide LLM-ready data for AI agents and dynamic applications."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Firecrawl, AIagents, WebScraping, LLM]
 categories: ["AI", "AI Agents", "Web Development", "Data Extraction"]
 image: "https://avatars.githubusercontent.com/u/135057108?v=4"

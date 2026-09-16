@@ -2,7 +2,7 @@
 title: "Survey Finds Majority of Likely Voters Oppose AI Data Center Construction"
 slug: "survey-finds-majority-of-likely-voters-oppose-ai-data-center-construction"
 description: "A survey of 1,503 likely voters conducted in early September reveals that 61 percent of respondents oppose the construction of data centers used to power AI technology, while 14 percent say they..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AI, DataCenters, PublicOpinion, Infrastructure]
 categories: ["AI", "Artificial Intelligence", "Public Policy", "Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/STKS528_DATA_CENTERS2_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

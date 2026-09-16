@@ -2,7 +2,7 @@
 title: "ECC Agent Harness Performance Optimization System Released for AI Development"
 slug: "ecc-agent-harness-performance-optimization-system-released-for-ai-development"
 description: "A new performance optimization system for AI agents, called ECC, has been made available."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AI, PerformanceOptimization, OpenSource]
 categories: ["AI", "Artificial Intelligence", "Developer Tools", "Open Source Software"]
 image: "https://avatars.githubusercontent.com/u/124439313?v=4"

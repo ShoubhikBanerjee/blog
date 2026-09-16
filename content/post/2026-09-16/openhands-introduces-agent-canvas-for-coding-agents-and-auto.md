@@ -2,7 +2,7 @@
 title: "OpenHands Introduces Agent Canvas for Coding Agents and Automations"
 slug: "openhands-introduces-agent-canvas-for-coding-agents-and-automations"
 description: "OpenHands has released Agent Canvas, a self-hosted developer control center designed for managing coding agents and automations across various backends."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [OpenHands, AIagents, CodingAgents, DeveloperTools, Automation]
 categories: ["AI", "AI Agents", "Software Development", "Automation"]
 image: "https://avatars.githubusercontent.com/u/45487711?v=4"

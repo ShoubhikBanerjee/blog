@@ -2,7 +2,7 @@
 title: "OpenHuman Open Source Agent Harness Launched with Local-First Memory"
 slug: "openhuman-open-source-agent-harness-launched-with-local-first-memory"
 description: "OpenHuman has launched as an open source agent harness featuring agent orchestration, workflows, and local-first memory. Within one week of its launch, the project became the number one trending..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [OpenHuman, OpenSource, AIAgents, GitHub]
 categories: ["AI", "AI Agents", "Open Source Software", "Personal Intelligence"]
 image: "https://avatars.githubusercontent.com/u/246003628?v=4"

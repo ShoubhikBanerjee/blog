@@ -2,7 +2,7 @@
 title: "gstack turns Claude Code into a virtual engineering team"
 slug: "gstack-turns-claude-code-into-a-virtual-engineering-team"
 description: "gstack is a set of Claude Code skills that assemble a virtual engineering team."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [gstack, ClaudeCode, AItools, Automation]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/19957?v=4"

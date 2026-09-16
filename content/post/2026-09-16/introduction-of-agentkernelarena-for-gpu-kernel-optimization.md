@@ -2,7 +2,7 @@
 title: "Introduction of AgentKernelArena for GPU Kernel Optimization Benchmarking"
 slug: "introduction-of-agentkernelarena-for-gpu-kernel-optimization-benchmarking"
 description: "AgentKernelArena is a new controlled experimentation platform designed for developing and evaluating AI agents on real GPU kernel optimization tasks."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [GPU, AIagents, Benchmarking, LLM, KernelOptimization]
 categories: ["AI", "AI Agents", "Machine Learning", "GPU Computing"]
 image: "https://avatars.githubusercontent.com/u/162090453?v=4"

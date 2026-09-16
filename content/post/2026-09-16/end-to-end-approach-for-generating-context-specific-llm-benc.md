@@ -2,7 +2,7 @@
 title: "End-to-End Approach for Generating Context-Specific LLM Benchmark Datasets"
 slug: "end-to-end-approach-for-generating-context-specific-llm-benchmark-datasets"
 description: "A new paper presents an end-to-end approach for creating large language model (LLM) benchmark datasets by combining synthetic data generation with expert input."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [LLM, Benchmarks, SyntheticData, AIevaluation]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Data Engineering"]
 author: "Shoubhik Banerjee"

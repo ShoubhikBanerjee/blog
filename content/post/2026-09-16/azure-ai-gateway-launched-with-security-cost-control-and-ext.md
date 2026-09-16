@@ -2,7 +2,7 @@
 title: "Azure AI Gateway launched with security, cost control, and extensibility features"
 slug: "azure-ai-gateway-launched-with-security-cost-control-and-extensibility-features"
 description: "Microsoft has launched the AI Gateway, powered by Azure API Management, offering tools for securing, optimizing, and extending AI model deployments. The service provides multiple capabilities for..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Azure, AIGateway, APIManagement, AIAgents, MCP, FinOps]
 categories: ["AI", "Cloud Computing", "AI Development", "API Management", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/1844662?v=4"

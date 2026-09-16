@@ -2,7 +2,7 @@
 title: "DeerFlow 2.0 Open-Source SuperAgent Harness Launched"
 slug: "deerflow-2-0-open-source-superagent-harness-launched"
 description: "DeerFlow (Deep Exploration and Efficient Research Flow) is an open-source super agent harness designed to research, code, and create. On February 28th, 2026, the project claimed the #1 spot on GitHub..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [DeerFlow, OpenSource, AIAgents, GitHubTrending]
 categories: ["AI", "AI Agents", "Software Development", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/4158466?v=4"

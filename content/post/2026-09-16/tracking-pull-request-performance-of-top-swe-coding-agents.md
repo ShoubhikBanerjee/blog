@@ -2,7 +2,7 @@
 title: "Tracking Pull Request Performance of Top SWE Coding Agents"
 slug: "tracking-pull-request-performance-of-top-swe-coding-agents"
 description: "A new repository tracks the opened and merged pull requests (PRs) from top software engineering (SWE) coding agents developed by OpenAI, GitHub, and other entities."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [SWEagents, codingagents, GitHub, OpenAI]
 categories: ["AI", "AI Agents", "Software Engineering", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/3076502?v=4"

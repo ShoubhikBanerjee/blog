@@ -2,7 +2,7 @@
 title: "Launch of Trajectory for Normalizing AI Agent Transcripts"
 slug: "launch-of-trajectory-for-normalizing-ai-agent-transcripts"
 description: "A new development called `trajectory` has been released to normalize agent transcripts from various runtimes into a single validated, model-ready record format."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AIagents, TypeScript, Python, MachineLearning]
 categories: ["AI", "AI Agents", "Software Development", "Data Normalization"]
 image: "https://avatars.githubusercontent.com/u/177780362?v=4"

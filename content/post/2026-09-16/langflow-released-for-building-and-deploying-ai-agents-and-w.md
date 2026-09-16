@@ -2,7 +2,7 @@
 title: "Langflow Released for Building and Deploying AI Agents and Workflows"
 slug: "langflow-released-for-building-and-deploying-ai-agents-and-workflows"
 description: "Langflow is an open source tool designed for the construction and deployment of AI-powered agents and workflows, supporting all major LLMs and vector databases."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Langflow, AIagents, OpenSource, LLM]
 categories: ["AI", "AI Agents", "Software Development", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/85702467?v=4"

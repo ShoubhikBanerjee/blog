@@ -2,7 +2,7 @@
 title: "Ruflo Launches as an Agent Meta-Harness for Claude Code and Codex"
 slug: "ruflo-launches-as-an-agent-meta-harness-for-claude-code-and-codex"
 description: "Claude Flow has been renamed to Ruflo, an agent meta-harness and execution layer designed for Claude Code and Codex."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Ruflo, ClaudeCode, AIagents, Codex]
 categories: ["AI", "AI Agents", "Software Development", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/2934394?v=4"

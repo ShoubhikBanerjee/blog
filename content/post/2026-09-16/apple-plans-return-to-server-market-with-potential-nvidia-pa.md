@@ -2,7 +2,7 @@
 title: "Apple Plans Return to Server Market With Potential Nvidia Partnership"
 slug: "apple-plans-return-to-server-market-with-potential-nvidia-partnership"
 description: "Apple is planning to re-enter the server market, potentially partnering with Nvidia to develop the new hardware."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Apple, Nvidia, EnterpriseHardware, AIServers]
 categories: ["AI", "Hardware", "Enterprise Technology", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/03/STK071_APPLE_I.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Paca Launches as Open-Source AI-Native Project Management Platform"
 slug: "paca-launches-as-open-source-ai-native-project-management-platform"
 description: "Paca is a new self-hosted project management platform designed for Scrum teams where humans and AI agents collaborate as equals on the same boards and sprints."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Paca, OpenSource, AIagents, Scrum, ProjectManagement]
 categories: ["AI", "AI Agents", "Software Development", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/269367978?v=4"

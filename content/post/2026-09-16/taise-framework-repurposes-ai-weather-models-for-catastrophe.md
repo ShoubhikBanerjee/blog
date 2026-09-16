@@ -2,7 +2,7 @@
 title: "TAISE Framework Repurposes AI Weather Models for Catastrophe Risk Modeling"
 slug: "taise-framework-repurposes-ai-weather-models-for-catastrophe-risk-modeling"
 description: "A new study proposes the TAISE framework, which utilizes AI weather forecasting models to generate extreme weather sequences for catastrophe (CAT) risk modeling."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AI, WeatherForecasting, RiskModeling, TAISE]
 categories: ["AI", "Machine Learning", "Meteorology", "Risk Management"]
 author: "Shoubhik Banerjee"

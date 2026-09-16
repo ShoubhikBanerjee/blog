@@ -2,7 +2,7 @@
 title: "Industry Leaders and Historians Call for AI Regulation and Caution"
 slug: "industry-leaders-and-historians-call-for-ai-regulation-and-caution"
 description: "Prominent technology executives and researchers are advocating for the regulation of artificial intelligence, citing long-term risks and the need for proactive government oversight."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AI, Regulation, TechPolicy, ArtificialIntelligence]
 categories: ["AI", "AI Ethics", "Technology Policy", "Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/AI_extinction.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

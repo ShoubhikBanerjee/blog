@@ -2,7 +2,7 @@
 title: "New Pre-Generation Triage Layer for Retrieval-Augmented Generation Pipelines"
 slug: "new-pre-generation-triage-layer-for-retrieval-augmented-generation-pipelines"
 description: "Researchers have developed a pre-generation triage layer designed to address instances where retrieval-augmented generation (RAG) pipelines omit the material relationship between a source and a query."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [RAG, AI, InformationRetrieval, MachineLearning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Infrastructure"]
 author: "Shoubhik Banerjee"

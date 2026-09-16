@@ -2,7 +2,7 @@
 title: "Haystack 3.0 Released: Open‑Source Framework for Production‑Ready LLM Apps"
 slug: "haystack-3-0-released-opensource-framework-for-productionready-llm-apps"
 description: "Haystack 3.0 has been released as an open‑source AI orchestration framework for building production‑ready LLM applications in Python."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Haystack, LLM, RAG, OpenSource]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Open Source Software"]
 image: "https://avatars.githubusercontent.com/u/51827949?v=4"

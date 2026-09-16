@@ -2,7 +2,7 @@
 title: "EchoPath Converts GUI Trajectories Into Standardized Callable Memories"
 slug: "echopath-converts-gui-trajectories-into-standardized-callable-memories"
 description: "Researchers have introduced EchoPath, a model-agnostic harness designed to convert artifact-validated GUI trajectories into standardized, parameter-controlled callable memories."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [EchoPath, GUI, AIagents, Automation]
 categories: ["AI", "AI Agents", "Computer Vision", "Machine Learning"]
 author: "Shoubhik Banerjee"

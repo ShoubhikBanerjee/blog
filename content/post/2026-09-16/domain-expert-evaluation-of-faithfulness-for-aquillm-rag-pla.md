@@ -2,7 +2,7 @@
 title: "Domain-Expert Evaluation of Faithfulness for AquiLLM RAG Platform"
 slug: "domain-expert-evaluation-of-faithfulness-for-aquillm-rag-platform"
 description: "A new paper presents a domain-expert evaluation of faithfulness for AquiLLM, an open-weight, offline RAG-LLM platform developed to support scientific research groups in preserving and using formal..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AquiLLM, RAG, ScientificResearch, LLM]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Scientific Computing"]
 author: "Shoubhik Banerjee"

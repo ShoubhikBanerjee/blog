@@ -2,7 +2,7 @@
 title: "Introduction of little m AI Agent for Industrial Process Control Modeling"
 slug: "introduction-of-little-m-ai-agent-for-industrial-process-control-modeling"
 description: "Researchers have introduced little m, an AI agent developed to assist in the formulation of industrial process control models."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AIagents, IndustrialAutomation, ProcessControl, LLM]
 categories: ["AI", "Artificial Intelligence", "Industrial Engineering", "Machine Learning"]
 author: "Shoubhik Banerjee"

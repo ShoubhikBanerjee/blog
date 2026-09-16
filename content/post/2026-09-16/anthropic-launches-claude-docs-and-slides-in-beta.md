@@ -2,7 +2,7 @@
 title: "Anthropic Launches Claude Docs and Slides in Beta"
 slug: "anthropic-launches-claude-docs-and-slides-in-beta"
 description: "Anthropic is introducing two new productivity tools, Claude Docs and Claude Slides, which allow users to create, edit, and share documents and presentations directly from Claude chats."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [Anthropic, Claude, AIproductivity, AItools]
 categories: ["AI", "Artificial Intelligence", "Productivity Software", "Enterprise Software"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Claude-Docs.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

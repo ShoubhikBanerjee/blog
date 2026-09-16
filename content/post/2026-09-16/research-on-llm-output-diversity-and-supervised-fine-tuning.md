@@ -2,7 +2,7 @@
 title: "Research on LLM Output Diversity and Supervised Fine-Tuning"
 slug: "research-on-llm-output-diversity-and-supervised-fine-tuning"
 description: "New research examines the phenomenon of mode collapse in large language models (LLMs), where model outputs are under-diverse and resemble one another more often than responses from the population..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [LLM, SFT, MachineLearning, ModeCollapse]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Research"]
 author: "Shoubhik Banerjee"

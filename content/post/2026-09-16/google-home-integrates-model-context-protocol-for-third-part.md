@@ -2,7 +2,7 @@
 title: "Google Home integrates Model Context Protocol for third-party AI agents"
 slug: "google-home-integrates-model-context-protocol-for-third-party-ai-agents"
 description: "Google is opening its smart home ecosystem to third-party AI agents through the standardized Model Context Protocol (MCP). This integration allows external agents to access and control connected..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [GoogleHome, MCP, AIAgents, SmartHome]
 categories: ["AI", "AI Agents", "Smart Home", "IoT"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/07/gemini-for-home.jpg?quality=90&strip=all&crop=0%2C3.4128369206903%2C100%2C93.174326158619&w=1200"

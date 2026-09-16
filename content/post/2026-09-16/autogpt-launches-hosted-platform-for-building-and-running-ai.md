@@ -2,7 +2,7 @@
 title: "AutoGPT Launches Hosted Platform for Building and Running AI Agents"
 slug: "autogpt-launches-hosted-platform-for-building-and-running-ai-agents"
 description: "AutoGPT has introduced a hosted platform that allows users to build, deploy, and run AI agents designed to carry out complete workflows."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AutoGPT, AIAgents, Automation, LLM]
 categories: ["AI", "AI Agents", "Software Development", "Automation"]
 image: "https://avatars.githubusercontent.com/u/130738209?v=4"

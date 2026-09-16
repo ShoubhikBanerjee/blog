@@ -2,7 +2,7 @@
 title: "mcp-memory-service Released as Open-Source Memory Backend for AI Agents"
 slug: "mcp-memory-service-released-as-open-source-memory-backend-for-ai-agents"
 description: "A new open-source memory backend for AI agents, mcp-memory-service, has been released to allow agents to store decisions and share causal knowledge graphs without cloud lock-in or API costs."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [MCP, AIagents, OpenSource, KnowledgeGraph]
 categories: ["AI", "AI Agents", "Software Development", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/5000709?v=4"

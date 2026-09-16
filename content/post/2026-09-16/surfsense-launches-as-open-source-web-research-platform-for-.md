@@ -2,7 +2,7 @@
 title: "SurfSense Launches as Open-Source Web Research Platform for AI Agents"
 slug: "surfsense-launches-as-open-source-web-research-platform-for-ai-agents"
 description: "SurfSense is a new open-source NotebookLM alternative designed for AI agents, providing an open web research platform with live data connectors."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [SurfSense, OpenSource, AIAgents, WebResearch, MCP]
 categories: ["AI", "AI Agents", "Open Source", "Web Scraping"]
 image: "https://avatars.githubusercontent.com/u/122026167?v=4"

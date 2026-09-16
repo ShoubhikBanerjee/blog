@@ -2,7 +2,7 @@
 title: "CodeGraph Released as a Pre-indexed Code Knowledge Graph for AI Agents"
 slug: "codegraph-released-as-a-pre-indexed-code-knowledge-graph-for-ai-agents"
 description: "CodeGraph is a new, self-contained pre-indexed code knowledge graph designed to integrate with various AI agents and IDEs. It provides a local solution to reduce token usage and tool calls by..."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [CodeGraph, AIagents, MCP, SoftwareDevelopment]
 categories: ["AI", "AI Agents", "Developer Tools", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/18431132?v=4"

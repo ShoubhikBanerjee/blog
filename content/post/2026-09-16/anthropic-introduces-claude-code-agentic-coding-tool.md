@@ -2,7 +2,7 @@
 title: "Anthropic Introduces Claude Code Agentic Coding Tool"
 slug: "anthropic-introduces-claude-code-agentic-coding-tool"
 description: "Claude Code is a new agentic coding tool that operates in the terminal to help users code faster through natural language commands."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [ClaudeCode, AIagents, CodingTool, DeveloperTools]
 categories: ["AI", "AI Agents", "Software Development", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/76263028?v=4"

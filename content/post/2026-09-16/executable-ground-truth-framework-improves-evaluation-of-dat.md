@@ -2,7 +2,7 @@
 title: "Executable Ground‑Truth Framework Improves Evaluation of Data‑Science Agents"
 slug: "executable-groundtruth-framework-improves-evaluation-of-datascience-agents"
 description: "A new framework introduces “ground‑truth‑as‑code” to evaluate data‑science agents on live, continuously updated data."
-date: 2026-09-17T00:45:10+05:30
+date: 2026-09-17T00:50:10+05:30
 tags: [AIagents, Evaluation, DataScience]
 categories: ["AI", "Machine Learning", "AI Agents", "Evaluation Methods"]
 author: "Shoubhik Banerjee"
