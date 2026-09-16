@@ -2,7 +2,7 @@
 title: "Introducing little m AI Agent for Industrial Process Optimization"
 slug: "introducing-little-m-ai-agent-for-industrial-process-optimization"
 description: "Researchers have introduced little m, an AI agent developed to assist in the formulation of industrial process control models to improve energy efficiency in manufacturing."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [AIagents, IndustrialOptimization, EnergyEfficiency, LLM]
 categories: ["AI", "Artificial Intelligence", "Industrial Engineering", "Machine Learning"]
 author: "Shoubhik Banerjee"

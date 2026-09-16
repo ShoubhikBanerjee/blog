@@ -2,7 +2,7 @@
 title: "Hatch Conference 2026 to Host AI and Innovation Content in Berlin"
 slug: "hatch-conference-2026-to-host-ai-and-innovation-content-in-berlin"
 description: "The Hatch Conference 2026 will deliver three days of content focused on AI and innovation in a hybrid format."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [HatchConference, AI, Innovation, Berlin]
 categories: ["AI", "AI Conferences", "Technology Events", "Innovation"]
 image: "https://createwith.com/cities/berlin/opengraph-image-1dn5y7?1e8ebbc89547e0c5"

@@ -2,7 +2,7 @@
 title: "Novo and Anthropic Collaborate to Advance Drug Discovery with Claude"
 slug: "novo-and-anthropic-collaborate-to-advance-drug-discovery-with-claude"
 description: "Novo and Anthropic are collaborating to use Claude to advance the process of drug discovery."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [Novo, Anthropic, Claude, DrugDiscovery, HealthcareAI]
 categories: ["AI", "Artificial Intelligence", "Biotechnology", "Pharmaceuticals"]
 image: "https://www.novonordisk.com/content/dam/nncorp/global/en/front-page/images/lasting-health-starts-today-image2.jpg"

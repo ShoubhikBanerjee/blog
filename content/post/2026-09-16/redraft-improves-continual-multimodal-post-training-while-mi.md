@@ -2,7 +2,7 @@
 title: "ReDraft Improves Continual Multimodal Post-Training While Minimizing Knowledge Forgetting"
 slug: "redraft-improves-continual-multimodal-post-training-while-minimizing-knowledge-forgetting"
 description: "On September 15, 2026, researchers introduced ReDraft (Reference-Driven Revision and Fine-Tuning), a new method designed for the continual post-training of large multimodal models (VLLMs). Continual..."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [VLLM, FineTuning, ReDraft, MachineLearning]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Model Training"]
 author: "Shoubhik Banerjee"

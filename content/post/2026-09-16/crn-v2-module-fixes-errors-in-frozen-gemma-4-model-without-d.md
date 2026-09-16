@@ -2,7 +2,7 @@
 title: "CRN v2 Module Fixes Errors in Frozen Gemma 4 Model Without Degrading Capabilities"
 slug: "crn-v2-module-fixes-errors-in-frozen-gemma-4-model-without-degrading-capabilities"
 description: "Researchers have introduced CRN v2, a lightweight correction module designed to fix errors in a frozen Gemma 4 E2B model without degrading its original capabilities. The development addresses the..."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [G, e, m, m, a, 4, L, o, g, i, t, C, o, r, r, e, c, t, i, o, n, F, r, o, z, e, n, M, o, d, e, l, s, P, a, r, a, m, e, t, e, r, E, f, f, i, c, i, e, n, t]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "N", "a", "t", "u", "r", "a", "l", "L", "a", "n", "g", "u", "a", "g", "e", "P", "r", "o", "c", "e", "s", "s", "i", "n", "g", ",", "M", "o", "d", "e", "l", "E", "f", "f", "i", "c", "i", "e", "n", "c", "y", ",", "F", "i", "n", "e", "-", "T", "u", "n", "i", "n", "g"]
 author: "Shoubhik Banerjee"

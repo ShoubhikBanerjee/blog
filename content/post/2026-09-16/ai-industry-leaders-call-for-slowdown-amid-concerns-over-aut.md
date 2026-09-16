@@ -2,7 +2,7 @@
 title: "AI Industry Leaders Call for Slowdown Amid Concerns Over Autonomous Risks"
 slug: "ai-industry-leaders-call-for-slowdown-amid-concerns-over-autonomous-risks"
 description: "Leading AI executives and founders have publicly agreed on the need to slow down AI development to prevent a loss of control. This consensus includes CEOs from OpenAI, Anthropic, Google DeepMind,..."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [AIregulation, OpenAI, AISafety, AutonomousAgents]
 categories: ["AI", "Artificial Intelligence", "AI Safety", "Tech Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK_414_5_D.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

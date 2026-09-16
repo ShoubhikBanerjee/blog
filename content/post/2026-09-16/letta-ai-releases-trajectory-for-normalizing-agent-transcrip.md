@@ -2,7 +2,7 @@
 title: "Letta AI Releases Trajectory for Normalizing Agent Transcripts into Unified Records"
 slug: "letta-ai-releases-trajectory-for-normalizing-agent-transcripts-into-unified-records"
 description: "Letta AI has introduced `trajectory`, a tool designed to convert agent transcripts from various incompatible runtimes into a single, validated, model-ready record format. This development provides a..."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [AIagents, TypeScript, Python, MachineLearning, SoftwareDevelopment]
 categories: ["AI", "AI Agents", "Machine Learning", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/177780362?v=4"

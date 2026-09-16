@@ -2,7 +2,7 @@
 title: "Union Agriculture Minister Shivraj Singh Chouhan to Visit Flood-Hit Bihar on September 16"
 slug: "union-agriculture-minister-shivraj-singh-chouhan-to-visit-flood-hit-bihar-on-september-16"
 description: "Union Agriculture Minister Shivraj Singh Chouhan will visit Bihar on Wednesday, September 16, 2026, to review the flood situation, check crop damage, and see relief work in flood-hit areas. The tour..."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [BiharFloods, ShivrajSinghChouhan, DisasterRelief, AgricultureNews]
 categories: ["AI", "Disaster Management", "Government Policy", "Agriculture"]
 image: "https://cdn02.bumppy.com/upload/photos/2026/09/union-minister-shivraj-singh-chouhans-bihar-visit-set-for-september-16.webp"

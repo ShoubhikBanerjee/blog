@@ -2,7 +2,7 @@
 title: "NVIDIA Updates Vera Rubin Platform with NVL72 and Groq 3 LPX Integration"
 slug: "nvidia-updates-vera-rubin-platform-with-nvl72-and-groq-3-lpx-integration"
 description: "NVIDIA has released updates for its Vera Rubin platform, a full-stack AI factory designed to enable power-efficient AI at scale. The platform includes the Vera Rubin NVL72 compute engine and the..."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [NVIDIA, VeraRubin, DataCenter, NVLink, EnergyEfficiency, AIInfrastructure]
 categories: ["AI", "AI Infrastructure", "Hardware Engineering", "Data Centers"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/gpu-architecture-groq3-lpx-rack-660x370.jpg"

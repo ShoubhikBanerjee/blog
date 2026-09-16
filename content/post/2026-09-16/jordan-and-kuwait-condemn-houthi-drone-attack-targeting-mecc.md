@@ -2,7 +2,7 @@
 title: "Jordan and Kuwait Condemn Houthi Drone Attack Targeting Mecca"
 slug: "jordan-and-kuwait-condemn-houthi-drone-attack-targeting-mecca"
 description: "Regional tensions have escalated following a Houthi drone attack targeting Mecca, which has drawn condemnation from neighboring states."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [Yemen, Houthis, Mecca, Jordan, Kuwait]
 categories: ["AI", "International Relations", "Middle East Politics", "Global Security"]
 image: "https://www.aljazeera.com/images/logo_aje_social.png"

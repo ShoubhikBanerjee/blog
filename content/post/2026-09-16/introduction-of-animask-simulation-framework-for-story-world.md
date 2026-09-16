@@ -2,7 +2,7 @@
 title: "Introduction of ANIMASK Simulation Framework for Story World Replays"
 slug: "introduction-of-animask-simulation-framework-for-story-world-replays"
 description: "Researchers have introduced ANIMASK, a simulation framework that freezes books and scripts into story worlds where characters act on their own motivations to replay stories from a freeze point."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [ANIMASK, AI, simulation, storytelling]
 categories: ["AI", "Artificial Intelligence", "Simulation Frameworks", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

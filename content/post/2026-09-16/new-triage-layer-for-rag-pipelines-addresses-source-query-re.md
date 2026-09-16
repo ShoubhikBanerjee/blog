@@ -2,7 +2,7 @@
 title: "New Triage Layer for RAG Pipelines Addresses Source-Query Relationships"
 slug: "new-triage-layer-for-rag-pipelines-addresses-source-query-relationships"
 description: "A development introduces a pre-generation triage layer for retrieval-augmented generation (RAG) pipelines. This method addresses the issue where pipelines may omit a source's material relationship to..."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [R, A, G, R, e, t, r, i, e, v, a, l, A, u, g, m, e, n, t, e, d, G, e, n, e, r, a, t, i, o, n, M, a, c, h, i, n, e, L, e, a, r, n, i, n, g, a, r, X, i, v, L, a, b, s, D, a, t, a, P, r, i, v, a, c, y, E, v, a, l, u, a, t, i, o, n]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "I", "n", "f", "o", "r", "m", "a", "t", "i", "o", "n", "R", "e", "t", "r", "i", "e", "v", "a", "l", ",", "D", "a", "t", "a", "P", "r", "i", "v", "a", "c", "y"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Enterprise Multi-Agent AI System Advances with LLM Integration"
 slug: "enterprise-multi-agent-ai-system-advances-with-llm-integration"
 description: "The latest development focuses on building and scaling AI agents that combine large language models, reinforcement learning, and planning to handle complex enterprise tasks."
-date: 2026-09-16T18:03:35+05:30
+date: 2026-09-16T22:05:42+05:30
 tags: [AIagents, LLM, MultiAgent, EnterpriseAI, Planning]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents", "Software Engineering"]
 image: "https://img-cdn.publive.online/fit-in/1200x675/saur-energy/media/post_attachments/2024/09/ge-vernova-2.jpg"
