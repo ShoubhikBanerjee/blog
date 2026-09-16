@@ -2,7 +2,7 @@
 title: "Introduction of Blindspot Safety Benchmark and EchoPath GUI Harness"
 slug: "introduction-of-blindspot-safety-benchmark-and-echopath-gui-harness"
 description: "New developments have been introduced to improve the safety calibration and execution efficiency of tool-using agents through the Blindspot benchmark and the EchoPath harness."
-date: 2026-09-16T12:08:47+05:30
+date: 2026-09-16T18:03:35+05:30
 tags: [AIagents, LLM, AISafety, GUI]
 categories: ["AI", "AI Agents", "Machine Learning", "Software Evaluation"]
 author: "Shoubhik Banerjee"

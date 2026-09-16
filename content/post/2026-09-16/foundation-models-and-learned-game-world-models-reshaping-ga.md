@@ -2,7 +2,7 @@
 title: "Foundation Models and Learned Game-World Models Reshaping Game Development Lifecycle"
 slug: "foundation-models-and-learned-game-world-models-reshaping-game-development-lifecycle"
 description: "Foundation models and advances in learned game-world models are reshaping AI across the game lifecycle, moving beyond simply playing games to supporting design, development, and runtime experiences."
-date: 2026-09-16T12:08:47+05:30
+date: 2026-09-16T18:03:35+05:30
 tags: [FoundationModels, GameDev, AI, GameDesign]
 categories: ["AI", "Artificial Intelligence", "Game Development", "Machine Learning"]
 author: "Shoubhik Banerjee"

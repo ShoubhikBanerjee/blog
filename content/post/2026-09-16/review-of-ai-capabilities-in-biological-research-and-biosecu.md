@@ -2,7 +2,7 @@
 title: "Review of AI Capabilities in Biological Research and Biosecurity Risks"
 slug: "review-of-ai-capabilities-in-biological-research-and-biosecurity-risks"
 description: "A review paper submitted on September 14, 2026, analyzes the impact of artificial intelligence on biological research and the associated biosecurity risks across digital-to-physical workflows."
-date: 2026-09-16T12:08:47+05:30
+date: 2026-09-16T18:03:35+05:30
 tags: [Biosecurity, AI, BiologicalResearch, Governance]
 categories: ["AI", "Artificial Intelligence", "Biotechnology", "Cybersecurity"]
 author: "Shoubhik Banerjee"

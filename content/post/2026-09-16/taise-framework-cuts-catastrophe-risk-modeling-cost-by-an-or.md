@@ -2,7 +2,7 @@
 title: "TAISE framework cuts catastrophe risk modeling cost by an order of magnitude"
 slug: "taise-framework-cuts-catastrophe-risk-modeling-cost-by-an-order-of-magnitude"
 description: "A new study introduces the TAISE framework, which repurposes AI weather forecasting models to generate extreme weather sequences at a fraction of the cost of traditional catastrophe risk models."
-date: 2026-09-16T12:08:47+05:30
+date: 2026-09-16T18:03:35+05:30
 tags: [catastropherisk, AIweather, insurance, climatemodeling]
 categories: ["AI", "Artificial Intelligence", "Climate Risk", "Insurance"]
 author: "Shoubhik Banerjee"

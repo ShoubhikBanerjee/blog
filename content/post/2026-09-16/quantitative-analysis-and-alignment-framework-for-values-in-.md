@@ -2,7 +2,7 @@
 title: "Quantitative Analysis and Alignment Framework for Values in Large Language Models"
 slug: "quantitative-analysis-and-alignment-framework-for-values-in-large-language-models"
 description: "A new study titled 'Do LLMs Have Values? A Quantitative Analysis and Alignment Framework for Values in Large Language Models' explores the existence of intrinsic value systems in LLMs and proposes a..."
-date: 2026-09-16T12:08:47+05:30
+date: 2026-09-16T18:03:35+05:30
 tags: [LLM, AIAlignment, MachineLearning, AIEthics]
 categories: ["AI", "Machine Learning", "AI Alignment", "Natural Language Processing"]
 author: "Shoubhik Banerjee"
