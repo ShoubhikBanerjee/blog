@@ -2,7 +2,7 @@
 title: "New Deployment Specifications for Kubernetes Cluster Infrastructure"
 slug: "new-deployment-specifications-for-kubernetes-cluster-infrastructure"
 description: "A new infrastructure deployment specification has been released, supporting highly available clusters across a wide range of cloud providers and Linux distributions."
-date: 2026-09-17T12:07:20+05:30
+date: 2026-09-17T18:02:05+05:30
 tags: [Kubernetes, CloudInfrastructure, Linux, DevOps]
 categories: ["AI", "Cloud Computing", "Infrastructure", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/36015203?v=4"

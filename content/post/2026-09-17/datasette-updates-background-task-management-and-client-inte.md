@@ -2,7 +2,7 @@
 title: "Datasette Updates Background Task Management and Client Integration"
 slug: "datasette-updates-background-task-management-and-client-integration"
 description: "Datasette has introduced new capabilities for plugin management and internal client functionality."
-date: 2026-09-17T12:07:20+05:30
+date: 2026-09-17T18:02:05+05:30
 tags: [Datasette, plugins, httpx2]
 categories: ["AI", "Software Development", "Data Tools"]
 author: "Shoubhik Banerjee"

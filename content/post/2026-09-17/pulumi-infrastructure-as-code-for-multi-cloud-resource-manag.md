@@ -2,7 +2,7 @@
 title: "Pulumi Infrastructure as Code for Multi-Cloud Resource Management"
 slug: "pulumi-infrastructure-as-code-for-multi-cloud-resource-management"
 description: "Pulumi provides an infrastructure-as-code approach to build and deploy infrastructure across any architecture and cloud using known programming languages."
-date: 2026-09-17T12:07:20+05:30
+date: 2026-09-17T18:02:05+05:30
 tags: [Pulumi, InfrastructureAsCode, CloudComputing, OpenSource]
 categories: ["AI", "Cloud Infrastructure", "DevOps", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/21992475?v=4"

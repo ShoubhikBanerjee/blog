@@ -2,7 +2,7 @@
 title: "Security Fix Addresses Table Permission Bypass Caused by Trailing Newlines"
 slug: "security-fix-addresses-table-permission-bypass-caused-by-trailing-newlines"
 description: "A security fix has been released to address a vulnerability that allowed requested table names to bypass standard permission controls. The issue centered on how specific character formatting could..."
-date: 2026-09-17T12:07:20+05:30
+date: 2026-09-17T18:02:05+05:30
 tags: [CyberSecurity, DataPrivacy, SoftwareSecurity, SecurityFix]
 categories: ["AI", "Cybersecurity", "Data Security", "Software Engineering"]
 author: "Shoubhik Banerjee"

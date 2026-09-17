@@ -2,7 +2,7 @@
 title: "Development of the AI Leadership Battery Behavioral Framework"
 slug: "development-of-the-ai-leadership-battery-behavioral-framework"
 description: "Researchers have developed the AI Leadership Battery, a measure designed to provide a behavioral framework for examining leadership within AI-enabled work."
-date: 2026-09-17T12:07:20+05:30
+date: 2026-09-17T18:02:05+05:30
 tags: [AILeadership, BehavioralFramework, LeadershipResearch, AIWorkforce]
 categories: ["AI", "Artificial Intelligence", "Organizational Psychology", "Leadership Development"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Floci Released as an Open-Source Local AWS Emulator"
 slug: "floci-released-as-an-open-source-local-aws-emulator"
 description: "Floci is a free, open-source local AWS emulator designed for development, testing, and CI. It provides AWS-shaped services on a local machine without requiring a cloud account, paid feature gates, or..."
-date: 2026-09-17T12:07:20+05:30
+date: 2026-09-17T18:02:05+05:30
 tags: [AWS, OpenSource, Emulator, CloudDevelopment, CI]
 categories: ["AI", "Cloud Computing", "Software Development", "DevOps Tools"]
 image: "https://avatars.githubusercontent.com/u/271436837?v=4"

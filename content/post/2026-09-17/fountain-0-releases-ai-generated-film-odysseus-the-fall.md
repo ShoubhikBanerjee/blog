@@ -2,7 +2,7 @@
 title: "Fountain 0 Releases AI Generated Film Odysseus: The Fall"
 slug: "fountain-0-releases-ai-generated-film-odysseus-the-fall"
 description: "AI firm Fountain 0 has released a new film titled *Odysseus: The Fall*, which is described as 'the first completely AI generated film produced at the level of a Hollywood blockbuster.'"
-date: 2026-09-17T12:07:20+05:30
+date: 2026-09-17T18:02:05+05:30
 tags: [Fountain0, GenerativeAI, AIFilm, OdysseusTheFall]
 categories: ["AI", "Artificial Intelligence", "Digital Media", "Entertainment Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Screenshot-2026-09-16-at-4.19.06-PM.png?quality=90&strip=all&crop=3.9791086350975%2C0%2C92.041782729805%2C100&w=1200"

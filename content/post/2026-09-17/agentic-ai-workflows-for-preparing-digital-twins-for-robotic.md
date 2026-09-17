@@ -2,7 +2,7 @@
 title: "Agentic AI Workflows for Preparing Digital Twins for Robotics Simulation"
 slug: "agentic-ai-workflows-for-preparing-digital-twins-for-robotics-simulation"
 description: "Agentic AI workflows are being used to prepare and validate digital twins for physical AI systems, moving scenes from Blender to simulation-ready OpenUSD handoffs for NVIDIA Isaac Sim or NVIDIA Isaac..."
-date: 2026-09-17T12:07:20+05:30
+date: 2026-09-17T18:02:05+05:30
 tags: [NVIDIA, OpenUSD, AIagents, Robotics, DigitalTwins]
 categories: ["AI", "AI Agents", "Robotics Simulation", "Digital Twins"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/classroom-ovrtx-660x370.png"

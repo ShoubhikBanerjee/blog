@@ -2,7 +2,7 @@
 title: "PIVOT Enhances Vision-Language Reasoning via Experience Replay and Vision-Guided Advantage"
 slug: "pivot-enhances-vision-language-reasoning-via-experience-replay-and-vision-guided-advantage"
 description: "A new dual-level learning framework called PIVOT has been introduced to improve the reasoning capabilities of large vision‑language models by addressing key limitations of standard on‑policy RLVR..."
-date: 2026-09-17T12:07:20+05:30
+date: 2026-09-17T18:02:05+05:30
 tags: [LVLM, ReinforcementLearning, MultimodalAI]
 categories: ["AI", "Machine Learning", "Computer Vision", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

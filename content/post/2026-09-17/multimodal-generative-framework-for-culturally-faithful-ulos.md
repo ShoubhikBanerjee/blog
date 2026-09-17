@@ -2,7 +2,7 @@
 title: "Multimodal Generative Framework for Culturally Faithful Ulos Motif Generation"
 slug: "multimodal-generative-framework-for-culturally-faithful-ulos-motif-generation"
 description: "Researchers have proposed a multimodal generative framework designed to enable the controllable and culturally faithful generation of Ulos motifs."
-date: 2026-09-17T12:07:20+05:30
+date: 2026-09-17T18:02:05+05:30
 tags: [GenerativeAI, CulturalHeritage, StableDiffusion, LLaMA]
 categories: ["AI", "Machine Learning", "Computer Vision", "Digital Preservation"]
 author: "Shoubhik Banerjee"
