@@ -2,7 +2,7 @@
 title: "Anthropic Introduces Claude Docs and Slides and Merges Chat Interfaces"
 slug: "anthropic-introduces-claude-docs-and-slides-and-merges-chat-interfaces"
 description: "Anthropic is updating Claude by introducing two new beta productivity tools, Docs and Slides, and merging its chat interfaces into a single experience."
-date: 2026-09-17T06:05:39+05:30
+date: 2026-09-17T12:07:20+05:30
 tags: [Anthropic, Claude, AIProductivity, AItools]
 categories: ["AI", "Artificial Intelligence", "Productivity Software", "AI Agents"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Claude-Docs.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

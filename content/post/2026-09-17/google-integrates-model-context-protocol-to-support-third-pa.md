@@ -2,7 +2,7 @@
 title: "Google Integrates Model Context Protocol to Support Third-Party AI Agents in Google Home"
 slug: "google-integrates-model-context-protocol-to-support-third-party-ai-agents-in-google-home"
 description: "Google is opening its smart home ecosystem to third-party AI agents, allowing tools such as Claude, Hermes, and Open Claw to access and control connected devices. This integration utilizes the..."
-date: 2026-09-17T06:05:39+05:30
+date: 2026-09-17T12:07:20+05:30
 tags: [GoogleHome, AIAgents, SmartHome, ModelContextProtocol]
 categories: ["AI", "AI Agents", "Smart Home", "Internet of Things"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/07/gemini-for-home.jpg?quality=90&strip=all&crop=0%2C3.4128369206903%2C100%2C93.174326158619&w=1200"

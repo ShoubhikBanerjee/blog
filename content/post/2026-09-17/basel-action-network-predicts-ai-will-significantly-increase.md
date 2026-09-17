@@ -2,7 +2,7 @@
 title: "Basel Action Network Predicts AI Will Significantly Increase Global E-Waste"
 slug: "basel-action-network-predicts-ai-will-significantly-increase-global-e-waste"
 description: "The nonprofit Basel Action Network (BAN) published a paper today predicting that AI will contribute significantly to the growth of global electronic waste through 2050."
-date: 2026-09-17T06:05:39+05:30
+date: 2026-09-17T12:07:20+05:30
 tags: [AI, ewaste, Sustainability, BaselActionNetwork, DataCenters]
 categories: ["AI", "Environmental Impact", "Artificial Intelligence", "Hardware Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/STKS528_DATA_CENTERS_C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

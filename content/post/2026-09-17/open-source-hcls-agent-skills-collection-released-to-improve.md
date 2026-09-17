@@ -2,7 +2,7 @@
 title: "Open Source HCLS Agent Skills Collection Released to Improve Domain Reasoning"
 slug: "open-source-hcls-agent-skills-collection-released-to-improve-domain-reasoning"
 description: "A new collection of 38 open source agent skills across 11 healthcare and life sciences (HCLS) domains has been released to address a methodology gap where AI agents misapply decision frameworks..."
-date: 2026-09-17T06:05:39+05:30
+date: 2026-09-17T12:07:20+05:30
 tags: [HCLS, AIAgents, OpenSource, HealthcareAI, Genomics]
 categories: ["AI", "AI Agents", "Healthcare and Life Sciences", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-21213-featured-image.png"

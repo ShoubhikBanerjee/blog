@@ -2,7 +2,7 @@
 title: "Snap Launches Specs Intelligence Anticipatory AI Service"
 slug: "snap-launches-specs-intelligence-anticipatory-ai-service"
 description: "Snap is introducing Specs Intelligence, an anticipatory AI service designed to help users manage daily tasks and long-term goals by connecting to various digital accounts."
-date: 2026-09-17T06:05:39+05:30
+date: 2026-09-17T12:07:20+05:30
 tags: [Snap, SpecsIntelligence, AI, AugmentedReality, AIAssistant]
 categories: ["AI", "AI Agents", "Augmented Reality", "Consumer Electronics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Screenshot-2026-09-15-at-9.05.55-PM.png?quality=90&strip=all&crop=5.0466377440347%2C0%2C89.906724511931%2C100&w=1200"

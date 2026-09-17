@@ -2,7 +2,7 @@
 title: "Integrating NVIDIA Resiliency Extension with PyTorch FSDP on Amazon EKS"
 slug: "integrating-nvidia-resiliency-extension-with-pytorch-fsdp-on-amazon-eks"
 description: "NVIDIA Resiliency Extension (NVRx) has been integrated into PyTorch Fully Sharded Data Parallel (FSDP) training on Amazon Elastic Kubernetes Service (Amazon EKS) to address training interruptions and..."
-date: 2026-09-17T06:05:39+05:30
+date: 2026-09-17T12:07:20+05:30
 tags: [PyTorch, NVIDIA, AmazonEKS, FSDP, GPU]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Infrastructure"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-20900-featured-image.png"
