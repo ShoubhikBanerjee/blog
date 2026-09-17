@@ -2,7 +2,7 @@
 title: "Contiguity, Not Importance: Budgeted Repair of Stale KV Caches After Document Edits"
 slug: "contiguity-not-importance-budgeted-repair-of-stale-kv-caches-after-document-edits"
 description: "KV‑cache reuse can cut inference cost in retrieval‑augmented generation (RAG) and agentic systems, but edits to retrieved knowledge, working memory, or user state can make cached contexts stale."
-date: 2026-09-17T18:02:05+05:30
+date: 2026-09-17T22:02:13+05:30
 tags: [KVCache, RAG, ModelRepair, AIInference]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

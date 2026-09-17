@@ -2,7 +2,7 @@
 title: "Update on Full-Stack AI App Generator and Pydantic AI Ecosystem"
 slug: "update-on-full-stack-ai-app-generator-and-pydantic-ai-ecosystem"
 description: "A production-ready full-stack AI app generator has been updated, providing a FastAPI and Next.js 15 project generator that includes AI agents, RAG, and over 20 enterprise integrations."
-date: 2026-09-17T18:02:05+05:30
+date: 2026-09-17T22:02:13+05:30
 tags: [FastAPI, Nextjs, PydanticAI, AIAgents, RAG]
 categories: ["AI", "AI Agents", "Software Development", "Enterprise Software"]
 image: "https://avatars.githubusercontent.com/u/80465946?v=4"

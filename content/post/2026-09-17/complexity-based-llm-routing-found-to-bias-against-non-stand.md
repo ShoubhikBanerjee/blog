@@ -2,7 +2,7 @@
 title: "Complexity-Based LLM Routing Found to Bias Against Non-Standard English Registers"
 slug: "complexity-based-llm-routing-found-to-bias-against-non-standard-english-registers"
 description: "Recent research indicates that the process of routing queries to different large language models (LLMs) based on estimated complexity introduces systematic bias against users of non-standard English..."
-date: 2026-09-17T18:02:05+05:30
+date: 2026-09-17T22:02:13+05:30
 tags: [LLM, AIBias, NLP, MachineLearning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Ethics"]
 author: "Shoubhik Banerjee"

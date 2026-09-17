@@ -2,7 +2,7 @@
 title: "Introduction of ERPBench for Evaluating Computer-Use Agents in Enterprise Systems"
 slug: "introduction-of-erpbench-for-evaluating-computer-use-agents-in-enterprise-systems"
 description: "Researchers have introduced ERPBench, a new benchmark designed to evaluate screenshot-only AI agents operating within live Enterprise Resource Planning (ERP) systems. This development addresses the..."
-date: 2026-09-17T18:02:05+05:30
+date: 2026-09-17T22:02:13+05:30
 tags: [ERPBench, AIagents, EnterpriseSoftware, GUIagents, Benchmarks]
 categories: ["AI", "AI Agents", "Enterprise Software", "Machine Learning"]
 author: "Shoubhik Banerjee"

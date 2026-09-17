@@ -2,7 +2,7 @@
 title: "Serverless Framework V.4 Updates and New AI Integration Features"
 slug: "serverless-framework-v-4-updates-and-new-ai-integration-features"
 description: "Serverless Inc. continues to maintain the Serverless Framework, with V.4 featuring significant updates as of July 2026 to simplify the deployment of code and cloud infrastructure."
-date: 2026-09-17T18:02:05+05:30
+date: 2026-09-17T22:02:13+05:30
 tags: [Serverless, AWS, CloudInfrastructure, AIagents, IaC]
 categories: ["AI", "Cloud Computing", "Software Development", "AI Infrastructure"]
 image: "https://avatars.githubusercontent.com/u/13742415?v=4"

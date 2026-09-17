@@ -2,7 +2,7 @@
 title: "NVIDIA TensorRT Edge-LLM Performance in MLPerf Inference v6.1 Edge Agentic Benchmark"
 slug: "nvidia-tensorrt-edge-llm-performance-in-mlperf-inference-v6-1-edge-agentic-benchmark"
 description: "NVIDIA TensorRT Edge-LLM has completed the MLPerf Inference v6.1 Edge Agentic benchmark running the Qwen3.6-27B model on a single NVIDIA Jetson AGX Thor Developer Kit."
-date: 2026-09-17T18:02:05+05:30
+date: 2026-09-17T22:02:13+05:30
 tags: [MLPerf, TensorRT, JetsonAGXThor, EdgeAI, LLM]
 categories: ["AI", "Machine Learning", "Edge Computing", "Artificial Intelligence"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image5-6-660x370.png"

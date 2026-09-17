@@ -2,7 +2,7 @@
 title: "Adaptive Agents via Latent Topologies Improve Active Imitation Learning Efficiency"
 slug: "adaptive-agents-via-latent-topologies-improve-active-imitation-learning-efficiency"
 description: "Researchers have introduced Adaptive Agents via Latent Topologies (AALT), a new approach to active imitation learning designed to reduce expert effort by requesting high-value demonstrations."
-date: 2026-09-17T18:02:05+05:30
+date: 2026-09-17T22:02:13+05:30
 tags: [ActiveImitationLearning, Robotics, DiffusionPolicy, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Robotics", "Machine Learning"]
 author: "Shoubhik Banerjee"

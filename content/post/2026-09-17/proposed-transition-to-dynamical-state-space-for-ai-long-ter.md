@@ -2,7 +2,7 @@
 title: "Proposed Transition to Dynamical State Space for AI Long-Term Memory"
 slug: "proposed-transition-to-dynamical-state-space-for-ai-long-term-memory"
 description: "Researchers are proposing a new approach to long-term memory for personalized AI, moving away from static record sets toward a user-specific dynamical state space."
-date: 2026-09-17T18:02:05+05:30
+date: 2026-09-17T22:02:13+05:30
 tags: [AI, LongTermMemory, Personalization, MachineLearning]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "AI Architecture"]
 author: "Shoubhik Banerjee"

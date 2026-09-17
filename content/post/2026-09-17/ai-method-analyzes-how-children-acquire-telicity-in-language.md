@@ -2,7 +2,7 @@
 title: "AI Method Analyzes How Children Acquire Telicity in Language Development"
 slug: "ai-method-analyzes-how-children-acquire-telicity-in-language-development"
 description: "Researchers have introduced a new method using GPT2 to analyze how first language learners acquire telicity—the distinction between bounded events, such as 'ate an apple,' and unbounded events, such..."
-date: 2026-09-17T18:02:05+05:30
+date: 2026-09-17T22:02:13+05:30
 tags: [GPT2, Linguistics, LanguageAcquisition, SyntacticBootstrapping]
 categories: ["AI", "Natural Language Processing", "Computational Linguistics", "Machine Learning"]
 author: "Shoubhik Banerjee"

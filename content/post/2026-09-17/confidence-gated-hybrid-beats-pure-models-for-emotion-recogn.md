@@ -2,7 +2,7 @@
 title: "Confidence‑Gated Hybrid Beats Pure Models for Emotion Recognition in Call Centers"
 slug: "confidencegated-hybrid-beats-pure-models-for-emotion-recognition-in-call-centers"
 description: "Emotion recognition in conversation (ERC) is a production capability behind agent‑assist prompts, escalation routing, and post‑call analytics in contact‑center‑as‑a‑service (CCaaS) platforms, where..."
-date: 2026-09-17T18:02:05+05:30
+date: 2026-09-17T22:02:13+05:30
 tags: [EmotionRecognition, ContactCenterAI, LLMDeployment]
 categories: ["AI", "Machine Learning", "Conversational AI", "Cloud Services"]
 author: "Shoubhik Banerjee"
