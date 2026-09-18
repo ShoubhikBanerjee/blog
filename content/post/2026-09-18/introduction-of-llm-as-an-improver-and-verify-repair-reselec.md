@@ -2,7 +2,7 @@
 title: "Introduction of LLM-as-an-Improver and Verify-Repair-Reselect Method"
 slug: "introduction-of-llm-as-an-improver-and-verify-repair-reselect-method"
 description: "Researchers have introduced LLM-as-an-Improver and a method called Verify--Repair--Reselect (VRR) to enhance the performance of Large Language Models (LLMs) by using verification feedback to generate..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [LLM, Reasoning, CodeGeneration, MachineLearning]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Software Engineering"]
 author: "Shoubhik Banerjee"

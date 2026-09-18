@@ -2,7 +2,7 @@
 title: "A new unified romanization scheme for Thai and Lao languages"
 slug: "a-new-unified-romanization-scheme-for-thai-and-lao-languages"
 description: "A new research paper introduces a phonemically comprehensive, ASCII-only romanization scheme for Thai and Lao, treating the two languages as a unified cross-lingual design problem."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [Linguistics, NLP, ThaiLanguage, LaoLanguage, Romanization]
 categories: ["AI", "Natural Language Processing", "Computational Linguistics", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

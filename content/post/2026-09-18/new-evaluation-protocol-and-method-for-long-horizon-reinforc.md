@@ -2,7 +2,7 @@
 title: "New Evaluation Protocol and Method for Long-Horizon Reinforcement Learning Agents"
 slug: "new-evaluation-protocol-and-method-for-long-horizon-reinforcement-learning-agents"
 description: "Researchers have introduced a new evaluation protocol called checkpoint handoff and a training method called Reward Stimulation Implicit Q-Learning (RSIQL) to improve and analyze language-model..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [ReinforcementLearning, AIagents, MachineLearning, RSIQL]
 categories: ["AI", "Machine Learning", "AI Agents", "Reinforcement Learning"]
 author: "Shoubhik Banerjee"

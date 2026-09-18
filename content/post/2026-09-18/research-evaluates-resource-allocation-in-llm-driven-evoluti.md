@@ -2,7 +2,7 @@
 title: "Research evaluates resource allocation in LLM-driven evolutionary search"
 slug: "research-evaluates-resource-allocation-in-llm-driven-evolutionary-search"
 description: "A new analysis examines how resource allocation affects the performance of LLM-driven evolutionary search. By running tests across a full grid of seeds and iterations, the researchers demonstrate..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [LLM, EvolutionarySearch, MachineLearning, AIResearch]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Research"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "FINSKILLOPS Multi-Agent System Improves SEC Filing QA via Evolved Skills"
 slug: "finskillops-multi-agent-system-improves-sec-filing-qa-via-evolved-skills"
 description: "Updates have been provided regarding FINSKILLOPS, a multi-agent system designed for SEC filing question answering (QA)."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [FINSKILLOPS, SEC, MultiAgentSystems, FinancialQA]
 categories: ["AI", "AI Agents", "Financial Technology", "Machine Learning"]
 author: "Shoubhik Banerjee"

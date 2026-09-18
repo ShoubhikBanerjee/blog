@@ -2,7 +2,7 @@
 title: "CliniCIRCA Framework for Temporal Reconstruction of Clinical Annals"
 slug: "clinicirca-framework-for-temporal-reconstruction-of-clinical-annals"
 description: "Researchers have introduced CliniCIRCA, a multi-stage LLM framework designed for Calendar-anchored, Imprecision-aware Reconstruction of Clinical Annals."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [LLM, ClinicalAI, Healthcare, MIMICIII]
 categories: ["AI", "Machine Learning", "Health Informatics", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Developments in Systematic Generalization and Efficient Reasoning for Large Language Models"
 slug: "developments-in-systematic-generalization-and-efficient-reasoning-for-large-language-models"
 description: "Recent research has introduced new frameworks and post-training methods to improve how AI models handle systematic generalization, computational efficiency, and self-correction during reasoning."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [LLM, Reasoning, SystematicGeneralization, MachineLearning]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

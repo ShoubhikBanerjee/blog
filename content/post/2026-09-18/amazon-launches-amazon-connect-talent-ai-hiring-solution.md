@@ -2,7 +2,7 @@
 title: "Amazon Launches Amazon Connect Talent AI Hiring Solution"
 slug: "amazon-launches-amazon-connect-talent-ai-hiring-solution"
 description: "Amazon has launched Amazon Connect Talent, an AI hiring solution designed for talent acquisition leaders managing scaled hiring in industries such as retail, logistics, and hospitality."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [Amazon, ConnectTalent, AI, Recruitment, TalentAcquisition]
 categories: ["AI", "Artificial Intelligence", "Enterprise Software", "Human Resources"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/Reduce-time-to-hire-for-quality-candidates-with-AI-powered-Amazon-Connect-Talent.png"

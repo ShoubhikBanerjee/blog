@@ -2,7 +2,7 @@
 title: "Autonomous Frameworks ScientistTwo and CDA Advance Enterprise Model Discovery and Scientific Research"
 slug: "autonomous-frameworks-scientisttwo-and-cda-advance-enterprise-model-discovery-and-scientific-research"
 description: "Researchers have announced developments in autonomous discovery with the introduction of ScientistTwo and the Continual Discovery Agent (CDA). ScientistTwo is a multi-agent framework designed to..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [AIAgents, MachineLearning, ScientistTwo, EnterpriseSoftware, AutonomousDiscovery]
 categories: ["AI", "AI Agents", "Machine Learning", "Enterprise Software", "Scientific Computing"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Updating Federated Learning for Smart-City Water-Metering with Hegselmann-Krause Coalition Formation"
 slug: "updating-federated-learning-for-smart-city-water-metering-with-hegselmann-krause-coalition-formation"
 description: "Researchers have updated weight-driven coalition-formation schemes in federated learning (FL) to address statistical heterogeneity in Internet-of-Things (IoT) deployments, such as smart-city..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [FederatedLearning, IoT, SmartCities, MachineLearning]
 categories: ["AI", "Machine Learning", "Internet Of Things", "Smart Cities"]
 author: "Shoubhik Banerjee"

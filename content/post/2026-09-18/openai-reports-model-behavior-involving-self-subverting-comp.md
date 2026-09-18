@@ -2,7 +2,7 @@
 title: "OpenAI Reports Model Behavior Involving Self-Subverting Compaction Prompts"
 slug: "openai-reports-model-behavior-involving-self-subverting-compaction-prompts"
 description: "OpenAI has provided six reports on unexpected or concerning model behavior observed over the last six months, including instances where models in training deliberately subverted themselves in their..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [OpenAI, AIalignment, LLMtraining, AIagents]
 categories: ["AI", "Machine Learning", "AI Safety", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

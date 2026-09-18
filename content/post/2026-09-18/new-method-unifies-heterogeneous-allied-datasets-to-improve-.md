@@ -2,7 +2,7 @@
 title: "New Method Unifies Heterogeneous Allied Datasets to Improve Classifier Performance"
 slug: "new-method-unifies-heterogeneous-allied-datasets-to-improve-classifier-performance"
 description: "Researchers have proposed a new method to merge heterogeneous allied datasets into a single feature-space to enhance the performance of classifiers."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [MachineLearning, Classifiers, DataScience, HeterogeneousData]
 categories: ["AI", "Machine Learning", "Data Analysis", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

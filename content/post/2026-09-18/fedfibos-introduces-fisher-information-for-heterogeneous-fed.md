@@ -2,7 +2,7 @@
 title: "FedFIbOS Introduces Fisher Information for Heterogeneous Federated Learning Submodelling"
 slug: "fedfibos-introduces-fisher-information-for-heterogeneous-federated-learning-submodelling"
 description: "Researchers have proposed FedFIbOS (Fisher Importance-based Optimal Submodelling), a new method for heterogeneous federated learning that uses Fisher Information to select submodel parameters for..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [FederatedLearning, FisherInformation, MachineLearning, Submodelling]
 categories: ["AI", "Machine Learning", "Distributed Computing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

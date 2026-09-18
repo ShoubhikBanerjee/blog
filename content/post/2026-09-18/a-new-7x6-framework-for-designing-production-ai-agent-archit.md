@@ -2,7 +2,7 @@
 title: "A New 7x6 Framework for Designing Production AI Agent Architectures"
 slug: "a-new-7x6-framework-for-designing-production-ai-agent-architectures"
 description: "A new framework for AI agent architecture has been introduced, providing a structured approach to designing production-ready agents through a 7x6 matrix of patterns. This framework serves as a..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [AIAgents, SoftwareArchitecture, PatternDesign, Engineering]
 categories: ["AI", "Artificial Intelligence", "Software Engineering", "System Design"]
 image: "https://avatars.githubusercontent.com/u/48795276?v=4"

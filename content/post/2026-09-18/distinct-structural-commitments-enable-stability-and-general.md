@@ -2,7 +2,7 @@
 title: "Distinct Structural Commitments Enable Stability and Generalization in Physical World Models"
 slug: "distinct-structural-commitments-enable-stability-and-generalization-in-physical-world-models"
 description: "Researchers have identified that learned simulators can fail in two distinct ways when training conditions change, requiring separate structural remedies to achieve long-horizon stability and..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [PhysicalWorldModels, Simulators, MachineLearning, PhysicsAI]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Physics"]
 author: "Shoubhik Banerjee"

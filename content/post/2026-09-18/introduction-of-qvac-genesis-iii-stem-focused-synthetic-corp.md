@@ -2,7 +2,7 @@
 title: "Introduction of QVAC Genesis III STEM-Focused Synthetic Corpus"
 slug: "introduction-of-qvac-genesis-iii-stem-focused-synthetic-corpus"
 description: "Researchers have introduced QVAC Genesis III, a multi-domain synthetic corpus designed to address the bottleneck of high-quality pre-training data for educational and STEM-specific language models..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [STEM, SyntheticData, EdgeAI, LLM]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

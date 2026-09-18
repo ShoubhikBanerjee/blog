@@ -2,7 +2,7 @@
 title: "Researchers Introduce OceanMoE for Multivariate Ocean Forecasting"
 slug: "researchers-introduce-oceanmoe-for-multivariate-ocean-forecasting"
 description: "Researchers have proposed OceanMoE, a structured conditional sparse Mixture-of-Experts framework designed to combine sharing and specialization for multivariate ocean forecasting."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [OceanMoE, MachineLearning, OceanForecasting, MixtureOfExperts]
 categories: ["AI", "Machine Learning", "Earth Science", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

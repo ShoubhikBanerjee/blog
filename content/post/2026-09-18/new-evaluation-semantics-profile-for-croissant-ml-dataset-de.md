@@ -2,7 +2,7 @@
 title: "New Evaluation Semantics Profile for Croissant ML Dataset Descriptors"
 slug: "new-evaluation-semantics-profile-for-croissant-ml-dataset-descriptors"
 description: "A new additive profile has been developed to provide evaluation semantics for Croissant, the de facto machine-readable descriptor for ML datasets."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [Croissant, MLdatasets, DataGovernance, ODRL]
 categories: ["AI", "Machine Learning", "Data Management", "Technical Standards"]
 author: "Shoubhik Banerjee"

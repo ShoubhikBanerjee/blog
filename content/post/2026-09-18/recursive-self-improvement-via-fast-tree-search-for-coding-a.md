@@ -2,7 +2,7 @@
 title: "Recursive Self Improvement via Fast Tree-search for Coding Agents"
 slug: "recursive-self-improvement-via-fast-tree-search-for-coding-agents"
 description: "Researchers have introduced Recursive Self Improvement via Fast Tree-search (SIFT), a framework designed to enhance coding performance by allowing agents to recursively modify their own..."
-date: 2026-09-18T12:08:53+05:30
+date: 2026-09-18T18:02:43+05:30
 tags: [AI, CodingAgents, MachineLearning, SelfImprovement]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Machine Learning"]
 author: "Shoubhik Banerjee"
