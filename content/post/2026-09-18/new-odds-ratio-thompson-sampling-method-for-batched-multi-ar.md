@@ -2,7 +2,7 @@
 title: "New Odds-Ratio Thompson Sampling Method for Batched Multi-Armed Bandits"
 slug: "new-odds-ratio-thompson-sampling-method-for-batched-multi-armed-bandits"
 description: "A new paper specifies Odds-Ratio Thompson Sampling (OR-TS), an alternative update method for batched multi-armed bandits. While standard implementations carry each arm's absolute reward rate from one..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [MachineLearning, MultiArmedBandits, BayesianInference, DataScience]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Data Science"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Research identifies limitations in how full-duplex AI models initiate speech"
 slug: "research-identifies-limitations-in-how-full-duplex-ai-models-initiate-speech"
 description: "Full-duplex speech models are designed to listen and speak simultaneously, supporting always-on assistants. While these models can answer direct questions, they often struggle to determine when to..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [AI, SpeechModels, MachineLearning, NaturalLanguageProcessing]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Speech Technology"]
 author: "Shoubhik Banerjee"

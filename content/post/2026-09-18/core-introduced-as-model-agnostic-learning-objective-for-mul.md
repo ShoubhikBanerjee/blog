@@ -2,7 +2,7 @@
 title: "CoRe Introduced as Model-Agnostic Learning Objective for Multivariate Forecasting"
 slug: "core-introduced-as-model-agnostic-learning-objective-for-multivariate-forecasting"
 description: "Researchers have proposed CoRe, a model-agnostic learning objective designed for direct multivariate time-series forecasting."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [TimeSeries, Forecasting, MachineLearning, CoRe]
 categories: ["AI", "Machine Learning", "Data Science", "Predictive Modeling"]
 author: "Shoubhik Banerjee"

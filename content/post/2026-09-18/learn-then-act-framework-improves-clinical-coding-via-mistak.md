@@ -2,7 +2,7 @@
 title: "Learn-Then-Act Framework Improves Clinical Coding via Mistake Knowledge Database"
 slug: "learn-then-act-framework-improves-clinical-coding-via-mistake-knowledge-database"
 description: "Researchers have introduced Learn-Then-Act, an inference-time adaptation framework designed to convert errors from small labeled batches into a structured Mistake Knowledge Database (MistakeKDB) to..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [ClinicalCoding, InferenceTimeAdaptation, HealthcareAI, MIMICIII, MIMICIV]
 categories: ["AI", "Machine Learning", "Healthcare Technology", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

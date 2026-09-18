@@ -2,7 +2,7 @@
 title: "Anthropic introduces revamped projects feature for Claude Code"
 slug: "anthropic-introduces-revamped-projects-feature-for-claude-code"
 description: "Anthropic has launched a revamped projects feature in Claude Code that enables users to manage and coordinate a team of multiple AI agents working on the same codebase."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [Anthropic, ClaudeCode, AIAgents, SoftwareDevelopment]
 categories: ["AI", "AI Agents", "Software Engineering", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/videoframe_18541.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

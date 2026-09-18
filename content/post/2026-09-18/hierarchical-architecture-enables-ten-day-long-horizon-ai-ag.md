@@ -2,7 +2,7 @@
 title: "Hierarchical Architecture Enables Ten-Day Long-Horizon AI Agent with Economic Web Skills"
 slug: "hierarchical-architecture-enables-ten-day-long-horizon-ai-agent-with-economic-web-skills"
 description: "Language‑model agents are increasingly asked to carry out work spanning days or weeks, such as an operations remediation or a research programme. A new paper presents a hierarchical architecture that..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [AIagents, LongHorizon, EconSkills, ContinualLearning]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents"]
 author: "Shoubhik Banerjee"

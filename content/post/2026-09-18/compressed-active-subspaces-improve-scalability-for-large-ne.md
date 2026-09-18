@@ -2,7 +2,7 @@
 title: "Compressed Active Subspaces Improve Scalability for Large Neural Network Inference"
 slug: "compressed-active-subspaces-improve-scalability-for-large-neural-network-inference"
 description: "Researchers have introduced Compressed Active Subspaces (CAS), a new approach designed to overcome the memory limitations of standard active subspace methods in high-dimensional models."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [MachineLearning, NeuralNetworks, BayesianInference, ModelOptimization]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Data Science"]
 author: "Shoubhik Banerjee"

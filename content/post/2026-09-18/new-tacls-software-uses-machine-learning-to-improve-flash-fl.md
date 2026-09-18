@@ -2,7 +2,7 @@
 title: "New TACLS Software Uses Machine Learning to Improve Flash Flood Alerts"
 slug: "new-tacls-software-uses-machine-learning-to-improve-flash-flood-alerts"
 description: "Scientists from UCSD, the NWS, and NASA have collaborated to create the Transient Artifact and Continuous Learning System (TACLS), a new software designed to help the National Weather Service (NWS)..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [MachineLearning, NWS, NASA, FloodPrediction, PublicSafety]
 categories: ["AI", "Machine Learning", "Environmental Technology", "Public Safety"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/268746_new_technology_could_change_how_we_predict_flash_floods_for_good_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

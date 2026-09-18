@@ -2,7 +2,7 @@
 title: "For Your Eyes Only game reveals hidden‑signal challenges for LLMs"
 slug: "for-your-eyes-only-game-reveals-hiddensignal-challenges-for-llms"
 description: "Researchers introduced **For Your Eyes Only**, a cooperative signalling game designed to evaluate large language models' ability to hide signals."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [AIAlignment, LanguageModels, SignalSteganography]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Safety"]
 author: "Shoubhik Banerjee"

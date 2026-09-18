@@ -2,7 +2,7 @@
 title: "Research on Cross-Lingual Knowledge Generalization and Sequential Sentence Classification"
 slug: "research-on-cross-lingual-knowledge-generalization-and-sequential-sentence-classification"
 description: "Recent research has investigated the barriers to cross-lingual knowledge generalization in large language models (LLMs) and the factors influencing cross-lingual transfer for sequential sentence..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [LLM, NaturalLanguageProcessing, CrossLingualTransfer, MultilingualAI]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

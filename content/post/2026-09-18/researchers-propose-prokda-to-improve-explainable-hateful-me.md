@@ -2,7 +2,7 @@
 title: "Researchers Propose ProKDA to Improve Explainable Hateful Meme Detection"
 slug: "researchers-propose-prokda-to-improve-explainable-hateful-meme-detection"
 description: "Researchers have developed ProKDA, a progressive knowledge-to-decision alignment method designed to improve explainable hateful meme detection. Hateful memes spread abusive content through implicit..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [MultimodalAI, HateSpeechDetection, MachineLearning, ArtificialIntelligence]
 categories: ["AI", "Artificial Intelligence", "Computer Vision", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

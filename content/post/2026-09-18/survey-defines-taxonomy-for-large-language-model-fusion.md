@@ -2,7 +2,7 @@
 title: "Survey Defines Taxonomy for Large Language Model Fusion"
 slug: "survey-defines-taxonomy-for-large-language-model-fusion"
 description: "A new survey titled 'From Parameters to Behaviors: A Survey of Model Fusion for Large Language Models' provides a unified definition and systematic taxonomy for model fusion, which integrates..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [LLM, ModelFusion, HuggingFace, MachineLearning]
 categories: ["AI", "Computation and Language", "Machine Learning", "Large Language Models"]
 author: "Shoubhik Banerjee"

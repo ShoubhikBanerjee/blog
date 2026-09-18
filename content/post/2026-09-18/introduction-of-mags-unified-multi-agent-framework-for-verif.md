@@ -2,7 +2,7 @@
 title: "Introduction of MAGS Unified Multi-Agent Framework for Verified Program Generation"
 slug: "introduction-of-mags-unified-multi-agent-framework-for-verified-program-generation"
 description: "Researchers have introduced MAGS, a unified multi-agent framework designed to generate executable programs with formal safety guarantees."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [MAGS, Dafny, FormalVerification, AIagents, SoftwareSafety]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Engineering"]
 author: "Shoubhik Banerjee"

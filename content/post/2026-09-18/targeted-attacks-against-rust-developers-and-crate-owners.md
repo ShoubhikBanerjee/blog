@@ -2,7 +2,7 @@
 title: "Targeted Attacks Against Rust Developers and Crate Owners"
 slug: "targeted-attacks-against-rust-developers-and-crate-owners"
 description: "Adam Harvey and the crates security team have issued a warning regarding an ongoing campaign targeting rust-lang members and owners of popular crates to compromise devices and accounts for the..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [Rust, Cybersecurity, SupplyChainAttack, OpenSource]
 categories: ["AI", "Cybersecurity", "Software Development", "Open Source"]
 author: "Shoubhik Banerjee"

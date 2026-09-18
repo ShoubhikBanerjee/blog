@@ -2,7 +2,7 @@
 title: "Hierarchical LLM-MARL Architecture for Low-Altitude Wireless Network Coordination"
 slug: "hierarchical-llm-marl-architecture-for-low-altitude-wireless-network-coordination"
 description: "Researchers have proposed a hierarchical hybrid architecture combining large language models (LLMs) and multi-agent reinforcement learning (MARL) to manage heterogeneous unmanned aerial systems in..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [LLM, MARL, WirelessNetworks, UAS, AI]
 categories: ["AI", "Machine Learning", "Wireless Communications", "Unmanned Aerial Systems"]
 author: "Shoubhik Banerjee"

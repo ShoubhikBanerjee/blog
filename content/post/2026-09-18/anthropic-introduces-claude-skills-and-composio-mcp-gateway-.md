@@ -2,7 +2,7 @@
 title: "Anthropic Introduces Claude Skills and Composio MCP Gateway Integrations"
 slug: "anthropic-introduces-claude-skills-and-composio-mcp-gateway-integrations"
 description: "Anthropic has introduced Claude Skills as an open standard to define AI agent workflows, complemented by the Composio MCP Gateway which provides access to over 1,000 integrations."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [Claude, Anthropic, MCP, AIagents, Composio]
 categories: ["AI", "AI Agents", "Software Development", "Enterprise AI"]
 image: "https://avatars.githubusercontent.com/u/128464815?v=4"

@@ -2,7 +2,7 @@
 title: "End-to-End Framework Automates Business Semantic Layer Construction from Raw Logs"
 slug: "end-to-end-framework-automates-business-semantic-layer-construction-from-raw-logs"
 description: "Researchers have introduced an end-to-end framework that fully automates the construction of a business semantic layer from raw application logs, eliminating the need for labeled training data or..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [LLM, Telemetry, DataEngineering, SemanticLayer]
 categories: ["AI", "Machine Learning", "Data Management", "Software Engineering"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Evaluation of LLM Decision Alignment in Vehicle Voice Assistants"
 slug: "evaluation-of-llm-decision-alignment-in-vehicle-voice-assistants"
 description: "Researchers have evaluated the integration of Large Language Models (LLMs) into vehicle voice assistants using a new benchmark to test decision-making safety."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [LLM, AutomotiveAI, AISafety, VoiceAssistants]
 categories: ["AI", "Machine Learning", "AI Safety", "Automotive Technology"]
 author: "Shoubhik Banerjee"

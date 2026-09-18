@@ -2,7 +2,7 @@
 title: "Proposed Unified Evaluation Framework for Trustworthy AI and Multimodal Systems"
 slug: "proposed-unified-evaluation-framework-for-trustworthy-ai-and-multimodal-systems"
 description: "A new research paper proposes a unified evaluation framework designed to assess the trustworthiness of Large Language Models (LLMs), agentic systems, and multimodal models (MLLMs)."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [LLM, AIEvaluation, AITrustworthiness, MultimodalAI, AgenticAI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Governance"]
 author: "Shoubhik Banerjee"

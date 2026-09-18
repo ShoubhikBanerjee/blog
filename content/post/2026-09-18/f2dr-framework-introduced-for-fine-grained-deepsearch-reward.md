@@ -2,7 +2,7 @@
 title: "F2DR Framework Introduced for Fine-Grained DeepSearch Reward Evaluation"
 slug: "f2dr-framework-introduced-for-fine-grained-deepsearch-reward-evaluation"
 description: "Researchers have proposed F2DR, a fine-grained full-pipeline reward framework designed to evaluate DeepSearch workflows used by Large Language Models (LLMs) to resolve complex user queries."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [LLM, DeepSearch, RewardModels, AIEvaluation]
 categories: ["AI", "Machine Learning", "Large Language Models", "AI Evaluation"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Empirical Study Evaluates AI Replanning Methods for Itinerary Disruptions"
 slug: "empirical-study-evaluates-ai-replanning-methods-for-itinerary-disruptions"
 description: "A systematic empirical study has been conducted to compare three AI approaches for handling itinerary disruptions: LLM-Z3 full replanning, IPyHOPPER hierarchical repair, and the iTIMO local-revision..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [AI, Planning, LLM, Benchmarking]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Research"]
 author: "Shoubhik Banerjee"

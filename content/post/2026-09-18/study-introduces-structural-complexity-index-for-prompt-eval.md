@@ -2,7 +2,7 @@
 title: "Study Introduces Structural-Complexity Index for Prompt Evaluation"
 slug: "study-introduces-structural-complexity-index-for-prompt-evaluation"
 description: "A new study introduces a six-dimension prompt-side structural-complexity index scored before generation. The research evaluates 105,000 generations across 21 models to analyze performance thresholds..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [P, r, o, m, p, t, E, n, g, i, n, e, e, r, i, n, g, L, L, M, E, v, a, l, u, a, t, i, o, n, S, t, r, u, c, t, u, r, a, l, C, o, m, p, l, e, x, i, t, y, P, y, t, h, o, n, R, e, l, i, a, b, i, l, i, t, y]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "N", "a", "t", "u", "r", "a", "l", "L", "a", "n", "g", "u", "a", "g", "e", "P", "r", "o", "c", "e", "s", "s", "i", "n", "g", ",", "S", "o", "f", "t", "w", "a", "r", "e", "E", "n", "g", "i", "n", "e", "e", "r", "i", "n", "g", ",", "R", "e", "s", "e", "a", "r", "c", "h"]
 author: "Shoubhik Banerjee"

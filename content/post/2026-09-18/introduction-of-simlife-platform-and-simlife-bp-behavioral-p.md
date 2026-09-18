@@ -2,7 +2,7 @@
 title: "Introduction of SimLife Platform and SimLife-BP Behavioral Pattern Benchmark"
 slug: "introduction-of-simlife-platform-and-simlife-bp-behavioral-pattern-benchmark"
 description: "Researchers have introduced SimLife, a scalable platform designed to simulate long-term household life, alongside a corresponding benchmark called SimLife-BP to evaluate long-context pattern..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [SimLife, AIbenchmarks, LongContext, BehavioralModeling]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Simulation"]
 author: "Shoubhik Banerjee"

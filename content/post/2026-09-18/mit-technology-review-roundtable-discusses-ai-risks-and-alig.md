@@ -2,7 +2,7 @@
 title: "MIT Technology Review Roundtable Discusses AI Risks and Alignment Challenges"
 slug: "mit-technology-review-roundtable-discusses-ai-risks-and-alignment-challenges"
 description: "MIT Technology Review recently hosted a live Roundtables event for subscribers to discuss whether AI could potentially kill humans."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [AIalignment, LLM, AISafety, OpenAI, Anthropic]
 categories: ["AI", "Artificial Intelligence", "AI Safety", "Machine Learning"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/260917_RoundTable2.jpg?resize=1200,600"

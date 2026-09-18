@@ -2,7 +2,7 @@
 title: "SOPS Becomes a CNCF Sandbox Project"
 slug: "sops-becomes-a-cncf-sandbox-project"
 description: "SOPS, an editor of encrypted files originally launched at Mozilla in 2015, has been donated to the Cloud Native Computing Foundation (CNCF) as a Sandbox project in 2023."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [SOPS, CNCF, Encryption, CloudNative]
 categories: ["AI", "Cloud Computing", "Cybersecurity", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/129185620?v=4"

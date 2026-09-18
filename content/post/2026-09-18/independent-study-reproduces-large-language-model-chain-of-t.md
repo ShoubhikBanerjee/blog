@@ -2,7 +2,7 @@
 title: "Independent Study Reproduces Large Language Model Chain-of-Thought Entropy Trajectory Findings"
 slug: "independent-study-reproduces-large-language-model-chain-of-thought-entropy-trajectory-findings"
 description: "An independent empirical study has reproduced the dissociation reported by Zhao in 2026 regarding large language model chain-of-thought entropy trajectories. The study, registered at OSF prior to any..."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [MachineLearning, LargeLanguageModels, ModelEvaluation]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Model Evaluation"]
 author: "Shoubhik Banerjee"

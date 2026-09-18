@@ -2,7 +2,7 @@
 title: "Comparison of Two-Agent and One-Call AI Screening for Résumés"
 slug: "comparison-of-two-agent-and-one-call-ai-screening-for-resumes"
 description: "Researchers have studied a two-agent AI alternative for résumé screening where employer-side and candidate-side agents exchange evidence and update judgments to decide which applications advance."
-date: 2026-09-18T18:02:43+05:30
+date: 2026-09-18T22:02:10+05:30
 tags: [AIagents, LLM, recruitment, GPT55, ClaudeOpus]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Human Resources Technology"]
 author: "Shoubhik Banerjee"
