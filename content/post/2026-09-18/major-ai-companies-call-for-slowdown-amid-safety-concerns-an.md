@@ -2,7 +2,7 @@
 title: "Major AI Companies Call for Slowdown Amid Safety Concerns and Model Incidents"
 slug: "major-ai-companies-call-for-slowdown-amid-safety-concerns-and-model-incidents"
 description: "Several leading US AI companies are publicly suggesting it is time to 'pace the frontier' of bleeding-edge AI development following a summer where rogue AI agents became reality and researchers..."
-date: 2026-09-18T06:03:39+05:30
+date: 2026-09-18T12:08:53+05:30
 tags: [AISafety, OpenAI, Anthropic, AIregulation, Superintelligence]
 categories: ["AI", "AI Safety", "Artificial Intelligence", "Tech Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK_414_5_D.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

@@ -2,7 +2,7 @@
 title: "Thomas Ptacek Outlines Method for Using LLMs as Copyeditors"
 slug: "thomas-ptacek-outlines-method-for-using-llms-as-copyeditors"
 description: "Thomas Ptacek has shared a specific approach to using Large Language Models (LLMs) as copyeditors rather than writing assistants."
-date: 2026-09-18T06:03:39+05:30
+date: 2026-09-18T12:08:53+05:30
 tags: [LLM, Copyediting, WritingWorkflow, AI]
 categories: ["AI", "Artificial Intelligence", "Content Creation", "Writing Tools"]
 author: "Shoubhik Banerjee"
