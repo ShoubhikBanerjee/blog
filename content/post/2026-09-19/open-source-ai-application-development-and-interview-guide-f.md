@@ -2,7 +2,7 @@
 title: "Open Source AI Application Development and Interview Guide for Backend Developers"
 slug: "open-source-ai-application-development-and-interview-guide-for-backend-developers"
 description: "An open-source guide and platform for AI application development and interview preparation for backend developers has been released, covering core technologies and engineering practices."
-date: 2026-09-19T18:02:19+05:30
+date: 2026-09-19T22:01:30+05:30
 tags: [Java, RAG, LLM, SpringAI, BackendDevelopment]
 categories: ["AI", "AI Application Development", "Software Engineering", "Backend Development"]
 image: "https://avatars.githubusercontent.com/u/29880145?v=4"

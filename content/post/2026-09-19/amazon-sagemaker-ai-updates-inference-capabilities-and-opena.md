@@ -2,7 +2,7 @@
 title: "Amazon SageMaker AI Updates Inference Capabilities and OpenAI Compatibility"
 slug: "amazon-sagemaker-ai-updates-inference-capabilities-and-openai-compatibility"
 description: "Amazon SageMaker AI has introduced new capabilities for deploying and consuming AI models, offering users paths for managed infrastructure or Kubernetes-native control with Amazon SageMaker HyperPod..."
-date: 2026-09-19T18:02:19+05:30
+date: 2026-09-19T22:01:30+05:30
 tags: [AWS, SageMaker, MachineLearning, CloudComputing, Inference]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21809-featured-image-1.png"

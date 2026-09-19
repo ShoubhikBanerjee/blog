@@ -2,7 +2,7 @@
 title: "Claude Code adds support for AGENTS.md instruction files"
 slug: "claude-code-adds-support-for-agents-md-instruction-files"
 description: "Claude Code has introduced support for AGENTS.md, a new method for providing project-specific instructions to the coding assistant. This functionality allows for greater customization of the tool's..."
-date: 2026-09-19T18:02:19+05:30
+date: 2026-09-19T22:01:30+05:30
 tags: [ClaudeCode, AIAgents, SoftwareDevelopment, Coding]
 categories: ["AI", "Software Development", "AI Agents", "Tools"]
 author: "Shoubhik Banerjee"

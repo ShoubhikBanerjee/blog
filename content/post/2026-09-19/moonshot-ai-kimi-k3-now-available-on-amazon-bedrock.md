@@ -2,7 +2,7 @@
 title: "Moonshot AI Kimi K3 Now Available on Amazon Bedrock"
 slug: "moonshot-ai-kimi-k3-now-available-on-amazon-bedrock"
 description: "Kimi K3 from Moonshot AI is now available on Amazon Bedrock, providing a new option for knowledge work and coding."
-date: 2026-09-19T18:02:19+05:30
+date: 2026-09-19T22:01:30+05:30
 tags: [MoonshotAI, AmazonBedrock, KimiK3, AWS, LLM]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21636-featured-image.png"

@@ -2,7 +2,7 @@
 title: "NVIDIA Introduces AIPerf for GenAI Performance Benchmarking"
 slug: "nvidia-introduces-aiperf-for-genai-performance-benchmarking"
 description: "NVIDIA has released AIPerf, a ground-up rewrite and the designated successor to GenAI-Perf for measuring AI performance."
-date: 2026-09-19T18:02:19+05:30
+date: 2026-09-19T22:01:30+05:30
 tags: [NVIDIA, AIPerf, GenAI, Benchmarking, LLM]
 categories: ["AI", "Machine Learning", "AI Infrastructure", "Software Development"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image3-10-660x370.png"

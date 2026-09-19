@@ -2,7 +2,7 @@
 title: "Internal Documents Reveal Microsoft and OpenAI Concerns Over AI Content Strategy"
 slug: "internal-documents-reveal-microsoft-and-openai-concerns-over-ai-content-strategy"
 description: "Internal documents and employee statements from Microsoft and OpenAI indicate that the companies' AI content strategy may be damaging the web and the economic foundations of the data sources used to..."
-date: 2026-09-19T18:02:19+05:30
+date: 2026-09-19T22:01:30+05:30
 tags: [Microsoft, OpenAI, LLM, AIEthics, DataScraping]
 categories: ["AI", "Artificial Intelligence", "Data Strategy", "Digital Media"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKS534_AI_DOOMSDAY2_B.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"
