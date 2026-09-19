@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ImageProcessing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/imageprocessing/</link><description>Recent content in ImageProcessing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 03 Sep 2026 22:06:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/imageprocessing/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA CUDA Blog Post on GPU-Accelerated Image Processing</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuda-blog-post-on-gpu-accelerated-image-processing/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuda-blog-post-on-gpu-accelerated-image-processing/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/keyboard_16x9-660x370.jpg" alt="Featured image of post NVIDIA CUDA Blog Post on GPU-Accelerated Image Processing" /&gt;&lt;h1 id="nvidia-cuda-blog-post-on-gpu-accelerated-image-processing"&gt;NVIDIA CUDA Blog Post on GPU-Accelerated Image Processing
+&lt;/h1&gt;&lt;p&gt;NVIDIA has published a new technical blog post detailing a GPU-accelerated image processing pipeline using CUDA, with step-by-step optimizations and companion code available for testing.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;NVIDIA CUDA remains the foundation of GPU-accelerated computing, powering applications from scientific simulations to large-scale AI training. The post demonstrates a practical image processing pipeline, starting with RGB-to-grayscale conversion and median computation for image tiles.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The pipeline processes an input stream of red, green, and blue images with the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Transfer data from the CPU to the GPU.&lt;/li&gt;
+&lt;li&gt;Convert RGB images to grayscale.&lt;/li&gt;
+&lt;li&gt;For each 32x32 pixel tile, compute the median by sorting pixels and selecting the middle value.&lt;/li&gt;
+&lt;li&gt;Copy the median of each tile back to the CPU.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The base code initializes image data with the following constants:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pixel_t = uint8_t&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TILE_WIDTH = 32&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;HISTO_SIZE = 256&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NB_TILE_X = 250&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NB_TILE_Y = NB_TILE_X&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;IMAGE_LENGTH = TILE_WIDTH * NB_TILE_X&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;IMAGE_SIZE = IMAGE_LENGTH * IMAGE_LENGTH&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NB_IMAGES = 3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;INIT_VALUE = 4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The post outlines six incremental optimizations for the pipeline:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Optimization&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;CCCL API and Compute Sanitizer&lt;/td&gt;
+&lt;td&gt;Easily find indexing bugs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NVTX&lt;/td&gt;
+&lt;td&gt;Improve Nsight Systems benchmarks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CUB’s optimized algorithms&lt;/td&gt;
+&lt;td&gt;Use at the block and device level&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pooled containers&lt;/td&gt;
+&lt;td&gt;Manage GPU memory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pinned containers&lt;/td&gt;
+&lt;td&gt;Speed up host-to-device transfers&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Asynchronous transfers&lt;/td&gt;
+&lt;td&gt;Parallelize GPU work by giving each thread its own stream&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The pipeline runs in parallel for each image.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;A companion code repository is provided, with the option to run the example on Google Colab.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2021/06/CUDA-toolkit-featured.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2021/04/CUDA-Blog-Image-1000x600-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #CUDA #GPU #ImageProcessing #Optimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/the-modern-cuda-toolbox-in-practice-a-step-by-step-optimization-walkthrough/" target="_blank" rel="noopener"
+&gt;The Modern CUDA Toolbox in Practice: A Step-by-Step Optimization Walkthrough | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
