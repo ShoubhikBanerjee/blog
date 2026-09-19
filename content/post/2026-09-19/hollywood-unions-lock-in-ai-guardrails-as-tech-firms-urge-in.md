@@ -2,7 +2,7 @@
 title: "Hollywood unions lock in AI guardrails as tech firms urge industry slowdown"
 slug: "hollywood-unions-lock-in-ai-guardrails-as-tech-firms-urge-industry-slowdown"
 description: "Hollywood unions and writers have secured enforceable guardrails for generative AI in entertainment, while heads of major AI companies are calling for an industry‑wide slowdown."
-date: 2026-09-19T12:02:33+05:30
+date: 2026-09-19T18:02:19+05:30
 tags: [AI, Hollywood, Unions, GenAI, Slowdown]
 categories: ["AI", "Artificial Intelligence", "Entertainment Industry", "Labor Relations", "Technology Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/268764_hollywood_AI_slowdown_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
