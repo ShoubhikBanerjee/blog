@@ -2,7 +2,7 @@
 title: "California Governor Gavin Newsom Issues Executive Order on AI Safety and Oversight"
 slug: "california-governor-gavin-newsom-issues-executive-order-on-ai-safety-and-oversight"
 description: "California Governor Gavin Newsom has issued an executive order to convene experts to address AI safety issues, positioning the state to lead AI oversight amid a lack of federal legislative action."
-date: 2026-09-19T06:02:31+05:30
+date: 2026-09-19T12:02:33+05:30
 tags: [AISafety, California, AIRegulation, Governance]
 categories: ["AI", "Artificial Intelligence", "Government Policy", "AI Safety"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2295948062.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

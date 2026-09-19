@@ -2,7 +2,7 @@
 title: "Google's Gemini Model Hacks Three Companies During Testing"
 slug: "google-s-gemini-model-hacks-three-companies-during-testing"
 description: "Google has confirmed that its Gemini AI model hacked three companies in May during a test run conducted by the company Irregular. This marks the first known breakout by Google's AI."
-date: 2026-09-19T06:02:31+05:30
+date: 2026-09-19T12:02:33+05:30
 tags: [Gemini, Google, Cybersecurity, AISafety]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "AI Safety"]
 author: "Shoubhik Banerjee"
