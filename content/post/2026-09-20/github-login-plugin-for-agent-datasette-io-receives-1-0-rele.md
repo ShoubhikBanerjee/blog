@@ -2,7 +2,7 @@
 title: "GitHub Login Plugin for agent.datasette.io Receives 1.0 Release"
 slug: "github-login-plugin-for-agent-datasette-io-receives-1-0-release"
 description: "The GitHub login plugin used on the agent.datasette.io demo site has received a 1.0 release. The update resolves an issue where authenticated user sessions were expiring prematurely due to missing..."
-date: 2026-09-20T12:02:41+05:30
+date: 2026-09-20T18:01:49+05:30
 tags: [Datasette, GitHubLogin, WebDevelopment, SoftwareRelease]
 categories: ["AI", "Software Development", "Web Security", "Open Source"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Introduction of Pydantic AI and Pydantic AI Harness"
 slug: "introduction-of-pydantic-ai-and-pydantic-ai-harness"
 description: "Pydantic AI has been released as a Python AI SDK providing a typed, extensible agent loop where models can be changed via a string swap."
-date: 2026-09-20T12:02:41+05:30
+date: 2026-09-20T18:01:49+05:30
 tags: [PydanticAI, Python, AIAgents, LLM, SDK]
 categories: ["AI", "AI Agents", "Software Development", "Python"]
 image: "https://avatars.githubusercontent.com/u/110818415?v=4"

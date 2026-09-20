@@ -2,7 +2,7 @@
 title: "Overview of Apereo CAS Enterprise Identity and Authentication Platform"
 slug: "overview-of-apereo-cas-enterprise-identity-and-authentication-platform"
 description: "Apereo CAS is an enterprise-grade, multilingual identity provider and single sign-on solution designed to meet comprehensive authentication and authorization needs. Built on Spring Boot and Spring..."
-date: 2026-09-20T12:02:41+05:30
+date: 2026-09-20T18:01:49+05:30
 tags: [CAS, IdentityManagement, OpenSource, Authentication, SSO]
 categories: ["AI", "Software Development", "Cybersecurity", "Enterprise Software"]
 image: "https://avatars.githubusercontent.com/u/4679233?v=4"
