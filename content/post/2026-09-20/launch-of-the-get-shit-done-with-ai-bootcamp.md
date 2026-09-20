@@ -2,7 +2,7 @@
 title: "Launch of the Get Shit Done with AI Bootcamp"
 slug: "launch-of-the-get-shit-done-with-ai-bootcamp"
 description: "The AI Engineering Academy has introduced the 'Get Shit Done with AI' Bootcamp, a self-paced program focused on real-world applications designed to equip students with the skills to become AI..."
-date: 2026-09-20T18:01:49+05:30
+date: 2026-09-20T22:01:28+05:30
 tags: [AIEngineering, MachineLearning, GenerativeAI, MLOps, PyTorch]
 categories: ["AI", "AI Education", "Machine Learning", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/150327?v=4"

@@ -2,7 +2,7 @@
 title: "Terragrunt Orchestration Tool for OpenTofu and Terraform Infrastructure as Code"
 slug: "terragrunt-orchestration-tool-for-opentofu-and-terraform-infrastructure-as-code"
 description: "Terragrunt has been introduced as a flexible orchestration tool designed to help Infrastructure as Code written in OpenTofu/Terraform scale."
-date: 2026-09-20T18:01:49+05:30
+date: 2026-09-20T22:01:28+05:30
 tags: [Terragrunt, InfrastructureAsCode, OpenTofu, Terraform]
 categories: ["AI", "DevOps", "Cloud Infrastructure", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/17118990?v=4"

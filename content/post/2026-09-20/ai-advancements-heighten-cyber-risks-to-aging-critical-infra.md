@@ -2,7 +2,7 @@
 title: "AI Advancements Heighten Cyber Risks to Aging Critical Infrastructure"
 slug: "ai-advancements-heighten-cyber-risks-to-aging-critical-infrastructure"
 description: "The rapid development of AI capabilities is enabling adversaries to execute cyberattacks against critical infrastructure more efficiently, compounding the vulnerabilities of aging equipment designed..."
-date: 2026-09-20T18:01:49+05:30
+date: 2026-09-20T22:01:28+05:30
 tags: [Cybersecurity, CriticalInfrastructure, AI, OTSecurity]
 categories: ["AI", "Cybersecurity", "Artificial Intelligence", "Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/akrales_220309_4977_0292.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "CapRover Scalable PaaS for Application and Database Deployment"
 slug: "caprover-scalable-paas-for-application-and-database-deployment"
 description: "CapRover is a scalable Platform as a Service (PaaS) designed as an easy-to-use app/database deployment and web server manager that automates Docker and nginx."
-date: 2026-09-20T18:01:49+05:30
+date: 2026-09-20T22:01:28+05:30
 tags: [PaaS, Docker, WebDevelopment, Deployment, OpenSource]
 categories: ["AI", "Cloud Computing", "Web Development", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/46361891?v=4"

@@ -2,7 +2,7 @@
 title: "Decepticon Launches as an Autonomous Red Team Agent"
 slug: "decepticon-launches-as-an-autonomous-red-team-agent"
 description: "Decepticon is a new autonomous red team agent now available in the cloud to assist with autonomous red-team engagements directly from the browser."
-date: 2026-09-20T18:01:49+05:30
+date: 2026-09-20T22:01:28+05:30
 tags: [Decepticon, AIAgents, Cybersecurity, Pentesting]
 categories: ["AI", "AI Agents", "Cybersecurity", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/211282590?v=4"
