@@ -2,7 +2,7 @@
 title: "California Sea Lion and Brandt's Cormorant Spotted at Pillar Point Harbor"
 slug: "california-sea-lion-and-brandt-s-cormorant-spotted-at-pillar-point-harbor"
 description: "On 19th September 2026 at 10:10 AM, observers recorded marine wildlife at Pillar Point Harbor, CA, US."
-date: 2026-09-20T06:01:48+05:30
+date: 2026-09-20T12:02:41+05:30
 tags: [Wildlife, Birds, MarineLife]
 categories: ["AI", "Wildlife Observation", "Bird Watching", "Marine Biology"]
 author: "Shoubhik Banerjee"

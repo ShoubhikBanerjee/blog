@@ -2,7 +2,7 @@
 title: "Meta’s Muse assistant clarifies message‑preview access on new Mac app"
 slug: "metas-muse-assistant-clarifies-messagepreview-access-on-new-mac-app"
 description: "Meta's Muse AI assistant explained how it accesses message data on its new Mac app."
-date: 2026-09-20T06:01:48+05:30
+date: 2026-09-20T12:02:41+05:30
 tags: [Meta, AIassistant, MacApp, Privacy]
 categories: ["AI", "Artificial Intelligence", "AI Assistants", "Privacy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/08/257890_Chatbot_secrets_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
