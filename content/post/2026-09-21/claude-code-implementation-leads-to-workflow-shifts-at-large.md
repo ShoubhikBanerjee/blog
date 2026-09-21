@@ -2,7 +2,7 @@
 title: "Claude Code Implementation Leads to Workflow Shifts at Large Company"
 slug: "claude-code-implementation-leads-to-workflow-shifts-at-large-company"
 description: "A shift in software development operations at a large company has centralized the creation of project documentation and technical assets around Claude Code. Engineers are reporting that all technical..."
-date: 2026-09-21T12:01:58+05:30
+date: 2026-09-21T18:02:01+05:30
 tags: [ClaudeCode, AI, SoftwareEngineering, WorkplaceTrends]
 categories: ["AI", "Artificial Intelligence", "Software Engineering", "Technology Management"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "New plugin enables API key configuration for remote coding agents controlled from phones"
 slug: "new-plugin-enables-api-key-configuration-for-remote-coding-agents-controlled-from-phones"
 description: "A new plugin has been introduced to solve a specific problem for developers running coding agents on remote machines controlled from their phones. It provides a way to configure API keys on those..."
-date: 2026-09-21T12:01:58+05:30
+date: 2026-09-21T18:02:01+05:30
 tags: [CodexRemote, APIKeys, ChatGPT, CodingAgents, LLM]
 categories: ["AI", "AI Agents", "Developer Tools", "Software Development"]
 image: "https://static.simonwillison.net/static/2026-09-20/IMG_8168.jpeg"
