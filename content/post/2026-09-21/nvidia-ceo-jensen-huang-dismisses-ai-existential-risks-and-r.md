@@ -2,7 +2,7 @@
 title: "Nvidia CEO Jensen Huang Dismisses AI Existential Risks and Regulation"
 slug: "nvidia-ceo-jensen-huang-dismisses-ai-existential-risks-and-regulation"
 description: "Nvidia CEO Jensen Huang has publicly stated that fears regarding the dangers of artificial intelligence are overblown, asserting there is no need for new laws or guidelines to govern the technology."
-date: 2026-09-21T06:01:38+05:30
+date: 2026-09-21T12:01:58+05:30
 tags: [Nvidia, JensenHuang, AIRegulation, AISafety]
 categories: ["AI", "Artificial Intelligence", "Technology Policy", "Business"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/STKP210_JENSEN_HUANG_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
