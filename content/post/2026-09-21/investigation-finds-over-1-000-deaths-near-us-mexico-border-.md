@@ -2,7 +2,7 @@
 title: "Investigation Finds Over 1,000 Deaths Near US-Mexico Border Surveillance Towers"
 slug: "investigation-finds-over-1-000-deaths-near-us-mexico-border-surveillance-towers"
 description: "A 15-month collaboration between MIT Technology Review and Times of San Diego has produced the first comprehensive map and analysis of deaths occurring near US Customs and Border Protection (CBP)..."
-date: 2026-09-21T18:02:01+05:30
+date: 2026-09-21T22:03:11+05:30
 tags: [BorderSurveillance, AI, CustomsAndBorderProtection, Anduril, HumanRights]
 categories: ["AI", "Artificial Intelligence", "Government Technology", "Public Safety"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/260916_methodology.jpg?resize=1200,600"

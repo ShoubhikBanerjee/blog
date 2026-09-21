@@ -2,7 +2,7 @@
 title: "AI Surveillance Towers Deployed for Border Monitoring in Southern California"
 slug: "ai-surveillance-towers-deployed-for-border-monitoring-in-southern-california"
 description: "The U.S. border in Southern California has seen a proliferation of surveillance towers equipped with artificial intelligence designed to track movements and distinguish border-crossers from animals..."
-date: 2026-09-21T18:02:01+05:30
+date: 2026-09-21T22:03:11+05:30
 tags: [AI, Surveillance, ComputerVision, BorderSecurity]
 categories: ["AI", "Computer Vision", "Artificial Intelligence", "Government Technology"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/NewLede_9-15-26_Border_322.jpg?resize=1200,600"

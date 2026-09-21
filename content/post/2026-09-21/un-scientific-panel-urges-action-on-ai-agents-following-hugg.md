@@ -2,7 +2,7 @@
 title: "UN Scientific Panel Urges Action on AI Agents Following Hugging Face Hack"
 slug: "un-scientific-panel-urges-action-on-ai-agents-following-hugging-face-hack"
 description: "A United Nations scientific panel has warned that governments must rein in increasingly capable AI agents before their risks are fully understood. The warning comes in the global organization’s first..."
-date: 2026-09-21T18:02:01+05:30
+date: 2026-09-21T22:03:11+05:30
 tags: [UN, AIsafety, OpenAI, HuggingFace]
 categories: ["AI", "Artificial Intelligence", "Global Governance", "Tech Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2234546269.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Amazon Blocks Meta's Muse AI Agent From Shopping on Its Platform"
 slug: "amazon-blocks-meta-s-muse-ai-agent-from-shopping-on-its-platform"
 description: "Amazon has blocked Meta's Muse AI agent from shopping on its e-commerce platform on behalf of users. Users began seeing a popup message on Sunday stating that 'continued access by an unauthorized AI..."
-date: 2026-09-21T18:02:01+05:30
+date: 2026-09-21T22:03:11+05:30
 tags: [Meta, Amazon, MuseAI, AIAgents, Ecommerce]
 categories: ["AI", "AI Agents", "Technology Policy", "Ecommerce"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/Amazon_Prime_Illo.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
