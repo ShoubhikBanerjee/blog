@@ -2,7 +2,7 @@
 title: "Scrutiny intensifies over claims of AI mathematical breakthroughs and security incidents"
 slug: "scrutiny-intensifies-over-claims-of-ai-mathematical-breakthroughs-and-security-incidents"
 description: "Recent developments have sparked a debate regarding the claims made by major AI companies, including Anthropic and OpenAI, concerning their models' capabilities in software security and mathematics...."
-date: 2026-09-22T18:02:41+05:30
+date: 2026-09-22T22:03:42+05:30
 tags: [Anthropic, OpenAI, AIethics, Cybersecurity]
 categories: ["AI", "Artificial Intelligence", "Corporate Governance", "Technology Policy"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/summer-hype2.jpg?resize=1200,600"

@@ -2,7 +2,7 @@
 title: "NVIDIA Contributes CUDA Buffer Backend to ROS 2 Lyrical"
 slug: "nvidia-contributes-cuda-buffer-backend-to-ros-2-lyrical"
 description: "NVIDIA has contributed a CUDA buffer backend to ROS 2 Lyrical, enabling ROS 2 nodes to exchange GPU-resident payloads through zero-copy transport while preserving standard node boundaries and..."
-date: 2026-09-22T18:02:41+05:30
+date: 2026-09-22T22:03:42+05:30
 tags: [ROS2, CUDA, NVIDIA, Robotics, IsaacROS]
 categories: ["AI", "Robotics", "GPU Computing", "AI Agents"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/robot-arm-ros-2-node-660x370.png"

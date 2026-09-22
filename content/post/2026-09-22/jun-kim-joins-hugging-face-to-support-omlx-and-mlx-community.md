@@ -2,7 +2,7 @@
 title: "Jun Kim Joins Hugging Face to Support oMLX and MLX Community"
 slug: "jun-kim-joins-hugging-face-to-support-omlx-and-mlx-community"
 description: "Jun Kim, the creator and maintainer of oMLX, has joined Hugging Face to support the MLX community. MLX is Apple's framework for local AI, specifically optimized for Apple Silicon."
-date: 2026-09-22T18:02:41+05:30
+date: 2026-09-22T22:03:42+05:30
 tags: [MLX, oMLX, HuggingFace, AppleSilicon, LocalAI]
 categories: ["AI", "Machine Learning", "Software Development", "AI Frameworks"]
 image: "https://huggingface.co/blog/assets/omlx/omlx-hf.jpg"

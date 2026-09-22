@@ -2,7 +2,7 @@
 title: "OpenHands CLI Launches Lightweight Binary for Local AI Agent Development"
 slug: "openhands-cli-launches-lightweight-binary-for-local-ai-agent-development"
 description: "A new lightweight OpenHands CLI is available as a standalone binary executable. Powered by the OpenHands Software Agent SDK, it lets you run an OpenHands agent directly in your terminal, favorite..."
-date: 2026-09-22T18:02:41+05:30
+date: 2026-09-22T22:03:42+05:30
 tags: [OpenHands, AIagents, CLI, Automation]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Software Development", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/225919603?v=4"

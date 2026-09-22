@@ -2,7 +2,7 @@
 title: "Transformers Now Supports llama.cpp GGUF Quantizations for Local Inference"
 slug: "transformers-now-supports-llama-cpp-gguf-quantizations-for-local-inference"
 description: "The Transformers library now allows users to run llama.cpp GGUF quantizations using `from_pretrained`, enabling AI model generation directly on a user's own machine."
-date: 2026-09-22T18:02:41+05:30
+date: 2026-09-22T22:03:42+05:30
 tags: [Transformers, llamacpp, GGUF, LocalAI, AppleSilicon]
 categories: ["AI", "Machine Learning", "Local Inference", "Software Development"]
 image: "https://huggingface.co/blog/assets/transformers_llama_cpp_quants/thumbnail.png"

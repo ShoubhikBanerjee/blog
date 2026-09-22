@@ -2,7 +2,7 @@
 title: "The Evolution of Agentic Evaluation from Function Calls to Full Task Execution"
 slug: "the-evolution-of-agentic-evaluation-from-function-calls-to-full-task-execution"
 description: "The evaluation of AI agents has shifted from scoring isolated function calls to assessing entire task execution, as modern agents must now navigate multi-step workflows in live environments."
-date: 2026-09-22T18:02:41+05:30
+date: 2026-09-22T22:03:42+05:30
 tags: [AIAgents, LLM, Benchmark, SoftwareEngineering]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Development"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image4-10-660x370.png"

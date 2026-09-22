@@ -2,7 +2,7 @@
 title: "California Governor Signs Laws Regulating AI Data Center Energy and Water Use"
 slug: "california-governor-signs-laws-regulating-ai-data-center-energy-and-water-use"
 description: "California Governor Gavin Newsom has signed a package of seven bills designed to regulate the utility consumption of AI data centers and prevent them from passing costs onto residents."
-date: 2026-09-22T18:02:41+05:30
+date: 2026-09-22T22:03:42+05:30
 tags: [California, AI, DataCenters, EnergyPolicy, Regulation]
 categories: ["AI", "AI Governance", "Energy Policy", "Technology Regulation"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2286055476.jpg?quality=90&strip=all&crop=0%2C10.022372800543%2C100%2C79.955254398914&w=1200"

@@ -2,7 +2,7 @@
 title: "LawGlance Transitions to Agentic Retrieval Pipeline for Legal Guidance"
 slug: "lawglance-transitions-to-agentic-retrieval-pipeline-for-legal-guidance"
 description: "LawGlance, formerly known as Niyam SahaAI, has updated its open-source, people-centric platform to utilize an agentic retrieval pipeline. This initiative provides legal guidance through AI-powered..."
-date: 2026-09-22T18:02:41+05:30
+date: 2026-09-22T22:03:42+05:30
 tags: [LawGlance, AIAgents, LangGraph, LegalTech, OpenSource]
 categories: ["AI", "Artificial Intelligence", "Legal Technology", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/182550481?v=4"
