@@ -2,7 +2,7 @@
 title: "Positron IDE Now Available on Amazon SageMaker AI"
 slug: "positron-ide-now-available-on-amazon-sagemaker-ai"
 description: "Positron, an integrated development environment for data science, is now available to run on Amazon SageMaker AI. Platform administrators can deploy Positron by building a container image based on..."
-date: 2026-09-22T06:03:33+05:30
+date: 2026-09-22T12:02:55+05:30
 tags: [Positron, SageMaker, AWS, DataScience, MachineLearning]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Data Science", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21876-featured-image.png"

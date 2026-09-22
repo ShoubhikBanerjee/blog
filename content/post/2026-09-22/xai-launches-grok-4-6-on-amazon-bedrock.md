@@ -2,7 +2,7 @@
 title: "xAI Launches Grok 4.6 on Amazon Bedrock"
 slug: "xai-launches-grok-4-6-on-amazon-bedrock"
 description: "xAI has made Grok 4.6 available in Amazon Bedrock, marking xAI's second model to join the Bedrock model catalog. Launched on August 18, 2026, Grok 4.6 is a frontier model designed for knowledge work,..."
-date: 2026-09-22T06:03:33+05:30
+date: 2026-09-22T12:02:55+05:30
 tags: [xAI, AmazonBedrock, Grok, AIagents, LLM]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21784-featured-image.png"

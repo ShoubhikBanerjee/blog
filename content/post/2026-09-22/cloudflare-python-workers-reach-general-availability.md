@@ -2,7 +2,7 @@
 title: "Cloudflare Python Workers Reach General Availability"
 slug: "cloudflare-python-workers-reach-general-availability"
 description: "Cloudflare has announced that support for running Python code on its server-side Workers platform is now generally available following a two-year preview period."
-date: 2026-09-22T06:03:33+05:30
+date: 2026-09-22T12:02:55+05:30
 tags: [Cloudflare, Python, WebAssembly, Pyodide, Serverless]
 categories: ["AI", "Cloud Computing", "Programming Languages", "Software Development"]
 author: "Shoubhik Banerjee"

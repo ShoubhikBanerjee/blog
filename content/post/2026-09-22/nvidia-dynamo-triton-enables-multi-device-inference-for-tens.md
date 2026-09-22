@@ -2,7 +2,7 @@
 title: "NVIDIA Dynamo-Triton Enables Multi-Device Inference for TensorRT"
 slug: "nvidia-dynamo-triton-enables-multi-device-inference-for-tensorrt"
 description: "NVIDIA has updated its software stack to allow a single TensorRT network to execute across multiple GPUs. This development integrates NVIDIA TensorRT multi-device inference with NVIDIA Dynamo-Triton..."
-date: 2026-09-22T06:03:33+05:30
+date: 2026-09-22T12:02:55+05:30
 tags: [NVIDIA, TensorRT, TritonInferenceServer, GenerativeAI, GPU]
 categories: ["AI", "Machine Learning", "AI Infrastructure", "GPU Computing"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/grid-robot-arm-cleaning-plate-1-660x370.png"

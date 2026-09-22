@@ -2,7 +2,7 @@
 title: "BMW Group Implements AI-Driven Anomaly Detection for Cloud FinOps"
 slug: "bmw-group-implements-ai-driven-anomaly-detection-for-cloud-finops"
 description: "The BMW Group has developed Cloud Efficiency Analytics (CLEA), an in-house FinOps system built on AWS in collaboration with Reply, to monitor spending across more than 14,000 cloud accounts."
-date: 2026-09-22T06:03:33+05:30
+date: 2026-09-22T12:02:55+05:30
 tags: [AWS, FinOps, BMW, Prophet, CloudComputing]
 categories: ["AI", "Cloud Computing", "Machine Learning", "Finance Technology"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21627-featured-image.png"
