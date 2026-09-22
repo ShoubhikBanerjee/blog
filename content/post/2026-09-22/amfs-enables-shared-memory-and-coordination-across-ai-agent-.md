@@ -2,7 +2,7 @@
 title: "AMFS Enables Shared Memory and Coordination Across AI Agent Fleets"
 slug: "amfs-enables-shared-memory-and-coordination-across-ai-agent-fleets"
 description: "AMFS provides a connection layer that allows AI agents to share knowledge, coordinate, and learn as a team across different frameworks, sessions, and machines."
-date: 2026-09-22T12:02:55+05:30
+date: 2026-09-22T18:02:41+05:30
 tags: [AIagents, AMFS, MCP, AgenticWorkflows]
 categories: ["AI", "AI Agents", "Software Development", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/125519634?v=4"

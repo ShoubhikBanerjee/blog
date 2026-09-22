@@ -2,7 +2,7 @@
 title: "TypeSafe AI Launches Jev as a System One Decision Model"
 slug: "typesafe-ai-launches-jev-as-a-system-one-decision-model"
 description: "Last week, TypeSafe AI unveiled Jev, the first example of a new category of models they call “System One models.”"
-date: 2026-09-22T12:02:55+05:30
+date: 2026-09-22T18:02:41+05:30
 tags: [TypeSafeAI, Jev, SystemOne, MachineLearning, Classification]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Software Development"]
 author: "Shoubhik Banerjee"
