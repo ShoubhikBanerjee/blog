@@ -2,7 +2,7 @@
 title: "PandaProbe Releases Open Source Agent Engineering Platform"
 slug: "pandaprobe-releases-open-source-agent-engineering-platform"
 description: "PandaProbe is an open source agent engineering platform designed to help teams collaboratively trace, evaluate, monitor, and debug AI agents."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [PandaProbe, AIagents, OpenSource, AgentEngineering]
 categories: ["AI", "AI Agents", "Developer Tools", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/211257412?v=4"

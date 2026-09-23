@@ -2,7 +2,7 @@
 title: "GPT-6 Sol and Luna Generally Available on Amazon Bedrock"
 slug: "gpt-6-sol-and-luna-generally-available-on-amazon-bedrock"
 description: "GPT-6 Sol and GPT-6 Luna are now generally available on Amazon Bedrock, giving developers two new model options tuned for different workload patterns."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [OpenAI, AmazonBedrock, GPT6, LargeLanguageModels, AIInference]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Cloud Computing", "Large Language Models"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21956-featured-image.png"

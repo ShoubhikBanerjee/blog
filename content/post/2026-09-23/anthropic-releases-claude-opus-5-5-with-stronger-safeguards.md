@@ -2,7 +2,7 @@
 title: "Anthropic releases Claude Opus 5.5 with stronger safeguards"
 slug: "anthropic-releases-claude-opus-5-5-with-stronger-safeguards"
 description: "Anthropic has released Claude Opus 5.5, a new language model that adds stronger safeguards after a series of AI‑hacking incidents."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [Anthropic, ClaudeOpus, AISafety, AIHacking]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Safety", "Natural Language Processing"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/STK269_ANTHROPIC_2_D.webp?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Claude Opus 5.5 Now Available on Amazon Bedrock and Claude Platform"
 slug: "claude-opus-5-5-now-available-on-amazon-bedrock-and-claude-platform"
 description: "Anthropic has announced the availability of Claude Opus 5.5, the first model in the Claude 5.5 model family, now accessible via Amazon Bedrock and Claude Platform on AWS."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [Anthropic, AWS, AmazonBedrock, ClaudeOpus, LLM]
 categories: ["AI", "Machine Learning", "Cloud Computing", "AI Agents"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/22/ML-22003-featured-image.png"

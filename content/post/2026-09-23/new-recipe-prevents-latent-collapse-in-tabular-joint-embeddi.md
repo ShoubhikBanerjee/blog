@@ -2,7 +2,7 @@
 title: "New Recipe Prevents Latent Collapse in Tabular Joint-Embedding Predictive Architectures"
 slug: "new-recipe-prevents-latent-collapse-in-tabular-joint-embedding-predictive-architectures"
 description: "Researchers have developed a new training recipe that prevents the latent term of a joint-embedding predictive architecture (JEPA) from collapsing when applied to a tabular foundation-model prior. In..."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [MachineLearning, JEPA, TabularModels]
 categories: ["AI", "Machine Learning", "Deep Learning", "AI Research"]
 author: "Shoubhik Banerjee"

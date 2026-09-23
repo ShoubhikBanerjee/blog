@@ -2,7 +2,7 @@
 title: "Introduction of Hill Sampling for Program Edit Optimization in LLMs"
 slug: "introduction-of-hill-sampling-for-program-edit-optimization-in-llms"
 description: "Researchers have introduced Hill Sampling, a procedure designed to improve program edits by repeatedly sampling from a frozen Large Language Model (LLM)."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [LLM, HillSampling, ProgramSynthesis, EvolutionStrategies]
 categories: ["AI", "Machine Learning", "Software Engineering", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

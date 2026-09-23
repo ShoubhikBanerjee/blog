@@ -2,7 +2,7 @@
 title: "Anthropic and OpenAI Unveil Claude Opus 5.5 and GPT‑6 Models with Aggressive Pricing"
 slug: "anthropic-and-openai-unveil-claude-opus-5-5-and-gpt6-models-with-aggressive-pricing"
 description: "Today Anthropic released Claude Opus 5.5, and within an hour OpenAI released GPT‑6 Sol and GPT‑6 Luna."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [Anthropic, OpenAI, Pricing, LLM]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Large Language Models"]
 image: "https://static.simonwillison.net/static/2026/gpt-grid-card.jpg"

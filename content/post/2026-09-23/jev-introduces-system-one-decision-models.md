@@ -2,7 +2,7 @@
 title: "Jev Introduces System One Decision Models"
 slug: "jev-introduces-system-one-decision-models"
 description: "On September 21, 2026, Jev introduced a new shape of Large Language Model (LLM) known as System One, also referred to as Decision Models."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [LLM, SystemOne, DecisionModels]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Large Language Models"]
 author: "Shoubhik Banerjee"

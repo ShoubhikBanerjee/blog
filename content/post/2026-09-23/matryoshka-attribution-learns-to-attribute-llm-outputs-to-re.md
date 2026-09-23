@@ -2,7 +2,7 @@
 title: "Matryoshka Attribution Learns to Attribute LLM Outputs to Representations and Weights"
 slug: "matryoshka-attribution-learns-to-attribute-llm-outputs-to-representations-and-weights"
 description: "Researchers have introduced Matryoshka Attribution (MAttr), a mask learning method designed to attribute large language model (LLM) outputs to specific internal components by identifying nested..."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [LLM, MechanisticInterpretability, MachineLearning, Llama31]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

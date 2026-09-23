@@ -2,7 +2,7 @@
 title: "a16z Launches Horowitz Andreessen Academy for Silicon Valley Startup Pipeline"
 slug: "a16z-launches-horowitz-andreessen-academy-for-silicon-valley-startup-pipeline"
 description: "Venture capital firm Andreessen Horowitz (a16z) is creating the Horowitz Andreessen Academy, a pipeline designed for young people to build or join a Silicon Valley startup."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [a16z, SiliconValley, Education, Startups]
 categories: ["AI", "Venture Capital", "Education", "Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK483_EDUCATION_B.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

@@ -2,7 +2,7 @@
 title: "OpenAI hires former Patreon executives to lead creator product strategy"
 slug: "openai-hires-former-patreon-executives-to-lead-creator-product-strategy"
 description: "OpenAI announced it is bringing three former Patreon executives onto its creator‑product team. The move gives OpenAI the talent behind the modern creator‑subscription economy."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [OpenAI, Patreon, CreatorEconomy, DevDay]
 categories: ["AI", "Artificial Intelligence", "Creator Economy", "Product Strategy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/04/STK326_PATREON_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

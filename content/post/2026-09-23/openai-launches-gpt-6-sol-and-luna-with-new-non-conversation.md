@@ -2,7 +2,7 @@
 title: "OpenAI launches GPT‑6 Sol and Luna with new non‑conversational plugin flag"
 slug: "openai-launches-gpt6-sol-and-luna-with-new-nonconversational-plugin-flag"
 description: "On 22 September 2026 OpenAI released two new GPT‑6 model families, GPT‑6 Sol and GPT‑6 Luna, and introduced a plugin flag that lets models opt out of conversational history."
-date: 2026-09-23T18:02:56+05:30
+date: 2026-09-23T22:05:40+05:30
 tags: [OpenAI, GPT6, AIPlugins, LLM]
 categories: ["AI", "Machine Learning", "Large Language Models", "AI Platforms", "AI Market"]
 author: "Shoubhik Banerjee"
