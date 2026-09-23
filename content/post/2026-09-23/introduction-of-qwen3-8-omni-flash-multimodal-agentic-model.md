@@ -2,7 +2,7 @@
 title: "Introduction of Qwen3.8-Omni-Flash Multimodal Agentic Model"
 slug: "introduction-of-qwen3-8-omni-flash-multimodal-agentic-model"
 description: "A new natively multimodal agentic model, Qwen3.8-Omni-Flash, has been introduced to improve real-world multimodal productivity, specifically in multimodal understanding, reasoning, and long-horizon..."
-date: 2026-09-23T12:05:26+05:30
+date: 2026-09-23T18:02:56+05:30
 tags: [Qwen, MultimodalAI, AIAgents, MachineLearning]
 categories: ["AI", "Machine Learning", "AI Agents", "Multimodal AI"]
 author: "Shoubhik Banerjee"

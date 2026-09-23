@@ -2,7 +2,7 @@
 title: "NVIDIA Releases Topograph Open Source Toolkit for Topology-Aware GPU Scheduling"
 slug: "nvidia-releases-topograph-open-source-toolkit-for-topology-aware-gpu-scheduling"
 description: "NVIDIA has introduced Topograph, an open source toolkit designed to identify cluster network topology to enable workload managers to make topology-aware scheduling decisions."
-date: 2026-09-23T12:05:26+05:30
+date: 2026-09-23T18:02:56+05:30
 tags: [NVIDIA, GPU, Kubernetes, Slurm, AIInfrastructure]
 categories: ["AI", "AI Infrastructure", "Cloud Computing", "Hardware Optimization"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2025/09/inference-nvidia-dynamo-blog-1280x680-1-e1758728822171-660x370.jpg"

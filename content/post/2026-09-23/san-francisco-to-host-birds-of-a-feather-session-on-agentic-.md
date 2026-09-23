@@ -2,7 +2,7 @@
 title: "San Francisco to host Birds of a Feather session on agentic engineering"
 slug: "san-francisco-to-host-birds-of-a-feather-session-on-agentic-engineering"
 description: "A community event focused on agentic engineering is scheduled to take place in San Francisco on Wednesday, October 14th. Hosted by Jesse Vincent, the gathering aims to bring together builders and..."
-date: 2026-09-23T12:05:26+05:30
+date: 2026-09-23T18:02:56+05:30
 tags: [AI, AgenticEngineering, SanFrancisco, CodingAgents]
 categories: ["AI", "AI Agents", "Software Development", "Technology Events"]
 author: "Shoubhik Banerjee"

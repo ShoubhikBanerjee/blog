@@ -2,7 +2,7 @@
 title: "OpenAI Announces Independent Advisory Group on Mathematics and Artificial Intelligence"
 slug: "openai-announces-independent-advisory-group-on-mathematics-and-artificial-intelligence"
 description: "OpenAI has announced the formation of the Advisory Group on Mathematics and Artificial Intelligence (AGMAI), an independent panel of mathematicians tasked with advising the company and other AI firms..."
-date: 2026-09-23T12:05:26+05:30
+date: 2026-09-23T18:02:56+05:30
 tags: [OpenAI, Mathematics, AGMAI, ArtificialIntelligence]
 categories: ["AI", "Artificial Intelligence", "Mathematical Research", "AI Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2294952541.jpg?quality=90&strip=all&crop=0%2C10.735367145048%2C100%2C78.529265709904&w=1200"

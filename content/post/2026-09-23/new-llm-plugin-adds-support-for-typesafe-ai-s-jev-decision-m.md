@@ -2,7 +2,7 @@
 title: "New LLM plugin adds support for TypeSafe AI's Jev decision model"
 slug: "new-llm-plugin-adds-support-for-typesafe-ai-s-jev-decision-model"
 description: "A new plugin has been released for LLM to provide support for the Jev model from TypeSafe AI. This development, announced on 22nd September 2026, allows users to integrate Jev into their existing LLM..."
-date: 2026-09-23T12:05:26+05:30
+date: 2026-09-23T18:02:56+05:30
 tags: [LLM, Jev, TypeSafe, DecisionModels]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Machine Learning"]
 author: "Shoubhik Banerjee"

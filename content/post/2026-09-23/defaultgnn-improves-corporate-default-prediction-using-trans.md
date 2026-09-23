@@ -2,7 +2,7 @@
 title: "DefaultGNN Improves Corporate Default Prediction Using Transaction Network Analysis"
 slug: "defaultgnn-improves-corporate-default-prediction-using-transaction-network-analysis"
 description: "Researchers have developed DefaultGNN, a dual-perspective graph neural network framework designed to predict corporate default risk by analyzing electronic tax-invoice data."
-date: 2026-09-23T12:05:26+05:30
+date: 2026-09-23T18:02:56+05:30
 tags: [DefaultGNN, FinTech, GraphNeuralNetworks, RiskManagement, MachineLearning]
 categories: ["AI", "Machine Learning", "Financial Technology", "Data Science"]
 author: "Shoubhik Banerjee"
