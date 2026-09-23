@@ -2,7 +2,7 @@
 title: "Modular Agent Skills and New Evaluators Enable Precise Performance Measurement"
 slug: "modular-agent-skills-and-new-evaluators-enable-precise-performance-measurement"
 description: "General‑purpose AI agents can handle many tasks, but keeping them aligned with business procedures—such as compliance checks, document‑processing workflows, escalation policies, and engineering..."
-date: 2026-09-23T06:05:34+05:30
+date: 2026-09-23T12:05:26+05:30
 tags: [AIAgents, AgentSkills, Evaluation, AmazonBedrock, StrandsEvals]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21794-featured-image.png"

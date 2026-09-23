@@ -2,7 +2,7 @@
 title: "AWS Labs releases TOLAP: Open‑source tool‑object level access control"
 slug: "aws-labs-releases-tolap-opensource-toolobject-level-access-control"
 description: "TOLAP (Tool‑Object Level Access Protocol) is now available as an open‑source project under Apache‑2.0. It provides a specification and libraries that let teams enforce fine‑grained access policies at..."
-date: 2026-09-23T06:05:34+05:30
+date: 2026-09-23T12:05:26+05:30
 tags: [TOLAP, AccessControl, AIAgents, OpenSource]
 categories: ["AI", "Security", "AI Agents", "Software Development", "Open Source"]
 image: "https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2026/09/21/Screenshot-2026-09-21-at-10.53.24 AM-1131x630.png"

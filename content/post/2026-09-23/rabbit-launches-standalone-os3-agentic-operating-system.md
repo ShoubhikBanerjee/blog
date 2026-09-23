@@ -2,7 +2,7 @@
 title: "Rabbit Launches Standalone OS3 Agentic Operating System"
 slug: "rabbit-launches-standalone-os3-agentic-operating-system"
 description: "Rabbit is releasing a standalone AI agent called OS3, an 'agentic operating system' that can be used without the company's R1 hardware."
-date: 2026-09-23T06:05:34+05:30
+date: 2026-09-23T12:05:26+05:30
 tags: [Rabbit, OS3, AIagents, AIhardware]
 categories: ["AI", "AI Agents", "Operating Systems", "Consumer Electronics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25415491/DSC08587.JPG?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
