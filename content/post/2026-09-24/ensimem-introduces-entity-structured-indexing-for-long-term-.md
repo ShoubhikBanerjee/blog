@@ -2,7 +2,7 @@
 title: "EnSIMem Introduces Entity-Structured Indexing for Long-Term Agent Memory"
 slug: "ensimem-introduces-entity-structured-indexing-for-long-term-agent-memory"
 description: "Researchers have introduced EnSIMem, an entity-structured long-term memory architecture designed for agents that must recall facts, preferences, and events from continuously growing interaction..."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [AIagents, LongTermMemory, ArtificialIntelligence, AgentArchitecture]
 categories: ["AI", "Artificial Intelligence", "Computer Science", "AI Agents"]
 author: "Shoubhik Banerjee"

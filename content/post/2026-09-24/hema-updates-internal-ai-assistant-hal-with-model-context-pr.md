@@ -2,7 +2,7 @@
 title: "HEMA Updates Internal AI Assistant HAL with Model Context Protocol"
 slug: "hema-updates-internal-ai-assistant-hal-with-model-context-protocol"
 description: "The 100-year-old Dutch retailer HEMA has updated HAL, its internal AI assistant, by incorporating Model Context Protocol (MCP) and Amazon Bedrock AgentCore to consolidate fragmented organizational..."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [HEMA, AmazonBedrock, MCP, AIagents, DigitalTransformation]
 categories: ["AI", "AI Agents", "Enterprise Software", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21352-featured-image.png"

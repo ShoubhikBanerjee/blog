@@ -2,7 +2,7 @@
 title: "Introduction of ZO-COSMO for Distributed Estimation and Masked Consensus"
 slug: "introduction-of-zo-cosmo-for-distributed-estimation-and-masked-consensus"
 description: "Researchers have developed 	extsf{ZO-COSMO}, a new method that couples two-query estimation with average-preserving masked consensus using $q$ values per active link."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [ZOCOSMO, Qwen2, DistributedLearning, Optimization]
 categories: ["AI", "Machine Learning", "Distributed Computing", "AI Optimization"]
 author: "Shoubhik Banerjee"

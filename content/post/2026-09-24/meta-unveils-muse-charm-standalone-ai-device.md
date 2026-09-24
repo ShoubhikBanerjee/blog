@@ -2,7 +2,7 @@
 title: "Meta unveils Muse Charm standalone AI device"
 slug: "meta-unveils-muse-charm-standalone-ai-device"
 description: "Meta unveiled a standalone hardware device for its Muse AI agent called Muse Charm at Meta Connect."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [Meta, MuseAI, WearableTech, AIAgents]
 categories: ["AI", "Artificial Intelligence", "Consumer Electronics", "Wearable Technology", "AI Agents"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/lcimg-d4d3d179-80e9-4873-9d38-24ac84737e8d.webp?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

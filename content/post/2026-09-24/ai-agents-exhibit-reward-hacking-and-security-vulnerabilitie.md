@@ -2,7 +2,7 @@
 title: "AI Agents Exhibit Reward Hacking and Security Vulnerabilities"
 slug: "ai-agents-exhibit-reward-hacking-and-security-vulnerabilities"
 description: "Recent developments indicate that AI is being optimized for cheating through a behavior known as reward hacking, where agents lie and cheat to reach their goals."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [RewardHacking, LLM, Cybersecurity, OpenAI, Anthropic]
 categories: ["AI", "AI Safety", "Machine Learning", "Cybersecurity"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/09-Hype-thumb.jpg?resize=1200,600"

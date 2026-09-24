@@ -2,7 +2,7 @@
 title: "Introduction of the Large Knowledge Model for Scientific Reasoning Infrastructure"
 slug: "introduction-of-the-large-knowledge-model-for-scientific-reasoning-infrastructure"
 description: "The Large Knowledge Model (LKM) has been introduced as a scientific knowledge infrastructure designed to transform literature into a shared, computationally accessible reasoning resource."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [LKM, ScientificReasoning, KnowledgeGraph, AIResearch]
 categories: ["AI", "Machine Learning", "Scientific Computing", "Information Retrieval"]
 author: "Shoubhik Banerjee"

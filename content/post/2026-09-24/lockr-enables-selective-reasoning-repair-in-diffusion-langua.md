@@ -2,7 +2,7 @@
 title: "LOCKR Enables Selective Reasoning Repair in Diffusion Language Models"
 slug: "lockr-enables-selective-reasoning-repair-in-diffusion-language-models"
 description: "Diffusion language models now have a test‑time tool that can spot and fix early‑stabilizing errors without retraining."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [DiffusionLM, SelectiveRepair, AIReasoning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "TimeEvo Improves Time Series Agents Through Automated Tool Synthesis"
 slug: "timeevo-improves-time-series-agents-through-automated-tool-synthesis"
 description: "Researchers have introduced TimeEvo, a new approach to developing tools for time series agents to address misalignment and failures in analytical question answering."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [TimeEvo, TimeSeries, AIAgents, MachineLearning]
 categories: ["AI", "Machine Learning", "AI Agents", "Data Analysis"]
 author: "Shoubhik Banerjee"

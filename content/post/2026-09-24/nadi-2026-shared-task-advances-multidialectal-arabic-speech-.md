@@ -2,7 +2,7 @@
 title: "NADI 2026 Shared Task Advances Multidialectal Arabic Speech Processing"
 slug: "nadi-2026-shared-task-advances-multidialectal-arabic-speech-processing"
 description: "The seventh edition of the Nuanced Arabic Dialect Identification (NADI) shared task series, NADI 2026, has concluded. This iteration is the second dedicated to multidialectal Arabic speech processing."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [NADI2026, ArabicNLP, SpeechProcessing, ASR]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Speech Technology"]
 author: "Shoubhik Banerjee"

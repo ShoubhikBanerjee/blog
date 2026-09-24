@@ -2,7 +2,7 @@
 title: "Physics-Informed Neural Network Evaluated for Potential-Temperature Forecasting"
 slug: "physics-informed-neural-network-evaluated-for-potential-temperature-forecasting"
 description: "A study has evaluated a physics-informed neural network (PINN) designed for potential-temperature forecasting, testing its performance against various baselines across different geographical regions."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [NeuralNetworks, PhysicsInformedML, Meteorology, Forecasting]
 categories: ["AI", "Machine Learning", "Atmospheric Science", "Predictive Modeling"]
 author: "Shoubhik Banerjee"

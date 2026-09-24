@@ -2,7 +2,7 @@
 title: "LEGO Framework Combines Legal Expert GraphRAG and Expert Chain-of-Thought"
 slug: "lego-framework-combines-legal-expert-graphrag-and-expert-chain-of-thought"
 description: "Researchers have introduced LEGO, a dual-module framework designed to improve complex legal reasoning by synergizing Legal Expert GraphRAG and expert Chain-of-thought."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [LegalAI, GraphRAG, LLM, LegalReasoning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Legal Technology"]
 author: "Shoubhik Banerjee"

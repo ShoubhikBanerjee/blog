@@ -2,7 +2,7 @@
 title: "New Memory Management Frameworks for Long Horizon AI Agents"
 slug: "new-memory-management-frameworks-for-long-horizon-ai-agents"
 description: "Recent developments in AI agent research introduce new methods for managing interaction history to reduce computational costs while maintaining task performance in long-horizon scenarios."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [AIagents, LanguageModels, MemoryManagement, EDA]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents"]
 author: "Shoubhik Banerjee"

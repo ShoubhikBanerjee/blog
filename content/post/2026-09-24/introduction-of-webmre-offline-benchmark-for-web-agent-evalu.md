@@ -2,7 +2,7 @@
 title: "Introduction of WebMRE Offline Benchmark for Web Agent Evaluation"
 slug: "introduction-of-webmre-offline-benchmark-for-web-agent-evaluation"
 description: "Researchers have introduced WebMRE, an offline benchmark designed to address the instability of live environment evaluations for web agents, where drift in environment state and judge models often..."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [WebMRE, WebAgents, AIBenchmarks, Qwen]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Evaluation"]
 author: "Shoubhik Banerjee"

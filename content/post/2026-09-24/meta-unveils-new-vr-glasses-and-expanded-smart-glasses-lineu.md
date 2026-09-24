@@ -2,7 +2,7 @@
 title: "Meta Unveils New VR Glasses and Expanded Smart Glasses Lineup"
 slug: "meta-unveils-new-vr-glasses-and-expanded-smart-glasses-lineup"
 description: "During the annual Meta Connect showcase on Wednesday, Meta announced a slate of new wearables, including VR glasses, updated smart glasses, and a dedicated hardware device for its Muse AI agent."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [Meta, MetaConnect, SmartGlasses, VR, ArtificialIntelligence]
 categories: ["AI", "Wearable Technology", "Virtual Reality", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/20260922_C0744.00_54_59_23.Still025-1.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

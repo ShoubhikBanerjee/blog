@@ -2,7 +2,7 @@
 title: "Hunyuan-A13B Open-Source Mixture-of-Experts Model Released"
 slug: "hunyuan-a13b-open-source-mixture-of-experts-model-released"
 description: "An update introduces Hunyuan-A13B, an open-source large language model designed to balance capability, computational efficiency, and deployment cost through a Mixture-of-Experts architecture."
-date: 2026-09-24T12:10:10+05:30
+date: 2026-09-24T18:02:55+05:30
 tags: [HunyuanA13B, OpenSource, LLM, MixtureOfExperts]
 categories: ["AI", "Machine Learning", "Large Language Models", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"
