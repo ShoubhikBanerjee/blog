@@ -2,7 +2,7 @@
 title: "California passes bills to force data‑center energy and water disclosures"
 slug: "california-passes-bills-to-force-datacenter-energy-and-water-disclosures"
 description: "California Governor Gavin Newsom signed seven bills on Monday that aim to increase transparency around data centers’ electricity and water consumption."
-date: 2026-09-24T06:07:17+05:30
+date: 2026-09-24T12:10:10+05:30
 tags: [California, DataCenters, EnergyPolicy, WaterUse]
 categories: ["AI", "Energy", "Infrastructure", "Public Policy", "Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/STKS528_DATA_CENTERS2_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

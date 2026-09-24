@@ -2,7 +2,7 @@
 title: "NVIDIA Releases Open Source Cluster Readiness Engine for Kubernetes"
 slug: "nvidia-releases-open-source-cluster-readiness-engine-for-kubernetes"
 description: "NVIDIA has introduced the Cluster Readiness Engine (NVCRE), an open source Kubernetes controller designed to identify hardware and configuration issues in GPU clusters before production workloads are..."
-date: 2026-09-24T06:07:17+05:30
+date: 2026-09-24T12:10:10+05:30
 tags: [NVIDIA, Kubernetes, GPU, OpenSource, ClusterManagement]
 categories: ["AI", "Infrastructure", "Machine Learning", "Cloud Computing"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2025/12/cybersecurity.jpg"

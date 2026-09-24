@@ -2,7 +2,7 @@
 title: "Interactive Examples for Learning Shadow DOM"
 slug: "interactive-examples-for-learning-shadow-dom"
 description: "New interactive examples are available to help users learn about shadow DOM and how shadow roots function."
-date: 2026-09-24T06:07:17+05:30
+date: 2026-09-24T12:10:10+05:30
 tags: [WebDevelopment, ShadowDOM, Frontend]
 categories: ["AI", "Web Development", "Software Engineering", "Programming"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Agentic AI Solution for Natural Language Video Querying on AWS"
 slug: "agentic-ai-solution-for-natural-language-video-querying-on-aws"
 description: "A new AI agent implementation allows users to upload videos and ask natural language questions about their content to receive answers within seconds."
-date: 2026-09-24T06:07:17+05:30
+date: 2026-09-24T12:10:10+05:30
 tags: [AWS, AIAgents, AmazonBedrock, VideoIntelligence]
 categories: ["AI", "AI Agents", "Computer Vision", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21279-featured-image.png"

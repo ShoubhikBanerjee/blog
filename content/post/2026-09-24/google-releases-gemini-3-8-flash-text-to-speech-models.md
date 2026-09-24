@@ -2,7 +2,7 @@
 title: "Google Releases Gemini 3.8 Flash Text-to-Speech Models"
 slug: "google-releases-gemini-3-8-flash-text-to-speech-models"
 description: "Google has released two new text-to-speech models: gemini-3.8-flash-tts and gemini-3.8-flash-lite-tts."
-date: 2026-09-24T06:07:17+05:30
+date: 2026-09-24T12:10:10+05:30
 tags: [Google, Gemini, TTS, AI]
 categories: ["AI", "Machine Learning", "Text To Speech", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

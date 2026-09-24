@@ -2,7 +2,7 @@
 title: "Anthropic's Claude AI Discovers New Enzyme System in DNA Sequences"
 slug: "anthropic-s-claude-ai-discovers-new-enzyme-system-in-dna-sequences"
 description: "Anthropic has announced that its AI, Claude, has autonomously discovered a new enzyme system similar to the machinery used in the gene-editing tool Crispr."
-date: 2026-09-24T06:07:17+05:30
+date: 2026-09-24T12:10:10+05:30
 tags: [Anthropic, Claude, AI, Biotechnology, Enzymes]
 categories: ["AI", "Artificial Intelligence", "Biotechnology", "Scientific Research"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKB364_CLAUDE_2_C_96d15c-2.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

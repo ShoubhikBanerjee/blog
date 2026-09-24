@@ -2,7 +2,7 @@
 title: "Scaling MuJoCo Simulations to GPU with MuJoCo Warp"
 slug: "scaling-mujoco-simulations-to-gpu-with-mujoco-warp"
 description: "As part of the State of Simulation for Physical AI series, MuJoCo Warp (MJWarp) has been introduced to move compatible MuJoCo models into a GPU-scale regime. This development enables the transition..."
-date: 2026-09-24T06:07:17+05:30
+date: 2026-09-24T12:10:10+05:30
 tags: [MuJoCo, NVIDIAWarp, GPU, Robotics, Simulation]
 categories: ["AI", "Physical AI", "Robotics", "GPU Computing"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6994dc99f850a10f03fd0b21/rQ6tGCJEaH16bQQ8X4M8b.png"
