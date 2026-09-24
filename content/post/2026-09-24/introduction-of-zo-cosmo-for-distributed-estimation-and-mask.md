@@ -1,7 +1,7 @@
 ---
 title: "Introduction of ZO-COSMO for Distributed Estimation and Masked Consensus"
 slug: "introduction-of-zo-cosmo-for-distributed-estimation-and-masked-consensus"
-description: "Researchers have developed 	extsf{ZO-COSMO}, a new method that couples two-query estimation with average-preserving masked consensus using $q$ values per active link."
+description: "Researchers have developed ZO-COSMO, a new method that couples two-query estimation with average-preserving masked consensus using $q$ values per active link."
 date: 2026-09-24T22:03:57+05:30
 tags: [ZOCOSMO, Qwen2, DistributedLearning, Optimization]
 categories: ["AI", "Machine Learning", "Distributed Computing", "AI Optimization"]
@@ -11,7 +11,7 @@ draft: false
 
 # Introduction of ZO-COSMO for Distributed Estimation and Masked Consensus
 
-Researchers have developed 	extsf{ZO-COSMO}, a new method that couples two-query estimation with average-preserving masked consensus using $q$ values per active link.
+Researchers have developed ZO-COSMO, a new method that couples two-query estimation with average-preserving masked consensus using $q$ values per active link.
 
 ## 🧩 How it works
 
@@ -29,11 +29,9 @@ Experiments were conducted across several configurations:
 
 Performance tests on Qwen2-7B QNLI demonstrated the following gains at matched payload budgets:
 
-| Comparison Baseline | Improvement |
-| :--- | :--- |
-| Explicit-index Rand-$k$ | 3.65 accuracy points |
-| All-neighbor mixing (complete graph) | 3.42 accuracy points |
-| All-neighbor mixing (ring graph) | 2.53 accuracy points |
+* **Explicit-index Rand-$k$**: 3.65 accuracy points
+* **All-neighbor mixing (complete graph)**: 3.42 accuracy points
+* **All-neighbor mixing (ring graph)**: 2.53 accuracy points
 
 Additionally, a matched-first-step ablation resulted in a 3.92-point momentum benefit.
 

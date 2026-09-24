@@ -3,8 +3,8 @@ title: "VHD-Play Improves Qwen3.6 Agentic Performance"
 slug: "vhd-play-improves-qwen3-6-agentic-performance"
 description: "VHD-Play is an update to an AI development that improves agentic capabilities by generating environments and training a model to solve them."
 date: 2026-09-24T22:03:57+05:30
-tags: [A, I, A, g, e, n, t, s, M, a, c, h, i, n, e, L, e, a, r, n, i, n, g, Q, w, e, n, B, e, n, c, h, m, a, r, k, i, n, g, V, H, D, P, l, a, y]
-categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "B", "e", "n", "c", "h", "m", "a", "r", "k", "i", "n", "g", ",", "S", "o", "f", "t", "w", "a", "r", "e", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t"]
+tags: [AI, Agents, Machine Learning, Qwen, Benchmarking, VHD-Play]
+categories: ["AI", "Agents", "Benchmarking", "Software Development"]
 author: "Shoubhik Banerjee"
 draft: false
 ---
