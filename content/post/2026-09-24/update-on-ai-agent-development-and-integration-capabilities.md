@@ -2,7 +2,7 @@
 title: "Update on AI Agent Development and Integration Capabilities"
 slug: "update-on-ai-agent-development-and-integration-capabilities"
 description: "Recent updates introduce new management tools, expanded API capabilities, and experimental workspace integrations for AI agents."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [AIAgents, OpenAPI, MCP, OpenSource, LLM]
 categories: ["AI", "AI Agents", "Software Development", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/169401942?v=4"

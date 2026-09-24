@@ -2,7 +2,7 @@
 title: "WISE Method Optimizes Recurrent Language Model Inference via Support Exploitation"
 slug: "wise-method-optimizes-recurrent-language-model-inference-via-support-exploitation"
 description: "Researchers have introduced WISE (Working-set Inference with Support Exploitation), a training-free method designed to improve the efficiency of recurrent language models by optimizing how they..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [LLM, InferenceOptimization, AttentionMechanism, RecurrentLanguageModels]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Efficiency"]
 author: "Shoubhik Banerjee"

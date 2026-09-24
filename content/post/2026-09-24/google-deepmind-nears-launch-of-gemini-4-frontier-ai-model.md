@@ -2,7 +2,7 @@
 title: "Google DeepMind Nears Launch of Gemini 4 Frontier AI Model"
 slug: "google-deepmind-nears-launch-of-gemini-4-frontier-ai-model"
 description: "Google is preparing to launch Gemini 4, a new frontier AI model, following a period of leadership changes and a shift in release strategy."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [Google, DeepMind, Gemini4, ArtificialIntelligence]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Tech Industry"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK255_Google_Gemini_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

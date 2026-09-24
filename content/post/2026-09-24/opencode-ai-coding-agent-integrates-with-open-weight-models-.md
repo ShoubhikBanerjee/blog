@@ -2,7 +2,7 @@
 title: "OpenCode AI Coding Agent Integrates with Open Weight Models on Amazon Bedrock"
 slug: "opencode-ai-coding-agent-integrates-with-open-weight-models-on-amazon-bedrock"
 description: "OpenCode is an open source, terminal-native AI coding agent built in Go that now pairs with open weight models on Amazon Bedrock to provide a locally running assistant with secure cloud inference."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [OpenCode, AmazonBedrock, OpenSourceAI, AICodingAgent, AWS]
 categories: ["AI", "AI Agents", "Software Development", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/22/ML-21055-featured-image.png"

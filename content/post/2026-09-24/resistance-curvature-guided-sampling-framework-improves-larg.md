@@ -2,7 +2,7 @@
 title: "Resistance-Curvature Guided Sampling Framework Improves Large-Scale GNN Training"
 slug: "resistance-curvature-guided-sampling-framework-improves-large-scale-gnn-training"
 description: "Subgraph sampling reduces the training cost of large‑scale graph neural networks, but existing criteria can miss the geometric roles of edges. A new resistance‑curvature‑guided sampling framework..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [GraphNeuralNetworks, SubgraphSampling, CurvatureApproximation]
 categories: ["AI", "Machine Learning", "Graph Neural Networks", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

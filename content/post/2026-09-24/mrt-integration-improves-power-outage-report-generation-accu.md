@@ -2,7 +2,7 @@
 title: "MRT Integration Improves Power Outage Report Generation Accuracy"
 slug: "mrt-integration-improves-power-outage-report-generation-accuracy"
 description: "Minimum Risk Training (MRT) has been applied to the generation of power outage reports for the Outage Data Initiative Nationwide (ODIN)."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [MRT, Qwen25, MachineTranslation, ODIN]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Structured Data"]
 author: "Shoubhik Banerjee"

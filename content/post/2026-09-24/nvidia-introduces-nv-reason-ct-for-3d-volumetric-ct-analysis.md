@@ -2,7 +2,7 @@
 title: "NVIDIA Introduces NV-Reason-CT for 3D Volumetric CT Analysis"
 slug: "nvidia-introduces-nv-reason-ct-for-3d-volumetric-ct-analysis"
 description: "NVIDIA has developed NV-Reason-CT, a vision language model (VLM) specifically designed for 3D CT analysis. This foundation model extends chain-of-thought reasoning to full volumetric CT scans to..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [NVIDIA, MedicalAI, ComputerVision, CTAnalysis, VLM]
 categories: ["AI", "Machine Learning", "Healthcare AI", "Computer Vision"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/ct-scan-image-660x370.jpg"

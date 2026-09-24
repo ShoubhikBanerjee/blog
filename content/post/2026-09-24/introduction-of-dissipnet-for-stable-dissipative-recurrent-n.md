@@ -2,7 +2,7 @@
 title: "Introduction of DissipNet for Stable Dissipative Recurrent Neural Networks"
 slug: "introduction-of-dissipnet-for-stable-dissipative-recurrent-neural-networks"
 description: "Researchers have proposed DissipNet, a deep discrete-time dissipative recurrent neural network designed to explicitly enforce dissipativity, a property linked to energy dissipation and stability."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [DissipNet, NeuralNetworks, Stability, RNN]
 categories: ["AI", "Machine Learning", "Deep Learning", "Neural Network Architecture"]
 author: "Shoubhik Banerjee"

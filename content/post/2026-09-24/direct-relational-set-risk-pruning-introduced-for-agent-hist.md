@@ -2,7 +2,7 @@
 title: "Direct Relational Set-Risk Pruning Introduced for Agent-History Compression"
 slug: "direct-relational-set-risk-pruning-introduced-for-agent-history-compression"
 description: "Researchers have introduced Direct Relational Set-Risk Pruning (DRSR), a new method that treats agent-history compression as a risk-constrained selection over deletion sets."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [DRSR, AIagents, MachineLearning, TokenOptimization]
 categories: ["AI", "Machine Learning", "AI Agents", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

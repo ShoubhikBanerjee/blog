@@ -2,7 +2,7 @@
 title: "Introduction of xlog CUDA-native Logic Programming Engine"
 slug: "introduction-of-xlog-cuda-native-logic-programming-engine"
 description: "xlog is a new CUDA-native logic programming engine that integrates neural perception with deterministic Datalog, probabilistic inference, and epistemic world views using a typed frontend and..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [CUDA, Datalog, LogicProgramming, GPU, ProbabilisticInference]
 categories: ["AI", "Machine Learning", "Programming Languages", "GPU Computing"]
 author: "Shoubhik Banerjee"

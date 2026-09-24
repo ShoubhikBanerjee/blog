@@ -2,7 +2,7 @@
 title: "Study Evaluates Multi-Task Fine-Tuning for Customer-Support LLMs"
 slug: "study-evaluates-multi-task-fine-tuning-for-customer-support-llms"
 description: "Researchers have studied how to best train Large Language Models (LLMs) for production customer-support systems that require multiple skills, such as tool-use decisions, summarization, question..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [LLM, FineTuning, CustomerSupport, MachineLearning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Development"]
 author: "Shoubhik Banerjee"

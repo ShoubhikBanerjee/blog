@@ -2,7 +2,7 @@
 title: "ChinaUnicom Introduces UniDataAgent for Ontology-Grounded Enterprise Report Automation"
 slug: "chinaunicom-introduces-unidataagent-for-ontology-grounded-enterprise-report-automation"
 description: "ChinaUnicom has developed UniDataAgent, an ontology-grounded system designed for reusable question-to-report analysis that separates semantic acquisition from online execution."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [EnterpriseAI, DataAgents, Ontology, Automation, ChinaUnicom]
 categories: ["AI", "Computation and Language", "AI Agents", "Enterprise Software"]
 author: "Shoubhik Banerjee"

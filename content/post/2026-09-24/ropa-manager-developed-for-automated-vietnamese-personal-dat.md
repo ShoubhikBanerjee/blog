@@ -2,7 +2,7 @@
 title: "RoPA Manager Developed for Automated Vietnamese Personal Data Protection Compliance"
 slug: "ropa-manager-developed-for-automated-vietnamese-personal-data-protection-compliance"
 description: "Researchers have proposed RoPA Manager, a system designed to automate the extraction of information for Records of Processing Activities (RoPA) to help organizations comply with Vietnam's upcoming..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [RoPA, Vietnam, LLM, DataProtection, Compliance]
 categories: ["AI", "Artificial Intelligence", "Data Privacy", "Legal Technology"]
 author: "Shoubhik Banerjee"

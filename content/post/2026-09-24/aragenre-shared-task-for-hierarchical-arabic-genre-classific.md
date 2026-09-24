@@ -2,7 +2,7 @@
 title: "AraGenre Shared Task for Hierarchical Arabic Genre Classification"
 slug: "aragenre-shared-task-for-hierarchical-arabic-genre-classification"
 description: "The AraGenre shared task was developed to address the limited availability of annotated data for Arabic and other low-resource languages through hierarchical, definition-guided genre classification."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [AraGenre, ArabicNLP, GenreClassification, ZeroShotLearning]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "Arabic Language Technology"]
 author: "Shoubhik Banerjee"

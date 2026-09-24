@@ -2,7 +2,7 @@
 title: "CAVEAT Benchmark Identifies and Mitigates Steering Failures in AI Shopping Agents"
 slug: "caveat-benchmark-identifies-and-mitigates-steering-failures-in-ai-shopping-agents"
 description: "Researchers have introduced CAVEAT, a controlled benchmark designed to evaluate how steering mechanisms affect the ability of AI agents to purchase user-optimal products across various marketplace..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [AIagents, CAVEAT, Benchmark, MachineLearning]
 categories: ["AI", "AI Agents", "Machine Learning", "Evaluation Benchmarks"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "LeakScale framework measures privacy‑controlled accuracy improvements"
 slug: "leakscale-framework-measures-privacycontrolled-accuracy-improvements"
 description: "LeakScale, a new interventional framework, estimates a previously missing quantity by measuring how private, family‑specific information affects task accuracy."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [LeakScale, Privacy, AIAccuracy, MachineLearning]
 categories: ["AI", "Machine Learning", "Privacy", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "NVIDIA Open Sources NodeWright for Kubernetes Host Infrastructure Management"
 slug: "nvidia-open-sources-nodewright-for-kubernetes-host-infrastructure-management"
 description: "NVIDIA has released NodeWright as an open-source, Kubernetes-native package manager designed to modify and maintain host infrastructure at scale. As part of the NVIDIA DSX OS open-source software..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [NVIDIA, Kubernetes, OpenSource, Infrastructure, CloudNative]
 categories: ["AI", "Infrastructure", "Cloud Computing", "Software Development"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/kubernetes-clusters-660x370.jpg"

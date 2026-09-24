@@ -2,7 +2,7 @@
 title: "New Wake-up System and TACT Benchmark for Spoken Dialogue Models"
 slug: "new-wake-up-system-and-tact-benchmark-for-spoken-dialogue-models"
 description: "Recent developments in intelligent assistant technologies introduce a novel wake-up system for contextual trigger detection and a new benchmark called TACT for evaluating full-duplex spoken dialogue..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [SpokenDialogue, AIAssistants, MachineLearning, NLP]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Speech Technology"]
 author: "Shoubhik Banerjee"

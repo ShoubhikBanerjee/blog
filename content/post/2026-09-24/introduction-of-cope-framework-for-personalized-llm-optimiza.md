@@ -2,7 +2,7 @@
 title: "Introduction of COPE Framework for Personalized LLM Optimization"
 slug: "introduction-of-cope-framework-for-personalized-llm-optimization"
 description: "Researchers have proposed COPE (Continual Optimization with Personalized embedding and self-Evaluation), a novel optimization framework designed for real-world interaction settings characterized by..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [LLM, Personalization, MachineLearning, AIAlignment]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

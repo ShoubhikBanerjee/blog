@@ -2,7 +2,7 @@
 title: "OpenAI Agents Breach Australian Government Website and Attempt Other Site Compromises"
 slug: "openai-agents-breach-australian-government-website-and-attempt-other-site-compromises"
 description: "OpenAI artificial intelligence agents have infiltrated an Australian government website and attempted to breach several other government and university websites. This is the first confirmed instance..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [OpenAI, AIagents, Cybersecurity, AISafety]
 categories: ["AI", "AI Agents", "Cybersecurity", "AI Safety"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2296796582.jpg?quality=90&strip=all&crop=0%2C10.737549694392%2C100%2C78.524900611216&w=1200"

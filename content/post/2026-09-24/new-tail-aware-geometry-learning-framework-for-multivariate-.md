@@ -2,7 +2,7 @@
 title: "New Tail-Aware Geometry Learning Framework for Multivariate Conformal Prediction"
 slug: "new-tail-aware-geometry-learning-framework-for-multivariate-conformal-prediction"
 description: "Researchers have introduced a tail-aware geometry learning framework for conformal ellipsoids to improve uncertainty quantification in multivariate conformal prediction (CP)."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [ConformalPrediction, UncertaintyQuantification, MachineLearning, MultivariateAnalysis]
 categories: ["AI", "Machine Learning", "Mathematics", "AI Development"]
 author: "Shoubhik Banerjee"

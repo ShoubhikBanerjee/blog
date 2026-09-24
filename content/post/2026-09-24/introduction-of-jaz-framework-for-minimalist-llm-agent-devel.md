@@ -2,7 +2,7 @@
 title: "Introduction of JAZ Framework for Minimalist LLM Agent Development"
 slug: "introduction-of-jaz-framework-for-minimalist-llm-agent-development"
 description: "Researchers have developed JAZ, an LLM agent framework designed to investigate the effectiveness of a minimal harness consisting primarily of an agent loop. By focusing on simplicity, the framework..."
-date: 2026-09-24T18:02:55+05:30
+date: 2026-09-24T22:03:57+05:30
 tags: [LLM, AIAgents, Frameworks, JAZ]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Engineering"]
 author: "Shoubhik Banerjee"
