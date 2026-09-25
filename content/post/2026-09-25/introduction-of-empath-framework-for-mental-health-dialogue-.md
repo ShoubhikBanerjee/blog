@@ -2,7 +2,7 @@
 title: "Introduction of EMPATH Framework for Mental Health Dialogue Analysis"
 slug: "introduction-of-empath-framework-for-mental-health-dialogue-analysis"
 description: "Researchers have introduced EMPATH, a framework designed to understand affective dynamics within mental health dialogues."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [EMPATH, MentalHealth, AffectiveComputing, NLP]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Healthcare AI"]
 author: "Shoubhik Banerjee"

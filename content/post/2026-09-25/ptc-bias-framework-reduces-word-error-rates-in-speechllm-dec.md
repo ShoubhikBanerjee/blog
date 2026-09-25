@@ -2,7 +2,7 @@
 title: "PTC-Bias Framework Reduces Word Error Rates in SpeechLLM Decoding"
 slug: "ptc-bias-framework-reduces-word-error-rates-in-speechllm-decoding"
 description: "Researchers have proposed PTC-Bias, a two-stage framework based on phoneme-level temporal competition designed to improve SpeechLLM decoding performance."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [SpeechLLM, ASR, PTCBias, MachineLearning]
 categories: ["AI", "Machine Learning", "Speech Recognition", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

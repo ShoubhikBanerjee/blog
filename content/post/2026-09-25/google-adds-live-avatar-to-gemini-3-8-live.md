@@ -2,7 +2,7 @@
 title: "Google adds Live Avatar to Gemini 3.8 Live"
 slug: "google-adds-live-avatar-to-gemini-3-8-live"
 description: "Google has updated Gemini 3.8 Live with a new feature called 'Live Avatar,' which provides an animated AI persona that responds to users in real time."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [Google, Gemini, LiveAvatar, AI]
 categories: ["AI", "Artificial Intelligence", "Enterprise Software", "Computer Vision"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gemini-live-avatar-animated.png?quality=90&strip=all&crop=0%2C10.856319364173%2C94.893468926603%2C78.287361271654&w=1200"

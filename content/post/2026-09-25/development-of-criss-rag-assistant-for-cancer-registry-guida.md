@@ -2,7 +2,7 @@
 title: "Development of CRISS RAG Assistant for Cancer Registry Guidance"
 slug: "development-of-criss-rag-assistant-for-cancer-registry-guidance"
 description: "Researchers have developed the Cancer Registry Intelligent Support System (CRISS), a retrieval-augmented generation (RAG) conversational assistant designed to provide rapid, citation-supported access..."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [RAG, CancerRegistry, LLM, HealthcareAI]
 categories: ["AI", "Machine Learning", "Health Informatics", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

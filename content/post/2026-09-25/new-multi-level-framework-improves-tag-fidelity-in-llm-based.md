@@ -2,7 +2,7 @@
 title: "New Multi-Level Framework Improves Tag Fidelity in LLM-Based Translation"
 slug: "new-multi-level-framework-improves-tag-fidelity-in-llm-based-translation"
 description: "A new approach has been developed to help large language model (LLM)-based translation systems better balance translation fluency with tag fidelity when processing text containing structural,..."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [LLM, MachineTranslation, NLP, TagFidelity]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Development"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Nvidia CEO Jensen Huang warns AI will keep fossil fuels in use"
 slug: "nvidia-ceo-jensen-huang-warns-ai-will-keep-fossil-fuels-in-use"
 description: "Nvidia CEO Jensen Huang discussed the future of energy and AI’s impact on our planet on the latest episode of The Ezra Klein Show."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [Nvidia, AI, ClimateChange, Energy]
 categories: ["AI", "Artificial Intelligence", "Energy & Environment", "Corporate Responsibility"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2285784039.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

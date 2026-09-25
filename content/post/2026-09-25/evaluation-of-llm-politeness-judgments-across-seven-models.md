@@ -2,7 +2,7 @@
 title: "Evaluation of LLM Politeness Judgments Across Seven Models"
 slug: "evaluation-of-llm-politeness-judgments-across-seven-models"
 description: "Researchers have evaluated the ability of seven large language models (LLMs) to make politeness judgments using two English-language datasets featuring continuous human ratings and three-way..."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [LLM, NLP, AIEvaluation, Politeness]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Safety"]
 author: "Shoubhik Banerjee"

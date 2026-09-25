@@ -2,7 +2,7 @@
 title: "Predicting Anticipatory Outliers in Embedding-Based Topic Models"
 slug: "predicting-anticipatory-outliers-in-embedding-based-topic-models"
 description: "Researchers have studied whether documents initially classified as noise by embedding-based topic models can be identified as 'anticipatory outliers' that later become founding members of emerging..."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [TopicModeling, Embeddings, NLP, PredictiveModeling]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Data Science"]
 author: "Shoubhik Banerjee"

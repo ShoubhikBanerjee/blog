@@ -2,7 +2,7 @@
 title: "New Research on Linguistic Representation and Script Commitment in LLMs"
 slug: "new-research-on-linguistic-representation-and-script-commitment-in-llms"
 description: "Recent research utilizing interpretability methods has provided new insights into how Large Language Models (LLMs) distribute script knowledge, localize linguistic selectivity, and encode..."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [LLM, Interpretability, NLP, NeuralNetworks]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Research"]
 author: "Shoubhik Banerjee"

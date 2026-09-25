@@ -2,7 +2,7 @@
 title: "IBM provides guides and APIs for building Gen AI applications on watsonx"
 slug: "ibm-provides-guides-and-apis-for-building-gen-ai-applications-on-watsonx"
 description: "IBM has released examples and guides for building and deploying Gen AI applications using the watsonx platform and its APIs."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [watsonx, GenAI, APIs, IBMCloud]
 categories: ["AI", "Generative AI", "Software Development", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/1459110?v=4"

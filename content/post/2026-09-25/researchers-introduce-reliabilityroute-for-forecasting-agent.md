@@ -2,7 +2,7 @@
 title: "Researchers introduce ReliabilityRoute for forecasting agents and MeshHeal for multi-agent systems"
 slug: "researchers-introduce-reliabilityroute-for-forecasting-agents-and-meshheal-for-multi-agent-systems"
 description: "Researchers have developed two new frameworks to improve AI agent reliability: ReliabilityRoute, which optimizes mechanism choice for binary forecasting tasks, and MeshHeal, a decentralized..."
-date: 2026-09-25T12:04:19+05:30
+date: 2026-09-25T18:03:21+05:30
 tags: [AIagents, LLM, Forecasting, MultiAgentSystems]
 categories: ["AI", "Machine Learning", "AI Agents", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"
