@@ -2,7 +2,7 @@
 title: "New LLM Releases and Price Competition Reported in September 2026"
 slug: "new-llm-releases-and-price-competition-reported-in-september-2026"
 description: "On 22 September 2026 and the surrounding days, a set of articles highlighted fresh large‑language‑model releases and a price‑war dynamic in the AI field."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [LLM, GPT6, AIModels, PriceWar]
 categories: ["AI", "Machine Learning", "Large Language Models", "AI Industry"]
 author: "Shoubhik Banerjee"

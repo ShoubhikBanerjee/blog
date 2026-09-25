@@ -2,7 +2,7 @@
 title: "New Frameworks for Governing AI Coding Agent Costs and Research Diversity"
 slug: "new-frameworks-for-governing-ai-coding-agent-costs-and-research-diversity"
 description: "Recent developments in AI agent deployment address the challenges of enterprise cost management for coding agents and the optimization of multi-agent systems for alpha factor mining."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [AIagents, EnterpriseAI, LLM, CostOptimization]
 categories: ["AI", "Artificial Intelligence", "Software Engineering", "Quantitative Finance"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Streamlined Edge ML Workflow for WeBe Band Wearable Device"
 slug: "streamlined-edge-ml-workflow-for-webe-band-wearable-device"
 description: "Researchers have developed a streamlined edge ML workflow to enable the rapid development, optimization, and deployment of machine-learning models directly on the WeBe Band, a wrist-worn device for..."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [EdgeML, Wearables, AutoML, EmbeddedSystems]
 categories: ["AI", "Machine Learning", "Edge Computing", "Health Technology"]
 author: "Shoubhik Banerjee"

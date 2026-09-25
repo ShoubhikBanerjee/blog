@@ -2,7 +2,7 @@
 title: "Study Finds Divergence Between Declarative Statement Likelihood and Prompted LLM Answering"
 slug: "study-finds-divergence-between-declarative-statement-likelihood-and-prompted-llm-answering"
 description: "Researchers have identified a systematic divergence between how large language models (LLMs) perform when using prompted answering versus likelihood ranking of declarative statements."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [LLM, Evaluation, MachineLearning, NaturalLanguageProcessing]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Model Evaluation"]
 author: "Shoubhik Banerjee"

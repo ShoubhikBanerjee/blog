@@ -2,7 +2,7 @@
 title: "AI Grading Performance and Sensitivity to Prompt Personas in Academic Exams"
 slug: "ai-grading-performance-and-sensitivity-to-prompt-personas-in-academic-exams"
 description: "Researchers have evaluated the performance of closed and open-weights models in grading Computer Vision and Machine Learning exams, discovering that specific prompt instructions can significantly..."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [ComputerVision, MachineLearning, LLM, LoRA, AIgrading]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Educational Technology"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "New Multilevel Framework and ArGuard Task Advance Harmful Content Detection"
 slug: "new-multilevel-framework-and-arguard-task-advance-harmful-content-detection"
 description: "Recent developments in harmful content detection include the proposal of a multilevel explainable hate speech detection framework and the results of the ArGuard shared task focusing on Arabic content."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [HateSpeechDetection, NLP, ArabicLLM, MachineLearning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Safety"]
 author: "Shoubhik Banerjee"

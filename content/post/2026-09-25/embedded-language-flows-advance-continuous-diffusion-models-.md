@@ -2,7 +2,7 @@
 title: "Embedded Language Flows Advance Continuous Diffusion Models for Reasoning and Code"
 slug: "embedded-language-flows-advance-continuous-diffusion-models-for-reasoning-and-code"
 description: "A new update introduces ELF-REG, an extension of Embedded Language Flows (ELF) that improves continuous diffusion language models on reasoning and code generation tasks."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [diffusionLLM, ELF, AIresearch]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Research"]
 author: "Shoubhik Banerjee"

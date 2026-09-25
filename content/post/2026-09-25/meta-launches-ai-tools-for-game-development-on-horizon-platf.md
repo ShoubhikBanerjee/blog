@@ -2,7 +2,7 @@
 title: "Meta Launches AI Tools for Game Development on Horizon Platform"
 slug: "meta-launches-ai-tools-for-game-development-on-horizon-platform"
 description: "Meta has announced a plan to encourage game creation for its Horizon social platform through two new AI-powered development tools. This move follows a recent pivot for Horizon, which launched as a VR..."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [Meta, Horizon, AI, GameDev]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Social Media"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Screenshot-2026-09-24-at-6.56.53-AM.png?quality=90&strip=all&crop=0%2C3.4422539850274%2C100%2C93.115492029945&w=1200"

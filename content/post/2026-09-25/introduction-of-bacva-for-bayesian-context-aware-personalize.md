@@ -2,7 +2,7 @@
 title: "Introduction of BaCVA for Bayesian Context-aware Personalized Value Alignment"
 slug: "introduction-of-bacva-for-bayesian-context-aware-personalized-value-alignment"
 description: "Researchers have proposed BaCVA, an inference-time Bayesian Context-aware personalized Value Alignment method designed to help large language models (LLMs) accommodate diverse user preferences."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [LLM, ValueAlignment, BayesianInference, Personalization]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

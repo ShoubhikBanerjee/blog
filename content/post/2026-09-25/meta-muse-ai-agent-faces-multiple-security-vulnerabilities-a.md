@@ -2,7 +2,7 @@
 title: "Meta Muse AI Agent Faces Multiple Security Vulnerabilities and Data Leaks"
 slug: "meta-muse-ai-agent-faces-multiple-security-vulnerabilities-and-data-leaks"
 description: "Meta's new consumer-facing AI agent, Muse, has encountered two security disclosures in a single week, including an exploit allowing account hijacking and a leak of its root filesystem."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [Meta, Muse, Cybersecurity, AIAgents, DataPrivacy]
 categories: ["AI", "AI Agents", "Cybersecurity", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKB394_MUSE_AI_CVIRGINIA_A.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

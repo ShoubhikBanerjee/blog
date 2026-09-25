@@ -2,7 +2,7 @@
 title: "Meta Introduces Muse AI Agent for Smart Glasses and Charm Wearable"
 slug: "meta-introduces-muse-ai-agent-for-smart-glasses-and-charm-wearable"
 description: "Meta has introduced Muse, an AI agent designed to assist users with productivity, health, and relationship goals."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [Meta, Muse, AIagents, Wearables, SmartGlasses]
 categories: ["AI", "AI Agents", "Consumer Electronics", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/jolly1.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Privileged Self-Practice Improves Performance for Multi-Turn LLM Agents"
 slug: "privileged-self-practice-improves-performance-for-multi-turn-llm-agents"
 description: "Researchers have introduced Privileged Self-Practice (PSP), a new method for post-training multi-turn LLM agents that addresses the shortcomings of on-policy self-distillation (OPSD)."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [LLM, AIagents, PostTraining, MachineLearning]
 categories: ["AI", "Machine Learning", "AI Agents", "Large Language Models"]
 author: "Shoubhik Banerjee"

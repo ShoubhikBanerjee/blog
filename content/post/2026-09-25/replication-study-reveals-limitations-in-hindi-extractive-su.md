@@ -2,7 +2,7 @@
 title: "Replication study reveals limitations in Hindi extractive summarization methods"
 slug: "replication-study-reveals-limitations-in-hindi-extractive-summarization-methods"
 description: "Researchers have adapted the distributional-semantics extractive summarization method by Mohd, Jan and Shah (2020) for the Hindi language, utilizing Devanagari-appropriate components. Evaluation..."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [NLP, Hindi, Summarization, Benchmarking]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Research"]
 author: "Shoubhik Banerjee"

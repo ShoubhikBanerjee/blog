@@ -2,7 +2,7 @@
 title: "US Government Requests $30.3 Million for AI-Powered Polygraph Modernization"
 slug: "us-government-requests-30-3-million-for-ai-powered-polygraph-modernization"
 description: "The US government has requested $30.3 million over the next five years to develop an improved form of lie detector known as Polygraph+ (or Polygraph Next). The program aims to modernize federal..."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [AI, MachineLearning, Defense, Polygraph, Biometrics]
 categories: ["AI", "Artificial Intelligence", "Government Technology", "Security"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/polygraph2a.jpg?resize=1200,600"

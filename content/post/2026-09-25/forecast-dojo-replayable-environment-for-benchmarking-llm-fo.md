@@ -2,7 +2,7 @@
 title: "Forecast-Dojo: Replayable Environment for Benchmarking LLM Forecasting Agents"
 slug: "forecast-dojo-replayable-environment-for-benchmarking-llm-forecasting-agents"
 description: "A new replayable environment called Forecast-Dojo has been released for benchmarking and training large‑language‑model (LLM) forecasting agents."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [Forecasting, LLM, Benchmark, AIResearch]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing", "AI Evaluation"]
 author: "Shoubhik Banerjee"

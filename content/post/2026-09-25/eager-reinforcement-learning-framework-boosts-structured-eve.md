@@ -2,7 +2,7 @@
 title: "EAGER Reinforcement Learning Framework Boosts Structured Event Extraction"
 slug: "eager-reinforcement-learning-framework-boosts-structured-event-extraction"
 description: "A new reinforcement‑learning framework called EAGER has been introduced to improve generative event extraction."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [EAGER, EventExtraction, ReinforcementLearning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Reinforcement Learning"]
 author: "Shoubhik Banerjee"

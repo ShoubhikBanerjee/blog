@@ -2,7 +2,7 @@
 title: "uvx commit-rewriter Adds Support for Non-Default Branches"
 slug: "uvx-commit-rewriter-adds-support-for-non-default-branches"
 description: "On 24th September 2026, an update was released for the commit-rewriter tool to allow support for branches other than the default branch."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [uvx, commitrewriter, developertools]
 categories: ["AI", "Software Development", "Version Control", "Developer Tools"]
 author: "Shoubhik Banerjee"

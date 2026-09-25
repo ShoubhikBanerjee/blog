@@ -2,7 +2,7 @@
 title: "Microsoft Unveils New Copilot Super App for Work"
 slug: "microsoft-unveils-new-copilot-super-app-for-work"
 description: "Microsoft has officially unveiled a redesigned Copilot 'super app' that bundles chat, coding, and AI agents into a single interface designed for work."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [Microsoft, Copilot, AIagents, EnterpriseAI, Productivity]
 categories: ["AI", "Artificial Intelligence", "Enterprise Software", "AI Agents"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/New-Copilot.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

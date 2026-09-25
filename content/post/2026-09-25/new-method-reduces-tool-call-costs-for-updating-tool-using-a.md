@@ -2,7 +2,7 @@
 title: "New Method Reduces Tool-Call Costs for Updating Tool-Using AI Agents"
 slug: "new-method-reduces-tool-call-costs-for-updating-tool-using-ai-agents"
 description: "Researchers have developed a method to maintain action credit for tool-using agents after policy updates, reducing the need to recompute data from scratch through the reuse and correction of..."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [AIagents, MachineLearning, ToolUse, AIoptimization]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Engineering"]
 author: "Shoubhik Banerjee"

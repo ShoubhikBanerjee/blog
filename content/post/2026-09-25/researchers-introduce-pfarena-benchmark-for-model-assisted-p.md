@@ -2,7 +2,7 @@
 title: "Researchers Introduce PFArena Benchmark for Model-Assisted Protein Modification"
 slug: "researchers-introduce-pfarena-benchmark-for-model-assisted-protein-modification"
 description: "Researchers have introduced PFArena, a benchmark designed to evaluate the performance of various models in protein modification tasks."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [PFArena, ProteinModification, LLM, PLM, Biotechnology]
 categories: ["AI", "Machine Learning", "Bioinformatics", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

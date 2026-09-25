@@ -2,7 +2,7 @@
 title: "Introduction of Pistis Multimodal Model Family and New RL Frameworks"
 slug: "introduction-of-pistis-multimodal-model-family-and-new-rl-frameworks"
 description: "Recent developments in multimodal large language models have led to the introduction of the Pistis model family and several new reinforcement learning (RL) optimization frameworks designed to improve..."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [MLLM, ReinforcementLearning, Pistis, AIagents]
 categories: ["AI", "Machine Learning", "Multimodal AI", "AI Agents"]
 author: "Shoubhik Banerjee"

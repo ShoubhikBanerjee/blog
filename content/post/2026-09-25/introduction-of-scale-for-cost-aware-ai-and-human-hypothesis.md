@@ -2,7 +2,7 @@
 title: "Introduction of SCALE for Cost-Aware AI and Human Hypothesis Testing"
 slug: "introduction-of-scale-for-cost-aware-ai-and-human-hypothesis-testing"
 description: "Researchers have developed a new framework to conduct valid hypothesis tests by combining AI judgments with selective human verification to minimize costs."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [LLM, HypothesisTesting, AIevaluation, DataLabeling]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Statistics"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Functional Architecture Developed for AI-Supported European Electricity Trading"
 slug: "functional-architecture-developed-for-ai-supported-european-electricity-trading"
 description: "A new paper proposes a functional architecture for AI-supported electricity trading designed to operate within the constrained multi-layer system of the EU, where legal design, exchange..."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [AI, ElectricityTrading, EnergyMarkets, EURegulation]
 categories: ["AI", "Artificial Intelligence", "Energy Sector", "Financial Regulation"]
 author: "Shoubhik Banerjee"

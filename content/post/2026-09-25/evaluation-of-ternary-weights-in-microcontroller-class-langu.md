@@ -2,7 +2,7 @@
 title: "Evaluation of Ternary Weights in Microcontroller-Class Language Models"
 slug: "evaluation-of-ternary-weights-in-microcontroller-class-language-models"
 description: "Recent research has re-evaluated the performance of ternary (1.58-bit) weights in small-scale language models, specifically examining the claims regarding routed ternary blocks versus full-precision..."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [LanguageModels, TernaryWeights, ModelQuantization, SSM]
 categories: ["AI", "Machine Learning", "Model Optimization", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

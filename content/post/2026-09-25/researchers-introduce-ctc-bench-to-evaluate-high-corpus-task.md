@@ -2,7 +2,7 @@
 title: "Researchers Introduce CTC-Bench to Evaluate High Corpus Task Complexity in LCLMs"
 slug: "researchers-introduce-ctc-bench-to-evaluate-high-corpus-task-complexity-in-lclms"
 description: "Researchers have introduced a new notion of Corpus Task Complexity (CTC) and a corresponding 22-task evaluation suite called CTC-Bench to study how task difficulty scales with corpus size in Large..."
-date: 2026-09-25T18:03:21+05:30
+date: 2026-09-25T22:04:20+05:30
 tags: [LCLM, CTCBench, MachineLearning, AttentionMechanisms]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Evaluation"]
 author: "Shoubhik Banerjee"
