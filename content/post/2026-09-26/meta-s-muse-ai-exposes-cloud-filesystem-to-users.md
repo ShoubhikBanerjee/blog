@@ -2,7 +2,7 @@
 title: "Meta's Muse AI Exposes Cloud Filesystem to Users"
 slug: "meta-s-muse-ai-exposes-cloud-filesystem-to-users"
 description: "Recent developments show that Meta’s Muse now allows users to access and download its entire filesystem, a capability described as 'intended behavior.'"
-date: 2026-09-26T18:02:33+05:30
+date: 2026-09-26T22:01:53+05:30
 tags: [Meta, Muse, AIagents, Linux, CloudComputing]
 categories: ["AI", "AI Agents", "Cloud Infrastructure", "Cybersecurity"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKB394_MUSE_AI_CVIRGINIA_D.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

@@ -2,7 +2,7 @@
 title: "Accelerating Mixture-of-Experts Training with Amazon EKS, EFA, and DeepEP"
 slug: "accelerating-mixture-of-experts-training-with-amazon-eks-efa-and-deepep"
 description: "AWS has described an architecture optimized to accelerate the training of Mixture-of-Experts (MoE) models, specifically addressing the infrastructure challenges associated with large-scale..."
-date: 2026-09-26T18:02:33+05:30
+date: 2026-09-26T22:01:53+05:30
 tags: [AWS, MoE, ReinforcementLearning, LLM, Kubernetes]
 categories: ["AI", "Machine Learning", "Cloud Infrastructure", "Large Language Models"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21346-featured-image.png"
