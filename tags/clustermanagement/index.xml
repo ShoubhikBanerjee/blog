@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ClusterManagement on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/clustermanagement/</link><description>Recent content in ClusterManagement on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 24 Sep 2026 22:03:57 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/clustermanagement/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Releases Open Source Cluster Readiness Engine for Kubernetes</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-open-source-cluster-readiness-engine-for-kubernetes/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-open-source-cluster-readiness-engine-for-kubernetes/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2025/12/cybersecurity.jpg" alt="Featured image of post NVIDIA Releases Open Source Cluster Readiness Engine for Kubernetes" /&gt;&lt;h1 id="nvidia-releases-open-source-cluster-readiness-engine-for-kubernetes"&gt;NVIDIA Releases Open Source Cluster Readiness Engine for Kubernetes
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced the Cluster Readiness Engine (NVCRE), an open source Kubernetes controller designed to identify hardware and configuration issues in GPU clusters before production workloads are deployed.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Standard diagnostics can report that every GPU, network link, and pod is healthy, yet a 512-GPU training job may still underperform or fail. Potential causes include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A single slow GPU.&lt;/li&gt;
+&lt;li&gt;A link that degrades under load.&lt;/li&gt;
+&lt;li&gt;A configuration that routes traffic over a slower path.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Without specialized tooling, operators may only discover these problems hours into a run or via customer tickets, leading to days of manual cluster bisection while capacity remains idle. NVCRE transforms readiness from an assumption into a proven property by running real distributed workloads that expose hardware problems.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;On Slurm, testing readiness requires a single srun command, but Kubernetes lacks a built-in equivalent. Running such tests on Kubernetes typically requires manual GPU and RDMA resource requests, NCCL settings matched to the network fabric, large shared-memory volumes, and mechanisms to ensure pods start together. NVCRE fills these gaps, removing the need for operators to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Write NVIDIA Collective Communications Library (NCCL) manifests by hand.&lt;/li&gt;
+&lt;li&gt;Bisect racks manually.&lt;/li&gt;
+&lt;li&gt;Rely on customer tickets to learn about degraded hardware.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;NVCRE supports a staged readiness process where clusters move through bring-up, burn-in, preproduction, and production, with each stage setting a different bar. This replaces the need for platform teams to maintain custom runbooks, spreadsheets, or shell scripts wrapped around NCCL tests.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NVCRE uses an API based on Custom Resource Definitions (CRDs), allowing management through GitOps workflows and inspection via kubectl. The system uses a three-resource hierarchy to attribute failures to specific nodes and categories:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Resource&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Certification&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The top-level resource that names the nodes to test and the categories to run.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Workflow&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Manages one category; applies overrides, manages iteration count, sets the orchestration target, and creates the child job.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Job&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Runs the workload for the target node group, monitors health, and records measurements and failures.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Results propagate upward from the Job to the Workflow and finally to the Certification. This allows the system to name exactly which node caused a failure, such as reporting that one GPU hit a hardware fault during NCCL while another missed its bandwidth target.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/kubernetes-clusters-660x370-jpg.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Kubernetes #GPU #OpenSource #ClusterManagement&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/validate-gpu-cluster-readiness-before-ai-workloads-land/" target="_blank" rel="noopener"
+&gt;Validate GPU Cluster Readiness Before AI Workloads Land | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

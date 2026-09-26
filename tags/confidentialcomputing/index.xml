@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ConfidentialComputing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/confidentialcomputing/</link><description>Recent content in ConfidentialComputing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 23 Sep 2026 22:05:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/confidentialcomputing/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Blackwell Confidential Computing retains up to 98% LLM inference throughput</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-blackwell-confidential-computing-retains-up-to-98-llm-inference-throughput/</link><pubDate>Wed, 23 Sep 2026 22:05:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-blackwell-confidential-computing-retains-up-to-98-llm-inference-throughput/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2024/12/cybersecurity-graphic-1-660x370.png" alt="Featured image of post NVIDIA Blackwell Confidential Computing retains up to 98% LLM inference throughput" /&gt;&lt;h1 id="nvidia-blackwell-confidential-computing-retains-up-to-98-llm-inference-throughput"&gt;NVIDIA Blackwell Confidential Computing retains up to 98% LLM inference throughput
+&lt;/h1&gt;&lt;p&gt;NVIDIA demonstrated that running a 32K‑input/1K‑output LLM inference workload inside confidential virtual machines (CVMs) on a Blackwell‑based DGX B200 system keeps almost all of the baseline performance.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;NVIDIA Confidential Computing (CC) provides memory‑encrypted CVMs, confidential GPUs, and encrypted NVLink, enabling LLM inference to run securely while preserving throughput.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Secure data path&lt;/strong&gt; – The Blackwell CC architecture enforces hardware‑based protection for data and workloads in use.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Host‑to‑device transfer&lt;/strong&gt; – In the B200 CC, transfers go through a software‑encrypted bounce buffer because the GPU cannot directly access protected CVM memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TensorRT LLM adaptations&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses CC‑aware memory selection, opting for pageable memory on protected paths instead of always using pinned memory.&lt;/li&gt;
+&lt;li&gt;Moves repeated‑token and sampling‑data readback to an asynchronous worker, so protected copies do not block the main scheduler during decode.&lt;/li&gt;
+&lt;li&gt;Measures tactics with the GPU &lt;code&gt;%globaltimer&lt;/code&gt; inside CC while keeping CUDA events outside CC.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NVLink limitation&lt;/strong&gt; – NVLS (NVLink SHARP) multicast is not available in B200 CC configurations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model&lt;/strong&gt;: &lt;code&gt;nvidia/DeepSeek-R1-0528-NVFP4&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference framework&lt;/strong&gt;: TensorRT LLM (Docker container) with PyTorch backend&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sequence lengths&lt;/strong&gt;: 32K input, 1K output&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Parallelism&lt;/strong&gt;: TP=8, EP=1, PP=1; KV cache in FP8&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Concurrency tested&lt;/strong&gt;: 1, 2, 4, 8, 16 requests&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware&lt;/strong&gt;: 1 NVIDIA DGX B200 system (8 NVIDIA B200 GPUs), GPU power limit 1,000 W&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Platform&lt;/strong&gt;: Intel TDX&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Host OS / kernel&lt;/strong&gt;: Ubuntu 25.10 / 6.17.0-20-generic&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Guest OS / kernel&lt;/strong&gt;: Ubuntu 24.04.4 LTS / 6.8.0-124-generic, 256 vCPUs, 2 NUMA nodes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Driver / software stack&lt;/strong&gt;: NVIDIA driver 595.71.05, VBIOS FW 1.4.x, CUDA 13.2, TensorRT LLM 1.3.0rc22, NCCL v2.30, OpenSSL 3.6.0, Docker + NVIDIA Container Toolkit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-results"&gt;📈 Performance results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Across concurrency levels 1–16, CC retained &lt;strong&gt;96.1 %–98.2 %&lt;/strong&gt; of the output‑token throughput compared with a non‑confidential baseline.&lt;/li&gt;
+&lt;li&gt;Mean TPOT (time‑per‑output‑token) stayed within &lt;strong&gt;1.2 %–4.3 %&lt;/strong&gt; of the baseline.&lt;/li&gt;
+&lt;li&gt;These results show that the security overhead of CC is limited to a few percent while providing full data protection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The Blackwell confidential computing architecture creates a hardware‑enforced security path that protects data in use without sacrificing most of the inference performance required for large‑scale LLM deployments.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/cc-on-off-output-token-throughput.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/mean-tpot-cc-on-off.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2023/07/confidential-computing-featured.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #ConfidentialComputing #LLMInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/enabling-private-high-performance-production-ai-inference-with-nvidia-confidential-computing/" target="_blank" rel="noopener"
+&gt;Enabling Private High-Performance Production AI Inference with NVIDIA Confidential Computing | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

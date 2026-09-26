@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Data-Quality on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/data-quality/</link><description>Recent content in Data-Quality on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 00:56:28 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/data-quality/index.xml" rel="self" type="application/rss+xml"/><item><title>Garbage In, Garbage Out: The Case For Better Robot Data Understanding</title><link>https://shoubhikbanerjee.github.io/blog/p/garbage-in-garbage-out-the-case-for-better-robot-data-understanding/</link><pubDate>Tue, 28 Oct 2025 00:56:28 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/garbage-in-garbage-out-the-case-for-better-robot-data-understanding/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/paxnE6FD5Lf-LWfAArml3.png" alt="Featured image of post Garbage In, Garbage Out: The Case For Better Robot Data Understanding" /&gt;&lt;h1 id="-garbage-in-garbage-out-the-case-for-better-robot-data-understanding"&gt;🤖 Garbage In, Garbage Out: The Case For Better Robot Data Understanding
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/paxnE6FD5Lf-LWfAArml3.png"
+loading="lazy"
+alt="Alt Text"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;RobotData&amp;rsquo;s comprehensive toolkit for analyzing robot dataset quality&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;h3 id="-key-insight"&gt;💡 Key Insight
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Low quality robot data → Poor robot performance.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Robot data collection is expensive, requiring hundreds of human expert teleoperation hours. At
+the same time, collecting &lt;strong&gt;high quality&lt;/strong&gt; robot data is difficult - even for a highly skilled
+teleoperator. For example, idle trajectories may occur when the teleoperator pauses or poor
+lighting might affect visual clarity.&lt;/p&gt;
+&lt;p&gt;While the &lt;strong&gt;precise&lt;/strong&gt; definition of what constitutes a high quality training example is a
+complicated question (e.g. does a dark video increase policy resilience or reduce performance?),
+a few quality indicators can provide an insightful snapshot into your dataset. Data
+understanding is the first step to data improvement.&lt;/p&gt;
+&lt;p&gt;In this article, we introduce a lightweight Open Source toolkit to find low quality examples in
+the Open X-Embodiment datasets and show that training on &lt;strong&gt;20%&lt;/strong&gt; of low quality examples hurts
+policy training loss by &lt;strong&gt;30%&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="-want-to-know-how-good-your-dataset-is"&gt;🎯 Want to know how good &lt;em&gt;your&lt;/em&gt; dataset is?
+&lt;/h3&gt;&lt;p&gt;![score_lerobot_episodes](&lt;a class="link" href="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3" target="_blank" rel="noopener"
+&gt;https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3&lt;/a&gt;
+243155c8/RocyD8bhLoorNfqo21rcL.png)&lt;/p&gt;
+&lt;h3 id="-try-out-the-tool-here"&gt;⚡ Try out the tool here: &lt;a class="link" href="https://github.com/RoboticsData/score_lerobot_episodes" target="_blank" rel="noopener"
+&gt;https://github.com/RoboticsData/score_lerobot_episodes&lt;/a&gt;
+&lt;/h3&gt;&lt;hr&gt;
+&lt;h2 id="-robot-data-defined"&gt;🔍 Robot Data Defined
+&lt;/h2&gt;&lt;p&gt;We ran experiments on the Open X-Embodiment datasets - a large collection of over 60 robot
+manipulation datasets gathered through teleoperation on robots such as &lt;strong&gt;Franka&lt;/strong&gt;, &lt;strong&gt;UR5&lt;/strong&gt;, and
+&lt;strong&gt;DROID&lt;/strong&gt;.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/IVdQ5ODRVh3hmac0k2Z5j.png"
+loading="lazy"
+alt="Open X-Embodiment Overview"
+&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Overview of the Open X-Embodiment dataset&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;A dataset is represented as a collection of N episodes (or trajectories):
+&lt;strong&gt;D = {E₁, …, Eₙ}&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Each episode consists of timestamped frames:
+&lt;strong&gt;Eᵢ = {(oᵢ,ₜ, sᵢ,ₜ, aᵢ,ₜ)}ᵀⁱₜ₌₁&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;strong&gt;oᵢ,ₜ&lt;/strong&gt; is the &lt;strong&gt;observation&lt;/strong&gt;, &lt;strong&gt;sᵢ,ₜ&lt;/strong&gt; is the &lt;strong&gt;robot state&lt;/strong&gt;, and &lt;strong&gt;aᵢ,ₜ&lt;/strong&gt; is the
+&lt;strong&gt;action&lt;/strong&gt; at time &lt;strong&gt;t&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="-observation-spac"&gt;👁️ Observation spac
+&lt;/h3&gt;&lt;p&gt;Each observation &lt;strong&gt;oᵢ,ₜ&lt;/strong&gt; includes two synchronized &lt;strong&gt;RGB camera streams&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;An over-the-shoulder view showing the full scene and robot&lt;/li&gt;
+&lt;li&gt;A wrist-mounted camera providing a close-up view of the robot&amp;rsquo;s end-effector&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="-state-space"&gt;⚙️ State space
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;sᵢ,ₜ = [qᵢ,ₜ, gᵢ,ₜ] ∈ ℝᴶ⁺¹&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;strong&gt;qᵢ,ₜ ∈ ℝᴶ&lt;/strong&gt; represents the robot&amp;rsquo;s &lt;strong&gt;joint angles&lt;/strong&gt; at time &lt;strong&gt;t&lt;/strong&gt;, and &lt;strong&gt;gᵢ,ₜ ∈ ℝ&lt;/strong&gt;
+represents the &lt;strong&gt;gripper position&lt;/strong&gt; (e.g., open or closed).&lt;/p&gt;
+&lt;h3 id="-action-space"&gt;🎮 Action space
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;aᵢ,ₜ = [q&amp;rsquo;ᵢ,ₜ, g&amp;rsquo;ᵢ,ₜ] ∈ ℝᶜ⁺¹&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;strong&gt;q&amp;rsquo;ᵢ,ₜ&lt;/strong&gt; are the &lt;strong&gt;motor commands&lt;/strong&gt; and &lt;strong&gt;g&amp;rsquo;ᵢ,ₜ&lt;/strong&gt; is the &lt;strong&gt;gripper command&lt;/strong&gt; applied by the teleoperator.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-visual-scoring"&gt;📸 Visual Scoring
+&lt;/h2&gt;&lt;p&gt;We evaluate each episode for visual clarity indicators such as &lt;strong&gt;lighting&lt;/strong&gt; and &lt;strong&gt;blur&lt;/strong&gt;. This
+allows us to ensure that only high-quality visual data is retained for training.&lt;/p&gt;
+&lt;p&gt;Our process involves:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Uniformly sampling 10 frames per episode&lt;/strong&gt; - This strategy provides a representative
+snapshot of the visual quality throughout the episode without the computational expense of analyzing every frame&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compute per-episode aggregate visual score&lt;/strong&gt; - For each frame &lt;strong&gt;I&lt;/strong&gt;, we compute a penalty
+based on blur and brightness where frames which are too dark or too blurry are penalized. This
+penalty is then averaged across the episode and used to compute an aggregate visual score&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Remove episodes that score below a threshold&lt;/strong&gt; - This final filtering step discards any
+episode whose aggregate visual score falls below a pre-defined quality threshold, ensuring only
+visually high-quality data is retained for training&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="-blur"&gt;🌀 Blur
+&lt;/h3&gt;&lt;p&gt;We estimate blur using the &lt;strong&gt;variance of the Laplacian&lt;/strong&gt;. This metric is used because &lt;strong&gt;it
+measures the magnitude of high-frequency content in an image, which is drastically reduced by
+blur.&lt;/strong&gt; The high-frequency components correspond to sharp edges and details; a sharper image
+will have a higher variance of the Laplacian.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;Laplace operator&lt;/strong&gt;, &lt;strong&gt;Δ&lt;/strong&gt;, for a 2D image &lt;strong&gt;I(x, y)&lt;/strong&gt; is defined as the sum of its second partial derivatives:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ΔI = ∂²I/∂x² + ∂²I/∂y²&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In discrete form, it is often approximated using a convolution kernel e.g., a &lt;strong&gt;3 × 3&lt;/strong&gt; kernel such as:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;⎛ 0 1 0 ⎞ ⎜ 1 -4 1 ⎟
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;⎝ 0 1 0 ⎠
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;where &lt;strong&gt;ΔI&lt;/strong&gt; is the discrete convolution of the kernel &lt;strong&gt;Δ&lt;/strong&gt; with the frame &lt;strong&gt;I&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The metric used for blur is the &lt;strong&gt;variance of the Laplacian&lt;/strong&gt; &lt;strong&gt;Var(ΔI)&lt;/strong&gt;, which is calculated
+across all pixels in the frame:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Var(ΔI) = (1/HW) Σₓ₌₁ᵂ Σᵧ₌₁ᴴ (ΔI(x,y) - μΔI)²&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;strong&gt;W × H&lt;/strong&gt; is the frame size, and &lt;strong&gt;μΔI&lt;/strong&gt; is the mean of the Laplacian values over the frame.&lt;/p&gt;
+&lt;p&gt;We then scale this variance into a blur penalty score and apply a threshold. In practice we use
+a default value of 100 for the variance threshold.&lt;/p&gt;
+&lt;h3 id="-lighting"&gt;💡 Lighting
+&lt;/h3&gt;&lt;p&gt;We use mean-brightness as a proxy for good lighting. If the mean intensity &lt;strong&gt;μ&lt;/strong&gt; of the
+grayscale image is below 50 (on a scale of 0 to 255), we assign a linearly proportional penalty:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Penalty = max(0.0, (50.0 - μ)/50.0)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Note we only penalize images that are too dark; overexposure is not penalized since it is not a
+failure mode that occurs frequently and we observe that penalizing it can result in an excessive
+rate of false positives.&lt;/p&gt;
+&lt;p&gt;In many cases, the wrist camera suffers from a noticeable drop in visual quality compared to the
+overhead view due to occlusions, shadows and focus issues.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-motion-scor"&gt;🏃‍♂️ Motion Scor
+&lt;/h2&gt;&lt;p&gt;In addition to visual observations, each episode contains motion data representing the robot&amp;rsquo;s
+internal state and control commands over time. This includes joint positions, velocities, and
+actions, which specify the robot&amp;rsquo;s kinematic behavior.&lt;/p&gt;
+&lt;p&gt;We introduce scoring functions that classify the quality of motion of a given episode. We
+describe how we score for categories such as collision, path efficiency, and idle-time.&lt;/p&gt;
+&lt;h3 id="-collision"&gt;💥 Collision
+&lt;/h3&gt;&lt;p&gt;We aim to detect potential physical collisions by analyzing spikes in the robot&amp;rsquo;s joint-space
+acceleration. The idea is that when a robot physically impacts an object, it experiences abrupt
+changes in joint motion—typically seen as sudden decelerations upon contact, and rapid accelerations as it moves away.&lt;/p&gt;
+&lt;p&gt;Our collision scoring function estimates an acceleration threshold for each joint, based on the
+median absolute acceleration over time. A spike is detected when any joint&amp;rsquo;s acceleration at a
+given timestamp exceeds its respective threshold.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Joint acceleration proxy:&lt;/strong&gt;
+&lt;strong&gt;aₜ = (qₜ₊₁ - 2qₜ + qₜ₋₁)/(tₜ₊₁ - tₜ)²&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Per-joint robust threshold:&lt;/strong&gt;
+&lt;strong&gt;spike_ratio = θ &amp;gt; 15 × median(|a|)&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Collision score (goodness):&lt;/strong&gt;
+&lt;strong&gt;1 - spike_ratio&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The function returns a score between 0 and 1 where a low-score indicates high likelihood of collision.&lt;/p&gt;
+&lt;h3 id="-path-efficiency"&gt;📏 Path Efficiency
+&lt;/h3&gt;&lt;p&gt;We also score path efficiency by calculating how close the motion of the robot is to a straight
+line. This is motivated by the fact that expert trajectories are often the most direct path
+between two points. A path with excessive meandering or corrections suggests poor human control
+or indecision, which introduces noise and complexity that hampers policy training and results in
+inefficient robot behavior.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Path length:&lt;/strong&gt;
+&lt;strong&gt;L = Σₜ ‖qₜ₊₁ - qₜ‖₂&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Straight-line distance:&lt;/strong&gt;
+&lt;strong&gt;D = ‖qₑₙd - qₛₜₐᵣₜ‖₂&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Path Efficiency Score:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;path_eff = { clip(D/L, 0, 1), if L ≥ 10⁻⁶
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 0, otherwise }
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The final score is the ratio of the straight-line distance in joint space to the actual path length traveled.&lt;/p&gt;
+&lt;p&gt;There may be situations where the direct path between two points isn&amp;rsquo;t the ideal trajectory. For
+example, manipulating an object or maneuvering past obstacles in the scene might result in high
+amounts of nonlinear local perturbations or the robot&amp;rsquo;s joint configuration may not permit a
+direct path. In these cases, path efficiency may not be a useful metric and can be excluded from the scoring criteria.&lt;/p&gt;
+&lt;h3 id="-actuator-saturation"&gt;⚡ Actuator Saturation
+&lt;/h3&gt;&lt;p&gt;When the expected action &lt;strong&gt;aₜ&lt;/strong&gt; doesn&amp;rsquo;t result in the next state &lt;strong&gt;qₜ₊₁&lt;/strong&gt; we use this as a proxy
+for actuator saturation. Too much actuator saturation can indicate that the robot is lifting
+heavier loads than it is equipped for or is running into resistance within the scene or has
+faulty motors. In order to reduce robot wear and tear over time, we want to prevent this
+behavior inheriting this behavior from training data.&lt;/p&gt;
+&lt;p&gt;Specifically, we check how often &lt;strong&gt;|aₜ - qₜ₊₁| &amp;gt; threshold_deg&lt;/strong&gt; for any joint (threshold default: 7).&lt;/p&gt;
+&lt;p&gt;To downweight minor transient divergence caused by slippage or inertia, we impose a
+non-linearity on the saturation ratio:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;sₛₐₜ = exp(-4 · saturation_ratio)&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id="-idle-time"&gt;⏸️ Idle Time
+&lt;/h3&gt;&lt;p&gt;We score the robot&amp;rsquo;s motion based on how idle it is throughout the task. This is bad because
+periods of near-zero velocity are often the result of distraction, indecision, or taking a break
+rather than intentional action to complete the task. These stationary periods slow down
+learning and result in undesirable robot behavior.&lt;/p&gt;
+&lt;p&gt;Specifically, we calculate the proportion of time the robot&amp;rsquo;s velocity lies below a certain
+threshold during its motion. We first calculate the joint-space velocity magnitude &lt;strong&gt;‖vₜ‖&lt;/strong&gt; for each time step &lt;strong&gt;t&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;‖vₜ‖ = √(Σⱼ₌₁ᴶ (Δqⱼ/Δt)²)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The raw score is &lt;strong&gt;1.0&lt;/strong&gt; minus the proportion of steps where &lt;strong&gt;‖vₜ‖&lt;/strong&gt; is below a threshold default of &lt;strong&gt;0.1&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;We also note that filtering idle intervals improves performance in openpi.&lt;/p&gt;
+&lt;p&gt;Idle time may sometimes be useful to attenuate inertia or allow the dynamics of the environment
+to settle to rest before the next action. In these cases, idle time is repeated and predictable rather than incidental.&lt;/p&gt;
+&lt;p&gt;We are currently in the process of launching a tool that accounts for these cases so if your use
+case exhibits such behavior, reach out to us!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-corruption-experiment"&gt;🧪 Corruption Experiment
+&lt;/h2&gt;&lt;p&gt;We evaluate the effect of noisy examples on robot learning by artificially corrupting the robot
+using the sources of noise we aim to identify using our tool. Specifically, for 20% of episodes,
+we introduce the following realistic corruptions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Visual Noise&lt;/strong&gt;: We artificially darken frames and apply an unsharp mask or motion blur to a
+random subset of frames in the episode&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Motion Noise&lt;/strong&gt;: We introduce short, random idle periods (setting joint velocities to zero
+for 0.5-1.0 seconds) and insert single-step acceleration spikes (random, large joint command
+outliers) to simulate teleoperator jerks or minor collisions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-note-on-evaluations"&gt;📊 Note on evaluations
+&lt;/h3&gt;&lt;p&gt;In a typical machine learning experiment, the most direct approach would be to compare the
+held-out validation loss on a model train on the filtered and unfiltered versions of a real-world dataset.&lt;/p&gt;
+&lt;p&gt;However, in the context of robotics, validation loss isn&amp;rsquo;t representative of real-world
+performance and the training loss is not directly comparable since the filtered set has fewer examples.&lt;/p&gt;
+&lt;p&gt;For simplicity&amp;rsquo;s sake, we opt to motivate the importance of data understanding by using an
+artificial corruption experiment to illustrate the impact of low quality data on robot learning.&lt;/p&gt;
+&lt;p&gt;We invite the community to share real world or simulation evaluation results and plan to share
+more of our own results in a future post.&lt;/p&gt;
+&lt;h3 id="-retrieval-precision-recall"&gt;🎯 Retrieval Precision-Recall
+&lt;/h3&gt;&lt;p&gt;Just for illustrative purposes, we can design the following recall/precision experiment where we
+use our scoring algorithm to detect corrupted episodes within a dataset that has been
+corrupted. Essentially, we have the following binary classification problem where we set a
+threshold where episodes whose score fell below this result where classified as corrupt.&lt;/p&gt;
+&lt;p&gt;For example, we have the following results for the detecting corrupted videos using the visual
+scoring function in the following Stanford HYDRA dataset. This is a robotic manipulation dataset
+containing 570 episodes of Franka robot demonstrations across 3 tasks, with synchronized wrist
+and external camera views and 7-DOF action sequences.&lt;/p&gt;
+&lt;p&gt;For this experiment, we corrupted 50% of these episodes and obtained the following precision and
+recall results for various thresholds.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/4Wuofxeh280NEk9BprGkU.png"
+loading="lazy"
+alt="Precision-Recall Results"
+&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;Precision, Recall and F-1 curves on the Stanford HYDRA dataset (50% corrupted).&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id="-effects-on-training"&gt;📈 Effects on Training
+&lt;/h2&gt;&lt;p&gt;We also compared the training losses between the original datasets and the corrupted datasets
+where we used ACT as our policy.&lt;/p&gt;
+&lt;p&gt;The figure below compares policy training on a corrupted dataset—where 20% of the episodes were
+intentionally degraded—with training on the original, clean dataset.&lt;/p&gt;
+&lt;p&gt;We see that models trained on corrupted data require significantly more optimization steps to
+reach the same loss threshold as those trained on clean data, highlighting the sensitivity of
+policy learning to data quality.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/EwfFO4KzyWsnSu-EVOXoz.png"
+loading="lazy"
+alt="Stanford Hydra Training Loss"
+&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;Standard Hydra training loss curve.&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68eae3f4b462cbf3243155c8/caAXsXIH5c9oQO8OeheVf.png"
+loading="lazy"
+alt="Berkeley Autolab UR5 Training Loss"
+&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;Berkeley Autolab UR5 training loss curve.&lt;/em&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In conclusion, these results quantify the large impact of incorporating low quality data into an
+otherwise useful dataset, resulting in poor performance and wasted GPU hours.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="-wed-love-to-hear-from-you---do-send-us-any-comments-or-feedback-you-have"&gt;💬 We&amp;rsquo;d love to hear from you - do send us any comments or feedback you have!
+&lt;/h3&gt;&lt;h3 id="heading"&gt;🔗 &lt;a class="link" href="https://github.com/RoboticsData/score_lerobot_episodes" target="_blank" rel="noopener"
+&gt;https://github.com/RoboticsData/score_lerobot_episodes&lt;/a&gt;
+&lt;/h3&gt;&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/robotdata/gigo" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/robotdata/gigo&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;This comprehensive analysis demonstrates the critical importance of data quality in robot
+learning systems. The research clearly shows that even a modest 20% contamination of low-quality
+data can significantly degrade training performance by 30%, leading to wasted computational
+resources and suboptimal robot behavior.&lt;/p&gt;
+&lt;p&gt;The open-source toolkit presented here provides practitioners with concrete metrics for
+evaluating both visual and motion quality in robot datasets. By implementing systematic scoring
+for blur, lighting, collisions, path efficiency, actuator saturation, and idle time, teams can
+make informed decisions about data curation and improve their robot learning outcomes.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;garbage in, garbage out&amp;rdquo; principle is particularly relevant in robotics, where data
+collection is expensive and time-consuming. Investing in proper data quality assessment upfront
+can save significant resources in training and deployment phases while ensuring more reliable
+robot performance in real-world scenarios.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#ROBOTICS #MACHINELEARNING #DATAQUALIT Y #ROBOTDATA #TELEOPERATION #OPENXEMBODIMENT #ACT
+#FRANKA #UR5 #DROID&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SpeechAI on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/speechai/</link><description>Recent content in SpeechAI on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 23 Sep 2026 22:05:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/speechai/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Releases Nemotron 3 Diarization Open-Weight Model</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-nemotron-3-diarization-open-weight-model/</link><pubDate>Wed, 23 Sep 2026 22:05:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-nemotron-3-diarization-open-weight-model/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/688d4bdfdeb55432d90e546d/d_xBvPVTwTB_Rt9yxmp_0.png" alt="Featured image of post NVIDIA Releases Nemotron 3 Diarization Open-Weight Model" /&gt;&lt;h1 id="nvidia-releases-nemotron-3-diarization-open-weight-model"&gt;NVIDIA Releases Nemotron 3 Diarization Open-Weight Model
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced Nemotron 3 Diarization, an open-weight, 100M-parameter model designed to turn overlapping conversations into speaker-aware data. The model currently ranks #1 on VoiceArena&amp;rsquo;s Diarization-Bench leaderboard with a 14.72% Diarization Error Rate (DER).&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Nemotron 3 Diarization expands upon earlier models like NVIDIA Streaming Sortformer, which established a four-speaker diarization approach. The new model increases support to eight speakers and improves both throughput and accuracy.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To process audio, the model must detect speech and assign it to the correct speaker while preserving that assignment through interruptions, silence, or long gaps. The model employs the following technical approach:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Arrival-Time Ordering:&lt;/strong&gt; Following the Sortformer approach, the model orders output speakers by when they first appear. The first new voice is assigned to the first speaker channel, the second voice to the second channel, and so on. This stabilizes generic speaker labels and removes the need to solve a new speaker permutation for every chunk.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Audio Processing:&lt;/strong&gt; The model accepts 16 kHz, single-channel audio, converting it into Mel-spectrogram features with a 10 ms frame step. These are stacked by a factor of eight into 80 ms frames for a 31-layer Transformer encoder with rotary positional embeddings (RoPE).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Output:&lt;/strong&gt; The default output is a [T, 8] floating-point tensor (T time steps by eight speaker channels), where each value represents the probability that a speaker is active. This naturally handles overlap, as multiple channels can be active in the same frame.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Context Management:&lt;/strong&gt; The Arrival-Order Speaker Cache (AOSC) retains information about speakers from earlier chunks. A first-in, first-out (FIFO) queue provides recent frame context, and the input buffer includes right context (audio immediately after the current chunk).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Specification&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Model Parameters&lt;/td&gt;
+&lt;td style="text-align: left"&gt;100M&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Max Speaker Support&lt;/td&gt;
+&lt;td style="text-align: left"&gt;8 speakers&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Input Audio&lt;/td&gt;
+&lt;td style="text-align: left"&gt;16 kHz, single-channel&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Default Stride&lt;/td&gt;
+&lt;td style="text-align: left"&gt;10 ms (configurable to other multiples of 10 ms)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Capabilities&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles overlapping speech, chunked processing, and customizable streaming latency&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Streaming diarization is more difficult than offline processing because a streaming system receives limited context and small chunks of audio rather than the entire recording.&lt;/p&gt;
+&lt;p&gt;Regarding speaker identification, the model provides anonymous labels (e.g., speaker_2) rather than real-world identities. Downstream applications can map these IDs to explicit identities using active speaker verification models, user profiles, or meeting metadata.&lt;/p&gt;
+&lt;h2 id="-training"&gt;🛠️ Training
+&lt;/h2&gt;&lt;p&gt;The model was trained on public and licensed speech data, including real-world conversations from David AI. This included simulated English and multilingual mixtures spanning 21 languages. The inclusion of David AI data decreased the compound DER from 11.19% to 10.42% at both ultra-low-latency and offline-style operating points.&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Diarization #OpenWeight #SpeechAI #Nemotron&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/nvidia/nemotron-diarization" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Know Who Spoke When: Build Real-Time, Multi-Speaker AI with NVIDIA Nemotron 3 Diarization&lt;/strong&gt;&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

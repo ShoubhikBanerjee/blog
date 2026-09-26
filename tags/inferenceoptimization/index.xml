@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>InferenceOptimization on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/inferenceoptimization/</link><description>Recent content in InferenceOptimization on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 24 Sep 2026 22:03:57 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/inferenceoptimization/index.xml" rel="self" type="application/rss+xml"/><item><title>DSpark Draft Model for LFM2.5-VL-3B Improves Vision-Language Inference Speed</title><link>https://shoubhikbanerjee.github.io/blog/p/dspark-draft-model-for-lfm2-5-vl-3b-improves-vision-language-inference-speed/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/dspark-draft-model-for-lfm2-5-vl-3b-improves-vision-language-inference-speed/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/644249b08443bce4c9890a0f/WgfT8N8Xyb6lBxSif7XLO.gif" alt="Featured image of post DSpark Draft Model for LFM2.5-VL-3B Improves Vision-Language Inference Speed" /&gt;&lt;h1 id="dspark-draft-model-for-lfm25-vl-3b-improves-vision-language-inference-speed"&gt;DSpark Draft Model for LFM2.5-VL-3B Improves Vision-Language Inference Speed
+&lt;/h1&gt;&lt;p&gt;An update to the LFM2.5-VL-3B model introduces a DSpark draft model designed to accelerate inference through speculative decoding.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The vision drafter uses the same architecture as the text LFM2.5-DSpark drafters. Key technical details include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Architecture&lt;/strong&gt;: A simplified attention-only drafter with 4 layers and a block size of 9.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mechanism&lt;/strong&gt;: It captures the target model&amp;rsquo;s hidden states at a fixed set of tapped layers and conditions on them to draft a block of k candidate tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Modality Handling&lt;/strong&gt;: Image patches and text tokens are projected into a shared representation before the layers, allowing the drafter to operate on hidden-state vectors of identical dimensionality regardless of input modality.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Verification&lt;/strong&gt;: Speculative decoding is exact, as the target verifies every proposed token, ensuring greedy output equals the target alone.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Parameter Count&lt;/strong&gt;: Approximately 280M parameters, increasing the deployed model’s parameter count by 8.9%.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Training&lt;/strong&gt;: The model was trained for 10 epochs on a mixture of vision-language SFT data weighted toward expected workloads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware Recommendation&lt;/strong&gt;: A block size of 8 or 9 is recommended depending on the hardware.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The DSpark draft model is available on Hugging Face in Safetensors and GGUF formats. It ships with day-one support for:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Integration&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Requirement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;llama.cpp&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Respective build (PR#29339)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;MLX-VLM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Respective build (PR#2280)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;SGLang&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Build with DSpark support for LFM2 targets (PR #40651)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Speculative decoding accelerates the decode stage of inference, though it does not speed up vision encoding or prefill. Because prefill is compute-bound and grows (sub)quadratically with prompt length, it can occupy a significant portion of end-to-end latency, particularly on edge devices. This follows Amdahl&amp;rsquo;s law, where overall speedup is capped by the non-accelerated parts of the workload.&lt;/p&gt;
+&lt;p&gt;Performance measurements across six diverse vision-based tasks (including general VQA, text VQA, image captioning, chart VQA, complex reasoning, and multi-turn conversation) show the following gains using a block size of 8:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MLX (M5 Max)&lt;/strong&gt;: Decoding speedups of 2.30x to 3.13x; end-to-end latency improvements of 1.56x to 2.62x.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;llama.cpp (M3 Ultra)&lt;/strong&gt;: Decoding improvements of 1.57x to 2.14x; end-to-end improvements of 1.30x to 1.77x.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;H100 GPU&lt;/strong&gt;: Decoding speedups of 20.4x to 2.66x; end-to-end improvements of 1.64x to 2.27x.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#LFM2.5 #SpeculativeDecoding #VLM #InferenceOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/LiquidAI/lfm2-5-vl-dspark" target="_blank" rel="noopener"
+&gt;Accelerating vision-language models with LFM2.5-VL-DSpark&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>WISE Method Optimizes Recurrent Language Model Inference via Support Exploitation</title><link>https://shoubhikbanerjee.github.io/blog/p/wise-method-optimizes-recurrent-language-model-inference-via-support-exploitation/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/wise-method-optimizes-recurrent-language-model-inference-via-support-exploitation/</guid><description>&lt;h1 id="wise-method-optimizes-recurrent-language-model-inference-via-support-exploitation"&gt;WISE Method Optimizes Recurrent Language Model Inference via Support Exploitation
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced WISE (Working-set Inference with Support Exploitation), a training-free method designed to improve the efficiency of recurrent language models by optimizing how they handle global attention during inference.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Recurrent language models refine latent representations by repeatedly applying shared network blocks. However, standard inference typically recomputes global attention at every recurrent step. The developers of WISE discovered that attention support and distributions stabilize substantially earlier than attention outputs and hidden states.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;WISE leverages the observation that early recurrent steps identify a sparse working set of relevant context, while subsequent steps refine representations using largely the same routing support. The method operates as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Early Recurrence:&lt;/strong&gt; Uses unrestricted global attention.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Later Recurrence:&lt;/strong&gt; Reuses the directly discovered block-structured support.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamic Control:&lt;/strong&gt; Keeps recurrent depth and within-support attention computation dynamic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Controlled interventions indicated that recurrent discovery is necessary and that support-only reuse preserves model behavior better than more restrictive attention-reuse options. Performance metrics include:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Multi-hop QA Performance&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Largely preserves full-attention performance&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Quality (2K context)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Largely preserved&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Quality (4K context)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Measurable loss&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Max Attention Speedup (4K)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Up to 1.76x over native FlashAttention&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Full 32-step Trajectory Speedup&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.36x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Context scaling reveals that as context increases, working sets become increasingly sparse, leading to greater efficiency gains.&lt;/p&gt;
+&lt;p&gt;#LLM #InferenceOptimization #AttentionMechanism #RecurrentLanguageModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.27373v1" target="_blank" rel="noopener"
+&gt;Attention Routing Stabilizes Early: Working-Set Inference for Recurrent Language Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Rust on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/rust/</link><description>Recent content in Rust on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 21 Sep 2026 22:03:11 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/rust/index.xml" rel="self" type="application/rss+xml"/><item><title>Introduction of tokenizers v1 with SIMD and Parallelism Improvements</title><link>https://shoubhikbanerjee.github.io/blog/p/introduction-of-tokenizers-v1-with-simd-and-parallelism-improvements/</link><pubDate>Mon, 21 Sep 2026 22:03:11 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introduction-of-tokenizers-v1-with-simd-and-parallelism-improvements/</guid><description>&lt;img src="https://huggingface.co/blog/assets/tokenizers-v1/thumbnail.png" alt="Featured image of post Introduction of tokenizers v1 with SIMD and Parallelism Improvements" /&gt;&lt;h1 id="introduction-of-tokenizers-v1-with-simd-and-parallelism-improvements"&gt;Introduction of tokenizers v1 with SIMD and Parallelism Improvements
+&lt;/h1&gt;&lt;p&gt;A new version of the tokenizers library, v1, has been released. The goal of this version was to improve performance while preserving the API, vocabulary, merge ranks, and output of v0.23, ensuring v1 produces the same token IDs as the previous version.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Tokenizers run conversions in four stages:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Stage&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Normalization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Applies operations such as Unicode normalization or lowercasing to raw text.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Pre-tokenization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Splits text into smaller pieces called pre-tokens.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Model&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Maps each pre-token to IDs in its vocabulary.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Post-processing&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Adds special tokens expected by the model.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="bpe-and-model-support"&gt;BPE and Model Support
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;The library supports three model types: Byte Pair Encoding (BPE), WordPiece, and Unigram.&lt;/li&gt;
+&lt;li&gt;Eight of the ten measured model families use BPE.&lt;/li&gt;
+&lt;li&gt;BPE models use regular expressions to split input text into pre-tokens; merges occur inside a pre-token and never across boundaries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="performance-optimizations"&gt;Performance Optimizations
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SIMD Instructions:&lt;/strong&gt; For a handful of common grammars, a hand-written function uses SIMD instructions to find splits via boolean operations over bitstreams instead of a regex engine. This process, using bitcannon, views input bytes as parallel streams and decides 64 bytes per register operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Management:&lt;/strong&gt; The merge working set uses a caller-owned scratch buffer to avoid touching the allocator. Merged pieces form an intrusive doubly-linked list inside one preallocated buffer, allowing merges to update two indices rather than moving data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Caching:&lt;/strong&gt; A thread-local memo maps pre-token bytes to finished IDs, allowing repeated words to be merged once.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Concurrency:&lt;/strong&gt; Each thread draws its scratch buffer and word cache from its own sub-pool, allowing one shared tokenizer to encode from many threads at once without queuing on a single lock.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="architecture-changes"&gt;Architecture Changes
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;The library remains general across tokenizer families and loads everything v0.23 loaded.&lt;/li&gt;
+&lt;li&gt;The project structure moved from one crate to a workspace:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;tk-encode&lt;/code&gt;: The required runtime.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tk-serialize&lt;/code&gt;, &lt;code&gt;tk-convert&lt;/code&gt;, and &lt;code&gt;tk-train&lt;/code&gt;: Linked only when an application needs them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/tokenizers/thumbnail.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#tokenizers #BPE #SIMD #NLP #Rust&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/tokenizers-v1" target="_blank" rel="noopener"
+&gt;tokenizers v1: encode, decode and scaling, measured&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Targeted Attacks Against Rust Developers and Crate Owners</title><link>https://shoubhikbanerjee.github.io/blog/p/targeted-attacks-against-rust-developers-and-crate-owners/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/targeted-attacks-against-rust-developers-and-crate-owners/</guid><description>&lt;h1 id="targeted-attacks-against-rust-developers-and-crate-owners"&gt;Targeted Attacks Against Rust Developers and Crate Owners
+&lt;/h1&gt;&lt;p&gt;Adam Harvey and the crates security team have issued a warning regarding an ongoing campaign targeting rust-lang members and owners of popular crates to compromise devices and accounts for the purpose of publishing malware.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Attackers use video calls framed as positive opportunities—such as projects, jobs, or contract opportunities—as a vector to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Get the target to install software on their computer (e.g., a purportedly missing audio codec).&lt;/li&gt;
+&lt;li&gt;Get the target to execute a command (e.g., via a command placed on the clipboard).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Impact:&lt;/strong&gt; Last month, this method was used in a successful supply chain attack against the array ref crate and others.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Risk Factor:&lt;/strong&gt; Every piece of software depending on open source has a network of human beings who are potential attack vectors, specifically anyone with publishing rights to packages in the dependency network.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Defense:&lt;/strong&gt; A recommended defense is the use of dependency cooldowns, which involves waiting a few days before upgrading to new package releases to allow others to spot supply chain attacks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Rust #Cybersecurity #SupplyChainAttack #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/17/targeted-attacks-on-rustaceans/" target="_blank" rel="noopener"
+&gt;Be alert: targeted attacks on prominent Rustaceans&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AI Agent Skill Translates CUDA Tile Kernels to cuTile Rust</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-agent-skill-translates-cuda-tile-kernels-to-cutile-rust/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-agent-skill-translates-cuda-tile-kernels-to-cutile-rust/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2025/07/neon-green-cube-660x370.png" alt="Featured image of post AI Agent Skill Translates CUDA Tile Kernels to cuTile Rust" /&gt;&lt;h1 id="ai-agent-skill-translates-cuda-tile-kernels-to-cutile-rust"&gt;AI Agent Skill Translates CUDA Tile Kernels to cuTile Rust
+&lt;/h1&gt;&lt;p&gt;A new AI agent skill has been developed to translate GPU kernels from cuTile Python and Triton-TileIR into cuTile Rust, a tile-based system designed for safe and idiomatic GPU kernel authoring in the Rust programming language.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;cuTile Rust extends the Rust ownership model to tile-based GPU kernels by splitting mutable outputs into disjoint pieces and preserving the host-side ownership contract across kernel launches. It serves as one of three front ends—alongside cuTile Python and Triton-TileIR—that feed into the same CUDA Tile IR (the cuda_tile dialect) and the tileiras compiler, which emits the GPU binary.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The translation process uses a bounded multi-agent pipeline that covers the following stages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Analysis&lt;/li&gt;
+&lt;li&gt;Device kernel creation&lt;/li&gt;
+&lt;li&gt;Host and FFI code generation&lt;/li&gt;
+&lt;li&gt;Benchmarking&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Each stage concludes with a machine-checkable verdict. Because all three front ends share the same IR, translation is verified by &amp;ldquo;diffing&amp;rdquo; the Tile IR of the reference kernel and the translated kernel to ensure they reproduce the same reductions, tile shapes, and memory-op families before tests are executed.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;There are significant differences between the JIT compilation of cuTile Python and the ahead-of-time compilation of Rust source:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Specialization:&lt;/strong&gt; cuTile Python specializes kernels implicitly at call time. In contrast, cuTile Rust requires every specialization to be declared in the kernel&amp;rsquo;s signature; nothing is specialized unless declared.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Structural Changes:&lt;/strong&gt; A single Python kernel may become multiple Rust entries. For example, layer_norm splits into 2-Dnchw and 1-Dw1 entries because the branch changes tile rank.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compilation:&lt;/strong&gt; Rust source is compiled ahead of time, with tile shapes and element types checked by rustc. The crate embeds the kernel AST, and the runtime specializes it with concrete const-generic values to compile a cached cubin at first launch.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ABI Support:&lt;/strong&gt; Supporting a dtype is an explicit ABI extension. Supported types include sf32, f16, bf16, i32, i64, f8e5m2, and f8e4m3fn.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The translation skill is shipped in the TileGym repo. In TileGym, cuTile Rust functions as a backend that can be activated using &lt;code&gt;tilegym.set_backend(&amp;quot;cutile-rs&amp;quot;)&lt;/code&gt; to route the operator API to Rust kernels.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Using this AI agent skill, all 24 public TileGym operators—comprising roughly 40 GPU kernels—were ported to cuTile Rust. These kernels range from element-wise operations to mixture-of-experts (MoE) models, Multi-head Latent Attention (MLA), and flash-attention decode. On average, the ported kernels reached 99.5% of cuTile Python performance.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/cuda-tile-translation-python-rust-flow.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/cutile-rust-versus-python-kernels-tilegym-operators.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Rust #CUDA #GPU #AIagents #TileGym&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/translating-cuda-tile-operations-from-python-to-rust-using-agentic-ai/" target="_blank" rel="noopener"
+&gt;Translating CUDA Tile Operations from Python to Rust Using Agentic AI | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AI CLI Landscape Converges to Seven Active Tools</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-cli-landscape-converges-to-seven-active-tools/</link><pubDate>Tue, 15 Sep 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-cli-landscape-converges-to-seven-active-tools/</guid><description>&lt;img src="https://opengraph.githubassets.com/de00fd1be42da28eee18145211e22a9f3bfbe8429dbab3e1cf747186d8f9657f/sikm-lqs/agents-radar/issues/193" alt="Featured image of post AI CLI Landscape Converges to Seven Active Tools" /&gt;&lt;h1 id="ai-cli-landscape-converges-to-seven-active-tools"&gt;AI CLI Landscape Converges to Seven Active Tools
+&lt;/h1&gt;&lt;p&gt;The AI CLI tool landscape has converged into seven active competing products, spanning both major tech giants and independent developers.&lt;/p&gt;
+&lt;p&gt;#OpenAI #CLITools #AIDevelopment #GitHub #Rust&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/sikm-lqs/agents-radar/issues/193" target="_blank" rel="noopener"
+&gt;📊 AI CLI 工具社区动态日报 2026-09-15 · Issue #193 · sikm-lqs/agents-radar&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SpaceXAI releases Grok Build: a terminal-based AI coding agent</title><link>https://shoubhikbanerjee.github.io/blog/p/spacexai-releases-grok-build-a-terminal-based-ai-coding-agent/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/spacexai-releases-grok-build-a-terminal-based-ai-coding-agent/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/130314967?v=4" alt="Featured image of post SpaceXAI releases Grok Build: a terminal-based AI coding agent" /&gt;&lt;h1 id="spacexai-releases-grok-build-a-terminal-based-ai-coding-agent"&gt;SpaceXAI releases Grok Build: a terminal-based AI coding agent
+&lt;/h1&gt;&lt;p&gt;SpaceXAI has open‑sourced Grok Build, its terminal‑based AI coding agent.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Grok Build is a terminal‑based AI coding agent developed by SpaceXAI.&lt;/li&gt;
+&lt;li&gt;It runs as a full‑screen text user interface (TUI) that can understand a codebase, edit files, execute shell commands, search the web, and manage long‑running tasks.&lt;/li&gt;
+&lt;li&gt;It can be used interactively, headlessly for scripting/CI, or embedded in editors via the Agent Client Protocol (ACP).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The repository contains the Rust source for the &lt;code&gt;grok&lt;/code&gt; CLI/TUI and its agent runtime.&lt;/li&gt;
+&lt;li&gt;The source tree is synced periodically from the SpaceXAI monorepo; a &lt;code&gt;SOURCE_REV&lt;/code&gt; file records the exact monorepo commit SHA.&lt;/li&gt;
+&lt;li&gt;The workspace &lt;code&gt;Cargo.toml&lt;/code&gt; is generated and should be treated as read‑only.&lt;/li&gt;
+&lt;li&gt;Build requirements:
+&lt;ul&gt;
+&lt;li&gt;Rust toolchain pinned by &lt;code&gt;rust-toolchain.toml&lt;/code&gt;; &lt;code&gt;rustup&lt;/code&gt; installs automatically on first build.&lt;/li&gt;
+&lt;li&gt;DotSlash is required so hermetic tools under &lt;code&gt;bin/&lt;/code&gt; (e.g., &lt;code&gt;bin/protoc&lt;/code&gt;) can be downloaded and run; ensure &lt;code&gt;dotslash&lt;/code&gt; is on your &lt;code&gt;PATH&lt;/code&gt; before building.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;protoc&lt;/code&gt; proto codegen resolves &lt;code&gt;bin/protoc&lt;/code&gt; via DotSlash or falls back to a &lt;code&gt;protoc&lt;/code&gt; on &lt;code&gt;PATH&lt;/code&gt; / &lt;code&gt;$PROTOC&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Supported build hosts: macOS and Linux; Windows builds are best‑effort and not currently tested from this tree.&lt;/li&gt;
+&lt;li&gt;Prebuilt binaries are published for macOS, Linux, and Windows.&lt;/li&gt;
+&lt;li&gt;The binary artifact is named &lt;code&gt;xai-grok-pager&lt;/code&gt;; official installs ship it as &lt;code&gt;grok&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;On first launch the tool opens a browser for authentication (see the authentication guide).&lt;/li&gt;
+&lt;li&gt;Full online documentation: &lt;a class="link" href="https://docs.x.ai/build/overview" target="_blank" rel="noopener"
+&gt;https://docs.x.ai/build/overview&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;User guide location: &lt;code&gt;crates/codegen/xai-grok-pager/docs/user-guide/&lt;/code&gt; (covers getting started, keyboard shortcuts, slash commands, configuration, theming, MCP servers, skills, plugins, hooks, headless mode, sandboxing, and more).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;📦 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Releases include a changelog with fixes, features, and improvements: &lt;a class="link" href="https://x.ai/build/changelog" target="_blank" rel="noopener"
+&gt;https://x.ai/build/changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Binaries can be downloaded for the three major platforms.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-licensing"&gt;📄 Licensing
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;First‑party code in the repository is licensed under the Apache License, Version 2.0.&lt;/li&gt;
+&lt;li&gt;Third‑party and vendored code retains its original licenses.&lt;/li&gt;
+&lt;li&gt;External contributions are not accepted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#SpaceXAI #AIcoding #Rust #TerminalAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/xai-org/grok-build" target="_blank" rel="noopener"
+&gt;xai-org/grok-build&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

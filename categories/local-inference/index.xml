@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Local Inference on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/local-inference/</link><description>Recent content in Local Inference on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 22 Sep 2026 22:03:42 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/local-inference/index.xml" rel="self" type="application/rss+xml"/><item><title>Transformers Now Supports llama.cpp GGUF Quantizations for Local Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/transformers-now-supports-llama-cpp-gguf-quantizations-for-local-inference/</link><pubDate>Tue, 22 Sep 2026 22:03:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/transformers-now-supports-llama-cpp-gguf-quantizations-for-local-inference/</guid><description>&lt;img src="https://huggingface.co/blog/assets/transformers_llama_cpp_quants/thumbnail.png" alt="Featured image of post Transformers Now Supports llama.cpp GGUF Quantizations for Local Inference" /&gt;&lt;h1 id="transformers-now-supports-llamacpp-gguf-quantizations-for-local-inference"&gt;Transformers Now Supports llama.cpp GGUF Quantizations for Local Inference
+&lt;/h1&gt;&lt;p&gt;The Transformers library now allows users to run llama.cpp GGUF quantizations using &lt;code&gt;from_pretrained&lt;/code&gt;, enabling AI model generation directly on a user&amp;rsquo;s own machine.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;GGUF is a widely used format for local inference developed by the llama.cpp team. It packages model weights and metadata—including tokenizer information and optional chat templates—into a single file. This format supports various quantization levels, allowing users to reduce the memory footprint by trading off some precision.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To achieve performance close to llama.cpp, Transformers reuses its underlying ggml kernels through the kernels library and reduces overhead in &lt;code&gt;generate&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Loading:&lt;/strong&gt; Users pass the Hub &lt;code&gt;model_id&lt;/code&gt; and filename as &lt;code&gt;gguf_file&lt;/code&gt; to &lt;code&gt;from_pretrained&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution:&lt;/strong&gt; On Apple Silicon, when weights stay packed on Metal, Transformers automatically loads compatible ggml/Metal layer kernels and uses &lt;code&gt;ggml-org/ggml-attn&lt;/code&gt; for attention implementation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fallbacks:&lt;/strong&gt; If the compatible kernel cannot be fetched, the system falls back to &amp;ldquo;sdpa&amp;rdquo; (which can also be forced by passing &lt;code&gt;attn_implementation=&amp;quot;sdpa&amp;quot;&lt;/code&gt;). Without a compatible quantization kernel, the loader dequantizes the model, which uses more memory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Initial focus is on local inference for Apple Silicon, starting with the Qwen3.5 architecture. Users can select different quantization variants based on their available memory:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Quantization Variant&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Q4_K_M&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Mixes tensor precisions; uses mostly 4-bit weights while keeping sensitive tensors at higher precision.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Q5_K_M&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Recommended for users with more memory available.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Q6_K&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Recommended for users with more memory available.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Ready-to-use GGUF checkpoints are available on the Hub from several providers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ggml-org&lt;/li&gt;
+&lt;li&gt;Unsloth&lt;/li&gt;
+&lt;li&gt;LM Studio Community&lt;/li&gt;
+&lt;li&gt;bartowski&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Running AI models locally has been made practical through llama.cpp and projects like MLX. The llama.cpp inference engine already powers tools such as Ollama, Jan, and LM Studio. Integrating this into Transformers makes it easier to run these models locally while allowing the same endpoint to be used by other clients that support the API.&lt;/p&gt;
+&lt;p&gt;#Transformers #llama.cpp #GGUF #LocalAI #AppleSilicon&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/transformers-llama-cpp-quants" target="_blank" rel="noopener"
+&gt;Transformers now runs llama.cpp quants&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

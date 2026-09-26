@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hardware Optimization on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/hardware-optimization/</link><description>Recent content in Hardware Optimization on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 23 Sep 2026 22:05:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/hardware-optimization/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Releases Topograph Open Source Toolkit for Topology-Aware GPU Scheduling</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-topograph-open-source-toolkit-for-topology-aware-gpu-scheduling/</link><pubDate>Wed, 23 Sep 2026 22:05:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-topograph-open-source-toolkit-for-topology-aware-gpu-scheduling/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2025/09/inference-nvidia-dynamo-blog-1280x680-1-e1758728822171-660x370.jpg" alt="Featured image of post NVIDIA Releases Topograph Open Source Toolkit for Topology-Aware GPU Scheduling" /&gt;&lt;h1 id="nvidia-releases-topograph-open-source-toolkit-for-topology-aware-gpu-scheduling"&gt;NVIDIA Releases Topograph Open Source Toolkit for Topology-Aware GPU Scheduling
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced Topograph, an open source toolkit designed to identify cluster network topology to enable workload managers to make topology-aware scheduling decisions.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;AI factories are power-limited systems that require full optimization to deliver maximum value. Because GPUs exchange data continuously during training and inference, distributed workloads benefit from communication locality. Poor workload placement can lead to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fragmented topology domains&lt;/li&gt;
+&lt;li&gt;Increased traffic across shared links&lt;/li&gt;
+&lt;li&gt;Reduced throughput and higher job costs&lt;/li&gt;
+&lt;li&gt;GPUs consuming provisioned power while waiting for data without advancing the workload&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Topograph prevents these bottlenecks by mapping how cluster hardware is connected, allowing schedulers to favor nearby resources and avoid spreading tightly coupled workloads across distant domains.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Topograph solves the problem of maintaining an accurate view of GPU and fabric relationships as a cluster changes. It uses two primary concepts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Providers&lt;/strong&gt;: These discover topology from cloud APIs or on-premises systems and normalize it into a canonical model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Engines&lt;/strong&gt;: These translate the normalized model into formats expected by various workload managers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Within the NVIDIA DSX OS cluster orchestration layer, Topograph works alongside KAI Scheduler and Dynamic Resource Allocation (DRA) to enable topology-aware gang scheduling.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Topograph supports a variety of hardware and software integrations to ensure the scheduler works from current data rather than a manually maintained snapshot.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Supported Integration/Requirement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Cloud Providers&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Google Cloud, Lambda, Nebius, Nscale, and OCI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;On-Premises Providers&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;InfiniBand (with ibnetdiscover), NetQ (for Spectrum-X or Multi-Node NVLink domains)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Engines/Outputs&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Kubernetes node labels, Slurm topology configuration, Slinky ConfigMaps, Node Feature Discovery (NFD) resources, instance-oriented topology JSON&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Slurm Engine&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Requires a writable volume for its configured topology.conf output path&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;NFD Engine&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Requires the alpha NodeFeatureGroupAPI feature gate&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Crusoe Provider&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Runs in Kubernetes; reads fabric and accelerator-domain labels from Crusoe Managed Kubernetes nodes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Topograph is an open source toolkit with an open provider interface, allowing operators to add and contribute providers for their own environments upstream. As of September 16, 2026, the toolkit supports various provider-to-engine output combinations, though requirements may vary by version and configuration.&lt;/p&gt;
+&lt;p&gt;#NVIDIA #GPU #Kubernetes #Slurm #AIInfrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/topology-aware-workload-scheduling-with-nvidia-topograph/" target="_blank" rel="noopener"
+&gt;Topology-Aware Workload Scheduling with NVIDIA Topograph | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

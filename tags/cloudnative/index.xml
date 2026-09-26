@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CloudNative on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cloudnative/</link><description>Recent content in CloudNative on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 24 Sep 2026 22:03:57 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cloudnative/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Open Sources NodeWright for Kubernetes Host Infrastructure Management</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-open-sources-nodewright-for-kubernetes-host-infrastructure-management/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-open-sources-nodewright-for-kubernetes-host-infrastructure-management/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/kubernetes-clusters-660x370.jpg" alt="Featured image of post NVIDIA Open Sources NodeWright for Kubernetes Host Infrastructure Management" /&gt;&lt;h1 id="nvidia-open-sources-nodewright-for-kubernetes-host-infrastructure-management"&gt;NVIDIA Open Sources NodeWright for Kubernetes Host Infrastructure Management
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released NodeWright as an open-source, Kubernetes-native package manager designed to modify and maintain host infrastructure at scale. As part of the NVIDIA DSX OS open-source software layer, NodeWright enables the declarative configuration and safe updating of Kubernetes node operating systems without disrupting workloads.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;NodeWright is a component of the NVIDIA DSX platform, which treats entire facilities as single systems (AI factories) rather than collections of machines. It is part of the supporting infrastructure capabilities that include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NVIDIA GPU Operator&lt;/li&gt;
+&lt;li&gt;NVIDIA Network Operator&lt;/li&gt;
+&lt;li&gt;Topograph&lt;/li&gt;
+&lt;li&gt;DRA Driver for NVIDIA GPUs&lt;/li&gt;
+&lt;li&gt;NVIDIA Cluster Readiness Engine (NVCRE)&lt;/li&gt;
+&lt;li&gt;NVSentinel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NodeWright consists of three main components:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Operator&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A Kubernetes controller that watches for custom resources and manages the lifecycle of changes across nodes.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Custom Resources&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used to define NodeWright packages; these deploy via tools such as kubectl, Helm, Argo CD, or Flux.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Packages&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Container images containing binaries, configurations, scripts, and verification scripts to surface failures and stop incorrect rollouts.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;When applying changes, NodeWright follows a specific operational flow:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Cordon&lt;/strong&gt;: Marks the node as unschedulable.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Wait&lt;/strong&gt;: Allows critical workloads to finish gracefully.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Drain&lt;/strong&gt;: Evicts remaining pods, honoring PodDisruptionBudgets by default.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Apply and configure&lt;/strong&gt;: Runs the package to set kernel parameters, install agents, and configure system services.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interrupt&lt;/strong&gt;: Restarts a service or reboots the node if required.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Uncordon&lt;/strong&gt;: Returns the node to the cluster for workloads.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;NodeWright manages the full lifecycle of host-level changes, including installation, configuration, upgrade, and uninstallation. Key capabilities include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure Operations&lt;/strong&gt;: Performs tasks that normally require root access without recycling nodes, such as setting sysctl and GRUB parameters, configuring crash dump collection, creating logical volumes, installing security agents, and remediating CVEs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workload Awareness&lt;/strong&gt;: Respects Kubernetes primitives including node selectors, taints, tolerations, and PodDisruptionBudgets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;State Tracking&lt;/strong&gt;: Tracks the semantic version and state of every package on every node to distinguish between fresh installations, upgrades, and downgrades.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dependency Management&lt;/strong&gt;: Uses declared dependencies to determine the correct execution order.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;NodeWright is available as open source and has run in production at NVIDIA under the name Skyhook.&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Kubernetes #OpenSource #Infrastructure #CloudNative&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/manage-kubernetes-node-fleets-with-nodewright/" target="_blank" rel="noopener"
+&gt;Manage Kubernetes Node Fleets with NodeWright | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SOPS Becomes a CNCF Sandbox Project</title><link>https://shoubhikbanerjee.github.io/blog/p/sops-becomes-a-cncf-sandbox-project/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sops-becomes-a-cncf-sandbox-project/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/129185620?v=4" alt="Featured image of post SOPS Becomes a CNCF Sandbox Project" /&gt;&lt;h1 id="sops-becomes-a-cncf-sandbox-project"&gt;SOPS Becomes a CNCF Sandbox Project
+&lt;/h1&gt;&lt;p&gt;SOPS, an editor of encrypted files originally launched at Mozilla in 2015, has been donated to the Cloud Native Computing Foundation (CNCF) as a Sandbox project in 2023.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;SOPS is an editor of encrypted files that was inspired by sneaker, password store, credstash, hiera-eyaml, and the experience of managing PGP encrypted files by hand for many years.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Supported Options&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Supported Formats&lt;/td&gt;
+&lt;td style="text-align: left"&gt;YAML, JSON, ENV, INI, and BINARY&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Encryption Methods&lt;/td&gt;
+&lt;td style="text-align: left"&gt;AWS KMS, GCP KMS, Azure Key Vault, HuaweiCloud KMS, age, and PGP&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;License&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Mozilla Public License Version 2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-project-history"&gt;🧩 Project History
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Original Authors:&lt;/strong&gt; Adrian Utrilla (@autrilla) and Julien Vehent (@jvehent).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Key Contributors:&lt;/strong&gt; The project was carried for a long time by AJ Bahnken (@ajvb) and received contributions from numerous other contributors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Current Status:&lt;/strong&gt; Now under the stewardship of a new group of maintainers as a CNCF Sandbox project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#SOPS #CNCF #Encryption #CloudNative&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/getsops/sops" target="_blank" rel="noopener"
+&gt;getsops/sops&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Serverless Framework V4 Adds AI Agent Support and AWS Enhancements</title><link>https://shoubhikbanerjee.github.io/blog/p/serverless-framework-v4-adds-ai-agent-support-and-aws-enhancements/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/serverless-framework-v4-adds-ai-agent-support-and-aws-enhancements/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/13742415?v=4" alt="Featured image of post Serverless Framework V4 Adds AI Agent Support and AWS Enhancements" /&gt;&lt;h1 id="serverless-framework-v4-adds-ai-agent-support-and-aws-enhancements"&gt;Serverless Framework V4 Adds AI Agent Support and AWS Enhancements
+&lt;/h1&gt;&lt;p&gt;The Serverless Framework has released version 4, introducing significant updates that enhance serverless application development on AWS. This release emphasizes AI integration, security, and developer experience improvements.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The Serverless Framework is a command-line tool enabling developers to deploy serverless applications using approachable YAML syntax. It supports AWS Lambda and other managed services, offering auto-scaling, zero idle costs, and minimal maintenance. Version 4 expands these capabilities with AI-native features and AWS ecosystem integrations.&lt;/p&gt;
+&lt;h2 id="-key-new-features"&gt;🚀 Key New Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sandboxes&lt;/strong&gt;: Isolate ephemeral compute environments on AWS Lambda for untrusted workloads like AI agents or per-session code execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Bedrock AgentCore Support&lt;/strong&gt;: Define AI agents, memory, tools, and code interpreters directly in &lt;code&gt;serverless.yml&lt;/code&gt; using the &lt;code&gt;ai&lt;/code&gt; property.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Login &amp;amp; SSO&lt;/strong&gt;: Streamline AWS credential setup via browser-based flows.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deployment Diffs&lt;/strong&gt;: Preview CloudFormation stack changes before deployment using &lt;code&gt;serverless diff&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Managed Instances&lt;/strong&gt;: Native EC2-backed Lambda support for higher throughput and long-running workloads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Durable Functions&lt;/strong&gt;: Built-in stateful workflows for complex orchestrations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lambda Tenant Isolation&lt;/strong&gt;: Reduce cross-tenant interference in multi-tenant applications.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HTTP Response Streaming&lt;/strong&gt;: Stream long-running AI responses from Lambda via API Gateway.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Serverless MCP&lt;/strong&gt;: IDE integration to debug serverless apps directly in editors like Cursor or Windsurf.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-enhanced-developer-experience"&gt;🛠️ Enhanced Developer Experience
+&lt;/h2&gt;&lt;p&gt;Popular plugins are now built-in, including Python requirements and API Gateway Service Proxy. Custom domains with auto-configured SSL are now natively supported. Secrets management integrates with Doppler via framework variables.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;These updates position the Serverless Framework as a robust platform for AI-driven and enterprise-scale serverless applications. Features like Sandboxes and AgentCore support accelerate secure AI agent deployment, while MCP integration eliminates context-switching during debugging. The framework now unifies deployment across AWS SAM, CloudFormation, and traditional Serverless projects.&lt;/p&gt;
+&lt;h2 id="-under-the-hood"&gt;⚙️ Under the Hood
+&lt;/h2&gt;&lt;p&gt;Version 4 maintains multi-language support (Node.js, Python, Go, etc.) and extensibility via 1,000+ plugins. All features are actively maintained by Serverless Inc., ensuring long-term reliability.&lt;/p&gt;
+&lt;p&gt;#Serverless #AWS #AIAgents #DevOps #CloudNative&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/serverless/serverless" target="_blank" rel="noopener"
+&gt;serverless/serverless&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

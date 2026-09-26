@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud Infrastructure on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/cloud-infrastructure/</link><description>Recent content in Cloud Infrastructure on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 26 Sep 2026 22:01:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/cloud-infrastructure/index.xml" rel="self" type="application/rss+xml"/><item><title>Accelerating Mixture-of-Experts Training with Amazon EKS, EFA, and DeepEP</title><link>https://shoubhikbanerjee.github.io/blog/p/accelerating-mixture-of-experts-training-with-amazon-eks-efa-and-deepep/</link><pubDate>Sat, 26 Sep 2026 22:01:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/accelerating-mixture-of-experts-training-with-amazon-eks-efa-and-deepep/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21346-featured-image.png" alt="Featured image of post Accelerating Mixture-of-Experts Training with Amazon EKS, EFA, and DeepEP" /&gt;&lt;h1 id="accelerating-mixture-of-experts-training-with-amazon-eks-efa-and-deepep"&gt;Accelerating Mixture-of-Experts Training with Amazon EKS, EFA, and DeepEP
+&lt;/h1&gt;&lt;p&gt;AWS has described an architecture optimized to accelerate the training of Mixture-of-Experts (MoE) models, specifically addressing the infrastructure challenges associated with large-scale Reinforcement Learning (RL) post-training.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Mixture-of-Experts (MoE) is a standard architecture for scaling large language models (LLMs) to hundreds of billions or trillions of parameters while maintaining efficient inference through sparsity. However, large-scale RL training—including pipelines based on Proximal Policy Optimization (PPO) and Group Relative Policy Optimization (GRPO)—places unusual demands on infrastructure. These demands arise because RL combines elastic inference work with tightly coupled model training that requires high-bandwidth communication.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;Large-scale asynchronous RL jobs must optimize two distinct, simultaneous workloads:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Rollout Generation&lt;/strong&gt;: Distributed inference focused on maximizing aggregate throughput rather than minimizing inter-token latency or time to first token (TTFT).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Policy Training&lt;/strong&gt;: Tightly coupled workers that progress in lockstep; any straggling worker or latency spike can trigger NVIDIA Collective Communications Library (NCCL) timeouts or stall the entire job.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Training MoE models introduces specific constraints compared to dense models. As architectures become more sparse to reduce inference costs, training is constrained more by communication than by compute. A primary source of this overhead is Expert Parallelism (EP), which introduces dynamic all-to-all token routing across devices in addition to standard Tensor Parallelism (TP), Data Parallelism (DP), and Pipeline Parallelism (PP).&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To address these challenges, an architecture combining the following tools is used:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Elastic Kubernetes Service (Amazon EKS)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Orchestrates large-scale RL training and coordinates heterogeneous compute.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Elastic Fabric Adapter (EFA)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Accelerates large-scale RL training and provides high-bandwidth inter-node communication.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;DeepEP&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Optimizes expert-parallel communication over EFA.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;This system must balance three resource constraints to prevent bottlenecks or idle capacity:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Accelerator compute&lt;/li&gt;
+&lt;li&gt;Memory (including KV-cache capacity for distributed inference)&lt;/li&gt;
+&lt;li&gt;Network bandwidth&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AWS #MoE #ReinforcementLearning #LLM #Kubernetes&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with-40-more-throughput/" target="_blank" rel="noopener"
+&gt;Scaling MoE reinforcement learning on Amazon EKS with EFA and DeepEP with 40% more throughput | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Meta's Muse AI Exposes Cloud Filesystem to Users</title><link>https://shoubhikbanerjee.github.io/blog/p/meta-s-muse-ai-exposes-cloud-filesystem-to-users/</link><pubDate>Sat, 26 Sep 2026 22:01:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/meta-s-muse-ai-exposes-cloud-filesystem-to-users/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKB394_MUSE_AI_CVIRGINIA_D.png?quality=90&amp;strip=all&amp;crop=0%2C9.9676601489831%2C100%2C80.064679702034&amp;w=1200" alt="Featured image of post Meta's Muse AI Exposes Cloud Filesystem to Users" /&gt;&lt;h1 id="metas-muse-ai-exposes-cloud-filesystem-to-users"&gt;Meta&amp;rsquo;s Muse AI Exposes Cloud Filesystem to Users
+&lt;/h1&gt;&lt;p&gt;Recent developments show that Meta’s Muse now allows users to access and download its entire filesystem, a capability described as &amp;ldquo;intended behavior.&amp;rdquo;&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Muse utilizes an architecture that differs fundamentally from other AI platforms like Gemini and ChatGPT. Its structure is closer to running OpenClaw on a local machine, but the machine is hosted in the cloud. Key architectural details include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each user is provided with their own persistent Linux VM in Meta’s cloud.&lt;/li&gt;
+&lt;li&gt;The Muse Secure VM functions as the user&amp;rsquo;s own computer in the cloud.&lt;/li&gt;
+&lt;li&gt;Users can operate this Linux box to install software, write and compile code, and use a browser to surf the web.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;While Muse previously only offered a text file download of its directory tree, recent updates have expanded this access:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Muse now provides a clickable file browser with root access when asked to see its filesystem.&lt;/li&gt;
+&lt;li&gt;Muse will zip up the root directory for download, providing &amp;ldquo;the full filesystem listings&amp;rdquo; with &amp;ldquo;all with secrets stripped out.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Muse is identified as the first consumer-accessible agentic AI system. Due to these capabilities, there are concerns regarding how powerful and dangerous the system is, particularly when running on a Mac.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKB394_MUSE_AI_CVIRGINIA_D.png?quality=90&amp;amp;strip=all&amp;amp;crop=0.95588235294118%2C0%2C98.088235294118%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Meta #Muse #AIagents #Linux #CloudComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/ai-artificial-intelligence/1000784/meta-muse-filesystem" target="_blank" rel="noopener"
+&gt;Meta makes the Muse filesystem even more accessible&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/25/john-gruber/" target="_blank" rel="noopener"
+&gt;A quote from John Gruber&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Scaling Machine Learning Workloads with Amazon SageMaker HyperPod and Cloud Data Fabric</title><link>https://shoubhikbanerjee.github.io/blog/p/scaling-machine-learning-workloads-with-amazon-sagemaker-hyperpod-and-cloud-data-fabric/</link><pubDate>Fri, 25 Sep 2026 22:04:20 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/scaling-machine-learning-workloads-with-amazon-sagemaker-hyperpod-and-cloud-data-fabric/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21828-featured-image.png" alt="Featured image of post Scaling Machine Learning Workloads with Amazon SageMaker HyperPod and Cloud Data Fabric" /&gt;&lt;h1 id="scaling-machine-learning-workloads-with-amazon-sagemaker-hyperpod-and-cloud-data-fabric"&gt;Scaling Machine Learning Workloads with Amazon SageMaker HyperPod and Cloud Data Fabric
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker HyperPod now offers infrastructure for large-scale machine learning workloads on Amazon Elastic Kubernetes Service (EKS). By integrating with Cloud Native Qumulo (CNQ) and Qumulo’s Cloud Data Fabric (CDF), developers can now run training compute in one AWS Region while accessing datasets stored in another without the need to copy data or modify existing code.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Cloud Data Fabric maintains a single authoritative copy of a dataset on a hub cluster and projects it to spoke clusters as a unified POSIX namespace. Through predictive caching via NeuralCache, the system learns data loader access patterns and serves data from local NVMe storage. After an initial warmup period, this architecture allows spoke clusters to achieve throughput performance equivalent to locally co-located clusters, even across high-latency network links.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Resiliency&lt;/strong&gt;: The infrastructure continuously monitors node health and automatically replaces faulty nodes to prevent hardware failures from impacting the entire cluster.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: Training jobs using this setup reach 98–100 percent GPU utilization after a brief warmup of 100–150 batches.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integration&lt;/strong&gt;: The solution supports remote job submission via the &lt;code&gt;sagemaker_ray://&lt;/code&gt; protocol and provides pre-built Amazon Managed Grafana dashboards through the HyperPod Observability EKS add-on.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Training Frameworks&lt;/strong&gt;: The platform supports frameworks such as SkyRL, enabling advanced techniques like Group Relative Policy Optimization (GRPO) for tasks like vision-language model navigation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-comparison"&gt;📊 Performance Comparison
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Cluster Configuration&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Throughput (samples/sec)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Training Time&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Hub (Local)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;116–117&lt;/td&gt;
+&lt;td style="text-align: left"&gt;18.5 minutes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Spoke (Warm Cache)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;115–116&lt;/td&gt;
+&lt;td style="text-align: left"&gt;18.5 minutes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Spoke (Cold Start)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;95–116&lt;/td&gt;
+&lt;td style="text-align: left"&gt;~19–20 minutes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21828-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21828-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#MachineLearning #AmazonSageMaker #CloudComputing #DataEngineering&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/" target="_blank" rel="noopener"
+&gt;Accelerate multimodal RL training with SkyRL on Amazon SageMaker HyperPod | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/" target="_blank" rel="noopener"
+&gt;Multi-Region training with Amazon SageMaker HyperPod and Qumulo | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker AI Introduces Concurrency Sweeps for Generative AI Endpoints</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-introduces-concurrency-sweeps-for-generative-ai-endpoints/</link><pubDate>Tue, 22 Sep 2026 22:03:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-introduces-concurrency-sweeps-for-generative-ai-endpoints/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-featured-image.png" alt="Featured image of post Amazon SageMaker AI Introduces Concurrency Sweeps for Generative AI Endpoints" /&gt;&lt;h1 id="amazon-sagemaker-ai-introduces-concurrency-sweeps-for-generative-ai-endpoints"&gt;Amazon SageMaker AI Introduces Concurrency Sweeps for Generative AI Endpoints
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker AI has updated its Inference Recommendations to include concurrency sweeps, a systematic benchmarking approach used to right-size generative AI endpoints by optimizing price-performance while maintaining acceptable latency.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;A concurrency sweep sends controlled, increasing levels of simultaneous requests to a SageMaker AI endpoint to analyze performance. This feature is built into Amazon SageMaker AI Inference Recommendations, eliminating the need to build or maintain custom load-testing infrastructure.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The concurrency sweep measures two primary metrics at each level of traffic:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Throughput&lt;/strong&gt;: The number of tokens per second produced by the endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Latency&lt;/strong&gt;: The time taken for each request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The workflow consists of four steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Deploy the model to a SageMaker AI endpoint using the native vLLM container.&lt;/li&gt;
+&lt;li&gt;Configure the workload profile (input and output token counts, streaming mode).&lt;/li&gt;
+&lt;li&gt;Run the concurrency sweep using the &lt;code&gt;CreateAIBenchmarkJob&lt;/code&gt; API.&lt;/li&gt;
+&lt;li&gt;Analyze the results to identify optimal concurrency and right-size the fleet.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;In a deployment scenario using the NVIDIA Nemotron-3 Nano 30B Mixture-of-Experts (MoE) model on an &lt;code&gt;ml.g7e.2xlarge&lt;/code&gt; instance (backed by an NVIDIA Blackwell GPU), the following configurations are applied:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Configuration&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Container&lt;/td&gt;
+&lt;td style="text-align: left"&gt;vLLM Deep Learning Container for SageMaker AI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;SM_VLLM_ENFORCE_EAGER&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Required for Nemotron-3 Nano&amp;rsquo;s Mamba-Transformer hybrid architecture&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GPU Memory Utilization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Set to 0.85 to provide headroom for KV cache growth&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Prefix Caching&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enabled to reuse cached key-value pairs for repeated system prompts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Workload profiles are defined using &lt;code&gt;CreateAIWorkloadConfig&lt;/code&gt; with the following parameters:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Parameter&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Value&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;prompt_input_tokens_mean&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,024&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Average input prompt length&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;output_tokens_mean&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;256&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Average generated response length&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Streaming is enabled to capture time to first token (TTFT) metrics for interactive user experiences. The benchmark engine (AIPerf) runs each concurrency level sequentially within a single job, sending the total number of requests defined under &lt;code&gt;request_count&lt;/code&gt; at each level.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonSageMaker #vLLM #GenerativeAI #LLMInference #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/right-size-generative-ai-endpoints-with-concurrency-sweeps-on-amazon-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Right-size generative AI endpoints with concurrency sweeps on Amazon SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Terragrunt Orchestration Tool for OpenTofu and Terraform Infrastructure as Code</title><link>https://shoubhikbanerjee.github.io/blog/p/terragrunt-orchestration-tool-for-opentofu-and-terraform-infrastructure-as-code/</link><pubDate>Sun, 20 Sep 2026 22:01:28 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/terragrunt-orchestration-tool-for-opentofu-and-terraform-infrastructure-as-code/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/17118990?v=4" alt="Featured image of post Terragrunt Orchestration Tool for OpenTofu and Terraform Infrastructure as Code" /&gt;&lt;h1 id="terragrunt-orchestration-tool-for-opentofu-and-terraform-infrastructure-as-code"&gt;Terragrunt Orchestration Tool for OpenTofu and Terraform Infrastructure as Code
+&lt;/h1&gt;&lt;p&gt;Terragrunt has been introduced as a flexible orchestration tool designed to help Infrastructure as Code written in OpenTofu/Terraform scale.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Allows Infrastructure as Code written in OpenTofu/Terraform to scale.&lt;/li&gt;
+&lt;li&gt;Released under the MIT License.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Terragrunt #InfrastructureAsCode #OpenTofu #Terraform&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/gruntwork-io/terragrunt" target="_blank" rel="noopener"
+&gt;gruntwork-io/terragrunt&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Bedrock AgentCore for Managed Agent Deployment and Optimization</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-for-managed-agent-deployment-and-optimization/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-for-managed-agent-deployment-and-optimization/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21510-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore for Managed Agent Deployment and Optimization" /&gt;&lt;h1 id="amazon-bedrock-agentcore-for-managed-agent-deployment-and-optimization"&gt;Amazon Bedrock AgentCore for Managed Agent Deployment and Optimization
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore is a platform designed to build, connect, and optimize agents at scale, supporting any framework or model. This update introduces AgentCore runtime, a managed deployment capability that handles operational concerns including container lifecycle, scaling, identity, and observability.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;AgentCore runtime utilizes a decorator pattern to wrap agent logic, allowing developers to deploy existing agent code via a bring-your-own (BYO) agent approach without rewriting for a specific framework. As a reference implementation, the solution supports the Hugging Face smolagents open source Python library.&lt;/p&gt;
+&lt;p&gt;In a healthcare agent implementation, the system orchestrates across three model backends using Hugging Face Messages API compatibility for consistent request and response formats:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model Backend&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock (Llama 3.1 70B Instruct)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Complex medical reasoning&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon SageMaker AI (BioM-ELECTRA-Large-SQuAD2)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Specialized biomedical queries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Containerized model server (BioM-ELECTRA)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Self-hosted model deployment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Knowledge Retrieval&lt;/strong&gt;: Uses Amazon OpenSearch Service for vector similarity matching and contextual medical knowledge indexing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security and Controls&lt;/strong&gt;: Implements AWS Identity and Access Management (IAM) for access control and Amazon Bedrock Guardrails for content filtering and grounding validation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure&lt;/strong&gt;: The healthcare agent container is hosted via AgentCore runtime and connects to a client web interface.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deployment Options&lt;/strong&gt;: The containerized model server can be deployed on Amazon ECS, Amazon Elastic Kubernetes Service (Amazon EKS), or other container environments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-integration-with-hugging-face-skills"&gt;🛠️ Integration with Hugging Face Skills
+&lt;/h2&gt;&lt;p&gt;Coding agents can use six open source skills from the Hugging Face Skills GitHub repository to deploy models on Amazon SageMaker AI. These skills, written in Python and the AWS CLI, use a planner skill to orchestrate the workflow.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Operational Capabilities&lt;/strong&gt;: Supports real-time endpoints (default), real-time with scale-to-zero, serverless inference, asynchronous inference, batch transform, and Amazon Bedrock Custom Model Import.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Resource Management&lt;/strong&gt;: Automates the creation of target tracking autoscaling (1–2 instances) and CloudWatch alarms for latency, errors, and overhead.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Container Handling&lt;/strong&gt;: Resolves images from the AWS Deep Learning Containers (DLC) catalog, with the ability to pivot between serving containers such as TGI and vLLM based on model architecture requirements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/15/ML-21283-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #HuggingFace #SageMaker #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/migrating-multi-model-ai-agents-to-amazon-bedrock-agentcore-runtime/" target="_blank" rel="noopener"
+&gt;Migrating multi-model AI agents to Amazon Bedrock AgentCore runtime | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/" target="_blank" rel="noopener"
+&gt;Deploy Hugging Face models on Amazon SageMaker AI with coding agents | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker HyperPod Inference Gateway for GPU-Aware Routing</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-hyperpod-inference-gateway-for-gpu-aware-routing/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-hyperpod-inference-gateway-for-gpu-aware-routing/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21822-featured-image-2.png" alt="Featured image of post Amazon SageMaker HyperPod Inference Gateway for GPU-Aware Routing" /&gt;&lt;h1 id="amazon-sagemaker-hyperpod-inference-gateway-for-gpu-aware-routing"&gt;Amazon SageMaker HyperPod Inference Gateway for GPU-Aware Routing
+&lt;/h1&gt;&lt;p&gt;Amazon has announced the Amazon SageMaker HyperPod Inference Gateway, a Kubernetes-native, GPU-aware routing system designed to optimize how inference requests are placed on GPU clusters.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Running large language models (LLMs) at scale on GPU clusters is expensive, and default Kubernetes load balancers can exacerbate this. Standard round-robin and least-connections algorithms lack visibility into GPU internals, such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Saturated KV caches&lt;/li&gt;
+&lt;li&gt;Long-context generations in progress&lt;/li&gt;
+&lt;li&gt;Loaded LoRA adapters in memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These limitations cause requests to pile up behind busy pods while idle capacity remains unused, leading to unpredictable GPU utilization, wasted spend, and first-token latency spikes of 4+ seconds during traffic bursts.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The Inference Gateway uses a two-tier design built on Kubernetes-native primitives:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Tier&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Deployment&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Tier 1&lt;/td&gt;
+&lt;td style="text-align: left"&gt;amazon-sagemaker-hyperpod-inference addon&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Installs on each HyperPod/EKS cluster to handle local intelligent routing using real-time GPU signals.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Tier 2&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Built on top of Tier 1&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides fleet-wide coordination across multiple clusters and regions, including global rate limiting, cost-aware traffic shaping, and cross-cluster failover.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Deployment&lt;/strong&gt;: Deploys as a single EKS managed addon on existing HyperPod infrastructure using a declarative &lt;code&gt;InferenceGatewayConfig&lt;/code&gt; custom resource.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compatibility&lt;/strong&gt;: Exposes a standard OpenAI-compatible endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Request Routing&lt;/strong&gt;: The Body-Based Router natively routes requests to the correct model pool based on the model field in the request body via defined schedulers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LoRA Optimization&lt;/strong&gt;: The EPP’s LoRA Affinity Scorer identifies pods with the requested adapter resident in GPU memory to eliminate adapter swap latency. If no pod has it loaded, the request is routed to the pod with the most available capacity to load it quickly.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tuning&lt;/strong&gt;: Each scorer includes a configurable weight to tune routing for specific workloads, such as throughput-optimized batch or latency-sensitive chat.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonSageMaker #Kubernetes #LLM #GPU #CloudComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-amazon-sagemaker-hyperpod-inference-gateway/" target="_blank" rel="noopener"
+&gt;Introducing Amazon SageMaker HyperPod Inference Gateway | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS CLI v1 Enters Maintenance Mode and Sets End-of-Support Date</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-cli-v1-enters-maintenance-mode-and-sets-end-of-support-date/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-cli-v1-enters-maintenance-mode-and-sets-end-of-support-date/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/2232217?v=4" alt="Featured image of post AWS CLI v1 Enters Maintenance Mode and Sets End-of-Support Date" /&gt;&lt;h1 id="aws-cli-v1-enters-maintenance-mode-and-sets-end-of-support-date"&gt;AWS CLI v1 Enters Maintenance Mode and Sets End-of-Support Date
+&lt;/h1&gt;&lt;p&gt;The AWS CLI v1, which provides a unified command line interface to Amazon Web Services, has entered maintenance mode as of August 5, 2026.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Maintenance Mode:&lt;/strong&gt; Starting August 5, 2026, releases are limited to security issues and critical bug fixes only.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;End-of-Support:&lt;/strong&gt; The AWS CLI v1 will reach end-of-support on July 15, 2027.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Limitations:&lt;/strong&gt; The version will not receive updates for existing or new services, nor will it be updated to support new regions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;h3 id="installation-and-requirements"&gt;Installation and Requirements
+&lt;/h3&gt;&lt;p&gt;Installation uses packaging features from setuptools (recommended 36.2.0 or greater) and pip (recommended 9.0.2 or greater).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supported Python Versions:&lt;/strong&gt; 3.10.x, 3.11.x, 3.12.x, 3.13.x, and 3.14.x (and greater).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Installation Methods:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Virtualenv using pip (the safest way).&lt;/li&gt;
+&lt;li&gt;Bundled installer for Mac OS and Linux.&lt;/li&gt;
+&lt;li&gt;MSI Installer for Windows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="configuration"&gt;Configuration
+&lt;/h3&gt;&lt;p&gt;Users must configure AWS credentials before use via the following methods:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Method&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Configuration command&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Run the &lt;code&gt;aws configure&lt;/code&gt; command for the quickest start&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Environment variables&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use &lt;code&gt;export AWS_ACCESS_KEY_ID&lt;/code&gt; and &lt;code&gt;export AWS_SECRET_ACCESS_KEY&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Shared credentials file&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Create an INI file in &lt;code&gt;~/.aws/credentials&lt;/code&gt; (or &lt;code&gt;%UserProfile%\.aws\credentials&lt;/code&gt; on Windows)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Config file&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Create an INI formatted file&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;IAM Role&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Available configuration method&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;If the shared credentials file is placed in a custom location, the &lt;code&gt;AWS_SHARED_CREDENTIALS_FILE&lt;/code&gt; environment variable must be set.&lt;/p&gt;
+&lt;p&gt;#AWS #AWSCLI #CloudComputing #DeveloperTools&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/aws/aws-cli" target="_blank" rel="noopener"
+&gt;aws/aws-cli&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Pulumi Infrastructure as Code for Multi-Cloud Resource Management</title><link>https://shoubhikbanerjee.github.io/blog/p/pulumi-infrastructure-as-code-for-multi-cloud-resource-management/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/pulumi-infrastructure-as-code-for-multi-cloud-resource-management/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/21992475?v=4" alt="Featured image of post Pulumi Infrastructure as Code for Multi-Cloud Resource Management" /&gt;&lt;h1 id="pulumi-infrastructure-as-code-for-multi-cloud-resource-management"&gt;Pulumi Infrastructure as Code for Multi-Cloud Resource Management
+&lt;/h1&gt;&lt;p&gt;Pulumi provides an infrastructure-as-code approach to build and deploy infrastructure across any architecture and cloud using known programming languages.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Pulumi allows users to provision and manage resources on AWS, Azure, Google Cloud Platform, Kubernetes, and over 300 other providers. It is open source under the Apache 2.0 license and is designed to be easy to extend.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Instead of using YAML, users write code in their favorite language, utilizing standard features such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Loops&lt;/li&gt;
+&lt;li&gt;Functions&lt;/li&gt;
+&lt;li&gt;Classes&lt;/li&gt;
+&lt;li&gt;Package management&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Automation API&lt;/strong&gt;: Used to embed IaC anywhere.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pulumi ESC&lt;/strong&gt;: Used to manage configuration complexity and secrets sprawl securely across applications and cloud infrastructure.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repository Components&lt;/strong&gt;: The main repository includes the Pulumi CLI, language SDKs, and the core Pulumi engine, while individual libraries are maintained in their own repositories.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Pulumi #InfrastructureAsCode #CloudComputing #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/pulumi/pulumi" target="_blank" rel="noopener"
+&gt;pulumi/pulumi&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Wood Mackenzie Launches APEX Shared Agentic Platform Using Amazon Bedrock AgentCore</title><link>https://shoubhikbanerjee.github.io/blog/p/wood-mackenzie-launches-apex-shared-agentic-platform-using-amazon-bedrock-agentcore/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/wood-mackenzie-launches-apex-shared-agentic-platform-using-amazon-bedrock-agentcore/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/16/ML-21057-featured-image.png" alt="Featured image of post Wood Mackenzie Launches APEX Shared Agentic Platform Using Amazon Bedrock AgentCore" /&gt;&lt;h1 id="wood-mackenzie-launches-apex-shared-agentic-platform-using-amazon-bedrock-agentcore"&gt;Wood Mackenzie Launches APEX Shared Agentic Platform Using Amazon Bedrock AgentCore
+&lt;/h1&gt;&lt;p&gt;Wood Mackenzie has developed APEX (Agentic Platform for Energy eXperience), a shared platform designed to allow teams to ship AI agents without reinventing underlying infrastructure.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;There is a wide gap between AI experimentation and production. Industry surveys through early 2026 indicate enterprise AI experimentation is near universal, yet only about a quarter of organizations have scaled agents into production in even one function. Internally at Wood Mackenzie, 88 percent of AI proofs-of-concept never reach widescale deployment.&lt;/p&gt;
+&lt;p&gt;Failures are largely attributed to architectural issues rather than model-related ones:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation and Observability:&lt;/strong&gt; This is the most-named blocker; teams cannot reliably predict when non-deterministic agents will be wrong, and standard regression tests often fail to catch it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Governance and Identity:&lt;/strong&gt; Many executives report an inability to immediately shut down misbehaving agents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure Duplication:&lt;/strong&gt; Teams frequently rebuild authentication, guardrails, memory, and tracing from scratch, often hardcoding models which makes swapping providers require code rewrites.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;System Behavior:&lt;/strong&gt; Forrester attributes failures to ambiguity, miscoordination, and unpredictable system behavior.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;APEX is built on Amazon Bedrock AgentCore, a managed platform used to build, connect, and optimize agents at scale. By using a shared runtime for orchestration, safety, observability, identity, and connectivity, teams can focus on business logic rather than &amp;ldquo;backend plumbing.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Before APEX, three applications—Woody, Lens AI, and the ST Trading App—were each building their own agent stacks. A shared platform prevents the &amp;ldquo;infrastructure tax&amp;rdquo; of duplicating runtimes and ensures these stacks can share tools, memory, and evaluation.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Wood Mackenzie selected AgentCore over self-hosted solutions based on requirements for hosting models, cost models, scalability, governance, enterprise support, and whether the system is model agnostic.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Platform Capabilities:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model and Framework Agnostic:&lt;/strong&gt; Works with any model (regardless of whether it runs on Amazon Bedrock) and any open source framework, including:
+&lt;ul&gt;
+&lt;li&gt;Strands Agents&lt;/li&gt;
+&lt;li&gt;LangGraph&lt;/li&gt;
+&lt;li&gt;LangChain&lt;/li&gt;
+&lt;li&gt;LlamaIndex&lt;/li&gt;
+&lt;li&gt;CrewAI&lt;/li&gt;
+&lt;li&gt;Google ADK&lt;/li&gt;
+&lt;li&gt;OpenAI Agents SDK&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Protocol Support:&lt;/strong&gt; Supports both the Model Context Protocol (MCP) and the Agent-to-Agent (A2A) protocol.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Managed Infrastructure:&lt;/strong&gt; AWS handles patching, availability, and scaling, removing the need to operate a cluster.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Control Plane:&lt;/strong&gt; APEX Studio provides a single control plane for operations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deployment:&lt;/strong&gt; Serves both internal users (Woody) and external consumers (Lens) under identity-aware entitlements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AIagents #AmazonBedrock #EnterpriseAI #AgentCore #WoodMackenzie&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/a-shared-agentic-platform-for-wood-mackenzie-on-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;A shared agentic platform for Wood Mackenzie, on Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Floci Released as Open-Source Local AWS Emulator</title><link>https://shoubhikbanerjee.github.io/blog/p/floci-released-as-open-source-local-aws-emulator/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/floci-released-as-open-source-local-aws-emulator/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/271436837?v=4" alt="Featured image of post Floci Released as Open-Source Local AWS Emulator" /&gt;&lt;h1 id="floci-released-as-open-source-local-aws-emulator"&gt;Floci Released as Open-Source Local AWS Emulator
+&lt;/h1&gt;&lt;p&gt;Floci is a new free, open-source local AWS emulator designed for development, testing, and CI, allowing users to run AWS-shaped services on their own machines.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Floci serves as a drop-in replacement for AWS services that does not require a cloud account, auth tokens, or paid feature gates. Key capabilities include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Compatibility with AWS SDK, CLI, Terraform, CDK, OpenTofu, and test suites.&lt;/li&gt;
+&lt;li&gt;Support for any region.&lt;/li&gt;
+&lt;li&gt;Acceptance of any non-empty values for credentials, unless stricter service-specific auth checks are explicitly enabled.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Users can point their workflows to http://localhost:4566 to access all AWS services. The fastest way to run Floci is via the official CLI. For containerized deployments, the following configurations are used:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Image:&lt;/strong&gt; floci/floci:latest&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ports:&lt;/strong&gt; 4566:4566&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Required Volume:&lt;/strong&gt; /var/run/docker.sock:/var/run/docker.sock (required to start a container)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Floci includes a browser console for inspecting local emulator resources, accessible at http://localhost:4566/_floci/ui. The first request pulls the console image and starts it as a sidecar container on Floci&amp;rsquo;s Docker network, with logs streamed into CloudWatch Logs under /floci/ui.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Configuration Variable&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Default Value&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;FLOCI_SERVICES_UI_ENABLED&lt;/td&gt;
+&lt;td style="text-align: left"&gt;true&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enable the console sidecar&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;FLOCI_SERVICES_UI_IMAGE&lt;/td&gt;
+&lt;td style="text-align: left"&gt;floci/floci-ui:latest&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Console image to run&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;FLOCI_SERVICES_UI_CONTAINER_NAME&lt;/td&gt;
+&lt;td style="text-align: left"&gt;floci-ui&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Name of the sidecar container&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;FLOCI_SERVICES_UI_PORT&lt;/td&gt;
+&lt;td style="text-align: left"&gt;4500&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Host port the console is published on&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;FLOCI_SERVICES_UI_KEEP_RUNNING_ON_SHUTDOWN&lt;/td&gt;
+&lt;td style="text-align: left"&gt;false&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Leave the sidecar running when Floci stops&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Floci is the AWS member of a larger emulator family:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Emulator&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Provider&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Port&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;floci&lt;/td&gt;
+&lt;td style="text-align: left"&gt;AWS&lt;/td&gt;
+&lt;td style="text-align: left"&gt;4566&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;floci-az&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Azure&lt;/td&gt;
+&lt;td style="text-align: left"&gt;4577&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;floci-gcp&lt;/td&gt;
+&lt;td style="text-align: left"&gt;GCP&lt;/td&gt;
+&lt;td style="text-align: left"&gt;4588&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;floci-oci&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OCI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;4599&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Note: The old hectorvent/floci repository no longer receives updates.&lt;/p&gt;
+&lt;p&gt;#AWS #OpenSource #CloudComputing #DevOps #Emulator&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/floci-io/floci" target="_blank" rel="noopener"
+&gt;floci-io/floci&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Composable Highly Available Cluster Deployment with Kubernetes 1.36.4</title><link>https://shoubhikbanerjee.github.io/blog/p/new-composable-highly-available-cluster-deployment-with-kubernetes-1-36-4/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-composable-highly-available-cluster-deployment-with-kubernetes-1-36-4/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/36015203?v=4" alt="Featured image of post New Composable Highly Available Cluster Deployment with Kubernetes 1.36.4" /&gt;&lt;h1 id="new-composable-highly-available-cluster-deployment-with-kubernetes-1364"&gt;New Composable Highly Available Cluster Deployment with Kubernetes 1.36.4
+&lt;/h1&gt;&lt;p&gt;A new composable, highly available cluster has been introduced, supporting a wide range of cloud environments, bare metal deployments, and popular Linux distributions.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The system can be deployed on the following platforms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS&lt;/li&gt;
+&lt;li&gt;GCE&lt;/li&gt;
+&lt;li&gt;Azure&lt;/li&gt;
+&lt;li&gt;OpenStack&lt;/li&gt;
+&lt;li&gt;vSphere&lt;/li&gt;
+&lt;li&gt;Equinix Metal (bare metal)&lt;/li&gt;
+&lt;li&gt;Oracle Cloud Infrastructure (Experimental)&lt;/li&gt;
+&lt;li&gt;Baremetal&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="supported-operating-systems"&gt;Supported Operating Systems
+&lt;/h3&gt;&lt;p&gt;The cluster supports most popular Linux distributions, though Upstart/SysV init based OS types are not supported. Support includes:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;OS Family&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Supported Versions&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Ubuntu&lt;/td&gt;
+&lt;td style="text-align: left"&gt;22.04, 24.04, 26.04&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Fedora&lt;/td&gt;
+&lt;td style="text-align: left"&gt;39, 40, 41, 42&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Debian&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Bookworm, Trixie&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CentOS Stream / RHEL&lt;/td&gt;
+&lt;td style="text-align: left"&gt;9, 10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Alma Linux&lt;/td&gt;
+&lt;td style="text-align: left"&gt;9, 10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Rocky Linux&lt;/td&gt;
+&lt;td style="text-align: left"&gt;9, 10 (experimental in 10)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Oracle Linux&lt;/td&gt;
+&lt;td style="text-align: left"&gt;9, 10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;openSUSE&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Leap 16.x/Tumbleweed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Specialized&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Flatcar Container Linux by Kinvolk, Fedora CoreOS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Experimental&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Kylin Linux Advanced Server V10, Amazon Linux 2, UOS Linux, openEuler&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="technical-stack"&gt;Technical Stack
+&lt;/h3&gt;&lt;p&gt;The deployment utilizes the following components and versions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Core:&lt;/strong&gt; kubernetes 1.36.4, etcd 3.6.14&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Container Runtimes:&lt;/strong&gt; docker 28.3, containerd 2.3.5, cri-o 1.36.5 (experimental; available only on Fedora, Ubuntu, and CentOS based OS)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Networking &amp;amp; Plugins:&lt;/strong&gt; cni-plugins 1.9.1, calico 3.31.7, cilium 1.20.2, flannel 0.28.9, kube-ovn 1.12.21, kube-router 2.1.1, multus 4.2.2, kube-vip 1.0.3&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Management &amp;amp; Tools:&lt;/strong&gt; cert-manager 1.15.3, coredns 1.14.2, argocd 2.14.5, helm 3.18.4, metallb 0.13.9, registry 2.8.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Composable Architecture:&lt;/strong&gt; Users have a choice of the network plugin for instances.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quality Assurance:&lt;/strong&gt; The system utilizes continuous integration tests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Kubernetes #CloudComputing #Linux #Infrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/kubernetes-sigs/kubespray" target="_blank" rel="noopener"
+&gt;kubernetes-sigs/kubespray&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Resiliency Extension Adds Fault-Tolerance Primitives to PyTorch</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-resiliency-extension-adds-fault-tolerance-primitives-to-pytorch/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-resiliency-extension-adds-fault-tolerance-primitives-to-pytorch/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-20900-featured-image.png" alt="Featured image of post NVIDIA Resiliency Extension Adds Fault-Tolerance Primitives to PyTorch" /&gt;&lt;h1 id="nvidia-resiliency-extension-adds-fault-tolerance-primitives-to-pytorch"&gt;NVIDIA Resiliency Extension Adds Fault-Tolerance Primitives to PyTorch
+&lt;/h1&gt;&lt;p&gt;The NVIDIA Resiliency Extension (NVRx) has been introduced as a pip-installable Python layer (&lt;code&gt;pip install nvidia-resiliency-ext&lt;/code&gt;) that provides fault-tolerance primitives for PyTorch without requiring custom kernels, a PyTorch fork, or recompilation.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NVRx provides three primary features to handle different types of failures during training:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Async Checkpointing&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Replaces &lt;code&gt;torch.save&lt;/code&gt; with &lt;code&gt;async_save()&lt;/code&gt; via &lt;code&gt;TorchAsyncCheckpoint&lt;/code&gt;, handing the state dict to a background process to return immediately.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;In-process Restart&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses &lt;code&gt;inprocess.Wrapper&lt;/code&gt; to wrap the train function, preventing transient faults like unhandled exceptions or NCCL hangs from killing the Python process.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;ft_launcher&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;An in-job restart launcher that handles OS-level hangs, SIGKILL, and out-of-memory (OOM) kills.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;When using &lt;code&gt;ft_launcher&lt;/code&gt;, each rank runs a &lt;code&gt;RankMonitorClient&lt;/code&gt;. The launcher monitors heartbeats against CLI-set timeouts; if a stall or death is detected, it kills survivors, reclaims GPU memory, and respawns workers in the same job, which then reload from the latest checkpoint.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Checkpointing Efficiency:&lt;/strong&gt; When paired with FSDP &lt;code&gt;LOCAL_STATE_DICT&lt;/code&gt;, each rank writes its own shard directly, eliminating the rank-0 bottleneck and the need for all-gather.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure Requirements:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Compute:&lt;/strong&gt; Amazon EC2 p5.48xlarge instances featuring 8x NVIDIA H100 80 GB GPUs and 32x Elastic Fabric Adapter (EFA) network interfaces.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Orchestration:&lt;/strong&gt; Amazon EKS (v1.28+) managing the control plane, pod scheduling, and Job lifecycle. Training pods run as Kubernetes Jobs with headless Services for DNS-based peer discovery.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Storage:&lt;/strong&gt; Amazon FSx for Lustre (SCRATCH_2) mounted via the FSx CSI driver for distributed checkpoint I/O.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Networking:&lt;/strong&gt; EFA provides 3,200 Gbps network bandwidth for NCCL all-reduce operations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Software:&lt;/strong&gt; Container images containing PyTorch 2.9+ and NVRx 0.4.1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;To reproduce benchmark results, the following environment is required:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS account with service quota for p5.48xlarge (or p4de.24xlarge) instances.&lt;/li&gt;
+&lt;li&gt;Amazon EKS cluster with EFA-enabled self-managed GPU node groups and the NVIDIA device plugin.&lt;/li&gt;
+&lt;li&gt;Amazon FSx for Lustre filesystem in the same Availability Zone as the GPU nodes.&lt;/li&gt;
+&lt;li&gt;Container image stored in Amazon ECR.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#NVIDIA #PyTorch #AWS #FaultTolerance #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/fault-tolerant-distributed-training-on-amazon-eks-using-nvrx/" target="_blank" rel="noopener"
+&gt;Fault tolerant distributed training on Amazon EKS using NVRx | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Pulumi Infrastructure as Code for Multi-Cloud Resource Management</title><link>https://shoubhikbanerjee.github.io/blog/p/pulumi-infrastructure-as-code-for-multi-cloud-resource-management/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/pulumi-infrastructure-as-code-for-multi-cloud-resource-management/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/21992475?v=4" alt="Featured image of post Pulumi Infrastructure as Code for Multi-Cloud Resource Management" /&gt;&lt;h1 id="pulumi-infrastructure-as-code-for-multi-cloud-resource-management"&gt;Pulumi Infrastructure as Code for Multi-Cloud Resource Management
+&lt;/h1&gt;&lt;p&gt;Pulumi provides an infrastructure-as-code (IaC) approach to build and deploy infrastructure across any architecture and cloud using familiar programming languages.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Pulumi is an open source tool under the Apache 2.0 license that supports many clouds and languages. Its repository includes the core Pulumi engine, language SDKs, and the pulumi CLI, while individual libraries are maintained in separate repositories.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Resource Management&lt;/strong&gt;: Automatically provisions and manages resources on Kubernetes, Azure, AWS, Google Cloud Platform, and 300+ other providers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Development Experience&lt;/strong&gt;: Allows users to skip YAML in favor of standard language features such as classes, functions, loops, and package management.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integration&lt;/strong&gt;: Infrastructure as Code can be embedded anywhere using the Automation API.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configuration&lt;/strong&gt;: Pulumi ESC is used to manage configuration complexity and secrets sprawl securely across applications and cloud infrastructure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Pulumi #InfrastructureAsCode #CloudComputing #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/pulumi/pulumi" target="_blank" rel="noopener"
+&gt;pulumi/pulumi&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Hostinger Launches GPU Hosting for AI Development</title><link>https://shoubhikbanerjee.github.io/blog/p/hostinger-launches-gpu-hosting-for-ai-development/</link><pubDate>Mon, 14 Sep 2026 22:04:39 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/hostinger-launches-gpu-hosting-for-ai-development/</guid><description>&lt;img src="https://imagedelivery.net/LqiWLm-3MGbYHtFuUbcBtA/wp-content/uploads/sites/2/2026/09/gpu-cloud-providers-hero.jpg/public" alt="Featured image of post Hostinger Launches GPU Hosting for AI Development" /&gt;&lt;h1 id="hostinger-launches-gpu-hosting-for-ai-development"&gt;Hostinger Launches GPU Hosting for AI Development
+&lt;/h1&gt;&lt;p&gt;Hostinger has introduced GPU Hosting, providing direct access to NVIDIA GPUs with a deployment process designed to be simpler than traditional hyperscalers.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Users maintain control of the server environment through full root, terminal, and SSH access. To streamline setup, the service allows for the launch of preconfigured AI applications that include necessary drivers, containers, and dependencies.&lt;/p&gt;
+&lt;p&gt;Management and usage monitoring are handled via the Hostinger dashboard, and live availability is displayed before deployment.&lt;/p&gt;
+&lt;h2 id="-pricing-and-billing"&gt;💰 Pricing and Billing
+&lt;/h2&gt;&lt;p&gt;Hostinger uses an hourly credit model that meters GPU usage per minute with no long-term commitment. Key billing details include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Continuous Billing:&lt;/strong&gt; Charges continue as long as the instance exists, including during idle periods.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stopping Charges:&lt;/strong&gt; Destroying the instance is currently the only way to stop compute charges.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Transfer:&lt;/strong&gt; There are no egress charges for transferring generated data out of the instance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;There are currently six instance options across five GPU models:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;GPU Model&lt;/th&gt;
+&lt;th style="text-align: left"&gt;VRAM&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Price per Hour&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;RTX 4090&lt;/td&gt;
+&lt;td style="text-align: left"&gt;24GB&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.38&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;RTX PRO 6000 Server&lt;/td&gt;
+&lt;td style="text-align: left"&gt;96GB&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.60&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;L40S&lt;/td&gt;
+&lt;td style="text-align: left"&gt;48GB&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.92&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;A100 80GB PCIe&lt;/td&gt;
+&lt;td style="text-align: left"&gt;80GB&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$1.43&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;B200&lt;/td&gt;
+&lt;td style="text-align: left"&gt;192GB&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$4.50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;B200 Dedicated&lt;/td&gt;
+&lt;td style="text-align: left"&gt;192GB&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$7.08&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Different GPU options support various AI workloads:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;RTX 4090:&lt;/strong&gt; The most accessible starting point for workloads requiring 24GB of VRAM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;A100:&lt;/strong&gt; Provides 80GB of VRAM for memory-intensive inference and training.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B200:&lt;/strong&gt; Offers 192GB of VRAM for large-model inference and training at scale.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Hostinger #NVIDIA #GPU #AIInfrastructure #CloudComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.hostinger.com/tutorials/best-gpu-cloud-providers/" target="_blank" rel="noopener"
+&gt;10 best GPU cloud providers for AI and machine learning&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>MIT AI Gateway Updates with Expanded Provider Catalog and Token Compression</title><link>https://shoubhikbanerjee.github.io/blog/p/mit-ai-gateway-updates-with-expanded-provider-catalog-and-token-compression/</link><pubDate>Sat, 12 Sep 2026 22:02:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/mit-ai-gateway-updates-with-expanded-provider-catalog-and-token-compression/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/8016841?v=4" alt="Featured image of post MIT AI Gateway Updates with Expanded Provider Catalog and Token Compression" /&gt;&lt;h1 id="mit-ai-gateway-updates-with-expanded-provider-catalog-and-token-compression"&gt;MIT AI Gateway Updates with Expanded Provider Catalog and Token Compression
+&lt;/h1&gt;&lt;p&gt;The MIT AI gateway has provided updates to its single-endpoint access system, which connects users to a vast array of AI providers and models.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Built by over 550 contributors, the gateway provides a single endpoint to access 352 providers and 1,312 unique chat model IDs, including Kimi, Claude, GPT, Gemini, GLM, DeepSeek, and MiniMax.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Free Access:&lt;/strong&gt; 150+ providers offer free tiers, with 444 cataloged free-tier entries across 34 recurring pool keys.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Token Volume:&lt;/strong&gt; The system maintains ~1.47B free tokens per month, which can reach ~2.10B in the first month including signup credits.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Token Savings:&lt;/strong&gt; RTK and Caveman stacked compression saves between 15% and 95% of tokens, with an average saving of ~89%.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Routing and Scheduling:&lt;/strong&gt; The system features 19 routing strategies and new quota-aware scheduling called Quota-Share.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compatibility:&lt;/strong&gt; The gateway works with Claude Code, Codex, Cursor, OpenCode, Cline, Copilot, and Antigravity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;OmniRoute&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Catalogs free-tier entries and computes token headlines from 16 pools with published positive monthly budgets.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Modality Bridge&lt;/td&gt;
+&lt;td style="text-align: left"&gt;New support for vision, audio, and video.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Radar Free Catalog&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A new opt-in catalog for free tiers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Auto-fallback&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Quota-aware system that switches providers to prevent hitting limits.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Regional Identity Check&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Quotas requiring regional identity verification (e.g., ModelScope) are shown separately and not summed into the main headline.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Users can start at $0 and access a wide range of models through a single endpoint. The system includes a terms-risk catalog marking 13 providers to avoid, and figures are re-audited every two weeks against the live catalog to ensure accuracy. The results remain visible on the /dashboard/free-tiers dashboard.&lt;/p&gt;
+&lt;p&gt;#MIT #AIGateway #LLM #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/diegosouzapw/OmniRoute" target="_blank" rel="noopener"
+&gt;diegosouzapw/OmniRoute&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Alibaba Releases Open-Weight Qwen3.8-2.4T-A95B Model for Agentic Workloads</title><link>https://shoubhikbanerjee.github.io/blog/p/alibaba-releases-open-weight-qwen3-8-2-4t-a95b-model-for-agentic-workloads/</link><pubDate>Thu, 10 Sep 2026 22:04:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/alibaba-releases-open-weight-qwen3-8-2-4t-a95b-model-for-agentic-workloads/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/09/ML-21725-featured-image.png" alt="Featured image of post Alibaba Releases Open-Weight Qwen3.8-2.4T-A95B Model for Agentic Workloads" /&gt;&lt;h1 id="alibaba-releases-open-weight-qwen38-24t-a95b-model-for-agentic-workloads"&gt;Alibaba Releases Open-Weight Qwen3.8-2.4T-A95B Model for Agentic Workloads
+&lt;/h1&gt;&lt;p&gt;On August 12, 2026, Alibaba’s Qwen team released Qwen3.8-2.4T-A95B, marking the first time a Qwen-Max-class model has been made available as open weights. This model is the largest and most capable in the Qwen family, designed for the most demanding reasoning and agentic workloads.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Qwen3.8-2.4T-A95B utilizes a hybrid linear-plus-full-attention architecture to enable efficient long-context inference:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Gated DeltaNet layers:&lt;/strong&gt; 69 of 92 layers use linear attention with a bounded recurrent state, replacing the growing KV-cache with fixed-size memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Gated Attention layers:&lt;/strong&gt; 23 of 92 layers use full quadratic attention for high-fidelity token interactions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fine-grained MoE:&lt;/strong&gt; Capacity is distributed across 512 small experts to improve specialization and routing efficiency.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This 3:1 ratio of linear to full attention keeps compute and memory bounded as context scales toward 1M tokens.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Specification&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Total Parameters&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.4 Trillion&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Activated Parameters&lt;/td&gt;
+&lt;td style="text-align: left"&gt;95 Billion per token&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Native Context&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Up to 262K tokens (extensible to 1M)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Formats&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Standard Transformers (Hugging Face)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Quantizations&lt;/td&gt;
+&lt;td style="text-align: left"&gt;MXFP4 and NVFP4 (W4A4)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Designed for agentic execution, the model targets capabilities including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Multi-step coding&lt;/li&gt;
+&lt;li&gt;Long-horizon planning&lt;/li&gt;
+&lt;li&gt;Autonomous tool use&lt;/li&gt;
+&lt;li&gt;Complex research workflows&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Developers can use the &lt;code&gt;reasoning_effort&lt;/code&gt; parameter (low, medium, high) to trade compute for reasoning depth per request. According to vendor benchmarking, the model shows strength in terminal-based coding (86.6), instruction following (IFBench 82.8), and research workflows (PaperBench 93.0).&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;While the open weights allow data to stay within an organization&amp;rsquo;s infrastructure and eliminate per-token API fees, hosting requires purpose-built GPU infrastructure. Deployment is supported on Amazon SageMaker HyperPod using vLLM on ml.p6-b300 instances (8× NVIDIA B300 Blackwell Ultra GPUs).&lt;/p&gt;
+&lt;p&gt;HyperPod utilizes Amazon Elastic Kubernetes Service (Amazon EKS) as the control plane and provides an Inference Operator with an &lt;code&gt;InferenceEndpointConfig&lt;/code&gt; CRD to specify model and GPU resource requests. The ml.p6-b300.48xlarge instance type requires reserved capacity via Flexible Training Plans.&lt;/p&gt;
+&lt;p&gt;#Qwen #OpenWeights #LLM #AmazonSageMaker #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploying-qwen3-8-2-4t-a95b-on-amazon-sagemaker-hyperpod-with-vllm/" target="_blank" rel="noopener"
+&gt;Deploying Qwen3.8-2.4T-A95B on Amazon SageMaker HyperPod with vLLM | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Google to Invest €13 Billion in AI Infrastructure and Nuclear Power in Finland</title><link>https://shoubhikbanerjee.github.io/blog/p/google-to-invest-13-billion-in-ai-infrastructure-and-nuclear-power-in-finland/</link><pubDate>Thu, 10 Sep 2026 22:04:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/google-to-invest-13-billion-in-ai-infrastructure-and-nuclear-power-in-finland/</guid><description>&lt;img src="https://static.dw.com/image/79207581_6.jpg" alt="Featured image of post Google to Invest €13 Billion in AI Infrastructure and Nuclear Power in Finland" /&gt;&lt;h1 id="google-to-invest-13-billion-in-ai-infrastructure-and-nuclear-power-in-finland"&gt;Google to Invest €13 Billion in AI Infrastructure and Nuclear Power in Finland
+&lt;/h1&gt;&lt;p&gt;Google has announced a €13 billion ($15.1 billion) investment in AI infrastructure in Finland, marking the company&amp;rsquo;s largest single investment in the EU to date. This initiative includes a massive deal to purchase nuclear power in the Nordic country over the next two decades.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Scheduled for disbursement in 2027 and 2028, the investment will support Google&amp;rsquo;s map, search, and chatbot services through the following projects:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Data centers&lt;/li&gt;
+&lt;li&gt;Electrical grid improvement&lt;/li&gt;
+&lt;li&gt;Clean energy and battery projects&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Google is expanding its existing site in Hamina and opening data center operations in three new municipalities:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Location&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Hamina&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Expanding site on a &amp;ldquo;remarkable level&amp;rdquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Kajaani&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Opening data center operations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Muhos&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Opening data center operations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Vaala&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Opening data center operations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Economic and Employment Impact&lt;/strong&gt;
+Google claims the investment will create 37,000 jobs (7,000 permanent and the remainder during construction) and contribute approximately €3.6 billion to Finland&amp;rsquo;s GDP.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Energy Infrastructure&lt;/strong&gt;
+To manage energy needs, Google has entered a purchase agreement for 50% of the energy output from one of Finland&amp;rsquo;s two nuclear power plants for the next 22 years. Regarding this &amp;ldquo;bring your own power&amp;rdquo; (BYOP) strategy, Ruth Porat, Google President and Chief Investment Officer, noted, &amp;ldquo;This is Google&amp;rsquo;s first nuclear energy deal outside of the United States.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Operational Continuity&lt;/strong&gt;
+Plant operator Fortum stated that this deal allows the Loviisa Nuclear Power Plant to continue operating until its licenses end in 2050; otherwise, the plant—which provides about 10% of Finland&amp;rsquo;s electricity—would not have been able to operate past 2030. Following the news, Fortum shares rose 15.5% to their highest level in over four years.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Energy Demand&lt;/strong&gt;
+Network operator Fingrid forecasts a 40% jump in energy consumption over coming years due to Finland&amp;rsquo;s data center boom.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.dw.com/image/79207581_800.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Google #Finland #AIInfrastructure #NuclearEnergy #DataCenters&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.dw.com/en/finland-google-announces-13-billion-ai-energy-investment/a-79208034" target="_blank" rel="noopener"
+&gt;Finland: Google announces €13 billion AI, energy investment&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LLMinference on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/llminference/</link><description>Recent content in LLMinference on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 23 Sep 2026 22:05:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/llminference/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Blackwell Confidential Computing retains up to 98% LLM inference throughput</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-blackwell-confidential-computing-retains-up-to-98-llm-inference-throughput/</link><pubDate>Wed, 23 Sep 2026 22:05:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-blackwell-confidential-computing-retains-up-to-98-llm-inference-throughput/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2024/12/cybersecurity-graphic-1-660x370.png" alt="Featured image of post NVIDIA Blackwell Confidential Computing retains up to 98% LLM inference throughput" /&gt;&lt;h1 id="nvidia-blackwell-confidential-computing-retains-up-to-98-llm-inference-throughput"&gt;NVIDIA Blackwell Confidential Computing retains up to 98% LLM inference throughput
+&lt;/h1&gt;&lt;p&gt;NVIDIA demonstrated that running a 32K‑input/1K‑output LLM inference workload inside confidential virtual machines (CVMs) on a Blackwell‑based DGX B200 system keeps almost all of the baseline performance.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;NVIDIA Confidential Computing (CC) provides memory‑encrypted CVMs, confidential GPUs, and encrypted NVLink, enabling LLM inference to run securely while preserving throughput.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Secure data path&lt;/strong&gt; – The Blackwell CC architecture enforces hardware‑based protection for data and workloads in use.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Host‑to‑device transfer&lt;/strong&gt; – In the B200 CC, transfers go through a software‑encrypted bounce buffer because the GPU cannot directly access protected CVM memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TensorRT LLM adaptations&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses CC‑aware memory selection, opting for pageable memory on protected paths instead of always using pinned memory.&lt;/li&gt;
+&lt;li&gt;Moves repeated‑token and sampling‑data readback to an asynchronous worker, so protected copies do not block the main scheduler during decode.&lt;/li&gt;
+&lt;li&gt;Measures tactics with the GPU &lt;code&gt;%globaltimer&lt;/code&gt; inside CC while keeping CUDA events outside CC.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NVLink limitation&lt;/strong&gt; – NVLS (NVLink SHARP) multicast is not available in B200 CC configurations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model&lt;/strong&gt;: &lt;code&gt;nvidia/DeepSeek-R1-0528-NVFP4&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference framework&lt;/strong&gt;: TensorRT LLM (Docker container) with PyTorch backend&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sequence lengths&lt;/strong&gt;: 32K input, 1K output&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Parallelism&lt;/strong&gt;: TP=8, EP=1, PP=1; KV cache in FP8&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Concurrency tested&lt;/strong&gt;: 1, 2, 4, 8, 16 requests&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware&lt;/strong&gt;: 1 NVIDIA DGX B200 system (8 NVIDIA B200 GPUs), GPU power limit 1,000 W&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Platform&lt;/strong&gt;: Intel TDX&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Host OS / kernel&lt;/strong&gt;: Ubuntu 25.10 / 6.17.0-20-generic&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Guest OS / kernel&lt;/strong&gt;: Ubuntu 24.04.4 LTS / 6.8.0-124-generic, 256 vCPUs, 2 NUMA nodes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Driver / software stack&lt;/strong&gt;: NVIDIA driver 595.71.05, VBIOS FW 1.4.x, CUDA 13.2, TensorRT LLM 1.3.0rc22, NCCL v2.30, OpenSSL 3.6.0, Docker + NVIDIA Container Toolkit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-results"&gt;📈 Performance results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Across concurrency levels 1–16, CC retained &lt;strong&gt;96.1 %–98.2 %&lt;/strong&gt; of the output‑token throughput compared with a non‑confidential baseline.&lt;/li&gt;
+&lt;li&gt;Mean TPOT (time‑per‑output‑token) stayed within &lt;strong&gt;1.2 %–4.3 %&lt;/strong&gt; of the baseline.&lt;/li&gt;
+&lt;li&gt;These results show that the security overhead of CC is limited to a few percent while providing full data protection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The Blackwell confidential computing architecture creates a hardware‑enforced security path that protects data in use without sacrificing most of the inference performance required for large‑scale LLM deployments.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/cc-on-off-output-token-throughput.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/mean-tpot-cc-on-off.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2023/07/confidential-computing-featured.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #ConfidentialComputing #LLMInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/enabling-private-high-performance-production-ai-inference-with-nvidia-confidential-computing/" target="_blank" rel="noopener"
+&gt;Enabling Private High-Performance Production AI Inference with NVIDIA Confidential Computing | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker AI Introduces Concurrency Sweeps for Generative AI Endpoints</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-introduces-concurrency-sweeps-for-generative-ai-endpoints/</link><pubDate>Tue, 22 Sep 2026 22:03:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-introduces-concurrency-sweeps-for-generative-ai-endpoints/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-featured-image.png" alt="Featured image of post Amazon SageMaker AI Introduces Concurrency Sweeps for Generative AI Endpoints" /&gt;&lt;h1 id="amazon-sagemaker-ai-introduces-concurrency-sweeps-for-generative-ai-endpoints"&gt;Amazon SageMaker AI Introduces Concurrency Sweeps for Generative AI Endpoints
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker AI has updated its Inference Recommendations to include concurrency sweeps, a systematic benchmarking approach used to right-size generative AI endpoints by optimizing price-performance while maintaining acceptable latency.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;A concurrency sweep sends controlled, increasing levels of simultaneous requests to a SageMaker AI endpoint to analyze performance. This feature is built into Amazon SageMaker AI Inference Recommendations, eliminating the need to build or maintain custom load-testing infrastructure.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The concurrency sweep measures two primary metrics at each level of traffic:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Throughput&lt;/strong&gt;: The number of tokens per second produced by the endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Latency&lt;/strong&gt;: The time taken for each request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The workflow consists of four steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Deploy the model to a SageMaker AI endpoint using the native vLLM container.&lt;/li&gt;
+&lt;li&gt;Configure the workload profile (input and output token counts, streaming mode).&lt;/li&gt;
+&lt;li&gt;Run the concurrency sweep using the &lt;code&gt;CreateAIBenchmarkJob&lt;/code&gt; API.&lt;/li&gt;
+&lt;li&gt;Analyze the results to identify optimal concurrency and right-size the fleet.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;In a deployment scenario using the NVIDIA Nemotron-3 Nano 30B Mixture-of-Experts (MoE) model on an &lt;code&gt;ml.g7e.2xlarge&lt;/code&gt; instance (backed by an NVIDIA Blackwell GPU), the following configurations are applied:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Configuration&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Container&lt;/td&gt;
+&lt;td style="text-align: left"&gt;vLLM Deep Learning Container for SageMaker AI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;SM_VLLM_ENFORCE_EAGER&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Required for Nemotron-3 Nano&amp;rsquo;s Mamba-Transformer hybrid architecture&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GPU Memory Utilization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Set to 0.85 to provide headroom for KV cache growth&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Prefix Caching&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enabled to reuse cached key-value pairs for repeated system prompts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Workload profiles are defined using &lt;code&gt;CreateAIWorkloadConfig&lt;/code&gt; with the following parameters:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Parameter&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Value&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;prompt_input_tokens_mean&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,024&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Average input prompt length&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;output_tokens_mean&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;256&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Average generated response length&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Streaming is enabled to capture time to first token (TTFT) metrics for interactive user experiences. The benchmark engine (AIPerf) runs each concurrency level sequentially within a single job, sending the total number of requests defined under &lt;code&gt;request_count&lt;/code&gt; at each level.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonSageMaker #vLLM #GenerativeAI #LLMInference #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/right-size-generative-ai-endpoints-with-concurrency-sweeps-on-amazon-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Right-size generative AI endpoints with concurrency sweeps on Amazon SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Optimizing Speculative Decoding Draft Length for LLM Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/optimizing-speculative-decoding-draft-length-for-llm-inference/</link><pubDate>Wed, 02 Sep 2026 22:08:32 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/optimizing-speculative-decoding-draft-length-for-llm-inference/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/llm-optimize-deploy-660x370.png" alt="Featured image of post Optimizing Speculative Decoding Draft Length for LLM Inference" /&gt;&lt;h1 id="optimizing-speculative-decoding-draft-length-for-llm-inference"&gt;Optimizing Speculative Decoding Draft Length for LLM Inference
+&lt;/h1&gt;&lt;p&gt;Speculative decoding is a technique for accelerating the autoregressive decoding phase of LLM inference by predicting multiple tokens per iteration. New guidelines detail how to optimize draft length based on workload characteristics and hardware constraints, particularly for mixture-of-experts models and attention-heavy workloads.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Speculative decoding works by using a small draft model to predict several likely next tokens, which are then verified in parallel with a single pass through the larger target model. This approach reduces the total number of decoding iterations while increasing the arithmetic intensity of the target model, without requiring higher concurrency.&lt;/p&gt;
+&lt;p&gt;The target model accepts the proposed tokens in sequence until it encounters the first mismatch. The next prediction cycle then resumes from that position. Because only tokens accepted by the target model are retained, speculative decoding produces the same output sequence as standard decoding, unless the acceptance criteria are deliberately relaxed.&lt;/p&gt;
+&lt;h2 id="-key-metrics"&gt;🧩 Key Metrics
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Draft length (\(D\))&lt;/strong&gt;: The number of proposed tokens per target iteration&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Acceptance length (\(AL\))&lt;/strong&gt;: The number of tokens produced (accepted) per target iteration&lt;/li&gt;
+&lt;li&gt;\(AL\) ranges from \(1\) to \((1 + D)\) because the target can always produce one new ground-truth token in addition to the accepted draft tokens&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-compute-and-memory-dynamics"&gt;⚙️ Compute and Memory Dynamics
+&lt;/h2&gt;&lt;p&gt;During verification, compute scales with \((1 + D)\), but memory access remains unchanged. The goal is to increase \(D\) until \(T_{\mathrm{verif}}\) remains constant, typically up to the point where verification transitions from memory bound to compute bound.&lt;/p&gt;
+&lt;p&gt;With speculation, the GEMM-\(M\) for each target linear layer GEMM grows from \(M\) to \(M \times (1 + D)\), where \(M\) is the GEMM-\(M\) with no speculation.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Draft length&lt;/th&gt;
+&lt;th&gt;Batch size reduction for compute-bound&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;\(D=7\)&lt;/td&gt;
+&lt;td&gt;One-eighth of batch size needed vs. \(D=0\)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;As mixture-of-experts (MoE) models become sparser and long-context workloads increase KV capacity pressure, the effective concurrency per expert decreases, making larger draft lengths attractive across the Pareto frontier.&lt;/p&gt;
+&lt;h2 id="-three-guidelines-for-draft-length-selection"&gt;📐 Three Guidelines for Draft Length Selection
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Guideline 1&lt;/strong&gt;: Increase speculative decoding draft length to push GEMMs into the compute-bound region without increasing KV cache capacity pressure.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Guideline 2&lt;/strong&gt;: When attention dominates decode time, choose \(D = \frac{128}{G} – 1\).&lt;/p&gt;
+&lt;p&gt;For reasoning and agentic workloads, attention tends to dominate the execution time in the throughput-oriented region. On current GPU devices, attention kernels achieve good hardware utilization at GEMM-\(M=128\). The \(G = 32\) variant reaches throughput saturation at a lower value of \(D\). Beyond the throughput saturation point, attention is no longer DRAM bandwidth bound, and its runtime scales with \(D\).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Guideline 3&lt;/strong&gt;: If you choose \(D &gt; \frac{128}{G} – 1\), prefer values where \(G \times (1 + D)\) is a multiple of 128 to avoid tile underutilization.&lt;/p&gt;
+&lt;p&gt;Attention runtime also depends on tile size. Runtime increases in steps as \(G \times (1 + D)\) crosses a multiple of 128, the software tile size for the benchmarked attention kernel. If \(G \times (1 + D)\) falls between two tile boundaries, the last tile is only partially utilized but still costs about as much as a full tile.&lt;/p&gt;
+&lt;h2 id="-performance-characteristics"&gt;📊 Performance Characteristics
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;With \(D=7\), one-eighth of the batch size is needed to become compute bound compared to \(D=0\)&lt;/li&gt;
+&lt;li&gt;Normalized attention throughput varies with \(D\) for different \(G\) values across 32K and 128K KV sequence lengths&lt;/li&gt;
+&lt;li&gt;Attention kernel tile size is 128&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/speculative-decoding-flow.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/gemm-throughput-spec-decode.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/normalized-attention-tflops.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#speculativedecoding #LLMinference #mixtureofexperts #GPUoptimization #attentionmechanism #GEMMoptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/co-designing-ai-models-using-speculative-decoding-for-faster-llm-inference/" target="_blank" rel="noopener"
+&gt;Co-Designing AI Models Using Speculative Decoding for Faster LLM Inference | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

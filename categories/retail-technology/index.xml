@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Retail Technology on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/retail-technology/</link><description>Recent content in Retail Technology on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 14 Sep 2026 22:04:39 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/retail-technology/index.xml" rel="self" type="application/rss+xml"/><item><title>Automating Retail Replenishment with MMF, Databricks Genie, and Amazon Quick</title><link>https://shoubhikbanerjee.github.io/blog/p/automating-retail-replenishment-with-mmf-databricks-genie-and-amazon-quick/</link><pubDate>Mon, 14 Sep 2026 22:04:39 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/automating-retail-replenishment-with-mmf-databricks-genie-and-amazon-quick/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21670-featured-image.png" alt="Featured image of post Automating Retail Replenishment with MMF, Databricks Genie, and Amazon Quick" /&gt;&lt;h1 id="automating-retail-replenishment-with-mmf-databricks-genie-and-amazon-quick"&gt;Automating Retail Replenishment with MMF, Databricks Genie, and Amazon Quick
+&lt;/h1&gt;&lt;p&gt;A new technical solution integrates Databricks and Amazon Quick to automate the retail replenishment loop, connecting demand forecasting directly to order placement to reduce stockouts of fast-moving items.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Retail demand forecasts typically have a short shelf life. Traditionally, the gap between a forecast and a placed order persisted because the forecast (stored in a governed data platform) and supplier availability (stored in a separate operational feed) lived in different systems, often inaccessible to the person placing the order. While foundation models have simplified demand forecasting across entire catalogs without per-item tuning, the bottleneck shifted to the downstream gap between the forecast and the action.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The solution creates a loop that detects demand surges, identifies a supplier, and places orders unattended, escalating to a human only when no rule fits. The process runs in four stages:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Stage&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Tool&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Forecast&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Databricks MMF&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Serves Chronos-2 to predict 7-day demand for every SKU.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Detect&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Databricks Genie Agent&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Surfaces SKUs in a surge (next-7-day average $\geq$ 1.5x prior-14-day average, with a floor of 1).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Decide&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Amazon Quick&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Reconciles surging SKUs against live supplier availability in Amazon S3 Tables and picks the cheapest supplier.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Act&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Amazon Quick Flows&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Places a purchase order via Supplier Order API or raises a human-review ticket if no single supplier can cover the surge.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Amazon Quick serves as the central component, joining data on a shared product key at decision time using a Databricks Genie Agent over the Model Context Protocol (MCP), S3 Tables for supplier feeds, and an OpenAPI connector for the Order API.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Technical Requirements:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Databricks CLI 0.299.0+&lt;/li&gt;
+&lt;li&gt;AWS CLI 2.36.2+&lt;/li&gt;
+&lt;li&gt;jq 1.7&lt;/li&gt;
+&lt;li&gt;uv (or Python 3.11) for the supplier-feed loader&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Permissions and Setup:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Quick:&lt;/strong&gt; User requires an Author or Author Pro role to create Quick Flows, MCP, and OpenAPI connectors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Databricks:&lt;/strong&gt; Identity requires CREATE CATALOG on the metastore (or admin pre-creation of the mmf catalog).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Authentication:&lt;/strong&gt; Databricks workspace profile must be authenticated via &lt;code&gt;databricks auth login&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Deployment:&lt;/strong&gt;
+The solution is managed via the local terminal using &lt;code&gt;aws quicksight&lt;/code&gt; subcommands (&lt;code&gt;create-flow&lt;/code&gt;, &lt;code&gt;create-data-source&lt;/code&gt;, and &lt;code&gt;create-space&lt;/code&gt;). Key files in the accompanying repository include &lt;code&gt;genie/genie_space&lt;/code&gt; for the agent definition, &lt;code&gt;flow/flow_definition&lt;/code&gt; for the flow, and &lt;code&gt;cleanup/cleanup.sh&lt;/code&gt; for teardown. The forecast is produced using notebooks 01 and 02 from the MMF accelerator’s &lt;code&gt;fresh_retail_net&lt;/code&gt; example.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21670-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21670-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/artifacts/DBSBlogs/ML-21670/ML-21670-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Databricks #AmazonQuick #RetailAutomation #SupplyChain #DemandForecasting&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/automate-replenishment-with-mmf-databricks-genie-and-amazon-quick/" target="_blank" rel="noopener"
+&gt;Automate replenishment with MMF, Databricks Genie, and Amazon Quick | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

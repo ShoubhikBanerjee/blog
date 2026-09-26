@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Shopify on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/shopify/</link><description>Recent content in Shopify on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 22 Sep 2026 22:03:42 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/shopify/index.xml" rel="self" type="application/rss+xml"/><item><title>Reactiv uses Amazon Bedrock AgentCore to automate Shopify app updates</title><link>https://shoubhikbanerjee.github.io/blog/p/reactiv-uses-amazon-bedrock-agentcore-to-automate-shopify-app-updates/</link><pubDate>Tue, 22 Sep 2026 22:03:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/reactiv-uses-amazon-bedrock-agentcore-to-automate-shopify-app-updates/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21280-featured-image.png" alt="Featured image of post Reactiv uses Amazon Bedrock AgentCore to automate Shopify app updates" /&gt;&lt;h1 id="reactiv-uses-amazon-bedrock-agentcore-to-automate-shopify-app-updates"&gt;Reactiv uses Amazon Bedrock AgentCore to automate Shopify app updates
+&lt;/h1&gt;&lt;p&gt;Reactiv has updated its mobile commerce product by implementing an AI Scheduler to autonomously update merchant apps on a schedule. By utilizing Amazon Bedrock AgentCore, Reactiv reduced merchant configuration time by 80 percent and reached production 33 percent faster.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Reactiv provides Shopify merchants with native iOS and Android apps, which see shopper conversion rates 2–4 times higher than web visitors. Their toolset includes analytics dashboards, a low-code app builder, and AI-powered features.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Reactiv built the AI Scheduler as a three-agent system using the Strands Agents SDK on Amazon Bedrock AgentCore. The system consists of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supervisor:&lt;/strong&gt; Classifies intent.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Analytics Agent:&lt;/strong&gt; Queries merchant data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Builder Agent:&lt;/strong&gt; Generates configurations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Reactiv packages its Strands agent graph as a Docker image, pushes it to Amazon Elastic Container Registry (Amazon ECR), and deploys it to AgentCore. The system later unified interactive and scheduled agents onto a single stack to achieve shared memory across both modes.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Reactiv migrated its configuration schema server (the Config MCP) from Amazon Elastic Container Service (Amazon ECS) to Amazon Bedrock AgentCore runtime. The MCP operates as a stateful server that initializes the current app configuration at the start of a session, with the Builder Agent performing mutations validated against the schema on every call.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore runtime&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles managed agent execution&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore memory&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides persistent cross-session context&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgentCore Identity&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles service-to-service authentication&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon EventBridge&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides Cron scheduling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides foundation model access and guardrails&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="memory-and-isolation"&gt;Memory and Isolation
+&lt;/h3&gt;&lt;p&gt;AgentCore provides long-term memory scoped per merchant to maintain data privacy, utilizing three specific mechanisms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Session summarizer:&lt;/strong&gt; Condenses job actions into context for future runs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Preference learner:&lt;/strong&gt; Tracks merchant approvals or rejections of layouts over time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Semantic fact extractor:&lt;/strong&gt; Stores knowledge regarding brand guidelines, top sellers, and product categories.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Infrastructure isolation is managed via Firecracker microVMs, ensuring each merchant&amp;rsquo;s agent state, memory, and execution context runs in its own isolated environment.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21280-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21280-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21280-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #Shopify #AIAgents #Ecommerce #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-reactiv-automates-mobile-commerce-80-faster-with-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;How Reactiv automates mobile commerce 80% faster with Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Shopify Returns to Swift and Kotlin Codebases for Native Apps</title><link>https://shoubhikbanerjee.github.io/blog/p/shopify-returns-to-swift-and-kotlin-codebases-for-native-apps/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/shopify-returns-to-swift-and-kotlin-codebases-for-native-apps/</guid><description>&lt;h1 id="shopify-returns-to-swift-and-kotlin-codebases-for-native-apps"&gt;Shopify Returns to Swift and Kotlin Codebases for Native Apps
+&lt;/h1&gt;&lt;p&gt;Shopify is moving from React Native back to separate Swift and Kotlin codebases for its native applications.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;In 2020, Shopify switched to React Native for three reasons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Stop building the same features twice&lt;/li&gt;
+&lt;li&gt;Allow developers to work across the stack&lt;/li&gt;
+&lt;li&gt;Spend less time chasing feature parity and more time shipping value&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Shopify states that agents can now handle enough of the implementation, translation, testing, and review work that those factors are no longer the deciding factors they were in 2020.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Shopify is the maintainer of three significant React Native libraries. Their status is as follows:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Library&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Status&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;react-native-skia&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Finding a new home&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;flash-list&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Finding a new home&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;restyle&lt;/td&gt;
+&lt;td style="text-align: left"&gt;To be archived at the end of 2026 (noted as having a smaller user base than other libraries)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#Shopify #ReactNative #Swift #Kotlin #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/10/shopify-react-native/" target="_blank" rel="noopener"
+&gt;Native is now the future of mobile at Shopify&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud Security on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/cloud-security/</link><description>Recent content in Cloud Security on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 21 Sep 2026 22:03:11 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/cloud-security/index.xml" rel="self" type="application/rss+xml"/><item><title>Benchling Secures AI-Generated Scientific Code Using Amazon Bedrock AgentCore</title><link>https://shoubhikbanerjee.github.io/blog/p/benchling-secures-ai-generated-scientific-code-using-amazon-bedrock-agentcore/</link><pubDate>Mon, 21 Sep 2026 22:03:11 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/benchling-secures-ai-generated-scientific-code-using-amazon-bedrock-agentcore/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-21025-featured-image.png" alt="Featured image of post Benchling Secures AI-Generated Scientific Code Using Amazon Bedrock AgentCore" /&gt;&lt;h1 id="benchling-secures-ai-generated-scientific-code-using-amazon-bedrock-agentcore"&gt;Benchling Secures AI-Generated Scientific Code Using Amazon Bedrock AgentCore
+&lt;/h1&gt;&lt;p&gt;Benchling has implemented AgentCore Code Interpreter, a capability of Amazon Bedrock AgentCore, to securely execute AI-generated scientific code for researchers across thousands of tenants.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock AgentCore is a platform designed to build, connect, and optimize agents at scale using any framework or model. Benchling utilizes this platform in Amazon Virtual Private Cloud (VPC) mode to handle several primary use cases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AI agent-generated scientific code&lt;/li&gt;
+&lt;li&gt;Simple calculations&lt;/li&gt;
+&lt;li&gt;Code-generation sandboxes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To prevent data exfiltration and ensure tenant isolation, Benchling employs an architecture that separates production environments from code execution:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Production Account&lt;/strong&gt;: Contains the Benchling Stack, IAM Roles, AWS STS, and customer data in Amazon S3.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Untrusted Code Account&lt;/strong&gt;: A separate AWS account hosting the ACCI VPC and a container-based execution environment using gVisor for kernel-level isolation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Tasks are dispatched from the production account to the untrusted account. Because the solution cannot use one IAM role per tenant to avoid unsustainable role sprawl, per-job credentials are injected into each session via AWS Security Token Service (AWS STS) to scope data access dynamically.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Security is enforced through multiple layers of network and access controls:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Control Mechanism&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;VPC Configuration&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;No internet gateway and no NAT gateway; restricts outbound paths to the public internet.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Security Group&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Restricts the Code Interpreter to port 443.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Route 53 Resolver DNS Firewall&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Applies a three-priority policy: blocks malicious domains (Priority 10), allows explicitly listed endpoints (Priority 100), and blocks all others (Priority 200).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;VPC Endpoints&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides the only permitted network paths via S3 Gateway and Interface endpoints.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Network Controls&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Block HTTP, restrict egress ports, and limit outbound connections.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This architecture ensures that each session accesses only that specific tenant&amp;rsquo;s data with no cross-tenant visibility. A Continuous Validation suite runs integration tests to simulate exfiltration attempts against the configuration. Currently, this architecture processes more than 600 code execution sessions per day across more than 250 tenants per week with zero security incidents.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/Benchling-agentcore-ci-revised.drawio.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AIagents #Cybersecurity #CloudComputing #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;How Benchling secured multi-tenant AI agents with Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Implementing Multi-Gate Authorization for MCP Tools on Amazon Quick</title><link>https://shoubhikbanerjee.github.io/blog/p/implementing-multi-gate-authorization-for-mcp-tools-on-amazon-quick/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/implementing-multi-gate-authorization-for-mcp-tools-on-amazon-quick/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/15/ML-21168-featured-image.png" alt="Featured image of post Implementing Multi-Gate Authorization for MCP Tools on Amazon Quick" /&gt;&lt;h1 id="implementing-multi-gate-authorization-for-mcp-tools-on-amazon-quick"&gt;Implementing Multi-Gate Authorization for MCP Tools on Amazon Quick
+&lt;/h1&gt;&lt;p&gt;Amazon Quick now supports a multi-gate authorization pattern for Model Context Protocol (MCP) tool invocations, utilizing an interceptor to evaluate OpenID Connect (OIDC) JSON Web Token (JWT) claims in sequence.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Model Context Protocol (MCP) is an open protocol that connects applications to internal tools, databases, and APIs to reduce the need for custom integrations. In this implementation, Amazon Quick connects to an Amazon Bedrock AgentCore Gateway—a capability of Amazon Bedrock AgentCore—which provides the JWT validation layer and HTTP endpoint between clients and MCP tools.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Authorization is managed through a single AWS Lambda REQUEST interceptor attached to the Amazon Bedrock AgentCore Gateway. This interceptor processes JWT claims through four independent gates in a fixed sequence:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Gate&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Name&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Enforcement/Claim&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Requirement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;1&lt;/td&gt;
+&lt;td style="text-align: left"&gt;MFA verification&lt;/td&gt;
+&lt;td style="text-align: left"&gt;IdP / Conditional Access Policy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Require MFA before token issuance&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Conditional&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;2&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Country geo-fence&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;ctry&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Restrict access to approved countries&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Conditional (&lt;code&gt;REQUIRE_COUNTRY=true&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;3&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Group RBAC&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;groups&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Map group membership to reader, author, or admin policies&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Always (core gate)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;4&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tool permission&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Policy allowlists&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Verify the requested tool exists in the matched policy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Always (core gate)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Identity Provider:&lt;/strong&gt; Microsoft Entra ID serves as the IdP. It enforces the Conditional Access Policy for MFA before issuing a token.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configuration:&lt;/strong&gt; Gates are configured via environment variables. While Gates 3 and 4 are always active, Gates 1 and 2 can be disabled by omitting the environment variables or setting them to false.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MFA Validation:&lt;/strong&gt; Setting &lt;code&gt;REQUIRE_MFA&lt;/code&gt; enables an additional check of the &lt;code&gt;amr&lt;/code&gt; claim inside the interceptor for IdPs that record MFA evidence in the token.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access Control:&lt;/strong&gt; Role-based permissions establish a read/write boundary where readers can query risks but cannot create, update, or delete them, while administrators can bypass conditional gates.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compliance:&lt;/strong&gt; Every mutation must produce an immutable audit record for forensic and compliance requirements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This pattern is demonstrated using a fictional example involving AnyCompany Global Services, which uses MCP tools on Amazon Quick to access a multi-tenant risk register hosted on Amazon DynamoDB.&lt;/p&gt;
+&lt;p&gt;#AmazonQuick #AmazonBedrock #MCP #Authorization #AWSLambda&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/implementing-defense-in-depth-authorization-for-mcp-tools-on-amazon-quick/" target="_blank" rel="noopener"
+&gt;Implementing defense-in-depth authorization for MCP tools on Amazon Quick | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Automating Custom Permissions Assignment in Quick</title><link>https://shoubhikbanerjee.github.io/blog/p/automating-custom-permissions-assignment-in-quick/</link><pubDate>Wed, 09 Sep 2026 22:05:26 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/automating-custom-permissions-assignment-in-quick/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/ML-21102-featured-image.png" alt="Featured image of post Automating Custom Permissions Assignment in Quick" /&gt;&lt;h1 id="automating-custom-permissions-assignment-in-quick"&gt;Automating Custom Permissions Assignment in Quick
+&lt;/h1&gt;&lt;p&gt;Quick has introduced architectural patterns to automate the assignment of custom permissions, allowing organizations to enforce fine-grained access control across the user lifecycle.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Custom permissions enable administrators to toggle specific features on or off for individual users. This allows for precise control, such as enabling financial analysts to author reports without exporting raw data, or allowing external partners to view dashboards without accessing sharing controls.&lt;/p&gt;
+&lt;p&gt;Permissions follow a three-level hierarchy where settings are applied as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;User-level&lt;/strong&gt;: Overrides role-level settings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Role-level&lt;/strong&gt;: Overrides account-level settings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Account-level&lt;/strong&gt;: The base level of the hierarchy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Organizations can use four architectural patterns to automate permissions based on their specific needs:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Method&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Application Scenario&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;RegisterUser&lt;/code&gt; API&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Applies permissions during user creation via the &lt;code&gt;--custom-permissions-name&lt;/code&gt; parameter; common for SaaS companies restricting features like GenBI and paginated reports based on pricing tiers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;UpdateAccountCustomPermission&lt;/code&gt; API&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Sets a fallback profile for any user without an explicit assignment, including those created via Just-In-Time provisioning.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;UpdateRoleCustomPermission&lt;/code&gt; API&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Sets a default custom permission profile per Quick role (READER, AUTHOR, ADMIN, and PRO roles).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Event-Driven Automation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses Amazon EventBridge and AWS Lambda to detect new group memberships (native Quick groups or AWS IAM Identity Center groups) and apply permissions dynamically.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Conditional Logic&lt;/strong&gt;: For requirements beyond native defaults—such as applying different profiles based on group membership—event-driven automation is used. This is necessary because there is no native API for assigning custom permissions directly to a Group.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complementary Strategies&lt;/strong&gt;: Role and account-level defaults (Scenario 2) and group-based automation (Scenario 3) are complementary rather than alternatives.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Provisioning Gaps&lt;/strong&gt;: Because Just-In-Time federation creates a window between account creation and group assignment, Scenario 3 only triggers upon the group membership event.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enterprise Scale&lt;/strong&gt;: Account-level defaults allow large enterprises to instantly block new features, such as GenBI or connectors, for all users during security reviews without per-user automation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Quick #AWS #AccessControl #Automation #IAM&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/automate-user-level-custom-permissions-for-amazon-quick/" target="_blank" rel="noopener"
+&gt;Automate user-level custom permissions for Amazon Quick | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

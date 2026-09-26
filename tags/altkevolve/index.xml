@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ALTKEvolve on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/altkevolve/</link><description>Recent content in ALTKEvolve on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 15 Sep 2026 22:08:30 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/altkevolve/index.xml" rel="self" type="application/rss+xml"/><item><title>Consistency Guidelines for ALTK-Evolve Reduce Agent Reliability Gaps</title><link>https://shoubhikbanerjee.github.io/blog/p/consistency-guidelines-for-altk-evolve-reduce-agent-reliability-gaps/</link><pubDate>Tue, 15 Sep 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/consistency-guidelines-for-altk-evolve-reduce-agent-reliability-gaps/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6435a1131860001f144239ea/dI5J2sSc3TSprk9VB4EVJ.jpeg" alt="Featured image of post Consistency Guidelines for ALTK-Evolve Reduce Agent Reliability Gaps" /&gt;&lt;h1 id="consistency-guidelines-for-altk-evolve-reduce-agent-reliability-gaps"&gt;Consistency Guidelines for ALTK-Evolve Reduce Agent Reliability Gaps
+&lt;/h1&gt;&lt;p&gt;An update to the ALTK-Evolve system introduces consistency guidelines designed to address the reliability gap in AI agents, where workflows that succeed once may fail upon repeated requests.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Reliability is a critical issue for mission-critical work, such as checking a contract for an obligation or reconciling a financial transaction. This inconsistency is not a capability problem solvable by larger models, but an orthogonal axis where an agent can be simultaneously capable and inconsistent.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Using a ReAct agent (GPT-4.1 on AppWorld test_normal), researchers identified a &amp;ldquo;consistency gap&amp;rdquo;—defined as Mean@k minus Pass^k. While the agent posted a Mean@5 of 77.4%, its Pass^5 was only 53.0%, resulting in a 24.4-point consistency gap. On hard tasks, this gap reaches 30 points.&lt;/p&gt;
+&lt;p&gt;This variance occurs because LLM decisions are based on probability distributions over next tokens:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sharp distributions:&lt;/strong&gt; Most mass is on a single token, making them resilient to platform-side effects like request batching or GPU floating-point non-associativity.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flat distributions:&lt;/strong&gt; Mass is spread across near-tied tokens. Small perturbations on hosted endpoints can reorder these ties, causing the same prompt at temperature 0.0 to resolve differently from run to run.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The update introduces consistency guidelines built upon a diagnostic tool called the Consistency Analyzer.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Diagnosis:&lt;/strong&gt; The Consistency Analyzer resamples an agent&amp;rsquo;s recorded trajectory to find &amp;ldquo;flip-prone decision points&amp;rdquo; where the model was one token-sample away from a different action.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Process:&lt;/strong&gt; It requires one trace and no ground truth. It resamples each decision point in the trace with a single call requesting k completions (k=5 by default) replayed against the recorded context, rather than re-running the task end-to-end.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Implementation:&lt;/strong&gt; These diagnoses are turned into guidelines and injected back at inference time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Turning the Consistency Analyzer&amp;rsquo;s diagnosis into guidelines resulted in the following improvements:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Impact&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Consistency Gap&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Halved from 24.4pp to 12.0pp&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Same-task Pass^5&lt;/td&gt;
+&lt;td style="text-align: left"&gt;+16.0pp&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Similar-task&lt;/td&gt;
+&lt;td style="text-align: left"&gt;+13.0pp&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Average Accuracy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;No cost&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The setup utilized a ReAct agent running at temperature 0.0.&lt;/p&gt;
+&lt;p&gt;#LLM #AIagents #ALTK-Evolve #Reliability&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/ibm-research/altk-evolve-consistency" target="_blank" rel="noopener"
+&gt;Your Agent Aced the Task. Will It Do It Again?&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
