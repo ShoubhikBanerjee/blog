@@ -2,7 +2,7 @@
 title: "Strands Agents Releases Open-Source SDK for Production AI Agents"
 slug: "strands-agents-releases-open-source-sdk-for-production-ai-agents"
 description: "Strands Agents has released an open-source SDK for building and running production AI agents in Python and TypeScript. The SDK allows developers to build an agent harness and control it end-to-end..."
-date: 2026-09-26T12:01:30+05:30
+date: 2026-09-26T18:02:33+05:30
 tags: [OpenSource, AIAgents, Python, TypeScript, SDK]
 categories: ["AI", "AI Agents", "Software Development", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/209155962?v=4"
