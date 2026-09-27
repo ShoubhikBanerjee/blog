@@ -2,7 +2,7 @@
 title: "Ubicloud Launches Open Source Cloud for Bare Metal Providers"
 slug: "ubicloud-launches-open-source-cloud-for-bare-metal-providers"
 description: "Ubicloud is an open source cloud that can run anywhere, providing IaaS cloud features on bare metal providers including AWS Bare Metal, Leaseweb, and Hetzner."
-date: 2026-09-27T18:01:26+05:30
+date: 2026-09-27T22:01:46+05:30
 tags: [Ubicloud, OpenSource, IaaS, CloudComputing, BareMetal]
 categories: ["AI", "Cloud Infrastructure", "Open Source Software", "Information Technology"]
 image: "https://avatars.githubusercontent.com/u/121406468?v=4"
