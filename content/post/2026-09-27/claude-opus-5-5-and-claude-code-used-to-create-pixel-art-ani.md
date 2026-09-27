@@ -2,7 +2,7 @@
 title: "Claude Opus 5.5 and Claude Code used to create pixel art animation"
 slug: "claude-opus-5-5-and-claude-code-used-to-create-pixel-art-animation"
 description: "A user utilized Claude Opus 5.5 and Claude Code to generate a pixel art animation and a corresponding video for a keynote presentation at the WeAreDevelopers World Congress North America."
-date: 2026-09-27T12:02:31+05:30
+date: 2026-09-27T18:01:26+05:30
 tags: [Claude, Anthropic, PixelArt, ClaudeCode, Playwright]
 categories: ["AI", "Generative AI", "Software Development", "AI Agents"]
 image: "https://static.simonwillison.net/static/2026/kakapo-party-first-frame.webp"

@@ -2,7 +2,7 @@
 title: "Update to Agent Development Kit with Go Toolkit Support"
 slug: "update-to-agent-development-kit-with-go-toolkit-support"
 description: "The Agent Development Kit (ADK) has been updated with an open-source, code-first Go toolkit designed for building, evaluating, and deploying AI agents."
-date: 2026-09-27T12:02:31+05:30
+date: 2026-09-27T18:01:26+05:30
 tags: [GoLang, AIAgents, OpenSource, CloudNative]
 categories: ["AI", "AI Agents", "Software Development", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/1342004?v=4"

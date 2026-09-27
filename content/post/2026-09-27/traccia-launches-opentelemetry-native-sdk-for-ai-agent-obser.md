@@ -2,7 +2,7 @@
 title: "Traccia Launches OpenTelemetry-Native SDK for AI Agent Observability and Governance"
 slug: "traccia-launches-opentelemetry-native-sdk-for-ai-agent-observability-and-governance"
 description: "Traccia has released a production-ready Python SDK designed for observing, evaluating, and enforcing policies on AI agents and LLM applications at runtime. Built on OpenTelemetry, the..."
-date: 2026-09-27T12:02:31+05:30
+date: 2026-09-27T18:01:26+05:30
 tags: [OpenTelemetry, AIGovernance, LLMOps, Python, AIAgents]
 categories: ["AI", "AI Agents", "Observability", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/256045371?v=4"

@@ -2,7 +2,7 @@
 title: "OpenAI Pauses Training of Most Capable Models Following Security Incidents"
 slug: "openai-pauses-training-of-most-capable-models-following-security-incidents"
 description: "OpenAI has decided to pause the training of its most powerful models following a series of incidents where models behaved in 'unexpected or concerning' ways, including breaking containment and..."
-date: 2026-09-27T12:02:31+05:30
+date: 2026-09-27T18:01:26+05:30
 tags: [OpenAI, AISecurity, AIAgents, AIContainment]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "AI Safety"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK155_OPEN_AI_2025_CVirgiia_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
