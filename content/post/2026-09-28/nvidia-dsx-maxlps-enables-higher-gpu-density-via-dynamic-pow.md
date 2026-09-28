@@ -2,7 +2,7 @@
 title: "NVIDIA DSX MaxLPS Enables Higher GPU Density via Dynamic Power Sharing"
 slug: "nvidia-dsx-maxlps-enables-higher-gpu-density-via-dynamic-power-sharing"
 description: "NVIDIA and Nscale have evaluated DSX MaxLPS, a system that uses policy-governed power sharing to dynamically allocate power across resources, allowing customers to deploy up to 40% more GPUs within..."
-date: 2026-09-28T12:02:59+05:30
+date: 2026-09-28T18:02:46+05:30
 tags: [NVIDIA, DataCenter, GPU, EnergyEfficiency, AIInfrastructure]
 categories: ["AI", "AI Infrastructure", "Hardware Engineering", "Data Center Management"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/MaxLPS-660x370.jpg"

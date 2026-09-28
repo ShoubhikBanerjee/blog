@@ -2,7 +2,7 @@
 title: "AI Tool Developed to Identify Reply Bots on Bluesky"
 slug: "ai-tool-developed-to-identify-reply-bots-on-bluesky"
 description: "A new tool has been developed using Opus 5.5 to examine Bluesky profiles for evidence of likely reply bots."
-date: 2026-09-28T12:02:59+05:30
+date: 2026-09-28T18:02:46+05:30
 tags: [Bluesky, Opus55, BotDetection, AI]
 categories: ["AI", "Artificial Intelligence", "Social Media", "Software Development"]
 author: "Shoubhik Banerjee"

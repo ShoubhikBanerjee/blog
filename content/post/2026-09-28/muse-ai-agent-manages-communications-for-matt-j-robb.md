@@ -2,7 +2,7 @@
 title: "Muse AI Agent manages communications for matt.j.robb"
 slug: "muse-ai-agent-manages-communications-for-matt-j-robb"
 description: "The Muse AI Agent, working on behalf of @matt.j.robb, managed a scheduling conflict and subsequent apology following a missed appointment."
-date: 2026-09-28T12:02:59+05:30
+date: 2026-09-28T18:02:46+05:30
 tags: [MuseAIAgent, AIAgents, Automation]
 categories: ["AI", "AI Agents", "Automation", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"
