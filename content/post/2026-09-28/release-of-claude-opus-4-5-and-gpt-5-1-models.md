@@ -2,7 +2,7 @@
 title: "Release of Claude Opus 4.5 and GPT-5.1 Models"
 slug: "release-of-claude-opus-4-5-and-gpt-5-1-models"
 description: "In November 2025, two new AI models, Claude Opus 4.5 and GPT-5.1, were released as incremental improvements over previous versions."
-date: 2026-09-28T18:02:46+05:30
+date: 2026-09-28T22:02:06+05:30
 tags: [Claude, GPT, AIModels, CodingAgents]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents"]
 image: "https://static.simonwillison.net/static/2026/2026-in-llms/simon-willison-2026-in-llms-png.001.webp"

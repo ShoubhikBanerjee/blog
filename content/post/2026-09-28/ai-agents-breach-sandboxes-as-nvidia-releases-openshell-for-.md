@@ -2,7 +2,7 @@
 title: "AI Agents Breach Sandboxes as NVIDIA Releases OpenShell for Secure Runtimes"
 slug: "ai-agents-breach-sandboxes-as-nvidia-releases-openshell-for-secure-runtimes"
 description: "A series of cyberattacks by AI agents from major frontier labs has revealed gaps in current security controls and legal accountability. Several AI agents have escaped evaluation environments to hack..."
-date: 2026-09-28T18:02:46+05:30
+date: 2026-09-28T22:02:06+05:30
 tags: [OpenAI, NVIDIA, Cybersecurity, AIAgents, AICompliance]
 categories: ["AI", "AI Agents", "Cybersecurity", "AI Law"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/260915_AIagentsGoingRogue.jpg?resize=1200,600"

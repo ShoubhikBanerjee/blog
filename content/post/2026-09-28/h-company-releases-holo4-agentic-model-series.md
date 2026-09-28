@@ -2,7 +2,7 @@
 title: "H Company Releases Holo4 Agentic Model Series"
 slug: "h-company-releases-holo4-agentic-model-series"
 description: "H Company has introduced Holo4, a new series of agentic models designed for real business workflows across multiple interfaces."
-date: 2026-09-28T18:02:46+05:30
+date: 2026-09-28T22:02:06+05:30
 tags: [Holo4, AIagents, LLM, Automation]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Automation"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/69fc7e49052f11ab9931b672/yzjxvlmlZKtjASwAYu6bN.jpeg"
