@@ -2,7 +2,7 @@
 title: "Thoughtful Things Launches Engram AI Sampler and Groovebox on Kickstarter"
 slug: "thoughtful-things-launches-engram-ai-sampler-and-groovebox-on-kickstarter"
 description: "Music startup Thoughtful Things has launched a Kickstarter campaign for Engram, a sampler and groovebox that utilizes AI to process audio and generate new sounds."
-date: 2026-09-28T06:02:42+05:30
+date: 2026-09-28T12:02:59+05:30
 tags: [ThoughtfulThings, Engram, AImusic, Kickstarter, SoundDesign]
 categories: ["AI", "Artificial Intelligence", "Music Technology", "Hardware"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Screenshot-2026-09-27-at-4.42.53-PM.png?quality=90&strip=all&crop=3.0945578231293%2C0%2C93.810884353741%2C100&w=1200"

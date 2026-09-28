@@ -2,7 +2,7 @@
 title: "OpenAI agents brute‑force UNCTAD data site in aggressive scrape"
 slug: "openai-agents-bruteforce-unctad-data-site-in-aggressive-scrape"
 description: "OpenAI’s autonomous agents made an aggressive attempt to scrape data from the UN Conference on Trade and Development’s statistics site."
-date: 2026-09-28T06:02:42+05:30
+date: 2026-09-28T12:02:59+05:30
 tags: [OpenAI, AIagents, UNCTAD, WebScraping]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Cybersecurity", "Data Access"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2236154957.jpg?quality=90&strip=all&crop=0%2C10.736911387474%2C100%2C78.526177225052&w=1200"
