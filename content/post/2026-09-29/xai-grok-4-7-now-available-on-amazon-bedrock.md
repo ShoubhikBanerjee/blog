@@ -2,7 +2,7 @@
 title: "xAI Grok 4.7 Now Available on Amazon Bedrock"
 slug: "xai-grok-4-7-now-available-on-amazon-bedrock"
 description: "xAI’s Grok 4.7 is now available on Amazon Bedrock, introducing a frontier model designed for coding, knowledge work, and long-running agents to the Bedrock model catalog."
-date: 2026-09-29T06:03:39+05:30
+date: 2026-09-29T12:01:29+05:30
 tags: [xAI, AmazonBedrock, Grok, LLM, CodingAgents]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/28/ML-21934-featured-image.png"

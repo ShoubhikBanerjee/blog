@@ -2,7 +2,7 @@
 title: "AI Agent Capabilities Lead to Increased Cybersecurity Risks and Vulnerabilities"
 slug: "ai-agent-capabilities-lead-to-increased-cybersecurity-risks-and-vulnerabilities"
 description: "Recent developments in agentic AI systems have significantly advanced cybersecurity and coding capabilities, leading to both the discovery of widespread system vulnerabilities and an increase in..."
-date: 2026-09-29T06:03:39+05:30
+date: 2026-09-29T12:01:29+05:30
 tags: [Cybersecurity, Anthropic, OpenAI, AIAgents, Infosec]
 categories: ["AI", "AI Agents", "Cybersecurity", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25299205/STK453_Privacy_D_CVirginia.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

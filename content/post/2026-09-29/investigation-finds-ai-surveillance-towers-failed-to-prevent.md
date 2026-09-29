@@ -2,7 +2,7 @@
 title: "Investigation Finds AI Surveillance Towers Failed to Prevent Border Deaths"
 slug: "investigation-finds-ai-surveillance-towers-failed-to-prevent-border-deaths"
 description: "An investigation by MIT Technology Review has documented that over a thousand people died in areas monitored by US border surveillance towers, including those equipped with AI technology."
-date: 2026-09-29T06:03:39+05:30
+date: 2026-09-29T12:01:29+05:30
 tags: [AI, Surveillance, BorderSecurity, MITTechnologyReview]
 categories: ["AI", "Artificial Intelligence", "Computer Vision", "Public Safety"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/MITTR-Roundtables-Zoom-Opening-Overlay.png?resize=1200,600"

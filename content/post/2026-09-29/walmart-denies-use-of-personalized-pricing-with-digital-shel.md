@@ -2,7 +2,7 @@
 title: "Walmart Denies Use of Personalized Pricing with Digital Shelf Labels"
 slug: "walmart-denies-use-of-personalized-pricing-with-digital-shelf-labels"
 description: "Walmart has stated it will not use personal information or time of day to change product prices, following reports from The Wall Street Journal."
-date: 2026-09-29T06:03:39+05:30
+date: 2026-09-29T12:01:29+05:30
 tags: [Walmart, AI, PersonalizedPricing, RetailTech]
 categories: ["AI", "Artificial Intelligence", "Retail Technology", "Consumer Privacy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2289554785.jpg?quality=90&strip=all&crop=0%2C10.729479874121%2C100%2C78.541040251757&w=1200"
