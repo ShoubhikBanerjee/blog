@@ -2,7 +2,7 @@
 title: "Microsoft Research Asia Opens First Southeast Asia Lab in Singapore"
 slug: "microsoft-research-asia-opens-first-southeast-asia-lab-in-singapore"
 description: "On July 24, 2025, Microsoft Research Asia – Singapore (MSRA – Singapore) opened as the first Microsoft research lab in Southeast Asia, joining existing MSRA locations in Beijing, Shanghai, Vancouver,..."
-date: 2026-09-29T18:01:58+05:30
+date: 2026-09-29T22:02:51+05:30
 tags: [Microsoft, Singapore, AIResearch, HealthcareAI, MultimodalAI]
 categories: ["AI", "Artificial Intelligence", "Academic Research", "Industrial AI"]
 image: "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/09/1YSingapore-TWLIFB-1200x627-1-scaled.jpg"

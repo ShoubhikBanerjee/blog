@@ -2,7 +2,7 @@
 title: "OpenAI Rumored to Release Aeon AI Agent at 2026 DevDay"
 slug: "openai-rumored-to-release-aeon-ai-agent-at-2026-devday"
 description: "OpenAI is rumored to announce a new continuously running, consumer-facing AI agent called Aeon during its upcoming 2026 DevDay event. This move follows a period where OpenAI's visible progress in the..."
-date: 2026-09-29T18:01:58+05:30
+date: 2026-09-29T22:02:51+05:30
 tags: [OpenAI, AIagents, DevDay, GPT6Astra, AGI]
 categories: ["AI", "AI Agents", "Artificial Intelligence", "Software Development"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/STKP221_GREG_BROCKMAN2.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Jev AI Model for General Text Classification"
 slug: "jev-ai-model-for-general-text-classification"
 description: "The recently released Jev AI model has become a cultural phenomenon in technical communities over the past two weeks, offering a new approach to classification tasks."
-date: 2026-09-29T18:01:58+05:30
+date: 2026-09-29T22:02:51+05:30
 tags: [Jev, TextClassification, MachineLearning, AI]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing"]
 image: "https://substackcdn.com/image/fetch/$s_!jZ4X!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0015e77a-5140-4139-b361-78e28d18df17_2494x1304.png"

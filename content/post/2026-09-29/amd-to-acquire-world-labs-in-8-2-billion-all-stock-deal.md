@@ -2,7 +2,7 @@
 title: "AMD to Acquire World Labs in $8.2 Billion All-Stock Deal"
 slug: "amd-to-acquire-world-labs-in-8-2-billion-all-stock-deal"
 description: "AMD has announced an all-stock acquisition of World Labs, an AI research lab co-founded by Dr. Fei-Fei Li, for approximately $8.2 billion."
-date: 2026-09-29T18:01:58+05:30
+date: 2026-09-29T22:02:51+05:30
 tags: [AMD, WorldLabs, AIResearch, Acquisition]
 categories: ["AI", "Artificial Intelligence", "Corporate Business", "Hardware and Software"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2279092788.jpg?quality=90&strip=all&crop=0%2C10.723165084465%2C100%2C78.55366983107&w=1200"

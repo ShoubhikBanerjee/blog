@@ -2,7 +2,7 @@
 title: "Anthropic Files Prospectus for Potential November IPO with $2 Trillion Valuation"
 slug: "anthropic-files-prospectus-for-potential-november-ipo-with-2-trillion-valuation"
 description: "Anthropic has filed a prospectus for a potential IPO in November, eyeing a valuation of $2 trillion. This figure is more than double the $965 billion valuation the company held four months ago,..."
-date: 2026-09-29T18:01:58+05:30
+date: 2026-09-29T22:02:51+05:30
 tags: [Anthropic, IPO, AISafety, Claude]
 categories: ["AI", "Artificial Intelligence", "Business", "Finance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25469941/STK202_DARIO_AMODEI_CVIRGINIA_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Global Software Optimization (GSO) Benchmark Updates and Resource Releases"
 slug: "global-software-optimization-gso-benchmark-updates-and-resource-releases"
 description: "The Global Software Optimization (GSO) benchmark, designed to evaluate the capabilities of language models in developing high-performance software, has released several new integrations, datasets,..."
-date: 2026-09-29T18:01:58+05:30
+date: 2026-09-29T22:02:51+05:30
 tags: [GSO, LLM, SoftwareOptimization, Benchmarking]
 categories: ["AI", "Machine Learning", "Software Engineering", "AI Evaluation"]
 image: "https://avatars.githubusercontent.com/u/210908921?v=4"

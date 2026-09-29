@@ -2,7 +2,7 @@
 title: "Rep. Ro Khanna Calls for US-China Treaty to Regulate AI Risks"
 slug: "rep-ro-khanna-calls-for-us-china-treaty-to-regulate-ai-risks"
 description: "Representative Ro Khanna (D-CA) is calling for a treaty between the United States and China to prevent artificial intelligence from 'wreaking havoc on the world,' citing a lack of urgency from..."
-date: 2026-09-29T18:01:58+05:30
+date: 2026-09-29T22:02:51+05:30
 tags: [AISafety, USChinaRelations, Superintelligence, AIRegulation]
 categories: ["AI", "Artificial Intelligence", "Government Policy", "International Relations"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2292801324.jpg?quality=90&strip=all&crop=0%2C10.729583668295%2C100%2C78.54083266341&w=1200"

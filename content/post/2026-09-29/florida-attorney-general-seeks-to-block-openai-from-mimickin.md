@@ -2,7 +2,7 @@
 title: "Florida Attorney General Seeks to Block OpenAI From Mimicking Human Attributes"
 slug: "florida-attorney-general-seeks-to-block-openai-from-mimicking-human-attributes"
 description: "Florida Attorney General James Uthmeier is seeking a court order to block OpenAI from giving ChatGPT human attributes and developing new models without third-party approved safety guardrails. This..."
-date: 2026-09-29T18:01:58+05:30
+date: 2026-09-29T22:02:51+05:30
 tags: [OpenAI, ChatGPT, AISafety, Florida, AIRegulation]
 categories: ["AI", "Artificial Intelligence", "Law And Policy", "Technology Safety"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/08/STK149_AI_01.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
