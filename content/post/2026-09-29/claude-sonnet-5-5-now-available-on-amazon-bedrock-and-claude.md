@@ -2,7 +2,7 @@
 title: "Claude Sonnet 5.5 Now Available on Amazon Bedrock and Claude Platform on AWS"
 slug: "claude-sonnet-5-5-now-available-on-amazon-bedrock-and-claude-platform-on-aws"
 description: "Claude Sonnet 5.5 is now available on Amazon Bedrock and the Claude Platform on AWS, providing a smarter and more efficient model for knowledge work and coding."
-date: 2026-09-29T12:01:29+05:30
+date: 2026-09-29T18:01:58+05:30
 tags: [AWS, AmazonBedrock, Claude, AI, CloudComputing]
 categories: ["AI", "Machine Learning", "Cloud Infrastructure", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/28/ML-22023-featured-image.png"

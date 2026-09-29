@@ -2,7 +2,7 @@
 title: "Anthropic Releases Claude Sonnet 5.5 Model"
 slug: "anthropic-releases-claude-sonnet-5-5-model"
 description: "Anthropic has released a new model called Sonnet 5.5."
-date: 2026-09-29T12:01:29+05:30
+date: 2026-09-29T18:01:58+05:30
 tags: [Anthropic, Claude, Sonnet55, LLM]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Software Development"]
 image: "https://static.simonwillison.net/static/2026/claude-sonnet-5.5-pelican-xhigh.webp"

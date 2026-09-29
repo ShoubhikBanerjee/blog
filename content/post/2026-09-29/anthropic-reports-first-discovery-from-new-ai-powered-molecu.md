@@ -2,7 +2,7 @@
 title: "Anthropic Reports First Discovery From New AI-Powered Molecular Biology Lab"
 slug: "anthropic-reports-first-discovery-from-new-ai-powered-molecular-biology-lab"
 description: "Anthropic has announced that its recently launched molecular biology lab has made its first discovery using a system of Claude agents."
-date: 2026-09-29T12:01:29+05:30
+date: 2026-09-29T18:01:58+05:30
 tags: [Anthropic, Claude, Biology, AIagents]
 categories: ["AI", "AI Agents", "Biotechnology", "Machine Learning"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/science-ai-gene3.jpg?resize=1200,600"

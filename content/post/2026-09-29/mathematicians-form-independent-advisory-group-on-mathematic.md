@@ -2,7 +2,7 @@
 title: "Mathematicians form independent Advisory Group on Mathematics and Artificial Intelligence"
 slug: "mathematicians-form-independent-advisory-group-on-mathematics-and-artificial-intelligence"
 description: "On September 21st, a group of elite mathematicians announced the formation of the Advisory Group on Mathematics and Artificial Intelligence (AGMAI) via a guest post on the blog of UCLA professor and..."
-date: 2026-09-29T12:01:29+05:30
+date: 2026-09-29T18:01:58+05:30
 tags: [AGMAI, OpenAI, Mathematics, AIResearch]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "AI Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/VRG_OpenAIMAthBulldozer_Parkin.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
