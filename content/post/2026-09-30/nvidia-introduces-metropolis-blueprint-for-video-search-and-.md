@@ -2,7 +2,7 @@
 title: "NVIDIA Introduces Metropolis Blueprint for Video Search and Summarization 3.3"
 slug: "nvidia-introduces-metropolis-blueprint-for-video-search-and-summarization-3-3"
 description: "NVIDIA has released the Metropolis Blueprint for Video Search and Summarization (VSS), providing developers with agent skills to accelerate the creation of visual AI agents. The system integrates..."
-date: 2026-09-30T18:03:07+05:30
+date: 2026-09-30T22:03:54+05:30
 tags: [NVIDIA, Metropolis, VLM, AIagents, ComputerVision]
 categories: ["AI", "Computer Vision", "AI Agents", "Software Development"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/robotics-press-nurec-devpage-kv-1600x900-1-660x370.png"

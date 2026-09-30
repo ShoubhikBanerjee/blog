@@ -2,7 +2,7 @@
 title: "Trump and Tech Executives Sign Joint Commitment On Frontier Responsibilities"
 slug: "trump-and-tech-executives-sign-joint-commitment-on-frontier-responsibilities"
 description: "President Trump and leaders from several major AI companies have signed a 'morally binding' AI safety deal titled the Joint Commitment On Frontier Responsibilities. The accord, shared online by..."
-date: 2026-09-30T18:03:07+05:30
+date: 2026-09-30T22:03:54+05:30
 tags: [AISafety, SuperIntelligence, TechRegulation, FrontierAI]
 categories: ["AI", "AI Policy", "Artificial Intelligence", "Government Regulation"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2297269621.jpg?quality=90&strip=all&crop=0%2C10.752607989199%2C100%2C78.494784021602&w=1200"

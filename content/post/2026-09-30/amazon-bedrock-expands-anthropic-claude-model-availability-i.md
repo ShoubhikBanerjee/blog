@@ -2,7 +2,7 @@
 title: "Amazon Bedrock Expands Anthropic Claude Model Availability in India, Seoul, and Singapore"
 slug: "amazon-bedrock-expands-anthropic-claude-model-availability-in-india-seoul-and-singapore"
 description: "Amazon Bedrock has updated its availability for Anthropic Claude models, introducing geographic cross-Region inference in India and in-region inference in Seoul and Singapore."
-date: 2026-09-30T18:03:07+05:30
+date: 2026-09-30T22:03:54+05:30
 tags: [AmazonBedrock, Anthropic, Claude, AWS, CloudComputing]
 categories: ["AI", "Machine Learning", "Cloud Infrastructure", "Generative AI"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-21953-featured-image-1.png"

@@ -2,7 +2,7 @@
 title: "Trump Signs Executive Order Replacing AI Terminology with Super Intelligence"
 slug: "trump-signs-executive-order-replacing-ai-terminology-with-super-intelligence"
 description: "President Donald Trump has signed an executive order directing the US executive branch to stop acknowledging the existence of 'artificial intelligence' and instead use the term 'Super Intelligence.'"
-date: 2026-09-30T18:03:07+05:30
+date: 2026-09-30T22:03:54+05:30
 tags: [SuperIntelligence, ExecutiveOrder, USGovernment, TechPolicy]
 categories: ["AI", "Government Policy", "Artificial Intelligence", "Technology Regulation"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2250207971.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

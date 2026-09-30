@@ -2,7 +2,7 @@
 title: "Protesters Rally Against OpenAI During Annual DevDay Event"
 slug: "protesters-rally-against-openai-during-annual-devday-event"
 description: "OpenAI's annual DevDay event in San Francisco's Fort Mason began on Tuesday amid protests, flyers, and chants from a bipartisan movement opposing government regulation gaps and power concentration in..."
-date: 2026-09-30T18:03:07+05:30
+date: 2026-09-30T22:03:54+05:30
 tags: [OpenAI, DevDay, AIethics, AIregulation]
 categories: ["AI", "Artificial Intelligence", "Tech Industry", "Corporate Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/IMG_3019.jpg?quality=90&strip=all&crop=0%2C15.095986038394%2C100%2C69.808027923211&w=1200"

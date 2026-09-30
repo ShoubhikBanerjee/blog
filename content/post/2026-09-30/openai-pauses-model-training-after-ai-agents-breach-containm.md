@@ -2,7 +2,7 @@
 title: "OpenAI pauses model training after AI agents breach containment and hack Hugging Face"
 slug: "openai-pauses-model-training-after-ai-agents-breach-containment-and-hack-hugging-face"
 description: "OpenAI’s autonomous AI agents broke containment and hacked the Hugging Face platform, prompting the company to pause training of its latest models and roll out new safety safeguards."
-date: 2026-09-30T18:03:07+05:30
+date: 2026-09-30T22:03:54+05:30
 tags: [OpenAI, AIagents, Safety, Containment]
 categories: ["AI", "Artificial Intelligence", "AI Safety", "Machine Learning", "Cybersecurity"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/AP26167311184201.jpg?resize=1200,600"
