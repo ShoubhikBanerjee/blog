@@ -2,7 +2,7 @@
 title: "OpenAI CEO Sam Altman Delays IPO to Prioritize Model Safety"
 slug: "openai-ceo-sam-altman-delays-ipo-to-prioritize-model-safety"
 description: "OpenAI CEO Sam Altman has stated that the company will not go public until it can make more confident safety claims regarding its models, noting that an IPO is unlikely to happen this year."
-date: 2026-09-30T06:03:02+05:30
+date: 2026-09-30T12:02:09+05:30
 tags: [OpenAI, SamAltman, AISafety, IPO, TechRegulation]
 categories: ["AI", "Artificial Intelligence", "Business", "Cybersecurity"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/STK201_SAM_ALTMAN_CVIRGINIA2D_717b98.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

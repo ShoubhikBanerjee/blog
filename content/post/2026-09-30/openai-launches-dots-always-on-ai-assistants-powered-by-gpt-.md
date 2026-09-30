@@ -2,7 +2,7 @@
 title: "OpenAI Launches Dots Always-On AI Assistants Powered by GPT-6 Astra"
 slug: "openai-launches-dots-always-on-ai-assistants-powered-by-gpt-6-astra"
 description: "OpenAI has announced Dots, always-on AI assistants designed to perform tasks across connected apps in the background while learning user preferences over time."
-date: 2026-09-30T06:03:02+05:30
+date: 2026-09-30T12:02:09+05:30
 tags: [OpenAI, GPT6, AIAgents, Productivity]
 categories: ["AI", "AI Agents", "Software Development", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Dots-Hero-Image.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

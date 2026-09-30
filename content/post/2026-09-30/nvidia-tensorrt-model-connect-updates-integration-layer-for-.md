@@ -2,7 +2,7 @@
 title: "NVIDIA TensorRT Model Connect Updates Integration Layer for AI Model Implementations"
 slug: "nvidia-tensorrt-model-connect-updates-integration-layer-for-ai-model-implementations"
 description: "NVIDIA has provided updates regarding TensorRT Model Connect, an open source collection of AI model reference implementations in C++ built on top of NVIDIA TensorRT."
-date: 2026-09-30T06:03:02+05:30
+date: 2026-09-30T12:02:09+05:30
 tags: [NVIDIA, TensorRT, OpenSource, AIModels, Cpp]
 categories: ["AI", "Machine Learning", "AI Infrastructure", "Software Development"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/07/llm-optimize-deploy-660x370.png"
