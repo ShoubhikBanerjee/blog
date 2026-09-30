@@ -2,7 +2,7 @@
 title: "Introduction of Dots powered by Astra and ChatGPT Space"
 slug: "introduction-of-dots-powered-by-astra-and-chatgpt-space"
 description: "A new AI development called 'Dots' has been introduced, functioning alongside a new environment called ChatGPT Space."
-date: 2026-09-30T12:02:09+05:30
+date: 2026-09-30T18:03:07+05:30
 tags: [Astra, ChatGPTSpace, AIAgents, Dots]
 categories: ["AI", "AI Agents", "Software Development", "Productivity Tools"]
 image: "https://static.simonwillison.net/static/2026/live-20260929-092441.webp"

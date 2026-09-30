@@ -2,7 +2,7 @@
 title: "Grokipedia Resumes Article Updates After Months-Long Pause"
 slug: "grokipedia-resumes-article-updates-after-months-long-pause"
 description: "Grokipedia, the AI‑powered online encyclopedia from SpaceXAI, has started updating articles again after a months‑long pause."
-date: 2026-09-30T12:02:09+05:30
+date: 2026-09-30T18:03:07+05:30
 tags: [Grokipedia, AIEncyclopedia, SpaceXAI, FactChecking]
 categories: ["AI", "Artificial Intelligence", "Knowledge Bases", "Tech News"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/04/STK171_VRG_Illo_16_Normand_ElonMusk_16.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

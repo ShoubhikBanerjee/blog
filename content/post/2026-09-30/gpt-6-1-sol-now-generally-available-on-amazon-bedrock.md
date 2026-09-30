@@ -2,7 +2,7 @@
 title: "GPT-6.1 Sol Now Generally Available on Amazon Bedrock"
 slug: "gpt-6-1-sol-now-generally-available-on-amazon-bedrock"
 description: "GPT-6.1 Sol is now generally available on Amazon Bedrock, providing an upgrade to GPT-6 Sol with enhanced reasoning for coding, computer use, and professional workloads."
-date: 2026-09-30T12:02:09+05:30
+date: 2026-09-30T18:03:07+05:30
 tags: [GPT61Sol, AmazonBedrock, AIagents, OpenAI, AWS]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-22090-featured-image.png"
