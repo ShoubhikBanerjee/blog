@@ -2,7 +2,7 @@
 title: "Google Announces Argon AI Model for Gemini 4 Generation"
 slug: "google-announces-argon-ai-model-for-gemini-4-generation"
 description: "Alphabet's Google has announced 'Argon,' a new top-tier artificial intelligence model designed to anchor its Gemini 4 generation of models in an effort to catch up to rivals OpenAI and Anthropic."
-date: 2026-10-01T12:05:03+05:30
+date: 2026-10-01T18:04:45+05:30
 tags: [Google, Gemini, Argon, ArtificialIntelligence, DeepMind]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Enterprise Tech"]
 image: "https://www.devdiscourse.com/img?imageUrl=https://devdiscourse.blob.core.windows.net/imagegallery/25_06_2019_19_12_02_9568411.jpg&width=1280"

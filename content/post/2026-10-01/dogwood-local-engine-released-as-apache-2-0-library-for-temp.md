@@ -2,7 +2,7 @@
 title: "Dogwood Local Engine released as Apache‑2.0 library for temporal policy enforcement"
 slug: "dogwood-local-engine-released-as-apache2-0-library-for-temporal-policy-enforcement"
 description: "Today we are releasing the Dogwood Local Engine under the Apache 2.0 license. The engine embeds the Dogwood governance language to enforce agent actions with temporal conditions."
-date: 2026-10-01T12:05:03+05:30
+date: 2026-10-01T18:04:45+05:30
 tags: [Dogwood, AIAgents, OpenSource, PolicyEngine]
 categories: ["AI", "AI Agents", "Software Engineering", "Open Source", "Systems"]
 image: "https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2026/09/29/Screenshot-2026-09-29-at-1.23.31 PM-1156x630.png"

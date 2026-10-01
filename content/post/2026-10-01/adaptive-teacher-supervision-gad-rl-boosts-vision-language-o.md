@@ -2,7 +2,7 @@
 title: "Adaptive Teacher Supervision (GAD-RL) Boosts Vision-Language OCR Performance"
 slug: "adaptive-teacher-supervision-gad-rl-boosts-vision-language-ocr-performance"
 description: "- Vision‑language models can rewrite anomalous text in images into linguistically plausible expressions, which harms the faithfulness of OCR transcription."
-date: 2026-10-01T12:05:03+05:30
+date: 2026-10-01T18:04:45+05:30
 tags: [VisionLanguage, OCR, AdaptiveLearning, AITraining]
 categories: ["AI", "Machine Learning", "Computer Vision", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

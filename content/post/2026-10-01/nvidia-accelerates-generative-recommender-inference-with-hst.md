@@ -2,7 +2,7 @@
 title: "NVIDIA accelerates generative recommender inference with HSTU and Dynamo-Triton"
 slug: "nvidia-accelerates-generative-recommender-inference-with-hstu-and-dynamo-triton"
 description: "NVIDIA has introduced an optimized production workflow for Hierarchical Sequential Transduction Unit (HSTU) generative recommenders using Dynamo-Triton and PyTorch Ahead-of-Time Inductor (AOTI). This..."
-date: 2026-10-01T12:05:03+05:30
+date: 2026-10-01T18:04:45+05:30
 tags: [NVIDIA, AIRecommenders, HSTU, PyTorch, InferenceOptimization]
 categories: ["AI", "Machine Learning", "Recommender Systems", "AI Infrastructure", "Model Deployment"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/recsys-660x370.jpg"

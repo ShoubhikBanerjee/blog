@@ -2,7 +2,7 @@
 title: "NVIDIA Announces cuObject General Availability and Expands xio-sig Partnership"
 slug: "nvidia-announces-cuobject-general-availability-and-expands-xio-sig-partnership"
 description: "NVIDIA has announced the general availability of cuObject client and server libraries and is expanding xio-sig to include cuObject alongside cuFile in partnership with Microsoft and Google Cloud."
-date: 2026-10-01T12:05:03+05:30
+date: 2026-10-01T18:04:45+05:30
 tags: [NVIDIA, GPU, ObjectStorage, RDMA, cuObject]
 categories: ["AI", "AI Infrastructure", "Cloud Storage", "Hardware Acceleration"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/AI-Storage-660x370.png"
