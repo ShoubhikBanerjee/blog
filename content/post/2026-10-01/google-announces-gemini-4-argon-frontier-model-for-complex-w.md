@@ -2,7 +2,7 @@
 title: "Google Announces Gemini 4 Argon Frontier Model for Complex Workflows"
 slug: "google-announces-gemini-4-argon-frontier-model-for-complex-workflows"
 description: "Google has announced Gemini 4 Argon, a new frontier model designed to sustain deep reasoning across complex, long-horizon workflows. The model is currently rolling out to a set of trusted cyber..."
-date: 2026-10-01T06:03:44+05:30
+date: 2026-10-01T12:05:03+05:30
 tags: [Gemini4, Google, Cybersecurity, SoftwareEngineering, AI]
 categories: ["AI", "Machine Learning", "AI Agents", "Cybersecurity", "Software Development"]
 image: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/g4_30-09-26_key-art_blog.width-1300.png"

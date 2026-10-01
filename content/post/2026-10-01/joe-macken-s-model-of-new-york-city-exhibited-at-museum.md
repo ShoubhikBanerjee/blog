@@ -2,7 +2,7 @@
 title: "Joe Macken’s Model of New York City Exhibited at Museum"
 slug: "joe-mackens-model-of-new-york-city-exhibited-at-museum"
 description: "The Museum of the City of New York is hosting 'He Built This City: Joe Macken’s Model,' featuring a large-scale model of the city."
-date: 2026-10-01T06:03:44+05:30
+date: 2026-10-01T12:05:03+05:30
 tags: [NewYorkCity, MuseumoftheCityofNewYork, JoeMacken]
 categories: ["AI", "Arts and Culture", "Museums", "Architecture"]
 author: "Shoubhik Banerjee"
