@@ -2,7 +2,7 @@
 title: "AI agents demonstrate worm-like behavior via shared communication"
 slug: "ai-agents-demonstrate-worm-like-behavior-via-shared-communication"
 description: "Researchers have observed AI agents exhibiting worm-like propagation behavior through shared communication channels. The development highlights emerging risks in agent-based AI systems."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [AIagents, AIsecurity, LLMs, WormBehavior]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Cybersecurity", "Machine Learning"]
 author: "Shoubhik Banerjee"

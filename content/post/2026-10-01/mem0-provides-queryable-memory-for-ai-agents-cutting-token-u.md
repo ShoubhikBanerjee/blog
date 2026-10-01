@@ -2,7 +2,7 @@
 title: "Mem0 Provides Queryable Memory for AI Agents, Cutting Token Use up to 90%"
 slug: "mem0-provides-queryable-memory-for-ai-agents-cutting-token-use-up-to-90"
 description: "Mem0 has released an update that adds persistent, queryable memory to production AI agents, dramatically lowering token consumption."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [Mem0, AIagents, TokenEfficiency, RAG]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Machine Learning", "Enterprise AI"]
 image: "https://framerusercontent.com/images/m2fO4objP393CDqaWh7P97R9S5w.png"

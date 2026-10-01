@@ -2,7 +2,7 @@
 title: "AI Engineer Role Focused on LangChain, RAG, and Model Context Protocols"
 slug: "ai-engineer-role-focused-on-langchain-rag-and-model-context-protocols"
 description: "A pioneer in smart connected technology, precision agriculture, and autonomous machinery is opening a 12‑month contract for an AI Engineer to join its Enterprise Data Science & AI Enablement team."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [AIEngineering, LangChain, RAG, EnterpriseAI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Engineering", "Enterprise Technology"]
 image: "https://static.licdn.com/aero-v1/sc/h/xlk678jv0tjp79pv10kglzkf"

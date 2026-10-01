@@ -2,7 +2,7 @@
 title: "UNESCO and ENS Launch AI Ethics Call for Early‑Career Researchers"
 slug: "unesco-and-ens-launch-ai-ethics-call-for-earlycareer-researchers"
 description: "UNESCO and the AI and Society Institute at École normale supérieure (ENS‑PSL) have opened a call for papers inviting researchers who earned their PhD within the last five years to submit proposals on..."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [UNESCO, AIethics, CallForPapers, Research]
 categories: ["AI", "Artificial Intelligence", "Ethics", "Academic Events", "Policy"]
 image: "https://unric.org/en/wp-content/uploads/sites/15/2026/10/ai-papers-unesco.jpg"

@@ -2,7 +2,7 @@
 title: "MetaSteer introduces context-aware nonlinear steering for large language models"
 slug: "metasteer-introduces-context-aware-nonlinear-steering-for-large-language-models"
 description: "Researchers propose MetaSteer, a method enabling context-dependent nonlinear steering of large language models via attention-projection adaptations. This approach challenges traditional linear..."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [SteeringMethods, LLMTuning, ContextualAI, MetaSteer, AttentionMechanisms]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "AI Safety", "Large Language Models"]
 author: "Shoubhik Banerjee"

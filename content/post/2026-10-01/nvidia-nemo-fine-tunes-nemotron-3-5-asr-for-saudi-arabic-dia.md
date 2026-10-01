@@ -2,7 +2,7 @@
 title: "NVIDIA NeMo fine‑tunes Nemotron 3.5 ASR for Saudi Arabic dialects"
 slug: "nvidia-nemo-finetunes-nemotron-3-5-asr-for-saudi-arabic-dialects"
 description: "NVIDIA’s Nemotron 3.5 multilingual ASR model can be specialized for under‑represented Saudi Arabic dialects such as Najdi and Hijazi by following a reproducible fine‑tuning workflow built on the NeMo..."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [ASR, NeMo, ArabicDialects, NVIDIA]
 categories: ["AI", "Machine Learning", "Speech Recognition", "Natural Language Processing", "AI Deployment"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image3-18-660x370.png"

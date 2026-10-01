@@ -2,7 +2,7 @@
 title: "Google withholds Gemini 4 Argon, releases it to vetted cybersecurity experts"
 slug: "google-withholds-gemini-4-argon-releases-it-to-vetted-cybersecurity-experts"
 description: "Google announced it will keep its most powerful artificial‑intelligence model, Gemini 4 Argon, out of the public eye for now, sharing it only with a vetted group of cybersecurity experts."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [GoogleAI, Gemini, Cybersecurity, AISafety]
 categories: ["AI", "Artificial Intelligence", "AI Safety", "Machine Learning", "Cybersecurity"]
 image: "http://en.ammonnews.net/image.php?token=819886e095c79ed89eae8d5d3ab74fc2&size=xxlarge"

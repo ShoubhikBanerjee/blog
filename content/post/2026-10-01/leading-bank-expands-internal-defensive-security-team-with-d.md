@@ -2,7 +2,7 @@
 title: "Leading Bank Expands Internal Defensive Security Team with Detection Engineers"
 slug: "leading-bank-expands-internal-defensive-security-team-with-detection-engineers"
 description: "A leading bank is appointing Detection Engineers to join a growing internal defensive security team, transitioning detection engineering from a secondary responsibility within the Cloud function to a..."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [Cybersecurity, DetectionEngineering, ThreatHunting, DefensiveSecurity, Banking]
 categories: ["AI", "Cybersecurity", "Information Technology", "Financial Services"]
 author: "Shoubhik Banerjee"

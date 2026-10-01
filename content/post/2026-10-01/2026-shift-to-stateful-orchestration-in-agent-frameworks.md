@@ -2,7 +2,7 @@
 title: "2026 Shift to Stateful Orchestration in Agent Frameworks"
 slug: "2026-shift-to-stateful-orchestration-in-agent-frameworks"
 description: "In 2026 the conversation around agent frameworks has moved away from simple model‑to‑tool loops toward explicit, stateful orchestration and fine‑grained control."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [AIagents, Orchestration, 2026, Frameworks]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Machine Learning", "Software Development"]
 image: "https://dianapps.com/blog/wp-content/uploads/2026/09/Ai-Agent-Frameworks.webp"

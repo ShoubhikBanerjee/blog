@@ -2,7 +2,7 @@
 title: "Acre Via Nominated for Detektor International Award in ID and Access Control"
 slug: "acre-via-nominated-for-detektor-international-award-in-id-and-access-control"
 description: "Acre Security's AI assistant, Acre Via, has been named as a nominee in the ID & Access Control category of the Detektor International Award."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [GenerativeAI, AccessControl, SecurityIndustry, AcreSecurity]
 categories: ["AI", "Artificial Intelligence", "Physical Security", "Industry Awards"]
 image: "https://www.securityworldmarket.com/Frontend/Images/swm-logo-400x400.jpg"

@@ -2,7 +2,7 @@
 title: "SpaceXAI Releases Grokipedia v0.3 Update with New Design Tweaks"
 slug: "spacexai-releases-grokipedia-v0-3-update-with-new-design-tweaks"
 description: "SpaceXAI has released a v0.3 update for Grokipedia, its AI-powered competitor to Wikipedia. The update introduces a new logo and visual refreshes to the homepage, article pages, and live edits page,..."
-date: 2026-10-01T18:04:45+05:30
+date: 2026-10-01T22:03:23+05:30
 tags: [SpaceXAI, Grokipedia, AI, Wikipedia]
 categories: ["AI", "Artificial Intelligence", "Web Design", "Information Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/Screenshot-2026-09-30-at-5.16.09-PM.png?quality=90&strip=all&crop=0%2C16.442283719771%2C100%2C67.115432560459&w=1200"
