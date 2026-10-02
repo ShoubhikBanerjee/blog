@@ -2,7 +2,7 @@
 title: "Foley Law Firm Advances Generative AI with Blueprint Methodology and Award-Winning FoleyChat"
 slug: "foley-law-firm-advances-generative-ai-with-blueprint-methodology-and-award-winning-foleychat"
 description: "Foley, a major law firm, has rolled out a structured AI Blueprint and its proprietary chatbot, FoleyChat, which won the Best Use of Artificial Intelligence Award at Legalweek 2026."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [LegalTech, GenerativeAI, AIWorkflow]
 categories: ["AI", "Legal Services", "Artificial Intelligence", "Technology Innovation"]
 image: "https://www.foley.com/wp-content/uploads/2023/09/aibrain1414x1414.jpg"

@@ -2,7 +2,7 @@
 title: "Atono Develops Product Engineering Platform to Address Gaps in AI Institutional Knowledge"
 slug: "atono-develops-product-engineering-platform-to-address-gaps-in-ai-institutional-knowledge"
 description: "Atono is developing a product engineering platform designed to integrate the software development lifecycle into a continuous loop. The platform focuses on connecting the stages of specifying,..."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [Atono, ProductEngineering, AIagents, SoftwareDevelopment]
 categories: ["AI", "Software Engineering", "Artificial Intelligence", "Product Management"]
 image: "https://atono-test.directus.app/assets/92f9f7db-20f7-45bd-837c-f7e0674aad35"

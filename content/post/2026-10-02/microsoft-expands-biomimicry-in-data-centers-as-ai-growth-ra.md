@@ -2,7 +2,7 @@
 title: "Microsoft expands biomimicry in data centers as AI growth raises community concerns"
 slug: "microsoft-expands-biomimicry-in-data-centers-as-ai-growth-raises-community-concerns"
 description: "Microsoft announced that it is expanding its use of “biomimicry” at data centers while facing increased pushback from local residents over construction, pollution, and noise."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [Microsoft, Biomimicry, DataCenters, AIInfrastructure]
 categories: ["AI", "Artificial Intelligence", "Data Centers", "Environmental Technology", "Community Impact"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268788_Datacenter_biomimicry_PARKIN_2-1.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

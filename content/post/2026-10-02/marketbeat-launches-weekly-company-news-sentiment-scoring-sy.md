@@ -2,7 +2,7 @@
 title: "MarketBeat launches weekly company news sentiment scoring system"
 slug: "marketbeat-launches-weekly-company-news-sentiment-scoring-system"
 description: "MarketBeat has introduced a news sentiment scoring system that rates each headline on a scale from 2 (good news) to -2 (bad news) and tracks average sentiment for companies over the most..."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [sentimentanalysis, marketdata, fintech]
 categories: ["AI", "Financial Technology", "Artificial Intelligence", "Data Analytics"]
 image: "https://www.marketbeat.com/logos/artiva-biotherapeutics-inc-logo.png?v=20240826163321"

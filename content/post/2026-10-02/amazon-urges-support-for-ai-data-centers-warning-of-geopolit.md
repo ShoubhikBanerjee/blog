@@ -2,7 +2,7 @@
 title: "Amazon Urges Support for AI Data Centers Warning of Geopolitical Risks"
 slug: "amazon-urges-support-for-ai-data-centers-warning-of-geopolitical-risks"
 description: "Amazon Web Services CEO Matt Gorman has published a blog post calling for public support of AI data center projects, warning that blocking them could cause irreparable harm to the US economy and..."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [AWS, DataCenters, Infrastructure, Amazon]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Infrastructure", "Public Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/STKS528_DATA_CENTERS_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

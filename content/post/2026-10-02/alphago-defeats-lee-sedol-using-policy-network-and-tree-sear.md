@@ -2,7 +2,7 @@
 title: "AlphaGo defeats Lee Sedol using policy network and tree search"
 slug: "alphago-defeats-lee-sedol-using-policy-network-and-tree-search"
 description: "On an afternoon in Seoul in March 2016, a program I helped build put a stone on the fifth line of a Go board in what looked like a gift to its human opponent.  AlphaGo won the game, ultimately..."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [AlphaGo, Go, AI, MachineLearning, DeepLearning]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Game AI"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/2llm-go.jpg?resize=1200,600"

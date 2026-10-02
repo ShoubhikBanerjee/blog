@@ -2,7 +2,7 @@
 title: "AI Hallucinations Undermine Customer Service Workers' Authority"
 slug: "ai-hallucinations-undermine-customer-service-workers-authority"
 description: "Generative AI tools are increasingly causing customers to challenge the expertise of service workers, leading to dangerous situations like ignored allergy warnings and dismissed sommeliers."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [AIhallucinations, CustomerService, ChatGPT, GenerativeAI, Meta, Muse]
 categories: ["AI", "Artificial Intelligence", "Customer Experience", "Workplace Issues", "Hallucination"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKS536_AI_HALLUCINATION_D.png?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

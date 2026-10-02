@@ -2,7 +2,7 @@
 title: "Suno launches Speech: AI voices with built‑in music in public beta"
 slug: "suno-launches-speech-ai-voices-with-builtin-music-in-public-beta"
 description: "Suno, known for its AI‑generated music, has added a new **Speech** feature that creates spoken voiceovers from scripts or descriptive prompts and can blend them with AI‑generated background music...."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [Suno, SpeechAI, TextToSpeech, AI_music]
 categories: ["AI", "AI Music", "Text-to-Speech", "Generative AI", "Emerging Tech"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Suno-AI-voices.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "US urges Europe to tap diesel reserves to lower fuel prices"
 slug: "us-urges-europe-to-tap-diesel-reserves-to-lower-fuel-prices"
 description: "The United States is pressing European governments to release a portion of their strategic diesel reserves in order to ease price pressures and address supply disruptions."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [Diesel, EnergyPolicy, USEuropeRelations]
 categories: ["AI", "Energy", "International Relations", "Policy"]
 image: "https://picturepackcdn-h33aaywmsq-ew.a.run.app/belgapicturepack:187479954:full?v=6ab4d5af&m=gmenkmlg"

@@ -2,7 +2,7 @@
 title: "Diagens Tech Unveils iMedImage Suite for Continuous Medical Imaging AI"
 slug: "diagens-tech-unveils-imedimage-suite-for-continuous-medical-imaging-ai"
 description: "On Sept. 25, during the fifth Global Digital Trade Expo, Diagens Tech demonstrated how medical imaging data can drive AI‑enabled productivity. The company presented a four‑layer product suite that..."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [MedicalAI, FoundationModels, Healthcare, ImagingAI]
 categories: ["AI", "Healthcare", "Artificial Intelligence", "Medical Imaging", "Machine Learning"]
 author: "Shoubhik Banerjee"

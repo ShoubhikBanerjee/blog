@@ -2,7 +2,7 @@
 title: "Open‑Source safelabs‑eval Brings Systematic Red‑Team Testing to AI Agents"
 slug: "opensource-safelabseval-brings-systematic-redteam-testing-to-ai-agents"
 description: "An open‑source framework called **safelabs‑eval** adds systematic adversarial safety testing for AI agents built on popular frameworks."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [AIAgents, RedTeaming, Security, OpenSource]
 categories: ["AI", "Artificial Intelligence", "AI Security", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/285054096?v=4"

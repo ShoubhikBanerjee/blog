@@ -2,7 +2,7 @@
 title: "EU Parliament Pushes for Global AI Governance Treaty and New Safeguards"
 slug: "eu-parliament-pushes-for-global-ai-governance-treaty-and-new-safeguards"
 description: "European lawmakers on the Parliament’s Constitutional Affairs Committee (AFCO) have approved a report that asks Brussels to spearhead a global AI agreement, tighten safeguards against election..."
-date: 2026-10-02T18:04:26+05:30
+date: 2026-10-02T22:04:29+05:30
 tags: [EU, AIRegulation, GlobalAI, Democracy]
 categories: ["AI", "Artificial Intelligence", "Policy & Regulation", "European Union", "Governance"]
 image: "https://euperspectives.eu/app/uploads/2026/10/igor-omilaev-fhgwfzddaos-unsplash-scaled.jpg"
