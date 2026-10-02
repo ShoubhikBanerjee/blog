@@ -2,7 +2,7 @@
 title: "Four‑Agent AI Pattern Cuts Migration IaC Time from Weeks to Minutes"
 slug: "fouragent-ai-pattern-cuts-migration-iac-time-from-weeks-to-minutes"
 description: "The four‑agent pattern introduced by AWS Professional Services adds purpose‑built AI agents to an existing AWS Transform migration program. By attaching to AWS Transform, AWS Database Migration..."
-date: 2026-10-02T06:06:47+05:30
+date: 2026-10-02T12:06:10+05:30
 tags: [AWS, AIAgents, MigrationAutomation, Bedrock]
 categories: ["AI", "Cloud Computing", "AI Agents", "Migration", "DevOps"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/12/ML-20875-featured-image.png"

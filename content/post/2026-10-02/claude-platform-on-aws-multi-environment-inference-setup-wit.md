@@ -2,7 +2,7 @@
 title: "Claude Platform on AWS: Multi‑environment Inference Setup with Cross‑Account Roles"
 slug: "claude-platform-on-aws-multienvironment-inference-setup-with-crossaccount-roles"
 description: "Claude Platform on AWS (CPonAWS) now supports a unified subscription that can serve production workloads, developer laptops, and external services across different cloud or on‑prem environments."
-date: 2026-10-02T06:06:47+05:30
+date: 2026-10-02T12:06:10+05:30
 tags: [ClaudePlatform, AWS, AIInference, CrossAccount]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21203-featured-image.png"

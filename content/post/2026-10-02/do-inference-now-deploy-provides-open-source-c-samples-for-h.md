@@ -2,7 +2,7 @@
 title: "Do Inference Now Deploy provides open‑source C++ samples for hardware‑accelerated AI inference"
 slug: "do-inference-now-deploy-provides-opensource-c-samples-for-hardwareaccelerated-ai-inference"
 description: "Do Inference Now (DIN) Deploy is an open‑source collection of practical C++ samples that bridges the gap from a model checkpoint to a native, hardware‑accelerated application on Windows and Linux."
-date: 2026-10-02T06:06:47+05:30
+date: 2026-10-02T12:06:10+05:30
 tags: [AIInference, ONNXRuntime, TensorRT, OpenSource]
 categories: ["AI", "Machine Learning", "Computer Vision", "Software Development", "AI Infrastructure"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/din-deploy-featured-660x370.png"

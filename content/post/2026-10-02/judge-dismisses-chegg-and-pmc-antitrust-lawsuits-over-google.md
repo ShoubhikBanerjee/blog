@@ -2,7 +2,7 @@
 title: "Judge Dismisses Chegg and PMC Antitrust Lawsuits Over Google AI Search"
 slug: "judge-dismisses-chegg-and-pmc-antitrust-lawsuits-over-google-ai-search"
 description: "Federal Judge Amit Mehta dismissed the antitrust lawsuits brought by Chegg and Rolling Stone parent Penske Media Corporation, which alleged that Google's AI‑powered search features siphoned traffic..."
-date: 2026-10-02T06:06:47+05:30
+date: 2026-10-02T12:06:10+05:30
 tags: [Google, Antitrust, AIOverviews]
 categories: ["AI", "Antitrust Law", "Artificial Intelligence", "Search Engines", "Publishing"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK093_GOOGLE_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization"
 slug: "amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization"
 description: "Amazon Payments applied AI‑based personalization to a product acquisition funnel, using a multi‑objective contextual multi‑armed bandit (MAB) on Amazon SageMaker AI."
-date: 2026-10-02T06:06:47+05:30
+date: 2026-10-02T12:06:10+05:30
 tags: [AmazonPayments, MultiArmedBandit, Personalization, SageMaker]
 categories: ["AI", "Machine Learning", "Reinforcement Learning", "Personalization", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-featured-image.png"

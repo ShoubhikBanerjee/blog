@@ -2,7 +2,7 @@
 title: "NVIDIA NeMo Agent Toolkit Adds Amazon S3 Vectors for Persistent Agent Memory"
 slug: "nvidia-nemo-agent-toolkit-adds-amazon-s3-vectors-for-persistent-agent-memory"
 description: "NVIDIA’s open‑source NeMo Agent Toolkit (NAT) now integrates Amazon S3 Vectors as a persistent memory backend, allowing agents deployed on Amazon EKS to store and retrieve long‑term knowledge with..."
-date: 2026-10-02T06:06:47+05:30
+date: 2026-10-02T12:06:10+05:30
 tags: [NVIDIA, NeMo, AWS, AIAgents]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing", "Data Management"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/28/ML-21981-featured-image.png"
