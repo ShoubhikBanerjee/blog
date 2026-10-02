@@ -2,7 +2,7 @@
 title: "AI Models Evolve Beyond 'Stochastic Parrot' into Reasoning Systems"
 slug: "ai-models-evolve-beyond-stochastic-parrot-into-reasoning-systems"
 description: "The definition of frontier AI models as 'stochastic parrots' is now outdated. Beginning in 2023, artificial intelligence labs began releasing large language models (LLMs) that have evolved beyond..."
-date: 2026-10-02T12:06:10+05:30
+date: 2026-10-02T18:04:26+05:30
 tags: [AIReasoning, LLMs, RetrievalAugmentedGeneration, ChainOfThought, AIrisks]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing"]
 image: "https://fastcompanyme.com/wp-content/uploads/2026/10/Its-time-to-retire-the-‘stochastic-parrot-definition-of-AI.jpg"

@@ -2,7 +2,7 @@
 title: "UBS Faces Shareholder Pressure, Merger Interest, and Team Exodus"
 slug: "ubs-faces-shareholder-pressure-merger-interest-and-team-exodus"
 description: "UBS Group AG is navigating a turbulent week as shareholder criticism intensifies, foreign banks signal merger interest, and a major advisory team departs."
-date: 2026-10-02T12:06:10+05:30
+date: 2026-10-02T18:04:26+05:30
 tags: [UBS, CapitalRequirements, BankingNews]
 categories: ["AI", "Finance", "Banking", "Corporate Governance", "Mergers & Acquisitions"]
 image: "https://www.marketbeat.com/logos/ubs-ag-logo.jpg"

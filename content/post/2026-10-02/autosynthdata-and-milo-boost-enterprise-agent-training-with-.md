@@ -2,7 +2,7 @@
 title: "AutoSynthData and MILO Boost Enterprise Agent Training with Automated Data Generation"
 slug: "autosynthdata-and-milo-boost-enterprise-agent-training-with-automated-data-generation"
 description: "ServiceNow CoreAI announced an update to its AutoSynthData pipeline and introduced the MILO framework for automatically generating training data and evolving agent harnesses in enterprise..."
-date: 2026-10-02T12:06:10+05:30
+date: 2026-10-02T18:04:26+05:30
 tags: [EnterpriseAI, AutoSynthData, MILO, AITraining, AgenticSystems]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Machine Learning", "Enterprise Software"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/68642da9885da181fde1ad70/8kSzlHLOdu5hchCtPnK8D.png"

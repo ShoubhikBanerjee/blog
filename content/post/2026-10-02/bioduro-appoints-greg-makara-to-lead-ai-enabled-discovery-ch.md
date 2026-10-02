@@ -2,7 +2,7 @@
 title: "BioDuro appoints Greg Makara to lead AI‑enabled discovery chemistry"
 slug: "bioduro-appoints-greg-makara-to-lead-aienabled-discovery-chemistry"
 description: "BioDuro, a global integrated contract research, development and manufacturing organization (CRDMO), announced on October 1 2026 that it has appointed Greg Makara, Ph.D., as Senior Vice President Lead..."
-date: 2026-10-02T12:06:10+05:30
+date: 2026-10-02T18:04:26+05:30
 tags: [AI, DrugDiscovery, ComputationalChemistry, Biotech]
 categories: ["AI", "Pharmaceuticals", "Artificial Intelligence", "Drug Discovery", "Computational Chemistry"]
 image: "https://www.bioduro.com/wp-content/uploads/2026/10/Dr-Greg-Makara-banner-.png"

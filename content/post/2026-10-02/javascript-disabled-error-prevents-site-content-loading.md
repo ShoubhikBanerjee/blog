@@ -2,7 +2,7 @@
 title: "JavaScript Disabled Error Prevents Site Content Loading"
 slug: "javascript-disabled-error-prevents-site-content-loading"
 description: "A user attempting to access a web page encountered repeated messages indicating that JavaScript is disabled and that a required part of the site could not load."
-date: 2026-10-02T12:06:10+05:30
+date: 2026-10-02T18:04:26+05:30
 tags: [JavaScript, WebIssues, Browser]
 categories: ["AI", "Web Development", "Browser Compatibility", "User Experience"]
 author: "Shoubhik Banerjee"

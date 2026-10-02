@@ -2,7 +2,7 @@
 title: "NVIDIA Releases DOCA AI Agent Skills on GitHub for BlueField DPU Infrastructure"
 slug: "nvidia-releases-doca-ai-agent-skills-on-github-for-bluefield-dpu-infrastructure"
 description: "NVIDIA has released DOCA AI agent skills on GitHub, providing a standardized, machine-readable specification that allows AI agents to manage BlueField data processing units (DPUs). This development..."
-date: 2026-10-02T12:06:10+05:30
+date: 2026-10-02T18:04:26+05:30
 tags: [NVIDIA, DOCA, AIagents, DPU, BlueField]
 categories: ["AI", "AI Infrastructure", "Software Development", "Data Centers"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/agentic-ai-660x370.png"
