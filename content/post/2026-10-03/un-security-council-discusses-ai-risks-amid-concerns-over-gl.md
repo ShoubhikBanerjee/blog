@@ -2,7 +2,7 @@
 title: "UN Security Council Discusses AI Risks Amid Concerns Over Global Governance and Inequality"
 slug: "un-security-council-discusses-ai-risks-amid-concerns-over-global-governance-and-inequality"
 description: "The United Nations Security Council recently convened to discuss the existential risks of artificial intelligence, bringing together tech CEOs and scientific advisors. However, the session has faced..."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [UnitedNations, AISafety, GlobalGovernance, AIInequality, TechPolicy]
 categories: ["AI", "Global Governance", "AI Ethics", "Political Economy"]
 image: "https://cdn.countercurrents.org/2026/10/United-Nations-Security-Council-meeting-on-Artificial-Intelligence.jpg"

@@ -2,7 +2,7 @@
 title: "Kolibri: German-English Mixture‑of‑Experts Model with 1 Million Token Context"
 slug: "kolibri-german-english-mixtureofexperts-model-with-1-million-token-context"
 description: "On the Day of German Reunification, a new model called Kolibri was released."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [Kolibri, MixtureOfExperts, GermanAI, SovereignAI]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Enterprise AI", "AI Governance"]
 image: "https://aleph-alpha.com/_astro/00-cover.Du35XCGh_zJqw.jpeg"

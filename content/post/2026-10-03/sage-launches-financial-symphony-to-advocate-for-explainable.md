@@ -2,7 +2,7 @@
 title: "Sage Launches Financial Symphony to Advocate for Explainable AI in Finance"
 slug: "sage-launches-financial-symphony-to-advocate-for-explainable-ai-in-finance"
 description: "Sage has launched Financial Symphony, a classical electro-acoustic composition generated from real, anonymised business data. The project serves as a tangible expression of the company's 'Glass Box'..."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [ExplainableAI, Fintech, Sage, DataSonification]
 categories: ["AI", "Artificial Intelligence", "Financial Technology", "Data Analytics"]
 image: "https://assets.bizclikmedia.net/1200/f04f9278e2e0d3238a0baafeed7a24d9:216816a159f22d18f8390721ab97421d/fintech-top10-graphics-cms-top-5-2026.jpg.jpg"

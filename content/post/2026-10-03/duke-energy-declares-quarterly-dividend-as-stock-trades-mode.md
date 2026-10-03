@@ -2,7 +2,7 @@
 title: "Duke Energy declares quarterly dividend as stock trades modestly higher"
 slug: "duke-energy-declares-quarterly-dividend-as-stock-trades-modestly-higher"
 description: "Duke Energy Corp. (NYSE: DUK) announced a new quarterly dividend while its shares edged up in extended trading, despite pressure from rising Treasury yields and recent analyst caution."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [DukeEnergy, Dividends, Utilities]
 categories: ["AI", "Utilities", "Finance", "Stock Market"]
 image: "https://www.marketbeat.com/logos/duke-energy-corporation-logo.png?v=20260608123106"

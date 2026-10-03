@@ -2,7 +2,7 @@
 title: "MarketBeat Tracks News Sentiment and Media Coverage for Bank of New York Mellon"
 slug: "marketbeat-tracks-news-sentiment-and-media-coverage-for-bank-of-new-york-mellon"
 description: "MarketBeat tracks and analyzes real-time media coverage and news sentiment for Bank of New York Mellon (BNY) alongside other finance companies. Utilizing automated tracking, the platform monitors..."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [MarketBeat, SentimentAnalysis, FinancialTechnology, BNY]
 categories: ["AI", "Financial Technology", "Data Analytics", "Sentiment Analysis"]
 image: "https://www.marketbeat.com/logos/the-bank-of-new-york-mellon-co-logo.png?v=20240108101436"

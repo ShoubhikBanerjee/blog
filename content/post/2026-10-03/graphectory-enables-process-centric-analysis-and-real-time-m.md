@@ -2,7 +2,7 @@
 title: "Graphectory Enables Process‑Centric Analysis and Real‑Time Monitoring of Agentic Systems"
 slug: "graphectory-enables-processcentric-analysis-and-realtime-monitoring-of-agentic-systems"
 description: "Agentic systems are modern software systems composed of orchestrated modules, exposed interfaces, and deployment pipelines. Their execution is stochastic and adaptive, and evaluation has..."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [AIagents, AgenticSystems, LLM, ProcessAnalysis]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Machine Learning", "Software Engineering"]
 author: "Shoubhik Banerjee"

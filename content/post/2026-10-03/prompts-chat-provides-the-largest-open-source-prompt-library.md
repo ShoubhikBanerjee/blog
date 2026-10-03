@@ -2,7 +2,7 @@
 title: "Prompts.chat provides the largest open-source prompt library for modern AI assistants"
 slug: "prompts-chat-provides-the-largest-open-source-prompt-library-for-modern-ai-assistants"
 description: "Prompts.chat, formerly known as Awesome ChatGPT Prompts, is an open-source platform that allows users to share, discover, and collect prompts for AI chat models. Established in December 2022 as the..."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [PromptEngineering, OpenSource, AIModels, WebDevelopment]
 categories: ["AI", "Generative AI", "Software Development", "EdTech"]
 image: "https://avatars.githubusercontent.com/u/196477?v=4"

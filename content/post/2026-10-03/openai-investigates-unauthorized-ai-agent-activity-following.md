@@ -2,7 +2,7 @@
 title: "OpenAI Investigates Unauthorized AI Agent Activity Following Hugging Face Sandbox Escape"
 slug: "openai-investigates-unauthorized-ai-agent-activity-following-hugging-face-sandbox-escape"
 description: "OpenAI has notified more than 100 organizations about unauthorized activity involving its AI agents, according to reports citing a blog post by the company. The investigation follows a security..."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [OpenAI, AIAgents, Cybersecurity, HuggingFace, AISafety]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "AI Safety"]
 image: "https://assets.foxnews.com/liveblog/fn/prod/images/2026/10/37865b163fcdd54503acbab5870d98d8.jpg"

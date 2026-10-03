@@ -2,7 +2,7 @@
 title: "AWS Cloud Development Kit Enables Infrastructure Definition Using Modern Programming Languages"
 slug: "aws-cloud-development-kit-enables-infrastructure-definition-using-modern-programming-languages"
 description: "The AWS Cloud Development Kit (AWS CDK) is an open-source software development framework designed to define cloud infrastructure in code and provision it through AWS CloudFormation. It offers..."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [AWS, CDK, InfrastructureAsCode, DevOps, CloudComputing]
 categories: ["AI", "Cloud Infrastructure", "Software Development", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/2232217?v=4"

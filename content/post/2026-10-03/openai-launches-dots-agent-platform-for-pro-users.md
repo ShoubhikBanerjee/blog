@@ -2,7 +2,7 @@
 title: "OpenAI Launches Dots Agent Platform for Pro Users"
 slug: "openai-launches-dots-agent-platform-for-pro-users"
 description: "OpenAI announced its new agent platform, called Dots, earlier this week. Think of Dots as Codex, but for regular people. The platform is enterprise software that can also order your dinner. Dots have..."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [OpenAI, Dots, AIagents, automation, virtualmachine, enterprise]
 categories: ["AI", "Machine Learning", "AI Agents", "Enterprise Software", "Automation"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/DSC04281_processed.jpg?quality=90&strip=all&crop=0%2C10.723165084465%2C100%2C78.55366983107&w=1200"

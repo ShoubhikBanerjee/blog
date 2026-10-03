@@ -2,7 +2,7 @@
 title: "Eventbrite Event Combines Claude and Instagram for Clients"
 slug: "eventbrite-event-combines-claude-and-instagram-for-clients"
 description: "A new event is being promoted on Eventbrite that combines the AI tool Claude with the social media platform Instagram to attract clients."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [Eventbrite, Claude, Instagram, Clients, BusinessEvent, LasVegas]
 categories: ["AI", "AI Applications", "Event Planning", "Digital Marketing", "Business"]
 image: "https://www.eventbrite.com/e/_next/image?url=https%3A%2F%2Fimg.evbuc.com%2Fhttps%253A%252F%252Fcdn.evbuc.com%252Fimages%252F1192776753%252F178733019095%252F1%252Foriginal.20260905-160725%3Fcrop%3Dfocalpoint%26fit%3Dcrop%26w%3D940%26auto%3Dformat%252Ccompress%26q%3D75%26sharp%3D10%26fp-x%3D0.174%26fp-y%3D0.502%26s%3D69e58b1725049dfcd7d4eecfc88e6e4d&w=940&q=75"

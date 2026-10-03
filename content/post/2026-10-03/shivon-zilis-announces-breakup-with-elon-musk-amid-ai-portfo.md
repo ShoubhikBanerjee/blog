@@ -2,7 +2,7 @@
 title: "Shivon Zilis Announces Breakup with Elon Musk Amid AI Portfolio Testimony"
 slug: "shivon-zilis-announces-breakup-with-elon-musk-amid-ai-portfolio-testimony"
 description: "Shivon Zilis used X to announce that she and Elon Musk, the father of her four children, have broken up. The post was a quote‑tweet of a *Big Tech Alert* notice that Musk had stopped following her,..."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [ElonMusk, ShivonZilis, OpenAI, AI]
 categories: ["AI", "Artificial Intelligence", "Technology Law", "Corporate Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/STPK222_SHIVON_ZILIS2.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

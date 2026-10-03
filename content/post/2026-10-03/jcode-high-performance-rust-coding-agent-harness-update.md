@@ -2,7 +2,7 @@
 title: "jcode: High-Performance Rust Coding Agent Harness Update"
 slug: "jcode-high-performance-rust-coding-agent-harness-update"
 description: "The jcode coding agent harness, written in Rust, has received an update that improves performance, resource efficiency, and its update workflow."
-date: 2026-10-03T18:03:59+05:30
+date: 2026-10-03T22:03:57+05:30
 tags: [jcode, AIcoding, Rust, Performance]
 categories: ["AI", "Artificial Intelligence", "Developer Tools", "Programming Languages"]
 image: "https://avatars.githubusercontent.com/u/94247773?v=4"
