@@ -2,7 +2,7 @@
 title: "GOTCHAROCKA to Perform at Sapporo SPiCE Spin-off Event"
 slug: "gotcharocka-to-perform-at-sapporo-spice-spin-off-event"
 description: "GOTCHAROCKA has been announced as the lineup for a new spin-off event titled 'Joker on the 14th Moon Spin-off', which will take place on October 3, 2026 at Sapporo SPiCE."
-date: 2026-10-03T06:06:22+05:30
+date: 2026-10-03T12:03:03+05:30
 tags: [GOTCHAROCKA, Sapporo, SPiCE, livehouse, taiban, Jokeronthe14thMoon]
 categories: ["AI", "Music", "Live Events", "Japan Entertainment"]
 image: "https://vk.gy/style/card.png"

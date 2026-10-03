@@ -2,7 +2,7 @@
 title: "Meta open-sources Muse AI gadget code for DIY hardware integration"
 slug: "meta-open-sources-muse-ai-gadget-code-for-diy-hardware-integration"
 description: "Meta now lets you make your own Muse gadgets that feature the company’s new AI agent with code that the company open sourced."
-date: 2026-10-03T06:06:22+05:30
+date: 2026-10-03T12:03:03+05:30
 tags: [Meta, MuseAI, OpenSource, HardwareAI, IoT]
 categories: ["AI", "Artificial Intelligence", "Open Source Hardware", "IoT Devices", "AI Agents"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKB394_MUSE_AI_CVIRGINIA_B.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

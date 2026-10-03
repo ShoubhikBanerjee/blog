@@ -2,7 +2,7 @@
 title: "Apple to Limit macOS Full Disk Access Over AI Agent Privacy Risks"
 slug: "apple-to-limit-macos-full-disk-access-over-ai-agent-privacy-risks"
 description: "Apple is introducing new restrictions for the 'full disk access' permission on Mac systems. This decision follows reports of risks posed by AI agents and concerns about how developers utilize..."
-date: 2026-10-03T06:06:22+05:30
+date: 2026-10-03T12:03:03+05:30
 tags: [Apple, macOS, Privacy, AIAgents, DataSecurity]
 categories: ["AI", "Cybersecurity", "Artificial Intelligence", "Operating Systems"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/268759_Mac_Mini_AKrales_0079.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

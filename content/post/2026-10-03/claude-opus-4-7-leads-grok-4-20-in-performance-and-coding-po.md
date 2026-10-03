@@ -2,7 +2,7 @@
 title: "Claude Opus 4.7 Leads Grok 4.20 in Performance and Coding Point Estimates"
 slug: "claude-opus-4-7-leads-grok-4-20-in-performance-and-coding-point-estimates"
 description: "Updated on October 2, 2026, new performance rankings indicate that Claude Opus 4.7 is ahead of Grok 4.20. Across seven shared results, Claude Opus 4.7 achieved a higher public point estimate of..."
-date: 2026-10-03T06:06:22+05:30
+date: 2026-10-03T12:03:03+05:30
 tags: [ClaudeOpus, GrokAI, AIBenchmarks]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Model Performance"]
 image: "https://benchlm.ai/api/og?type=compare&modelA=Claude%20Opus%204.7&modelB=Grok%204.20&scoreA=65.82&scoreB=59.19"
