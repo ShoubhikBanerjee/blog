@@ -2,7 +2,7 @@
 title: "Cloudflare and Strands Release Open Decision Models for AI Agents"
 slug: "cloudflare-and-strands-release-open-decision-models-for-ai-agents"
 description: "Cloudflare and Strands Labs released open-source decision models and RL fine-tuning tools designed to help AI agents make fast, structured choices efficiently."
-date: 2026-10-03T12:03:03+05:30
+date: 2026-10-03T18:03:59+05:30
 tags: [Cloudflare, StrandsLabs, DecisionModels, AIAgents, OpenSource, RLAIF]
 categories: ["AI", "AI Agents", "Machine Learning", "Open Source", "Cloud Computing"]
 image: "https://aiagentstore.ai/explore-ai-agents.jpg"

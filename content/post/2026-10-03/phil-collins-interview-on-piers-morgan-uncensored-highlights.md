@@ -2,7 +2,7 @@
 title: "Phil Collins Interview on Piers Morgan Uncensored Highlights Health, Reconciliation, and Politics"
 slug: "phil-collins-interview-on-piers-morgan-uncensored-highlights-health-reconciliation-and-politics"
 description: "Phil Collins sat down for an hour‑long conversation on *Piers Morgan Uncensored* where he talked about recent health issues, made amends with Paul McCartney, and shared his views on Donald Trump."
-date: 2026-10-03T12:03:03+05:30
+date: 2026-10-03T18:03:59+05:30
 tags: [PhilCollins, PiersMorgan, Interview, Media]
 categories: ["AI", "Entertainment", "Music", "Television", "Pop Culture"]
 image: "https://images.consequence.net/5GTcpikVScwbnONXaY2DSabwrEeVR-kB-PU2AHA_xsw/rs:fit:400:0/plain/https%3A%2F%2Fconcerts.consequence.net%2Fimages%2Fevent-fallback.jpg@webp"

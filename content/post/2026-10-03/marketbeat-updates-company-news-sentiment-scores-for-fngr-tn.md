@@ -2,7 +2,7 @@
 title: "MarketBeat updates company news sentiment scores for FNGR, TNON, ICFI, TXNM"
 slug: "marketbeat-updates-company-news-sentiment-scores-for-fngr-tnon-icfi-txnm"
 description: "MarketBeat has refreshed its company news sentiment metrics, showing the latest seven‑day averages for four publicly traded firms."
-date: 2026-10-03T12:03:03+05:30
+date: 2026-10-03T18:03:59+05:30
 tags: [sentimentanalysis, marketdata, finance, AI]
 categories: ["AI", "Financial Technology", "Data Analytics", "Artificial Intelligence"]
 image: "https://www.marketbeat.com/logos/fingermotion-inc-logo.png?v=20240524091215"

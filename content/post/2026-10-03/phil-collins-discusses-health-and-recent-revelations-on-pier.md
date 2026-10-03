@@ -2,7 +2,7 @@
 title: "Phil Collins Discusses Health and Recent Revelations on Piers Morgan Uncensored"
 slug: "phil-collins-discusses-health-and-recent-revelations-on-piers-morgan-uncensored"
 description: "Phil Collins appeared on 'Piers Morgan Uncensored' for an hour-long conversation covering personal and political topics. The interview, reported by Alex Young, details several significant updates..."
-date: 2026-10-03T12:03:03+05:30
+date: 2026-10-03T18:03:59+05:30
 tags: [PhilCollins, PiersMorgan, VividSeats]
 categories: ["AI", "Entertainment", "Music", "Interviews"]
 image: "https://images.consequence.net/66s5X7kMoHXznHMmZd0VEEWBMGSEvb9WsbZljl0cZEQ/rs:fit:600:0/plain/https%3A%2F%2Fs1.ticketm.net%2Fdam%2Fc%2F8cf%2Fa6653880-7899-4f67-8067-1f95f4d158cf_124761_TABLET_LANDSCAPE_LARGE_16_9.jpg@webp"
