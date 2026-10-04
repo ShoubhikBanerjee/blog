@@ -2,7 +2,7 @@
 title: "EPAM Systems Seeks Lead AI/ML Consultant for AWS Agentic AI"
 slug: "epam-systems-seeks-lead-ai-ml-consultant-for-aws-agentic-ai"
 description: "EPAM Systems is hiring a Lead AI/ML Consultant to lead the AI/ML workstream for an ADP account engagement, focusing on architecting and building agentic AI and generative AI solutions using AWS..."
-date: 2026-10-04T18:04:32+05:30
+date: 2026-10-04T22:04:46+05:30
 tags: [EPAMSystems, AWS, AgenticAI, GenerativeAI, AIConsultant, AmazonBedrock]
 categories: ["AI", "AI Agents", "Cloud Computing", "Generative AI", "Machine Learning"]
 author: "Shoubhik Banerjee"

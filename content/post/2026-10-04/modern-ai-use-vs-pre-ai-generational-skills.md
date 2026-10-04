@@ -2,7 +2,7 @@
 title: "Modern AI Use vs. Pre-AI Generational Skills"
 slug: "modern-ai-use-vs-pre-ai-generational-skills"
 description: "This post contrasts the problem-solving methods of generations who lived without artificial intelligence with the modern reliance on AI tools."
-date: 2026-10-04T18:04:32+05:30
+date: 2026-10-04T22:04:46+05:30
 tags: [AI, CriticalThinking, GenerationalComparison, TechnologyDependence]
 categories: ["AI", "Artificial Intelligence", "Technology and Society", "Human-AI Interaction"]
 image: "https://pages.cld.bz/res/TWan8qa/fb.jpg?w=430&h=1316530093"

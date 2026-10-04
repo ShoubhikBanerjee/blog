@@ -2,7 +2,7 @@
 title: "Ukrainian Robot Offensive Operation Vivaldi Reverses Russian Gains in Donbas"
 slug: "ukrainian-robot-offensive-operation-vivaldi-reverses-russian-gains-in-donbas"
 description: "Ukraine has launched 'Operation Vivaldi,' a robotic counteroffensive in the eastern Donbas region that has reportedly reversed more than a year of Russian territorial gains. According to security..."
-date: 2026-10-04T18:04:32+05:30
+date: 2026-10-04T22:04:46+05:30
 tags: [OperationVivaldi, MilitaryRobotics, DefenseTech, Donbas]
 categories: ["AI", "Defense Technology", "Robotics", "International Security"]
 image: "https://image.cnbcfm.com/api/v1/image/108371730-1790941885757-gettyimages-2270934858-ukrinform-ukrainia260410_np94s.jpeg?v=1790941939&w=1920&h=1080"

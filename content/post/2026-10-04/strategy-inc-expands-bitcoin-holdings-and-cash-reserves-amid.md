@@ -2,7 +2,7 @@
 title: "Strategy Inc. expands Bitcoin holdings and cash reserves amid market volatility"
 slug: "strategy-inc-expands-bitcoin-holdings-and-cash-reserves-amid-market-volatility"
 description: "Strategy Inc. (NASDAQ: MSTR) has been in the spotlight as its stock volatility reflects the interplay between Bitcoin price movements, analyst targets, and corporate treasury actions."
-date: 2026-10-04T18:04:32+05:30
+date: 2026-10-04T22:04:46+05:30
 tags: [MSTR, Bitcoin, CryptoStocks, MarketAnalysis]
 categories: ["AI", "Financial Markets", "Cryptocurrency", "Equity Analysis"]
 image: "https://www.marketbeat.com/logos/strategy-incorporated-logo.png?v=20250407110423"

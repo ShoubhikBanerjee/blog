@@ -2,7 +2,7 @@
 title: "Sightlogix Launches NS12 and TC12 Megapixel Thermal Cameras for Large Scale Perimeter Security"
 slug: "sightlogix-launches-ns12-and-tc12-megapixel-thermal-cameras-for-large-scale-perimeter-security"
 description: "Sightlogix has announced the Sightsensor NS12 and TC12, which are among the first fixed thermal cameras on the market to feature a 1280×1024 imager. These devices are designed to protect large sites..."
-date: 2026-10-04T18:04:32+05:30
+date: 2026-10-04T22:04:46+05:30
 tags: [Sightlogix, ThermalImaging, PerimeterSecurity, EdgeAI, ComputerVision]
 categories: ["AI", "Computer Vision", "AI Hardware", "Security Technology"]
 image: "https://www.securityworldmarket.com/Frontend/Images/swm-logo-400x400.jpg"

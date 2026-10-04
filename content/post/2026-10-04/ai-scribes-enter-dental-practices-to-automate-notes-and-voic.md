@@ -2,7 +2,7 @@
 title: "AI Scribes Enter Dental Practices to Automate Notes and Voice Perio Charting"
 slug: "ai-scribes-enter-dental-practices-to-automate-notes-and-voice-perio-charting"
 description: "Dental practices are adopting AI scribes to automate the creation of exam notes and complete periodontic charts. These tools allow dental professionals to document patient visits and update records..."
-date: 2026-10-04T18:04:32+05:30
+date: 2026-10-04T22:04:46+05:30
 tags: [DentalAI, AIScribes, HealthcareTech, Dentistry, PracticeManagement]
 categories: ["AI", "Healthcare Technology", "Dental Practice Management", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "llama.cpp v0.4.0 Released with 18 Backends and 1-Bit Quantization"
 slug: "llama-cpp-v0-4-0-released-with-18-backends-and-1-bit-quantization"
 description: "The llama.cpp project, a pure C/C++ LLM inference engine, has released stable version v0.4.0 on 2026-09-04, alongside a rapid cadence of 12 nightly builds in approximately 27.5 hours. The release..."
-date: 2026-10-04T18:04:32+05:30
+date: 2026-10-04T22:04:46+05:30
 tags: [llamacpp, localAI, quantization, opensource, AIinference]
 categories: ["AI", "Machine Learning", "Open Source", "AI Inference", "Software Development"]
 image: "https://wakii-site.vercel.app/blog/heroes/deep-dive-ggml-org-llama-cpp.png"

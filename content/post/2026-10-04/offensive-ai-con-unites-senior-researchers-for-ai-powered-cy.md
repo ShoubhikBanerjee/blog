@@ -2,7 +2,7 @@
 title: "Offensive AI Con Unites Senior Researchers for AI-Powered Cyber Offense"
 slug: "offensive-ai-con-unites-senior-researchers-for-ai-powered-cyber-offense"
 description: "Offensive AI Con (OAIC) is an invite‑only technical conference that examined the intersection of artificial intelligence and offensive cybersecurity. Held in Oceanside, San Diego, the event gathered..."
-date: 2026-10-04T18:04:32+05:30
+date: 2026-10-04T22:04:46+05:30
 tags: [OffensiveAI, Cybersecurity, AIResearch, SecurityConference]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Offensive Security", "Policy"]
 author: "Shoubhik Banerjee"
