@@ -2,7 +2,7 @@
 title: "Capcom outlines AI-assisted evolution of RE Engine at RE: 2026"
 slug: "capcom-outlines-ai-assisted-evolution-of-re-engine-at-re-2026"
 description: "Capcom’s RE: 2026 Open Conference featured a presentation by programmer Satoshi Ishida titled “The Outlook and Future of the REX Project, Further Evolving the RE Engine for the Next Generation.” In..."
-date: 2026-10-04T06:05:55+05:30
+date: 2026-10-04T12:04:15+05:30
 tags: [Capcom, AIinGameDev, REEngine, GameDev]
 categories: ["AI", "Artificial Intelligence", "Game Development", "Computer Graphics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/02/RE9_SS_08.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

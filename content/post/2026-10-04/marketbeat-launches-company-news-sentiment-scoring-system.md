@@ -2,7 +2,7 @@
 title: "MarketBeat launches company news sentiment scoring system"
 slug: "marketbeat-launches-company-news-sentiment-scoring-system"
 description: "MarketBeat has introduced a sentiment scoring system that assigns a numeric rating to each news headline and aggregates those ratings into company‑level sentiment scores."
-date: 2026-10-04T06:05:55+05:30
+date: 2026-10-04T12:04:15+05:30
 tags: [NewsSentiment, Finance, DataAnalytics, MarketBeat]
 categories: ["AI", "Finance", "Artificial Intelligence", "Data Analytics"]
 image: "https://www.marketbeat.com/logos/pnc-financial-services-logo.jpg"

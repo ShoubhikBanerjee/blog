@@ -2,7 +2,7 @@
 title: "ThinkingBox Benchmark Reveals Gaps Between LLM Agent Tool Calls and Database State"
 slug: "thinkingbox-benchmark-reveals-gaps-between-llm-agent-tool-calls-and-database-state"
 description: "A joint Microsoft‑Hugging Face blog introduces **ThinkingBox**, a benchmark that runs LLM agents against isolated tool sessions, then grades the resulting backend database state and side effects."
-date: 2026-10-04T06:05:55+05:30
+date: 2026-10-04T12:04:15+05:30
 tags: [ThinkingBox, LLM, AIAgents, Benchmark]
 categories: ["AI", "Machine Learning", "AI Agents", "Evaluation", "Natural Language Processing"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/64b8491203124195cd795cad/NStwJm1AafDELVsU4KGwS.png"
