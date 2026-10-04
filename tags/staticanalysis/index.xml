@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>StaticAnalysis on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/staticanalysis/</link><description>Recent content in StaticAnalysis on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 14 Sep 2026 22:04:39 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/staticanalysis/index.xml" rel="self" type="application/rss+xml"/><item><title>Agent Audit Static Security Scanner Released for LLM Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/agent-audit-static-security-scanner-released-for-llm-agents/</link><pubDate>Mon, 14 Sep 2026 22:04:39 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/agent-audit-static-security-scanner-released-for-llm-agents/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/181223267?v=4" alt="Featured image of post Agent Audit Static Security Scanner Released for LLM Agents" /&gt;&lt;h1 id="agent-audit-static-security-scanner-released-for-llm-agents"&gt;Agent Audit Static Security Scanner Released for LLM Agents
+&lt;/h1&gt;&lt;p&gt;Agent Audit is a new static security scanner designed to find security vulnerabilities in AI agent code before they reach production.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;AI agents differ from chatbots because they execute code, call tools, and interact with real systems. This creates a high-probability risk surface where unsafe input paths can lead to production incidents, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prompt Injection:&lt;/strong&gt; Rewriting agent intent through user-controlled context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Unsafe Tool Inputs:&lt;/strong&gt; Reaching &lt;code&gt;subprocess&lt;/code&gt; or &lt;code&gt;eval&lt;/code&gt; to become command execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MCP Configuration Mistakes:&lt;/strong&gt; Unintentionally expanding access and leaking credentials.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Agent Audit analyzes agent workflows using a core designed for tool-boundary taint tracking, MCP configuration auditing, and semantic secret detection. It is intended for teams that ship agent features, own CI security gates, or operate tool integrations and MCP servers.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Framework Support:&lt;/strong&gt; Works with AutoGen, CrewAI, and LangChain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rule Set:&lt;/strong&gt; Includes 51 rules mapped to the OWASP Agentic Top 10 (2026), achieving 10/10 coverage of that list.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CI Integration:&lt;/strong&gt; Includes &lt;code&gt;--severity&lt;/code&gt; to control reporting and &lt;code&gt;--fail-on&lt;/code&gt; to control when the command exits with code &lt;code&gt;1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Future Development:&lt;/strong&gt; The system is designed to extend into learning-assisted detection over time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Performance is based on reproducible raw data from a clean clone using &lt;code&gt;pip install -e packages/audit/ &amp;amp;&amp;amp; python tests/benchmark/precision_recall.py --output-json results/layer1.json&lt;/code&gt;:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Precision&lt;/td&gt;
+&lt;td style="text-align: left"&gt;68.86%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Recall&lt;/td&gt;
+&lt;td style="text-align: left"&gt;84.32%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;F1 Score&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.7581&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;True Positives (TP)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;199&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;False Positives (FP)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;90&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;False Negatives (FN)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;37&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Regarding these metrics, at least 21 of the false positives are correct by their own rules&amp;rsquo; definitions. Additionally, recall rose and precision fell compared to v0.19.0 because two file-discovery fixes made previously unreachable findings possible, though the corpus does not yet label most of them. A ground-truth label refresh for 18 new rules (AGENT-053+) is scheduled for June 2026.&lt;/p&gt;
+&lt;p&gt;#AIagents #Cybersecurity #LLM #OWASP #StaticAnalysis&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/HeadyZhang/agent-audit" target="_blank" rel="noopener"
+&gt;HeadyZhang/agent-audit&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

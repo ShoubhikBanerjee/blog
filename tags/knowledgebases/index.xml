@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>KnowledgeBases on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/knowledgebases/</link><description>Recent content in KnowledgeBases on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 01 Sep 2026 22:04:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/knowledgebases/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock Launches Managed Knowledge Bases with Agentic Retrieval</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-launches-managed-knowledge-bases-with-agentic-retrieval/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-launches-managed-knowledge-bases-with-agentic-retrieval/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/27/ML-21427-featured-image.png" alt="Featured image of post Amazon Bedrock Launches Managed Knowledge Bases with Agentic Retrieval" /&gt;&lt;h1 id="amazon-bedrock-launches-managed-knowledge-bases-with-agentic-retrieval"&gt;Amazon Bedrock Launches Managed Knowledge Bases with Agentic Retrieval
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock Knowledge Bases has introduced managed knowledge bases, evolving from traditional RAG to agentic retrieval. This new capability enables multi-turn planning, iterative retrieval, and grounded answers with citations, all managed by Amazon Bedrock.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Amazon Bedrock now offers a Managed Knowledge Base (Type: MANAGED) that handles ingestion, storage, indexing, and retrieval, including embedding and reranking with service-managed models.&lt;/li&gt;
+&lt;li&gt;The solution eliminates the need to provision, scale, or patch a vector database.&lt;/li&gt;
+&lt;li&gt;It supports multimodal content, including text, vectors, metadata, and structured content like CSV and Excel files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A user sends a question to an agent hosted on the Amazon Bedrock AgentCore runtime.&lt;/li&gt;
+&lt;li&gt;The runtime auto-instruments every step with OpenTelemetry spans, making the reason-and-act loop observable from the first call.&lt;/li&gt;
+&lt;li&gt;The agent’s reasoning model plans the task and performs cross-knowledge-base routing, selecting the tool (e.g., financial or weather) whose topic matches the question.&lt;/li&gt;
+&lt;li&gt;The selected tool call is brokered by the Amazon Bedrock AgentCore Gateway over the Model Context Protocol (MCP), invoking the knowledge base’s &lt;code&gt;AgenticRetrieveStream&lt;/code&gt; API.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AgenticRetrieveStream&lt;/code&gt; decomposes the question into sub-queries, retrieves iteratively from the managed datastore (ingested from corpora in Amazon S3), and synthesizes a grounded, cited answer that streams back through the Gateway.&lt;/li&gt;
+&lt;li&gt;The runtime emits spans, token usage, and metrics to Amazon CloudWatch and AWS X-Ray, populating seven observability layers and feeding evaluation scores.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Classic RAG performs one retrieval and one generation, while agentic retrieval uses a reasoning agent to decide whether and what to retrieve, refine through multiple retrievals, choose relevant knowledge bases (semantic routing), and compose a grounded answer with citations.&lt;/li&gt;
+&lt;li&gt;The solution deploys as four native AWS CloudFormation stacks, each wiring its outputs into the next:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;01-knowledge-bases&lt;/code&gt;: Creates an Amazon S3 bucket, two Managed Knowledge Bases (financial and weather corpora), their data sources, IAM, and an ingestion custom resource.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;02-agentic-gateway&lt;/code&gt;: Stands up an Amazon Bedrock AgentCore Gateway with AWS_IAM auth and MCP.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The solution includes two CloudWatch dashboards spanning seven layers of telemetry, plus on-demand and continuous evaluation, all provisioned by the same templates.&lt;/li&gt;
+&lt;li&gt;Direct ingestion via a custom connector allows documents to become retrievable within seconds.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;AgenticRetrieveStream&lt;/code&gt; API runs an agentic workflow that decides how to respond to a question, performing single or multi-hop retrievals as needed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The service manages ingestion, storage, embedding, and ranking, with no infrastructure to provision or capacity to monitor.&lt;/li&gt;
+&lt;li&gt;Built-in agentic retrieval uses iterative planning and multi-hop retrievals to answer complex questions while honoring access permissions on every hop.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Agentic retrieval introduces reasoning agents that refine retrievals, route across knowledge bases, and produce grounded, cited answers.&lt;/li&gt;
+&lt;li&gt;Observability and evaluation are built in from the start, with telemetry and metrics integrated into AWS CloudWatch and AWS X-Ray.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/architecture_v2-Page-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/27/ML-21427-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/27/ML-21427-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgenticRetrieval #KnowledgeBases #AWS #RAG #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-observable-enterprise-agentic-retrieval-using-managed-amazon-bedrock-knowledge-base-with-aws-cloudformation/" target="_blank" rel="noopener"
+&gt;Build observable enterprise agentic retrieval using Managed Amazon Bedrock Knowledge Base with AWS CloudFormation | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-multi-tenant-agentic-chat-applications-on-enterprise-data-with-amazon-bedrock-managed-knowledge-base/" target="_blank" rel="noopener"
+&gt;Build multi-tenant agentic chat applications on enterprise data with Amazon Bedrock Managed Knowledge Base | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

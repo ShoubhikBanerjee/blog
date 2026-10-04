@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Verification on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/verification/</link><description>Recent content in Verification on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 29 Sep 2026 22:02:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/verification/index.xml" rel="self" type="application/rss+xml"/><item><title>ProvenanceGuard Introduces Post-Generation Verification for MCP Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/provenanceguard-introduces-post-generation-verification-for-mcp-agents/</link><pubDate>Tue, 29 Sep 2026 22:02:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/provenanceguard-introduces-post-generation-verification-for-mcp-agents/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/668e37fd9c9aa124a3c867e8/phhhj_BLOJbvnTFhVaZ5y.png" alt="Featured image of post ProvenanceGuard Introduces Post-Generation Verification for MCP Agents" /&gt;&lt;h1 id="provenanceguard-introduces-post-generation-verification-for-mcp-agents"&gt;ProvenanceGuard Introduces Post-Generation Verification for MCP Agents
+&lt;/h1&gt;&lt;p&gt;ProvenanceGuard has been developed as a post-generation verification layer that operates on top of black-box MCP agents to verify the accuracy of agent-produced answers.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The system runs after an agent produces an answer and reads the captured MCP trace, including tool outputs and source IDs, without requiring the agent to be retrained. The verification process follows these steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Claim Decomposition&lt;/strong&gt;: A local language model breaks the answer into specific claims.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Source Identification&lt;/strong&gt;: MiniLM is used to find the source most relevant to each claim.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Support Verification&lt;/strong&gt;: A DeBERTa NLI verifier model checks if the source actually supports the claim.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comparison&lt;/strong&gt;: The system compares the identified source with the one the answer names or implies.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Verdict&lt;/strong&gt;: It emits a per-claim source verdict and a global answer-level allow or block decision.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Literal Value Checking&lt;/strong&gt;: The verifier closely checks numbers, dates, or identifiers; if they are absent from the source, they cannot pass based on plausibility alone.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repair Mechanism&lt;/strong&gt;: Blocked answers can undergo a RARR-style repair step for a source-grounded revision or safe fallback, which is then re-verified.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transparency&lt;/strong&gt;: Unlike other checkers, ProvenanceGuard records the connection between each claim and its supporting tool output for reviewer oversight.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-and-testing"&gt;📊 Performance and Testing
+&lt;/h2&gt;&lt;p&gt;ProvenanceGuard was tested using 281 real traces from a medical agent utilizing research articles and patient records. In a main test where human experts checked 361 claims from 40 answers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It caught 138 of 139 claims that experts said should not pass.&lt;/li&gt;
+&lt;li&gt;It let one claim through.&lt;/li&gt;
+&lt;li&gt;It flagged 67 claims for review or repair that experts considered supported.&lt;/li&gt;
+&lt;li&gt;It identified the correct source for claims with an identifiable source approximately 86% of the time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When compared to other support checkers, ProvenanceGuard scored highest on the measure of catching claims that should be blocked while avoiding unnecessary blocks:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;System&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Score&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Provides Tool Output Connection&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;ProvenanceGuard&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.802&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;MiniCheck&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.783&lt;/td&gt;
+&lt;td style="text-align: left"&gt;No&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;RAGAS Faithfulness&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.758&lt;/td&gt;
+&lt;td style="text-align: left"&gt;No&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AlignScore&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.662&lt;/td&gt;
+&lt;td style="text-align: left"&gt;No&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;SummaC-ZS&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.436&lt;/td&gt;
+&lt;td style="text-align: left"&gt;No&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#MCP #AIagents #Verification #NLI #ProvenanceGuard&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/MultiverseComputingCAI/getting-the-source-right-not-just-the-fact-source" target="_blank" rel="noopener"
+&gt;Getting the Source Right, Not Just the Fact: Source-Aware Verification for MCP Agents&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

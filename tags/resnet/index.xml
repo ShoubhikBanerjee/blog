@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ResNet on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/resnet/</link><description>Recent content in ResNet on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 01:49:58 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/resnet/index.xml" rel="self" type="application/rss+xml"/><item><title>Batch Normalization — When your neural network needs anger management!</title><link>https://shoubhikbanerjee.github.io/blog/p/batch-normalization-when-your-neural-network-needs-anger-management/</link><pubDate>Tue, 28 Oct 2025 01:49:58 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/batch-normalization-when-your-neural-network-needs-anger-management/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Batch Normalization — When your neural network needs anger management!" /&gt;&lt;h1 id="-batch-normalization--when-your-neural-network-needs-anger-management-"&gt;🎚️ Batch Normalization — When your neural network needs anger management! 😤➡️😌
+&lt;/h1&gt;&lt;p&gt;Batch Normalization = giving your neural network &lt;strong&gt;chill pills&lt;/strong&gt; so it doesn&amp;rsquo;t freak out during
+training! It normalizes layer activations to prevent exploding/vanishing values that make training unstable.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Principle:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Normalize activations&lt;/strong&gt;: mean=0, std=1 for each mini-batch&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Learnable parameters&lt;/strong&gt;: scale (γ) and shift (β) for flexibility&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stabilizes training&lt;/strong&gt;: reduces internal covariate shift&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Acts as regularization&lt;/strong&gt;: slight noise effect helps generalization&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Allows higher learning rates&lt;/strong&gt;: faster convergence! 🚀&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-advantages--disadvantages--limitations"&gt;⚡ Advantages / Disadvantages / Limitations
+&lt;/h2&gt;&lt;h3 id="-advantages"&gt;✅ Advantages
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Faster training&lt;/strong&gt;: 2-10x speedup, allows higher learning rates&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Better convergence&lt;/strong&gt;: more stable gradient flow&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Regularization effect&lt;/strong&gt;: reduces need for dropout&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Less sensitive to initialization&lt;/strong&gt;: weight init matters less&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Higher accuracy&lt;/strong&gt;: 1-3% improvement on most tasks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-disadvantages"&gt;❌ Disadvantages
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Batch size dependent&lt;/strong&gt;: small batches = unstable normalization&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference complexity&lt;/strong&gt;: need to track running statistics&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory overhead&lt;/strong&gt;: stores mean/variance for each layer&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Not ideal for RNNs&lt;/strong&gt;: temporal dependencies broken&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Computational cost&lt;/strong&gt;: extra operations per layer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-limitations"&gt;⚠️ Limitations
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Breaks with batch_size=1&lt;/strong&gt;: can&amp;rsquo;t normalize single sample&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Domain shift issues&lt;/strong&gt;: train/test distribution mismatch&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Not scale-invariant&lt;/strong&gt;: sensitive to feature scales&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Alternatives often better&lt;/strong&gt;: LayerNorm for Transformers, GroupNorm for small batches&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Theoretical understanding incomplete&lt;/strong&gt;: still debated why it works so well&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-practical-tutorial-my-real-cas"&gt;🛠️ Practical Tutorial: My Real Cas
+&lt;/h2&gt;&lt;h3 id="-setup"&gt;📊 Setup
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model:&lt;/strong&gt; ResNet-18 on CIFAR-10&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dataset:&lt;/strong&gt; 50k training images, 10k test images&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Config:&lt;/strong&gt; Batch sizes [8, 32, 128], with/without BatchNorm&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware:&lt;/strong&gt; RTX 3090 (BatchNorm = cheap computationally)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-results-obtained"&gt;📈 Results Obtained
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Without BatchNorm (baseline):
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Training time/epoch: 45 seconds
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Convergence: 80 epochs to 85% accuracy
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Final test accuracy: 85.3%
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Learning rate: 0.001 (higher = diverges)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;With BatchNorm:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Training time/epoch: 52 seconds (+15% overhead)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Convergence: 30 epochs to 90% accuracy (2.7x faster!)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Final test accuracy: 91.7% (+6.4% improvement!)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Learning rate: 0.01 (10x higher, still stable)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;BatchNorm impact by batch size:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Batch=8: unstable, accuracy 87.2%
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Batch=32: good, accuracy 90.5%
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- Batch=128: best, accuracy 91.7%
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-real-world-testing"&gt;🧪 Real-world Testing
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-gdscript3" data-lang="gdscript3"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Training&lt;/span&gt; &lt;span class="n"&gt;stability&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loss&lt;/span&gt; &lt;span class="n"&gt;variance&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Without&lt;/span&gt; &lt;span class="n"&gt;BN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt; &lt;span class="n"&gt;jumps&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.5&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;wild&lt;/span&gt; &lt;span class="n"&gt;oscillations&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;With&lt;/span&gt; &lt;span class="n"&gt;BN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt; &lt;span class="n"&gt;smooth&lt;/span&gt; &lt;span class="mf"&gt;0.4&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;0.8&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stable&lt;/span&gt; &lt;span class="n"&gt;descent&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Gradient&lt;/span&gt; &lt;span class="n"&gt;flow&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;early&lt;/span&gt; &lt;span class="n"&gt;layers&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Without&lt;/span&gt; &lt;span class="n"&gt;BN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;gradients&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="mf"&gt;1e-6&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vanishing&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;With&lt;/span&gt; &lt;span class="n"&gt;BN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;gradients&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="mf"&gt;1e-3&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;healthy&lt;/span&gt; &lt;span class="n"&gt;flow&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Robustness&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;learning&lt;/span&gt; &lt;span class="n"&gt;rate&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Without&lt;/span&gt; &lt;span class="n"&gt;BN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;LR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.01&lt;/span&gt; &lt;span class="err"&gt;→&lt;/span&gt; &lt;span class="n"&gt;diverges&lt;/span&gt; &lt;span class="n"&gt;With&lt;/span&gt; &lt;span class="n"&gt;BN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;LR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.1&lt;/span&gt; &lt;span class="err"&gt;→&lt;/span&gt; &lt;span class="n"&gt;still&lt;/span&gt; &lt;span class="n"&gt;works&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Transfer&lt;/span&gt; &lt;span class="n"&gt;learning&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fine&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;tuning&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Without&lt;/span&gt; &lt;span class="n"&gt;BN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt; &lt;span class="n"&gt;epochs&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;converge&lt;/span&gt; &lt;span class="n"&gt;With&lt;/span&gt; &lt;span class="n"&gt;BN&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="n"&gt;epochs&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;converge&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;faster&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Verdict:&lt;/strong&gt; 🎯 &lt;strong&gt;BATCHNORM = GAME CHANGER&lt;/strong&gt; for deep networks!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-concrete-examples"&gt;💡 Concrete Examples
+&lt;/h2&gt;&lt;h3 id="how-batchnorm-works"&gt;How BatchNorm works
+&lt;/h3&gt;&lt;p&gt;Imagine a class where some students shout answers and others whisper:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Without BatchNorm:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Layer 1 outputs: [0.01, 0.02, 100.5, 0.03, 99.8] → The 100s dominate, small values ignored
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;→ Gradients explode or vanish → Training unstable
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;With BatchNorm:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1. Calculate batch statistics:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; mean = 40.08 std = 49.95
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2. Normalize:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; normalized = (x - mean) / std = [-0.80, -0.76, 1.21, -0.74, 1.20]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;3. Scale and shift (learnable):
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; output = γ * normalized + β → All values in similar range
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; → Stable gradients → Happy training! 😊
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="where-to-place-batchnorm"&gt;Where to place BatchNorm
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Standard placement&lt;/strong&gt; (CNNs):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Conv2D → BatchNorm → ReLU → MaxPool
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;ResNet style&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Conv2D → BatchNorm → ReLU
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Alternative (some prefer)&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Conv2D → ReLU → BatchNorm
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Pre-activation ResNet&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;BatchNorm → ReLU → Conv2D
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="batchnorm-alternatives"&gt;BatchNorm alternatives
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;LayerNorm&lt;/strong&gt; 📏&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Used in: Transformers (BERT, GPT)&lt;/li&gt;
+&lt;li&gt;Normalizes: across features (not batch)&lt;/li&gt;
+&lt;li&gt;Advantage: batch size independent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;GroupNorm&lt;/strong&gt; 👥&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Used in: small batch scenarios&lt;/li&gt;
+&lt;li&gt;Normalizes: across channel groups&lt;/li&gt;
+&lt;li&gt;Advantage: works with batch_size=1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;InstanceNorm&lt;/strong&gt; 🖼&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Used in: style transfer, GANs&lt;/li&gt;
+&lt;li&gt;Normalizes: per instance per channel&lt;/li&gt;
+&lt;li&gt;Advantage: preserves instance-specific info&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;WeightNorm&lt;/strong&gt; ⚖️&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Normalizes: weight vectors themselves&lt;/li&gt;
+&lt;li&gt;Less common but theoretically cleaner&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-cheat-sheet-using-batchnorm"&gt;📋 Cheat Sheet: Using BatchNorm
+&lt;/h2&gt;&lt;h3 id="-implementation-rules"&gt;🔍 Implementation Rules
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Do&amp;rsquo;s&lt;/strong&gt; ✅&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Place &lt;strong&gt;after linear/conv layer, before activation&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Use &lt;strong&gt;batch_size ≥ 32&lt;/strong&gt; for stability&lt;/li&gt;
+&lt;li&gt;Set &lt;strong&gt;momentum=0.9-0.99&lt;/strong&gt; for running stats&lt;/li&gt;
+&lt;li&gt;Enable &lt;strong&gt;training mode&lt;/strong&gt; during training&lt;/li&gt;
+&lt;li&gt;Use &lt;strong&gt;eval mode&lt;/strong&gt; during inference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Don&amp;rsquo;ts&lt;/strong&gt; ❌&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Don&amp;rsquo;t use with &lt;strong&gt;batch_size &amp;lt; 8&lt;/strong&gt; (too unstable)&lt;/li&gt;
+&lt;li&gt;Don&amp;rsquo;t normalize &lt;strong&gt;after activation&lt;/strong&gt; (diminishes effect)&lt;/li&gt;
+&lt;li&gt;Don&amp;rsquo;t forget to call &lt;strong&gt;model.train()/model.eval()&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Don&amp;rsquo;t use in &lt;strong&gt;final classification layer&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Don&amp;rsquo;t use for &lt;strong&gt;RNNs&lt;/strong&gt; (use LayerNorm instead)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-architecture-integratio"&gt;🛠️ Architecture Integratio
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Typical CNN block&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Conv2D(in, out, kernel=3) BatchNorm2d(out)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ReLU() MaxPool2d(2)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Typical FC block&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Linear(in, out) BatchNorm1d(out)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ReLU() Dropout(0.5)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-hyperparameters"&gt;⚙️ Hyperparameters
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-gdscript3" data-lang="gdscript3"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;eps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;1e-5&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;numerical&lt;/span&gt; &lt;span class="n"&gt;stability&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;momentum&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.1&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;running&lt;/span&gt; &lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;affine&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;learnable&lt;/span&gt; &lt;span class="err"&gt;γ&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;β&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;track_running_stats&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;inference&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Note&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;momentum&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;BN&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;opposite&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;optimizer&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;BN&lt;/span&gt; &lt;span class="n"&gt;momentum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.1&lt;/span&gt; &lt;span class="n"&gt;means&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;running_stat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.9&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;running_stat&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mf"&gt;0.1&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;batch_stat&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-simplified-concept-minimal-code"&gt;💻 Simplified Concept (minimal code)
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;span class="lnt"&gt;24
+&lt;/span&gt;&lt;span class="lnt"&gt;25
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# BatchNorm in ultra-simple pseudocode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SimpleBatchNorm&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;num_features&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gamma&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="c1"&gt;# Learnable scale self.beta = 0.0 # Learnable shift&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# Running statistics (for inference) self.running_mean = 0.0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;running_var&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;forward&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;training&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;Apply batch normalization&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;training&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# Calculate batch statistics batch_mean = mean(x) # Average over batch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;batch_var&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;variance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# Normalize x_normalized = (x - batch_mean) / sqrt(batch_var + eps)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# Update running stats (for inference later) self.running_mean = 0.9*self.running_mean + 0.1*batch_mean&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;running_var&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.9&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;running_var&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mf"&gt;0.1&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;batch_var&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# Inference # Use running statistics (stable)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;x_normalized&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;running_mean&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;running_var&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;eps&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# Scale and shift (learnable) output = self.gamma * x_normalized + self.beta&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# The magic: normalizes to mean=0, std=1, then learns optimal scale/shift!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Prevents exploding/vanishing activations&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;The key concept&lt;/strong&gt;: BatchNorm &lt;strong&gt;normalizes activations&lt;/strong&gt; to a standard distribution (mean=0,
+std=1), then uses &lt;strong&gt;learnable parameters&lt;/strong&gt; (γ, β) to allow the network to decide the optimal
+scale and shift. Result: &lt;strong&gt;stable training&lt;/strong&gt; and &lt;strong&gt;faster convergence&lt;/strong&gt;! 🎯&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-summary"&gt;📝 Summary
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;BatchNorm = training stabilizer&lt;/strong&gt;! Normalizes layer activations to &lt;strong&gt;mean=0, std=1&lt;/strong&gt; per
+mini-batch, with &lt;strong&gt;learnable scale/shift&lt;/strong&gt; for flexibility. &lt;strong&gt;Speeds up training 2-10x&lt;/strong&gt;, allows
+&lt;strong&gt;higher learning rates&lt;/strong&gt;, acts as &lt;strong&gt;regularization&lt;/strong&gt;, and improves &lt;strong&gt;final accuracy&lt;/strong&gt;.
+Requires &lt;strong&gt;batch_size ≥ 32&lt;/strong&gt; for stability. &lt;strong&gt;Essential for deep CNNs&lt;/strong&gt;, less used in
+&lt;strong&gt;Transformers&lt;/strong&gt; (LayerNorm preferred)! 🎚️✨&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-questions--answers"&gt;❓ Questions &amp;amp; Answers
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Q: My BatchNorm makes training worse with batch_size=8, why?&lt;/strong&gt;
+A: Because &lt;strong&gt;batch_size too small&lt;/strong&gt; = unreliable statistics! With 8 samples, mean/variance are
+noisy and don&amp;rsquo;t represent the true distribution. Use &lt;strong&gt;batch_size ≥ 32&lt;/strong&gt; for stable BatchNorm,
+or switch to &lt;strong&gt;GroupNorm/LayerNorm&lt;/strong&gt; which don&amp;rsquo;t depend on batch size!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q: Should I put BatchNorm before or after ReLU?&lt;/strong&gt;
+A: &lt;strong&gt;Standard practice: Conv → BatchNorm → ReLU&lt;/strong&gt;. Some argue ReLU → BatchNorm works too, but
+empirically, normalizing before activation gives &lt;strong&gt;slightly better results&lt;/strong&gt;. Just be consistent
+throughout your architecture!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q: Do I need Dropout if I use BatchNorm?&lt;/strong&gt;
+A: &lt;strong&gt;Often no!&lt;/strong&gt; BatchNorm has a &lt;strong&gt;regularization effect&lt;/strong&gt; (noise from batch statistics), so you
+can often &lt;strong&gt;reduce or remove Dropout&lt;/strong&gt;. Try training with just BatchNorm first. If overfitting,
+add light Dropout (0.2-0.3) instead of 0.5. Many modern architectures use &lt;strong&gt;only BatchNorm&lt;/strong&gt;, no Dropout!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-did-you-know"&gt;🤓 Did You Know?
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Batch Normalization&lt;/strong&gt; was invented by &lt;strong&gt;Sergey Ioffe and Christian Szegedy&lt;/strong&gt; at Google in
+&lt;strong&gt;2015&lt;/strong&gt;, originally to solve &amp;ldquo;internal covariate shift.&amp;rdquo; Funny thing: recent research suggests
+&lt;strong&gt;that&amp;rsquo;s not actually why it works&lt;/strong&gt;! Turns out BatchNorm &lt;strong&gt;smooths the loss landscape&lt;/strong&gt;, making
+optimization easier. The paper was &lt;strong&gt;initially rejected&lt;/strong&gt; at ICLR 2015, then accepted at ICML
+2015, and is now one of the &lt;strong&gt;most cited papers&lt;/strong&gt; in deep learning with &lt;strong&gt;40k+ citations&lt;/strong&gt;!
+Without BatchNorm, we probably wouldn&amp;rsquo;t have &lt;strong&gt;ResNet-152&lt;/strong&gt;, &lt;strong&gt;Inception&lt;/strong&gt;, or most modern CNNs&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;they&amp;rsquo;d be &lt;strong&gt;too unstable to train&lt;/strong&gt;. Also funny: the original paper proposed BatchNorm for
+&lt;strong&gt;internal covariate shift&lt;/strong&gt;, but researchers now think that&amp;rsquo;s &lt;strong&gt;not the real reason&lt;/strong&gt; it works&lt;/li&gt;
+&lt;li&gt;it&amp;rsquo;s more about &lt;strong&gt;loss landscape smoothing&lt;/strong&gt;! Sometimes we invent amazing tools for the
+&lt;strong&gt;wrong reasons&lt;/strong&gt;! 📊🔬🎉&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at:
+&lt;a class="link" href="https://huggingface.co/blog/RDTvlokip/when-your-neural-network-needs-anger-management" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/RDTvlokip/when-your-neural-network-needs-anger-management&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🎯 Conclusion
+&lt;/h2&gt;&lt;p&gt;Batch Normalization &lt;strong&gt;revolutionized deep learning&lt;/strong&gt; in 2015 by making very deep networks
+trainable. From &lt;strong&gt;ResNet&lt;/strong&gt; to &lt;strong&gt;Inception&lt;/strong&gt; to modern architectures, BatchNorm is &lt;strong&gt;everywhere&lt;/strong&gt;
+in CNNs. Despite alternatives (&lt;strong&gt;LayerNorm&lt;/strong&gt; for Transformers, &lt;strong&gt;GroupNorm&lt;/strong&gt; for small
+batches), BatchNorm remains the &lt;strong&gt;standard for computer vision&lt;/strong&gt;. The exact mechanism is still
+&lt;strong&gt;debated&lt;/strong&gt; (internal covariate shift? loss landscape smoothing?), but the &lt;strong&gt;results speak&lt;/strong&gt;:
+faster, more stable, more accurate training. BatchNorm = &lt;strong&gt;essential tool&lt;/strong&gt; in the deep learning toolbox! 🚀⚡&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Théo CHARLET&lt;/strong&gt;
+IT Systems &amp;amp; Networks Student - AI/ML Specialization Creator of AG-BPE (Attention-Guided Byte-Pair Encoding)
+🔗 LinkedIn: &lt;a class="link" href="https://www.linkedin.com/in/th" target="_blank" rel="noopener"
+&gt;https://www.linkedin.com/in/th&lt;/a&gt;éo-charlet🚀 Seeking internship opportunities&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#DEEPLEARNING #MACHINELEARNING #BATCHNORMALIZATION #NEURALNETWORKS #PYTORCH #TENSORFLOW
+#COMPUTERVISION #AI #CNN #RESNET&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SpeechToText on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/speechtotext/</link><description>Recent content in SpeechToText on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 24 Sep 2026 22:03:57 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/speechtotext/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Releases WhisperX Deep Learning Container for Amazon SageMaker AI</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-releases-whisperx-deep-learning-container-for-amazon-sagemaker-ai/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-releases-whisperx-deep-learning-container-for-amazon-sagemaker-ai/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/22/ML-21846-featured-image-1.png" alt="Featured image of post AWS Releases WhisperX Deep Learning Container for Amazon SageMaker AI" /&gt;&lt;h1 id="aws-releases-whisperx-deep-learning-container-for-amazon-sagemaker-ai"&gt;AWS Releases WhisperX Deep Learning Container for Amazon SageMaker AI
+&lt;/h1&gt;&lt;p&gt;AWS has introduced a Deep Learning Container (DLC) for WhisperX, an open source project that extends OpenAI&amp;rsquo;s Whisper for production workloads. This DLC allows users to deploy WhisperX to Amazon SageMaker AI real-time or asynchronous endpoints without building a custom image.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Whisper is a popular open source automatic speech recognition (ASR) model family from OpenAI used to transcribe spoken audio into text across many languages. WhisperX builds on this foundation to provide faster transcription and structured, analyzable transcripts by adding:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Per-word timestamps via wav2vec2 forced alignment&lt;/li&gt;
+&lt;li&gt;Speaker labels via speaker diarization&lt;/li&gt;
+&lt;li&gt;Batched inference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The AWS WhisperX DLC is a maintained, GPU-ready image containing Whisper, alignment models, and diarization weights without requiring a Hugging Face token. It follows the standard Amazon SageMaker AI serving contract, serving on port 8080 with the following endpoints:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;POST /invocations&lt;/code&gt;: Used for inference&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GET /ping&lt;/code&gt;: Used for health checks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Request and Response Specifications&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Request Format&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;multipart/form-data&lt;/code&gt; (audio as the &lt;code&gt;file&lt;/code&gt; part)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Optional Fields&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;language&lt;/code&gt;, &lt;code&gt;diarize&lt;/code&gt;, and &lt;code&gt;response_format&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Output Formats&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;json&lt;/code&gt;, &lt;code&gt;verbose_json&lt;/code&gt;, &lt;code&gt;srt&lt;/code&gt;, and &lt;code&gt;vtt&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Users can deploy the DLC to Amazon SageMaker AI using two patterns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Asynchronous endpoints&lt;/strong&gt;: Recommended for long audio where transcription, alignment, and diarization require more time; brokers input and output through Amazon S3.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Real-time endpoints&lt;/strong&gt;: Reserved for short, interactive clips that finish within the 60-second response cap; operates synchronously.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Deployment Requirements&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Instances&lt;/strong&gt;: &lt;code&gt;ml.g4dn.xlarge&lt;/code&gt; (for cost) or &lt;code&gt;ml.g5.2xlarge&lt;/code&gt; (for headroom) with the required GPU AMI pin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Permissions&lt;/strong&gt;: An AWS account and an Amazon SageMaker AI execution role with &lt;code&gt;create_model&lt;/code&gt; and &lt;code&gt;create_endpoint&lt;/code&gt; permissions. Asynchronous inference additionally requires read and write access to an S3 bucket whose name contains &amp;ldquo;sagemaker.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Resources&lt;/strong&gt;: GPU service quota for the chosen instance type and the WhisperX DLC image URI from Amazon ECR.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;WhisperX enables media and e-learning teams to generate accurate captions in SubRip Subtitle (SRT) and Web Video Text Tracks (VTT) formats for large content libraries. Because the same endpoint can output both JSON and subtitle formats, it can simultaneously feed analytics pipelines and video editors.&lt;/p&gt;
+&lt;p&gt;#AWS #WhisperX #AmazonSageMaker #ASR #SpeechToText&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/speaker-labeled-transcription-with-whisperx-on-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Speaker-labeled transcription with WhisperX on SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

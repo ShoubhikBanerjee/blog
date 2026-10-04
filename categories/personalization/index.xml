@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Personalization on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/personalization/</link><description>Recent content in Personalization on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 02 Oct 2026 22:04:29 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/personalization/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-featured-image.png" alt="Featured image of post Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization" /&gt;&lt;h1 id="amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization"&gt;Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization
+&lt;/h1&gt;&lt;p&gt;Amazon Payments applied AI‑based personalization to a product acquisition funnel, using a multi‑objective contextual multi‑armed bandit (MAB) on Amazon SageMaker AI.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;In this post, we share how Amazon Payments applied AI-based personalization to a product acquisition funnel, using a multi-objective contextual multi-armed bandit (MAB) on Amazon SageMaker AI.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;The customer journey in our use case comprises three steps: application start, submission, and approval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;In a seven-week online A/B test we currently see a high single-digit percentage relative lift in final-funnel conversion for one customer population, while another saw no improvement over the existing experience.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The problem turned out to be the content, not the model.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🤖 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;A multi-armed bandit (MAB) is a reinforcement learning method built for settings with many options and limited traffic.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It treats each content variation as an “arm,” tries each against live traffic, and steadily shifts impressions toward the arms that perform, while holding a fraction back to keep testing the rest.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;In Amazon Payments, we chose UCB, a strategy that selects the arm with the highest estimated reward plus an uncertainty bonus, naturally balancing exploitation and exploration.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Its deterministic selection rule gives an auditable, reproducible decision for every impression, which makes sure every serving decision can be explained and reproduced if needed.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Contextual bandits condition directly on a feature vector (a numeric representation of attributes), so a pattern learned in one context transfers to every similar visit without separate per-group traffic.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Our production system represents each customer as a context vector of behavioral signals (payment behavior, transaction mix, and similar features) in place of a fixed segment.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The entity ID (an opaque key such as entity_id) is used only to route the learned recommendation back to the right visitor.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The entity ID is never a model input.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;For a contextual approach, we selected Linear UCB (LinUCB), introduced by Li et al. (2010).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;LinUCB remains a battle-tested method that is computationally efficient, auditable (deterministic arm selection), and naturally handles a large arm space with limited warm-start data.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Its key assumption is that the expected reward for an arm is a linear function of the context vector, which lets it generalize to visitors it has not seen before.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Each arm keeps two running tallies updated on every impression: b , the reward ledger: which visitor signals led to conversions (b += reward · x).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;A , the experience ledger: which visitors the arm has seen (A += x·xᵀ, starting from identity).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Dividing reward by experience gives the estimate (θ = A⁻¹·b).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The experience ledger also shrinks the exploration bonus as evidence grows.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The bonus is context‑dependent.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It’s large for a kind of visitor the arm has rarely seen, and small for one it has seen often.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;A plain bandit explores at a single global rate, while LinUCB adjusts how much it explores for every visitor it scores.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Optimizing one stage in isolation can degrade another.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Our approach optimizes the entire funnel simultaneously by running one LinUCB model per stage (start, submit, approve) and combining their UCB scores through a linear combination.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The stage weights can be assigned based on business priorities or learned by a separate calibration step.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture--implementation"&gt;🛠️ Architecture &amp;amp; Implementation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;We also share a code repository that you can use to test this approach on synthetic data and understand the method hands‑on using Amazon SageMaker AI.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonPayments #MultiArmedBandit #Personalization #SageMaker&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-bandits-on-aws/" target="_blank" rel="noopener"
+&gt;Uplifting conversion across the acquisition funnel with personalization using contextual bandits on AWS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

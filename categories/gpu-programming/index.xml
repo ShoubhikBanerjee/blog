@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPU Programming on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/gpu-programming/</link><description>Recent content in GPU Programming on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 17 Sep 2026 00:50:10 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/gpu-programming/index.xml" rel="self" type="application/rss+xml"/><item><title>AI Agent Skill Translates CUDA Tile Kernels to cuTile Rust</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-agent-skill-translates-cuda-tile-kernels-to-cutile-rust/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-agent-skill-translates-cuda-tile-kernels-to-cutile-rust/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2025/07/neon-green-cube-660x370.png" alt="Featured image of post AI Agent Skill Translates CUDA Tile Kernels to cuTile Rust" /&gt;&lt;h1 id="ai-agent-skill-translates-cuda-tile-kernels-to-cutile-rust"&gt;AI Agent Skill Translates CUDA Tile Kernels to cuTile Rust
+&lt;/h1&gt;&lt;p&gt;A new AI agent skill has been developed to translate GPU kernels from cuTile Python and Triton-TileIR into cuTile Rust, a tile-based system designed for safe and idiomatic GPU kernel authoring in the Rust programming language.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;cuTile Rust extends the Rust ownership model to tile-based GPU kernels by splitting mutable outputs into disjoint pieces and preserving the host-side ownership contract across kernel launches. It serves as one of three front ends—alongside cuTile Python and Triton-TileIR—that feed into the same CUDA Tile IR (the cuda_tile dialect) and the tileiras compiler, which emits the GPU binary.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The translation process uses a bounded multi-agent pipeline that covers the following stages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Analysis&lt;/li&gt;
+&lt;li&gt;Device kernel creation&lt;/li&gt;
+&lt;li&gt;Host and FFI code generation&lt;/li&gt;
+&lt;li&gt;Benchmarking&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Each stage concludes with a machine-checkable verdict. Because all three front ends share the same IR, translation is verified by &amp;ldquo;diffing&amp;rdquo; the Tile IR of the reference kernel and the translated kernel to ensure they reproduce the same reductions, tile shapes, and memory-op families before tests are executed.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;There are significant differences between the JIT compilation of cuTile Python and the ahead-of-time compilation of Rust source:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Specialization:&lt;/strong&gt; cuTile Python specializes kernels implicitly at call time. In contrast, cuTile Rust requires every specialization to be declared in the kernel&amp;rsquo;s signature; nothing is specialized unless declared.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Structural Changes:&lt;/strong&gt; A single Python kernel may become multiple Rust entries. For example, layer_norm splits into 2-Dnchw and 1-Dw1 entries because the branch changes tile rank.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compilation:&lt;/strong&gt; Rust source is compiled ahead of time, with tile shapes and element types checked by rustc. The crate embeds the kernel AST, and the runtime specializes it with concrete const-generic values to compile a cached cubin at first launch.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ABI Support:&lt;/strong&gt; Supporting a dtype is an explicit ABI extension. Supported types include sf32, f16, bf16, i32, i64, f8e5m2, and f8e4m3fn.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The translation skill is shipped in the TileGym repo. In TileGym, cuTile Rust functions as a backend that can be activated using &lt;code&gt;tilegym.set_backend(&amp;quot;cutile-rs&amp;quot;)&lt;/code&gt; to route the operator API to Rust kernels.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Using this AI agent skill, all 24 public TileGym operators—comprising roughly 40 GPU kernels—were ported to cuTile Rust. These kernels range from element-wise operations to mixture-of-experts (MoE) models, Multi-head Latent Attention (MLA), and flash-attention decode. On average, the ported kernels reached 99.5% of cuTile Python performance.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/cuda-tile-translation-python-rust-flow.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/cutile-rust-versus-python-kernels-tilegym-operators.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Rust #CUDA #GPU #AIagents #TileGym&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/translating-cuda-tile-operations-from-python-to-rust-using-agentic-ai/" target="_blank" rel="noopener"
+&gt;Translating CUDA Tile Operations from Python to Rust Using Agentic AI | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

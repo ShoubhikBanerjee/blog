@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud Services on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/cloud-services/</link><description>Recent content in Cloud Services on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 17 Sep 2026 22:02:13 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/cloud-services/index.xml" rel="self" type="application/rss+xml"/><item><title>Confidence‑Gated Hybrid Beats Pure Models for Emotion Recognition in Call Centers</title><link>https://shoubhikbanerjee.github.io/blog/p/confidencegated-hybrid-beats-pure-models-for-emotion-recognition-in-call-centers/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/confidencegated-hybrid-beats-pure-models-for-emotion-recognition-in-call-centers/</guid><description>&lt;h1 id="confidencegated-hybrid-beats-pure-models-for-emotion-recognition-in-call-centers"&gt;Confidence‑Gated Hybrid Beats Pure Models for Emotion Recognition in Call Centers
+&lt;/h1&gt;&lt;p&gt;Emotion recognition in conversation (ERC) is a production capability behind agent‑assist prompts, escalation routing, and post‑call analytics in contact‑center‑as‑a‑service (CCaaS) platforms, where cost and latency constraints matter as much as accuracy.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Three deployment options were compared: a low‑cost stacked ensemble, off‑the‑shelf LLM prompting (GPT‑4o‑mini), and a confidence‑gated hybrid that escalates only the ensemble&amp;rsquo;s least‑confident predictions to the LLM.&lt;/li&gt;
+&lt;li&gt;The hybrid mirrors IVA‑to‑human‑agent escalation policies used in production contact centers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Ensemble&lt;/strong&gt;: stacked model using sentence embeddings, windowed context, and RandomForest/XGBoost/logistic‑regression stacking.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LLM&lt;/strong&gt;: GPT‑4o‑mini prompted zero‑shot, few‑shot, or chain‑of‑thought.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid&lt;/strong&gt;: the ensemble handles the majority of utterances; when its confidence falls below a threshold, the turn is routed to the LLM for re‑prediction.&lt;/li&gt;
+&lt;li&gt;Escalated turns disproportionately follow an emotion or sentiment shift, providing an interpretable routing signal. The ensemble’s confidence is well‑calibrated and tends to be under‑confident rather than over‑confident.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-comparison"&gt;⚙️ Performance comparison
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Option&lt;/th&gt;
+&lt;th&gt;Approach&lt;/th&gt;
+&lt;th&gt;Cost per M utterances&lt;/th&gt;
+&lt;th&gt;Latency&lt;/th&gt;
+&lt;th&gt;Weighted F1 (IEMOCAP)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Ensemble&lt;/td&gt;
+&lt;td&gt;Stacked ensemble (sentence embeddings, windowed context, RandomForest/XGBoost/logistic‑regression stacking)&lt;/td&gt;
+&lt;td&gt;near‑zero&lt;/td&gt;
+&lt;td&gt;&amp;lt;10 ms&lt;/td&gt;
+&lt;td&gt;0.595&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LLM&lt;/td&gt;
+&lt;td&gt;GPT‑4o‑mini prompting (zero‑shot, few‑shot, chain‑of‑thought)&lt;/td&gt;
+&lt;td&gt;$99‑170&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;td&gt;0.460‑0.536&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hybrid&lt;/td&gt;
+&lt;td&gt;Confidence‑gated cascade (ensemble + LLM escalation)&lt;/td&gt;
+&lt;td&gt;$10‑85&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;td&gt;0.620 (IEMOCAP) 0.643 (MELD) 0.824 (CMU‑MOSI)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;On IEMOCAP the ensemble outperforms every LLM configuration (0.595 vs. 0.460‑0.536, p &amp;lt; 0.0001).&lt;/li&gt;
+&lt;li&gt;On MELD and CMU‑MOSI the ranking reverses, so neither pure system is a safe default.&lt;/li&gt;
+&lt;li&gt;The hybrid Pareto‑dominates both pure systems on all three datasets, routing most traffic through the near‑zero‑cost ensemble.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The hybrid reduces spend from roughly $99‑170 per million utterances (LLM‑only) to $10‑85 while delivering higher accuracy.&lt;/li&gt;
+&lt;li&gt;It provides an auditable escalation signal tied to emotion shifts, aligning with operational needs in CCaaS.&lt;/li&gt;
+&lt;li&gt;Confidence‑gated cascading, a known technique in ML, is shown to transfer cleanly to dialogue‑contextual ERC, offering a concrete deployment recipe for conversational‑AI platforms.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#EmotionRecognition #ContactCenterAI #LLMDeployment&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.17977v1" target="_blank" rel="noopener"
+&gt;When to Call an LLM: A Confidence-Gated Hybrid for Cost-Effective Emotion Recognition in Conversational AI&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Serverless Framework V4 Adds AI Agent Support and AWS Enhancements</title><link>https://shoubhikbanerjee.github.io/blog/p/serverless-framework-v4-adds-ai-agent-support-and-aws-enhancements/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/serverless-framework-v4-adds-ai-agent-support-and-aws-enhancements/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/13742415?v=4" alt="Featured image of post Serverless Framework V4 Adds AI Agent Support and AWS Enhancements" /&gt;&lt;h1 id="serverless-framework-v4-adds-ai-agent-support-and-aws-enhancements"&gt;Serverless Framework V4 Adds AI Agent Support and AWS Enhancements
+&lt;/h1&gt;&lt;p&gt;The Serverless Framework has released version 4, introducing significant updates that enhance serverless application development on AWS. This release emphasizes AI integration, security, and developer experience improvements.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The Serverless Framework is a command-line tool enabling developers to deploy serverless applications using approachable YAML syntax. It supports AWS Lambda and other managed services, offering auto-scaling, zero idle costs, and minimal maintenance. Version 4 expands these capabilities with AI-native features and AWS ecosystem integrations.&lt;/p&gt;
+&lt;h2 id="-key-new-features"&gt;🚀 Key New Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sandboxes&lt;/strong&gt;: Isolate ephemeral compute environments on AWS Lambda for untrusted workloads like AI agents or per-session code execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Bedrock AgentCore Support&lt;/strong&gt;: Define AI agents, memory, tools, and code interpreters directly in &lt;code&gt;serverless.yml&lt;/code&gt; using the &lt;code&gt;ai&lt;/code&gt; property.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Login &amp;amp; SSO&lt;/strong&gt;: Streamline AWS credential setup via browser-based flows.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deployment Diffs&lt;/strong&gt;: Preview CloudFormation stack changes before deployment using &lt;code&gt;serverless diff&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Managed Instances&lt;/strong&gt;: Native EC2-backed Lambda support for higher throughput and long-running workloads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Durable Functions&lt;/strong&gt;: Built-in stateful workflows for complex orchestrations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lambda Tenant Isolation&lt;/strong&gt;: Reduce cross-tenant interference in multi-tenant applications.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HTTP Response Streaming&lt;/strong&gt;: Stream long-running AI responses from Lambda via API Gateway.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Serverless MCP&lt;/strong&gt;: IDE integration to debug serverless apps directly in editors like Cursor or Windsurf.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-enhanced-developer-experience"&gt;🛠️ Enhanced Developer Experience
+&lt;/h2&gt;&lt;p&gt;Popular plugins are now built-in, including Python requirements and API Gateway Service Proxy. Custom domains with auto-configured SSL are now natively supported. Secrets management integrates with Doppler via framework variables.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;These updates position the Serverless Framework as a robust platform for AI-driven and enterprise-scale serverless applications. Features like Sandboxes and AgentCore support accelerate secure AI agent deployment, while MCP integration eliminates context-switching during debugging. The framework now unifies deployment across AWS SAM, CloudFormation, and traditional Serverless projects.&lt;/p&gt;
+&lt;h2 id="-under-the-hood"&gt;⚙️ Under the Hood
+&lt;/h2&gt;&lt;p&gt;Version 4 maintains multi-language support (Node.js, Python, Go, etc.) and extensibility via 1,000+ plugins. All features are actively maintained by Serverless Inc., ensuring long-term reliability.&lt;/p&gt;
+&lt;p&gt;#Serverless #AWS #AIAgents #DevOps #CloudNative&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/serverless/serverless" target="_blank" rel="noopener"
+&gt;serverless/serverless&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>OpenCode Go Offers $10/month Access to Reliable Open Coding Models</title><link>https://shoubhikbanerjee.github.io/blog/p/opencode-go-offers-10-month-access-to-reliable-open-coding-models/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/opencode-go-offers-10-month-access-to-reliable-open-coding-models/</guid><description>&lt;img src="https://social-cards.sst.dev/opencode-docs/R28%3D.png?desc=Low%20cost%20subscription%20for%20open%20coding%20models." alt="Featured image of post OpenCode Go Offers $10/month Access to Reliable Open Coding Models" /&gt;&lt;h1 id="opencode-go-offers-10month-access-to-reliable-open-coding-models"&gt;OpenCode Go Offers $10/month Access to Reliable Open Coding Models
+&lt;/h1&gt;&lt;p&gt;OpenCode has launched OpenCode Go, a $10‑per‑month subscription that provides reliable, low‑latency access to popular open‑source coding models.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Open models now perform close to proprietary models on coding tasks.&lt;/li&gt;
+&lt;li&gt;Reliable, low‑latency access to these models can be difficult because provider quality and availability vary.&lt;/li&gt;
+&lt;li&gt;OpenCode Go addresses this gap with a stable global service, especially for international users.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Subscribe to OpenCode Go and receive an API key.&lt;/li&gt;
+&lt;li&gt;The service functions like any other provider in the OpenCode platform.&lt;/li&gt;
+&lt;li&gt;It is optional; users can still use OpenCode without the subscription.&lt;/li&gt;
+&lt;li&gt;Designed for OpenCode and similar coding agents that send comparable request types.&lt;/li&gt;
+&lt;li&gt;Traffic is monitored to prevent abuse that could degrade other users’ experience.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Pricing: $10 per month.&lt;/li&gt;
+&lt;li&gt;Usage limits are expressed as monthly dollar amounts; each model enforces:
+&lt;ul&gt;
+&lt;li&gt;5‑hour limit: 20 % of the monthly limit&lt;/li&gt;
+&lt;li&gt;Weekly limit: 50 % of the monthly limit&lt;/li&gt;
+&lt;li&gt;Monthly limit: 100 % of the monthly limit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Token pricing is listed per 1 M tokens (exact amounts are model‑specific).&lt;/li&gt;
+&lt;li&gt;The list of available models may change as new models are tested and added.&lt;/li&gt;
+&lt;li&gt;The x‑opencode‑session header request remains open, but sending that header is no longer required.&lt;/li&gt;
+&lt;li&gt;Clients beyond OpenCode have been validated, though future support is not guaranteed and some have incomplete session support.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Subscription costs $10/month and provides stable global access.&lt;/li&gt;
+&lt;li&gt;Primarily aimed at international users seeking consistent performance.&lt;/li&gt;
+&lt;li&gt;Works with the latest version v0.81.6 or later, which includes the session‑header fix.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Open models have improved to near‑proprietary performance, offering a cheaper alternative for coding tasks.&lt;/li&gt;
+&lt;li&gt;Because many providers can serve these models competitively, costs are generally lower than closed‑source options.&lt;/li&gt;
+&lt;li&gt;OpenCode Go bundles reliable, low‑latency access into a simple subscription, reducing the overhead of managing multiple providers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#OpenCode #OpenSourceAI #CodingModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://opencode.ai/docs/go/" target="_blank" rel="noopener"
+&gt;Go&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
