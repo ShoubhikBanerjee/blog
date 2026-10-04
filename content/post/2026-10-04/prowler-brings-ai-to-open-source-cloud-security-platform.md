@@ -2,7 +2,7 @@
 title: "Prowler Brings AI to Open Source Cloud Security Platform"
 slug: "prowler-brings-ai-to-open-source-cloud-security-platform"
 description: "Prowler, the world’s most widely used open-source cloud security platform, now includes AI-driven capabilities to automate security and compliance across any cloud environment. This update positions..."
-date: 2026-10-04T12:04:15+05:30
+date: 2026-10-04T18:04:32+05:30
 tags: [OpenSource, CloudSecurity, AI, Compliance, DevSecOps, Prowler]
 categories: ["AI", "Cloud Security", "Artificial Intelligence", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/97106991?v=4"

@@ -2,7 +2,7 @@
 title: "AbbVie’s Juvmo Gains FDA Approval, Boosting Stock and Analyst Sentiment"
 slug: "abbvies-juvmo-gains-fda-approval-boosting-stock-and-analyst-sentiment"
 description: "AbbVie (NYSE: ABBV) announced FDA approval for its new Parkinson’s disease pill, Juvmo, with a commercial launch slated for October 2026. The approval has sparked positive moves in the stock and..."
-date: 2026-10-04T12:04:15+05:30
+date: 2026-10-04T18:04:32+05:30
 tags: [AbbVie, Pharma, Parkinsons, StockMarket, FDAApproval]
 categories: ["AI", "Biotechnology", "Pharmaceuticals", "Healthcare Finance"]
 image: "https://www.marketbeat.com/logos/abbvie-inc-logo.jpg"

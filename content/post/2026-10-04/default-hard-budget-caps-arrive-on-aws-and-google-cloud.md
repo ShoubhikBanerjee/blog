@@ -2,7 +2,7 @@
 title: "Default Hard Budget Caps Arrive on AWS and Google Cloud"
 slug: "default-hard-budget-caps-arrive-on-aws-and-google-cloud"
 description: "A push for hard budget caps in pay‑by‑usage services is gaining traction as cloud providers roll out spending‑limit features."
-date: 2026-10-04T12:04:15+05:30
+date: 2026-10-04T18:04:32+05:30
 tags: [cloud, budgetcaps, AIagents, devops]
 categories: ["AI", "Cloud Computing", "AI Agents", "Developer Tools"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "New Fable Class Models Announced in September Sponsor Newsletter"
 slug: "new-fable-class-models-announced-in-september-sponsor-newsletter"
 description: "On **3rd October 2026** the author announced that the September edition of the sponsor‑only monthly newsletter had been sent, highlighting a fresh batch of **Fable class models**."
-date: 2026-10-04T12:04:15+05:30
+date: 2026-10-04T18:04:32+05:30
 tags: [LLM, FableModels, AIUpdate]
 categories: ["AI", "Machine Learning", "Large Language Models", "AI Development", "AI News"]
 author: "Shoubhik Banerjee"
