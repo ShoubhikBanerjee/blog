@@ -2,7 +2,7 @@
 title: "AI Is Cognitive Junk Food For Your Brain, Researchers Warn"
 slug: "ai-is-cognitive-junk-food-for-your-brain-researchers-warn"
 description: "A new analysis argues that artificial intelligence functions as a cognitive version of a hot dog, appealing in the moment but ultimately bad for cognitive health. The warning is grounded in..."
-date: 2026-10-05T18:05:56+05:30
+date: 2026-10-05T22:07:36+05:30
 tags: [AIandCognition, Neuroscience, BrainAsComputer, FeedbackControl, CognitiveHealth, AIWarning]
 categories: ["AI", "Artificial Intelligence", "Neuroscience", "Cognitive Science"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268726_Cognitive_hotdogs_PENEKOI.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

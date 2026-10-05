@@ -2,7 +2,7 @@
 title: "Springboards launches LLM aimed at broader response diversity"
 slug: "springboards-launches-llm-aimed-at-broader-response-diversity"
 description: "Springboards, a startup, is developing a large‑language model that aims to generate a wider variety of responses than mainstream rivals."
-date: 2026-10-05T18:05:56+05:30
+date: 2026-10-05T22:07:36+05:30
 tags: [AI, LLM, Springboards, PublicSentiment, Regulation]
 categories: ["AI", "Artificial Intelligence", "Large Language Models", "Technology Adoption"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/ai-relationship3.jpg?resize=1200,600"

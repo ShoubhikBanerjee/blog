@@ -2,7 +2,7 @@
 title: "LangGraph‑FastAPI‑Streamlit Toolkit Enables Deployable AI Agent Services"
 slug: "langgraphfastapistreamlit-toolkit-enables-deployable-ai-agent-services"
 description: "A new open‑source toolkit delivers a complete stack for running AI agents. It combines a LangGraph agent, a FastAPI service, a Python client, and a Streamlit chat interface, all wired together with..."
-date: 2026-10-05T18:05:56+05:30
+date: 2026-10-05T22:07:36+05:30
 tags: [LangGraph, FastAPI, Streamlit, AIagents]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Engineering", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/8251002?v=4"

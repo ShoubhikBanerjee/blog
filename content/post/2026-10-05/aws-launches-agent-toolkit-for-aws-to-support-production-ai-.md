@@ -2,7 +2,7 @@
 title: "AWS Launches Agent Toolkit for AWS to Support Production AI Agents"
 slug: "aws-launches-agent-toolkit-for-aws-to-support-production-ai-agents"
 description: "AWS has officially launched the Agent Toolkit for AWS, a suite of specialized Model Context Protocol (MCP) servers designed to help users maximize their use of AWS wherever they use MCP. Informed by..."
-date: 2026-10-05T18:05:56+05:30
+date: 2026-10-05T22:07:36+05:30
 tags: [AWS, AIAgents, ModelContextProtocol, CloudComputing]
 categories: ["AI", "AI Agents", "Cloud Computing", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/3299148?v=4"

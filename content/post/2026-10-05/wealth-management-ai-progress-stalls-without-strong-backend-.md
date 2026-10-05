@@ -2,7 +2,7 @@
 title: "Wealth Management AI Progress Stalls Without Strong Backend Infrastructure"
 slug: "wealth-management-ai-progress-stalls-without-strong-backend-infrastructure"
 description: "The Wealth Mosaic’s AI in Wealth 2026: APAC conference in Singapore on 24 September highlighted that the wealth‑management industry’s rapid move from digitalisation to artificial intelligence is now..."
-date: 2026-10-05T18:05:56+05:30
+date: 2026-10-05T22:07:36+05:30
 tags: [WealthTech, AI, FinTech, RiskManagement]
 categories: ["AI", "Wealth Management", "Artificial Intelligence", "Financial Services", "Risk Management"]
 author: "Shoubhik Banerjee"

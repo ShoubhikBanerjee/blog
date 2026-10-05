@@ -2,7 +2,7 @@
 title: "Aleph Alpha launches Kolibri: Open‑weight English‑German MoE model"
 slug: "aleph-alpha-launches-kolibri-openweight-englishgerman-moe-model"
 description: "German AI company Aleph Alpha released Kolibri, an open‑weight English‑German Mixture‑of‑Experts (MoE) model, on 3 October 2026."
-date: 2026-10-05T18:05:56+05:30
+date: 2026-10-05T22:07:36+05:30
 tags: [AlephAlpha, Kolibri, OpenWeight, MoE, AIRegulation]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Governance", "European Technology"]
 image: "https://localmodelwatch.tsuchitsuchi.com/wp-content/uploads/2026/10/202610031610_hackernews-49942706-en.png"

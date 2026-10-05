@@ -2,7 +2,7 @@
 title: "Adaptive Human-AI Collaboration: Taxonomies and the MCAL Reference Model"
 slug: "adaptive-human-ai-collaboration-taxonomies-and-the-mcal-reference-model"
 description: "Artificial intelligence is shifting from a static decision-support tool to an adaptive collaborator that must sense context, decide when and how to intervene, and improve through repeated interaction..."
-date: 2026-10-05T18:05:56+05:30
+date: 2026-10-05T22:07:36+05:30
 tags: [humanAI, multimodal, adaptiveCollaboration, AIresearch]
 categories: ["AI", "Human-AI Interaction", "Artificial Intelligence", "Multimodal Systems", "Robotics"]
 image: "https://portal.findresearcher.sdu.dk/skin/headerImage/"
