@@ -2,7 +2,7 @@
 title: "Mem0 Open‑Source Memory Layer Empowers AI Agents with Persistent Context"
 slug: "mem0-opensource-memory-layer-empowers-ai-agents-with-persistent-context"
 description: "Mem0 (pronounced “mem‑zero”) is an open‑source memory layer that sits between your application and an LLM such as GPT, Claude, or Llama. It filters durable facts from each interaction, stores them in..."
-date: 2026-10-05T12:06:31+05:30
+date: 2026-10-05T18:05:56+05:30
 tags: [Mem0, AIagents, OpenSource, LongTermMemory]
 categories: ["AI", "Machine Learning", "AI Agents", "Open Source Software", "Natural Language Processing"]
 image: "https://komunitech.com/blog/wp-content/uploads/2026/10/mem0-adalah-hero.jpg"

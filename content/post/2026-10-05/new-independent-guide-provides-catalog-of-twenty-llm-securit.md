@@ -2,7 +2,7 @@
 title: "New independent guide provides catalog of twenty LLM security and red teaming tools"
 slug: "new-independent-guide-provides-catalog-of-twenty-llm-security-and-red-teaming-tools"
 description: "An independent evaluation guide has been released featuring 20 synced entries from the community-maintained Awesome MLSecOps catalog. This resource provides a central list of tools designed to find..."
-date: 2026-10-05T12:06:31+05:30
+date: 2026-10-05T18:05:56+05:30
 tags: [MLSecOps, Cybersecurity, LLM, RedTeaming, GenerativeAI]
 categories: ["AI", "Cybersecurity", "Artificial Intelligence", "Machine Learning"]
 image: "https://awesomemlsecops.com/og/tools/llm-security.png"

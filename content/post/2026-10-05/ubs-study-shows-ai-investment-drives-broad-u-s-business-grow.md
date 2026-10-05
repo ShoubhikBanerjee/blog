@@ -2,7 +2,7 @@
 title: "UBS Study Shows AI Investment Drives Broad U.S. Business Growth Through Large Spillovers"
 slug: "ubs-study-shows-ai-investment-drives-broad-u-s-business-growth-through-large-spillovers"
 description: "Investment linked to artificial intelligence is generating a much broader boost to U.S. business investment than its direct contribution would suggest, according to UBS research."
-date: 2026-10-05T12:06:31+05:30
+date: 2026-10-05T18:05:56+05:30
 tags: [AIInvestment, EconomicGrowth, SpilloverEffects]
 categories: ["AI", "Economics", "Artificial Intelligence", "Investment"]
 author: "Shoubhik Banerjee"

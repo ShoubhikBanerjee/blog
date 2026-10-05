@@ -2,7 +2,7 @@
 title: "Turning a VPS into a 24/7 AI Worker with Hermes Agent or OpenClaw"
 slug: "turning-a-vps-into-a-24-7-ai-worker-with-hermes-agent-or-openclaw"
 description: "A VPS can now be turned into an AI Worker by installing an AI Agent platform such as Hermes Agent or OpenClaw, connecting a language model, granting tools, and configuring a command channel."
-date: 2026-10-05T12:06:31+05:30
+date: 2026-10-05T18:05:56+05:30
 tags: [AIWorker, VPS, AIAgents, HermesAgent, OpenClaw]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Cloud Computing", "Automation"]
 image: "https://tino.vn/blog/wp-admin/admin-ajax.php?action=rank_math_overlay_thumb&id=130428&type=play&hash=24aee8205432ec2b86acdf0abafefc06"

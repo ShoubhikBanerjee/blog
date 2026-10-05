@@ -2,7 +2,7 @@
 title: "Testing Guardrails in a Small Customer Support AI Agent"
 slug: "testing-guardrails-in-a-small-customer-support-ai-agent"
 description: "We built a small customer support agent with three guardrails and ran a QA‑style test suite of 18 prompts. Seventeen passed; one failed when the agent leaked an internal fraud case number to the..."
-date: 2026-10-05T12:06:31+05:30
+date: 2026-10-05T18:05:56+05:30
 tags: [AIagents, Guardrails, QualityAssurance]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Software Testing"]
 image: "https://testcollab.com/static_v2/blog/og/how-to-test-ai-agent-guardrails.png"

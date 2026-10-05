@@ -2,7 +2,7 @@
 title: "Physical Access Control Controllers Gain AI Features Amid Growing Cybersecurity Gaps"
 slug: "physical-access-control-controllers-gain-ai-features-amid-growing-cybersecurity-gaps"
 description: "A new global survey of 561 physical security and cyber security professionals shows that controllers are becoming a strategic focus for access control systems, with AI‑driven capabilities and cloud..."
-date: 2026-10-05T12:06:31+05:30
+date: 2026-10-05T18:05:56+05:30
 tags: [PhysicalSecurity, AccessControl, CyberSecurity, AI]
 categories: ["AI", "Physical Security", "Cybersecurity", "Artificial Intelligence", "IoT"]
 image: "https://www.securityworldmarket.com/Frontend/Images/swm-logo-400x400.jpg"
