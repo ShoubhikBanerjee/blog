@@ -2,7 +2,7 @@
 title: "New AI Engineer Positions Target Automation in Finance and Manufacturing"
 slug: "new-ai-engineer-positions-target-automation-in-finance-and-manufacturing"
 description: "Several organizations have announced new AI engineering positions focused on automation and integration with Microsoft Copilot and Azure AI, reflecting growing demand for AI‑driven solutions in..."
-date: 2026-10-05T06:06:53+05:30
+date: 2026-10-05T12:06:31+05:30
 tags: [AIEngineering, Automation, JobMarket]
 categories: ["AI", "Artificial Intelligence", "Automation", "Job Trends"]
 author: "Shoubhik Banerjee"

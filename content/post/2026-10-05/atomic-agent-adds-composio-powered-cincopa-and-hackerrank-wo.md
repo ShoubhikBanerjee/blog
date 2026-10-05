@@ -2,7 +2,7 @@
 title: "Atomic Agent adds Composio-powered Cincopa and HackerRank Work integrations"
 slug: "atomic-agent-adds-composio-powered-cincopa-and-hackerrank-work-integrations"
 description: "Atomic Agent, the open‑source AI agent that runs on your machine and supports local models via llama.cpp, now integrates with the multimedia platform Cincopa and the coding‑assessment platform..."
-date: 2026-10-05T06:06:53+05:30
+date: 2026-10-05T12:06:31+05:30
 tags: [AIAgents, Composio, Cincopa, HackerRankWork]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Developer Tools"]
 image: "https://composio.dev/toolkits/graphics/composio_ogImage.png"
