@@ -2,7 +2,7 @@
 title: "Self-Evolving Curriculum Boosts RL Fine‑Tuning of Large Language Models"
 slug: "self-evolving-curriculum-boosts-rl-finetuning-of-large-language-models"
 description: "Reinforcement learning (RL) has proven effective for fine‑tuning large language models (LLMs), significantly enhancing their reasoning abilities in domains such as mathematics and code generation. A..."
-date: 2026-10-06T06:10:15+05:30
+date: 2026-10-06T12:04:46+05:30
 tags: [RL, CurriculumLearning, LLM, MachineLearning]
 categories: ["AI", "Machine Learning", "Reinforcement Learning", "Natural Language Processing", "AI Research"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Nolla Health launches AI‑driven acne prescription pilot in Utah"
 slug: "nolla-health-launches-aidriven-acne-prescription-pilot-in-utah"
 description: "People in Utah can now use AI to get a prescription for acne treatment."
-date: 2026-10-06T06:10:15+05:30
+date: 2026-10-06T12:04:46+05:30
 tags: [AI, Healthcare, Dermatology, Prescription, Utah]
 categories: ["AI", "Artificial Intelligence", "Digital Health", "Dermatology", "Regulatory Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/nolla-health-app.png?quality=90&strip=all&crop=0%2C5.420521028312%2C100%2C89.158957943376&w=1200"

@@ -2,7 +2,7 @@
 title: "AWS adds aws‑ai‑ml skill to enhance SageMaker inference optimization"
 slug: "aws-adds-awsaiml-skill-to-enhance-sagemaker-inference-optimization"
 description: "Amazon SageMaker AI optimized generative AI inference now includes the aws‑ai‑ml skill, available through the Agent Toolkit for AWS."
-date: 2026-10-06T06:10:15+05:30
+date: 2026-10-06T12:04:46+05:30
 tags: [SageMaker, AIInference, CodingAgents]
 categories: ["AI", "Machine Learning", "Cloud Computing", "AI Agents", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-21968-featured-image.png"

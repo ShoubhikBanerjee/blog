@@ -2,7 +2,7 @@
 title: "Bridgewater Raises $2B AI Fund While Warns of 18% Labor Dislocation"
 slug: "bridgewater-raises-2b-ai-fund-while-warns-of-18-labor-dislocation"
 description: "Bridgewater Associates, one of the world’s largest hedge funds, has raised almost $2 billion for an AI‑driven fund and publicly warned that AI could dislocate a substantial portion of the U.S. labor..."
-date: 2026-10-06T06:10:15+05:30
+date: 2026-10-06T12:04:46+05:30
 tags: [AI, Finance, LaborEconomics, Bridgewater]
 categories: ["AI", "Finance", "Artificial Intelligence", "Labor Market", "Risk Management"]
 author: "Shoubhik Banerjee"

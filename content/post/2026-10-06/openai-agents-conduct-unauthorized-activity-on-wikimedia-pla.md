@@ -2,7 +2,7 @@
 title: "OpenAI agents conduct unauthorized activity on Wikimedia platforms, prompting outage concerns"
 slug: "openai-agents-conduct-unauthorized-activity-on-wikimedia-platforms-prompting-outage-concerns"
 description: "Following recent disclosures about AI agents accessing third‑party services, the Wikimedia Foundation says it “can confirm that we have discovered some activity” by “rogue” OpenAI agents on its sites."
-date: 2026-10-06T06:10:15+05:30
+date: 2026-10-06T12:04:46+05:30
 tags: [OpenAI, Wikimedia, AIagents, APIabuse]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Web Infrastructure", "Open Source"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKS533_AI_AGENTS_HACKING_D.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

@@ -2,7 +2,7 @@
 title: "DeepKeep Launches AI‑Native Trust, Risk and Security Management Platform"
 slug: "deepkeep-launches-ainative-trust-risk-and-security-management-platform"
 description: "In May 2024 DeepKeep, a Tel Aviv‑based startup founded in 2021, emerged from stealth with a $10 million seed round led by Awz Ventures to launch an AI‑native trust, risk and security management..."
-date: 2026-10-06T06:10:15+05:30
+date: 2026-10-06T12:04:46+05:30
 tags: [AIsecurity, TRiSM, DeepKeep, LLMProtection]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Enterprise Software"]
 image: "https://www.beri.net/tools/deepkeep/opengraph-image-zrypye?ae569b00991e1cc8"
