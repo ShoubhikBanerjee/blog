@@ -2,7 +2,7 @@
 title: "Google's Gemini AI to Automate Personal Phone Calls with 'Call for Me' Expansion"
 slug: "google-s-gemini-ai-to-automate-personal-phone-calls-with-call-for-me-expansion"
 description: "Google may be expanding its “Call for Me” AI feature beyond business calls so you can use it to send messages to friends and family."
-date: 2026-10-06T18:04:10+05:30
+date: 2026-10-06T22:08:14+05:30
 tags: [Google, Gemini, AI, Android, CallForMe]
 categories: ["AI", "Artificial Intelligence", "Mobile Technology", "Voice Assistants", "Google"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/Google-Pixel-11-Pro-Photos-of-Phone-7.jpg?quality=90&strip=all&crop=0%2C10.731298651824%2C100%2C78.537402696352&w=1200"

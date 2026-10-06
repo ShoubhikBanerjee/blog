@@ -2,7 +2,7 @@
 title: "Qualys TotalAppSec Achieves FedRAMP High Authorization"
 slug: "qualys-totalappsec-achieves-fedramp-high-authorization"
 description: "Qualys TotalAppSec has been granted FedRAMP High authorization on the Qualys Government Platform (FedRAMP Certified Class D, package FR2231052341). The authorization positions the service within the..."
-date: 2026-10-06T18:04:10+05:30
+date: 2026-10-06T22:08:14+05:30
 tags: [FedRAMP, GovSec, APIsecurity, AICompliance]
 categories: ["AI", "Cybersecurity", "Government Technology", "Artificial Intelligence", "Risk Management"]
 image: "https://ik.imagekit.io/qualys/wp-content/uploads/2026/09/Blog-Images-1080x1080.Cloud_.Agent_.2025.Updates-1-8.png"

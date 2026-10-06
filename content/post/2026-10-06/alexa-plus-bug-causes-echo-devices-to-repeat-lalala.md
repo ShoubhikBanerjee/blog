@@ -2,7 +2,7 @@
 title: "Alexa Plus bug causes Echo devices to repeat “lalala”"
 slug: "alexa-plus-bug-causes-echo-devices-to-repeat-lalala"
 description: "An Alexa Plus bug has caused some Amazon Echo smart speakers to repeat – and sometimes sing – “lalala” for minutes, often in the middle of conversations."
-date: 2026-10-06T18:04:10+05:30
+date: 2026-10-06T22:08:14+05:30
 tags: [Alexa, Echo, Bug, Amazon]
 categories: ["AI", "Artificial Intelligence", "Smart Home", "Consumer Electronics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/10/258035_Alexa_Studio_2025_JHiggins_0017.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

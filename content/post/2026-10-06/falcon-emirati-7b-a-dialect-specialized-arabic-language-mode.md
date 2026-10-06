@@ -2,7 +2,7 @@
 title: "Falcon-Emirati-7B: A Dialect‑Specialized Arabic Language Model"
 slug: "falcon-emirati-7b-a-dialectspecialized-arabic-language-model"
 description: "A new dialect‑focused language model, **Falcon‑Emirati‑7B**, has been released. It builds on the Falcon‑H1‑Arabic family and is trained to understand and generate Emirati Arabic—the Gulf dialect used..."
-date: 2026-10-06T18:04:10+05:30
+date: 2026-10-06T22:08:14+05:30
 tags: [ArabicAI, DialectModels, Falcon, Emirati]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Language Models", "Computational Linguistics"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/659bc8a7b0f43ed69f0b2300/MJHJMYW3O4CkLvXvn7DOp.png"

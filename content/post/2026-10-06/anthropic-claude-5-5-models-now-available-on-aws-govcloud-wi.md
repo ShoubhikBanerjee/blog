@@ -2,7 +2,7 @@
 title: "Anthropic Claude 5.5 Models Now Available on AWS GovCloud with Full Compliance"
 slug: "anthropic-claude-5-5-models-now-available-on-aws-govcloud-with-full-compliance"
 description: "Anthropic’s latest Claude models—Opus 5.5 and Sonnet 5.5—are now offered through Amazon Bedrock in the U.S. GovCloud regions, giving regulated workloads a compliant path for AI‑assisted development."
-date: 2026-10-06T18:04:10+05:30
+date: 2026-10-06T22:08:14+05:30
 tags: [AWS, Anthropic, AICompliance, DeveloperTools]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Developer Tools", "Security & Compliance"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-19466-featured-image.png"

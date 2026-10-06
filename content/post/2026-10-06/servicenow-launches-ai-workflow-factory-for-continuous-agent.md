@@ -2,7 +2,7 @@
 title: "ServiceNow Launches AI Workflow Factory for Continuous Agentic Workflow Improvement"
 slug: "servicenow-launches-ai-workflow-factory-for-continuous-agentic-workflow-improvement"
 description: "ServiceNow announced the AI Workflow Factory, a platform that turns workflow improvement into a continuous, agentic AI‑powered loop.  The announcement also introduced Flow by ServiceNow, an AI..."
-date: 2026-10-06T18:04:10+05:30
+date: 2026-10-06T22:08:14+05:30
 tags: [ServiceNow, AIWorkflow, AgenticAI, Automation]
 categories: ["AI", "Enterprise Software", "Artificial Intelligence", "Workflow Automation", "AI Agents"]
 image: "https://s.yimg.com/cv/apiv2/cv/apiv2/social/images/yahoo-finance-default-logo.png"

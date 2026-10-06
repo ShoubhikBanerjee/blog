@@ -2,7 +2,7 @@
 title: "LangGraph Enables Low‑Level Orchestration for Stateful AI Agents"
 slug: "langgraph-enables-lowlevel-orchestration-for-stateful-ai-agents"
 description: "LangChain Inc. announced an update to LangGraph, a low‑level orchestration framework for building stateful agents that is already used by Replit, Uber, LinkedIn, GitLab and others."
-date: 2026-10-06T18:04:10+05:30
+date: 2026-10-06T22:08:14+05:30
 tags: [LangGraph, AIagents, LLM, Orchestration]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/126733545?v=4"

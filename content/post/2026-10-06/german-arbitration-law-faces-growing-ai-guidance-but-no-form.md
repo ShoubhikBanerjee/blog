@@ -2,7 +2,7 @@
 title: "German Arbitration Law Faces Growing AI Guidance but No Formal Rules Yet"
 slug: "german-arbitration-law-faces-growing-ai-guidance-but-no-formal-rules-yet"
 description: "If you are looking for specific legislation or institutional guidance to tell you whether artificial intelligence (AI) belongs in your arbitration in Germany, you can stop waiting."
-date: 2026-10-06T18:04:10+05:30
+date: 2026-10-06T22:08:14+05:30
 tags: [Arbitration, AIRegulation, GermanLaw, EUAIAct]
 categories: ["AI", "Dispute Resolution", "Artificial Intelligence", "Law", "European Union Policy"]
 image: "https://www.freshfields.com/cdn-cgi/image/format=auto,quality=90,fit=cover,width=1280/https://images.passle.net/fit-in/400x400/filters:crop(0,196,700,391"

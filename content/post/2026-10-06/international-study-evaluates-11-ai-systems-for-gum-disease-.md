@@ -2,7 +2,7 @@
 title: "International Study Evaluates 11 AI Systems for Gum Disease Diagnosis"
 slug: "international-study-evaluates-11-ai-systems-for-gum-disease-diagnosis"
 description: "On October 5, 2026, an international study led by Dr. Yaniv Mayer, senior physician and director of the residency program in the Department of Periodontics and Implants at Rambam and senior lecturer..."
-date: 2026-10-06T18:04:10+05:30
+date: 2026-10-06T22:08:14+05:30
 tags: [AI, Periodontics, MedicalAI, Healthcare, Technion]
 categories: ["AI", "Artificial Intelligence", "Healthcare", "Medical Research", "Dentistry"]
 image: "https://ats.org/wp-content/uploads/2026/10/AdobeStock_320631517-scaled.jpeg"

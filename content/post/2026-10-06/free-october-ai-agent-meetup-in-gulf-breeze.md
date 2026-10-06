@@ -2,7 +2,7 @@
 title: "Free October AI Agent Meetup in Gulf Breeze"
 slug: "free-october-ai-agent-meetup-in-gulf-breeze"
 description: "AutoEDU is hosting a free, in‑person AI Agent meetup this October for anyone who wants to see practical AI‑agent workflows and connect with local builders."
-date: 2026-10-06T18:04:10+05:30
+date: 2026-10-06T22:08:14+05:30
 tags: [AIagents, Meetup, AutoEDU, GulfBreeze, Education]
 categories: ["AI", "Artificial Intelligence", "Community Events", "Education", "Business Applications"]
 image: "https://www.eventbrite.com/e/_next/image?url=https%3A%2F%2Fimg.evbuc.com%2Fhttps%253A%252F%252Fcdn.evbuc.com%252Fimages%252F1192383140%252F1936469628983%252F1%252Foriginal.20260901-164604%3Fw%3D940%26auto%3Dformat%252Ccompress%26q%3D75%26sharp%3D10%26s%3D1ebaead5378c74ea18bdc0ec19e3b83c&w=940&q=75"
