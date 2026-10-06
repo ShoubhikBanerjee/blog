@@ -2,7 +2,7 @@
 title: "OpenAI publicist pushes to change interview after suicide discussion"
 slug: "openai-publicist-pushes-to-change-interview-after-suicide-discussion"
 description: "An OpenAI publicist tried to change the topic of CEO Sam Altman’s interview with Vanity Fair’s Mark Guiducci after the editor brought up a ChatGPT user’s suicide."
-date: 2026-10-06T12:04:46+05:30
+date: 2026-10-06T18:04:10+05:30
 tags: [OpenAI, SamAltman, ChatGPT, MentalHealth]
 categories: ["AI", "Artificial Intelligence", "Ethics", "Mental Health"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/12/STK201_SAM_ALTMAN_CVIRGINIA_C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

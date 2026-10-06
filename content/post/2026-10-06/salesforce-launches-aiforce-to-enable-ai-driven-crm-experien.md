@@ -2,7 +2,7 @@
 title: "Salesforce launches AIforce to enable AI‑driven CRM experiences"
 slug: "salesforce-launches-aiforce-to-enable-aidriven-crm-experiences"
 description: "Salesforce announced **AIforce** at Dreamforce on September 15, 2026. AIforce is a live interface layer that brings Salesforce data, workflows, business logic, semantics, permissions, security, and..."
-date: 2026-10-06T12:04:46+05:30
+date: 2026-10-06T18:04:10+05:30
 tags: [Salesforce, AIforce, CRM, HeadlessToolkit, AIIntegration]
 categories: ["AI", "Artificial Intelligence", "Enterprise Software", "Customer Relationship Management", "Software Architecture"]
 image: "https://technoparticles.com/assets/imgs/blog/salesforce-aiforce-crm-workflows-any-ai-interface/blog_6abe35c217de54.88236540.webp"

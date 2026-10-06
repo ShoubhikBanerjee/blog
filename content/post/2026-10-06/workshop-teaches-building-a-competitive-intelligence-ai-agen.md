@@ -2,7 +2,7 @@
 title: "Workshop Teaches Building a Competitive Intelligence AI Agent in 3 Hours"
 slug: "workshop-teaches-building-a-competitive-intelligence-ai-agent-in-3-hours"
 description: "A new online workshop, **“3 Hours to Research Intelligence: Build Your First AI Agent**,” lets participants create a custom AI research agent that can save 10+ hours a week on job‑search or..."
-date: 2026-10-06T12:04:46+05:30
+date: 2026-10-06T18:04:10+05:30
 tags: [AIagents, CompetitiveIntelligence, Productivity, CareerDevelopment]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Productivity", "Career Development"]
 image: "https://www.eventbrite.com/e/_next/image?url=https%3A%2F%2Fimg.evbuc.com%2Fhttps%253A%252F%252Fcdn.evbuc.com%252Fimages%252F1193028053%252F4051253644%252F1%252Foriginal.20260909-042356%3Fw%3D940%26auto%3Dformat%252Ccompress%26q%3D75%26sharp%3D10%26s%3D1b7d62f62271941c836f3d4da42534d4&w=940&q=75"

@@ -2,7 +2,7 @@
 title: "Anthropic Moves Cowork’s Model Inference and VM to the Cloud"
 slug: "anthropic-moves-coworks-model-inference-and-vm-to-the-cloud"
 description: "On 5 October 2026 Anthropic announced a new version of its Cowork product that moves both model inference and the supporting virtual machine (VM) from the local device to the cloud."
-date: 2026-10-06T12:04:46+05:30
+date: 2026-10-06T18:04:10+05:30
 tags: [Anthropic, Cowork, AIInference, CloudVM, LLM]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Software Engineering"]
 author: "Shoubhik Banerjee"

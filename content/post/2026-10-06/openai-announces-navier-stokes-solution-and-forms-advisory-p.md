@@ -2,7 +2,7 @@
 title: "OpenAI Announces Navier‑Stokes Solution and Forms Advisory Panel Amid Backlash"
 slug: "openai-announces-navierstokes-solution-and-forms-advisory-panel-amid-backlash"
 description: "OpenAI announced that its internal AI model has produced a solution to the Navier‑Stokes Millennium Prize problem, and the company responded to the ensuing controversy by creating an independent..."
-date: 2026-10-06T12:04:46+05:30
+date: 2026-10-06T18:04:10+05:30
 tags: [OpenAI, Mathematics, AIResearch, MillenniumPrize]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "Research Ethics", "Industry News"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268684_OpenAI_claims_to_revolutionize_maths_CVirginia2-1.webp?quality=90&strip=all&crop=0,10.732984293194,100,78.534031413613"

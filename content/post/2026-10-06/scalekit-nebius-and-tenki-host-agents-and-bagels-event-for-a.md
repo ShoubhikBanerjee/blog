@@ -2,7 +2,7 @@
 title: "Scalekit, Nebius, and Tenki Host Agents and Bagels Event for AI Founders"
 slug: "scalekit-nebius-and-tenki-host-agents-and-bagels-event-for-ai-founders"
 description: "Scalekit, Nebius, and Tenki are hosting a special SF Tech Week edition of Agents & Bagels, a curated breakfast for founders and AI builders. The gathering is designed for individuals building..."
-date: 2026-10-06T12:04:46+05:30
+date: 2026-10-06T18:04:10+05:30
 tags: [SFTechWeek, AIAgents, AIInfrastructure, Startups]
 categories: ["AI", "AI Agents", "Events", "Software Development"]
 image: "https://www.eventbrite.com/e/_next/image?url=https%3A%2F%2Fimg.evbuc.com%2Fhttps%253A%252F%252Fcdn.evbuc.com%252Fimages%252F1194736163%252F302551915418%252F1%252Foriginal.20260930-160742%3Fw%3D940%26auto%3Dformat%252Ccompress%26q%3D75%26sharp%3D10%26s%3Df111c7236dd40bebd0ae399dc4279443&w=940&q=75"
