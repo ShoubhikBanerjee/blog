@@ -2,7 +2,7 @@
 title: "Federal Reserve Raises Federal Funds Rate by 25 Basis Points in September 2026"
 slug: "federal-reserve-raises-federal-funds-rate-by-25-basis-points-in-september-2026"
 description: "The Federal Open Market Committee (FOMC) increased the target range for the federal funds rate by a quarter‑point to 3.75 %–4.00 % at its September 15‑16, 2026 meeting."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [FederalReserve, MonetaryPolicy, InterestRates]
 categories: ["AI", "Economics", "Finance", "Monetary Policy"]
 author: "Shoubhik Banerjee"

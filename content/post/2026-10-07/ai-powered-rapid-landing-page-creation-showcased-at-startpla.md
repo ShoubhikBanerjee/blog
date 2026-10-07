@@ -2,7 +2,7 @@
 title: "AI‑Powered Rapid Landing Page Creation Showcased at Startplatz AI Hub Event"
 slug: "aipowered-rapid-landing-page-creation-showcased-at-startplatz-ai-hub-event"
 description: "An AI‑focused meetup took place in Cologne, bringing together over 100 vibe coders and marketers each month (more than 2,000 since June 2025).  Speakers demonstrated how AI can turn a vague brief..."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [AIEvents, NoCode, GrowthMarketing, EUAIAct]
 categories: ["AI", "Artificial Intelligence", "Community Events", "No-Code Development", "AI Ethics"]
 image: "https://pirateskills.com/events/vibe-coding-cologne/2026-10-07/opengraph-image-1ah7qy?38738e7527715c6d"

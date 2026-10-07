@@ -2,7 +2,7 @@
 title: "OpenAI launches Decisions API with image‑capable decision model"
 slug: "openai-launches-decisions-api-with-imagecapable-decision-model"
 description: "OpenAI released its new Decisions API, a Jev‑style service announced at last week’s DevDay."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [OpenAI, DecisionsAPI, LLM, ImageInput, Pricing]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Large Language Models", "APIs"]
 author: "Shoubhik Banerjee"

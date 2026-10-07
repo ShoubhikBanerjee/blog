@@ -2,7 +2,7 @@
 title: "Keystroke Analysis Detects LLM‑Assisted Vietnamese Writing"
 slug: "keystroke-analysis-detects-llmassisted-vietnamese-writing"
 description: "A new study submitted on 6 Oct 2026 examines how keystroke dynamics can reveal when large language models (LLMs) assist Vietnamese text production, even when users try to hide their involvement."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [keystrokes, LLMDetection, Vietnamese, AdversarialAI]
 categories: ["AI", "Natural Language Processing", "Security", "Human-Computer Interaction", "Machine Learning"]
 author: "Shoubhik Banerjee"

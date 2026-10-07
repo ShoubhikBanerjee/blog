@@ -2,7 +2,7 @@
 title: "EmbeddingGemma 2 Brings Unified Multimodal Embeddings to On‑Device AI"
 slug: "embeddinggemma-2-brings-unified-multimodal-embeddings-to-ondevice-ai"
 description: "- Today we are launching **EmbeddingGemma 2**, a unified multimodal embedding model that expands beyond text to include code, images, video, and audio."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [EmbeddingGemma, MultimodalAI, EdgeAI]
 categories: ["AI", "Machine Learning", "Multimodal AI", "Edge Computing"]
 image: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/embeddinggemma2-banner_169.width-1300.png"

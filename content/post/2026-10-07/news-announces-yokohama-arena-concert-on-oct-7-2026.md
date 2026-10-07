@@ -2,7 +2,7 @@
 title: "NEWS Announces Yokohama Arena Concert on Oct 7 2026"
 slug: "news-announces-yokohama-arena-concert-on-oct-7-2026"
 description: "NEWS will perform at Yokohama Arena in Yokohama on Wednesday, October 7 2026. The concert is part of the 25th Anniversary Trilogy “We Are NEWS Live Tour 2026 /// KMK”."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [NEWS, LiveTour, Yokohama, JapanConcerts]
 categories: ["AI", "Music", "Live Events", "Concerts"]
 image: "https://www.japanconcerttickets.com/wp-content/uploads/News-2OURaY.jpg"

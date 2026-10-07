@@ -2,7 +2,7 @@
 title: "Momentic AI launches intent‑based test automation platform with 99.2% reliability"
 slug: "momentic-ai-launches-intentbased-test-automation-platform-with-99-2-reliability"
 description: "Momentic AI announced updated capabilities for its intent‑based test automation platform, now running 200M+ test steps a month for over 2,600 users with 99.2% reliability and preventing more than..."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [AITesting, Momentic, Azure, GitHubActions]
 categories: ["AI", "Artificial Intelligence", "Software Testing", "Developer Tools", "Cloud Computing"]
 image: "https://media.daily.dev/image/upload/s--QgMRrp8J--/f_auto,q_auto/v1/recruiter-landing/6ac440e4ef6c0279d8507e9b_1791270639463_f16a6573ec?_a=BAMAMiB80"

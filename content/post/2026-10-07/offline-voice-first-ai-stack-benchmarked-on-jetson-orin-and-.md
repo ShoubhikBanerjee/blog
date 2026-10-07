@@ -2,7 +2,7 @@
 title: "Offline Voice-First AI Stack Benchmarked on Jetson Orin and Raspberry Pi5"
 slug: "offline-voice-first-ai-stack-benchmarked-on-jetson-orin-and-raspberry-pi5"
 description: "A new workstream titled **Offline AI Modules: Voice-First Offline Architecture, Hardware Reference Stack, Quantization and Benchmarking** was submitted on 4 Oct 2026. It delivers a practical,..."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [OfflineAI, VoiceFirst, EdgeAI, AfricanLanguages]
 categories: ["AI", "Artificial Intelligence", "Computation And Language", "Edge Computing"]
 author: "Shoubhik Banerjee"

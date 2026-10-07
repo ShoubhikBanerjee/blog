@@ -2,7 +2,7 @@
 title: "Tokyo Fun Language Exchange – Multilingual Meetup in Tokyo"
 slug: "tokyo-fun-language-exchange-multilingual-meetup-in-tokyo"
 description: "Welcome to Tokyo Fun Language Exchange – a regular meetup where participants practice a variety of languages in small groups."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [LanguageExchange, TokyoEvents, Multilingual]
 categories: ["AI", "Community Events", "Language Learning", "Cultural Exchange"]
 image: "https://secure.meetupstatic.com/photos/event/9/5/7/2/600_535478258.jpeg"

@@ -2,7 +2,7 @@
 title: "SteerScope Introduces Multi‑Dimensional Evaluation for LLM Activation Steering"
 slug: "steerscope-introduces-multidimensional-evaluation-for-llm-activation-steering"
 description: "Activation steering offers a lightweight and flexible way to control large language model (LLM) behavior, but effective steering must limit unintended changes and stay robust across inputs and..."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [LLM, ActivationSteering, Evaluation, AISafety]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Safety", "Evaluation Methods"]
 author: "Shoubhik Banerjee"

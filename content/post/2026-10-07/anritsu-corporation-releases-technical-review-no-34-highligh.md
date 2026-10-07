@@ -2,7 +2,7 @@
 title: "Anritsu Corporation Releases Technical Review No. 34 Highlighting AI and Engineering Research"
 slug: "anritsu-corporation-releases-technical-review-no-34-highlighting-ai-and-engineering-research"
 description: "ANRITSU CORPORATION announced the publication of Anritsu Technical Review No. 34 on October 7, 2026. This publication is the English edition of Japanese Issue No. 101 and compiles research and..."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [Anritsu, ImageRecognition, AI, EVpowertrain]
 categories: ["AI", "Telecommunications", "Artificial Intelligence", "Engineering Research"]
 author: "Shoubhik Banerjee"

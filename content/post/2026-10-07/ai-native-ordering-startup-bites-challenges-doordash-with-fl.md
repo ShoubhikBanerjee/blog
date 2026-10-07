@@ -2,7 +2,7 @@
 title: "AI‑Native Ordering Startup Bites Challenges DoorDash with Flat‑Fee Model"
 slug: "ainative-ordering-startup-bites-challenges-doordash-with-flatfee-model"
 description: "Bites, a pre‑seed food‑delivery startup operating in the Bay Area, attracted DoorDash’s attention after the larger platform warned restaurants that they might be listed on Bites without consent...."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [FoodDelivery, AI, Startup, RestaurantMargins]
 categories: ["AI", "Artificial Intelligence", "Food Delivery", "Startup", "Business Models"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268795_Can_AI_reform_overpriced_food_delivery__CVirginia2.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

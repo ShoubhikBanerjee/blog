@@ -2,7 +2,7 @@
 title: "EmbeddingGemma 2 released under Apache 2.0 license"
 slug: "embeddinggemma-2-released-under-apache-2-0-license"
 description: "EmbeddingGemma 2, an embedding model, was announced on 6 October 2026 and is licensed under Apache 2.0."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [EmbeddingGemma, OpenSource, AIEmbeddings, ApacheLicense]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Open Source AI", "Data Infrastructure"]
 author: "Shoubhik Banerjee"

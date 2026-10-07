@@ -2,7 +2,7 @@
 title: "MarketBeat updates news sentiment scoring and coverage metrics"
 slug: "marketbeat-updates-news-sentiment-scoring-and-coverage-metrics"
 description: "MarketBeat has refreshed its real‑time news sentiment platform, providing clearer scoring for headlines and new comparative coverage data for individual companies."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [MarketBeat, SentimentAnalysis, FinanceNews]
 categories: ["AI", "Financial Technology", "Data Science", "AI Applications"]
 image: "https://www.marketbeat.com/logos/marketaxess-holdings-inc-logo.jpg?v=20221109140326"

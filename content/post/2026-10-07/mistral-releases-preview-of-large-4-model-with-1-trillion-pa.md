@@ -2,7 +2,7 @@
 title: "Mistral Releases Preview of Large 4 Model with 1 Trillion Parameters"
 slug: "mistral-releases-preview-of-large-4-model-with-1-trillion-parameters"
 description: "Mistral released a preview of its new Mistral Large 4 model."
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [Mistral, Large4, LLM, AI]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence", "Large Language Models"]
 image: "https://static.simonwillison.net/static/2026-10-06/mistral-large-4-pelican.webp"

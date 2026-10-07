@@ -2,7 +2,7 @@
 title: "Common Sense Media labels OpenAI's ChatGPT for Teens an unacceptable risk"
 slug: "common-sense-media-labels-openai-s-chatgpt-for-teens-an-unacceptable-risk"
 description: "Common Sense Media, a nonprofit that offers reviews of apps, services, and entertainment with a focus on youth safety, today said that OpenAI’s ChatGPT for Teens is an “unacceptable risk.”"
-date: 2026-10-07T18:06:06+05:30
+date: 2026-10-07T22:09:50+05:30
 tags: [OpenAI, ChatGPT, AISafety, TeenSafety, CommonSenseMedia]
 categories: ["AI", "Artificial Intelligence", "AI Ethics", "Child Safety", "Technology Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25461999/STK155_OPEN_AI_CVirginia_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
