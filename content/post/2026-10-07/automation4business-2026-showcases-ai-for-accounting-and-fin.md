@@ -2,7 +2,7 @@
 title: "Automation4Business 2026 Showcases AI for Accounting and Finance"
 slug: "automation4business-2026-showcases-ai-for-accounting-and-finance"
 description: "Automation4Business 2026 took place on 9 November 2026 at Cubex Centre Prague, bringing together professionals and solution providers focused on automation, digitalisation, and modern technologies..."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [Automation, AI, BusinessTech, Event2026]
 categories: ["AI", "Automation", "Artificial Intelligence", "Business Technology", "Event Management"]
 author: "Shoubhik Banerjee"

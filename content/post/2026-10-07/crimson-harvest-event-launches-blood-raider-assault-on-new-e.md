@@ -2,7 +2,7 @@
 title: "Crimson Harvest Event Launches Blood Raider Assault on New Eden"
 slug: "crimson-harvest-event-launches-blood-raider-assault-on-new-eden"
 description: "On June 9, 2026, CCP Games launched the Crimson Harvest event, marking a new assault by the Blood Raiders across New Eden and turning Pochven into a contested battleground."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [EVEOnline, CrimsonHarvest, Pochven, BloodRaiders, GameUpdate]
 categories: ["AI", "Video Games", "Massively Multiplayer Online", "Game Events"]
 image: "https://images.ctfassets.net/7lhcm73ukv5p/5R8eXvpNPvAVuGWz3N6UdI/01c0f8f71648164ecb1c49c0b41e3d4a/Cradle_of_War_Header_Image.png?fm=jpg&w=1200&h=630&fit=fill"

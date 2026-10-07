@@ -2,7 +2,7 @@
 title: "HZDR Introduces SHABA: Satellite Tool for Seasonal Vegetation Analysis"
 slug: "hzdr-introduces-shaba-satellite-tool-for-seasonal-vegetation-analysis"
 description: "Researchers at the Helmholtz‑Zentrum Dresden‑Rossendorf (HZDR) have unveiled SHABA – Seasonal Harmonic Anomaly Break Analysis – a satellite‑based remote sensing tool designed to analyze spatial and..."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [remotesensing, vegetation, satellite, AI, environment]
 categories: ["AI", "Environmental Science", "Remote Sensing", "Artificial Intelligence", "Geospatial Analysis"]
 image: "https://www.hzdr.de/db/PicOri?pOid=57529"

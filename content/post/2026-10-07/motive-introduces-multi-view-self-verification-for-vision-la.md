@@ -2,7 +2,7 @@
 title: "MOTIVE introduces multi-view self-verification for vision-language models"
 slug: "motive-introduces-multi-view-self-verification-for-vision-language-models"
 description: "- Vision-language models (VLMs) have achieved strong performance in multimodal reasoning, yet they remain prone to generating plausible but incorrect answers."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [VisionLanguageModels, SelfVerification, AIResearch]
 categories: ["AI", "Artificial Intelligence", "Computer Vision", "Machine Learning"]
 author: "Shoubhik Banerjee"

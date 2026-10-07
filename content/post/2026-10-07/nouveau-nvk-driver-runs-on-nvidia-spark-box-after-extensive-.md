@@ -2,7 +2,7 @@
 title: "Nouveau/NVK Driver Runs on NVIDIA Spark Box After Extensive Patching"
 slug: "nouveau-nvk-driver-runs-on-nvidia-spark-box-after-extensive-patching"
 description: "After much back and forth and hoops jumping, I can finally reveal nouveau/nvk running on a NVIDIA Spark box."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [Nouveau, NVK, NVIDIA, Linux, ACPI]
 categories: ["AI", "Operating Systems", "Hardware", "Drivers"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Barnette's Conjecture Solution Discussed on Hacker News"
 slug: "barnette-s-conjecture-solution-discussed-on-hacker-news"
 description: "On 7 October 2026, a Hacker News comment highlighted a claimed proof of Barnette's Conjecture (Problem 180) and sparked a mix of emotional reactions."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [BarnetteConjecture, Math, OpenAI]
 categories: ["AI", "Mathematics", "Artificial Intelligence", "Community Discussion"]
 author: "Shoubhik Banerjee"

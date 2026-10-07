@@ -2,7 +2,7 @@
 title: "AttSVD Enables Prompt-Adaptive Low-Rank KV Cache Compression"
 slug: "attsvd-enables-prompt-adaptive-low-rank-kv-cache-compression"
 description: "AttSVD is a new, interpretable low‑rank compression method that adapts to each prompt’s attention geometry, reducing key‑value (KV) cache memory while preserving performance."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [KVCache, LowRank, Transformer, MemoryEfficiency]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Deep Learning"]
 author: "Shoubhik Banerjee"

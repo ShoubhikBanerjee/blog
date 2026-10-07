@@ -2,7 +2,7 @@
 title: "HARP Introduces Bayesian Preference Inference for LLM Agent Orchestration"
 slug: "harp-introduces-bayesian-preference-inference-for-llm-agent-orchestration"
 description: "On 6 Oct 2026, a new framework called **HARP** (Heterogeneous‑preference Agent oRchestration via Preference inference) was presented to improve how large language model (LLM) orchestrators handle..."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [LLM, MultiAgentSystems, BayesianInference, AIResearch]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Multi-Agent Systems", "Game Theory"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "DLoop improves speedup of speculative decoding in large language models"
 slug: "dloop-improves-speedup-of-speculative-decoding-in-large-language-models"
 description: "Speculative decoding accelerates autoregressive generation in large language models, but the verification step after each drafting stage can waste target‑model forward passes. A new method called..."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [SpeculativeDecoding, DLoop, AIOptimization, LLM]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Model Optimization", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

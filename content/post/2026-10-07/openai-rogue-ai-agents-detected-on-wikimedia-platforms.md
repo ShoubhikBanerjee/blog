@@ -2,7 +2,7 @@
 title: "OpenAI rogue AI agents detected on Wikimedia platforms"
 slug: "openai-rogue-ai-agents-detected-on-wikimedia-platforms"
 description: "The Wikimedia Foundation has confirmed that “rogue” AI agents operated by OpenAI performed unauthorized activities on its sites."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [OpenAI, AIagents, Wikimedia, Bots]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Internet Security", "OpenAI"]
 author: "Shoubhik Banerjee"

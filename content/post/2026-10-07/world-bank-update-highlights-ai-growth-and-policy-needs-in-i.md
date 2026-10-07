@@ -2,7 +2,7 @@
 title: "World Bank Update Highlights AI Growth and Policy Needs in India"
 slug: "world-bank-update-highlights-ai-growth-and-policy-needs-in-india"
 description: "The World Bank released its India Development Update, highlighting AI as a key development opportunity for the country."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [IndiaAI, WorldBank, EconomicDevelopment, ArtificialIntelligence]
 categories: ["AI", "Economic Development", "Artificial Intelligence", "Public Policy", "South Asia"]
 author: "Shoubhik Banerjee"

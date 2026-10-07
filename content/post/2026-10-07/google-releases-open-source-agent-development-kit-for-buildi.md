@@ -2,7 +2,7 @@
 title: "Google releases open-source Agent Development Kit for building AI agents"
 slug: "google-releases-open-source-agent-development-kit-for-building-ai-agents"
 description: "Google has opened the Agent Development Kit (ADK), an open‑source framework that helps developers build, debug, and deploy AI agents at enterprise scale."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [GoogleADK, AIagents, OpenSource]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Software Development", "Machine Learning"]
 image: "https://images.ctfassets.net/wp1lcwdav1p1/10s1ymeB8TkO0GwW4s60Cl/86421e36a577b5c5fb02918213296dbd/GettyImages-1533018013.webp?w=1500&h=680&q=60&fit=fill&f=faces&fm=jpg&fl=progressive"

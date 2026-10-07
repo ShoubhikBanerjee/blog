@@ -2,7 +2,7 @@
 title: "HouseholdBench Introduces a Unified Benchmark for Predicting Household Economic Behavior"
 slug: "householdbench-introduces-a-unified-benchmark-for-predicting-household-economic-behavior"
 description: "A new benchmark called **HouseholdBench** has been released to evaluate large language models (LLMs) as predictors of household economic decisions across a range of settings."
-date: 2026-10-07T12:11:17+05:30
+date: 2026-10-07T18:06:06+05:30
 tags: [LLM, HouseholdEconomics, Benchmark, PolicyResponse]
 categories: ["AI", "Machine Learning", "Economics", "Natural Language Processing"]
 author: "Shoubhik Banerjee"
