@@ -2,7 +2,7 @@
 title: "SOCRadar Alerts Integration Brings External Threat Intel into Elastic Security"
 slug: "socradar-alerts-integration-brings-external-threat-intel-into-elastic-security"
 description: "Your SOC runs on Elastic. Detections, logs, cases and dashboards all live in Kibana, and your analysts have built their muscle memory around it. Until now, external threat intelligence – alarms about..."
-date: 2026-10-07T06:09:38+05:30
+date: 2026-10-07T12:11:17+05:30
 tags: [SOCRadar, ElasticSecurity, ThreatIntelligence, SIEM, ECS]
 categories: ["AI", "Cybersecurity", "Threat Intelligence", "Security Operations", "Security Analytics"]
 image: "https://cdn.socradar.io/wp-content/uploads/2026/10/What-Do-You-Need-to-Know-How-to.png.webp"

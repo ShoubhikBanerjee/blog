@@ -2,7 +2,7 @@
 title: "Webex AI Agent upgraded to GPT-5.4 with new Webex AI Pro 2.0 engines"
 slug: "webex-ai-agent-upgraded-to-gpt-5-4-with-new-webex-ai-pro-2-0-engines"
 description: "Webex Contact Center announced a major upgrade for its AI Agent, moving the underlying model from GPT‑4.1 to GPT‑5.4."
-date: 2026-10-07T06:09:38+05:30
+date: 2026-10-07T12:11:17+05:30
 tags: [Webex, AI, GPT5, ContactCenter]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Enterprise Software"]
 author: "Shoubhik Banerjee"

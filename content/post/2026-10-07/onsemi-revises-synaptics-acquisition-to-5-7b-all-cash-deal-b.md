@@ -2,7 +2,7 @@
 title: "onsemi revises Synaptics acquisition to $5.7B all‑cash deal, boosting AI‑related power strategy"
 slug: "onsemi-revises-synaptics-acquisition-to-5-7b-allcash-deal-boosting-airelated-power-strategy"
 description: "onsemi (NASDAQ: ON) announced a revised acquisition of Synaptics that is expected to accelerate growth in AI‑related power solutions."
-date: 2026-10-07T06:09:38+05:30
+date: 2026-10-07T12:11:17+05:30
 tags: [onsemi, Synaptics, AIHardware, Mergers]
 categories: ["AI", "Semiconductors", "Artificial Intelligence", "Mergers & Acquisitions", "Financial Markets"]
 image: "https://www.marketbeat.com/logos/onsemi-logo.jpg?v=20221102150659"

@@ -2,7 +2,7 @@
 title: "Late September 2026 AI updates: OpenAI DevDay live blog and LLM overview"
 slug: "late-september-2026-ai-updates-openai-devday-live-blog-and-llm-overview"
 description: "In late September and early October 2026, a set of AI‑related updates were posted."
-date: 2026-10-07T06:09:38+05:30
+date: 2026-10-07T12:11:17+05:30
 tags: [OpenAI, DevDay, LLMs, BudgetCaps]
 categories: ["AI", "Artificial Intelligence", "Large Language Models", "AI Events"]
 author: "Shoubhik Banerjee"

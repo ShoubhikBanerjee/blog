@@ -2,7 +2,7 @@
 title: "Parseable Observability Platform Integrated with Datasette via Codex"
 slug: "parseable-observability-platform-integrated-with-datasette-via-codex"
 description: "On 6 October 2026 a new observability platform called **Parseable** was highlighted on Show HN."
-date: 2026-10-07T06:09:38+05:30
+date: 2026-10-07T12:11:17+05:30
 tags: [Parseable, Observability, OpenTelemetry, Datasette]
 categories: ["AI", "Observability", "Open Source", "Rust Programming", "Data Tools"]
 image: "https://raw.githubusercontent.com/simonw/til/refs/heads/main/datasette/datasette-parsable.webp"

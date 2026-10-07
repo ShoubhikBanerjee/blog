@@ -2,7 +2,7 @@
 title: "AgentCore memory enables persistent personal AI assistants on AWS"
 slug: "agentcore-memory-enables-persistent-personal-ai-assistants-on-aws"
 description: "Off‑the‑shelf AI assistants answer individual questions well, but they fall short on continuity. A new reference implementation shows how to give a personal assistant durable memory by wiring..."
-date: 2026-10-07T06:09:38+05:30
+date: 2026-10-07T12:11:17+05:30
 tags: [AgentCore, AWS, PersonalAssistant, OpenClaw, AI]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-21277-featured-image.png"

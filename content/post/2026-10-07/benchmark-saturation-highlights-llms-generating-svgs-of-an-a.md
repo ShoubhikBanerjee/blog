@@ -2,7 +2,7 @@
 title: "Benchmark Saturation Highlights LLMs Generating SVGs of an Armadillo on Mars"
 slug: "benchmark-saturation-highlights-llms-generating-svgs-of-an-armadillo-on-mars"
 description: "On 6 October 2026, the community observed that a leading benchmark had become saturated, leading researchers to test frontier models with a whimsical prompt: an armadillo in fishnet tights jaywalking..."
-date: 2026-10-07T06:09:38+05:30
+date: 2026-10-07T12:11:17+05:30
 tags: [LLM, Benchmark, SVG, AI]
 categories: ["AI", "Machine Learning", "Large Language Models", "Natural Language Processing", "AI Evaluation"]
 author: "Shoubhik Banerjee"

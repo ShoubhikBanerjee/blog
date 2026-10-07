@@ -2,7 +2,7 @@
 title: "NVIDIA expands GPUNetIO with open‑source library and unified GPU‑centric networking"
 slug: "nvidia-expands-gpunetio-with-opensource-library-and-unified-gpucentric-networking"
 description: "GPU‑driven applications are increasingly demanding that networking and data movement behave as first‑class GPU operations.  To eliminate the CPU bottleneck in the critical path, NVIDIA has updated..."
-date: 2026-10-07T06:09:38+05:30
+date: 2026-10-07T12:11:17+05:30
 tags: [NVIDIA, GPUNetIO, GPUNetworking, RDMA]
 categories: ["AI", "High Performance Computing", "Computer Architecture", "Networking", "GPU Computing"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image9-660x370.png"
