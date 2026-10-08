@@ -2,7 +2,7 @@
 title: "KVFetch adds temporal recall channel to improve KV‑cache compression"
 slug: "kvfetch-adds-temporal-recall-channel-to-improve-kvcache-compression"
 description: "KVFetch: Temporal Prefetching for the Missing Half of KV Cache Compression was submitted on 23 Sep 2026. It introduces a new mechanism to address a key limitation of current KV‑cache compressors used..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [KVCache, LLMInference, Compression]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Computer Systems"]
 author: "Shoubhik Banerjee"

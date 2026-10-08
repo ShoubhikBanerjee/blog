@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore Virtual Session Shows Path from Prototype to Production"
 slug: "amazon-bedrock-agentcore-virtual-session-shows-path-from-prototype-to-production"
 description: "Amazon Web Services held a 1‑hour online session titled **“From Prototype to Production: Building Enterprise AI Agents with Amazon Bedrock AgentCore**” that presented its fully managed agentic..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [AmazonBedrock, AIAgents, AWS, GenerativeAI]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Cloud Computing", "Enterprise Software"]
 image: "https://startups.aws.com/startups/resource/image/aws-events-thumbnail.png"

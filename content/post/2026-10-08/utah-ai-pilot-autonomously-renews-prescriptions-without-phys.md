@@ -2,7 +2,7 @@
 title: "Utah AI Pilot Autonomously Renews Prescriptions Without Physician in Loop"
 slug: "utah-ai-pilot-autonomously-renews-prescriptions-without-physician-in-loop"
 description: "On January 6, 2026 the Utah Office of Artificial Intelligence Policy (OAIP) publicly launched Doctronic’s autonomous AI prescription pilot – the first known instance in the United States where an AI..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [AIRegulation, MedicalAI, PrescriptionRenewal, UtahAI]
 categories: ["AI", "Artificial Intelligence", "Healthcare", "Regulation", "Medical Technology"]
 image: "https://www.swlaw.com/wp-content/uploads/2024/08/sw-placeholder-1200x677-2-e1723647319278.png"

@@ -2,7 +2,7 @@
 title: "Microsoft unveils Surface Laptop Ultra with Nvidia RTX Spark and Hybrid Intelligence"
 slug: "microsoft-unveils-surface-laptop-ultra-with-nvidia-rtx-spark-and-hybrid-intelligence"
 description: "Microsoft just wrapped up a big Windows and Surface‑focused keynote in San Francisco. The headline announcement was the Surface Laptop Ultra, a new laptop powered by Nvidia’s RTX Spark Arm‑based chip."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [Surface, Nvidia, AI, HybridIntelligence, Windows]
 categories: ["AI", "Artificial Intelligence", "Computer Hardware", "Operating Systems", "Developer Tools"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/lc-img-639ce71c-4af9-43a1-b5a1-34b6d8db35cc.jpeg?quality=90&strip=all&crop=0%2C10.745251402131%2C100%2C78.509497195739&w=1200"

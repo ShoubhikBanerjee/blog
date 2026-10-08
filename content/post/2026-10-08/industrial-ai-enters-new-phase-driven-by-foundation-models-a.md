@@ -2,7 +2,7 @@
 title: "Industrial AI Enters New Phase Driven by Foundation Models and Physical Systems"
 slug: "industrial-ai-enters-new-phase-driven-by-foundation-models-and-physical-systems"
 description: "Industrial AI is transitioning from decades of predictive analytics into a new phase where foundation models, physical AI, and agentic AI enable the automation of complex tasks across industrial..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [IndustrialAI, Robotics, AutonomousSystems, MachineLearning, Sustainability]
 categories: ["AI", "Industrial Automation", "Artificial Intelligence", "Robotics"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/MITTR-AVEVA-podcast-social-card-v2-1.png?resize=1200,600"

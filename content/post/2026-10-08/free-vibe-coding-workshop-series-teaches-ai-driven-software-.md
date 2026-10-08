@@ -2,7 +2,7 @@
 title: "Free Vibe Coding Workshop Series Teaches AI-Driven Software Creation"
 slug: "free-vibe-coding-workshop-series-teaches-ai-driven-software-creation"
 description: "WIT // HSV and ARC are hosting a free, three‑part Vibe Coding Workshop Series that shows participants how to turn natural‑language prompts into working software using AI‑powered code generators."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [AIWorkshop, VibeCoding, LowCode, AItools]
 categories: ["AI", "Artificial Intelligence", "Education", "Software Development", "Community Events"]
 image: "https://www.eventbrite.com/e/_next/image?url=https%3A%2F%2Fimg.evbuc.com%2Fhttps%253A%252F%252Fcdn.evbuc.com%252Fimages%252F1192317401%252F232535100690%252F1%252Foriginal.20260831-214249%3Fw%3D940%26auto%3Dformat%252Ccompress%26q%3D75%26sharp%3D10%26s%3De035c8803c6eb91db797eae5636b65e0&w=940&q=75"

@@ -2,7 +2,7 @@
 title: "Study Finds Reflective AI Use Boosts University Student Grades"
 slug: "study-finds-reflective-ai-use-boosts-university-student-grades"
 description: "A recent study from the University of Eastern Finland examined how university students use generative AI in take‑home exams (2023‑2024) and whether different usage patterns affect academic..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [AIinEducation, GenerativeAI, StudentPerformance, HigherEd]
 categories: ["AI", "Education Technology", "Artificial Intelligence", "Higher Education", "Learning Analytics"]
 image: "https://galileoalphamessages.s3.eu-west-2.amazonaws.com/Uploads/images/e7130d3c-1184-4f62-9568-ed5789edb0b5-university-of-eastern-finland7652.jpg"

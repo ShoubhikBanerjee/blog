@@ -2,7 +2,7 @@
 title: "Synthetic AI Voices Gain Human‑Like Disfluencies to Preserve Communication Nuance"
 slug: "synthetic-ai-voices-gain-humanlike-disfluencies-to-preserve-communication-nuance"
 description: "A recent article by Associate Professor Celeste Rodriguez Louro, Director of the Language Lab at The University of Western Australia, published in *The Conversation* on 8 October 2026, describes her..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [AIvoices, Disfluency, HumanAIInteraction, Linguistics]
 categories: ["AI", "Artificial Intelligence", "Human-Computer Interaction", "Linguistics", "Speech Technology"]
 image: "http://www.uwa.edu.au/news/-/media/project/uwa/uwa/newsroom/card-image/2026/robot-microphone-card.jpg"

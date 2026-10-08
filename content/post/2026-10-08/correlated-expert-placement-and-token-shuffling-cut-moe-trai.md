@@ -2,7 +2,7 @@
 title: "Correlated Expert Placement and Token Shuffling Cut MoE Training Overhead"
 slug: "correlated-expert-placement-and-token-shuffling-cut-moe-training-overhead"
 description: "Mixture‑of‑Experts (MoE) layers replace the feed‑forward block of a Transformer with **E** expert networks, routing each token to **k** experts. When experts are spread across GPUs under expert..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [MoE, GPU, Parallelism, DeepLearning, TrainingEfficiency]
 categories: ["AI", "Machine Learning", "Deep Learning", "High Performance Computing", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

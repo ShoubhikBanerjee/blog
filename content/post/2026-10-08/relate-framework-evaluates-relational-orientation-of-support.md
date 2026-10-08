@@ -2,7 +2,7 @@
 title: "RELATE framework evaluates relational orientation of supportive LLMs"
 slug: "relate-framework-evaluates-relational-orientation-of-supportive-llms"
 description: "Large language models (LLMs) are increasingly used for emotional support, prompting researchers to examine how these systems orient users toward continued assistance. On 7 Oct 2026, the paper..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [LLM, AIevaluation, relationalOrientation, AIethics]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Ethics"]
 author: "Shoubhik Banerjee"

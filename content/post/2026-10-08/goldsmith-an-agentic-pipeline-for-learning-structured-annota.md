@@ -2,7 +2,7 @@
 title: "Goldsmith: An Agentic Pipeline for Learning Structured Annotation Definitions"
 slug: "goldsmith-an-agentic-pipeline-for-learning-structured-annotation-definitions"
 description: "Many annotation projects begin before experts have a stable guideline or enough labels to train a task‑specific model."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [annotation, LLM, promptoptimization, AItools]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Data Annotation", "AI Agents"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Amazon Quick adds real‑time ACL checks to Bedrock Knowledge Bases for secure RAG"
 slug: "amazon-quick-adds-realtime-acl-checks-to-bedrock-knowledge-bases-for-secure-rag"
 description: "Enterprise organizations are adopting Retrieval Augmented Generation (RAG) to unlock insights from company knowledge sources like Microsoft SharePoint, Google Drive, and Atlassian Confluence. Because..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [RAG, AmazonBedrock, AIsecurity, EnterpriseAI]
 categories: ["AI", "Artificial Intelligence", "Enterprise Computing", "Cloud Services"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-22080-featured-image.png"

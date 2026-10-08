@@ -2,7 +2,7 @@
 title: "ARCS Benchmark Highlights Ambiguity Challenges in Text-to-SQL"
 slug: "arcs-benchmark-highlights-ambiguity-challenges-in-text-to-sql"
 description: "On 7 Oct 2026, researchers submitted a paper titled **“ARCS: Towards Precise Text-to-SQL via Structured Disambiguation**” to the *Computer Science > Computation and Language* category on arXiv."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [TextToSQL, StructuredDisambiguation, Benchmark]
 categories: ["AI", "Natural Language Processing", "Database Systems", "Machine Learning"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Convolutional Neural Networks Aid Visual Effects Green‑Screen Workflows"
 slug: "convolutional-neural-networks-aid-visual-effects-greenscreen-workflows"
 description: "On 7 October 2026, developers discussed how convolutional neural networks are being applied in visual‑effects pipelines to automate tasks like green‑screen removal."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [VFX, MachineLearning, ConvolutionalNeuralNetwork, Python]
 categories: ["AI", "Computer Vision", "Machine Learning", "Visual Effects", "Programming"]
 author: "Shoubhik Banerjee"

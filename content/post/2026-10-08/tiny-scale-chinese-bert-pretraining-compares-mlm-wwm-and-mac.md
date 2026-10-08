@@ -2,7 +2,7 @@
 title: "Tiny-Scale Chinese BERT Pretraining Compares MLM, WWM, and MacBERT"
 slug: "tiny-scale-chinese-bert-pretraining-compares-mlm-wwm-and-macbert"
 description: "A new paper submitted on 6 Oct 2026 investigates how different pre‑training strategies affect a *tiny* Chinese BERT model. By keeping architecture, corpus, and hyper‑parameters constant, the authors..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [ChineseBERT, Pretraining, NLP]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "Computational Linguistics"]
 author: "Shoubhik Banerjee"

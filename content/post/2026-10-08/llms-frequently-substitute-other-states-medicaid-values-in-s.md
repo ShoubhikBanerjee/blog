@@ -2,7 +2,7 @@
 title: "LLMs Frequently Substitute Other States’ Medicaid Values in State‑Specific Queries"
 slug: "llms-frequently-substitute-other-states-medicaid-values-in-statespecific-queries"
 description: "A new study examined how large language models (LLMs) answer state‑specific Medicaid income‑eligibility questions and found that the models often return a value that is correct for a different state..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [LLM, Medicaid, AIEvaluation, PolicyAI, CrossState]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Evaluation"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Tesla's Optimus and Google DeepMind's ALOHA 2 Advance General Purpose Robotics"
 slug: "tesla-s-optimus-and-google-deepmind-s-aloha-2-advance-general-purpose-robotics"
 description: "Tesla’s Optimus and Google DeepMind’s ALOHA 2 are at the forefront of a potential revolution in robotics, aiming to bring human-like dexterity and general-purpose utility to machines through advanced..."
-date: 2026-10-08T18:03:50+05:30
+date: 2026-10-08T22:04:21+05:30
 tags: [Robotics, TeslaOptimus, GoogleDeepMind, GeminiRobotics, HumanoidRobots]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Machine Learning"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/fin1a_updated.jpg?resize=1200,600"
