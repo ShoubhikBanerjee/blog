@@ -2,7 +2,7 @@
 title: "AI Trial Finds Senior Patent Lawyers Gain Judgment, Junior Gains Remain Mixed"
 slug: "ai-trial-finds-senior-patent-lawyers-gain-judgment-junior-gains-remain-mixed"
 description: "In a three‑month randomized field experiment with 133 practicing patent attorneys, early access to Google’s AI patent‑writing assistant (now part of Gemini Notebook) lifted drafting performance for..."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [AI, PatentLaw, WorkplaceLearning]
 categories: ["AI", "Artificial Intelligence", "Intellectual Property Law", "Workplace Learning", "Economic Research"]
 image: "https://storage.googleapis.com/gweb-research2023-media/images/HO_previewImage1.width-800.format-jpeg.jpg"

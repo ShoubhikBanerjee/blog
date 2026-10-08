@@ -2,7 +2,7 @@
 title: "OpenAI adds Intelligent UI to ChatGPT with GPT‑6 interactive visuals"
 slug: "openai-adds-intelligent-ui-to-chatgpt-with-gpt6-interactive-visuals"
 description: "OpenAI is rolling out an **Intelligent UI** feature in ChatGPT that pairs text responses with interactive visuals such as diagrams, charts, forms, and tappable buttons. The update launches alongside..."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [OpenAI, ChatGPT, IntelligentUI, GPT6]
 categories: ["AI", "Artificial Intelligence", "Natural Language Processing", "User Interfaces", "Machine Learning"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Intelligent-UI.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

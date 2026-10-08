@@ -2,7 +2,7 @@
 title: "Benchmark of Open-Source AI Coding Agents on Ruby on Rails"
 slug: "benchmark-of-open-source-ai-coding-agents-on-ruby-on-rails"
 description: "The Rails Foundation commissioned a benchmark of AI coding agents on real‑world Rails projects."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [Rails, AIAgents, Benchmark]
 categories: ["AI", "Artificial Intelligence", "Software Engineering", "Machine Learning"]
 image: "https://evilmartians.com/social-cards/events/agents-on-rails-deccan-queen.jpg"

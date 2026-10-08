@@ -2,7 +2,7 @@
 title: "Persona Hierarchy Model Explains Contextual Generalization in LLM Fine‑Tuning"
 slug: "persona-hierarchy-model-explains-contextual-generalization-in-llm-finetuning"
 description: "A study submitted on 7 Oct 2026 proposes the Persona Hierarchy Model to explain why fine‑tuned large language models sometimes generalize beyond their training context and sometimes stay confined."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [LLM, FineTuning, AIAlignment]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Alignment"]
 author: "Shoubhik Banerjee"

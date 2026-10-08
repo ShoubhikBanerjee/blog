@@ -2,7 +2,7 @@
 title: "MarketBeat Updates Company News Sentiment Scores for Simulations Plus, AMZE, and UNF"
 slug: "marketbeat-updates-company-news-sentiment-scores-for-simulations-plus-amze-and-unf"
 description: "MarketBeat has refreshed its weekly company news sentiment metrics, adding the latest sentiment scores, article counts, and engagement data for three listed firms."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [MarketBeat, SentimentAnalysis, FinancialNews]
 categories: ["AI", "Financial Technology", "Data Analytics", "Artificial Intelligence"]
 image: "https://www.marketbeat.com/logos/simulations-plus-inc-logo.png?v=20250702120027"

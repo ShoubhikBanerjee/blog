@@ -2,7 +2,7 @@
 title: "Study Improves Child Speech Recognition While Preserving Adult ASR Performance"
 slug: "study-improves-child-speech-recognition-while-preserving-adult-asr-performance"
 description: "Researchers have released an empirical study on adapting automatic speech recognition (ASR) systems for child speech while retaining adult performance."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [ASR, ChildSpeech, ModelAdaptation, SpeechRecognition]
 categories: ["AI", "Machine Learning", "Speech Processing", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

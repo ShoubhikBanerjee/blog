@@ -2,7 +2,7 @@
 title: "IANS Webinar Shows How to Leverage Microsoft 365 Copilot for Cybersecurity"
 slug: "ians-webinar-shows-how-to-leverage-microsoft-365-copilot-for-cybersecurity"
 description: "IANS hosted a live session where faculty member Shannon Lietz walked through practical ways to use Microsoft 365 Copilot in a security context."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [AI, Cybersecurity, MicrosoftCopilot, IANS, ProfessionalDevelopment]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Professional Development", "Enterprise Security"]
 image: "https://www.ians.com/_astro/securing-office-suite-ai-agents.3zhHxDTa.jpg"

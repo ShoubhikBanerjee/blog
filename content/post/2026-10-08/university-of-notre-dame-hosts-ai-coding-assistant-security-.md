@@ -2,7 +2,7 @@
 title: "University of Notre Dame Hosts AI Coding Assistant Security Workshop"
 slug: "university-of-notre-dame-hosts-ai-coding-assistant-security-workshop"
 description: "On Thursday, October 8, 2026, the AI Collaborative Programming group offered a virtual, hands‑on workshop where participants put AI coding assistants to the test in a web‑application security sandbox."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [AI, CodingAssistants, WebSecurity, Workshop]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Cybersecurity", "Education"]
 author: "Shoubhik Banerjee"

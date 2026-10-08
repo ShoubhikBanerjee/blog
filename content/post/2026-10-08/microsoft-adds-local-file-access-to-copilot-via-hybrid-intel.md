@@ -2,7 +2,7 @@
 title: "Microsoft adds local file access to Copilot via Hybrid Intelligence"
 slug: "microsoft-adds-local-file-access-to-copilot-via-hybrid-intelligence"
 description: "At the Windows and Surface event, Microsoft unveiled an upgrade to its Copilot AI system that lets the assistant read local files on a PC and act across the operating system."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [Microsoft, Copilot, HybridIntelligence, Windows11]
 categories: ["AI", "Artificial Intelligence", "Productivity Software", "Operating Systems"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/lcimg-e4e44609-0bf6-40b2-8c24-2e8c3ce7cee8.jpeg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

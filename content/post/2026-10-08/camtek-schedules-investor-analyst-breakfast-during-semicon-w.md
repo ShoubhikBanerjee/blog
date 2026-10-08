@@ -2,7 +2,7 @@
 title: "Camtek Schedules Investor & Analyst Breakfast During SEMICON West"
 slug: "camtek-schedules-investor-analyst-breakfast-during-semicon-west"
 description: "Camtek Ltd. announced that it will host an Investor & Analyst Breakfast Presentation on Wednesday, October 14, 2026, as part of SEMICON West in San Francisco."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [Semiconductor, InvestorRelations, Camtek, SEMICONWest]
 categories: ["AI", "Semiconductors", "Investor Relations", "Technology Roadmap", "Business"]
 image: "https://mmx.prnewswire.com/media/MS1270888/Camtek-logo.jpg?id=OA2992068&p=facebook"

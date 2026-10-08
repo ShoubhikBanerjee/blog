@@ -2,7 +2,7 @@
 title: "Benchmarking Transformer Models for Bangla Political Rhetoric Detection"
 slug: "benchmarking-transformer-models-for-bangla-political-rhetoric-detection"
 description: "A new benchmark study titled **BanglaRhet** was submitted on 7 Oct 2026, evaluating transformer‑based models on rhetorical and persuasion detection in Bangla political speech."
-date: 2026-10-08T12:07:03+05:30
+date: 2026-10-08T18:03:50+05:30
 tags: [BanglaNLP, RhetoricalAnalysis, TransformerBenchmarks]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "Computational Linguistics"]
 author: "Shoubhik Banerjee"
