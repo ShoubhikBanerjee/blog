@@ -2,7 +2,7 @@
 title: "Open-weight d1‑3B and d1‑omni‑600M decision models released with multimodal fast inference"
 slug: "open-weight-d13b-and-d1omni600m-decision-models-released-with-multimodal-fast-inference"
 description: "A new family of open‑weight decision models, d1‑3B and d1‑omni‑600M, is now available on Hugging Face. They are built on Liquid Foundation Models and are designed for fast, structured decisions with..."
-date: 2026-10-08T06:07:34+05:30
+date: 2026-10-08T12:07:03+05:30
 tags: [DecisionModels, MultimodalAI, EdgeInference, OpenSource]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Computer Vision", "Natural Language Processing"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/644249b08443bce4c9890a0f/hLsllw4zhC04cVGiV69v0.png"

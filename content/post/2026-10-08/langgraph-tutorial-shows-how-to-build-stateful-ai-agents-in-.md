@@ -2,7 +2,7 @@
 title: "LangGraph Tutorial Shows How to Build Stateful AI Agents in Python"
 slug: "langgraph-tutorial-shows-how-to-build-stateful-ai-agents-in-python"
 description: "LangGraph, a framework for building stateful AI agents and multi‑step LLM workflows, now has a hands‑on tutorial that walks developers through creating a complete agent in Python."
-date: 2026-10-08T06:07:34+05:30
+date: 2026-10-08T12:07:03+05:30
 tags: [LangGraph, AIAgents, StatefulAI, LLM, Python]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Development", "Python"]
 image: "http://www.mygreatlearning.com/blog/wp-content/uploads/2026/10/image-17.png"

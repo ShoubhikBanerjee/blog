@@ -2,7 +2,7 @@
 title: "Reflection AI releases open‑weight model Beam with 5 trillion parameters"
 slug: "reflection-ai-releases-openweight-model-beam-with-5-trillion-parameters"
 description: "Reflection AI announced its first open‑weight base model, **Beam**, on 5 October 2026 (U.S. time)."
-date: 2026-10-08T06:07:34+05:30
+date: 2026-10-08T12:07:03+05:30
 tags: [ReflectionAI, OpenWeight, MoE, AIFactory, AutonomousCoding]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Open Source AI", "AI Startup"]
 image: "https://assets.st-note.com/production/uploads/images/321675942/rectangle_large_type_2_b1e2bcae21ea76227f9af7f8841e8c88.png?fit=bounds&quality=85&width=1280"

@@ -2,7 +2,7 @@
 title: "AI Tools Challenge Trade Secret Protection, Says Legaltech Article"
 slug: "ai-tools-challenge-trade-secret-protection-says-legaltech-article"
 description: "An article by intellectual property attorney Terry Wikberg in *Legaltech News* examines how artificial intelligence is reshaping trade secret protection and creating new risks for companies that rely..."
-date: 2026-10-08T06:07:34+05:30
+date: 2026-10-08T12:07:03+05:30
 tags: [AI, TradeSecrets, IntellectualProperty]
 categories: ["AI", "Intellectual Property", "Artificial Intelligence", "Business Law"]
 image: "https://www.hklaw.com/-/media/images/twittercards/hk_opengraph.png?rev=ec0d75523b1f4e68920e3e1b42304866&sc_lang=en&hash=3345DDE33F8D43A99B42BABA11D22AF8"

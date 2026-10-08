@@ -2,7 +2,7 @@
 title: "AgentEng Open‑Source Companion Extends Agent Engineering Conference"
 slug: "agenteng-opensource-companion-extends-agent-engineering-conference"
 description: "Today we are introducing **AgentEng: Agent Engineering HQ**, an open‑source conference and tooling companion that lets developers retrieve the Agent Engineering Conference catalogue, query..."
-date: 2026-10-08T06:07:34+05:30
+date: 2026-10-08T12:07:03+05:30
 tags: [AgentEngineering, OpenSource, AItools, Python, Conference]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Developer Tools", "Conferences"]
 image: "https://shashikantjagtap.net/wp-content/uploads/2026/10/AgentEng_hero-1200x630.png"

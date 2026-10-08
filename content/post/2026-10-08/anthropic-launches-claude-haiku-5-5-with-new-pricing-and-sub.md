@@ -2,7 +2,7 @@
 title: "Anthropic launches Claude Haiku 5.5 with new pricing and subscription credits"
 slug: "anthropic-launches-claude-haiku-5-5-with-new-pricing-and-subscription-credits"
 description: "- Anthropic released Claude Haiku 5.5, promoted as a fast, low‑cost model."
-date: 2026-10-08T06:07:34+05:30
+date: 2026-10-08T12:07:03+05:30
 tags: [Anthropic, ClaudeHaiku, AIpricing, LLM, APICredits]
 categories: ["AI", "Machine Learning", "Large Language Models", "AI Pricing", "Cloud Services"]
 image: "https://static.simonwillison.net/static/2026/claude-haiku-5-5-card.webp"

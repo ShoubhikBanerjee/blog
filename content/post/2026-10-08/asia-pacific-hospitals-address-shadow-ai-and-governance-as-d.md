@@ -2,7 +2,7 @@
 title: "Asia‑Pacific hospitals address shadow AI and governance as digital maturity rises"
 slug: "asiapacific-hospitals-address-shadow-ai-and-governance-as-digital-maturity-rises"
 description: "Robots delivering supplies through hospital wards after hours and clinicians finding new ways to bring AI into everyday work were highlighted at HIMSS26 APAC in Singapore, where health‑tech leaders..."
-date: 2026-10-08T06:07:34+05:30
+date: 2026-10-08T12:07:03+05:30
 tags: [HealthTech, AI, DigitalHealth, HIMSS]
 categories: ["AI", "Digital Health", "Artificial Intelligence", "Healthcare Management", "Health Informatics"]
 image: "https://ik.imagekit.io/tht/uploads/news-pictures/1-darlinghurst-blog-post-image-20261002144213.webp"

@@ -2,7 +2,7 @@
 title: "Robots Assemble NVIDIA GB300 Tester Trays with High Precision"
 slug: "robots-assemble-nvidia-gb300-tester-trays-with-high-precision"
 description: "The NVIDIA Seattle Robotics Lab (SRL) and the NVIDIA Isaac engineering team tackled the problem of building intelligent robots that can assemble GB300 tester trays – a critical step before shipping..."
-date: 2026-10-08T06:07:34+05:30
+date: 2026-10-08T12:07:03+05:30
 tags: [NVIDIA, Robotics, Automation, AIHardware]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Manufacturing Automation", "Computer Vision"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image-1790985193398-660x370.jpg"
