@@ -2,7 +2,7 @@
 title: "How to Attend the 2026 World Cup Matches in Dallas"
 slug: "how-to-attend-the-2026-world-cup-matches-in-dallas"
 description: "If you missed your chance to buy tickets for the World Cup's Dallas matches, there are still a few ways to get in before the action kicks off at AT&T Stadium."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [WorldCup, Dallas, Ticketing, VenueInfo]
 categories: ["AI", "Sports Events", "Travel", "Event Planning"]
 image: "https://images.consequence.net/5GTcpikVScwbnONXaY2DSabwrEeVR-kB-PU2AHA_xsw/rs:fit:400:0/plain/https%3A%2F%2Fconcerts.consequence.net%2Fimages%2Fevent-fallback.jpg@webp"

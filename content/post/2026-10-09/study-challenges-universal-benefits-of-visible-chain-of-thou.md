@@ -2,7 +2,7 @@
 title: "Study Challenges Universal Benefits of Visible Chain of Thought in Code Generation"
 slug: "study-challenges-universal-benefits-of-visible-chain-of-thought-in-code-generation"
 description: "A new study submitted on October 7, 2026, examines the common but under-examined assumption that visible Chain-of-Thought (CoT) reasoning is a universally effective strategy for analytics code..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [ChainOfThought, CodeGeneration, AIResearch, LLMs]
 categories: ["AI", "Machine Learning", "AI Research", "Software Development"]
 author: "Shoubhik Banerjee"

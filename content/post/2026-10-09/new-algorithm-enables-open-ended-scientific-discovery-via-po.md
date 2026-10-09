@@ -2,7 +2,7 @@
 title: "New Algorithm Enables Open‑Ended Scientific Discovery via Possibilistic Reasoning"
 slug: "new-algorithm-enables-openended-scientific-discovery-via-possibilistic-reasoning"
 description: "An arXiv pre‑print titled **Open-ended Scientific Discovery with Possibilistic Reasoning** was submitted on 8 Oct 2026 to the Computer Science > Artificial Intelligence category. The work tackles..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [AI, ScientificDiscovery, PossibilityTheory, LLM]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Scientific Discovery", "Computational Science"]
 author: "Shoubhik Banerjee"

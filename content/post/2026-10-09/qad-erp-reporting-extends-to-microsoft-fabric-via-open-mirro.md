@@ -2,7 +2,7 @@
 title: "QAD ERP Reporting Extends to Microsoft Fabric via Open Mirroring"
 slug: "qad-erp-reporting-extends-to-microsoft-fabric-via-open-mirroring"
 description: "Manufacturers using QAD ERP can combine multiple reporting layers, and a new mirroring path now moves QAD data into Microsoft Fabric."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [QAD, MicrosoftFabric, PowerBI, DataMirroring]
 categories: ["AI", "Enterprise Software", "Business Intelligence", "Data Engineering"]
 image: "https://kanerika.com/wp-content/uploads/2025/04/kanerika.jpg"

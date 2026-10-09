@@ -2,7 +2,7 @@
 title: "Anthropic launches free OSS Scanner for open‑source security"
 slug: "anthropic-launches-free-oss-scanner-for-opensource-security"
 description: "Anthropic announced a new free service, OSS Scanner, that lets open‑source projects opt‑in to AI‑powered security vulnerability scans."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [Anthropic, OpenSource, AIsecurity]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Open Source"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/STKB364_CLAUDE_2_C_96d15c.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

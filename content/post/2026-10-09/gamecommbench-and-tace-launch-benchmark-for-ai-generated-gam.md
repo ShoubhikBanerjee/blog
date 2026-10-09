@@ -2,7 +2,7 @@
 title: "GameCommBench and TACE Launch Benchmark for AI-Generated Game Commentary"
 slug: "gamecommbench-and-tace-launch-benchmark-for-ai-generated-game-commentary"
 description: "A new benchmark and evaluation framework have been released to standardize research on AI‑generated game commentary."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [AICommentary, GameAI, Benchmark, Multimodal]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Multimodal AI", "Games"]
 author: "Shoubhik Banerjee"

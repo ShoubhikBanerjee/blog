@@ -2,7 +2,7 @@
 title: "AI Engineering Loop Becomes Mainstream with Agentic Tools and Structured Workflow"
 slug: "ai-engineering-loop-becomes-mainstream-with-agentic-tools-and-structured-workflow"
 description: "In 2025‑2026 a set of agentic tools and a disciplined engineering loop displaced the myth of one‑shot prompting for software development."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [AIEngineering, AgenticTools, SoftwareDevelopment, AIWorkflow]
 categories: ["AI", "Artificial Intelligence", "Software Engineering", "Machine Learning", "Developer Tools"]
 image: "https://cdn.axonactive.com/wp-content/uploads/2026/10/one-shot-prompting-is-a-myth.-engineering-is-a-loop_.jpg"

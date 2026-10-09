@@ -2,7 +2,7 @@
 title: "Agent-Controlled Forgetting Reduces Token Usage for Tool-Using AI Agents"
 slug: "agent-controlled-forgetting-reduces-token-usage-for-tool-using-ai-agents"
 description: "Researchers introduced a reversible context curation technique called agent‑controlled forgetting for tool‑using language‑model agents."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [AIagents, contextmanagement, tooluse, LLM, tokenoptimization]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Machine Learning", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

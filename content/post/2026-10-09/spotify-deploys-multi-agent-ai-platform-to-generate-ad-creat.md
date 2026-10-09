@@ -2,7 +2,7 @@
 title: "Spotify Deploys Multi‑Agent AI Platform to Generate Ad Creatives at Scale"
 slug: "spotify-deploys-multiagent-ai-platform-to-generate-ad-creatives-at-scale"
 description: "Spotify has moved AI from experimental prototypes into a production‑grade multi‑agent platform that creates ad scripts, selects audiences, and enforces policy guardrails directly inside Spotify Ads..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [AIProduction, AdTech, MultiAgentAI, SpotifyAds]
 categories: ["AI", "Artificial Intelligence", "Advertising Technology", "Machine Learning", "Software Architecture"]
 image: "https://res.infoq.com/presentations/spotify-multi-agent-ai-architecture/en/card_header_image/twitterCard-1790847111671.jpg"

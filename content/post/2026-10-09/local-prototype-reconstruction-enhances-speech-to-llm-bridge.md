@@ -2,7 +2,7 @@
 title: "Local Prototype Reconstruction Enhances Speech-to-LLM Bridge Pretraining"
 slug: "local-prototype-reconstruction-enhances-speech-to-llm-bridge-pretraining"
 description: "Speech‑to‑LLM systems typically attach a frozen speech encoder to a frozen large language model (LLM) via a small trainable bridge.  A new study submitted on 8 Oct 2026 shows that treating this..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [speech2LLM, pretraining, multilingualASR, speechTranslation]
 categories: ["AI", "Computation And Language", "Speech Processing", "Machine Learning"]
 author: "Shoubhik Banerjee"

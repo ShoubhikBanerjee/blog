@@ -2,7 +2,7 @@
 title: "New Benchmark and Framework for LLM-Assisted Peer Review Released"
 slug: "new-benchmark-and-framework-for-llm-assisted-peer-review-released"
 description: "The research community has unveiled a verification‑centric benchmark and a Multi‑Layered Review framework to assess and improve large language model (LLM) assistance in scientific peer review."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [peerreview, LLM, benchmark, AItools]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Scientific Publishing", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

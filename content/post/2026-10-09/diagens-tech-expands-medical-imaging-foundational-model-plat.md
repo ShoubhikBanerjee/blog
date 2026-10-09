@@ -2,7 +2,7 @@
 title: "Diagens Tech expands medical imaging foundational model platform across specialties"
 slug: "diagens-tech-expands-medical-imaging-foundational-model-platform-across-specialties"
 description: "Diagens Tech is extending its medical‑imaging foundational model platform beyond a single regulated use case, allowing clinicians to build, deploy and run thousands of custom models across multiple..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [MedicalAI, FoundationalModels, HealthcareTech]
 categories: ["AI", "Artificial Intelligence", "Healthcare Technology", "Medical Imaging", "Business"]
 author: "Shoubhik Banerjee"

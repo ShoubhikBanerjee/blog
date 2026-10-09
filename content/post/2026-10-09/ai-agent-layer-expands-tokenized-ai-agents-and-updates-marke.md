@@ -2,7 +2,7 @@
 title: "AI Agent Layer expands tokenized AI agents and updates market metrics"
 slug: "ai-agent-layer-expands-tokenized-ai-agents-and-updates-market-metrics"
 description: "AI Agent Layer has released an update that broadens its ecosystem of autonomous AI agents and provides new details on token economics and market activity."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [AIagents, Crypto, Tokenization, DeFi]
 categories: ["AI", "Artificial Intelligence", "Cryptocurrency", "Decentralized Finance", "Blockchain"]
 image: "https://assets.coingecko.com/coin_social_images/coin_social_image/crypto_symbol_image/40297/original/coin_social_image_crypto_symbol_5163420250417-7-3363u5.webp?1744929760"

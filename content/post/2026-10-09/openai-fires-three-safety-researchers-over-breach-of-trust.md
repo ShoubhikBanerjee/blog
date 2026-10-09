@@ -2,7 +2,7 @@
 title: "OpenAI Fires Three Safety Researchers Over Breach of Trust"
 slug: "openai-fires-three-safety-researchers-over-breach-of-trust"
 description: "OpenAI has stood firm on its decision to dismiss three AI safety researchers, saying the firings were due to a “significant breach of trust” and violations of policies on handling sensitive..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [OpenAI, AIsafety, Employment]
 categories: ["AI", "Artificial Intelligence", "AI Ethics", "Corporate Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/STK155_OPEN_AI_CVirginia_C-1.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

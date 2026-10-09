@@ -2,7 +2,7 @@
 title: "AI Models Now Engineered to Refuse Dangerous Requests"
 slug: "ai-models-now-engineered-to-refuse-dangerous-requests"
 description: "Today's large language models (LLMs) are deliberately engineered to disobey dangerous requests, a shift from early systems that would 'blab on about anything.'"
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [AIRefusal, LLMs, Safety, RedTeam]
 categories: ["AI", "Machine Learning", "AI Safety", "Ethics", "Security"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/0924OP.jpg?resize=1200,600"

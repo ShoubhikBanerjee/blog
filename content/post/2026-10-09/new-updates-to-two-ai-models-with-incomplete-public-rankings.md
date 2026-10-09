@@ -2,7 +2,7 @@
 title: "New Updates to Two AI Models with Incomplete Public Rankings"
 slug: "new-updates-to-two-ai-models-with-incomplete-public-rankings"
 description: "On October 8 2026, updates were announced for a pair of AI models. Because at least one model lacks a public score, the pair is not ranked and no overall quality winner is named."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [AIModels, Benchmarks, Ranking, Evaluation]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Benchmarking", "AI Evaluation"]
 image: "https://benchlm.ai/api/og?type=compare&modelA=DeepSeek%20V4.1%20Flash&modelB=kev%200.6B&scoreA=67.79&scoreB="

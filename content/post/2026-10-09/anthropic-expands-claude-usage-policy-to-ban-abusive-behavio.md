@@ -2,7 +2,7 @@
 title: "Anthropic expands Claude usage policy to ban abusive behavior and high‑risk misuse"
 slug: "anthropic-expands-claude-usage-policy-to-ban-abusive-behavior-and-highrisk-misuse"
 description: "Anthropic has revised its Claude usage policy for the first time in over a year, adding new prohibitions on abusive treatment of the model and on several high‑risk misuse scenarios such as election..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [Anthropic, AIpolicy, Claude, Modelwelfare]
 categories: ["AI", "Artificial Intelligence", "AI Ethics", "AI Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/11/STKS522_AGI_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

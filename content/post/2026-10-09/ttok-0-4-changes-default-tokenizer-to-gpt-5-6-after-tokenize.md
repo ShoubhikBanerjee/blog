@@ -2,7 +2,7 @@
 title: "ttok 0.4 changes default tokenizer to GPT‑5/6 after tokenizers are found identical"
 slug: "ttok-0-4-changes-default-tokenizer-to-gpt5-6-after-tokenizers-are-found-identical"
 description: "On 9 October 2026 the author released **ttok 0.4** and discovered that the tool was still defaulting to the GPT‑4 tokenizer. Wanting the default to reflect the newer models, the author switched it to..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [OpenAI, Tokenizer, GPT6, ttok]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Infrastructure"]
 author: "Shoubhik Banerjee"

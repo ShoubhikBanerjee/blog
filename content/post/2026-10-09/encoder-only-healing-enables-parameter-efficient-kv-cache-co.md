@@ -2,7 +2,7 @@
 title: "Encoder‑Only Healing Enables Parameter‑Efficient KV‑Cache Compression"
 slug: "encoderonly-healing-enables-parameterefficient-kvcache-compression"
 description: "A new study shows that fine‑tuning only the encoder after post‑hoc SVD‑based KV‑cache compression matches full‑factor healing while using far fewer trainable parameters and optimizer memory."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [KVCache, ParameterEfficient, ModelCompression, FineTuning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Model Compression"]
 author: "Shoubhik Banerjee"

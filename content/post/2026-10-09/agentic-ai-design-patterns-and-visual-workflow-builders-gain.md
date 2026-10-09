@@ -2,7 +2,7 @@
 title: "Agentic AI Design Patterns and Visual Workflow Builders Gain Traction in 2026"
 slug: "agentic-ai-design-patterns-and-visual-workflow-builders-gain-traction-in-2026"
 description: "Agentic AI design patterns—reusable blueprints that tell an AI agent how to reason, act, and improve its own work—are becoming the core of production‑grade AI agents. 2026 sees these patterns..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [AIagents, AgenticAI, WorkflowBuilders, LLM]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Machine Learning", "Software Engineering"]
 image: "https://www.scaler.com/topics/images/tech_card-agentic-ai-design-patterns-4-patterns-to-know-2026-techcard_surprise-1791531280.webp"

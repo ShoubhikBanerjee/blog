@@ -2,7 +2,7 @@
 title: "FedAlphaEdit Enables Privacy-Preserving Collaborative Knowledge Editing"
 slug: "fedalphaedit-enables-privacy-preserving-collaborative-knowledge-editing"
 description: "Multiple institutions may each hold private knowledge edits and wish to integrate them into a single large language model without sharing raw edit requests. A new paper titled **FedAlphaEdit:..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [FedAlphaEdit, KnowledgeEditing, NullSpace, CollaborativeAI]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Distributed Systems", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

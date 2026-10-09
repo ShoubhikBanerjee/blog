@@ -2,7 +2,7 @@
 title: "Ripwire: Zero‑Dependency C++23 CLI for Multi‑Agent Code Navigation"
 slug: "ripwire-zerodependency-c-23-cli-for-multiagent-code-navigation"
 description: "The new tool **ripwire** provides a zero‑dependency C++23 CLI + MCP server for coding agents."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [AIcoding, Ripwire, CodeQuality, MultiAgent]
 categories: ["AI", "Artificial Intelligence", "Software Development", "AI Agents", "Programming Tools"]
 image: "https://avatars.githubusercontent.com/u/66332970?v=4"

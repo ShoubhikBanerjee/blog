@@ -2,7 +2,7 @@
 title: "BeliefScope framework separates evidence‑driven and pressure‑induced shifts in LLMs"
 slug: "beliefscope-framework-separates-evidencedriven-and-pressureinduced-shifts-in-llms"
 description: "A new paper titled **BeliefScope: Diagnosing Evidence-Driven Revision and Pressure-Induced Shifts in Large Language Models** was submitted on 8 Oct 2026 to the Computation and Language category. The..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [BeliefScope, LLM, AIResearch, ModelDiagnostics]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Evaluation"]
 author: "Shoubhik Banerjee"

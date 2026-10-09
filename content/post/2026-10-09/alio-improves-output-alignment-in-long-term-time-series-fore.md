@@ -2,7 +2,7 @@
 title: "AliO improves output alignment in long‑term time series forecasting"
 slug: "alio-improves-output-alignment-in-longterm-time-series-forecasting"
 description: "Long‑term Time Series Forecasting (LTSF) models often produce inconsistent predictions for the same timestamps across lagged input sequences, limiting their reliability in applications such as..."
-date: 2026-10-09T18:05:31+05:30
+date: 2026-10-09T22:05:01+05:30
 tags: [TimeSeries, Forecasting, AI, MachineLearning]
 categories: ["AI", "Machine Learning", "Time Series Analysis", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"
