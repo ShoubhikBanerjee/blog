@@ -2,7 +2,7 @@
 title: "AI Generates Genetic Blueprints for Microscopic Viruses, Prompting MIT Tech Review Roundtable"
 slug: "ai-generates-genetic-blueprints-for-microscopic-viruses-prompting-mit-tech-review-roundtable"
 description: "On Friday, October 16, 2026, MIT Technology Review will host a subscriber‑only roundtable titled “A Conversation With the Creator of AI‑Designed Viruses,” featuring AI reporter James O'Donnell and..."
-date: 2026-10-09T06:07:14+05:30
+date: 2026-10-09T12:11:21+05:30
 tags: [AI, SyntheticBiology, GenerativeAI, MITTechReview]
 categories: ["AI", "Artificial Intelligence", "Synthetic Biology", "Biotechnology", "Emerging Technologies"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2024/01/MIT-TR-Roundtables_Oct-2-Thumbnail.png?resize=1200,600"

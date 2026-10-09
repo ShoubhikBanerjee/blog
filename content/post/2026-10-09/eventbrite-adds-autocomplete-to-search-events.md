@@ -2,7 +2,7 @@
 title: "Eventbrite Adds Autocomplete to Search Events"
 slug: "eventbrite-adds-autocomplete-to-search-events"
 description: "Eventbrite introduced an autocomplete capability for its Search events function."
-date: 2026-10-09T06:07:14+05:30
+date: 2026-10-09T12:11:21+05:30
 tags: [Eventbrite, AI, Search, Autocomplete, Events]
 categories: ["AI", "AI Applications", "Event Technology", "Software Updates"]
 image: "https://www.eventbrite.com/e/_next/image?url=https%3A%2F%2Fimg.evbuc.com%2Fhttps%253A%252F%252Fcdn.evbuc.com%252Fimages%252F1195193420%252F2963707473131%252F1%252Foriginal.20261006-162737%3Fw%3D940%26auto%3Dformat%252Ccompress%26q%3D75%26sharp%3D10%26rect%3D0%252C0%252C1200%252C630%26s%3Dca0f1364e22f8143a9a847ed5ea02a4a&w=940&q=75"

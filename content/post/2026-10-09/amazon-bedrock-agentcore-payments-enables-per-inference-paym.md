@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore Payments Enables Per‑Inference Payments for Autonomous Agents"
 slug: "amazon-bedrock-agentcore-payments-enables-perinference-payments-for-autonomous-agents"
 description: "When an autonomous AI agent needs to buy a service – a model inference, an API response, or web access – those purchases are tiny, frequent, and happen inside the agent’s loop without a human to..."
-date: 2026-10-09T06:07:14+05:30
+date: 2026-10-09T12:11:21+05:30
 tags: [AmazonBedrock, AIagents, Payments, x402, Stablecoin]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Cloud Computing", "Payments"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/ML-21707-featured-image.png"

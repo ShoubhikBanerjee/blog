@@ -2,7 +2,7 @@
 title: "AI Incident Response Tools Move Toward Autonomous Proactive Agents"
 slug: "ai-incident-response-tools-move-toward-autonomous-proactive-agents"
 description: "Most AI incident tools still leave a key decision to humans. An AI SRE agent can help troubleshoot an incident. But can you trust it to decide on its own when something needs attention?"
-date: 2026-10-09T06:07:14+05:30
+date: 2026-10-09T12:11:21+05:30
 tags: [AIIncidentResponse, AIautonomy, SRE, AIagents]
 categories: ["AI", "Artificial Intelligence", "Site Reliability Engineering", "Operations"]
 image: "https://cdn.thenewstack.io/media/2026/08/e2372247-osarugue-igbinoba-vfwig_hleny-unsplash.jpg"

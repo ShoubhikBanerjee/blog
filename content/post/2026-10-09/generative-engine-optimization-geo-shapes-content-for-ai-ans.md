@@ -2,7 +2,7 @@
 title: "Generative Engine Optimization (GEO) Shapes Content for AI Answer Engines"
 slug: "generative-engine-optimization-geo-shapes-content-for-ai-answer-engines"
 description: "Generative Engine Optimization (GEO) is the emerging practice of preparing web content so that AI‑driven answer engines can retrieve, quote, and verify it as a source."
-date: 2026-10-09T06:07:14+05:30
+date: 2026-10-09T12:11:21+05:30
 tags: [GEO, AIsearch, SEO, ContentOptimization]
 categories: ["AI", "Search Engine Optimization", "Artificial Intelligence", "Digital Marketing", "Web Development"]
 image: "https://all-inkl.com/web-guide/api/load-image/24e99026cb134af86f8f27126ed707e0/img-6ac3809b897a8.jpg"

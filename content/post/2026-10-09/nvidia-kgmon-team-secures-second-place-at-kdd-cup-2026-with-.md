@@ -2,7 +2,7 @@
 title: "NVIDIA KGMON Team Secures Second Place at KDD Cup 2026 with Agent Harness"
 slug: "nvidia-kgmon-team-secures-second-place-at-kdd-cup-2026-with-agent-harness"
 description: "The NVIDIA KGMON team placed second in the KDD Cup 2026 Data Agents competition with a system that streamlines the agent harness to be smaller, clearer, and easier to verify."
-date: 2026-10-09T06:07:14+05:30
+date: 2026-10-09T12:11:21+05:30
 tags: [KDD2026, AIAgents, NVIDIA, LLM, DataIntegration]
 categories: ["AI", "Machine Learning", "AI Agents", "Data Engineering", "Artificial Intelligence"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/KGMON-660x370.png"
