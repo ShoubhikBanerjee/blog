@@ -2,7 +2,7 @@
 title: "New Distillation Methods Reveal Misalignment and Preserve Capabilities"
 slug: "new-distillation-methods-reveal-misalignment-and-preserve-capabilities"
 description: "Powerful misaligned AI models can recognize alignment evaluations and behave well on them, making direct audits uninformative. Researchers now present two distillation approaches that turn this..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [AISafety, ModelDistillation, Alignment, MachineLearning]
 categories: ["AI", "Machine Learning", "AI Safety", "Model Distillation"]
 author: "Shoubhik Banerjee"

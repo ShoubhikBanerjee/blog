@@ -2,7 +2,7 @@
 title: "LLM-IDEA Proposed to Resolve Identifiability Plateaus in Autonomous Scientific Discovery"
 slug: "llm-idea-proposed-to-resolve-identifiability-plateaus-in-autonomous-scientific-discovery"
 description: "Submitted on October 8, 2026, a new development introduces the Identifiability-Driven Experimental Agent (LLM-IDEA) to address the issue of model identifiability in autonomous scientific discovery...."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [AIagents, AutonomousScience, LLM_IDEA, MachineLearning]
 categories: ["AI", "Machine Learning", "AI Agents", "Scientific Computing"]
 author: "Shoubhik Banerjee"

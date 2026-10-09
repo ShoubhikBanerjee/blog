@@ -2,7 +2,7 @@
 title: "MarketBeat expands AI‑powered news sentiment scoring for companies"
 slug: "marketbeat-expands-aipowered-news-sentiment-scoring-for-companies"
 description: "MarketBeat today released an update to its AI‑driven news sentiment platform, which assigns a numeric score to every headline and aggregates the results over the past seven days to show how companies..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [MarketBeat, SentimentAnalysis, AI]
 categories: ["AI", "Financial Technology", "Data Analytics", "Artificial Intelligence"]
 image: "https://www.marketbeat.com/logos/kier-group-logo.jpg"

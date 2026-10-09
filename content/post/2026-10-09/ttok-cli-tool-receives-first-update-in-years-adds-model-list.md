@@ -2,7 +2,7 @@
 title: "ttok CLI tool receives first update in years, adds model listing"
 slug: "ttok-cli-tool-receives-first-update-in-years-adds-model-listing"
 description: "On 8 October 2026, the ttok command‑line interface (CLI) tool for counting tokens was updated after a period of inactivity."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [OpenAI, CLI, TokenCounting, tiktoken]
 categories: ["AI", "Developer Tools", "Natural Language Processing", "Open Source"]
 author: "Shoubhik Banerjee"

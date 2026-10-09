@@ -2,7 +2,7 @@
 title: "Integrated Short‑Video Generation Workstation with AI Copy, TTS, and Image Synthesis"
 slug: "integrated-shortvideo-generation-workstation-with-ai-copy-tts-and-image-synthesis"
 description: "A new open‑source short‑video generation workstation bundles content planning, AI copywriting, batch TTS dubbing, AI image synthesis, ASR subtitle extraction, and free‑form AI creation into a single..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [AI, VideoAutomation, OpenSource]
 categories: ["AI", "Artificial Intelligence", "Video Production", "Open Source Software"]
 image: "https://avatars.githubusercontent.com/u/138738955?v=4"

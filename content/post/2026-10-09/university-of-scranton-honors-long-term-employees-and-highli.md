@@ -2,7 +2,7 @@
 title: "University of Scranton Honors Long‑Term Employees and Highlights Disability Advocacy"
 slug: "university-of-scranton-honors-longterm-employees-and-highlights-disability-advocacy"
 description: "The University of Scranton hosted several notable events in September 2026, recognizing staff longevity, presenting a high‑profile Ignatian Values lecture, and awarding leaders in disability..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [UniversityOfScranton, DisabilityInclusion, JesuitEducation, PublicService]
 categories: ["AI", "Higher Education", "Community Service", "Disability Advocacy", "Jesuit Values"]
 image: "https://news.scranton.edu//_assets/images/detail-placeholder.jpg"

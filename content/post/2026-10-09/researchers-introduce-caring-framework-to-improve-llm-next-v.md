@@ -2,7 +2,7 @@
 title: "Researchers Introduce CARing Framework to Improve LLM Next-Visit Diagnosis Prediction"
 slug: "researchers-introduce-caring-framework-to-improve-llm-next-visit-diagnosis-prediction"
 description: "Researchers have developed CARing, a new framework designed to enhance next-visit diagnosis prediction in large language models (LLMs) by addressing multi-label coverage and tokenization challenges."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [ClinicalAI, LLMs, Healthcare]
 categories: ["AI", "Machine Learning", "Healthcare Technology", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

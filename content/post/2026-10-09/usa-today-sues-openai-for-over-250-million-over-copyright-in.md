@@ -2,7 +2,7 @@
 title: "USA Today Sues OpenAI for Over $250 Million Over Copyright Infringement"
 slug: "usa-today-sues-openai-for-over-250-million-over-copyright-infringement"
 description: "USA Today Co., together with several local newspapers it owns, has filed a lawsuit against OpenAI alleging that the AI company copied “hundreds of thousands” of articles to train its models."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [OpenAI, CopyrightLaw, MediaLawsuits]
 categories: ["AI", "AI Ethics", "Intellectual Property", "Media Industry", "Law"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK155_OPEN_AI_CVirginia__A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

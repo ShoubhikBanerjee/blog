@@ -2,7 +2,7 @@
 title: "MARS-Gov Sets New State‑of‑the‑Art in Dutch Government Bias Detection"
 slug: "mars-gov-sets-new-stateoftheart-in-dutch-government-bias-detection"
 description: "A new multi‑agent system called MARS‑Gov has been introduced for closed‑loop bias governance of Dutch government documents."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [biasdetection, nlp, governmentAI, AIgovernance]
 categories: ["AI", "Natural Language Processing", "AI Governance", "Machine Learning"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "SpaceXAI Joins Omacom Foundation, Donates $1.5M Grok Tokens to Omarchy"
 slug: "spacexai-joins-omacom-foundation-donates-1-5m-grok-tokens-to-omarchy"
 description: "SpaceXAI announced it will become a Founding Corporate Patron of the Omacom Foundation – the body that oversees the Omarchy Linux distribution – and will donate $1.5 million worth of Grok tokens to..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [SpaceXAI, Omarchy, GrokTokens, OpenSource, Linux]
 categories: ["AI", "Artificial Intelligence", "Open Source Software", "Linux Distributions", "Technology Partnerships"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK262_GROK_A.png?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

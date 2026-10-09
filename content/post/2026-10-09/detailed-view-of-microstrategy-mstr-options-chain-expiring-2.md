@@ -2,7 +2,7 @@
 title: "Detailed View of MicroStrategy (MSTR) Options Chain Expiring 2026-10-09"
 slug: "detailed-view-of-microstrategy-mstr-options-chain-expiring-2026-10-09"
 description: "A complete, real‑time snapshot of MicroStrategy (MSTR) equity options expiring on 2026‑10‑09 is now available. The page lists every call and put contract for the single expiration date, showing..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [MSTR, OptionsTrading, FinancialMarkets]
 categories: ["AI", "Finance", "Derivatives", "Trading"]
 author: "Shoubhik Banerjee"

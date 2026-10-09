@@ -2,7 +2,7 @@
 title: "RAG-Stress Diagnostic Protocol Examines Evidence Reliance in Retrieval-Augmented Generation"
 slug: "rag-stress-diagnostic-protocol-examines-evidence-reliance-in-retrieval-augmented-generation"
 description: "Researchers have introduced RAG-Stress, a controlled diagnostic protocol designed to examine the limits of evidence reliance in retrieval-augmented generation (RAG). This development addresses how..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [RAG, MachineLearning, NLP, AIResearch]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Research"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "California Athletic Commission Issues Cease-and-Desist to Rek Over Human‑vs‑Robot Fight"
 slug: "california-athletic-commission-issues-cease-and-desist-to-rek-over-humanvsrobot-fight"
 description: "A human‑vs‑robot cage match staged by startup Rek drew a cease‑and‑desist letter from the California State Athletic Commission."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [California, Robotics, CombatSports, Regulation]
 categories: ["AI", "Robotics", "Sports Regulation", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Screenshot-2026-10-08-at-4.18.11-PM.png?quality=90&strip=all&crop=0%2C6.5996142187931%2C100%2C86.800771562414&w=1200"

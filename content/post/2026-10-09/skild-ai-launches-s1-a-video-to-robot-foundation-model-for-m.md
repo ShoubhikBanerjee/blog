@@ -2,7 +2,7 @@
 title: "Skild AI launches S1, a video‑to‑robot foundation model for manipulation"
 slug: "skild-ai-launches-s1-a-videotorobot-foundation-model-for-manipulation"
 description: "Skild AI unveiled S1 in August 2026 as its flagship foundation model for robotic manipulation. The system can learn a new task from a single video demonstration without any additional task‑specific..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [SkildAI, Robotics, FoundationModel, Simulation]
 categories: ["AI", "Artificial Intelligence", "Robotics", "Machine Learning", "Simulation"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image6-2.gif"

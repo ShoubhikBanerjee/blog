@@ -2,7 +2,7 @@
 title: "Veeam Releases Recovery Orchestrator v13.1 with Hyper-V and Azure Support"
 slug: "veeam-releases-recovery-orchestrator-v13-1-with-hyper-v-and-azure-support"
 description: "Veeam has launched Veeam Recovery Orchestrator v13.1 as part of the Veeam Data Platform Premium Edition. This release introduces quality-of-life improvements designed to make data orchestration..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [Veeam, DisasterRecovery, HyperV, CloudBackup, DataProtection]
 categories: ["AI", "Disaster Recovery", "Cloud Infrastructure", "Data Management"]
 image: "https://img.veeam.com/blog/wp-content/uploads/2026/09/18162545/Emilee-Tellez.jpg"

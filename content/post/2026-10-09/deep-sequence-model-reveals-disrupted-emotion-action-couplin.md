@@ -2,7 +2,7 @@
 title: "Deep Sequence Model Reveals Disrupted Emotion‑Action Coupling in Adolescents with NSSI"
 slug: "deep-sequence-model-reveals-disrupted-emotionaction-coupling-in-adolescents-with-nssi"
 description: "A new AI study submitted on 8 Oct 2026 combines an experimental pain paradigm, EEG microstate analysis, and an interpretable deep sequence model to uncover neurodynamic mechanisms linking social..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [NSSI, EEG, DeepLearning, Neuroscience, AI]
 categories: ["AI", "Artificial Intelligence", "Neuroscience", "Mental Health"]
 author: "Shoubhik Banerjee"

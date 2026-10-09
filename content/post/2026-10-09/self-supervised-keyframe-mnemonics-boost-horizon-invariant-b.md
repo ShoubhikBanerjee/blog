@@ -2,7 +2,7 @@
 title: "Self‑Supervised Keyframe Mnemonics Boost Horizon‑Invariant Behavior Cloning"
 slug: "selfsupervised-keyframe-mnemonics-boost-horizoninvariant-behavior-cloning"
 description: "A new self‑supervised method called **Keyframe Mnemonics** was submitted to arXiv on 7 Oct 2026 to improve behavior cloning (BC) in non‑Markovian environments that require long‑horizon context."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [behaviorcloning, keyframes, selfsupervised, robotics]
 categories: ["AI", "Machine Learning", "Robotics", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

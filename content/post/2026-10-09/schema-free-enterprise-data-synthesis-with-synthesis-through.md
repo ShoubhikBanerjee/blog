@@ -2,7 +2,7 @@
 title: "Schema‑Free Enterprise Data Synthesis with Synthesis Through Simulation"
 slug: "schemafree-enterprise-data-synthesis-with-synthesis-through-simulation"
 description: "Tool‑calling agents have become central to enterprise AI, yet training and evaluating them at scale remains severely constrained by business and legal restrictions on enterprise systems, data, and..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [AIagents, DataSynthesis, LLM, EnterpriseAI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Enterprise Computing", "Data Generation"]
 author: "Shoubhik Banerjee"

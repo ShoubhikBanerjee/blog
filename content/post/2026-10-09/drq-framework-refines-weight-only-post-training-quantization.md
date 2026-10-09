@@ -2,7 +2,7 @@
 title: "DRQ Framework Refines Weight-Only Post-Training Quantization for Large Language Models"
 slug: "drq-framework-refines-weight-only-post-training-quantization-for-large-language-models"
 description: "Researchers have developed Distributionally Robust Quantization (DRQ), a post-hoc refinement process that addresses critical limitations in standard weight-only post-training quantization (PTQ)."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [MachineLearning, ModelQuantization, LargeLanguageModels, AIResearch]
 categories: ["AI", "Machine Learning", "Deep Learning", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "MiMo-V2.6-Pro Leads DeepSeek V4.1 Flash in Public Scores (Update)"
 slug: "mimo-v2-6-pro-leads-deepseek-v4-1-flash-in-public-scores-update"
 description: "MiMo-V2.6-Pro remains ahead of DeepSeek V4.1 Flash in the latest public benchmark update (Oct 8 2026)."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [AIModels, Benchmarking, LLM, CostAnalysis]
 categories: ["AI", "Machine Learning", "Large Language Models", "AI Benchmarking"]
 image: "https://benchlm.ai/api/og?type=compare&modelA=DeepSeek%20V4.1%20Flash&modelB=MiMo-V2.6-Pro&scoreA=67.79&scoreB=74.11"

@@ -2,7 +2,7 @@
 title: "OpenProblemBench evaluates AI on 82 unresolved scientific problems"
 slug: "openproblembench-evaluates-ai-on-82-unresolved-scientific-problems"
 description: "OpenProblemBench was released as a new benchmark that gathers 82 open problems from mathematics and theoretical physics to test whether AI systems can contribute to unresolved scientific questions."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [OpenProblemBench, AI, TheoreticalScience]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Scientific Research"]
 author: "Shoubhik Banerjee"

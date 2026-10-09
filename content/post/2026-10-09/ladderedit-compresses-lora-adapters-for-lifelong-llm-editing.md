@@ -2,7 +2,7 @@
 title: "LadderEdit compresses LoRA adapters for lifelong LLM editing"
 slug: "ladderedit-compresses-lora-adapters-for-lifelong-llm-editing"
 description: "Lifelong editing of large language models (LLMs) faces a storage bottleneck because thousands of edits must be retained. A new method called **LadderEdit** addresses this by compressing each LoRA..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [LadderEdit, LoRA, ModelEditing, AICompression]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Model Compression"]
 author: "Shoubhik Banerjee"

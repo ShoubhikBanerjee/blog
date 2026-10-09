@@ -2,7 +2,7 @@
 title: "Trajectory-Grounded Instruction Translator Boosts Aerial Navigation Success"
 slug: "trajectory-grounded-instruction-translator-boosts-aerial-navigation-success"
 description: "A new front‑end called the Trajectory‑Grounded Instruction Translator (TGIT) was introduced to bridge the gap between short, intent‑driven user commands and the detailed, trajectory‑aligned..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [VisionLanguageNavigation, InstructionTranslation, AIResearch]
 categories: ["AI", "Machine Learning", "Robotics", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

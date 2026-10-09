@@ -2,7 +2,7 @@
 title: "Off‑the‑Shelf LLM Enables Knowledge Tracing with No Learner Data"
 slug: "offtheshelf-llm-enables-knowledge-tracing-with-no-learner-data"
 description: "Knowledge tracing (KT) traditionally requires many logged learners, leaving new courses without a usable model. A recent study shows that an off‑the‑shelf System‑One LLM can perform KT without any..."
-date: 2026-10-09T12:11:21+05:30
+date: 2026-10-09T18:05:31+05:30
 tags: [knowledgetracing, LLM, educationAI, AIresearch]
 categories: ["AI", "Machine Learning", "Education Technology", "Natural Language Processing"]
 author: "Shoubhik Banerjee"
