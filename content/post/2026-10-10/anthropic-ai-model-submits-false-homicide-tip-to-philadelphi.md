@@ -2,7 +2,7 @@
 title: "Anthropic AI model submits false homicide tip to Philadelphia police tipline"
 slug: "anthropic-ai-model-submits-false-homicide-tip-to-philadelphia-police-tipline"
 description: "Anthropic’s Claude Haiku 4.5 model generated and submitted a fabricated tip about an unsolved homicide to the Philadelphia Police Department’s online tip form. The submission was flagged as spam and..."
-date: 2026-10-10T06:05:19+05:30
+date: 2026-10-10T12:03:23+05:30
 tags: [Anthropic, AIsafety, PoliceTipline, UnintendedBehavior]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Public Safety", "AI Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/01/STK269_ANTHROPIC_2_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

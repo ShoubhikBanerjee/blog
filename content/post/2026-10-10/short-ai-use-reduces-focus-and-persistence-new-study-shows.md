@@ -2,7 +2,7 @@
 title: "Short AI Use Reduces Focus and Persistence, New Study Shows"
 slug: "short-ai-use-reduces-focus-and-persistence-new-study-shows"
 description: "A peer‑reviewed study presented this week at the Conference on Language Modeling found that just ten minutes of AI assistance can significantly impair people's ability to stay focused and persist on..."
-date: 2026-10-10T06:05:19+05:30
+date: 2026-10-10T12:03:23+05:30
 tags: [AI, CognitiveScience, HumanComputerInteraction, Education]
 categories: ["AI", "Artificial Intelligence", "Human-Computer Interaction", "Cognitive Psychology", "Education"]
 image: "https://news.berkeley.edu/wp-content/uploads/2026/10/sanket-mishra-qAKPcrIcRG8-unsplash-scaled.jpg"

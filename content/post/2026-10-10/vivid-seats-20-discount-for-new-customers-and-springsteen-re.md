@@ -2,7 +2,7 @@
 title: "Vivid Seats $20 Discount for New Customers and Springsteen Releases Minneapolis Performance Video"
 slug: "vivid-seats-20-discount-for-new-customers-and-springsteen-releases-minneapolis-performance-video"
 description: "Vivid Seats announced a new promotion for first‑time customers, and Bruce Springsteen released a performance video from his Minneapolis tour opener."
-date: 2026-10-10T06:05:19+05:30
+date: 2026-10-10T12:03:23+05:30
 tags: [VividSeats, BruceSpringsteen, Discount]
 categories: ["AI", "Live Entertainment", "Music", "Ticketing"]
 image: "https://images.consequence.net/5GTcpikVScwbnONXaY2DSabwrEeVR-kB-PU2AHA_xsw/rs:fit:400:0/plain/https%3A%2F%2Fconcerts.consequence.net%2Fimages%2Fevent-fallback.jpg@webp"

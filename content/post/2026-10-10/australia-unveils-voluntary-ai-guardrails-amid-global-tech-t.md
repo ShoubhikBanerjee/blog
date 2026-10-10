@@ -2,7 +2,7 @@
 title: "Australia unveils voluntary AI guardrails amid global tech tensions"
 slug: "australia-unveils-voluntary-ai-guardrails-amid-global-tech-tensions"
 description: "Nearly two weeks ago the United States entered a “morally binding” accord with the world’s largest tech firms, proclaiming an “AI peace in our time.” At the same time, the OpenAI hack of Australia’s..."
-date: 2026-10-10T06:05:19+05:30
+date: 2026-10-10T12:03:23+05:30
 tags: [Australia, AIpolicy, TechRegulation]
 categories: ["AI", "Artificial Intelligence", "Public Policy", "Technology Regulation"]
 image: "https://admin.thesaturdaypaper.com.au/sites/default/files/styles/comment/public/2026-10/Ed%20Husic%20on%20AI%20lobbying.png"
