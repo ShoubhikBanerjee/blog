@@ -2,7 +2,7 @@
 title: "China Telecom’s TeleAgent reaches 1.5 million users and launches private‑deployment edition"
 slug: "china-telecoms-teleagent-reaches-1-5-million-users-and-launches-privatedeployment-edition"
 description: "China Telecom’s office AI agent, TeleAgent, announced that it has grown to 1.5 million registered users and over 200,000 daily active users – a sharp rise from just 27,000 registered users in..."
-date: 2026-10-10T12:03:23+05:30
+date: 2026-10-10T18:06:18+05:30
 tags: [TeleAgent, AIEnterprise, ChinaTelecom]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Enterprise Software", "Security"]
 image: "https://bloximages.newyork1.vip.townnews.com/voiceofalexandria.com/content/tncms/custom/image/cd19b9c6-4615-443e-a9f9-46e08b81249d.jpg"

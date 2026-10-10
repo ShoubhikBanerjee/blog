@@ -2,7 +2,7 @@
 title: "GCU Hosts Cheer Camp for K‑8 Students with Clinic and Showcase"
 slug: "gcu-hosts-cheer-camp-for-k8-students-with-clinic-and-showcase"
 description: "Grand Canyon University (GCU) hosted a Cheer Camp for K‑8th graders, featuring a clinic and a showcase that welcomed parents."
-date: 2026-10-10T12:03:23+05:30
+date: 2026-10-10T18:06:18+05:30
 tags: [cheerleading, community, GCU, familyevent]
 categories: ["AI", "Education", "Community Engagement", "Sports and Recreation"]
 author: "Shoubhik Banerjee"

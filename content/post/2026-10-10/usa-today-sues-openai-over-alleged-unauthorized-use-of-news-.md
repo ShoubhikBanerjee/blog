@@ -2,7 +2,7 @@
 title: "USA Today Sues OpenAI Over Alleged Unauthorized Use of News Articles"
 slug: "usa-today-sues-openai-over-alleged-unauthorized-use-of-news-articles"
 description: "USA Today Co has filed a lawsuit against OpenAI, alleging that the company used the publisher’s copyrighted articles without permission."
-date: 2026-10-10T12:03:23+05:30
+date: 2026-10-10T18:06:18+05:30
 tags: [OpenAI, CopyrightLaw, NewsIndustry, AIlitigation]
 categories: ["AI", "Artificial Intelligence", "Intellectual Property", "Media Law", "Technology Business"]
 image: "https://m.economictimes.com/thumb/width-1200,height-900,imgsize-39508,msid-134837625/usa-today-vs-openai-what-are-the-major-questions-over-chatgpt-training-data-news-copyright-and-whether-publishers-deserve-compensation-raised-in-the-lawsuit.jpg"

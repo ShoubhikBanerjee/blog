@@ -2,7 +2,7 @@
 title: "MarketBeat Updates News Sentiment Scoring System for BioMarin"
 slug: "marketbeat-updates-news-sentiment-scoring-system-for-biomarin"
 description: "The latest update from MarketBeat adds new analytics to its news‑sentiment tracking, showing how BioMarin Pharmaceutical (BMRN) is covered in the press this week."
-date: 2026-10-10T12:03:23+05:30
+date: 2026-10-10T18:06:18+05:30
 tags: [MarketBeat, NewsSentiment, BioMarin]
 categories: ["AI", "Financial Technology", "Data Analytics", "Market Intelligence"]
 image: "https://www.marketbeat.com/logos/biomarin-pharm-logo.png"

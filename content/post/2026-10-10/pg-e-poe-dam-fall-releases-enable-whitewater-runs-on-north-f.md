@@ -2,7 +2,7 @@
 title: "PG&E Poe Dam Fall Releases Enable Whitewater Runs on North Fork Feather River"
 slug: "pg-e-poe-dam-fall-releases-enable-whitewater-runs-on-north-fork-feather-river"
 description: "During the federal hydropower relicensing process, American Whitewater negotiated annual fall releases from PG&E’s Poe Dam to provide whitewater recreation opportunities on the North Fork Feather..."
-date: 2026-10-10T12:03:23+05:30
+date: 2026-10-10T18:06:18+05:30
 tags: [whitewater, hydropower, PoeDam, FeatherRiver, recreation]
 categories: ["AI", "Recreation", "Water Resources", "Environmental Management"]
 image: "https://site-media.americanwhitewater.org/NF-Feather-Poe.jpeg"

@@ -2,7 +2,7 @@
 title: "ELLIS Postdoc Call: Advancing Commonsense Reasoning in Multimodal World Models"
 slug: "ellis-postdoc-call-advancing-commonsense-reasoning-in-multimodal-world-models"
 description: "A new postdoctoral opportunity has opened at ELLIS in Amsterdam to tackle the lack of commonsense abstraction and reasoning in multimodal world models."
-date: 2026-10-10T12:03:23+05:30
+date: 2026-10-10T18:06:18+05:30
 tags: [ELLIS, MultimodalAI, Neurosymbolic, Postdoc]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Neurosymbolic AI", "Research Opportunities"]
 author: "Shoubhik Banerjee"
