@@ -2,7 +2,7 @@
 title: "White House Signs Voluntary AI Safety Pact Amid Hands‑Off Policy Shift"
 slug: "white-house-signs-voluntary-ai-safety-pact-amid-handsoff-policy-shift"
 description: "Tech Week in San Francisco saw venture capitalists and AI founders celebrate the White House’s stance of not regulating artificial intelligence, even as the administration signed a voluntary safety..."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [AISafety, Trump, DefenseAI, Policy]
 categories: ["AI", "Artificial Intelligence", "Policy", "National Security", "Industry"]
 image: "https://i.abcnewsfe.com/a/1547bc69-dcbd-49f6-af76-d486b84398af/wirestory_32064fde8ad68c68f71d82336f7db525_16x9.jpg?w=1600"

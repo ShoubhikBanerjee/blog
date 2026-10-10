@@ -2,7 +2,7 @@
 title: "Online Event Shows 3 AIs and 9 Tools in 90 Minutes"
 slug: "online-event-shows-3-ais-and-9-tools-in-90-minutes"
 description: "An online, 90‑minute working session titled **“3 AIs, 9 Tools, 90 Minutes: The Complete AI Stack for 2026**” will walk professionals through a curated set of AI models and tools."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [AIStack, AIEvents, 2026AI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Tools", "Professional Development"]
 image: "https://www.eventbrite.com/e/_next/image?url=https%3A%2F%2Fimg.evbuc.com%2Fhttps%253A%252F%252Fcdn.evbuc.com%252Fimages%252F1193844372%252F3014624270130%252F1%252Foriginal.png%3Fw%3D940%26auto%3Dformat%252Ccompress%26q%3D75%26sharp%3D10%26rect%3D0%252C0%252C940%252C470%26s%3D432f83672dd7aebf4d02fe0c2ad5ed69&w=940&q=75"

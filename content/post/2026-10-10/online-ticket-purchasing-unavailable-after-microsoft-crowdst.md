@@ -2,7 +2,7 @@
 title: "Online ticket purchasing unavailable after Microsoft CrowdStrike outage"
 slug: "online-ticket-purchasing-unavailable-after-microsoft-crowdstrike-outage"
 description: "Online ticket purchasing is currently unavailable due to Microsoft CrowdStrike outage. The museum remains open and visitors can buy tickets in person."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [ticketoutage, museum, crowdstrike]
 categories: ["AI", "Museum Operations", "Visitor Services", "Public Information"]
 author: "Shoubhik Banerjee"

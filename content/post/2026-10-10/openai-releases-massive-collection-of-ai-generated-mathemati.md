@@ -2,7 +2,7 @@
 title: "OpenAI releases massive collection of AI‑generated mathematical results"
 slug: "openai-releases-massive-collection-of-aigenerated-mathematical-results"
 description: "OpenAI has published a large repository of AI‑generated mathematics, prompting an immediate response from the research community."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [OpenAI, Mathematics, AIresearch]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "Research Tools"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STKS537_AI_MATH_5.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

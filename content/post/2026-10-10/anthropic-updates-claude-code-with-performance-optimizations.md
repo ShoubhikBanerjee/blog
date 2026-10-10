@@ -2,7 +2,7 @@
 title: "Anthropic Updates Claude Code with Performance Optimizations and Specialized Agent Skills"
 slug: "anthropic-updates-claude-code-with-performance-optimizations-and-specialized-agent-skills"
 description: "Claude Code is an agentic coding tool that lives in the terminal, providing developers with the ability to understand codebases, explain complex logic, and handle git workflows through natural..."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [ClaudeCode, AIAgents, SoftwareDevelopment, Programming]
 categories: ["AI", "Software Development", "AI Agents", "Developer Tools"]
 author: "Shoubhik Banerjee"

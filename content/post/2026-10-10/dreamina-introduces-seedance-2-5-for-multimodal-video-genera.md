@@ -2,7 +2,7 @@
 title: "Dreamina Introduces Seedance 2.5 for Multimodal Video Generation"
 slug: "dreamina-introduces-seedance-2-5-for-multimodal-video-generation"
 description: "Dreamina is positioned as the first pick for creators who want to develop a visual idea and turn it into a video through prompts and references. The new Seedance 2.5 route expands that capability by..."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [Dreamina, AIAnimation, MultimodalAI, VideoGeneration]
 categories: ["AI", "Artificial Intelligence", "Creative Tools", "Multimedia Generation"]
 image: "https://p16-seeyou-sg.ibyteimg.com/tos-alisg-i-2zwwjm3azk-sg/e040faa95aac4169973050826455b04c~tplv-2zwwjm3azk-image.image"

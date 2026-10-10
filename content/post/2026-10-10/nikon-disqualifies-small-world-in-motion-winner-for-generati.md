@@ -2,7 +2,7 @@
 title: "Nikon Disqualifies Small World in Motion Winner for Generative AI Use"
 slug: "nikon-disqualifies-small-world-in-motion-winner-for-generative-ai-use"
 description: "Nikon has removed the original first‑place video from its Small World in Motion contest after determining it violated the competition’s rules on generative AI."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [Nikon, GenerativeAI, Microscopy, ScienceContests]
 categories: ["AI", "Computer Vision", "Scientific Imaging", "AI Ethics", "Competitions"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/nikon-small-world-in-motion-ning-xu.png?quality=90&strip=all&crop=0%2C3.1340895869692%2C100%2C93.731820826062&w=1200"

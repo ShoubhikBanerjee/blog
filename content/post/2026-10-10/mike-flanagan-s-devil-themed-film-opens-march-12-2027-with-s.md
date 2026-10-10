@@ -2,7 +2,7 @@
 title: "Mike Flanagan's devil-themed film opens March 12, 2027 with Scarlett Johansson trailer"
 slug: "mike-flanagan-s-devil-themed-film-opens-march-12-2027-with-scarlett-johansson-trailer"
 description: "On March 12th, 2027, Mike Flanagan brings his take on the devil to theaters."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [MikeFlanagan, TheExorcistMartyrs, ScarlettJohansson]
 categories: ["AI", "Film", "Entertainment", "Cinema"]
 image: "https://images.consequence.net/5GTcpikVScwbnONXaY2DSabwrEeVR-kB-PU2AHA_xsw/rs:fit:400:0/plain/https%3A%2F%2Fconcerts.consequence.net%2Fimages%2Fevent-fallback.jpg@webp"

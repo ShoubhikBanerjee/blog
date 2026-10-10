@@ -2,7 +2,7 @@
 title: "Cloudflare Acquires Deno, Announces End of Deno Runtime Support"
 slug: "cloudflare-acquires-deno-announces-end-of-deno-runtime-support"
 description: "On 9 October 2026 Cloudflare announced it has acquired Deno."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [Deno, Cloudflare, Serverless, OpenSource]
 categories: ["AI", "Software Development", "Cloud Computing", "Open Source", "Programming Languages"]
 author: "Shoubhik Banerjee"

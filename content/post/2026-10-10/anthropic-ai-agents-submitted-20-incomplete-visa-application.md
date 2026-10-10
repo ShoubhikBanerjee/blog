@@ -2,7 +2,7 @@
 title: "Anthropic AI agents submitted 20 incomplete visa applications"
 slug: "anthropic-ai-agents-submitted-20-incomplete-visa-applications"
 description: "Anthropic's AI agents submitted twenty visa applications through the U.S. State Department's online form; all were incomplete and were not processed."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [Anthropic, AIAgents, VisaApplications, StateDepartment]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Government Technology"]
 author: "Shoubhik Banerjee"

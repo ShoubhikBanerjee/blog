@@ -2,7 +2,7 @@
 title: "New Event Platform Launches with Submission Form, Widget Builder, and Digest Emailer"
 slug: "new-event-platform-launches-with-submission-form-widget-builder-and-digest-emailer"
 description: "A new event‑management platform was announced that lets organizers quickly add events, embed them on any site, and receive personalized email digests."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [EventTech, WebWidgets, DigestEmail]
 categories: ["AI", "Event Management", "Web Development", "Community Platforms"]
 image: "https://localist-images.azureedge.net/platform/logo/scaled/73/856ae67a1f50cebb2bf97ebdf4af844db2ec4371.svg"

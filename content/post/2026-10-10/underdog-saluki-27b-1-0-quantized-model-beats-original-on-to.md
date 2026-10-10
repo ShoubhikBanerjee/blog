@@ -2,7 +2,7 @@
 title: "Underdog Saluki 27B 1.0 Quantized Model Beats Original on Tool-Calling Test"
 slug: "underdog-saluki-27b-1-0-quantized-model-beats-original-on-tool-calling-test"
 description: "A new 2‑bit quantized version of the Qwen3.8‑27B model, Underdog Saluki 27B 1.0, has been released. At 7.89 GB it outperforms the 54 GB original on a 120‑task tool‑calling benchmark, though its math..."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [Quantization, LargeLanguageModels, ToolCalling, ModelCompression]
 categories: ["AI", "Machine Learning", "Large Language Models", "Model Compression", "Evaluation"]
 author: "Shoubhik Banerjee"

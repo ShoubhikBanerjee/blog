@@ -2,7 +2,7 @@
 title: "New Open LLM Leaderboard Consolidates Model Launches, Benchmarks, and Pricing"
 slug: "new-open-llm-leaderboard-consolidates-model-launches-benchmarks-and-pricing"
 description: "A dedicated leaderboard page now aggregates weekly releases, pricing changes, benchmark results, and licensing details for both closed‑frontier and open‑weight large language models."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [OpenLLM, AIModels, Benchmark, OpenSource]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing"]
 image: "https://ainews.ai/assets/images/logo.png"

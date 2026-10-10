@@ -2,7 +2,7 @@
 title: "Anthropic alleges Chinese firms are secretly using Claude AI model"
 slug: "anthropic-alleges-chinese-firms-are-secretly-using-claude-ai-model"
 description: "Anthropic has publicly claimed that some Chinese artificial‑intelligence companies are employing its Claude model without disclosure."
-date: 2026-10-10T18:06:18+05:30
+date: 2026-10-10T22:05:31+05:30
 tags: [Anthropic, Claude, AIsecurity, ChinaAI]
 categories: ["AI", "Artificial Intelligence", "AI Ethics", "International Relations"]
 image: "https://assets-v2.i-scmp.com/production/_next/static/media/default-image.f7171a35.png"
