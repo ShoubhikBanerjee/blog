@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud Services on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/cloud-services/</link><description>Recent content in Cloud Services on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 08 Oct 2026 22:04:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/cloud-services/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Quick adds real‑time ACL checks to Bedrock Knowledge Bases for secure RAG</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-quick-adds-realtime-acl-checks-to-bedrock-knowledge-bases-for-secure-rag/</link><pubDate>Thu, 08 Oct 2026 22:04:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-quick-adds-realtime-acl-checks-to-bedrock-knowledge-bases-for-secure-rag/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-22080-featured-image.png" alt="Featured image of post Amazon Quick adds real‑time ACL checks to Bedrock Knowledge Bases for secure RAG" /&gt;&lt;h1 id="amazon-quick-adds-realtime-acl-checks-to-bedrock-knowledge-bases-for-secure-rag"&gt;Amazon Quick adds real‑time ACL checks to Bedrock Knowledge Bases for secure RAG
+&lt;/h1&gt;&lt;p&gt;Enterprise organizations are adopting Retrieval Augmented Generation (RAG) to unlock insights from company knowledge sources like Microsoft SharePoint, Google Drive, and Atlassian Confluence. Because those sources contain sensitive information governed by complex permission structures, making sure AI‑generated answers respect those permissions is one of the hardest challenges in enterprise AI.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;RAG solutions must enforce access controls that match the source systems.&lt;/li&gt;
+&lt;li&gt;A single unauthorized document in an AI response could expose confidential strategy, unreleased financial data, or sensitive HR information.&lt;/li&gt;
+&lt;li&gt;Organizations want to democratize AI‑powered insights &lt;strong&gt;without&lt;/strong&gt; compromising their existing security posture.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-weaknesses-of-snapshotbased-acls"&gt;⚠️ Weaknesses of snapshot‑based ACLs
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Data source connectors (e.g., SharePoint connector) pull ACLs during periodic sync jobs.&lt;/li&gt;
+&lt;li&gt;ACLs are stored as attributes in an index and used for pre‑retrieval filtering.&lt;/li&gt;
+&lt;li&gt;This model places sole enforcement responsibility on the AI system, which is not the authoritative source of permissions.&lt;/li&gt;
+&lt;li&gt;Pull‑based syncs create a snapshot; the ACLs reflect the state &lt;strong&gt;at the last sync&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Sources like Confluence do not emit events when group membership changes, so revoked access may still be honored until the next sync.&lt;/li&gt;
+&lt;li&gt;New permission features or changes to sharing models can create gaps in the ACL mapping logic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-realtime-acl-enforcement-in-amazon-quick--bedrock-knowledge-bases"&gt;✅ Real‑time ACL enforcement in Amazon Quick &amp;amp; Bedrock Knowledge Bases
+&lt;/h2&gt;&lt;p&gt;When a user queries an Amazon Quick agent backed by a Google Drive knowledge base, the system enforces access controls in two stages:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Pre‑retrieval filtering&lt;/strong&gt; – Amazon Quick performs a semantic search against the vector index, then applies the stored ACL attributes. This reduces the number of documents that need real‑time checks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Real‑time verification&lt;/strong&gt; – For the candidate documents, Amazon Quick calls the Google Drive APIs using a service‑account credential supplied by the administrator. It generates user‑specific access tokens through impersonation, and Google Drive, the source of truth for ACLs, confirms whether the user can view each document. Unauthorized documents are excluded before the passages are passed to the large language model (LLM).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Stage&lt;/th&gt;
+&lt;th&gt;Action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Pre‑retrieval&lt;/td&gt;
+&lt;td&gt;Semantic search + apply stored ACL attributes (index‑based filter)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Real‑time verification&lt;/td&gt;
+&lt;td&gt;Call source API (Google Drive) with impersonated token; exclude documents without access&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Additional safeguards such as Amazon Bedrock Guardrails, grounding checks, and configurable safety policies are applied to the LLM context.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Always‑current permissions&lt;/strong&gt; – No security gaps between sync cycles; revoking a user’s access is reflected in AI responses within moments, not hours or days.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compliance assurance&lt;/strong&gt; – The authoritative source (Google Drive, SharePoint, etc.) validates every document at query time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalable cost&lt;/strong&gt; – The two‑stage approach avoids costly real‑time API calls for every indexed passage while still guaranteeing up‑to‑date enforcement.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The combined solution lets enterprises democratize AI insights while maintaining strict security and compliance controls.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-22080-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-22080-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-22080-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#RAG #AmazonBedrock #AIsecurity #EnterpriseAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Rethinking access control for RAG with Amazon Quick and Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Anthropic launches Claude Haiku 5.5 with new pricing and subscription credits</title><link>https://shoubhikbanerjee.github.io/blog/p/anthropic-launches-claude-haiku-5-5-with-new-pricing-and-subscription-credits/</link><pubDate>Thu, 08 Oct 2026 22:04:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/anthropic-launches-claude-haiku-5-5-with-new-pricing-and-subscription-credits/</guid><description>&lt;img src="https://static.simonwillison.net/static/2026/claude-haiku-5-5-card.webp" alt="Featured image of post Anthropic launches Claude Haiku 5.5 with new pricing and subscription credits" /&gt;&lt;h1 id="anthropic-launches-claude-haiku-55-with-new-pricing-and-subscription-credits"&gt;Anthropic launches Claude Haiku 5.5 with new pricing and subscription credits
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Anthropic released Claude Haiku 5.5, promoted as a fast, low‑cost model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-pricing"&gt;💰 Pricing
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Token range&lt;/th&gt;
+&lt;th&gt;Input price (per 1 M tokens)&lt;/th&gt;
+&lt;th&gt;Output price (per 1 M tokens)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Haiku 5.5&lt;/td&gt;
+&lt;td&gt;≤ 100 k&lt;/td&gt;
+&lt;td&gt;$0.10&lt;/td&gt;
+&lt;td&gt;$0.50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Haiku 5.5&lt;/td&gt;
+&lt;td&gt;&amp;gt; 100 k&lt;/td&gt;
+&lt;td&gt;$0.50&lt;/td&gt;
+&lt;td&gt;$2.50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPT‑6 Luna&lt;/td&gt;
+&lt;td&gt;≤ 272 k&lt;/td&gt;
+&lt;td&gt;$0.10&lt;/td&gt;
+&lt;td&gt;$0.50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPT‑6 Luna&lt;/td&gt;
+&lt;td&gt;&amp;gt; 272 k&lt;/td&gt;
+&lt;td&gt;$0.20&lt;/td&gt;
+&lt;td&gt;$0.75&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Haiku 5.5’s base price matches OpenAI’s GPT‑6 Luna up to 100 k tokens.&lt;/li&gt;
+&lt;li&gt;Beyond that limit Haiku 5.5’s price rises five‑fold, while Luna’s increase is less steep.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-tokenizer--hidden-cost"&gt;🧮 Tokenizer &amp;amp; Hidden Cost
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Haiku 5.5 uses a new, less generous tokenizer.&lt;/li&gt;
+&lt;li&gt;The same long prompt consumes about &lt;strong&gt;1.25 ×&lt;/strong&gt; more tokens with Haiku 5.5 than with Haiku 4.5, creating a hidden price increase.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-reasoning-levels"&gt;⚙️ Reasoning Levels
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Haiku 5.5 defaults to &lt;strong&gt;medium&lt;/strong&gt; reasoning and does not allow disabling reasoning.&lt;/li&gt;
+&lt;li&gt;Example runs using the &lt;code&gt;llm&lt;/code&gt; CLI:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Low‑effort&lt;/strong&gt; pelican SVG: 0.0936 cents, 7 seconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Max‑effort&lt;/strong&gt; pelican SVG (includes a reasoning trace): 3.3826 cents, 5 minutes 9 seconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-comparison-to-haiku45"&gt;📊 Comparison to Haiku 4.5
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Haiku 4.5 (which lacked reasoning levels) generated a pelican SVG for &lt;strong&gt;0.7583 cents&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-tooling-improvements"&gt;🛠️ Tooling Improvements
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The latest &lt;code&gt;llm-anthropic&lt;/code&gt; release removes the need to ship a new plugin version for each model.
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;llm install -U llm-anthropic
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;llm anthropic refresh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;llm -m claude-haiku-5.5 &lt;span class="s2"&gt;&amp;#34;Generate an SVG of a pelican riding a bicycle&amp;#34;&lt;/span&gt; -o thinking_effort low
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-additional-anthropic-updates"&gt;📦 Additional Anthropic Updates
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Cache‑read price for Sonnet 5.5 has been halved.&lt;/li&gt;
+&lt;li&gt;New API credit scheme (credits equal the subscription cost):
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Plan&lt;/th&gt;
+&lt;th&gt;Monthly credit&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Max 5x users&lt;/td&gt;
+&lt;td&gt;$100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Max 20x users&lt;/td&gt;
+&lt;td&gt;$200&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Team subscribers&lt;/td&gt;
+&lt;td&gt;up to $500 (pooled)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;Credits do &lt;strong&gt;not&lt;/strong&gt; roll over; unused credits are forfeited.&lt;/li&gt;
+&lt;li&gt;Option to disable auto‑reload for the API; requests stop when the balance runs out.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-cost-perspective-above-100k-tokens"&gt;📈 Cost Perspective Above 100 k Tokens
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Above 100 k tokens, &lt;strong&gt;GPT‑6 Luna&lt;/strong&gt; offers a better deal because its price increase is smaller than Haiku 5.5’s.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://static.simonwillison.net/static/2026-10-07/haiku-5.5-max.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.simonwillison.net/static/2026-10-07/claude-credits.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.simonwillison.net/static/2025/claude-haiku-4.5-pelican.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Anthropic #ClaudeHaiku #AIpricing #LLM #APICredits&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/" target="_blank" rel="noopener"
+&gt;Claude Haiku 5.5&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Google Gemini model access shifted to paid tiers starting Oct 9</title><link>https://shoubhikbanerjee.github.io/blog/p/google-gemini-model-access-shifted-to-paid-tiers-starting-oct-9/</link><pubDate>Tue, 06 Oct 2026 22:08:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/google-gemini-model-access-shifted-to-paid-tiers-starting-oct-9/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25290329/STK255_Google_Gemini_A.jpg?quality=90&amp;strip=all&amp;crop=0%2C9.9676601489831%2C100%2C80.064679702034&amp;w=1200" alt="Featured image of post Google Gemini model access shifted to paid tiers starting Oct 9" /&gt;&lt;h1 id="google-gemini-model-access-shifted-to-paid-tiers-starting-oct9"&gt;Google Gemini model access shifted to paid tiers starting Oct 9
+&lt;/h1&gt;&lt;p&gt;Starting on October 9th, Google Gemini’s free tier will be limited to the Flash Lite model.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Free users previously could choose Gemini Flash Lite, Flash, and Pro.&lt;/li&gt;
+&lt;li&gt;Access to the standard Flash model now requires a $4.99/month Google AI Plus subscription.&lt;/li&gt;
+&lt;li&gt;The AI Plus tier will soon lose Gemini Pro access.&lt;/li&gt;
+&lt;li&gt;AI Plus subscribers will be notified by email when they lose access.&lt;/li&gt;
+&lt;li&gt;Users can still select low, medium, or high effort levels for each model, though higher effort levels may consume usage limits faster.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-model-access-changes"&gt;⚙️ Model Access Changes
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Required subscription&lt;/th&gt;
+&lt;th&gt;Monthly price&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Gemini Flash Lite&lt;/td&gt;
+&lt;td&gt;Free plan&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Gemini Flash&lt;/td&gt;
+&lt;td&gt;Google AI Plus&lt;/td&gt;
+&lt;td&gt;$4.99&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Gemini Pro / Deep Think&lt;/td&gt;
+&lt;td&gt;Google AI Pro or Ultra&lt;/td&gt;
+&lt;td&gt;$19.99 or $99.99&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;📅 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The restriction to Flash Lite for free users begins on October 9.&lt;/li&gt;
+&lt;li&gt;After the change, only paid tiers will retain access to Gemini Flash and Pro models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Free users lose the ability to run higher‑performance Gemini models without paying.&lt;/li&gt;
+&lt;li&gt;The top‑tier Gemini Pro model and the “Deep Think” advanced reasoning option become exclusive to higher‑cost subscriptions, potentially reshaping how individuals and developers budget for AI usage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25290329/STK255_Google_Gemini_A.jpg?quality=90&amp;amp;strip=all&amp;amp;crop=0.95588235294118%2C0%2C98.088235294118%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#GoogleGemini #AIpricing #SubscriptionUpdate&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/ai-artificial-intelligence/1005451/google-gemini-free-flash-lite-only" target="_blank" rel="noopener"
+&gt;Google is about to remove free access to Gemini Flash and Pro&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Confidence‑Gated Hybrid Beats Pure Models for Emotion Recognition in Call Centers</title><link>https://shoubhikbanerjee.github.io/blog/p/confidencegated-hybrid-beats-pure-models-for-emotion-recognition-in-call-centers/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/confidencegated-hybrid-beats-pure-models-for-emotion-recognition-in-call-centers/</guid><description>&lt;h1 id="confidencegated-hybrid-beats-pure-models-for-emotion-recognition-in-call-centers"&gt;Confidence‑Gated Hybrid Beats Pure Models for Emotion Recognition in Call Centers
+&lt;/h1&gt;&lt;p&gt;Emotion recognition in conversation (ERC) is a production capability behind agent‑assist prompts, escalation routing, and post‑call analytics in contact‑center‑as‑a‑service (CCaaS) platforms, where cost and latency constraints matter as much as accuracy.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Three deployment options were compared: a low‑cost stacked ensemble, off‑the‑shelf LLM prompting (GPT‑4o‑mini), and a confidence‑gated hybrid that escalates only the ensemble&amp;rsquo;s least‑confident predictions to the LLM.&lt;/li&gt;
+&lt;li&gt;The hybrid mirrors IVA‑to‑human‑agent escalation policies used in production contact centers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Ensemble&lt;/strong&gt;: stacked model using sentence embeddings, windowed context, and RandomForest/XGBoost/logistic‑regression stacking.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LLM&lt;/strong&gt;: GPT‑4o‑mini prompted zero‑shot, few‑shot, or chain‑of‑thought.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid&lt;/strong&gt;: the ensemble handles the majority of utterances; when its confidence falls below a threshold, the turn is routed to the LLM for re‑prediction.&lt;/li&gt;
+&lt;li&gt;Escalated turns disproportionately follow an emotion or sentiment shift, providing an interpretable routing signal. The ensemble’s confidence is well‑calibrated and tends to be under‑confident rather than over‑confident.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-comparison"&gt;⚙️ Performance comparison
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Option&lt;/th&gt;
+&lt;th&gt;Approach&lt;/th&gt;
+&lt;th&gt;Cost per M utterances&lt;/th&gt;
+&lt;th&gt;Latency&lt;/th&gt;
+&lt;th&gt;Weighted F1 (IEMOCAP)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Ensemble&lt;/td&gt;
+&lt;td&gt;Stacked ensemble (sentence embeddings, windowed context, RandomForest/XGBoost/logistic‑regression stacking)&lt;/td&gt;
+&lt;td&gt;near‑zero&lt;/td&gt;
+&lt;td&gt;&amp;lt;10 ms&lt;/td&gt;
+&lt;td&gt;0.595&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LLM&lt;/td&gt;
+&lt;td&gt;GPT‑4o‑mini prompting (zero‑shot, few‑shot, chain‑of‑thought)&lt;/td&gt;
+&lt;td&gt;$99‑170&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;td&gt;0.460‑0.536&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hybrid&lt;/td&gt;
+&lt;td&gt;Confidence‑gated cascade (ensemble + LLM escalation)&lt;/td&gt;
+&lt;td&gt;$10‑85&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;td&gt;0.620 (IEMOCAP) 0.643 (MELD) 0.824 (CMU‑MOSI)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;On IEMOCAP the ensemble outperforms every LLM configuration (0.595 vs. 0.460‑0.536, p &amp;lt; 0.0001).&lt;/li&gt;
+&lt;li&gt;On MELD and CMU‑MOSI the ranking reverses, so neither pure system is a safe default.&lt;/li&gt;
+&lt;li&gt;The hybrid Pareto‑dominates both pure systems on all three datasets, routing most traffic through the near‑zero‑cost ensemble.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The hybrid reduces spend from roughly $99‑170 per million utterances (LLM‑only) to $10‑85 while delivering higher accuracy.&lt;/li&gt;
+&lt;li&gt;It provides an auditable escalation signal tied to emotion shifts, aligning with operational needs in CCaaS.&lt;/li&gt;
+&lt;li&gt;Confidence‑gated cascading, a known technique in ML, is shown to transfer cleanly to dialogue‑contextual ERC, offering a concrete deployment recipe for conversational‑AI platforms.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#EmotionRecognition #ContactCenterAI #LLMDeployment&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.17977v1" target="_blank" rel="noopener"
+&gt;When to Call an LLM: A Confidence-Gated Hybrid for Cost-Effective Emotion Recognition in Conversational AI&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Serverless Framework V4 Adds AI Agent Support and AWS Enhancements</title><link>https://shoubhikbanerjee.github.io/blog/p/serverless-framework-v4-adds-ai-agent-support-and-aws-enhancements/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/serverless-framework-v4-adds-ai-agent-support-and-aws-enhancements/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/13742415?v=4" alt="Featured image of post Serverless Framework V4 Adds AI Agent Support and AWS Enhancements" /&gt;&lt;h1 id="serverless-framework-v4-adds-ai-agent-support-and-aws-enhancements"&gt;Serverless Framework V4 Adds AI Agent Support and AWS Enhancements
+&lt;/h1&gt;&lt;p&gt;The Serverless Framework has released version 4, introducing significant updates that enhance serverless application development on AWS. This release emphasizes AI integration, security, and developer experience improvements.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The Serverless Framework is a command-line tool enabling developers to deploy serverless applications using approachable YAML syntax. It supports AWS Lambda and other managed services, offering auto-scaling, zero idle costs, and minimal maintenance. Version 4 expands these capabilities with AI-native features and AWS ecosystem integrations.&lt;/p&gt;
+&lt;h2 id="-key-new-features"&gt;🚀 Key New Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sandboxes&lt;/strong&gt;: Isolate ephemeral compute environments on AWS Lambda for untrusted workloads like AI agents or per-session code execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Bedrock AgentCore Support&lt;/strong&gt;: Define AI agents, memory, tools, and code interpreters directly in &lt;code&gt;serverless.yml&lt;/code&gt; using the &lt;code&gt;ai&lt;/code&gt; property.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Login &amp;amp; SSO&lt;/strong&gt;: Streamline AWS credential setup via browser-based flows.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deployment Diffs&lt;/strong&gt;: Preview CloudFormation stack changes before deployment using &lt;code&gt;serverless diff&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Managed Instances&lt;/strong&gt;: Native EC2-backed Lambda support for higher throughput and long-running workloads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Durable Functions&lt;/strong&gt;: Built-in stateful workflows for complex orchestrations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lambda Tenant Isolation&lt;/strong&gt;: Reduce cross-tenant interference in multi-tenant applications.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HTTP Response Streaming&lt;/strong&gt;: Stream long-running AI responses from Lambda via API Gateway.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Serverless MCP&lt;/strong&gt;: IDE integration to debug serverless apps directly in editors like Cursor or Windsurf.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-enhanced-developer-experience"&gt;🛠️ Enhanced Developer Experience
+&lt;/h2&gt;&lt;p&gt;Popular plugins are now built-in, including Python requirements and API Gateway Service Proxy. Custom domains with auto-configured SSL are now natively supported. Secrets management integrates with Doppler via framework variables.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;These updates position the Serverless Framework as a robust platform for AI-driven and enterprise-scale serverless applications. Features like Sandboxes and AgentCore support accelerate secure AI agent deployment, while MCP integration eliminates context-switching during debugging. The framework now unifies deployment across AWS SAM, CloudFormation, and traditional Serverless projects.&lt;/p&gt;
+&lt;h2 id="-under-the-hood"&gt;⚙️ Under the Hood
+&lt;/h2&gt;&lt;p&gt;Version 4 maintains multi-language support (Node.js, Python, Go, etc.) and extensibility via 1,000+ plugins. All features are actively maintained by Serverless Inc., ensuring long-term reliability.&lt;/p&gt;
+&lt;p&gt;#Serverless #AWS #AIAgents #DevOps #CloudNative&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/serverless/serverless" target="_blank" rel="noopener"
+&gt;serverless/serverless&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>OpenCode Go Offers $10/month Access to Reliable Open Coding Models</title><link>https://shoubhikbanerjee.github.io/blog/p/opencode-go-offers-10-month-access-to-reliable-open-coding-models/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/opencode-go-offers-10-month-access-to-reliable-open-coding-models/</guid><description>&lt;img src="https://social-cards.sst.dev/opencode-docs/R28%3D.png?desc=Low%20cost%20subscription%20for%20open%20coding%20models." alt="Featured image of post OpenCode Go Offers $10/month Access to Reliable Open Coding Models" /&gt;&lt;h1 id="opencode-go-offers-10month-access-to-reliable-open-coding-models"&gt;OpenCode Go Offers $10/month Access to Reliable Open Coding Models
+&lt;/h1&gt;&lt;p&gt;OpenCode has launched OpenCode Go, a $10‑per‑month subscription that provides reliable, low‑latency access to popular open‑source coding models.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Open models now perform close to proprietary models on coding tasks.&lt;/li&gt;
+&lt;li&gt;Reliable, low‑latency access to these models can be difficult because provider quality and availability vary.&lt;/li&gt;
+&lt;li&gt;OpenCode Go addresses this gap with a stable global service, especially for international users.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Subscribe to OpenCode Go and receive an API key.&lt;/li&gt;
+&lt;li&gt;The service functions like any other provider in the OpenCode platform.&lt;/li&gt;
+&lt;li&gt;It is optional; users can still use OpenCode without the subscription.&lt;/li&gt;
+&lt;li&gt;Designed for OpenCode and similar coding agents that send comparable request types.&lt;/li&gt;
+&lt;li&gt;Traffic is monitored to prevent abuse that could degrade other users’ experience.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Pricing: $10 per month.&lt;/li&gt;
+&lt;li&gt;Usage limits are expressed as monthly dollar amounts; each model enforces:
+&lt;ul&gt;
+&lt;li&gt;5‑hour limit: 20 % of the monthly limit&lt;/li&gt;
+&lt;li&gt;Weekly limit: 50 % of the monthly limit&lt;/li&gt;
+&lt;li&gt;Monthly limit: 100 % of the monthly limit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Token pricing is listed per 1 M tokens (exact amounts are model‑specific).&lt;/li&gt;
+&lt;li&gt;The list of available models may change as new models are tested and added.&lt;/li&gt;
+&lt;li&gt;The x‑opencode‑session header request remains open, but sending that header is no longer required.&lt;/li&gt;
+&lt;li&gt;Clients beyond OpenCode have been validated, though future support is not guaranteed and some have incomplete session support.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Subscription costs $10/month and provides stable global access.&lt;/li&gt;
+&lt;li&gt;Primarily aimed at international users seeking consistent performance.&lt;/li&gt;
+&lt;li&gt;Works with the latest version v0.81.6 or later, which includes the session‑header fix.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Open models have improved to near‑proprietary performance, offering a cheaper alternative for coding tasks.&lt;/li&gt;
+&lt;li&gt;Because many providers can serve these models competitively, costs are generally lower than closed‑source options.&lt;/li&gt;
+&lt;li&gt;OpenCode Go bundles reliable, low‑latency access into a simple subscription, reducing the overhead of managing multiple providers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#OpenCode #OpenSourceAI #CodingModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://opencode.ai/docs/go/" target="_blank" rel="noopener"
+&gt;Go&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

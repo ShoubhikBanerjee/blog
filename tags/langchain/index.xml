@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LangChain on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/langchain/</link><description>Recent content in LangChain on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 05 Oct 2026 22:07:36 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/langchain/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock Adds Agentic Retrieval to Managed Knowledge Base</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-adds-agentic-retrieval-to-managed-knowledge-base/</link><pubDate>Mon, 05 Oct 2026 22:07:36 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-adds-agentic-retrieval-to-managed-knowledge-base/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-21691-featured-image.png" alt="Featured image of post Amazon Bedrock Adds Agentic Retrieval to Managed Knowledge Base" /&gt;&lt;h1 id="amazon-bedrock-adds-agentic-retrieval-to-managed-knowledge-base"&gt;Amazon Bedrock Adds Agentic Retrieval to Managed Knowledge Base
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock’s Managed Knowledge Base now supports agentic retrieval, an advanced RAG capability that plans and iterates over search steps automatically.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Agentic retrieval is available on Amazon Bedrock Managed Knowledge Base.&lt;/li&gt;
+&lt;li&gt;Instead of one search, Amazon Bedrock Managed Knowledge Base plans the retrieval.&lt;/li&gt;
+&lt;li&gt;It breaks the question into sub‑queries, runs them, judges whether it has enough evidence, and searches again if it doesn&amp;rsquo;t.&lt;/li&gt;
+&lt;li&gt;Two APIs are provided:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Retrieve&lt;/strong&gt; – runs one hybrid search and returns scored chunks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AgenticRetrieveStream&lt;/strong&gt; – runs a planning loop and streams the steps back to you as trace events.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The planner splits the user query into sub‑queries.&lt;/li&gt;
+&lt;li&gt;Each sub‑query is executed against the knowledge base.&lt;/li&gt;
+&lt;li&gt;After each step the system checks whether the accumulated evidence is sufficient.&lt;/li&gt;
+&lt;li&gt;If not, additional sub‑queries are generated and the process repeats.&lt;/li&gt;
+&lt;li&gt;When a passage lacks enough context, a FullDocumentExpansion step calls &lt;code&gt;bedrock:GetDocumentContent&lt;/code&gt; to fetch the whole document.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-integration-with-langchain"&gt;⚙️ Integration with LangChain
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;langchain-aws&lt;/code&gt; package exposes both retrieval modes.
+&lt;ul&gt;
+&lt;li&gt;The standard Retrieve API appears as a normal LangChain retriever that can be dropped into a chain.&lt;/li&gt;
+&lt;li&gt;The AgenticRetrieveStream API is exposed as a function retrieval directly from a knowledge base.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Both paths return document chunks from the knowledge base, which the application then uses to generate a grounded response.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;📦 Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Amazon Bedrock Managed Knowledge Base removes the self‑managed vector store, embeddings, and re‑ranking models from the RAG architecture.&lt;/li&gt;
+&lt;li&gt;You configure a data source (e.g., an Amazon S3 bucket); the service handles chunking, embedding, storage, and retrieval.&lt;/li&gt;
+&lt;li&gt;Boto3 version 1.43.32 or later is required; &lt;code&gt;agentic_retrieve_stream&lt;/code&gt; did not exist before that version.&lt;/li&gt;
+&lt;li&gt;The knowledge base assumes a service role with the following permissions:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;bedrock:GetDocumentContent&lt;/code&gt; (often overlooked)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;s3:ListBucket&lt;/code&gt; on the bucket and &lt;code&gt;s3:GetObject&lt;/code&gt; on its contents, both conditioned on &lt;code&gt;aws:ResourceAccount&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;If guardrails are used, also &lt;code&gt;bedrock:GetGuardrail&lt;/code&gt; and &lt;code&gt;bedrock:ApplyGuardrail&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;A policy with only &lt;code&gt;bedrock:Retrieve&lt;/code&gt; works until the planner reaches a whole‑document fetch, then fails.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability--costs"&gt;🚀 Availability &amp;amp; Costs
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The walkthrough uses the US East (N. Virginia) Region (&lt;code&gt;us-east-1&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Running the walkthrough may incur costs for document storage, ingestion, retrieval calls, and foundation model inference.&lt;/li&gt;
+&lt;li&gt;Delete the resources when you complete the experiment to avoid ongoing charges.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-api-comparison"&gt;📊 API Comparison
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;API&lt;/th&gt;
+&lt;th&gt;Behavior&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Retrieve&lt;/td&gt;
+&lt;td&gt;Runs one hybrid search and returns scored chunks.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AgenticRetrieveStream&lt;/td&gt;
+&lt;td&gt;Executes a planning loop, streams each step as trace events, and returns document chunks after iterative retrieval.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#AmazonBedrock #AgenticRetrieval #RAG #LangChain #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/agentic-retrieval-with-langchain-and-amazon-bedrock-knowledge-bases/" target="_blank" rel="noopener"
+&gt;Agentic retrieval with LangChain and Amazon Bedrock Knowledge Bases | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Evolution of AI Agent Frameworks and Specialized Coding Tools for 2026</title><link>https://shoubhikbanerjee.github.io/blog/p/evolution-of-ai-agent-frameworks-and-specialized-coding-tools-for-2026/</link><pubDate>Sun, 04 Oct 2026 22:04:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/evolution-of-ai-agent-frameworks-and-specialized-coding-tools-for-2026/</guid><description>&lt;img src="https://klyvoo.com/wp-content/uploads/2024/10/Klyvoo-logo-Facebook-Cover.png" alt="Featured image of post Evolution of AI Agent Frameworks and Specialized Coding Tools for 2026" /&gt;&lt;h1 id="evolution-of-ai-agent-frameworks-and-specialized-coding-tools-for-2026"&gt;Evolution of AI Agent Frameworks and Specialized Coding Tools for 2026
+&lt;/h1&gt;&lt;p&gt;The landscape of AI development has expanded into specialized orchestration frameworks and diverse coding tools. Developers now choose between low-level graph-based execution, role-based multi-agent crews, and specialized IDE-integrated agents, often supported by routers to manage model lock-in and costs.&lt;/p&gt;
+&lt;h2 id="-framework-overview"&gt;🔍 Framework Overview
+&lt;/h2&gt;&lt;p&gt;Modern frameworks provide different levels of abstraction for building stateful agents and multi-agent workflows. These tools range from code-first toolkits to low-level orchestration frameworks that ensure durable execution.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Tool&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Primary Focus&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Language Support&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LangChain&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Stateful agents as graphs with durable execution&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Python, JavaScript/TypeScript&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CrewAI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Multi-agent teams with role-based agents and Flows&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Python (3.10 to 3.13)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;OpenAI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Multi-agent workflows with handoffs and tracing&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OpenAI models&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Anthropic SDK&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Claude Code tools, agent loop, and context management&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Python, TypeScript&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Microsoft&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Successor to AutoGen and Semantic Kernel&lt;/td&gt;
+&lt;td style="text-align: left"&gt;C#, Python, Go (preview)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Google&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Code-first toolkit for building and deploying agents&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Python, TS, Go, Java, Kotlin&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LlamaIndex&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Document ingestion, retrieval, and RAG&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Python&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Posh&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Native TypeScript framework with web integrations&lt;/td&gt;
+&lt;td style="text-align: left"&gt;TypeScript&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;Selection depends on the specific technical requirements of the agent or workflow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LangChain&lt;/strong&gt;: A low-level framework focusing on durable execution that recovers from failures. It requires more time to learn due to its low-level API.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CrewAI&lt;/strong&gt;: Features a simple role and task model for multi-agent teams using event-driven Flows for workflow control.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;OpenAI&lt;/strong&gt;: Offers a lightweight, open-source framework with a small set of building blocks that are easy to learn, prioritizing OpenAI models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LlamaIndex&lt;/strong&gt;: Provides deep tooling for document ingestion and retrieval; however, its TypeScript version was deprecated in April 2026.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Posh&lt;/strong&gt;: Integrates natively with Next.js, React, Express, and Hono, requiring Node.js 22.18 or later.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Anthropic SDK&lt;/strong&gt;: Packages tools for files, shell, and web search, specifically for use with Claude models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-coding-tool-selection"&gt;🚀 Coding Tool Selection
+&lt;/h2&gt;&lt;p&gt;Choosing the right AI coding tool depends on where the developer wants the AI to live—whether in the terminal, woven into the editor, or as a standalone IDE.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Tool&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Category&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Best Use Case&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Claude Code&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Terminal agent&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Agentic, multi-file CLI work&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Codex&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Terminal agent&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OpenAI-centric agentic coding&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cursor&lt;/td&gt;
+&lt;td style="text-align: left"&gt;AI-native IDE&lt;/td&gt;
+&lt;td style="text-align: left"&gt;In-editor edits and inline chat&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Windsurf&lt;/td&gt;
+&lt;td style="text-align: left"&gt;AI-native IDE&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Editor workflows and agentic flows&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cline&lt;/td&gt;
+&lt;td style="text-align: left"&gt;In-editor agent&lt;/td&gt;
+&lt;td style="text-align: left"&gt;VS Code agent with model choice&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Wuwei&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Router&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Accessing multiple models via one entry&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-model-flexibility-and-cost"&gt;💡 Model Flexibility and Cost
+&lt;/h2&gt;&lt;p&gt;While many tools lock developers to one provider&amp;rsquo;s models and billing, routers like Wuwei remove these constraints. A router allows terminal agents like Claude Code or Codex to reach Claude, GPT, Grok, Gemini, Kimi, and DeepSeek from a single endpoint. This approach enables routing routine work to cheaper models while reserving premium models for difficult problems. For low cost across models, pay-as-you-go routers allow the use of cheap models only when necessary without per-provider subscriptions.&lt;/p&gt;
+&lt;p&gt;#AIagents #LangChain #ClaudeCode #SoftwareDevelopment #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://klyvoo.com/best/ai-agent-frameworks/" target="_blank" rel="noopener"
+&gt;Best AI Agent Frameworks (2026): LangGraph, CrewAI and More&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://wuweiai.io/blog/best-ai-coding-tools-2026" target="_blank" rel="noopener"
+&gt;Best AI Coding Tools in 2026 (Tested &amp;amp; Compared)&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AI Engineer Role Focused on LangChain, RAG, and Model Context Protocols</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-engineer-role-focused-on-langchain-rag-and-model-context-protocols/</link><pubDate>Thu, 01 Oct 2026 22:03:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-engineer-role-focused-on-langchain-rag-and-model-context-protocols/</guid><description>&lt;img src="https://static.licdn.com/aero-v1/sc/h/xlk678jv0tjp79pv10kglzkf" alt="Featured image of post AI Engineer Role Focused on LangChain, RAG, and Model Context Protocols" /&gt;&lt;h1 id="ai-engineer-role-focused-on-langchain-rag-and-model-context-protocols"&gt;AI Engineer Role Focused on LangChain, RAG, and Model Context Protocols
+&lt;/h1&gt;&lt;p&gt;A pioneer in smart connected technology, precision agriculture, and autonomous machinery is opening a 12‑month contract for an AI Engineer to join its Enterprise Data Science &amp;amp; AI Enablement team.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The position is centered on translating departmental AI use cases into scalable, reusable AI agents, Model Context Protocol (MCP) connections, Retrieval‑Augmented Generation (RAG) systems, and modular starter kits.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-role--responsibilities"&gt;⚙️ Role &amp;amp; Responsibilities
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Architect, build, and maintain a central repository of reusable AI skills, agentic workflows, prompt templates, and developer starter kits.&lt;/li&gt;
+&lt;li&gt;Build and deploy functional AI agents, tool‑calling chains, and conversational copilots using Python and frameworks such as LangChain, LlamaIndex, or AutoGen.&lt;/li&gt;
+&lt;li&gt;Implement and standardize Model Context Protocols (MCPs) and custom tool harnesses to connect large language models (LLMs) securely with internal databases, APIs, and document stores.&lt;/li&gt;
+&lt;li&gt;Design and optimize RAG pipelines, embedding strategies, semantic search indices, and vector‑database storage for contextual reasoning.&lt;/li&gt;
+&lt;li&gt;Partner with embedded AI coaches across departments to package one‑off solutions into reusable, well‑documented enterprise knowledge assets.&lt;/li&gt;
+&lt;li&gt;Establish automated testing harnesses, evaluate agent performance and output quality, track adoption metrics, and manage version‑controlled releases via GitHub.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-location--work-structure"&gt;📍 Location &amp;amp; Work Structure
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Locations: Austin, TX 78704; Chicago, IL; Urbandale, IA – open to 100 % fully remote work.&lt;/li&gt;
+&lt;li&gt;Shift: First Shift, standard daytime business hours (≈ 8:00 AM – 5:00 PM), Monday through Friday.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-compensation--contract"&gt;💰 Compensation &amp;amp; Contract
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Pay Rate: &lt;strong&gt;$56.00 – $60.00 per hour&lt;/strong&gt; on a W‑2 basis.&lt;/li&gt;
+&lt;li&gt;Contract Duration: &lt;strong&gt;12 months&lt;/strong&gt; with the possibility of extension.&lt;/li&gt;
+&lt;li&gt;Seniority Level: Mid‑Senior.&lt;/li&gt;
+&lt;li&gt;Employment Type: Full‑time.&lt;/li&gt;
+&lt;li&gt;Industries: Motor Vehicle Manufacturing, Industrial Machinery Manufacturing, and Manufacturing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-required-skills--technologies"&gt;🛠️ Required Skills &amp;amp; Technologies
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;4 + years of software/data engineering experience with generative AI systems, conversational agents, or LLM‑powered applications.&lt;/li&gt;
+&lt;li&gt;Expert‑level Python development and familiarity with standard data/AI libraries.&lt;/li&gt;
+&lt;li&gt;Hands‑on experience orchestrating LLMs using LangChain, LlamaIndex, CrewAI, AutoGen, or comparable agent frameworks.\n- Practical understanding of Model Context Protocols (MCPs), API tool calling, and dynamic context injection.&lt;/li&gt;
+&lt;li&gt;Experience building end‑to‑end RAG pipelines and working with vector databases such as Pinecone, Milvus, Chroma, Weaviate, Qdrant, or pgvector.&lt;/li&gt;
+&lt;li&gt;Advanced GitHub workflow, CI/CD automation, and test‑harness engineering.&lt;/li&gt;
+&lt;li&gt;Cloud engineering experience on AWS (Bedrock, SageMaker, Lambda, S3).&lt;/li&gt;
+&lt;li&gt;Experience with complex multi‑agent systems, big‑data platforms (Databricks, Spark, Delta Lake), and developer documentation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-application-process"&gt;📅 Application Process
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A mandatory Glider AI/Coding assessment must be completed before client submission.&lt;/li&gt;
+&lt;li&gt;Interested candidates should contact the recruiter at &lt;strong&gt;&lt;a class="link" href="mailto:jevin@cube-hub.com" &gt;jevin@cube-hub.com&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AIEngineering #LangChain #RAG #EnterpriseAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.linkedin.com/jobs/view/ai-engineer-%E2%80%93-enterprise-ai-enablement-agents-and-mcps-langchain-rag-at-cube-hub-inc-4472391297" target="_blank" rel="noopener"
+&gt;AI Engineer – Enterprise AI Enablement, Agents and MCPs (LangChain &amp;amp; RAG at Cube Hub Inc. — Austin, TX | LinkedIn Jobs&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://www.gumtree.com/p/it-jobs/agentic-ai-engineer-rapid-prototyping/5419079703" target="_blank" rel="noopener"
+&gt;Apply for Agentic AI Engineer - Rapid Prototyping in North London, London | Gumtree&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Development of a RAG-enabled Chatbot using LangChain and LLaMA</title><link>https://shoubhikbanerjee.github.io/blog/p/development-of-a-rag-enabled-chatbot-using-langchain-and-llama/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/development-of-a-rag-enabled-chatbot-using-langchain-and-llama/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/125358861?v=4" alt="Featured image of post Development of a RAG-enabled Chatbot using LangChain and LLaMA" /&gt;&lt;h1 id="development-of-a-rag-enabled-chatbot-using-langchain-and-llama"&gt;Development of a RAG-enabled Chatbot using LangChain and LLaMA
+&lt;/h1&gt;&lt;p&gt;A new RAG-powered chatbot implementation has been developed using LangChain to orchestrate an LLaMA model and NVIDIA embeddings. The system is designed to provide context-aware responses by retrieving relevant documentation from a FAISS-backed vector store.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The system processes information by generating embeddings for documents, storing them in a FAISS index, and retrieving context for the LLaMA model during query generation. The pipeline supports both basic and RAG-enabled reasoning, with performance verified through LLM-as-a-Judge evaluation techniques.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LangChain&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Orchestrates LLM components and pipeline chaining&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LLaMa&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles text generation based on retrieved context&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;FAISS&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enables efficient similarity search and document retrieval&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;NVIDIA Embeddings&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Generates vector representations of documents&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;FastAPI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Exposes the pipeline via RESTful APIs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Gradio&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides an interactive frontend for user testing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-project-structure"&gt;📂 Project Structure
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;server_app.py&lt;/code&gt;: FastAPI server implementation&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;08_evaluation.ipynb&lt;/code&gt;: RAG pipeline implementation&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;docstore_index/&lt;/code&gt;: FAISS document store directory&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;frontend/&lt;/code&gt;: Gradio interface code&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;requirements.txt&lt;/code&gt;: Project dependencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#RAG #LangChain #LLaMA #FastAPI #FAISS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/misterseyiayeni/retrieval-augmented-generation" target="_blank" rel="noopener"
+&gt;misterseyiayeni/retrieval-augmented-generation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

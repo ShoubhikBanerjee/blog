@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tokenomics on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/tokenomics/</link><description>Recent content in Tokenomics on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 01 Sep 2026 22:04:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/tokenomics/index.xml" rel="self" type="application/rss+xml"/><item><title>Jamf Builds Real-Time Per-Engineer AI Spend Controls on Amazon Bedrock</title><link>https://shoubhikbanerjee.github.io/blog/p/jamf-builds-real-time-per-engineer-ai-spend-controls-on-amazon-bedrock/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/jamf-builds-real-time-per-engineer-ai-spend-controls-on-amazon-bedrock/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21656-featured-image.png" alt="Featured image of post Jamf Builds Real-Time Per-Engineer AI Spend Controls on Amazon Bedrock" /&gt;&lt;h1 id="jamf-builds-real-time-per-engineer-ai-spend-controls-on-amazon-bedrock"&gt;Jamf Builds Real-Time Per-Engineer AI Spend Controls on Amazon Bedrock
+&lt;/h1&gt;&lt;p&gt;Jamf, an Apple device management company serving more than 76,000 organizations, has deployed a production system that tracks individual engineers&amp;rsquo; daily Amazon Bedrock spending and enforces tiered model restrictions based on budget thresholds. The solution addresses what the company calls the &amp;ldquo;tokenomics problem&amp;rdquo;: generative AI spend scales with behavior rather than provisioned capacity, making costs invisible until the bill arrives and complicating both cost control and ROI proof.&lt;/p&gt;
+&lt;h2 id="-the-challenge"&gt;🔍 The Challenge
+&lt;/h2&gt;&lt;p&gt;Generative AI spend behaves unlike traditional compute costs in several ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Traditional compute scales with provisioned capacity&lt;/li&gt;
+&lt;li&gt;AI spend scales with behavior: a single engineer running an agentic coding loop against a premium model can burn more tokens in a few hours than a team does in a week&lt;/li&gt;
+&lt;li&gt;Usage is invisible until the bill arrives&lt;/li&gt;
+&lt;li&gt;Leadership wants three answers before expanding AI access: What do we spend per person? Can we cap it without slowing engineers down? And do the productivity gains justify the cost?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Jamf gave its engineering organization broad access to Amazon Bedrock to accelerate AI-assisted development. Productivity climbed, but so did the need for AI FinOps: per-user visibility and cost accountability.&lt;/p&gt;
+&lt;h2 id="-how-the-enforcement-works"&gt;⚙️ How the Enforcement Works
+&lt;/h2&gt;&lt;p&gt;Jamf&amp;rsquo;s solution tracks each engineer&amp;rsquo;s daily Amazon Bedrock spending and applies tiered model restrictions as they approach their budget:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Threshold&lt;/th&gt;
+&lt;th&gt;Action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;80% of daily budget&lt;/td&gt;
+&lt;td&gt;Denies Anthropic Claude Opus access&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;100% of daily budget&lt;/td&gt;
+&lt;td&gt;Denies Anthropic Claude Sonnet access&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Always allowed&lt;/td&gt;
+&lt;td&gt;Anthropic Claude Haiku (low-cost model remains available)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Key operational characteristics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Restrictions take effect within minutes&lt;/li&gt;
+&lt;li&gt;No re-authentication required&lt;/li&gt;
+&lt;li&gt;Restrictions revert automatically at the next daily reset&lt;/li&gt;
+&lt;li&gt;Documented exception process grants time-boxed higher limits for engineers who legitimately need more&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-technical-architecture"&gt;🧩 Technical Architecture
+&lt;/h2&gt;&lt;p&gt;The system uses multiple AWS services in a serverless pipeline:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Data collection and calculation:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;When an engineer calls Amazon Bedrock (&lt;code&gt;bedrock:InvokeModel&lt;/code&gt;) through their AWS IAM Identity Center SSO session, Amazon Bedrock logs invocations (including model ID, input and output token counts, and user identity) to an Amazon S3 bucket&lt;/li&gt;
+&lt;li&gt;An Amazon Athena view (&lt;code&gt;bedrock_cost_today&lt;/code&gt;) reads those logs and computes per-user daily spend by multiplying token counts against published model rates&lt;/li&gt;
+&lt;li&gt;Athena queries raw logs in place, avoiding a separate data pipeline&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Enforcement cycle:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An AWS Lambda enforcement handler runs every 15 minutes, triggered by Amazon EventBridge&lt;/li&gt;
+&lt;li&gt;It reads current day spend from the Athena view&lt;/li&gt;
+&lt;li&gt;Cross-references an Amazon DynamoDB exceptions table holding custom, time-boxed limits&lt;/li&gt;
+&lt;li&gt;Reads each user&amp;rsquo;s previous state from an Amazon DynamoDB state table&lt;/li&gt;
+&lt;li&gt;When spend crosses a new threshold, sends a one-time Slack direct message for that tier&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Policy application:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For each engineer over threshold, Lambda publishes a new Customer Managed Policy version using &lt;code&gt;iam:CreatePolicyVersion&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Policy targets specific users through a &lt;code&gt;saml:sub&lt;/code&gt; condition key&lt;/li&gt;
+&lt;li&gt;CMPs attach to the IAM permission set&lt;/li&gt;
+&lt;li&gt;On next Amazon Bedrock call, IAM evaluates the updated policy and allows or denies accordingly&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Pricing configuration:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Amazon Bedrock invocation logs land on S3 as JSON&lt;/li&gt;
+&lt;li&gt;Athena table created over log location, with view translating token counts to dollars&lt;/li&gt;
+&lt;li&gt;View multiplies input and output tokens by published per-token rate for each model, grouped by user identity and current date&lt;/li&gt;
+&lt;li&gt;Each model family needs explicit pricing branch&lt;/li&gt;
+&lt;li&gt;Unmapped models priced at highest tier as fail-safe (not $0)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment-requirements"&gt;🚀 Deployment Requirements
+&lt;/h2&gt;&lt;p&gt;To deploy this solution, you need:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS account with permissions to create IAM roles, Customer Managed Policies, AWS Lambda functions, Amazon Athena workgroups, Amazon S3 buckets, and Amazon DynamoDB tables&lt;/li&gt;
+&lt;li&gt;AWS IAM Identity Center with a configured permission set assigned to users&lt;/li&gt;
+&lt;li&gt;Amazon Bedrock model invocation logging configured to deliver logs to S3&lt;/li&gt;
+&lt;li&gt;AWS CLI configured with appropriate credentials&lt;/li&gt;
+&lt;li&gt;Slack workspace with app configured for slash commands, interactivity, and bot messages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-implementation-resources"&gt;💡 Implementation Resources
+&lt;/h2&gt;&lt;p&gt;The code for this solution is available at: &lt;a class="link" href="https://github.com/aws-samples/sample-bedrock-spend-enforcement" target="_blank" rel="noopener"
+&gt;https://github.com/aws-samples/sample-bedrock-spend-enforcement&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;When implementing, replace rate constants with current Amazon Bedrock pricing for your Region.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21656-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21656-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/28/ML-21656-3.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIFinOps #AmazonBedrock #costcontrol #generativeAI #IAMIdentityCenter #tokenomics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/tokenomics-at-scale-how-jamf-built-real-time-spend-enforcement-for-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Tokenomics at scale: How Jamf built real-time spend enforcement for Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

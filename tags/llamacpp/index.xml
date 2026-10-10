@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Llamacpp on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/llamacpp/</link><description>Recent content in Llamacpp on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 04 Oct 2026 22:04:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/llamacpp/index.xml" rel="self" type="application/rss+xml"/><item><title>llama.cpp v0.4.0 Released with 18 Backends and 1-Bit Quantization</title><link>https://shoubhikbanerjee.github.io/blog/p/llama-cpp-v0-4-0-released-with-18-backends-and-1-bit-quantization/</link><pubDate>Sun, 04 Oct 2026 22:04:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/llama-cpp-v0-4-0-released-with-18-backends-and-1-bit-quantization/</guid><description>&lt;img src="https://wakii-site.vercel.app/blog/heroes/deep-dive-ggml-org-llama-cpp.png" alt="Featured image of post llama.cpp v0.4.0 Released with 18 Backends and 1-Bit Quantization" /&gt;&lt;h1 id="llamacpp-v040-released-with-18-backends-and-1-bit-quantization"&gt;llama.cpp v0.4.0 Released with 18 Backends and 1-Bit Quantization
+&lt;/h1&gt;&lt;p&gt;The llama.cpp project, a pure C/C++ LLM inference engine, has released stable version v0.4.0 on 2026-09-04, alongside a rapid cadence of 12 nightly builds in approximately 27.5 hours. The release extends the engine&amp;rsquo;s reach with 18 backend directories and introduces experimental 1-bit quantization, furthering its goal of &amp;ldquo;minimal setup and state-of-the-art performance on a wide range of hardware.&amp;rdquo;&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;llama.cpp is an inference engine built on the ggml library. Its README states the goal up front: LLM (and VLM) inference &amp;ldquo;with minimal setup and state-of-the-art performance on a wide range of hardware.&amp;rdquo; The latest stable release, v0.4.0 on 2026-09-04, is the only numbered release among the last 100; everything else is b108xx nightly builds pouring out with merges. Public since 2023-03-10, the cadence has held for over three years.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The engine uses a modular backend system. The &lt;code&gt;ggml/src/&lt;/code&gt; directory holds 18 matching backend directories. A registry in &lt;code&gt;ggml/src/&lt;/code&gt; scans, loads libraries, and picks the highest-scoring backend — each backend advertises its own capability in the same header, and the dispatcher trusts only that number.&lt;/p&gt;
+&lt;p&gt;For models larger than total VRAM, the README describes a hybrid mode: part runs on GPU, the rest falls back to CPU.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="quantization-support"&gt;Quantization support
+&lt;/h3&gt;&lt;p&gt;The README lists the range — 1.5-bit, 2-bit, 3-bit, 4-bit, 5-bit, 6-bit, and 8-bit integer quantization &amp;ldquo;for faster inference and reduced memory use.&amp;rdquo; Most striking is IQ1_S/IQ1_M — super-block 1-bit quantization: each weight keeps roughly one bit of information, and the model still generates tokens.&lt;/p&gt;
+&lt;p&gt;The enum in &lt;code&gt;ggml.h&lt;/code&gt; spans 1-bit (IQ1_S/M), 4-bit (Q4_K, MXFP4) to 8-bit (Q8_0) — 56 type definitions in one header.&lt;/p&gt;
+&lt;p&gt;All compression kernels live in &lt;code&gt;ggml-quants.c&lt;/code&gt; — 5,667 lines of C.&lt;/p&gt;
+&lt;h3 id="supported-backends"&gt;Supported backends
+&lt;/h3&gt;&lt;p&gt;The &amp;ldquo;Supported backends&amp;rdquo; table in the README lists 17 backends — from CUDA, Metal, Vulkan, and HIP to Hexagon for Snapdragon, WebGPU for browsers, and even IBM zDNN.&lt;/p&gt;
+&lt;h3 id="model-format"&gt;Model format
+&lt;/h3&gt;&lt;p&gt;The models doc says it plainly: &amp;ldquo;requires the model to be stored in the GGUF file format&amp;rdquo; — other formats must be converted with the Python scripts shipped in the repo. The key-value structure is so lean the API is declared in just 211 lines of &lt;code&gt;gguf.h&lt;/code&gt; — a spec you can read in one sitting.&lt;/p&gt;
+&lt;h3 id="contribution-policy"&gt;Contribution policy
+&lt;/h3&gt;&lt;p&gt;The repo governs AI contributions with a &amp;ldquo;100% responsible for every line&amp;rdquo; policy and ships its own contribution-guidance skill in-tree. The first principle: &amp;ldquo;AI-generated code is allowed. What is not allowed is submitting code you do not understand.&amp;rdquo; Contributors own 100% of every line, whoever typed it — because every merged line is maintained indefinitely by a small maintainer team across a vast platform-backend matrix.&lt;/p&gt;
+&lt;h3 id="measurement-tools"&gt;Measurement tools
+&lt;/h3&gt;&lt;p&gt;Alongside sit the measurement tools: &lt;code&gt;tools/quantize&lt;/code&gt; to compress, &lt;code&gt;tools/imatrix&lt;/code&gt; to measure an importance matrix before compressing, &lt;code&gt;tools/perplexity&lt;/code&gt; and &lt;code&gt;tools/llama-bench&lt;/code&gt; to verify quality after — compress, then measure; never compress and trust.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Stable release v0.4.0 on 2026-09-04, yet 12 nightly b108xx builds landed in ~27 hours (per GitHub API on 2026-09-08). The repo&amp;rsquo;s pushed_at falls in the same window — 11:36:37 UTC on 2026-09-08.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;llama.cpp aims for performance across a &amp;ldquo;wide range of hardware&amp;rdquo; — x86, Apple Silicon, down to phone NPUs. With 18 backends and quantization as low as 1-bit, it enables running LLMs on devices that lack dedicated GPUs, while the hybrid GPU/CPU mode handles models larger than total VRAM. Inference configs for local LLMs are provided, including ready-to-run settings for Ollama Modelfile, vLLM command, and llama.cpp itself.&lt;/p&gt;
+&lt;p&gt;#llama.cpp #localAI #quantization #opensource #AIinference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://wakii.xyz/blog/deep-dive-ggml-org-llama-cpp/" target="_blank" rel="noopener"
+&gt;llama.cpp: efficient LLM inference from CPU to the edge — wakii&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://contextetech.com/en/inference" target="_blank" rel="noopener"
+&gt;Ollama, vLLM and llama.cpp configs for local LLMs · Contexte Tech&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Transformers Now Supports llama.cpp GGUF Quantizations for Local Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/transformers-now-supports-llama-cpp-gguf-quantizations-for-local-inference/</link><pubDate>Tue, 22 Sep 2026 22:03:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/transformers-now-supports-llama-cpp-gguf-quantizations-for-local-inference/</guid><description>&lt;img src="https://huggingface.co/blog/assets/transformers_llama_cpp_quants/thumbnail.png" alt="Featured image of post Transformers Now Supports llama.cpp GGUF Quantizations for Local Inference" /&gt;&lt;h1 id="transformers-now-supports-llamacpp-gguf-quantizations-for-local-inference"&gt;Transformers Now Supports llama.cpp GGUF Quantizations for Local Inference
+&lt;/h1&gt;&lt;p&gt;The Transformers library now allows users to run llama.cpp GGUF quantizations using &lt;code&gt;from_pretrained&lt;/code&gt;, enabling AI model generation directly on a user&amp;rsquo;s own machine.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;GGUF is a widely used format for local inference developed by the llama.cpp team. It packages model weights and metadata—including tokenizer information and optional chat templates—into a single file. This format supports various quantization levels, allowing users to reduce the memory footprint by trading off some precision.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To achieve performance close to llama.cpp, Transformers reuses its underlying ggml kernels through the kernels library and reduces overhead in &lt;code&gt;generate&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Loading:&lt;/strong&gt; Users pass the Hub &lt;code&gt;model_id&lt;/code&gt; and filename as &lt;code&gt;gguf_file&lt;/code&gt; to &lt;code&gt;from_pretrained&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution:&lt;/strong&gt; On Apple Silicon, when weights stay packed on Metal, Transformers automatically loads compatible ggml/Metal layer kernels and uses &lt;code&gt;ggml-org/ggml-attn&lt;/code&gt; for attention implementation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fallbacks:&lt;/strong&gt; If the compatible kernel cannot be fetched, the system falls back to &amp;ldquo;sdpa&amp;rdquo; (which can also be forced by passing &lt;code&gt;attn_implementation=&amp;quot;sdpa&amp;quot;&lt;/code&gt;). Without a compatible quantization kernel, the loader dequantizes the model, which uses more memory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Initial focus is on local inference for Apple Silicon, starting with the Qwen3.5 architecture. Users can select different quantization variants based on their available memory:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Quantization Variant&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Q4_K_M&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Mixes tensor precisions; uses mostly 4-bit weights while keeping sensitive tensors at higher precision.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Q5_K_M&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Recommended for users with more memory available.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Q6_K&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Recommended for users with more memory available.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Ready-to-use GGUF checkpoints are available on the Hub from several providers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ggml-org&lt;/li&gt;
+&lt;li&gt;Unsloth&lt;/li&gt;
+&lt;li&gt;LM Studio Community&lt;/li&gt;
+&lt;li&gt;bartowski&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Running AI models locally has been made practical through llama.cpp and projects like MLX. The llama.cpp inference engine already powers tools such as Ollama, Jan, and LM Studio. Integrating this into Transformers makes it easier to run these models locally while allowing the same endpoint to be used by other clients that support the API.&lt;/p&gt;
+&lt;p&gt;#Transformers #llama.cpp #GGUF #LocalAI #AppleSilicon&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/transformers-llama-cpp-quants" target="_blank" rel="noopener"
+&gt;Transformers now runs llama.cpp quants&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ThinkingBox on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/thinkingbox/</link><description>Recent content in ThinkingBox on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 04 Oct 2026 22:04:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/thinkingbox/index.xml" rel="self" type="application/rss+xml"/><item><title>ThinkingBox Benchmark Reveals Gaps Between LLM Agent Tool Calls and Database State</title><link>https://shoubhikbanerjee.github.io/blog/p/thinkingbox-benchmark-reveals-gaps-between-llm-agent-tool-calls-and-database-state/</link><pubDate>Sun, 04 Oct 2026 22:04:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/thinkingbox-benchmark-reveals-gaps-between-llm-agent-tool-calls-and-database-state/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64b8491203124195cd795cad/NStwJm1AafDELVsU4KGwS.png" alt="Featured image of post ThinkingBox Benchmark Reveals Gaps Between LLM Agent Tool Calls and Database State" /&gt;&lt;h1 id="thinkingbox-benchmark-reveals-gaps-between-llm-agent-tool-calls-and-database-state"&gt;ThinkingBox Benchmark Reveals Gaps Between LLM Agent Tool Calls and Database State
+&lt;/h1&gt;&lt;p&gt;A joint Microsoft‑Hugging Face blog introduces &lt;strong&gt;ThinkingBox&lt;/strong&gt;, a benchmark that runs LLM agents against isolated tool sessions, then grades the resulting backend database state and side effects.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The blog is co‑authored by Microsoft and Hugging Face, with thanks to Tommy Guy, Sergio Paniego, and former interns Zhuochun Li, Ali Keramati, and Youngmin Ko.&lt;/li&gt;
+&lt;li&gt;Figure 1 shows the workflow: an agent interacts with MCP tool sessions, and a grader checks the terminal backend state and side effects.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Each of the 507 stateful business workflows is executed 20 times from an identical clean backend.&lt;/li&gt;
+&lt;li&gt;Agents invoke tools (e.g., order lookup, tracking, policy search) and produce final responses.&lt;/li&gt;
+&lt;li&gt;An &lt;strong&gt;AI grader&lt;/strong&gt; examines the &lt;strong&gt;terminal database state&lt;/strong&gt; rather than just the sequence of tool calls.&lt;/li&gt;
+&lt;li&gt;Example: a retail‑support task where an agent makes nine well‑formed tool calls but leaves the ticket status as &lt;em&gt;solved&lt;/em&gt; while the required end state is &lt;em&gt;hold&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;The executable check fails because the database disagrees with the claimed outcome.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Trials:&lt;/strong&gt; 121 680 valid trials across 12 LLM models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Failures:&lt;/strong&gt; 79 853 attempts failed the executable checks.&lt;/li&gt;
+&lt;li&gt;Among failures:
+&lt;ul&gt;
+&lt;li&gt;67.24 % terminated cleanly, invoked a state‑changing tool, and reported no final tool error.&lt;/li&gt;
+&lt;li&gt;77.61 % had wrong field values.&lt;/li&gt;
+&lt;li&gt;43.30 % produced unintended extra effects.&lt;/li&gt;
+&lt;li&gt;25.36 % missed required effects.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance snapshot&lt;/strong&gt; (overall pass % where the backend state matched the claim):&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Overall Pass %&lt;/th&gt;
+&lt;th&gt;Retail Pass %&lt;/th&gt;
+&lt;th&gt;Auto‑Insurance Pass %&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Opus 5.5&lt;/td&gt;
+&lt;td&gt;67.16&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Opus 5&lt;/td&gt;
+&lt;td&gt;(two‑thirds of a point below 5.5)&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Opus 4.6&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;td&gt;68.62&lt;/td&gt;
+&lt;td&gt;8.30&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kimi‑K3 (open‑weights)&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;td&gt;(within a point of GPT‑6‑Astra)&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Observed 20/20&lt;/strong&gt;: the literal count of how many of the 507 tasks passed all 20 runs is reported.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Final responses and valid tool calls are only proxies; the &lt;strong&gt;database state is the evidence&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;A trajectory is a claim, and repetition is the trust test – an agent that succeeds once but fails later is not a reliable refund agent.&lt;/li&gt;
+&lt;li&gt;The benchmark highlights that many agents appear correct by tool‑call metrics yet leave incorrect values, unintended side effects, or missing required changes in the backend.&lt;/li&gt;
+&lt;li&gt;Domain matters: the same model can score dramatically different percentages on retail versus auto‑insurance tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;All statements are drawn directly from the provided evidence.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64b8491203124195cd795cad/Dzuml_9K2lfRq4hZi17EY.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64b8491203124195cd795cad/DjaLNZKNeU--Xy2WFCvVX.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64b8491203124195cd795cad/NONd2WGm4vtGpsVgs-CIq.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#ThinkingBox #LLM #AIAgents #Benchmark&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/microsoft/thinkingbox" target="_blank" rel="noopener"
+&gt;The Agent Said It Was Done. The Database Disagreed.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

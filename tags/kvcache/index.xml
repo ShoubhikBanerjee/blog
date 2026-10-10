@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>KVcache on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/kvcache/</link><description>Recent content in KVcache on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 09 Oct 2026 22:05:01 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/kvcache/index.xml" rel="self" type="application/rss+xml"/><item><title>Encoder‑Only Healing Enables Parameter‑Efficient KV‑Cache Compression</title><link>https://shoubhikbanerjee.github.io/blog/p/encoderonly-healing-enables-parameterefficient-kvcache-compression/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/encoderonly-healing-enables-parameterefficient-kvcache-compression/</guid><description>&lt;h1 id="encoderonly-healing-enables-parameterefficient-kvcache-compression"&gt;Encoder‑Only Healing Enables Parameter‑Efficient KV‑Cache Compression
+&lt;/h1&gt;&lt;p&gt;A new study shows that fine‑tuning only the encoder after post‑hoc SVD‑based KV‑cache compression matches full‑factor healing while using far fewer trainable parameters and optimizer memory.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The paper &lt;em&gt;Freeze the Decoder, Heal the Encoder&lt;/em&gt; (submitted 25 Sep 2026) investigates parameter‑efficient fine‑tuning recipes for KV‑cache compression.&lt;/li&gt;
+&lt;li&gt;It reveals that comparing recipes with a shared learning rate can create a misleading advantage for smaller‑parameter arms.&lt;/li&gt;
+&lt;li&gt;By assigning individual learning rates to each factor, the apparent win of encoder‑only healing disappears, exposing true parity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Low‑rank cache conversion&lt;/strong&gt; – An already‑pretrained model’s key/value weights are factorized into:
+&lt;ul&gt;
+&lt;li&gt;a down‑projection (&lt;strong&gt;encoder&lt;/strong&gt;) and&lt;/li&gt;
+&lt;li&gt;an up‑projection (&lt;strong&gt;decoder&lt;/strong&gt;) forming a low‑rank, multi‑head‑latent‑attention‑style cache.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Healing fine‑tune&lt;/strong&gt; – A short fine‑tune (“healing”) is applied to recover accuracy lost to truncation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Learning‑rate strategy&lt;/strong&gt; – Instead of a single shared rate, each factor receives its own tuned learning rate.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-findings"&gt;⚙️ Key Findings
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Shared learning rate bias&lt;/strong&gt;: When arms differ in trainable‑parameter count, a common learning rate depresses larger arms’ means and inflates variance, fabricating a multi‑seed‑significant advantage for the smallest arm.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Encoder‑only healing parity&lt;/strong&gt;: With per‑arm learning‑rate tuning, healing only the encoder achieves the same accuracy as healing the decoder or both factors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Resource savings&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;3× fewer trainable parameters&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;3× less optimizer‑state memory&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Empirical verification&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Tested on the vision‑language model &lt;strong&gt;Qwen2.5‑VL‑3B‑Instruct&lt;/strong&gt; with three random seeds per configuration.&lt;/li&gt;
+&lt;li&gt;Replicated on a text‑only testbed across two backbones.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Practical recipe&lt;/strong&gt;: Encoder‑only healing is a lower‑memory drop‑in method for retrofitting low‑rank KV‑cache compression during training.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;🚀 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a &lt;strong&gt;memory‑efficient&lt;/strong&gt; path to enable low‑rank KV‑cache compression without sacrificing model performance.&lt;/li&gt;
+&lt;li&gt;Highlights the &lt;strong&gt;importance of per‑arm learning‑rate tuning&lt;/strong&gt; when comparing fine‑tuning strategies that differ in parameter count, a caution applicable beyond this specific setting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-takeaway"&gt;💡 Takeaway
+&lt;/h2&gt;&lt;p&gt;For practitioners seeking to compress KV caches, applying a short healing phase to the encoder alone—while tuning its learning rate separately—delivers parity with full‑factor approaches at a fraction of the memory cost.&lt;/p&gt;
+&lt;p&gt;#KVCache #ParameterEfficient #ModelCompression #FineTuning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.10552v1" target="_blank" rel="noopener"
+&gt;Freeze the Decoder, Heal the Encoder: Parameter-Efficient Adaptation for SVD-Based KV-Cache Compression&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.10738v1" target="_blank" rel="noopener"
+&gt;Lossy Compressive Text Autoencoders&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.10871v1" target="_blank" rel="noopener"
+&gt;Sparse Attention Is Matrix Approximation, Not Choosing from a Bag of Values&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.11132v1" target="_blank" rel="noopener"
+&gt;SFT-as-Context Mitigates Forgetting in Supervised Fine-Tuning&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.11287v1" target="_blank" rel="noopener"
+&gt;REMORY: Learning Residual Memory for Context Compaction&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>KVFetch adds temporal recall channel to improve KV‑cache compression</title><link>https://shoubhikbanerjee.github.io/blog/p/kvfetch-adds-temporal-recall-channel-to-improve-kvcache-compression/</link><pubDate>Thu, 08 Oct 2026 22:04:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/kvfetch-adds-temporal-recall-channel-to-improve-kvcache-compression/</guid><description>&lt;h1 id="kvfetch-adds-temporal-recall-channel-to-improve-kvcache-compression"&gt;KVFetch adds temporal recall channel to improve KV‑cache compression
+&lt;/h1&gt;&lt;p&gt;KVFetch: Temporal Prefetching for the Missing Half of KV Cache Compression was submitted on 23 Sep 2026. It introduces a new mechanism to address a key limitation of current KV‑cache compressors used during long‑context LLM inference.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;As context windows grow to tens or hundreds of thousands of tokens, KV‑cache compression becomes essential for efficient inference.&lt;/li&gt;
+&lt;li&gt;Existing compressors belong to three families: score‑based eviction, summary compensation, and offload‑and‑recall.&lt;/li&gt;
+&lt;li&gt;All three decide what to keep or recall solely by content relevance to the current query.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-problem-with-existing-kvcache-compressors"&gt;⚙️ Problem with existing KV‑cache compressors
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A cache supports two access modes: &lt;strong&gt;associative lookup by content&lt;/strong&gt; and &lt;strong&gt;sequential traversal by position&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Current compressors implement only the associative (content‑based) mode.&lt;/li&gt;
+&lt;li&gt;This omission matters for tasks such as retrieval‑augmented generation, code completion, and structured‑data extraction, which need verbatim reproduction of identifiers, field values, or code tokens.&lt;/li&gt;
+&lt;li&gt;Under compression, content‑based eviction keeps the head of a sequence but discards its continuation, causing &amp;ldquo;sequential forgetting&amp;rdquo; – a failure that persists despite better scoring, larger budgets, summary compensation, or dynamic re‑scoring.&lt;/li&gt;
+&lt;li&gt;Sequential forgetting is identified as the dominant source of remaining quality loss under compression.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-kvfetch-design"&gt;🛠️ KVFetch design
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;KVFetch is a &lt;strong&gt;training‑free, drop‑in framework&lt;/strong&gt; that adds a &lt;strong&gt;temporal recall channel&lt;/strong&gt; to any score‑based compressor.&lt;/li&gt;
+&lt;li&gt;It &lt;strong&gt;demotes evicted candidates to a quantized cold tier&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;It &lt;strong&gt;detects active copying&lt;/strong&gt; through a &lt;strong&gt;monotone read pointer&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;It &lt;strong&gt;prefetches positional successors&lt;/strong&gt; into fixed‑size hot‑tier slots &lt;strong&gt;without increasing attention cost&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Evaluation on &lt;strong&gt;RULER‑16K&lt;/strong&gt; under an iso‑budget control shows:
+&lt;ul&gt;
+&lt;li&gt;Verbatim copying recovery improves from &lt;strong&gt;0.8 % to 78.4 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The 13‑task average score rises by &lt;strong&gt;+8.4&lt;/strong&gt; points, with gains concentrated on tasks requiring sequential access.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;On &lt;strong&gt;LongBench&lt;/strong&gt;, where no task requires sequential access, the temporal channel stays dormant and imposes no cost.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;KVFetch is presented as a &lt;strong&gt;drop‑in framework&lt;/strong&gt;, implying it can be incorporated into existing score‑based compressors without additional training.&lt;/li&gt;
+&lt;li&gt;The work is hosted on arXiv Labs, a platform that encourages community collaboration and upholds values of openness, community, excellence, and user data privacy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;The story is based on the arXiv preprint titled “KVFetch: Temporal Prefetching for the Missing Half of KV Cache Compression.”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#KVCache #LLMInference #Compression&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.08811v1" target="_blank" rel="noopener"
+&gt;KVFetch: Temporal Prefetching for the Missing Half of KV Cache Compression&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.08820v1" target="_blank" rel="noopener"
+&gt;Task-Oriented Key-Layer KV Communication for Efficient Latent Multi-Agent Collaboration&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.09003v1" target="_blank" rel="noopener"
+&gt;Algorithmic Scratchpads and Curriculum Staging for Arithmetic Reasoning in Tiny Transformers&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.09025v1" target="_blank" rel="noopener"
+&gt;SPIN: Shadow Predictive Indexer for Sparse Attention&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.09051v1" target="_blank" rel="noopener"
+&gt;A Self-Pruning Transformer: Extreme KV-Cache Compression with Universal Attention&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.08858v1" target="_blank" rel="noopener"
+&gt;LRCC: Generalizing Low-Rank Compression with Conditional Computation&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.09346v1" target="_blank" rel="noopener"
+&gt;OnlineQAT: On-Policy Distillation for Ultra-Low-Bit Large Language Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AttSVD Enables Prompt-Adaptive Low-Rank KV Cache Compression</title><link>https://shoubhikbanerjee.github.io/blog/p/attsvd-enables-prompt-adaptive-low-rank-kv-cache-compression/</link><pubDate>Wed, 07 Oct 2026 22:09:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/attsvd-enables-prompt-adaptive-low-rank-kv-cache-compression/</guid><description>&lt;h1 id="attsvd-enables-prompt-adaptive-low-rank-kv-cache-compression"&gt;AttSVD Enables Prompt-Adaptive Low-Rank KV Cache Compression
+&lt;/h1&gt;&lt;p&gt;AttSVD is a new, interpretable low‑rank compression method that adapts to each prompt’s attention geometry, reducing key‑value (KV) cache memory while preserving performance.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;KV caches of autoregressive transformers grow linearly with context length and dominate memory at long context.&lt;/li&gt;
+&lt;li&gt;Traditional training‑free remedies evict low‑importance tokens, an irreversible choice along the sequence axis.&lt;/li&gt;
+&lt;li&gt;AttSVD keeps every token but stores it more cheaply along the &lt;em&gt;feature&lt;/em&gt; axis.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Performs an online, per‑prompt truncated Singular Value Decomposition (SVD) that retains only the directions attention actually reads.&lt;/li&gt;
+&lt;li&gt;The retained rank determines the proportion of persistent per‑head KV memory that is kept.&lt;/li&gt;
+&lt;li&gt;Two decode‑time caching strategies are offered:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Accumulating&lt;/strong&gt; – suited for short generation regimes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Streaming&lt;/strong&gt; – suited for long generation regimes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Per‑matrix energy rule&lt;/strong&gt;: sizes the logit space and the attention mass independently.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Attention‑aware basis&lt;/strong&gt;: truncates only in the spaces attention reads, preserving both attention logits and output.&lt;/li&gt;
+&lt;li&gt;Provides free, per‑head interpretability insights into effective rank and the geometry attention consumes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance"&gt;📊 Performance
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Across multiple models, on an agentic benchmark and the full LongBench suite, AttSVD stays on par with the dense cache while using up to &lt;strong&gt;50 %&lt;/strong&gt; of the KV‑cache memory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#KVCache #LowRank #Transformer #MemoryEfficiency&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.06927v1" target="_blank" rel="noopener"
+&gt;AttSVD:Prompt-Adaptive Low-Rank KV Cache Compression via Attention-Guided SVD&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.06996v1" target="_blank" rel="noopener"
+&gt;Mask-Guided KV Cache Eviction in Block Diffusion Language Models&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.06963v1" target="_blank" rel="noopener"
+&gt;WavePrune: One period is often enough for RoPE&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.07591v1" target="_blank" rel="noopener"
+&gt;Recurrent Looped Transformer&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.07643v1" target="_blank" rel="noopener"
+&gt;Monte Carlo Estimation for KV Cache Eviction&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.07716v1" target="_blank" rel="noopener"
+&gt;Readout Stability in Prefill-Only Decision Models:Zero-Label Prediction and Inference-Time Compute Allocation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Contiguity, Not Importance: Budgeted Repair of Stale KV Caches After Document Edits</title><link>https://shoubhikbanerjee.github.io/blog/p/contiguity-not-importance-budgeted-repair-of-stale-kv-caches-after-document-edits/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/contiguity-not-importance-budgeted-repair-of-stale-kv-caches-after-document-edits/</guid><description>&lt;h1 id="contiguity-not-importance-budgeted-repair-of-stale-kv-caches-after-document-edits"&gt;Contiguity, Not Importance: Budgeted Repair of Stale KV Caches After Document Edits
+&lt;/h1&gt;&lt;p&gt;KV‑cache reuse can cut inference cost in retrieval‑augmented generation (RAG) and agentic systems, but edits to retrieved knowledge, working memory, or user state can make cached contexts stale.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Under causal self‑attention, a local edit can affect downstream KV states.&lt;/li&gt;
+&lt;li&gt;A full re‑prefill restores consistency but is costly.&lt;/li&gt;
+&lt;li&gt;Refreshing only the edited span can leave downstream dependencies stale.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-budgeted-repair-approach"&gt;⚙️ Budgeted Repair Approach
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The problem is framed as &lt;strong&gt;in‑place repair&lt;/strong&gt; = budgeted recomputation.&lt;/li&gt;
+&lt;li&gt;Training‑free position‑selection policies are evaluated on a factual RAG benchmark with matched direct and derived edits.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-findings"&gt;📊 Findings
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Across three model families, all policies fix direct‑edit cases; derived cases separate the policies.&lt;/li&gt;
+&lt;li&gt;With the primary budget, a contiguous edit‑local window recovers &lt;strong&gt;≥ 0.94&lt;/strong&gt; of the post‑edit answer margin and outperforms attention‑based, KV‑deviation, and structural selectors.&lt;/li&gt;
+&lt;li&gt;Mechanistic analysis: position sets that work under clean‑state transplantation can fail under actual recomputation because scattered positions inherit surrounding staleness.&lt;/li&gt;
+&lt;li&gt;The edit‑local advantage depends on adjacency and largely disappears when the answer‑bearing text moves downstream.&lt;/li&gt;
+&lt;li&gt;Answer‑relevant edits almost always corrupt model behavior; failure severity is difficult to predict.&lt;/li&gt;
+&lt;li&gt;Repair using the edit‑local window is &lt;strong&gt;13–21×&lt;/strong&gt; faster than a full re‑prefill.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-implications"&gt;💡 Implications
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;When the dependent text remains adjacent to the edit, unconditional edit‑local repair provides a fast, cost‑effective solution to stale KV caches.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#KVCache #RAG #ModelRepair #AIInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.17983v1" target="_blank" rel="noopener"
+&gt;Contiguity, Not Importance: Budgeted Repair of Stale KV Caches After Document Edits&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.17888v1" target="_blank" rel="noopener"
+&gt;Long-Context Demonstration Selection Using State Space Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>K/V-Cache Interventions for Persona Control in Llama-3.1-8B</title><link>https://shoubhikbanerjee.github.io/blog/p/k-v-cache-interventions-for-persona-control-in-llama-3-1-8b/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/k-v-cache-interventions-for-persona-control-in-llama-3-1-8b/</guid><description>&lt;h1 id="kv-cache-interventions-for-persona-control-in-llama-31-8b"&gt;K/V-Cache Interventions for Persona Control in Llama-3.1-8B
+&lt;/h1&gt;&lt;p&gt;Researchers have studied K/V-cache interventions as a structured surface for persona control in decoder-only language models, specifically by transplanting a target-conditioned K/V trajectory into a source-persona generation.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;This method is characterized as trajectory-level transplantation rather than isolated persona-representation injection because the transplanted trajectory carries the target&amp;rsquo;s own generated token history. To test this, a same-token-sequence control was used to decode an identical token sequence under source versus target conditioning, which reproduced the sign and layer localization of the L28 representational shift, suggesting the shift is not explained solely by imported token history.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Testing involved 13 intervention configurations applied to Llama-3.1-8B for a fixed source-to-target persona pair. The results showed a dissociation between representation-level alignment and behavioral expression:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Layer-Band Replacement&lt;/th&gt;
+&lt;th style="text-align: left"&gt;V-gap (Alignment)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Behavioral Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Early&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.91&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Strong local V-space alignment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Mid (Layers 9-20)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.89&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Combines target-marker expression with preserved lexical diversity&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Late&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.84&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Strong local V-space alignment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Full&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.94&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Comparable alignment to mid-layer but different lexical-diversity profile (TTR 0.65)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Additional findings include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lexical Diversity&lt;/strong&gt;: Mid-layer replacement produced a TTR of 0.77, compared to 0.65 for full-layer replacement.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Position Perturbations&lt;/strong&gt;: Both lag and shuffle operations uniformly suppressed target-persona expression, representing a common behavioral failure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;These findings indicate that representation-level similarity metrics alone are not sufficient predictors of downstream persona expression. The K/V cache serves as a controllable but structurally constrained intervention surface. Note that these results characterize representation-behavior dissociation in a high-signal setting and do not establish universality across all models or persona pairs.&lt;/p&gt;
+&lt;p&gt;#LLM #KV-cache #Llama-3.1 #PersonaControl #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.11020v1" target="_blank" rel="noopener"
+&gt;K/V-Cache Interventions Dissociate Representation Alignment from Persona Expression in Decoder-Only Language Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New InertiaKV Methods Boost Decoding-Time KV Cache Efficiency</title><link>https://shoubhikbanerjee.github.io/blog/p/new-inertiakv-methods-boost-decoding-time-kv-cache-efficiency/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-inertiakv-methods-boost-decoding-time-kv-cache-efficiency/</guid><description>&lt;h1 id="new-inertiakv-methods-boost-decoding-time-kv-cache-efficiency"&gt;New InertiaKV Methods Boost Decoding-Time KV Cache Efficiency
+&lt;/h1&gt;&lt;p&gt;A paper submitted on 3 Sep 2026 to the Computer Science &amp;gt; Artificial Intelligence category introduces aggressive KV‑cache eviction techniques that rely on temporal aggregation rather than solely on scoring function improvements.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Decoding‑time KV cache compression has traditionally emphasized better token scoring functions.&lt;/li&gt;
+&lt;li&gt;The authors highlight that the temporal rule aggregating scores across decode steps is often treated as an implementation detail.&lt;/li&gt;
+&lt;li&gt;Their experiments show that exponential‑moving‑average (EMA) aggregation preserves ranking order and makes many scorer modifications indistinguishable at the eviction‑set level.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;EMA‑based aggregation&lt;/strong&gt; couples layer weighting and temporal retention, providing stability for value‑norm and entropy variants, which stay highly correlated with attention and keep retention sets nearly unchanged.&lt;/li&gt;
+&lt;li&gt;Scorers such as KeyDiff, key norm, recency, and a learned scorer alter the ranking and cause substantial degradation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Method&lt;/th&gt;
+&lt;th&gt;Core idea&lt;/th&gt;
+&lt;th&gt;Reported impact&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;InertiaKV&lt;/td&gt;
+&lt;td&gt;EMA‑based decoding‑time eviction&lt;/td&gt;
+&lt;td&gt;Improves decode throughput compared to full‑refresh baselines&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;InertiaKV‑Lazy&lt;/td&gt;
+&lt;td&gt;Periodic‑refresh variant of InertiaKV&lt;/td&gt;
+&lt;td&gt;Yields &lt;strong&gt;1.34–1.46×&lt;/strong&gt; decode throughput relative to full‑refresh InertiaKV&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Score‑Free decoding&lt;/td&gt;
+&lt;td&gt;Scores the full context once at the first decode step, then freezes the ranking&lt;/td&gt;
+&lt;td&gt;Average quality change of &lt;strong&gt;+0.03&lt;/strong&gt; while removing all subsequent scoring&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Experiments span six open‑weight backbones and the &lt;strong&gt;LongBench, LongBench‑v2, and RULER&lt;/strong&gt; benchmarks.&lt;/li&gt;
+&lt;li&gt;Results identify &lt;strong&gt;temporal aggregation&lt;/strong&gt; and &lt;strong&gt;ranking preservation&lt;/strong&gt; as distinct, consequential design factors, without claiming scoring quality is irrelevant in general.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The paper provides &lt;strong&gt;code, data, and media associated with the article&lt;/strong&gt; for reproducibility.&lt;/li&gt;
+&lt;li&gt;Links to the PDF and supplementary material are available through the arXiv entry.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By focusing on temporal aggregation, the proposed methods achieve higher throughput without sacrificing generation quality.&lt;/li&gt;
+&lt;li&gt;The findings suggest that stable aggregation can make many scorer variations effectively equivalent, guiding future KV‑cache compression research toward aggregation strategies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AI #KVCache #Decoding #TemporalAggregation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.03515v1" target="_blank" rel="noopener"
+&gt;What Matters for Aggressive Decoding-Time KV Eviction? Temporal Aggregation and Ranking Preservation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Recent Developments in LLM KV Cache Compression and Efficiency</title><link>https://shoubhikbanerjee.github.io/blog/p/recent-developments-in-llm-kv-cache-compression-and-efficiency/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/recent-developments-in-llm-kv-cache-compression-and-efficiency/</guid><description>&lt;h1 id="recent-developments-in-llm-kv-cache-compression-and-efficiency"&gt;Recent Developments in LLM KV Cache Compression and Efficiency
+&lt;/h1&gt;&lt;p&gt;New research introduces two distinct approaches to optimizing key-value (KV) cache memory usage in large language models to address bottlenecks in long-context inference and reasoning workloads.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;KV cache growth poses a significant memory bottleneck for LLM serving. Two new frameworks, GrowPage and SGD-KV, provide methods to manage cache memory more efficiently.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Framework&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Methodology&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Primary Focus&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GrowPage&lt;/td&gt;
+&lt;td style="text-align: left"&gt;On-demand budgeting&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Dynamically adjusts KV capacity based on runtime demand variations.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;SGD-KV&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Summarization-Guided Compression&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses a head-aware diagnostic task to prioritize attention heads.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="growpage"&gt;GrowPage
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Treats KV capacity as a runtime resource that evolves during generation.&lt;/li&gt;
+&lt;li&gt;Maintains lightweight dual-timescale query summaries to estimate demand.&lt;/li&gt;
+&lt;li&gt;Integrates with PagedAttention to preserve continuous batching and prefix caching.&lt;/li&gt;
+&lt;li&gt;Adjusts capacity by compressing states or acquiring additional physical pages as needed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="sgd-kv"&gt;SGD-KV
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Employs a chunk-summarization diagnostic task to identify heads specialized in hierarchical information aggregation.&lt;/li&gt;
+&lt;li&gt;Reduces KV cache memory usage by up to 75%.&lt;/li&gt;
+&lt;li&gt;Maintains performance on benchmarks up to 1M context tokens.&lt;/li&gt;
+&lt;li&gt;Tested on Qwen2.5-7B-1M and Qwen3-32B models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Both methods offer improved performance-to-throughput or efficiency-to-accuracy trade-offs, enabling more effective long-context inference and reasoning.&lt;/p&gt;
+&lt;p&gt;#LLM #KVCache #AI #MachineLearning #Inference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.03494v1" target="_blank" rel="noopener"
+&gt;GrowPage: On-Demand KV Budgeting for Efficient LLM Reasoning Serving&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.03235v1" target="_blank" rel="noopener"
+&gt;SGD-KV: Summarization Guided KV Cache Compression&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>HeadWiseKV Compresses Key-Value Caches in Hybrid Language Models</title><link>https://shoubhikbanerjee.github.io/blog/p/headwisekv-compresses-key-value-caches-in-hybrid-language-models/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/headwisekv-compresses-key-value-caches-in-hybrid-language-models/</guid><description>&lt;h1 id="headwisekv-compresses-key-value-caches-in-hybrid-language-models"&gt;HeadWiseKV Compresses Key-Value Caches in Hybrid Language Models
+&lt;/h1&gt;&lt;p&gt;In a new optimization development, researchers have introduced HeadWiseKV, a training-free framework designed to compress the residual global key-value (KV) caches of hybrid language models. During long-context inference, retaining a growing KV cache during decoding consumes substantial GPU memory and can reduce generation throughput. This bottleneck remains in hybrid language models because their residual global-attention layers can dominate context-dependent cache demand. HeadWiseKV addresses how to allocate this state under an aggregate KV-residency budget while preserving the models&amp;rsquo; native local, recurrent, and linear paths.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;HeadWiseKV optimizes KV cache allocation through several architectural mechanisms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Predictable Cache Demand:&lt;/strong&gt; The framework assigns each physical KV head a static, multilevel history window, making cache demand predictable before serving.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SeqCalib Algorithm:&lt;/strong&gt; HeadWiseKV formulates the allocation as a restricted operational rate-distortion problem and uses SeqCalib as its core policy-generation algorithm. SeqCalib processes layers in execution order and conditions each decision on the lower-layer policy used at deployment, thereby accounting for interactions across depth.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grouped-Cache Runtime:&lt;/strong&gt; A grouped-cache runtime materializes the selected policy as actual per-head KV residency rather than a mask over a full cache.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;📊 Key details
+&lt;/h2&gt;&lt;p&gt;The framework has been evaluated for performance and downstream quality:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model Evaluation:&lt;/strong&gt; Quality was evaluated across four hybrid long-context models, and physical residency and serving behavior were studied on Qwen3.6-27B.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quality Preservation:&lt;/strong&gt; HeadWiseKV retains near-Full-KV RULER and LoCoMo quality across the evaluated models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Efficiency:&lt;/strong&gt; In a fixed-model systems study, the framework reduces sampled peak device memory by 8.59% at a 112K context length.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Context Extension:&lt;/strong&gt; HeadWiseKV extends the largest verified successful context from 114K to 161K.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#HeadWiseKV #KVCache #HybridLMs #SeqCalib #ModelInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.02029v1" target="_blank" rel="noopener"
+&gt;HeadWiseKV: Budgeted Per-Head Cache Residency for Hybrid Long-Context Language Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

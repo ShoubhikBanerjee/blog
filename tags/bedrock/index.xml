@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bedrock on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/bedrock/</link><description>Recent content in Bedrock on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 07 Oct 2026 22:09:50 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/bedrock/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS adds automated remediation workflow using Lambda Durable Functions, EventBridge, and Bedrock</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-adds-automated-remediation-workflow-using-lambda-durable-functions-eventbridge-and-bedrock/</link><pubDate>Wed, 07 Oct 2026 22:09:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-adds-automated-remediation-workflow-using-lambda-durable-functions-eventbridge-and-bedrock/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-featured-image.png" alt="Featured image of post AWS adds automated remediation workflow using Lambda Durable Functions, EventBridge, and Bedrock" /&gt;&lt;h1 id="aws-adds-automated-remediation-workflow-using-lambda-durable-functions-eventbridge-and-bedrock"&gt;AWS adds automated remediation workflow using Lambda Durable Functions, EventBridge, and Bedrock
+&lt;/h1&gt;&lt;p&gt;AWS announced an update that extends the AWS DevOps Agent with an automated remediation workflow built on AWS Lambda Durable Functions, Amazon EventBridge, and Amazon Bedrock. The new flow keeps the DevOps Agent in its safe observe‑and‑report mode while adding a controlled, programmable step that can apply fixes after a single approval.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Reducing the time between incident detection, investigation, and remediation is a critical priority for organizations running production workloads on AWS.&lt;/li&gt;
+&lt;li&gt;When an issue arises, on‑call engineers often need to diagnose the problem across components, identify the root cause, and apply a fix, sometimes in the middle of the night.&lt;/li&gt;
+&lt;li&gt;AWS DevOps Agent automatically triages incidents, provides root‑cause analysis (RCA) and recommended actions, but typically does &lt;strong&gt;not&lt;/strong&gt; modify production resources directly.&lt;/li&gt;
+&lt;li&gt;The update demonstrates how to combine AWS Lambda Durable Functions, Amazon EventBridge, and Amazon Bedrock to automate the remediation step, turning investigation summaries into pre‑validated fixes ready for a single approval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Investigation completed&lt;/strong&gt; – AWS DevOps Agent emits an event containing symptoms, findings, and RCA.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Event receipt&lt;/strong&gt; – Amazon EventBridge receives the investigation‑completion event and triggers the &lt;code&gt;devops-agent-trigger&lt;/code&gt; Lambda function with the investigation content.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Orchestration start&lt;/strong&gt; – The trigger function packages the summary and starts the &lt;code&gt;devops-agent-remediation-durable&lt;/code&gt; durable function.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bedrock analysis&lt;/strong&gt; – The durable function sends the investigation context to Amazon Bedrock. Bedrock analyzes the findings and searches an allowlist of approved Lambda tools (e.g., &lt;code&gt;devops-agent-lambda-tool&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tool selection&lt;/strong&gt; – Bedrock proposes specific remediation actions based on the findings and the available tools.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Read‑only execution&lt;/strong&gt; – For read‑only actions, the durable function runs the selected tools autonomously.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mutating actions&lt;/strong&gt; – For infrastructure‑changing actions, the workflow pauses and waits for a human approval signal.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Approval &amp;amp; execution&lt;/strong&gt; – After approval, the durable function applies the remediation actions using the selected tools.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iterative loop&lt;/strong&gt; – The function operates as an agentic loop, repeatedly invoking Bedrock, executing approved tools, and feeding results back until remediation is complete.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lambda Durable Functions&lt;/strong&gt; can run for up to one year without extra infrastructure, automatically checkpoint progress, suspend during long‑running tasks, and recover from failures.&lt;/li&gt;
+&lt;li&gt;The orchestrator enforces a &lt;strong&gt;curated allowlist&lt;/strong&gt; of remediation tools; each tool is a purpose‑built Lambda function that performs a single, well‑scoped action (e.g., reading a Lambda configuration or updating an IAM policy statement).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Read‑only tools&lt;/strong&gt; run autonomously; &lt;strong&gt;mutating tools&lt;/strong&gt; cause the durable function to pause and wait for an approve/reject signal.&lt;/li&gt;
+&lt;li&gt;The approval signal accepts an arbitrary JSON payload, allowing parameter overrides or reviewer observations to be fed back into the Bedrock conversation before execution.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tool (allowlist)&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;devops-agent-lambda-tool&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Performs a specific, well‑scoped action such as reading a Lambda configuration or updating an IAM policy statement&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-benefits"&gt;🚀 Benefits
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Reduces mean time to resolution (MTTR) by preparing pre‑validated changes that require only a single approval click.&lt;/li&gt;
+&lt;li&gt;Frees on‑call engineers from repetitive diagnostic and manual remediation steps.&lt;/li&gt;
+&lt;li&gt;Keeps automated actions auditable and safe by limiting execution to an approved set of Lambda tools.&lt;/li&gt;
+&lt;li&gt;Allows the workflow to pause for minutes, hours, or days without consuming compute resources, then resume exactly where it left off.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-realworld-impact--cornerstone-orionai"&gt;📈 Real‑world impact – Cornerstone Orion AI
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Cornerstone OnDemand’s Orion AI, built with Amazon Bedrock and Strands Agents, reduced database incident diagnosis time from &lt;strong&gt;45 minutes&lt;/strong&gt; to &lt;strong&gt;10 minutes&lt;/strong&gt; (a 78 % reduction).&lt;/li&gt;
+&lt;li&gt;A three‑person team delivered Orion AI in six months.&lt;/li&gt;
+&lt;li&gt;Orion AI also eliminated a 15‑minute reporting lag between SRE and data teams, reduced redundant alerts by a median of 65 %, and collapsed a four‑step manual handoff into a single interaction.&lt;/li&gt;
+&lt;li&gt;The system illustrates the same principles: AI‑driven investigation, curated tool execution, and human‑in‑the‑loop approval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The updated workflow shows how AWS services can be combined to automate the full incident‑response loop while preserving control and auditability.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #DevOpsAgent #LambdaDurable #Bedrock #Automation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/automate-remediation-post-aws-devops-agent-investigation/" target="_blank" rel="noopener"
+&gt;Automate remediation post AWS DevOps Agent investigation | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-cornerstone-ondemand-cut-database-diagnosis-by-78-with-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;How Cornerstone OnDemand cut database diagnosis by 78% with Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS Adds Voice Travel Concierge to Airline Apps</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-adds-voice-travel-concierge-to-airline-apps/</link><pubDate>Tue, 06 Oct 2026 22:08:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-adds-voice-travel-concierge-to-airline-apps/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21469-featured-image.png" alt="Featured image of post AWS Adds Voice Travel Concierge to Airline Apps" /&gt;&lt;h1 id="aws-adds-voice-travel-concierge-to-airline-apps"&gt;AWS Adds Voice Travel Concierge to Airline Apps
+&lt;/h1&gt;&lt;p&gt;Amazon Web Services has published guidance for adding a voice-operated travel concierge to airline applications, built on three managed services: Amazon Bedrock AgentCore, Amazon Nova Sonic on Bedrock, and Amazon Bedrock Knowledge Bases. The concierge allows travelers to check flights, change seats, and manage bookings through natural spoken requests without leaving the app or navigating screens.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Airlines already have apps and websites where travelers check flights, pick seats, and manage bookings. Adding a natural voice layer opens those tasks to spoken requests. With this voice layer, a traveler can change a seat or check a delay by speaking, without leaving the app or navigating through screens. The concierge runs alongside existing screens rather than replacing them, so travelers move between tapping and talking in the same session.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;p&gt;The traveler speaks, and the concierge pulls up their itinerary, changes a seat, updates a meal preference, answers a policy question, and connects them to a live agent on request. The user opens the web application, hosted on AWS Amplify, in a browser or on a mobile device. Amazon Cognito authenticates the request and returns JSON Web Tokens (JWTs) and temporary AWS credentials. The front end opens a SigV4-signed WebSocket connection to Amazon Bedrock AgentCore to begin the voice concierge session. The runtime validates the token with Amazon Cognito and initializes Amazon Nova 2.5 Sonic through Amazon Bedrock. Amazon Nova 2.5 Sonic processes the audio and triggers tool calls. The AgentCore Gateway forwards requests as REST API calls to Amazon API Gateway, which routes them to AWS Lambda functions. AWS Lambda functions query Amazon DynamoDB tables for bookings, passengers, seat maps, loyalty status, and flight information.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Bedrock AgentCore&lt;/strong&gt; is an agentic platform for building, deploying, and operating AI agents securely at scale with your choice of framework and model. The AgentCore runtime hosts the agent with microVM isolation per session. AgentCore Gateway exposes backend endpoints as discoverable MCP tools.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Nova Sonic on Bedrock&lt;/strong&gt; is a speech-to-speech model for real-time voice. This implementation uses Amazon Nova 2.5 Sonic for real-time speech.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Bedrock Knowledge Bases&lt;/strong&gt; is a fully managed retrieval augmented generation service that grounds answers in your own documents. It answers policy questions by grounding responses in your airline policy documents.&lt;/li&gt;
+&lt;li&gt;The system streams audio in both directions and holds the thread of a conversation across many turns.&lt;/li&gt;
+&lt;li&gt;The architecture separates the front end, the AI agent, and the backend services into distinct layers, so you can develop and scale each one on its own.&lt;/li&gt;
+&lt;li&gt;MCP (Model Context Protocol) is an open standard for connecting AI applications to external tools and data.&lt;/li&gt;
+&lt;li&gt;The AI layer connects to a sample airline backend with synthetic data, which accelerates your implementation when you adapt the pattern to your own systems.&lt;/li&gt;
+&lt;li&gt;The backend uses AWS Lambda for business logic (itineraries, seat maps, passenger updates, flight status, loyalty, policy lookups, and escalation) and Amazon DynamoDB for data storage (customer profiles, bookings, passengers, seat maps, purchase history, preferences, conversations, and flight data).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The solution is deployed by building an agent with the Strands Agents framework and Amazon Nova 2.5 Sonic for real-time speech, hosted on AgentCore runtime, a capability of the Amazon Bedrock AgentCore framework. It connects to backend services with the Model Context Protocol (MCP) through AgentCore Gateway, a capability of Amazon Bedrock AgentCore. Developers deploy a voice AI concierge on AWS using the AWS Cloud Development Kit (AWS CDK). The services scale on demand, so organizations spend time on the experience instead of the infrastructure.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21469-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/24/ML-21469-4.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #VoiceAI #Bedrock #AIAgents #TravelTech&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-a-voice-travel-concierge-with-amazon-bedrock-agentcore-managed-knowledge-base-and-nova-sonic/" target="_blank" rel="noopener"
+&gt;Build a voice travel concierge with Amazon Bedrock AgentCore, Managed Knowledge Base and Nova Sonic | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Quick resource migration automated with Bedrock AgentCore MCP server</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-quick-resource-migration-automated-with-bedrock-agentcore-mcp-server/</link><pubDate>Mon, 05 Oct 2026 22:07:36 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-quick-resource-migration-automated-with-bedrock-agentcore-mcp-server/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-21611-featured-image.png" alt="Featured image of post Amazon Quick resource migration automated with Bedrock AgentCore MCP server" /&gt;&lt;h1 id="amazon-quick-resource-migration-automated-with-bedrock-agentcore-mcp-server"&gt;Amazon Quick resource migration automated with Bedrock AgentCore MCP server
+&lt;/h1&gt;&lt;p&gt;Amazon Quick is Amazon’s agentic AI companion built for work. Moving its resources – chat agents, action connectors, knowledge bases, flows, and spaces – from a development AWS account to a production account has traditionally been a manual, error‑prone chore.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enterprises often run separate AWS accounts for development, QA, and production.&lt;/li&gt;
+&lt;li&gt;There is no native one‑click way to promote validated Quick resources into the next account; teams must rebuild each resource by hand.&lt;/li&gt;
+&lt;li&gt;The Quick Resource Migrator is a sample Model Context Protocol (MCP) server hosted on Amazon Bedrock AgentCore that automates this cross‑account promotion with a single tool call.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The migrator composes the &lt;strong&gt;Create&lt;/strong&gt;, &lt;strong&gt;Read&lt;/strong&gt;, &lt;strong&gt;Update&lt;/strong&gt;, and &lt;strong&gt;List&lt;/strong&gt; API calls of the Amazon Quick API into a repeatable workflow; it never issues a delete, so a run only adds or updates.&lt;/li&gt;
+&lt;li&gt;It is &lt;strong&gt;resource‑driven&lt;/strong&gt; – you pick a resource type (agent, connector, knowledge base, flow, or space) and select resources by ID, name, or all.&lt;/li&gt;
+&lt;li&gt;The server runs on Amazon Bedrock AgentCore runtime and can be triggered from Amazon Quick or any MCP‑compatible client.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Resource Type&lt;/th&gt;
+&lt;th&gt;Migration actions&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Chat agents&lt;/td&gt;
+&lt;td&gt;Recreate with custom instructions, identity, tone, starter prompts, welcome message; re‑attach action connectors (remapped to target).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Action connectors&lt;/td&gt;
+&lt;td&gt;Recreate configuration; secret values never read – placeholders are created then re‑authenticated in target.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Knowledge bases&lt;/td&gt;
+&lt;td&gt;Register in target, recreate data source, copy permissions; for S3‑backed bases also provision target bucket and bucket policy (documents are not copied).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Flows&lt;/td&gt;
+&lt;td&gt;Recreate from definition; matched by name – same‑named flow is updated, otherwise a new flow is created.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spaces&lt;/td&gt;
+&lt;td&gt;Recreate in target and re‑link to agents, connectors, and knowledge bases with ARN remapping; agents are automatically re‑linked when a space migrates.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-features"&gt;⚙️ Key features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Idempotent&lt;/strong&gt; – safe to re‑run; performs upserts (creates missing resources, updates existing ones).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Permission fidelity&lt;/strong&gt; – calls &lt;code&gt;Describe*Permissions&lt;/code&gt; on the source and replays identical actions in the target, remapping ARNs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Versioned backup&lt;/strong&gt; – every update is preceded by a backup written to Amazon S3, giving a full history for review or rollback.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Read‑only preview&lt;/strong&gt; – reports exactly what would be created or updated before committing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single‑call promotion&lt;/strong&gt; – a chosen set of resources is promoted in one operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Programmable&lt;/strong&gt; – all resources are managed through the Amazon Quick API (full CRUDL lifecycle).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Open source&lt;/strong&gt; – full source code is available in the &lt;code&gt;aws-samples&lt;/code&gt; repository.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The MCP server is hosted on Amazon Bedrock AgentCore runtime.&lt;/li&gt;
+&lt;li&gt;It can be invoked from Amazon Quick or any client that supports MCP.&lt;/li&gt;
+&lt;li&gt;Source code and deployment instructions are published in the public &lt;code&gt;aws-samples&lt;/code&gt; GitHub repository.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enterprises with separate development and production AWS accounts can eliminate a manual, error‑prone promotion process.&lt;/li&gt;
+&lt;li&gt;Consistent permission copying and versioned backups reduce risk of misconfiguration in production.&lt;/li&gt;
+&lt;li&gt;Idempotent upserts and preview mode enable safe, repeatable migrations, supporting CI/CD pipelines and governance.&lt;/li&gt;
+&lt;li&gt;By automating promotion, teams can focus on building and evaluating agentic AI solutions rather than on repetitive infrastructure work.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/Figure-1-8.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/Figure-2-8.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/Figure-3-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonQuick #Bedrock #MCP #AIautomation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/" target="_blank" rel="noopener"
+&gt;Making Amazon Quick enterprise-ready: Automated, auditable cross-account resource promotion | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Evaluating multi-agent systems for explainability and helpfulness with Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Four‑Agent AI Pattern Cuts Migration IaC Time from Weeks to Minutes</title><link>https://shoubhikbanerjee.github.io/blog/p/fouragent-ai-pattern-cuts-migration-iac-time-from-weeks-to-minutes/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/fouragent-ai-pattern-cuts-migration-iac-time-from-weeks-to-minutes/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/12/ML-20875-featured-image.png" alt="Featured image of post Four‑Agent AI Pattern Cuts Migration IaC Time from Weeks to Minutes" /&gt;&lt;h1 id="fouragent-ai-pattern-cuts-migration-iac-time-from-weeks-to-minutes"&gt;Four‑Agent AI Pattern Cuts Migration IaC Time from Weeks to Minutes
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The four‑agent pattern introduced by AWS Professional Services adds purpose‑built AI agents to an existing AWS Transform migration program. By attaching to AWS Transform, AWS Database Migration Service (DMS), and Model Context Protocol (MCP) tools, the pattern reduces infrastructure‑as‑code (IaC) generation from three‑to‑four weeks per application to minutes.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid integration&lt;/strong&gt; – The agents run alongside AWS Transform (migration and modernization) and AWS DMS (database tier) rather than replacing them.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MCP‑connected sources&lt;/strong&gt; – Agents access migration inputs and output destinations through MCP tools that each organization builds and maintains (e.g., internal wiki with security standards, ticketing system, collaboration platform, in‑house provisioning API).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security at every touchpoint&lt;/strong&gt; – The architecture applies security when reading inputs, generating IaC, and operating after cutover.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Serverless hosting&lt;/strong&gt; – All agents are hosted in Amazon Bedrock AgentCore Runtime, which provides container‑based execution, session isolation, and multi‑agent orchestration.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Identity&lt;/strong&gt; – AgentCore Identity authenticates each call using scoped IAM roles and the organization’s identity provider.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-agents"&gt;⚙️ Agents
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Agent&lt;/th&gt;
+&lt;th&gt;Primary Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Intake Agent&lt;/strong&gt; (Phase 1)&lt;/td&gt;
+&lt;td&gt;Reads migration inputs from documents and collaboration systems through MCP tools and defines the target‑state architecture.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;IaC Agent&lt;/strong&gt; (Phase 2)&lt;/td&gt;
+&lt;td&gt;Generates IaC that composes approved internal modules for each application.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Migration Intelligence &amp;amp; Governance Agent&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Provides automated portfolio reporting, well‑architected assessments, and governance across program tools such as Jira, Confluence, and Webex.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Site Reliability Engineering (SRE) Agent&lt;/strong&gt; (Phase 3)&lt;/td&gt;
+&lt;td&gt;Supplies monitoring and automated remediation after cutover.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-benefits"&gt;🚀 Benefits
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Internal project‑tracking data shows the pattern cuts IaC development time from &lt;strong&gt;3‑4 weeks per application to minutes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Applied to a portfolio of &lt;strong&gt;300+ applications&lt;/strong&gt; with a fixed fiscal‑year deadline, the effort saved translates to &lt;strong&gt;years of engineering work&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The pattern leverages the &lt;strong&gt;Strands Agents SDK&lt;/strong&gt; and any foundation model supported by Amazon Bedrock.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-requirements--availability"&gt;📦 Requirements &amp;amp; Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;An AWS account with access to &lt;strong&gt;Amazon Bedrock AgentCore&lt;/strong&gt; and Bedrock foundation models.&lt;/li&gt;
+&lt;li&gt;Ability to use the &lt;strong&gt;Strands Agents SDK&lt;/strong&gt; and connect to MCP tools via the &lt;strong&gt;AgentCore Gateway&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;AWS Transform and AWS DMS must be provisioned for the migration program.&lt;/li&gt;
+&lt;li&gt;No changes to existing permission models; existing row‑level and column‑level security rules continue to apply.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;This post was reviewed and updated for accuracy in October 2026.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/REVBLOG-1301-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/REVBLOG-1301-2-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/REVBLOG-1301-3-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #AIAgents #MigrationAutomation #Bedrock&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/scaling-cloud-migrations-with-agentic-ai-on-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Scaling cloud migrations with agentic AI on Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/serve-live-governed-data-in-ai-built-apps-with-amazon-quick/" target="_blank" rel="noopener"
+&gt;Serve live, governed data in AI-built apps with Amazon Quick | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/building-ambient-agents-with-amazon-bedrock-agentcore-from-event-driven-signals-to-human-in-the-loop-workflows/" target="_blank" rel="noopener"
+&gt;Building ambient agents with Amazon Bedrock AgentCore: From event-driven signals to human-in-the-loop workflows | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Bedrock and Textract Enable Accurate RAG for Utility Bill Processing</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-and-textract-enable-accurate-rag-for-utility-bill-processing/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-and-textract-enable-accurate-rag-for-utility-bill-processing/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-18730-featured-image.png" alt="Featured image of post Amazon Bedrock and Textract Enable Accurate RAG for Utility Bill Processing" /&gt;&lt;h1 id="amazon-bedrock-and-textract-enable-accurate-rag-for-utility-bill-processing"&gt;Amazon Bedrock and Textract Enable Accurate RAG for Utility Bill Processing
+&lt;/h1&gt;&lt;p&gt;Customer service teams that handle thousands of utility bills each month face a persistent challenge: parsing and analyzing complex, multi‑page documents accurately. Manual extraction is time‑consuming, error‑prone, and leads to delayed responses and customer dissatisfaction.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Utility bills arrive in many formats: PDF, DOCX, TXT, HTML, PNG, and XLSX.&lt;/li&gt;
+&lt;li&gt;An initial Retrieval Augmented Generation (RAG) attempt that fed raw bills directly into a large language model (LLM) resulted in:
+&lt;ul&gt;
+&lt;li&gt;Incomplete data extraction (missing due dates, payment amounts, account numbers).&lt;/li&gt;
+&lt;li&gt;Hallucinations – the model produced incorrect or irrelevant information.&lt;/li&gt;
+&lt;li&gt;Inconsistent performance across document types.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Textract&lt;/strong&gt; preprocesses the utility bills, extracting text from each supported format and capturing tables, images, and embedded objects.&lt;/li&gt;
+&lt;li&gt;Textract applies contextual understanding to label and tag the extracted data, making it easier for the downstream LLM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Bedrock&lt;/strong&gt; receives the structured output from Textract and provides generative AI capabilities, enabling programmatic queries instead of manual searches.&lt;/li&gt;
+&lt;li&gt;The combined solution delivers actionable insights from utility bills at scale and supports faster, more accurate customer interactions.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-supported-file-types"&gt;📂 Supported file types
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;File type&lt;/th&gt;
+&lt;th&gt;Textract capability&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;PDF&lt;/td&gt;
+&lt;td&gt;Extracts text from multi‑page documents, including complex layouts and embedded images&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DOCX&lt;/td&gt;
+&lt;td&gt;Parses and extracts text, tables, images, and other embedded objects&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TXT&lt;/td&gt;
+&lt;td&gt;Extracts plain text&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HTML&lt;/td&gt;
+&lt;td&gt;Extracts text and structured data within tags&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;XLSX&lt;/td&gt;
+&lt;td&gt;Extracts cell contents and table data&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PNG&lt;/td&gt;
+&lt;td&gt;Extracts text from images&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Advanced text extraction ensures all relevant information (account numbers, billing details, payment instructions) is captured.&lt;/li&gt;
+&lt;li&gt;Contextual tagging simplifies LLM processing, reducing hallucinations and missing data.&lt;/li&gt;
+&lt;li&gt;The solution moves from manually searching documents to programmatically querying them, unlocking insights at scale.&lt;/li&gt;
+&lt;li&gt;Faster, more accurate responses improve customer satisfaction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment"&gt;🚀 Deployment
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A shell script creates the AWS CloudFormation stack and deploys required resources.&lt;/li&gt;
+&lt;li&gt;The complete code for the demonstration is available on GitHub.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;By integrating Amazon Textract with Amazon Bedrock, organizations can reliably extract and analyze utility bill information across diverse formats, delivering timely and accurate support to customers while reducing manual effort and error rates.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-18730-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-18730-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-18730-3.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #Textract #Bedrock #RAG #UtilityBills&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/customizing-your-knowledge-base-on-amazon-bedrock-for-large-and-complex-documents-using-amazon-textract/" target="_blank" rel="noopener"
+&gt;Customizing your knowledge base on Amazon Bedrock for large and complex documents using Amazon Textract | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Staged migration of a LangGraph support agent to Amazon Bedrock AgentCore</title><link>https://shoubhikbanerjee.github.io/blog/p/staged-migration-of-a-langgraph-support-agent-to-amazon-bedrock-agentcore/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/staged-migration-of-a-langgraph-support-agent-to-amazon-bedrock-agentcore/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-20753-featured-image.png" alt="Featured image of post Staged migration of a LangGraph support agent to Amazon Bedrock AgentCore" /&gt;&lt;h1 id="staged-migration-of-a-langgraph-support-agent-to-amazon-bedrock-agentcore"&gt;Staged migration of a LangGraph support agent to Amazon Bedrock AgentCore
+&lt;/h1&gt;&lt;p&gt;A LangGraph customer‑support agent was moved from a notebook prototype to a production‑ready deployment using a four‑stage migration onto Amazon Bedrock services. The walk‑through shows how operational burdens are reduced and how managed runtime, guardrails, and observability are added at each stage.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The agent classifies each incoming message, escalates angry customers, and answers everyone else with three tools.&lt;/li&gt;
+&lt;li&gt;Model calls already go to Amazon Bedrock.&lt;/li&gt;
+&lt;li&gt;It runs on compute you provision, patch and scale.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-operational-burdens-four-of-ten"&gt;⚙️ Operational burdens (four of ten)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;An agent that works in a notebook isn’t an agent in production.&lt;/li&gt;
+&lt;li&gt;After real users arrive, you own work that has nothing to do with your agent’s reasoning.&lt;/li&gt;
+&lt;li&gt;Keep one user’s session out of another’s, and hold state across turns and days.&lt;/li&gt;
+&lt;li&gt;Auth for every tool the agent calls sits in your code, and the operating system underneath needs patching.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-migration-stages"&gt;🚀 Migration stages
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Stage&lt;/th&gt;
+&lt;th&gt;Change introduced&lt;/th&gt;
+&lt;th&gt;What stays the same&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;Model calls go to OpenAI or Anthropic directly; one constructor change.&lt;/td&gt;
+&lt;td&gt;The agent graph remains unchanged.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;Transition onto Amazon Bedrock AgentCore Runtime, Gateway and Memory; graph unchanged.&lt;/td&gt;
+&lt;td&gt;You own the container, web server, and conversation state.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;Rebuild the loop as model‑driven planning on Strands Agents; how it plans moves.&lt;/td&gt;
+&lt;td&gt;Runtime proved in earlier stage is reused.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;Hand the loop to an AgentCore harness (AgentCore capability); dependency updates move here.&lt;/td&gt;
+&lt;td&gt;Guardrails and managed tools continue to apply.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Stopping after stage 1 gives a hosted agent with managed tools and durable state.&lt;/li&gt;
+&lt;li&gt;Inference is the one call a migration doesn’t touch, so being on Amazon Bedrock already isn’t a head‑start.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-guardrails--security"&gt;🛡️ Guardrails &amp;amp; security
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;When the agent reaches production, add Amazon Bedrock Guardrails to filter harmful content, validate grounding against source documents, and block prompt‑injection attempts.&lt;/li&gt;
+&lt;li&gt;Those controls apply to any agent regardless of which stage you stop at.&lt;/li&gt;
+&lt;li&gt;Gateway takes tool auth and calls your function with its own execution role.&lt;/li&gt;
+&lt;li&gt;The agent signs Gateway calls with its own IAM credentials using Signature Version 4; Gateway then invokes the AWS Lambda target under its own execution role.&lt;/li&gt;
+&lt;li&gt;Identity brokers credentials and refreshes OAuth tokens for APIs the agent calls on someone’s behalf.&lt;/li&gt;
+&lt;li&gt;AWS IAM policies, VPC configuration, WAF rules, and secrets rotation stay yours at every stage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-runtime-features"&gt;🖥️ Runtime features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Runtime takes the compute, so OS patching, auto‑scaling, and session isolation stop being yours.&lt;/li&gt;
+&lt;li&gt;By default it runs on AWS‑managed infrastructure; you can attach it to a VPC you own.&lt;/li&gt;
+&lt;li&gt;Checkpoint storage goes to Memory, which holds conversation state across turns, processes and days.&lt;/li&gt;
+&lt;li&gt;Observability sends Runtime logs, metrics and traces to Amazon CloudWatch without you configuring it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-requirements"&gt;📦 Requirements
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;An AWS account with Amazon Bedrock model access enabled.&lt;/li&gt;
+&lt;li&gt;Python 3.12.&lt;/li&gt;
+&lt;li&gt;AWS CLI configured with credentials that can create AgentCore, Lambda, Amazon S3, and IAM resources.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;📈 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The staged approach isolates the ten operational burdens and lets you adopt managed services incrementally.&lt;/li&gt;
+&lt;li&gt;Production‑ready guardrails and built‑in observability reduce the operational load of running an AI‑driven support agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-20753-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-20753-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-20753-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #Bedrock #AIagents #LangGraph&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/migrate-agentic-workloads-to-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Migrate agentic workloads to Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Data Engineering on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/data-engineering/</link><description>Recent content in Data Engineering on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 09 Oct 2026 22:05:01 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/data-engineering/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA KGMON Team Secures Second Place at KDD Cup 2026 with Agent Harness</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-kgmon-team-secures-second-place-at-kdd-cup-2026-with-agent-harness/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-kgmon-team-secures-second-place-at-kdd-cup-2026-with-agent-harness/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/KGMON-660x370.png" alt="Featured image of post NVIDIA KGMON Team Secures Second Place at KDD Cup 2026 with Agent Harness" /&gt;&lt;h1 id="nvidia-kgmon-team-secures-second-place-at-kdd-cup-2026-with-agent-harness"&gt;NVIDIA KGMON Team Secures Second Place at KDD Cup 2026 with Agent Harness
+&lt;/h1&gt;&lt;p&gt;The NVIDIA KGMON team placed second in the KDD Cup 2026 Data Agents competition with a system that streamlines the agent harness to be smaller, clearer, and easier to verify.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The competition required agents to answer natural‑language questions over heterogeneous data sources such as databases, CSV/JSON files, prose documents, PDFs, and briefing videos.&lt;/li&gt;
+&lt;li&gt;Every task demanded more than simple retrieval: agents had to inspect data, choose appropriate tools, reason across sources, produce a final answer file, and navigate traps common in analytical workflows.&lt;/li&gt;
+&lt;li&gt;Teams were limited to a small, fixed LLM, making the harness the primary optimization surface.&lt;/li&gt;
+&lt;li&gt;KGMON’s approach focused on preprocessing, constrained tools, persistent state, and systematic evaluation to make the task easier for the available model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture--workflow"&gt;🛠️ Architecture &amp;amp; Workflow
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Unified data access&lt;/strong&gt; – CSV and JSON files were converted into tables inside a single SQLite database, giving the agent one SQL interface for all structured data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single tool set&lt;/strong&gt; – The environment exposed only a few helpers: schema inspection, SQL queries, document lookup, prose extraction, and answer writing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Schema‑scouting step&lt;/strong&gt; – Before the main reasoning loop the system inspected tables, columns, join keys, duplicate names, units, null patterns, and row‑grain issues, then supplied this context to the agent.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Middleware repair&lt;/strong&gt; – Malformed tool calls were automatically fixed so a single bad call would not abort the attempt.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stateful Python environment&lt;/strong&gt; – Variables persisted between tool calls, allowing reuse of intermediate results.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Predefined functions&lt;/strong&gt; – &lt;code&gt;schema()&lt;/code&gt;, &lt;code&gt;sql(query)&lt;/code&gt;, and &lt;code&gt;write_answer(df)&lt;/code&gt; reduced boilerplate, syntax errors, and file‑handling mistakes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution tracing&lt;/strong&gt; – Repeated attempts and trajectory inspection helped identify failures and refine the harness.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Function / Helper&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;schema()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Provide the agent with table and column metadata discovered during scouting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;sql(query)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Execute a SQL statement against the unified SQLite database&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;write_answer(df)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Write the final answer file in the required format&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Document lookup&lt;/td&gt;
+&lt;td&gt;Retrieve relevant prose or PDF content&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Prose extraction&lt;/td&gt;
+&lt;td&gt;Pull specific text snippets from unstructured documents&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Figure 1 (see below) illustrates the overall workflow from data ingestion to final answer generation.&lt;/p&gt;
+&lt;h2 id="-reliability-techniques"&gt;⚙️ Reliability Techniques
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Preprocessing data into a uniform SQL schema reduced routing failures and saved turns for reasoning.&lt;/li&gt;
+&lt;li&gt;Constrained tool set limited the ways the agent could interact with the environment, lowering the chance of mistakes.&lt;/li&gt;
+&lt;li&gt;Persistent state and middleware repair prevented a single error from ending an attempt.&lt;/li&gt;
+&lt;li&gt;Short, valid attempts conserved the limited turn budget for additional runs, evaluation, and ensembling.&lt;/li&gt;
+&lt;li&gt;Execution traces and trajectory inspection were used to pinpoint failures such as bad tool calls or answer‑format issues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-common-failure-modes"&gt;🚩 Common Failure Modes
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Bad tool call (e.g., syntax error)&lt;/li&gt;
+&lt;li&gt;Incorrect join key leading to wrong results&lt;/li&gt;
+&lt;li&gt;Missed document rule or threshold in unstructured sources&lt;/li&gt;
+&lt;li&gt;Answer‑format mismatch causing the final output to be rejected&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The techniques are especially useful when building reliable systems around smaller open models.&lt;/li&gt;
+&lt;li&gt;Reliability often stems more from a well‑designed harness than from expanding the openness of the model itself.&lt;/li&gt;
+&lt;li&gt;A streamlined harness leaves more capacity for the fixed LLM to focus on analysis rather than plumbing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Figure 1: Overall workflow of the KGMON system&lt;/em&gt;&lt;br&gt;
+&lt;img src="https://shoubhikbanerjee.github.io/blog/image1"
+loading="lazy"
+alt="Workflow"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-1-3.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/KGMON-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#KDD2026 #AIAgents #NVIDIA #LLM #DataIntegration&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/building-reliable-data-analytics-agents-lessons-from-the-kdd-cup/" target="_blank" rel="noopener"
+&gt;Building Reliable Data Analytics Agents: Lessons from the KDD Cup | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>QAD ERP Reporting Extends to Microsoft Fabric via Open Mirroring</title><link>https://shoubhikbanerjee.github.io/blog/p/qad-erp-reporting-extends-to-microsoft-fabric-via-open-mirroring/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/qad-erp-reporting-extends-to-microsoft-fabric-via-open-mirroring/</guid><description>&lt;img src="https://kanerika.com/wp-content/uploads/2025/04/kanerika.jpg" alt="Featured image of post QAD ERP Reporting Extends to Microsoft Fabric via Open Mirroring" /&gt;&lt;h1 id="qad-erp-reporting-extends-to-microsoft-fabric-via-open-mirroring"&gt;QAD ERP Reporting Extends to Microsoft Fabric via Open Mirroring
+&lt;/h1&gt;&lt;p&gt;Manufacturers using QAD ERP can combine multiple reporting layers, and a new mirroring path now moves QAD data into Microsoft Fabric.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Layer 1 – Native QAD tools&lt;/strong&gt; – Provide operational lookups, formatted documents and financial statements inside the ERP.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Layer 2 – Power BI&lt;/strong&gt; – Adds interactive analysis; the simplest connection imports QAD data over OpenEdge ODBC on a schedule.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Layer 3 – Data warehouse / Microsoft Fabric&lt;/strong&gt; – Uses a QAD Fabric mirroring process that runs through Open Mirroring because Microsoft Fabric has no native mirroring source for QAD.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;An extraction layer reads tables from the Progress OpenEdge database behind QAD.&lt;/li&gt;
+&lt;li&gt;It writes those tables as Parquet files into a landing zone in OneLake.&lt;/li&gt;
+&lt;li&gt;Microsoft Fabric turns the Parquet files into Delta tables and keeps them current.&lt;/li&gt;
+&lt;li&gt;Each table requires a stable key.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The three layers can be used simultaneously by a manufacturer.&lt;/li&gt;
+&lt;li&gt;Power BI connects via OpenEdge ODBC and can be scheduled for regular imports.&lt;/li&gt;
+&lt;li&gt;Fabric mirroring relies on Open Mirroring; there is no built‑in source connector for QAD.&lt;/li&gt;
+&lt;li&gt;Delta tables in Fabric provide a continuously refreshed view of the ERP data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-layer-comparison"&gt;📊 Layer comparison
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Layer&lt;/th&gt;
+&lt;th&gt;What it provides&lt;/th&gt;
+&lt;th&gt;Integration method&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Native QAD tools&lt;/td&gt;
+&lt;td&gt;Operational lookups, formatted documents, financial statements&lt;/td&gt;
+&lt;td&gt;Built‑in ERP functionality&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Power BI&lt;/td&gt;
+&lt;td&gt;Interactive analysis&lt;/td&gt;
+&lt;td&gt;OpenEdge ODBC import on a schedule&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Microsoft Fabric&lt;/td&gt;
+&lt;td&gt;Mirrored, current Delta tables&lt;/td&gt;
+&lt;td&gt;Open Mirroring → Parquet → OneLake → Delta&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Combining native ERP reports with Power BI and Fabric gives manufacturers flexible, up‑to‑date analytics.&lt;/li&gt;
+&lt;li&gt;The mirroring flow keeps the data warehouse synchronized without a native QAD connector.&lt;/li&gt;
+&lt;li&gt;Stable keys ensure reliable table joins and updates within Fabric.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://kanerika.com/wp-content/uploads/2026/10/kanerika-qad-erp-reporting-banner-1024x363.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://kanerika.com/wp-content/uploads/2026/10/kanerika-qad-fabric-mirroring-banner-1024x363.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#QAD #MicrosoftFabric #PowerBI #DataMirroring&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://kanerika.com/resources/blogs/" target="_blank" rel="noopener"
+&gt;Kanerika Blog | Latest Articles on AI, ML, Data &amp;amp; Automation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>End-to-End Approach for Generating Context-Specific LLM Benchmark Datasets</title><link>https://shoubhikbanerjee.github.io/blog/p/end-to-end-approach-for-generating-context-specific-llm-benchmark-datasets/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/end-to-end-approach-for-generating-context-specific-llm-benchmark-datasets/</guid><description>&lt;h1 id="end-to-end-approach-for-generating-context-specific-llm-benchmark-datasets"&gt;End-to-End Approach for Generating Context-Specific LLM Benchmark Datasets
+&lt;/h1&gt;&lt;p&gt;A new paper presents an end-to-end approach for creating large language model (LLM) benchmark datasets by combining synthetic data generation with expert input.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Existing benchmark construction methods typically face a trade-off between validity and scalability:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Expert-designed datasets:&lt;/strong&gt; Produce high-quality evaluations but are slow and costly to create.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Synthetically generated data:&lt;/strong&gt; Scale efficiently but often result in redundant, unrealistic, or out-of-scope examples.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To address these gaps, the approach utilizes the following mechanisms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Schema Elicitation:&lt;/strong&gt; A schema is used to elicit key information regarding the context, scope, and goals of an evaluation task, which then guides the synthetic data generation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Expert-Informed Scaffolds:&lt;/strong&gt; These scaffolds guide synthetic generation toward more valid benchmarks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The researchers defined four criteria grounded in measurement validity to assess dataset quality:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Criterion&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Coverage&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Assessing dataset quality&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Diversity&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Assessing dataset quality&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Content Realism&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Assessing dataset quality&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Stylistic Realism&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Assessing dataset quality&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Through quantitative evaluations and a real-world case study with domain experts, the authors demonstrate that this approach improves benchmark data quality over existing methods while preserving validity. Additionally, the research analyzes how different types of schema information affect specific quality criteria to provide guidance on prioritizing information collection under resource constraints.&lt;/p&gt;
+&lt;p&gt;#LLM #Benchmarks #SyntheticData #AIevaluation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.16592v1" target="_blank" rel="noopener"
+&gt;A Framework for Generating Valid Context-Specific Benchmarks through Expert Guidance&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

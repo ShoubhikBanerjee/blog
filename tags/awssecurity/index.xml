@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWSSecurity on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/awssecurity/</link><description>Recent content in AWSSecurity on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 02 Oct 2026 22:04:29 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/awssecurity/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore adds JWT-secured Claude Desktop web-search integration</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-jwt-secured-claude-desktop-web-search-integration/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-jwt-secured-claude-desktop-web-search-integration/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/30/ML-21694-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore adds JWT-secured Claude Desktop web-search integration" /&gt;&lt;h1 id="amazon-bedrock-agentcore-adds-jwt-secured-claude-desktop-web-search-integration"&gt;Amazon Bedrock AgentCore adds JWT-secured Claude Desktop web-search integration
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore now supports a secure integration that lets Claude Desktop invoke a fully managed web‑search tool via the AgentCore Gateway.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AgentCore&lt;/strong&gt;: a platform to build, connect, and optimize agents at scale, with any framework or model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AgentCore Gateway&lt;/strong&gt;: a capability of AgentCore that can close the knowledge‑cutoff gap by connecting Claude Desktop to Web Search.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Web Search&lt;/strong&gt;: a fully managed, Model Context Protocol (MCP)‑compatible search service backed by an Amazon index of tens of billions of documents.&lt;/li&gt;
+&lt;li&gt;All query traffic stays within AWS infrastructure, with no external API keys and no queries leaving your boundary.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;IAM Identity Center&lt;/strong&gt; authenticates the user via SAML.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Cognito&lt;/strong&gt; is registered as a federation layer; it receives the SAML assertion and issues a JSON Web Token (JWT).&lt;/li&gt;
+&lt;li&gt;Claude Desktop uses an app client (with client secret) to start the OAuth 2.0 authorization‑code flow, obtains the JWT, and calls the AgentCore Gateway.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;AgentCore Gateway&lt;/strong&gt; validates the JWT on each request and forwards the query to the Web Search target.&lt;/li&gt;
+&lt;li&gt;The entire authentication chain stays within AWS.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-prerequisites"&gt;⚙️ Prerequisites
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;An AWS account with permissions to create IAM roles and Bedrock AgentCore resources.&lt;/li&gt;
+&lt;li&gt;Admin access in the AWS Organizations management account for IAM Identity Center configuration.&lt;/li&gt;
+&lt;li&gt;AWS IAM Identity Center pre‑configured for SSO access to AWS accounts.&lt;/li&gt;
+&lt;li&gt;Claude Desktop set up with Amazon Bedrock as the inference provider.&lt;/li&gt;
+&lt;li&gt;AWS CLI v2 installed and configured.&lt;/li&gt;
+&lt;li&gt;Python 3.10 or later.&lt;/li&gt;
+&lt;li&gt;Latest Boto3 SDK.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-setup-steps"&gt;🛠️ Setup steps
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Verify the target region is &lt;strong&gt;us-east-1&lt;/strong&gt;, &lt;strong&gt;eu-west-1&lt;/strong&gt;, or &lt;strong&gt;ap-northeast-1&lt;/strong&gt; (the only regions where Web Search on AgentCore is available).&lt;/li&gt;
+&lt;li&gt;In the target AWS account, create an Amazon Cognito user pool to act as the OpenID Connect (OIDC) token issuer.&lt;/li&gt;
+&lt;li&gt;In the AWS Organizations management account, create a SAML application that federates with Cognito and assign the users or groups that should access Web Search.&lt;/li&gt;
+&lt;li&gt;Back in the target account, register IAM Identity Center as a SAML identity provider in the Cognito user pool.&lt;/li&gt;
+&lt;li&gt;Create a Cognito app client with a client secret; Claude Desktop will use this client to initiate the OAuth flow.&lt;/li&gt;
+&lt;li&gt;Create a new AgentCore Gateway, set &lt;strong&gt;Inbound Auth Type&lt;/strong&gt; to &lt;strong&gt;JSON Web Tokens (JWT)&lt;/strong&gt;, and enable the &lt;strong&gt;Web Search&lt;/strong&gt; tool.&lt;/li&gt;
+&lt;li&gt;Claude Desktop connects to the AgentCore Gateway using the JWT obtained from Cognito.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Region&lt;/th&gt;
+&lt;th&gt;Identifier&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;US East (N. Virginia)&lt;/td&gt;
+&lt;td&gt;us-east-1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Europe (Ireland)&lt;/td&gt;
+&lt;td&gt;eu-west-1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Asia Pacific (Tokyo)&lt;/td&gt;
+&lt;td&gt;ap-northeast-1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enterprises can keep all search queries inside their AWS boundary, eliminating the need to manage external API keys.&lt;/li&gt;
+&lt;li&gt;The JWT‑based inbound authentication leverages existing SSO (IAM Identity Center) and federation (Cognito) services, simplifying access control.&lt;/li&gt;
+&lt;li&gt;The integration provides a practical way to reduce the knowledge‑cutoff limitation of Claude Desktop by tapping a live web index.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/ML-21694-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/ML-21694-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/ML-21694-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AIAgents #WebSearch #AWSSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/add-secure-web-search-to-claude-desktop-with-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Add secure Web Search to Claude Desktop with Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

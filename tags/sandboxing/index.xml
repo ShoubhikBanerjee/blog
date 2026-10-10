@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Sandboxing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/sandboxing/</link><description>Recent content in Sandboxing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 01 Sep 2026 22:04:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/sandboxing/index.xml" rel="self" type="application/rss+xml"/><item><title>Harness engineering emerges as key to AI agent performance</title><link>https://shoubhikbanerjee.github.io/blog/p/harness-engineering-emerges-as-key-to-ai-agent-performance/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/harness-engineering-emerges-as-key-to-ai-agent-performance/</guid><description>&lt;img src="https://datanorth.ai/wp-content/uploads/2026/08/harness-engineering-the-complete-guide-to-ai-agent-scaffolding.png" alt="Featured image of post Harness engineering emerges as key to AI agent performance" /&gt;&lt;h1 id="harness-engineering-emerges-as-key-to-ai-agent-performance"&gt;Harness engineering emerges as key to AI agent performance
+&lt;/h1&gt;&lt;p&gt;A new discipline called harness engineering is shaping how language models are turned into functional agents. Early 2026 leaderboards show that the harness—software scaffolding around a model—can influence performance as much as the model itself.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Harness engineering is the discipline of designing the software that surrounds a language model and turns it into a working agent. It covers context delivery, tool interfaces, memory, and sandboxes. The model supplies the reasoning, while the harness decides what the model sees, what it can do, what it remembers, and where it runs.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;An agent harness is the software scaffolding around a model.&lt;/li&gt;
+&lt;li&gt;Anthropic describes it as &amp;rsquo;the loop, tools, context management, and guardrails that turn raw intelligence into a working agent'.&lt;/li&gt;
+&lt;li&gt;METR called it scaffolding back in 2023: scaffolding plus a model equals an agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="performance-impact"&gt;Performance impact
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;On early 2026 leaderboards, the harness moved the score at least as much as the model did.&lt;/li&gt;
+&lt;li&gt;On the Terminal-Bench 2.0 leaderboard, Claude Opus 4.6 scored between 58.0% and 74.7% across seven harnesses, all submitted between 5 and 23 February 2026.
+&lt;ul&gt;
+&lt;li&gt;The highest of the seven was Terminus-KIRA from KRAFTON AI at 74.7%.&lt;/li&gt;
+&lt;li&gt;Confidence intervals sit near plus or minus 2.5 to 2.9 points, so a 16.7 point spread is not noise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;On SWE-bench Verified’s bash-only board, nine frontier models ran the identical mini-swe-agent scaffold at matched reasoning effort, all submitted on 17 February 2026. Their scores spanned just 66.6% to 76.8%, a 10.2 point gap.&lt;/li&gt;
+&lt;li&gt;On the newer Terminal-Bench 2.1 board, harness spreads collapse to between 0.2 and 8.1 points once reasoning effort and submission dates are matched, so the gap appears to be narrowing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="components"&gt;Components
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Tool interfaces&lt;/strong&gt;: Tool dispatch turns a model’s request into a real action. The model returns a tool-use block, the harness runs it and returns the result, and the loop repeats until the model stops asking.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The Model Context Protocol (MCP) standardizes how an agent reaches those tools, and calls itself &amp;lsquo;an open-source standard for connecting AI applications to external systems&amp;rsquo;.&lt;/li&gt;
+&lt;li&gt;Anthropic created MCP and donated it to the Agentic AI Foundation in December 2025.&lt;/li&gt;
+&lt;li&gt;The MCP specification warns that tools &amp;lsquo;represent arbitrary code execution&amp;rsquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Memory&lt;/strong&gt;: State persistence is how an agent survives its own context window.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Context compaction is the usual answer, and the Claude Agent SDK summarizes earlier messages as the limit approaches.&lt;/li&gt;
+&lt;li&gt;Compaction is lossy, and Anthropic says so: &amp;lsquo;While compaction preserves continuity, it doesn’t give the agent a clean slate.&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;Durable state therefore belongs outside the transcript: Claude Code re-injects project memory files after compaction, and LangGraph gives agents short-term memory through checkpointers and long-term memory through stores.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Sandboxes&lt;/strong&gt;: A sandbox is the boundary between a mistake and an incident.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Claude Code’s built-in sandbox uses Seatbelt on macOS and bubblewrap plus socat on Linux and WSL2, and by default a command writes only to the working directory and the session temp directory.&lt;/li&gt;
+&lt;li&gt;OpenAI Codex offers read-only, workspace-write and danger-full-access modes, runs with network off by default, and applies one rule: &amp;lsquo;deny always wins over allow.&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;Heavier isolation goes as far as microVMs such as Firecracker, and E2B says its same-region sandboxes &amp;lsquo;start in less than 200 ms&amp;rsquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Guardrails&lt;/strong&gt;: Guardrails decide what an agent may attempt, and isolation decides what the attempt can reach.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Anthropic draws the line cleanly: &amp;lsquo;Permission modes decide whether a tool call runs and whether you are prompted first. Isolation restricts what a command can access once it runs.&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;Claude Code ranks its permission modes from Manual up to bypassPermissions, with acceptEdits, plan, auto and dontAsk in between, and deny rules block in every one of them.&lt;/li&gt;
+&lt;li&gt;The OpenAI Agents SDK adds input, output and tool guardrails, any of which can raise a tripwire and halt the run.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The core difference is scope: prompt engineering shapes one exchange with a model, while harness engineering shapes the system around the model for the length of a task.&lt;/li&gt;
+&lt;li&gt;Neither replaces the other: a harness contains prompts, and a bad system prompt sinks a good agent.&lt;/li&gt;
+&lt;li&gt;Coding agents are where harness engineering stopped being optional.&lt;/li&gt;
+&lt;li&gt;OpenAI’s account of adopting Codex is blunt about why: &amp;lsquo;Early progress was slower than we expected, not because Codex was incapable, but because the environment was underspecified.&amp;rsquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Anthropic defines context engineering as &amp;rsquo;the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference'.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AIagents #harnessengineering #LLMs #agenticAI #MCP #sandboxing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://datanorth.ai/blog/harness-engineering-the-complete-guide-to-ai-agent-scaffolding" target="_blank" rel="noopener"
+&gt;What is Harness Engineering? The AI Agent Scaffolding Guide&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

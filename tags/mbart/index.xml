@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MBART on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/mbart/</link><description>Recent content in MBART on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 04 Sep 2026 22:05:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/mbart/index.xml" rel="self" type="application/rss+xml"/><item><title>Sequence-to-sequence models improve Tamil spell and grammar correction</title><link>https://shoubhikbanerjee.github.io/blog/p/sequence-to-sequence-models-improve-tamil-spell-and-grammar-correction/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sequence-to-sequence-models-improve-tamil-spell-and-grammar-correction/</guid><description>&lt;h1 id="sequence-to-sequence-models-improve-tamil-spell-and-grammar-correction"&gt;Sequence-to-sequence models improve Tamil spell and grammar correction
+&lt;/h1&gt;&lt;p&gt;Tamil spell and grammar correction, a long‑standing challenge due to the language’s agglutinative structure and rich morphology, sees its first end‑to‑end results with fine‑tuned seq2seq models.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tamil is an agglutinative low‑resource language with rich verbal morphology, complex sandhi (phonetic transformation) rules at word boundaries, and a script of 247 distinct letters.&lt;/li&gt;
+&lt;li&gt;Prior work focused on word‑level surface errors using rule‑based methods, statistical n‑gram models, Minimum Edit Distance, or hybrid pipelines with a transformer re‑ranker, but these approaches struggle with contextual errors such as subject‑verb agreement, tense consistency, or cross‑word sandhi.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;We reformulate correction as an end‑to‑end sequence‑to‑sequence task and fine‑tune two multilingual backbones: &lt;strong&gt;mT5‑small&lt;/strong&gt; and &lt;strong&gt;mBART‑50&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Training data consist of a synthetic corpus of up to &lt;strong&gt;657,720&lt;/strong&gt; noisy‑clean Tamil sentence pairs covering ten error categories.&lt;/li&gt;
+&lt;li&gt;Both backbones follow a &lt;strong&gt;four‑stage progressive schedule&lt;/strong&gt; that introduces increasingly difficult error types:
+&lt;ul&gt;
+&lt;li&gt;v2 – surface noise&lt;/li&gt;
+&lt;li&gt;v3 – contextual grammar&lt;/li&gt;
+&lt;li&gt;v4 – single‑site sandhi&lt;/li&gt;
+&lt;li&gt;v5 – multi‑site cross‑word sandhi&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Version&lt;/th&gt;
+&lt;th&gt;Targeted weakness&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;mT5‑small&lt;/td&gt;
+&lt;td&gt;v2‑v5&lt;/td&gt;
+&lt;td&gt;surface noise → contextual grammar → single‑site sandhi → multi‑site sandhi&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;mBART‑50&lt;/td&gt;
+&lt;td&gt;v2‑v5&lt;/td&gt;
+&lt;td&gt;surface noise → contextual grammar → single‑site sandhi → multi‑site sandhi&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Evaluation uses a &lt;strong&gt;1,000‑sentence balanced diagnostic set&lt;/strong&gt; that is verified disjoint from all training data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Best result:&lt;/strong&gt; mBART‑50 v5 achieves &lt;strong&gt;69.3 %&lt;/strong&gt; top‑1 exact‑match accuracy, &lt;strong&gt;87.5 %&lt;/strong&gt; on sandhi corrections, and &lt;strong&gt;43.5 %&lt;/strong&gt; on subject‑verb agreement.&lt;/li&gt;
+&lt;li&gt;The progressive schedule drives the gains:
+&lt;ul&gt;
+&lt;li&gt;Subject‑verb agreement accuracy rises from &lt;strong&gt;1.0 %&lt;/strong&gt; to &lt;strong&gt;52.5 %&lt;/strong&gt; once contextual pairs are introduced (v3).&lt;/li&gt;
+&lt;li&gt;Sandhi accuracy climbs from &lt;strong&gt;0 %&lt;/strong&gt; to &lt;strong&gt;87.5 %&lt;/strong&gt; once multi‑site sandhi pairs are added (v5).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;A precision‑recall trade‑off is observed: improving sandhi recall comes at the cost of overall identity (exact‑match) accuracy, a relationship not previously reported in the literature.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability-of-instructiontuned-models"&gt;🚀 Availability of instruction‑tuned models
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A Tamil‑adapted instruction model, &lt;strong&gt;Tamil‑LLaMA‑7B‑Instruct&lt;/strong&gt;, reaches &lt;strong&gt;19.0 %&lt;/strong&gt; zero‑shot accuracy and &lt;strong&gt;24.7 %&lt;/strong&gt; with three demonstrations, only slightly above a &lt;strong&gt;20.0 %&lt;/strong&gt; copy baseline. This shows that without task‑specific supervision, a Tamil‑adapted instruction model does not transfer effectively to specialized sentence‑level correction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Demonstrates that a carefully staged seq2seq fine‑tuning regime can overcome the limitations of earlier word‑level approaches.&lt;/li&gt;
+&lt;li&gt;Provides the first quantified trade‑off between sandhi recall and overall correction precision for Tamil.&lt;/li&gt;
+&lt;li&gt;Highlights the need for dedicated correction supervision even for large instruction‑tuned models in low‑resource languages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#TamilAI #GrammarCorrection #Seq2Seq #LowResourceNLP #mBART&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.03273v1" target="_blank" rel="noopener"
+&gt;Contextual Tamil Spelling and Grammar Correction Using Progressively Fine-Tuned Sequence-to-Sequence Transformers&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
