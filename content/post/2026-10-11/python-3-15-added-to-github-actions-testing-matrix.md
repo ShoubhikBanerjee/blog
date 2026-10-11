@@ -2,7 +2,7 @@
 title: "Python 3.15 Added to GitHub Actions Testing Matrix"
 slug: "python-3-15-added-to-github-actions-testing-matrix"
 description: "On 10 October 2026 a blog post announced that Python 3.15.0 has been added to the **actions/python-versions** repository, making the new interpreter available for GitHub Actions workflows."
-date: 2026-10-11T06:08:05+05:30
+date: 2026-10-11T12:03:14+05:30
 tags: [GitHubActions, Python315, CI]
 categories: ["AI", "Software Development", "Continuous Integration", "Programming Languages"]
 author: "Shoubhik Banerjee"

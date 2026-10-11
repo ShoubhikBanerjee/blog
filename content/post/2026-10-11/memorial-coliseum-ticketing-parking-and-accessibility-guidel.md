@@ -2,7 +2,7 @@
 title: "Memorial Coliseum Ticketing, Parking, and Accessibility Guidelines Updated"
 slug: "memorial-coliseum-ticketing-parking-and-accessibility-guidelines-updated"
 description: "The Memorial Coliseum has released a set of detailed guidelines covering show hours, ticket verification, parking rates, accessibility accommodations, photography rules, and child admission policies."
-date: 2026-10-11T06:08:05+05:30
+date: 2026-10-11T12:03:14+05:30
 tags: [Ticketing, Accessibility, VenuePolicies]
 categories: ["AI", "Events", "Venue Management", "Public Safety"]
 image: "https://images.consequence.net/u1-mMH1eZJcnkvYr0w7f7KFEtZmw8iiflWFMt-rc-Gc/rs:fit:600:0/plain/https%3A%2F%2Fs1.ticketm.net%2Fdam%2Fc%2Fb89%2F718f87fe-8471-4d9c-a8c4-910da3eb2b89_105871_TABLET_LANDSCAPE_LARGE_16_9.jpg@webp"

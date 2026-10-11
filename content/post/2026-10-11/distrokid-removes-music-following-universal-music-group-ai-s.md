@@ -2,7 +2,7 @@
 title: "DistroKid Removes Music Following Universal Music Group AI Slop Lawsuit"
 slug: "distrokid-removes-music-following-universal-music-group-ai-slop-lawsuit"
 description: "DistroKid has begun unceremoniously removing songs from its platform without providing notice or explanations to affected artists. The distributor confirmed to The Verge that these takedowns are a..."
-date: 2026-10-11T06:08:05+05:30
+date: 2026-10-11T12:03:14+05:30
 tags: [DistroKid, UMG, MusicStreaming, ArtificialIntelligence, Lawsuit]
 categories: ["AI", "Music Industry", "Legal", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/distrokid_logo_og_image.jpg?quality=90&strip=all&crop=0,24.460477589069,100,51.079044821862"

@@ -2,7 +2,7 @@
 title: "Pfizer‑Astellas Launches Independent Medical Education Grant for Bladder Cancer Care"
 slug: "pfizerastellas-launches-independent-medical-education-grant-for-bladder-cancer-care"
 description: "The Pfizer–Astellas Independent Medical Education Grant supports U.S.‑based organizations that wish to develop educational projects on guideline‑concordant care for muscle‑invasive bladder cancer..."
-date: 2026-10-11T06:08:05+05:30
+date: 2026-10-11T12:03:14+05:30
 tags: [bladdercancer, medicaleducation, oncology, grant]
 categories: ["AI", "Healthcare", "Medical Education", "Oncology", "Pharmaceutical Grants"]
 image: "https://oncodaily.com/pub/uploads/2026/10/IMG_8060.webp"
