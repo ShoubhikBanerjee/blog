@@ -2,7 +2,7 @@
 title: "Saint‑Sulpice‑la‑Pointe launches citizen consultation for future neighborhoods around the station"
 slug: "saintsulpicelapointe-launches-citizen-consultation-for-future-neighborhoods-around-the-station"
 description: "The municipality of Saint‑Sulpice‑la‑Pointe has opened a citizen consultation called **« Imaginez les futurs quartiers autour de la gare »** to shape the evolution of the area surrounding its train..."
-date: 2026-10-11T12:03:14+05:30
+date: 2026-10-11T18:05:47+05:30
 tags: [CitizenEngagement, UrbanPlanning, SaintSulpiceLaPointe]
 categories: ["AI", "Urban Development", "Public Participation", "Local Government"]
 image: "https://images.ladepeche.fr/api/v1/images/view/6acaff6369e53930f60cee43/hd/image.jpg?v=1"

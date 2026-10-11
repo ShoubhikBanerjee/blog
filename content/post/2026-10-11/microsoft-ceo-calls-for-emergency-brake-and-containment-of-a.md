@@ -2,7 +2,7 @@
 title: "Microsoft CEO Calls for Emergency Brake and Containment of Advanced AI"
 slug: "microsoft-ceo-calls-for-emergency-brake-and-containment-of-advanced-ai"
 description: "Satya Nadella posted a lengthy message on X warning about the dangers of highly advanced AI models and outlining how the industry should respond."
-date: 2026-10-11T12:03:14+05:30
+date: 2026-10-11T18:05:47+05:30
 tags: [Microsoft, AIgovernance, EmergencyBrake, Transparency, Containment]
 categories: ["AI", "Artificial Intelligence", "AI Governance", "Technology Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/10/STK178_Satya_Nadella_B.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

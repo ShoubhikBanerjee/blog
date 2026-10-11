@@ -2,7 +2,7 @@
 title: "Encore expands platform for building production systems with real infrastructure"
 slug: "encore-expands-platform-for-building-production-systems-with-real-infrastructure"
 description: "Encore released an update that adds new capabilities for building, testing, and deploying production‑grade systems using real infrastructure throughout the development lifecycle."
-date: 2026-10-11T12:03:14+05:30
+date: 2026-10-11T18:05:47+05:30
 tags: [Encore, Infrastructure, DevOps, AIAgents]
 categories: ["AI", "Cloud Computing", "Infrastructure as Code", "Software Engineering", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/50438175?v=4"
