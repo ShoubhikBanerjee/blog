@@ -2,7 +2,7 @@
 title: "Bridgecrew launches Checkov for IaC and Open‑Source Package Security Scanning"
 slug: "bridgecrew-launches-checkov-for-iac-and-opensource-package-security-scanning"
 description: "Bridgecrew introduced Checkov, a static code analysis tool for infrastructure‑as‑code (IaC) that also performs software composition analysis (SCA) on container images and open‑source packages,..."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [Checkov, IaC, SCA, CloudSecurity]
 categories: ["AI", "Cloud Security", "Infrastructure As Code", "Software Composition Analysis", "DevSecOps"]
 image: "https://avatars.githubusercontent.com/u/48174253?v=4"

@@ -2,7 +2,7 @@
 title: "Dwarf Fortress Developer Tarn Adams Adopts Version Control After Years Without It"
 slug: "dwarf-fortress-developer-tarn-adams-adopts-version-control-after-years-without-it"
 description: "Dwarf Fortress creator Tarn Adams has adopted version control tools, bringing an end to years of developing the game's complex codebase without source control."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [DwarfFortress, VersionControl, GameDev, SoftwareEngineering]
 categories: ["AI", "Software Development", "Game Development", "Gaming"]
 author: "Shoubhik Banerjee"

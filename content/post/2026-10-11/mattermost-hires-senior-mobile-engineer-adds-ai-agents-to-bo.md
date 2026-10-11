@@ -2,7 +2,7 @@
 title: "Mattermost hires Senior Mobile Engineer, adds AI agents to boost reliability"
 slug: "mattermost-hires-senior-mobile-engineer-adds-ai-agents-to-boost-reliability"
 description: "Mattermost is seeking a Senior Mobile Engineer to own reliability, performance, and platform evolution for its React Native and TypeScript mobile application, including native iOS and Android..."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [Mattermost, MobileEngineering, AIagents, Security]
 categories: ["AI", "Software Engineering", "Artificial Intelligence", "Security", "Defense Technology"]
 image: "https://jobicy.com/image.php?title=Senior%20Mobile%20Engineer&company=Mattermost&logo=https%3A%2F%2Fjobicy.com%2Fdata%2Fserver-nyc0409%2Fgalaxy%2Fmercury%2F2022%2F02%2Fecb6ff3992a12e3be49b73ca8a11f5c5-200x200.webp"

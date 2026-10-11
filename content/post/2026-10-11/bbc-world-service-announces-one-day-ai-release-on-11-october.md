@@ -2,7 +2,7 @@
 title: "BBC World Service Announces One-Day AI Release on 11 October 2026"
 slug: "bbc-world-service-announces-one-day-ai-release-on-11-october-2026"
 description: "On 11 October 2026, the BBC World Service's latest five‑minute news bulletin announced an AI development that will be available for one day."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [BBC, AI, News, 2026]
 categories: ["AI", "Artificial Intelligence", "Broadcast Media", "Technology News"]
 image: "https://ichef.bbci.co.uk/images/ic/1024x576/p060dh18.jpg"

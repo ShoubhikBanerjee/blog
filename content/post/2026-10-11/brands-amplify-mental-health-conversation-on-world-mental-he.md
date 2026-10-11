@@ -2,7 +2,7 @@
 title: "Brands Amplify Mental Health Conversation on World Mental Health Day"
 slug: "brands-amplify-mental-health-conversation-on-world-mental-health-day"
 description: "World Mental Health Day on October 10 is a reminder that not every struggle comes with a visible sign and not every “I’m fine” tells the whole story. This year, brands are moving beyond simple..."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [WorldMentalHealthDay, MentalWellbeing, BrandCampaigns]
 categories: ["AI", "Mental Health", "Corporate Social Responsibility", "Public Awareness"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "TikTok Connects Ads Manager with External AI Agents via MCP Server"
 slug: "tiktok-connects-ads-manager-with-external-ai-agents-via-mcp-server"
 description: "TikTok has expanded access to its TikTok for Business Model Context Protocol (MCP) Server, allowing advertisers to manage advertising campaigns directly from external AI tools."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [TikTok, AIAgents, DigitalAdvertising, ModelContextProtocol, Automation]
 categories: ["AI", "Artificial Intelligence", "Digital Advertising", "AI Agents"]
 image: "https://soymarketingultra.com/wp-content/uploads/cabecera-5129.png"

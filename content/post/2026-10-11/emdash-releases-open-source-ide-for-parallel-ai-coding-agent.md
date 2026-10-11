@@ -2,7 +2,7 @@
 title: "emdash releases open‑source IDE for parallel AI coding agents"
 slug: "emdash-releases-opensource-ide-for-parallel-ai-coding-agents"
 description: "A new open‑source tool called **emdash** provides a desktop IDE that can run several coding agents side‑by‑side. Each agent works in its own isolated workspace, and the IDE surface includes..."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [AIagents, DeveloperTools, OpenSource, IDE]
 categories: ["AI", "Software Development", "AI Agents", "Open Source", "Developer Tools"]
 image: "https://howmakersbuild.com/og.png"

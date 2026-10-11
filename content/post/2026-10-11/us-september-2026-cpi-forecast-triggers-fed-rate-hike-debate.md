@@ -2,7 +2,7 @@
 title: "US September 2026 CPI Forecast Triggers Fed Rate‑Hike Debate and Tests Latin American Markets"
 slug: "us-september-2026-cpi-forecast-triggers-fed-ratehike-debate-and-tests-latin-american-markets"
 description: "The U.S. September Consumer Price Index (CPI) report, due on **Wednesday 14 October 2026**, is forecast to show headline inflation at **3.6 %**, up from 3.4 % in August. The result will be a key..."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [CPI, FederalReserve, EmergingMarkets, LatinAmerica, Dollar]
 categories: ["AI", "Macroeconomics", "Finance", "Emerging Markets", "Monetary Policy"]
 image: "https://www.riotimesonline.com/wp-content/uploads/2026/09/gc_47750873.jpg"

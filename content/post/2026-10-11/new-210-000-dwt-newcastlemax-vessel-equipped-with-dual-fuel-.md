@@ -2,7 +2,7 @@
 title: "New 210,000‑DWT Newcastlemax Vessel Equipped with Dual‑Fuel Ammonia Engine"
 slug: "new-210-000dwt-newcastlemax-vessel-equipped-with-dualfuel-ammonia-engine"
 description: "On 10 October 2026 a 210,000‑DWT Newcastlemax vessel built by Qingdao Beihai Shipbuilding Heavy Industry in China was launched with a dual‑fuel engine that can run on ammonia or conventional marine..."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [Maritime, AmmoniaFuel, Logistics]
 categories: ["AI", "Maritime Transport", "Energy Technology", "Sustainable Shipping"]
 author: "Shoubhik Banerjee"

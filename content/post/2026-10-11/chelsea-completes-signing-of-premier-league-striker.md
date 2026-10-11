@@ -2,7 +2,7 @@
 title: "Chelsea completes signing of Premier League striker"
 slug: "chelsea-completes-signing-of-premier-league-striker"
 description: "On January 31, 2018, Chelsea announced the signing of a Premier League striker."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [Chelsea, Transfers, Football]
 categories: ["AI", "Sports", "Football", "Transfers"]
 author: "Shoubhik Banerjee"

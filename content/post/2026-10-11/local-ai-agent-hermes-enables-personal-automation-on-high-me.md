@@ -2,7 +2,7 @@
 title: "Local AI Agent Hermes Enables Personal Automation on High‑Memory Macs"
 slug: "local-ai-agent-hermes-enables-personal-automation-on-highmemory-macs"
 description: "I’m embarking on a journey I’ve so far been hesitant to go on: actually using AI on the regular, this time by running a self‑hosted agent locally on a powerful Mac."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [LocalAI, Hermes, SelfHosted, LLM, Automation]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Computer Hardware", "Productivity"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/100926_Asus_TUF_A14_Hermes_local_AI_ADiBenedetto_0001.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

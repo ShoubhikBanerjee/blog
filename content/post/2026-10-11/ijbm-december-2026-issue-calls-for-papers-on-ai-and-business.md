@@ -2,7 +2,7 @@
 title: "IJBM December 2026 Issue Calls for Papers on AI and Business Topics"
 slug: "ijbm-december-2026-issue-calls-for-papers-on-ai-and-business-topics"
 description: "The International Journal of Business Management (IJBM) has announced a Call for Papers for its December 2026 issue, inviting original, unpublished research on a range of business and AI topics."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [AI, BusinessResearch, CallForPapers, OpenAccess]
 categories: ["AI", "Business", "Academic Publishing", "Artificial Intelligence", "Data Science"]
 author: "Shoubhik Banerjee"

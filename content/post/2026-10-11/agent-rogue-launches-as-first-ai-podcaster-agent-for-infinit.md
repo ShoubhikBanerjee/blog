@@ -2,7 +2,7 @@
 title: "Agent Rogue Launches as First AI Podcaster Agent for Infinite Voice Content"
 slug: "agent-rogue-launches-as-first-ai-podcaster-agent-for-infinite-voice-content"
 description: "Agent Rogue has emerged as the first-ever AI podcaster agent, capable of generating infinite voice content. The project functions as both a content platform featuring simulated celebrity voices and a..."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [AgentRogue, VoiceAI, AIpodcaster, Raydium, Solana, AIagents]
 categories: ["AI", "AI Agents", "Voice Technology", "Cryptocurrency"]
 image: "https://assets.coingecko.com/coin_social_images/coin_social_image/crypto_symbol_image/40922/original/coin_social_image_crypto_symbol_5226120250417-7-x6k2oo.webp?1744932727"

@@ -2,7 +2,7 @@
 title: "Agenti Gives AI Agents Autonomous Crypto Wallets"
 slug: "agenti-gives-ai-agents-autonomous-crypto-wallets"
 description: "A new development called **Agenti** lets any AI agent hold, spend, earn, and receive cryptocurrency on its own, removing the need for human‑mediated payments."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [AIAgents, CryptoWallet, AutonomousAI, Blockchain]
 categories: ["AI", "Artificial Intelligence", "Blockchain", "AI Agents", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/22895867?v=4"

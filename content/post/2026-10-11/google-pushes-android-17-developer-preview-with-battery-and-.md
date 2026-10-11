@@ -2,7 +2,7 @@
 title: "Google pushes Android 17 developer preview with battery and privacy enhancements"
 slug: "google-pushes-android-17-developer-preview-with-battery-and-privacy-enhancements"
 description: "The Android ecosystem is busy this weekend as Google released a fresh update to the Android 17 developer preview, focusing on better battery life, background‑process control, and new privacy tweaks."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [android, android17, mobileupdates, privacy, security]
 categories: ["AI", "Mobile Operating Systems", "Software Updates", "Security", "Consumer Technology"]
 image: "https://thetechpapa.com/wp-content/uploads/2026/10/brainypress-2588-p5Q1EE.png"

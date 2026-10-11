@@ -2,7 +2,7 @@
 title: "Bryden Wood Expands Spanish Architecture Teams for Complex Data Centre Projects"
 slug: "bryden-wood-expands-spanish-architecture-teams-for-complex-data-centre-projects"
 description: "Bryden Wood announced the expansion of its Barcelona and Madrid studios, hiring architects to support the delivery of large‑scale technical facilities across Europe and beyond."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [Architecture, DataCentres, ConstructionJobs, BIM]
 categories: ["AI", "Architecture", "Construction", "Career Opportunities"]
 image: "https://cdn.jobtoday.com/pics/share-pict-1200x630@2x.jpg"

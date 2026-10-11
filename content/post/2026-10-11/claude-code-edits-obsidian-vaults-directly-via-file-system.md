@@ -2,7 +2,7 @@
 title: "Claude Code edits Obsidian vaults directly via file system"
 slug: "claude-code-edits-obsidian-vaults-directly-via-file-system"
 description: "Claude Code can edit an Obsidian vault without a special plugin. Because an Obsidian vault is just a local folder of plain‑text .md files, the agent reads and writes those files directly."
-date: 2026-10-11T18:05:47+05:30
+date: 2026-10-11T22:04:07+05:30
 tags: [Obsidian, ClaudeCode, AIAgents, Productivity]
 categories: ["AI", "Productivity Tools", "Artificial Intelligence", "Software Integration"]
 image: "https://horadecodar.com.br/wp-content/uploads/2026/08/claude-code-obsidian.png"
