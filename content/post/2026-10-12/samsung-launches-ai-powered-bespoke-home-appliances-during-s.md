@@ -2,7 +2,7 @@
 title: "Samsung Launches AI‑Powered Bespoke Home Appliances During Samsung Week 2026"
 slug: "samsung-launches-aipowered-bespoke-home-appliances-during-samsung-week-2026"
 description: "From October 12 to November 8, Samsung’s global Samsung Week 2026 promotion highlighted the company’s newest AI‑enabled Bespoke appliances, offering up to 34% off plus freebies and exclusive benefits..."
-date: 2026-10-12T12:03:49+05:30
+date: 2026-10-12T18:04:23+05:30
 tags: [Samsung, AIappliances, Bespoke, SamsungWeek]
 categories: ["AI", "Consumer Electronics", "Artificial Intelligence", "Smart Home", "Appliances"]
 image: "https://img.global.news.samsung.com/ph/wp-content/uploads/2026/10/Samsung-Week-2026-KV_Thumbnail.jpg"

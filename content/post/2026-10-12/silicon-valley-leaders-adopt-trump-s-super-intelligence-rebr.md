@@ -2,7 +2,7 @@
 title: "Silicon Valley Leaders Adopt Trump's 'Super Intelligence' Rebrand"
 slug: "silicon-valley-leaders-adopt-trump-s-super-intelligence-rebrand"
 description: "President Donald Trump announced his plans to rebrand artificial intelligence as “super intelligence,” prompting a swift response from several tech executives."
-date: 2026-10-12T12:03:49+05:30
+date: 2026-10-12T18:04:23+05:30
 tags: [Trump, SuperIntelligence, AIRebrand, TechLeadership]
 categories: ["AI", "Artificial Intelligence", "Technology Policy", "Corporate Strategy", "Government Relations"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2297269621.jpg?quality=90&strip=all&crop=0%2C10.752607989199%2C100%2C78.494784021602&w=1200"

@@ -2,7 +2,7 @@
 title: "US Reverses Ban on Sharing AI Models with Britain’s AI Security Institute"
 slug: "us-reverses-ban-on-sharing-ai-models-with-britains-ai-security-institute"
 description: "The United States has reversed a previous decision that barred American AI developers from giving Britain early access to their newest models for safety testing."
-date: 2026-10-12T12:03:49+05:30
+date: 2026-10-12T18:04:23+05:30
 tags: [AIsafety, USpolicy, UKAI]
 categories: ["AI", "Artificial Intelligence", "Technology Policy", "International Relations"]
 author: "Shoubhik Banerjee"

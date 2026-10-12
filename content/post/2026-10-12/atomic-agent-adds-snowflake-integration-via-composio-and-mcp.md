@@ -2,7 +2,7 @@
 title: "Atomic Agent Adds Snowflake Integration via Composio and MCP"
 slug: "atomic-agent-adds-snowflake-integration-via-composio-and-mcp"
 description: "Atomic Agent, the open‑source on‑device AI assistant, now supports direct interaction with Snowflake through the Composio integration and the Snowflake Model Context Protocol (MCP)."
-date: 2026-10-12T12:03:49+05:30
+date: 2026-10-12T18:04:23+05:30
 tags: [AtomicAgent, Snowflake, Composio, AIAgents, MCP]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Data Management", "Cloud Services"]
 image: "https://composio.dev/toolkits/graphics/composio_ogImage.png"

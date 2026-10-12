@@ -2,7 +2,7 @@
 title: "Tech Sector Volatility Stems From AI Concerns Amid Rising Borrowing Costs"
 slug: "tech-sector-volatility-stems-from-ai-concerns-amid-rising-borrowing-costs"
 description: "The week‑end markets showed a clear split: broad indices posted modest gains while the technology sector faced selling pressure linked to worries about artificial intelligence and higher borrowing..."
-date: 2026-10-12T12:03:49+05:30
+date: 2026-10-12T18:04:23+05:30
 tags: [AI, TechStocks, MarketVolatility]
 categories: ["AI", "Artificial Intelligence", "Financial Markets", "Technology"]
 image: "https://www.yovich.co.nz/uploads/newsletter_images/Header-image-2026-10-12.png"
