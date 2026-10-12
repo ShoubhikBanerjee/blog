@@ -2,7 +2,7 @@
 title: "Stanford Live Celebrates 250 Years of American Voices"
 slug: "stanford-live-celebrates-250-years-of-american-voices"
 description: "Stanford Live launches a season that honors the United States’ 250th anniversary by featuring artists whose stories reflect the nation’s layered, diverse narrative."
-date: 2026-10-12T06:06:07+05:30
+date: 2026-10-12T12:03:49+05:30
 tags: [StanfordLive, AmericanArts, CulturalHeritage, Education, Community]
 categories: ["AI", "Arts & Culture", "Education", "Community Engagement"]
 image: "https://res.cloudinary.com/dopulypdj/image/upload/f_auto/q_auto/v1790975510/Web_banners_-_Campaign_hero_image_2?_a=BAAARODQ"

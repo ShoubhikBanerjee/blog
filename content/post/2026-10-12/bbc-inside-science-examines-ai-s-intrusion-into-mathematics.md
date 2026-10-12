@@ -2,7 +2,7 @@
 title: "BBC Inside Science Examines AI's Intrusion into Mathematics"
 slug: "bbc-inside-science-examines-ai-s-intrusion-into-mathematics"
 description: "A new segment on BBC Inside Science titled “Will AI complete mathematics? What next for the world of maths after a major intrusion by AI?” examines the role of artificial intelligence in the field of..."
-date: 2026-10-12T06:06:07+05:30
+date: 2026-10-12T12:03:49+05:30
 tags: [AI, Mathematics, BBCInsideScience]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "Science Media"]
 image: "https://ichef.bbci.co.uk/images/ic/1200x675/p01tqv8z.png"

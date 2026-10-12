@@ -2,7 +2,7 @@
 title: "DeepSeek adds vision to V4‑Flash model, matching Claude Opus 4.8 on multimodal tasks"
 slug: "deepseek-adds-vision-to-v4flash-model-matching-claude-opus-4-8-on-multimodal-tasks"
 description: "DeepSeek has released an experimental vision extension for its V4‑Flash large language model, giving the model image‑understanding capabilities while keeping the same pricing."
-date: 2026-10-12T06:06:07+05:30
+date: 2026-10-12T12:03:49+05:30
 tags: [DeepSeek, VisionModel, MultimodalAgents]
 categories: ["AI", "Machine Learning", "AI Agents", "Computer Vision"]
 image: "https://hermes-ai.net/img/hermes-banner.png"

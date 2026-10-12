@@ -2,7 +2,7 @@
 title: "Moku Brings Mobile Vibecoding Workspace for AI Agents to Multiple Platforms"
 slug: "moku-brings-mobile-vibecoding-workspace-for-ai-agents-to-multiple-platforms"
 description: "Moku, a pocket‑sized coding workspace for AI agents, is now available across iOS, macOS, Android, Linux and Windows, letting developers code from a phone or tablet with a full‑featured terminal..."
-date: 2026-10-12T06:06:07+05:30
+date: 2026-10-12T12:03:49+05:30
 tags: [Moku, AIAgents, MobileCoding, Vibecoding]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Mobile Computing", "Developer Tools"]
 image: "https://mokuapp.dev/og-card.png"
