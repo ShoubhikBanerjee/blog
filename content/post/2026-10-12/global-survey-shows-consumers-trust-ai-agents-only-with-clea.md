@@ -2,7 +2,7 @@
 title: "Global Survey Shows Consumers Trust AI Agents Only With Clear Limits"
 slug: "global-survey-shows-consumers-trust-ai-agents-only-with-clear-limits"
 description: "A new random double‑opt‑in survey of 11,000 consumers across 12 countries highlights a growing trust challenge as AI moves from answering questions to acting on consumers’ behalf."
-date: 2026-10-12T18:04:23+05:30
+date: 2026-10-12T22:04:14+05:30
 tags: [AITrust, ConsumerSurvey, AITransparency]
 categories: ["AI", "Artificial Intelligence", "Consumer Trust", "Data Privacy", "AI Governance"]
 image: "https://www.securityworldmarket.com/Frontend/Images/swm-logo-400x400.jpg"

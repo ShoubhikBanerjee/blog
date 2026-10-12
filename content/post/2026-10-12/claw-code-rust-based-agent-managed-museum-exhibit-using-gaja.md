@@ -2,7 +2,7 @@
 title: "Claw Code: Rust‑Based Agent‑Managed Museum Exhibit Using Gajae‑Code and LazyCodex"
 slug: "claw-code-rustbased-agentmanaged-museum-exhibit-using-gajaecode-and-lazycodex"
 description: "An agent-managed museum exhibit called **Claw Code** has been released. It is a public Rust implementation of the `claw` CLI agent harness, built with the Gajae-Code and LazyCodex toolchains and..."
-date: 2026-10-12T18:04:23+05:30
+date: 2026-10-12T22:04:14+05:30
 tags: [Rust, AIagents, AgentManagement, OpenSource]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Software Engineering", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/272961631?v=4"

@@ -2,7 +2,7 @@
 title: "AgentGID Skills Page Relocated to New URL"
 slug: "agentgid-skills-page-relocated-to-new-url"
 description: "The AgentGID skills page has been moved to a new location."
-date: 2026-10-12T18:04:23+05:30
+date: 2026-10-12T22:04:14+05:30
 tags: [AgentGID, AI, Web]
 categories: ["AI", "Artificial Intelligence", "Web Development", "Documentation"]
 author: "Shoubhik Banerjee"

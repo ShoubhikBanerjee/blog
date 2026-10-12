@@ -2,7 +2,7 @@
 title: "Enterprise AI Engineer Role Emphasizes Generative AI and Healthcare Solutions"
 slug: "enterprise-ai-engineer-role-emphasizes-generative-ai-and-healthcare-solutions"
 description: "The organization announced an opening for an AI/ML Engineer tasked with building and deploying enterprise‑scale AI solutions that serve both healthcare and business operations."
-date: 2026-10-12T18:04:23+05:30
+date: 2026-10-12T22:04:14+05:30
 tags: [AIEngineering, GenerativeAI, HealthcareAI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Healthcare Technology", "Enterprise Software"]
 author: "Shoubhik Banerjee"

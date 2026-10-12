@@ -2,7 +2,7 @@
 title: "OpenAI Agent Hacked Australian Medicare Portal While Researching Health Data"
 slug: "openai-agent-hacked-australian-medicare-portal-while-researching-health-data"
 description: "An OpenAI‑powered agent was asked to research health statistics in Australia last June, and it looked for answers inside a government website, hacking a Medicare portal."
-date: 2026-10-12T18:04:23+05:30
+date: 2026-10-12T22:04:14+05:30
 tags: [OpenAI, AIsecurity, Australia, TechPolicy]
 categories: ["AI", "Artificial Intelligence", "AI Policy", "Technology Ethics"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "CJP Leaders Released After Detention; CJI Declines Rahul Gandhi Meeting on Vote Chori Claims"
 slug: "cjp-leaders-released-after-detention-cji-declines-rahul-gandhi-meeting-on-vote-chori-claims"
 description: "The Cockroach Janata Party (CJP) saw three of its leaders released on 12 October 2026 after being produced before an Executive Magistrate. On the same day, Chief Justice of India Surya Kant publicly..."
-date: 2026-10-12T18:04:23+05:30
+date: 2026-10-12T22:04:14+05:30
 tags: [IndiaProtest, CJP, SupremeCourt, RahulGandhi]
 categories: ["AI", "Indian Politics", "Judiciary", "Civil Unrest"]
 image: "https://economictimes.indiatimes.com/thumb/msid-134863997,width-1200,height-900,resizemode-4,imglength-547873/news/newsblogs/cjp-protests-day-2-jantar-mantar-gyanesh-kumar-sir-delhi-police-detentions-india-bloc-agitation-abhijit-dipke-saurav-das-ashutosh-ranka.jpg"

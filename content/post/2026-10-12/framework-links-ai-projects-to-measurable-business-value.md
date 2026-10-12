@@ -2,7 +2,7 @@
 title: "Framework Links AI Projects to Measurable Business Value"
 slug: "framework-links-ai-projects-to-measurable-business-value"
 description: "A practical framework has been introduced for moving from technology activity to measurable business value, helping leaders determine whether digital transformation and AI initiatives are delivering..."
-date: 2026-10-12T18:04:23+05:30
+date: 2026-10-12T22:04:14+05:30
 tags: [digitaltransformation, AIvalue, KPIs]
 categories: ["AI", "Digital Transformation", "Artificial Intelligence", "Business Strategy"]
 image: "https://www.fluidogroup.com/wp-content/uploads/2026/10/digital-transformation-blog-1-1024x576.png"

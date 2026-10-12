@@ -2,7 +2,7 @@
 title: "FitCoach Integrates Pose Estimation and Food Recognition into AI Fitness Coaching"
 slug: "fitcoach-integrates-pose-estimation-and-food-recognition-into-ai-fitness-coaching"
 description: "A new paper presents FitCoach, an AI-assisted fitness coaching system that combines computer vision and intelligent decision-making into a unified framework for exercise and dietary guidance."
-date: 2026-10-12T18:04:23+05:30
+date: 2026-10-12T22:04:14+05:30
 tags: [ComputerVision, FitCoach, PoseEstimation, ArtificialIntelligence, FitnessTech]
 categories: ["AI", "Computer Vision", "Artificial Intelligence", "Health and Fitness", "Deep Learning"]
 author: "Shoubhik Banerjee"
