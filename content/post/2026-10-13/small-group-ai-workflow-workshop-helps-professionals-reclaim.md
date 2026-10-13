@@ -2,7 +2,7 @@
 title: "Small-Group AI Workflow Workshop Helps Professionals Reclaim Up to 5 Hours Weekly"
 slug: "small-group-ai-workflow-workshop-helps-professionals-reclaim-up-to-5-hours-weekly"
 description: "A new hands‑on co‑working session lets participants turn one repetitive task from their real work into an AI‑powered workflow, promising measurable time savings each week."
-date: 2026-10-13T06:08:42+05:30
+date: 2026-10-13T12:06:26+05:30
 tags: [AI, Automation, Workflows, Productivity]
 categories: ["AI", "Artificial Intelligence", "Automation", "Productivity Tools", "Workplace Innovation"]
 image: "https://www.eventbrite.com/e/_next/image?url=https%3A%2F%2Fimg.evbuc.com%2Fhttps%253A%252F%252Fcdn.evbuc.com%252Fimages%252F1191272471%252F3010505379317%252F1%252Foriginal.20260817-191744%3Fcrop%3Dfocalpoint%26fit%3Dcrop%26w%3D940%26auto%3Dformat%252Ccompress%26q%3D75%26sharp%3D10%26fp-x%3D0.081%26fp-y%3D0.487%26s%3D93c3f5aaad32d5ee55eafcadedbe6969&w=940&q=75"

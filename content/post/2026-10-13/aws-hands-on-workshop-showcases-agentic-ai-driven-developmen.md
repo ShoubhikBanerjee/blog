@@ -2,7 +2,7 @@
 title: "AWS Hands‑On Workshop Showcases Agentic AI‑Driven Development with Kiro"
 slug: "aws-handson-workshop-showcases-agentic-aidriven-development-with-kiro"
 description: "AWS hosted an in‑person **Hands‑On Workshop: Agentic AI‑Driven Development with Kiro**."
-date: 2026-10-13T06:08:42+05:30
+date: 2026-10-13T12:06:26+05:30
 tags: [AWS, AIagents, DeveloperTools, Kiro]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Cloud Computing", "Developer Tools"]
 image: "https://startups.aws.com/startups/resource/image/aws-events-thumbnail.png"

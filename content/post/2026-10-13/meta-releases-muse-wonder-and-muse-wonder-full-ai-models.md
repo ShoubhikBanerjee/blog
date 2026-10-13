@@ -2,7 +2,7 @@
 title: "Meta Releases Muse Wonder and Muse Wonder Full AI Models"
 slug: "meta-releases-muse-wonder-and-muse-wonder-full-ai-models"
 description: "Meta has introduced two new AI models, Muse Wonder and Muse Wonder Full, as part of its effort to reestablish itself as a major force in the AI industry. Developed by the revamped Superintelligence..."
-date: 2026-10-13T06:08:42+05:30
+date: 2026-10-13T12:06:26+05:30
 tags: [Meta, Muse, GenerativeAI, LargeLanguageModels]
 categories: ["AI", "Artificial Intelligence", "Product Launch", "Machine Learning"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STKB394_MUSE_AI_CVIRGINIA_D.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

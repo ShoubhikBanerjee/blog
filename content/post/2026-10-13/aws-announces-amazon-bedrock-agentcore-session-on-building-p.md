@@ -2,7 +2,7 @@
 title: "AWS Announces Amazon Bedrock AgentCore Session on Building Production-Ready Enterprise AI Agents"
 slug: "aws-announces-amazon-bedrock-agentcore-session-on-building-production-ready-enterprise-ai-agents"
 description: "AI agents are transforming how enterprises operate, but moving from prototype to production remains a major challenge."
-date: 2026-10-13T06:08:42+05:30
+date: 2026-10-13T12:06:26+05:30
 tags: [AIagents, AmazonBedrock, GenerativeAI, AWS, EnterpriseAI]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Cloud Computing", "Enterprise Technology"]
 image: "https://startups.aws.com/startups/resource/image/aws-events-thumbnail.png"

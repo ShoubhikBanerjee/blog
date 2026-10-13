@@ -2,7 +2,7 @@
 title: "Meta launches Wonder and Wonder Full models to challenge ChatGPT and Claude"
 slug: "meta-launches-wonder-and-wonder-full-models-to-challenge-chatgpt-and-claude"
 description: "Meta unveiled two new artificial intelligence models, called **Wonder** and **Wonder Full**, on Monday, which the company claims perform at a level comparable to OpenAI's ChatGPT and Anthropic's..."
-date: 2026-10-13T06:08:42+05:30
+date: 2026-10-13T12:06:26+05:30
 tags: [Meta, AIModels, Wonder, AICompetition, AISafety]
 categories: ["AI", "Artificial Intelligence", "Large Language Models", "AI Safety", "AI Industry"]
 image: "https://idsb.tmgrup.com.tr/ly/uploads/images/2026/10/12/thumbs/1200x675/465278.jpg"

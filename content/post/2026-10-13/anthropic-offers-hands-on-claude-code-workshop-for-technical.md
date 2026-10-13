@@ -2,7 +2,7 @@
 title: "Anthropic Offers Hands‑On Claude Code Workshop for Technical Teams"
 slug: "anthropic-offers-handson-claude-code-workshop-for-technical-teams"
 description: "Anthropic announced a hands‑on workshop focused on Claude Code for technical leaders, architects, and engineers."
-date: 2026-10-13T06:08:42+05:30
+date: 2026-10-13T12:06:26+05:30
 tags: [Anthropic, ClaudeCode, AIWorkshop, EnterpriseAI]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Enterprise Technology"]
 image: "https://www.bounteous.com/sites/default/files/insights/2026-08/previews/ims-14552_-_anthropic_workshop_frisco_thumbnail.jpg"
