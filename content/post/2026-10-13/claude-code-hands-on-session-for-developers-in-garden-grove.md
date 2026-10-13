@@ -2,7 +2,7 @@
 title: "Claude Code Hands‑On Session for Developers in Garden Grove"
 slug: "claude-code-handson-session-for-developers-in-garden-grove"
 description: "If you have been curious about how Claude Code can streamline your development workflow, a casual, hands‑on session is being hosted in Garden Grove."
-date: 2026-10-13T12:06:26+05:30
+date: 2026-10-13T18:11:09+05:30
 tags: [ClaudeCode, AIcoding, DeveloperMeetup, AItools]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Developer Communities"]
 author: "Shoubhik Banerjee"

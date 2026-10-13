@@ -2,7 +2,7 @@
 title: "Anthropic Claude Opus 5.5 and OpenAI GPT-6 Sol launch with cost‑focused positioning"
 slug: "anthropic-claude-opus-5-5-and-openai-gpt-6-sol-launch-with-costfocused-positioning"
 description: "Anthropic released Claude Opus 5.5 and OpenAI released GPT-6 Sol, highlighting a shift toward competitive pricing and market segmentation in the AI landscape."
-date: 2026-10-13T12:06:26+05:30
+date: 2026-10-13T18:11:09+05:30
 tags: [Anthropic, OpenAI, LLM]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Business Strategy", "Technology Policy"]
 image: "https://af.net/wp-content/uploads/aifod-ph/ph-5.jpg"

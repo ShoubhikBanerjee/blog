@@ -2,7 +2,7 @@
 title: "Google Releases SynthID Detector; Microsoft Teams to Add Deepfake Detection"
 slug: "google-releases-synthid-detector-microsoft-teams-to-add-deepfake-detection"
 description: "Google has made its SynthID Detector available to the public, and Microsoft announced that Teams will support third‑party deep‑fake detection beginning in November."
-date: 2026-10-13T12:06:26+05:30
+date: 2026-10-13T18:11:09+05:30
 tags: [AI, deepfake, privacy, Microsoft, Google]
 categories: ["AI", "Artificial Intelligence", "Security", "Technology"]
 image: "https://edrm.net/wp-content/uploads/2026/10/Weekly-Letter-10.13.26.png"

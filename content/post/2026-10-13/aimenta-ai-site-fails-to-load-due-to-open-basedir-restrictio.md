@@ -2,7 +2,7 @@
 title: "Aimenta.ai site fails to load due to open_basedir restriction errors"
 slug: "aimenta-ai-site-fails-to-load-due-to-open-basedir-restriction-errors"
 description: "A recent request to the Aimenta.ai web application triggered a series of PHP warnings and a fatal error, preventing the site from loading."
-date: 2026-10-13T12:06:26+05:30
+date: 2026-10-13T18:11:09+05:30
 tags: [PHP, ServerError, open_basedir, WebHosting]
 categories: ["AI", "Web Development", "Server Administration", "PHP"]
 author: "Shoubhik Banerjee"

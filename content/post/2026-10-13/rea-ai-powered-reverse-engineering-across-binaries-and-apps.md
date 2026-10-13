@@ -2,7 +2,7 @@
 title: "REA: AI‑Powered Reverse Engineering Across Binaries and Apps"
 slug: "rea-aipowered-reverse-engineering-across-binaries-and-apps"
 description: "Reverse engineer anything with agents, from app behavior down to native binaries. REA provides a single MCP for reverse engineering across binaries, applications, and runtime behavior."
-date: 2026-10-13T12:06:26+05:30
+date: 2026-10-13T18:11:09+05:30
 tags: [ReverseEngineering, AIAgents, MCP, SoftwareAnalysis]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Security"]
 image: "https://avatars.githubusercontent.com/u/76467478?v=4"

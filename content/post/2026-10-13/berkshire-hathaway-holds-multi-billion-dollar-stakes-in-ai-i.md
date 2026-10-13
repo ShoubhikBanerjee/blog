@@ -2,7 +2,7 @@
 title: "Berkshire Hathaway Holds Multi‑Billion Dollar Stakes in AI Infrastructure Providers"
 slug: "berkshire-hathaway-holds-multibillion-dollar-stakes-in-ai-infrastructure-providers"
 description: "When Berkshire Hathaway picked up a massive stake in major artificial intelligence infrastructure stocks last year, Wall Street took notice. Twelve months later, financial reports show Berkshire..."
-date: 2026-10-13T12:06:26+05:30
+date: 2026-10-13T18:11:09+05:30
 tags: [AIInfrastructure, BerkshireHathaway, EnterpriseCompute]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Hardware", "Investment"]
 image: "https://images.pexels.com/photos/8566467/pexels-photo-8566467.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1200&h=627"

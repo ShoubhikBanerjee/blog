@@ -2,7 +2,7 @@
 title: "Alibaba Announces Qwen 4 27B Tier but No Public Release Yet"
 slug: "alibaba-announces-qwen-4-27b-tier-but-no-public-release-yet"
 description: "Alibaba announced the Qwen 4 27B tier at the Apsara Conference on 22 September 2026, but the model remains in training and no download, API, or benchmark information is available."
-date: 2026-10-13T12:06:26+05:30
+date: 2026-10-13T18:11:09+05:30
 tags: [Alibaba, Qwen4, LLM, AIModels]
 categories: ["AI", "Machine Learning", "Large Language Models", "Artificial Intelligence"]
 image: "https://cms.orcarouter.ai/api/media/file/1-1945-1200x630.png"

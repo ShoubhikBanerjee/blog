@@ -2,7 +2,7 @@
 title: "ABU Hosts Hands-On AI Agents Training for Staffing Professionals"
 slug: "abu-hosts-hands-on-ai-agents-training-for-staffing-professionals"
 description: "The Association of Temporary Employment Agencies (ABU) is organizing a hands-on training on October 12, 2026, focusing on AI Agents. This workshop aims to move beyond basic text generation and..."
-date: 2026-10-13T12:06:26+05:30
+date: 2026-10-13T18:11:09+05:30
 tags: [A, I, A, g, e, n, t, s, B, u, s, i, n, e, s, s, A, u, t, o, m, a, t, i, o, n, S, t, a, f, f, i, n, g, I, n, d, u, s, t, r, y, N, o, C, o, d, e, W, o, r, k, f, l, o, w, s]
 categories: ["AI", "A", "r", "t", "i", "f", "i", "c", "i", "a", "l", "I", "n", "t", "e", "l", "l", "i", "g", "e", "n", "c", "e", ",", "B", "u", "s", "i", "n", "e", "s", "s", "A", "u", "t", "o", "m", "a", "t", "i", "o", "n", ",", "W", "o", "r", "k", "f", "o", "r", "c", "e", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t", ",", "T", "r", "a", "i", "n", "i", "n", "g"]
 image: "https://www.abu.nl/app/uploads/2026/07/ABRF00528.jpg"
