@@ -2,7 +2,7 @@
 title: "Hands-On Workshop: Building Enterprise AI Agents with Amazon Bedrock AgentCore"
 slug: "hands-on-workshop-building-enterprise-ai-agents-with-amazon-bedrock-agentcore"
 description: "Amazon is hosting an in-person workshop to teach participants how to build production-ready AI agents using Amazon Bedrock AgentCore. This interactive session is designed to take attendees through..."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [A, m, a, z, o, n, B, e, d, r, o, c, k, A, I, A, g, e, n, t, s, E, n, t, e, r, p, r, i, s, e, A, I, A, W, S, A, g, e, n, t, C, o, r, e]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "A", "m", "a", "z", "o", "n", "W", "e", "b", "S", "e", "r", "v", "i", "c", "e", "s", ",", "E", "n", "t", "e", "r", "p", "r", "i", "s", "e", "S", "o", "f", "t", "w", "a", "r", "e"]
 image: "https://startups.aws.com/startups/resource/image/aws-events-thumbnail.png"

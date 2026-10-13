@@ -2,7 +2,7 @@
 title: "Meta Launches Proprietary Multimodal Model Muse Wonder"
 slug: "meta-launches-proprietary-multimodal-model-muse-wonder"
 description: "Meta officially released Muse Wonder on October 12, 2026, introducing a new multimodal AI model to its growing artificial intelligence portfolio. The proprietary system marks Meta's latest effort to..."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [M, e, t, a, A, I, M, u, l, t, i, m, o, d, a, l, M, o, d, e, l, s, A, I, D, e, v, e, l, o, p, m, e, n, t, P, r, o, p, r, i, e, t, a, r, y, A, I]
 categories: ["AI", "A", "r", "t", "i", "f", "i", "c", "i", "a", "l", "I", "n", "t", "e", "l", "l", "i", "g", "e", "n", "c", "e", ",", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "C", "o", "m", "p", "u", "t", "e", "r", "V", "i", "s", "i", "o", "n", ",", "A", "I", "M", "o", "d", "e", "l", "s"]
 image: "https://cdn.prod.website-files.com/6a0f028de6df6a6fd88c3f89/6acd4f10d4e0d48176038aed_6acd4f0d427eabefb7d44b9d_meta-launches-muse-wonder-new-multimodal-ai-model.avif"

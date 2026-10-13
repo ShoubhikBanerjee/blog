@@ -2,7 +2,7 @@
 title: "Python 3.15 Released with Lazy Imports and New Sampling Profiler"
 slug: "python-3-15-released-with-lazy-imports-and-new-sampling-profiler"
 description: "Python 3.15 has been released, introducing significant updates to import behavior, profiling tools, and language syntax. This release, curated by 3.14 and 3.15 release manager Hugo van Kemenade,..."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [Python, Programming, SoftwareDevelopment, Python315]
 categories: ["AI", "Programming Languages", "Software Development", "Technology"]
 image: "https://static.simonwillison.net/static/2026/profiler-output.webp"

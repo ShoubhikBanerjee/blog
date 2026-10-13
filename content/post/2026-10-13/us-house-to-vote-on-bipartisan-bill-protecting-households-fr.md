@@ -2,7 +2,7 @@
 title: "US House to Vote on Bipartisan Bill Protecting Households from Data Center Power Costs"
 slug: "us-house-to-vote-on-bipartisan-bill-protecting-households-from-data-center-power-costs"
 description: "The US House of Representatives is expected to vote on the bipartisan 'Ratepayer Protection Act' this Wednesday. The legislation aims to prevent the soaring costs associated with data center..."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [DataCenters, EnergyPolicy, ArtificialIntelligence, Legislation]
 categories: ["AI", "Public Policy", "Energy Infrastructure", "Artificial Intelligence"]
 image: "https://img.etimg.com/thumb/msid-134899566,width-1200,height-900,imgsize-516465,overlay-economictimes/articleshow.jpg"

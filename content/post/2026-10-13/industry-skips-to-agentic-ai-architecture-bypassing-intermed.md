@@ -2,7 +2,7 @@
 title: "Industry Skips to Agentic AI Architecture, Bypassing Intermediate Steps"
 slug: "industry-skips-to-agentic-ai-architecture-bypassing-intermediate-steps"
 description: "The AI ecosystem is increasingly adopting the fourth architecture – agentic AI – even though it jumps over the three earlier, lower‑cost rungs."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [LLM, RAG, AIAgents, AgenticAI, Orchestration]
 categories: ["AI", "Machine Learning", "AI Architecture", "Natural Language Processing", "Software Engineering"]
 author: "Shoubhik Banerjee"

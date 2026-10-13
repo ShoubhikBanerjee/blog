@@ -2,7 +2,7 @@
 title: "Benchmarking Seven LLMs for Epilepsy MCQ Generation Reveals Strengths and Limits"
 slug: "benchmarking-seven-llms-for-epilepsy-mcq-generation-reveals-strengths-and-limits"
 description: "Large language models (LLMs) are increasingly used to generate medical assessment items, but their reliability for disease‑specific question writing remains uncertain. A new benchmark evaluated seven..."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [LLM, MedicalAI, EpilepsyEducation, MCQ]
 categories: ["AI", "Artificial Intelligence", "Medical Education", "Large Language Models"]
 image: "https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/3501F557-CAFA-4218-930C20D1D930C78C/F6FF788E-26D5-4BC5-8CB92EE85A59CA4A/WebsiteWebP_XL-FMED_Main Visual_Purple_Website.webp"

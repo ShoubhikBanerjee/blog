@@ -2,7 +2,7 @@
 title: "Python Web UI for Mobile File Editing Built with Codex Remote and GPT-6"
 slug: "python-web-ui-for-mobile-file-editing-built-with-codex-remote-and-gpt-6"
 description: "I built a Python web app on my phone using Codex Remote and GPT-6 Astra Extra High to view and edit files in a folder without routing credentials through the LLM."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [Python, Codex, GPT6, Tailscale, WebUI]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Web Technologies", "Networking"]
 image: "https://static.simonwillison.net/static/2026/web-edit-card.jpg"

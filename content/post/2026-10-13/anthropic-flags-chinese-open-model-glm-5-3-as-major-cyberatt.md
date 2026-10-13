@@ -2,7 +2,7 @@
 title: "Anthropic flags Chinese open model GLM-5.3 as major cyberattack risk"
 slug: "anthropic-flags-chinese-open-model-glm-5-3-as-major-cyberattack-risk"
 description: "Late last month, Anthropic released a report arguing that the model GLM-5.3 poses a major cyberattack risk."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [AISafety, OpenModels, CyberRisk, Anthropic]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Cybersecurity", "AI Ethics"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/09/260915_openaimodels.jpg?resize=1200,600"

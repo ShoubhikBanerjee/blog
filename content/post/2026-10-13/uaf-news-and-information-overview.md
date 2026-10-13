@@ -2,7 +2,7 @@
 title: "UAF News and Information Overview"
 slug: "uaf-news-and-information-overview"
 description: "- UAF news and information"
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [UAF, CampusNews, Events]
 categories: ["AI", "Education", "Campus Communications", "Public Information"]
 author: "Shoubhik Banerjee"

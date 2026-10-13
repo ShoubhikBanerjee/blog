@@ -2,7 +2,7 @@
 title: "Intel Begins Customer Sampling of GPU d-Series for Agentic AI"
 slug: "intel-begins-customer-sampling-of-gpu-d-series-for-agentic-ai"
 description: "Intel accelerates open infrastructure for the agentic AI era; begins customer sampling of GPU d-series."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [I, n, t, e, l, A, I, I, n, f, r, a, s, t, r, u, c, t, u, r, e, G, P, U, A, g, e, n, t, i, c, A, I, O, p, e, n, I, n, f, r, a, s, t, r, u, c, t, u, r, e]
 categories: ["AI", "A", "r", "t", "i", "f", "i", "c", "i", "a", "l", "I", "n", "t", "e", "l", "l", "i", "g", "e", "n", "c", "e", ",", "H", "a", "r", "d", "w", "a", "r", "e", ",", "S", "e", "m", "i", "c", "o", "n", "d", "u", "c", "t", "o", "r", ",", "D", "a", "t", "a", "C", "e", "n", "t", "e", "r", "s"]
 image: "https://www.newsquawk.com/assets/placeholder_images_for_news_by_category/Equities/3.png"

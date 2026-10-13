@@ -2,7 +2,7 @@
 title: "Anthropic Cuts Distillation Attacks by Up to 99% with New Anti‑Distillation Defenses"
 slug: "anthropic-cuts-distillation-attacks-by-up-to-99-with-new-antidistillation-defenses"
 description: "Anthropic announced that its new anti‑distillation defenses have lowered the amount of reasoning tokens that can be harvested from its Claude models by a factor of 10 to 100, while also reducing the..."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [Anthropic, AISafety, Distillation, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "AI Safety", "Machine Learning", "Security"]
 image: "https://news.lavx.hu/api/media/file/anthropic-cuts-distillation-attacks-by-up-to-99-with-new-defenses-1_1791866669420-1200x630.jpg"

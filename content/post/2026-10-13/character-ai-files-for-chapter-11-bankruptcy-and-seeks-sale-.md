@@ -2,7 +2,7 @@
 title: "Character.AI files for Chapter 11 bankruptcy and seeks sale of assets to Disney"
 slug: "character-ai-files-for-chapter-11-bankruptcy-and-seeks-sale-of-assets-to-disney"
 description: "Character.AI, an early generative‑AI chatbot startup, announced on Monday that it has filed for Chapter 11 bankruptcy protection in the United States and is pursuing a sale of its assets to Disney."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [CharacterAI, DisneyAI, Bankruptcy, AcquiHire]
 categories: ["AI", "Artificial Intelligence", "Tech Business", "Mergers & Acquisitions", "Legal Issues"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STK278_character_ai_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

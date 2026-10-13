@@ -2,7 +2,7 @@
 title: "AI Labs Buying Data from Defunct Startups as New Market Emerges"
 slug: "ai-labs-buying-data-from-defunct-startups-as-new-market-emerges"
 description: "AI labs are buying data from dead startups to train their models, turning the end‑of‑life ecosystem into a nascent data‑resale market."
-date: 2026-10-13T18:11:09+05:30
+date: 2026-10-13T22:07:53+05:30
 tags: [AIData, StartupClosure, MachineLearning, DataPrivacy]
 categories: ["AI", "Artificial Intelligence", "Data Management", "Startup Ecosystem"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/AI-Death_Redamonti_MIT-thumb.jpg?resize=1200,600"
