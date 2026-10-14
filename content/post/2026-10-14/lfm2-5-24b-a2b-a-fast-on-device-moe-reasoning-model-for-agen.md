@@ -2,7 +2,7 @@
 title: "LFM2.5-24B-A2B: A Fast On-Device MoE Reasoning Model for Agentic Tasks"
 slug: "lfm2-5-24b-a2b-a-fast-on-device-moe-reasoning-model-for-agentic-tasks"
 description: "LFM2.5-24B-A2B is a new reasoning-only model designed for fast, private agentic workflows on-device. Building upon the LFM2-24B-A2B architecture, this update introduces scaled training, expanded..."
-date: 2026-10-14T12:05:57+05:30
+date: 2026-10-14T18:06:09+05:30
 tags: [AIagents, EdgeAI, MoE, LiquidFoundationModel]
 categories: ["AI", "Machine Learning", "AI Agents", "Edge Computing"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/644249b08443bce4c9890a0f/YxGx9U6yV6_mumklCyMsE.png"

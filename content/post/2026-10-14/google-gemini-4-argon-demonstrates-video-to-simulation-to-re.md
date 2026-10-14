@@ -2,7 +2,7 @@
 title: "Google Gemini 4 Argon Demonstrates Video-to-Simulation-to-Real Control"
 slug: "google-gemini-4-argon-demonstrates-video-to-simulation-to-real-control"
 description: "Google’s Gemini 4 Argon model showcase a pipeline that turns raw video into a physics‑based simulation and then into real‑world robot actions."
-date: 2026-10-14T12:05:57+05:30
+date: 2026-10-14T18:06:09+05:30
 tags: [GoogleAI, Gemini, Simulation, HumanoidRobotics]
 categories: ["AI", "Artificial Intelligence", "Robotics", "Computer Vision", "3D Modeling"]
 author: "Shoubhik Banerjee"

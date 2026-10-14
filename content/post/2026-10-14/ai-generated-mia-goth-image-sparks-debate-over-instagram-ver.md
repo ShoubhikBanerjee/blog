@@ -2,7 +2,7 @@
 title: "AI‑generated Mia Goth image sparks debate over Instagram verification and labeling"
 slug: "aigenerated-mia-goth-image-sparks-debate-over-instagram-verification-and-labeling"
 description: "Earlier this month, an AI‑generated photo of actress Mia Goth wearing a T‑shirt that reads “MY EX IS MY BIGGEST FAN” and set to Beyoncé’s “Single Ladies (Put a Ring on It)” went viral on Instagram...."
-date: 2026-10-14T12:05:57+05:30
+date: 2026-10-14T18:06:09+05:30
 tags: [AI, Instagram, Verification, Deepfakes]
 categories: ["AI", "Artificial Intelligence", "Social Media", "Digital Ethics", "Computer Vision"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/gettyimages-2263775227.jpg?quality=90&strip=all&crop=0%2C10.653918363709%2C100%2C78.692163272582&w=1200"

@@ -2,7 +2,7 @@
 title: "Google allows users to launch personal AI apps through Play Store"
 slug: "google-allows-users-to-launch-personal-ai-apps-through-play-store"
 description: "Google has announced a new feature in the US that allows users to launch personal, vibe-coded apps directly through the Google Play Store."
-date: 2026-10-14T12:05:57+05:30
+date: 2026-10-14T18:06:09+05:30
 tags: [GooglePlay, Android, AppDevelopment, TechNews]
 categories: ["AI", "Software Development", "Android", "Google"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24007893/acastro_STK112_android_02.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

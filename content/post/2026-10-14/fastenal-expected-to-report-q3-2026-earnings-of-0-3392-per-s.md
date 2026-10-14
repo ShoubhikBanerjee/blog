@@ -2,7 +2,7 @@
 title: "Fastenal Expected to Report Q3 2026 Earnings of $0.3392 Per Share"
 slug: "fastenal-expected-to-report-q3-2026-earnings-of-0-3392-per-share"
 description: "Fastenal (NASDAQ:FAST) is slated to release its third‑quarter 2026 earnings on Wednesday, October 14, 2026 before the market opens. The earnings conference call is scheduled for 10:00 AM ET."
-date: 2026-10-14T12:05:57+05:30
+date: 2026-10-14T18:06:09+05:30
 tags: [Fastenal, Earnings, IndustrialSupplies]
 categories: ["AI", "Financial Reporting", "Industrial Distribution", "Market Analysis"]
 image: "https://www.marketbeat.com/logos/fastenal-logo-1200x675.jpg"

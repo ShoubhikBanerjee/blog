@@ -2,7 +2,7 @@
 title: "Meta brings Your Algorithm customization feature to Facebook"
 slug: "meta-brings-your-algorithm-customization-feature-to-facebook"
 description: "Meta is introducing the 'Your Algorithm' feature to Facebook, allowing users to directly manage and customize the content they see in their feed and Facebook Reels. This toolset is part of a broader..."
-date: 2026-10-14T12:05:57+05:30
+date: 2026-10-14T18:06:09+05:30
 tags: [Meta, Facebook, ArtificialIntelligence, LLM, Algorithms]
 categories: ["AI", "Social Media", "Artificial Intelligence", "Technology News"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/meta-your-algorithm-facebook.jpg?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

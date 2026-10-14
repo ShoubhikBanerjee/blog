@@ -2,7 +2,7 @@
 title: "TestZeus launches Hercules, the first open‑source, code‑free testing agent"
 slug: "testzeus-launches-hercules-the-first-opensource-codefree-testing-agent"
 description: "Testing modern web applications can be difficult, with frequent changes and complex features making it hard to keep up. That’s where **Hercules** comes in."
-date: 2026-10-14T12:05:57+05:30
+date: 2026-10-14T18:06:09+05:30
 tags: [TestAutomation, OpenSource, BDD, Playwright]
 categories: ["AI", "Software Testing", "Open Source Software", "Behavior-Driven Development", "Automation"]
 image: "https://avatars.githubusercontent.com/u/178647201?v=4"

@@ -2,7 +2,7 @@
 title: "Using Agents to Rewrite Apache Spark User-Defined Functions for GPU Acceleration"
 slug: "using-agents-to-rewrite-apache-spark-user-defined-functions-for-gpu-acceleration"
 description: "Agentic AI and demanding enterprise applications are compounding the need for vast amounts of data and frequent, complex queries. To meet this demand, NVIDIA cuDF is utilizing agents to automate the..."
-date: 2026-10-14T12:05:57+05:30
+date: 2026-10-14T18:06:09+05:30
 tags: [NVIDIA, ApacheSpark, AIagents, GPU, DataAnalytics]
 categories: ["AI", "Data Science", "Big Data", "Artificial Intelligence"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image2-5-660x370.png"

@@ -2,7 +2,7 @@
 title: "Z.ai Releases GLM-Legal for Specialized Agentic Legal Intelligence Applications"
 slug: "z-ai-releases-glm-legal-for-specialized-agentic-legal-intelligence-applications"
 description: "Z.ai has introduced GLM-Legal, a specialized model developed to advance agentic legal intelligence. This update, based on the GLM-5.3-Flash architecture, is designed to perform complex tasks such as..."
-date: 2026-10-14T12:05:57+05:30
+date: 2026-10-14T18:06:09+05:30
 tags: [LegalTech, AIagents, LLMs, Zai, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Legal Technology", "Machine Learning"]
 image: "https://wmeojibgfvjvinftolho.supabase.co/storage/v1/object/public/blog-research/banners/glm-legal-mv7f9tx2-6c9a74-20261014.png"
