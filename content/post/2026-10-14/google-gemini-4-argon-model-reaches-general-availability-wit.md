@@ -2,7 +2,7 @@
 title: "Google Gemini 4 Argon Model Reaches General Availability with Benchmarks"
 slug: "google-gemini-4-argon-model-reaches-general-availability-with-benchmarks"
 description: "Google announced that Gemini 4 Argon is now generally available (GA) for coding, knowledge work, enterprise workflows and cyber‑defense."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [Gemini, AIModels, Benchmarking, CodingAI, EnterpriseAI]
 categories: ["AI", "Machine Learning", "AI Agents", "Computer Vision", "Enterprise Software"]
 image: "https://substackcdn.com/image/youtube/w_728,c_limit/akEqiXFo3GM"

@@ -2,7 +2,7 @@
 title: "New AWS automation simplifies activation of Bedrock private‑pricing entitlements across organizations"
 slug: "new-aws-automation-simplifies-activation-of-bedrock-privatepricing-entitlements-across-organizations"
 description: "Amazon Bedrock with managed entitlements simplifies multi‑account access to third‑party AI models by allowing a single subscription from a central account and distribution across an organization...."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [AWS, AmazonBedrock, LicenseManager, CDK]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Infrastructure Automation"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-21638-featured-image.png"

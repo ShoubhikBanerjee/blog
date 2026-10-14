@@ -2,7 +2,7 @@
 title: "AWS launches Anchor Browser with Agentic Payments for AI agent transaction automation"
 slug: "aws-launches-anchor-browser-with-agentic-payments-for-ai-agent-transaction-automation"
 description: "When an AI agent accesses a paid resource, the server returns HTTP 402 Payment Required. AWS now offers a managed way for agents to handle that payment automatically."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [AWS, AIAgents, MachineToMachinePayments, CloudAutomation]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Payments", "Automation"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/08/ML-21771-featured-image.png"

@@ -2,7 +2,7 @@
 title: "Shopify Expands Catalog Access to AI Agents for Automated Shopping and Checkout"
 slug: "shopify-expands-catalog-access-to-ai-agents-for-automated-shopping-and-checkout"
 description: "Shopify announced Tuesday it will allow shoppers to configure AI agents to purchase products on their behalf, giving these agents access to a catalog of over a billion listings. This development..."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [Shopify, AIagents, ECommerce, ShopPay, AgenticCommerce]
 categories: ["AI", "AI Agents", "E-commerce", "Retail Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/gettyimages-2225304503.jpg?quality=90&strip=all&crop=0%2C10.729057198914%2C100%2C78.541885602173&w=1200"

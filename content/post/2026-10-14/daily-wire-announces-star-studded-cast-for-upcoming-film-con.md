@@ -2,7 +2,7 @@
 title: "Daily Wire Announces Star-Studded Cast for Upcoming Film Confession"
 slug: "daily-wire-announces-star-studded-cast-for-upcoming-film-confession"
 description: "The Daily Wire has announced that its next film, **Confession**, will feature a star‑studded cast and is scheduled for release on **Oct 14, 2026**."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [DailyWire, ConfessionFilm, Entertainment, Cinema]
 categories: ["AI", "Film", "Entertainment", "Media"]
 image: "https://images.consequence.net/5GTcpikVScwbnONXaY2DSabwrEeVR-kB-PU2AHA_xsw/rs:fit:400:0/plain/https%3A%2F%2Fconcerts.consequence.net%2Fimages%2Fevent-fallback.jpg@webp"

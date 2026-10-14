@@ -2,7 +2,7 @@
 title: "Google DeepMind and GovTech Singapore Deploy On‑Device AI Scam Detector"
 slug: "google-deepmind-and-govtech-singapore-deploy-ondevice-ai-scam-detector"
 description: "Google DeepMind and Singapore’s Government Technology Agency (GovTech) have jointly released a privacy‑preserving, on‑device scam detection model as part of the National AI Partnership."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [AI, ScamDetection, Privacy, Singapore]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Privacy Protection", "Public Policy"]
 image: "https://lh3.googleusercontent.com/m134KeViYlQXqWaac-fW1TuTvCk1ZQ2EnHF72xH6anzjd4iKukfGHvV3o5PiDTJfSytjxUF2E1rwAAHlZ4ZyCkGkOHV7Uij2ZZ3zsbVZUAFCMCccZQ=w1200-h630-n-nu-rw"

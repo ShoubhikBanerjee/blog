@@ -2,7 +2,7 @@
 title: "Hands‑On “Colab and Chill” Workshop Teaches AI‑Assisted Data Science"
 slug: "handson-colab-and-chill-workshop-teaches-aiassisted-data-science"
 description: "A new hands‑on workshop called “Colab and Chill” was announced for Wednesday, October 14, 2026."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [AIWorkshop, GoogleColab, PromptEngineering, DataScience]
 categories: ["AI", "Artificial Intelligence", "Data Science", "Education"]
 image: "https://www.lib.ncsu.edu/themes/custom/ncsulibraries/images/screenshot.jpg"

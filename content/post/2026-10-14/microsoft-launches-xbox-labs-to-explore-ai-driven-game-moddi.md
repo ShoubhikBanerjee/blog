@@ -2,7 +2,7 @@
 title: "Microsoft Launches Xbox Labs to Explore AI‑Driven Game Modding"
 slug: "microsoft-launches-xbox-labs-to-explore-aidriven-game-modding"
 description: "Microsoft announced a new Xbox Labs group to experiment with AI‑powered decompilation and recompilation of games, turning emerging ideas into experiences for players and developers."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [Xbox, AI, GameModding, Microsoft]
 categories: ["AI", "Artificial Intelligence", "Gaming", "Software Engineering", "Modding"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/XBOX-LABS-1.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

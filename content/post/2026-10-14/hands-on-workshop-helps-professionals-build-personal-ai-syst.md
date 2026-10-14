@@ -2,7 +2,7 @@
 title: "Hands‑On Workshop Helps Professionals Build Personal AI Systems"
 slug: "handson-workshop-helps-professionals-build-personal-ai-systems"
 description: "A new hands‑on workshop lets participants turn a repetitive work task into a personal AI workflow, requiring no technical background."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [AIWorkshop, Productivity, NoCode, Automation]
 categories: ["AI", "Artificial Intelligence", "Professional Development", "Automation", "Learning"]
 image: "https://www.eventbrite.com/e/_next/image?url=https%3A%2F%2Fimg.evbuc.com%2Fhttps%253A%252F%252Fcdn.evbuc.com%252Fimages%252F1191273294%252F3010505379317%252F1%252Foriginal.20260817-192546%3Fcrop%3Dfocalpoint%26fit%3Dcrop%26w%3D940%26auto%3Dformat%252Ccompress%26q%3D75%26sharp%3D10%26fp-x%3D0.087%26fp-y%3D0.477%26s%3Df49e16c2af564cae241f58a6142c4141&w=940&q=75"

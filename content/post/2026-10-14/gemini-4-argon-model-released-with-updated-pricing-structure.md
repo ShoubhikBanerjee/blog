@@ -2,7 +2,7 @@
 title: "Gemini 4 Argon model released with updated pricing structure"
 slug: "gemini-4-argon-model-released-with-updated-pricing-structure"
 description: "Support has been added to llm-gemini for the new Gemini 4 Argon model, which is now available via the Gemini API and for customers of the $100/month subscription plan."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [Gemini, LLM, AI, Pricing]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Development"]
 image: "https://static.simonwillison.net/static/2026/gemini-4-argon-artificial-analysis.webp"

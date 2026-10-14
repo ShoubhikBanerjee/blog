@@ -2,7 +2,7 @@
 title: "OpenAI employee arrested for allegedly planting recording device in executive conference room"
 slug: "openai-employee-arrested-for-allegedly-planting-recording-device-in-executive-conference-room"
 description: "An OpenAI employee has been arrested and terminated after the company discovered a sophisticated recording device hidden in an executive conference room. OpenAI utilized its own AI models to identify..."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [OpenAI, Security, Cybersecurity, Investigation, Technology]
 categories: ["AI", "Technology", "Cybersecurity", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/03/STK155_OPEN_AI_CVirginia__C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

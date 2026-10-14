@@ -2,7 +2,7 @@
 title: "Google launches Gemini 4 Argon, a multimodal AI model for complex tasks"
 slug: "google-launches-gemini-4-argon-a-multimodal-ai-model-for-complex-tasks"
 description: "Google has opened its flagship AI model, Gemini 4 Argon, to developers and businesses."
-date: 2026-10-14T18:06:09+05:30
+date: 2026-10-14T22:09:38+05:30
 tags: [Google, Gemini, AIAgents, MultimodalAI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents", "Productivity Tools"]
 image: "https://img.etb2bimg.com/files/cp/upload-1776075285-techmonk-logo-mobile-header.svg"
