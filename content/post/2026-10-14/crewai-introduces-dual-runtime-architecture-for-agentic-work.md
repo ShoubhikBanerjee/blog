@@ -2,7 +2,7 @@
 title: "crewAI Introduces Dual Runtime Architecture for Agentic Workflows"
 slug: "crewai-introduces-dual-runtime-architecture-for-agentic-workflows"
 description: "Multi-agent frameworks often struggle between free-form prompting and rigid pipelines. As of September 8, 2026, the crewAI framework (version 1.15.20) addresses this by splitting orchestration into..."
-date: 2026-10-14T06:05:57+05:30
+date: 2026-10-14T12:05:57+05:30
 tags: [crewAI, AIAgents, MachineLearning, SoftwareEngineering]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Machine Learning"]
 image: "https://wakii-site.vercel.app/blog/heroes/deep-dive-crewaiinc-crewai.png"

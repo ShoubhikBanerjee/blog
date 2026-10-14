@@ -2,7 +2,7 @@
 title: "Anthropic transitions to new internal source control system called Antique"
 slug: "anthropic-transitions-to-new-internal-source-control-system-called-antique"
 description: "Anthropic has completed a migration from Git to a new internal source control system named Antique, designed to support significantly higher volumes of daily code changes."
-date: 2026-10-14T06:05:57+05:30
+date: 2026-10-14T12:05:57+05:30
 tags: [Anthropic, SoftwareEngineering, SourceControl, Scaling, Infrastructure]
 categories: ["AI", "Software Development", "Infrastructure", "Engineering"]
 image: "https://static.simonwillison.net/static/2026/anthropic-merges-per-day.webp"

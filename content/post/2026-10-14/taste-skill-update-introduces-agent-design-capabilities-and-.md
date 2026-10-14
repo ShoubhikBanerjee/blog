@@ -2,7 +2,7 @@
 title: "Taste Skill Update Introduces Agent Design Capabilities and TasteCode Desktop Application"
 slug: "taste-skill-update-introduces-agent-design-capabilities-and-tastecode-desktop-application"
 description: "Taste Skill has released an update to its suite of Agent Skills, enabling coding agents to design custom websites rather than assembling standard landing pages. The update includes the launch of..."
-date: 2026-10-14T06:05:57+05:30
+date: 2026-10-14T12:05:57+05:30
 tags: [AIagents, WebDesign, OpenSource, TasteCode, WebDev]
 categories: ["AI", "AI Agents", "Web Development", "Software Tools"]
 image: "https://avatars.githubusercontent.com/u/219127460?v=4"

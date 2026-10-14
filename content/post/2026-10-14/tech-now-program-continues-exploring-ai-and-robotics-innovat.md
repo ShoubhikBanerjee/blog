@@ -2,7 +2,7 @@
 title: "Tech Now program continues exploring AI and robotics innovations"
 slug: "tech-now-program-continues-exploring-ai-and-robotics-innovations"
 description: "On October 14, 2026, the program Tech Now continues its series exploring recent innovations and technology shaping modern life. The program covers advancements across several sectors, including AI,..."
-date: 2026-10-14T06:05:57+05:30
+date: 2026-10-14T12:05:57+05:30
 tags: [AI, Robotics, Technology, Innovation]
 categories: ["AI", "Artificial Intelligence", "Robotics", "Technology News"]
 image: "https://ichef.bbci.co.uk/images/ic/1200x675/p0kxxp17.jpg"

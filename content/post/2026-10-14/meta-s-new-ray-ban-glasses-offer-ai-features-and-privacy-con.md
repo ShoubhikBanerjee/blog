@@ -2,7 +2,7 @@
 title: "Meta's New Ray-Ban Glasses Offer AI Features and Privacy Controls"
 slug: "meta-s-new-ray-ban-glasses-offer-ai-features-and-privacy-controls"
 description: "Meta has launched new Ray-Ban glasses with AI features and enhanced privacy controls. These glasses come in two styles: a retro Clubmaster look or a Wayfarer-esque Burbank style."
-date: 2026-10-14T06:05:57+05:30
+date: 2026-10-14T12:05:57+05:30
 tags: [MetaRayBan, AIglasses, PrivacyControls, SmartGlasses, MetaAI]
 categories: ["AI", "Smart Glasses", "AI Features", "Privacy Controls", "Consumer Electronics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/rayban_meta_audio_12.jpg?quality=90&strip=all&crop=0%2C9.756192857701%2C100%2C80.487614284598&w=1200"
