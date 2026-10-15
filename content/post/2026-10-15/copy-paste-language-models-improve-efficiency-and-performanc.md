@@ -2,7 +2,7 @@
 title: "Copy-Paste Language Models Improve Efficiency and Performance"
 slug: "copy-paste-language-models-improve-efficiency-and-performance"
 description: "Researchers have introduced Copy-Paste Language Models (CPLMs), a lightweight extension to the standard language‑model head that delivers better training efficiency and downstream performance."
-date: 2026-10-15T12:03:07+05:30
+date: 2026-10-15T18:01:40+05:30
 tags: [CopyPasteLM, LanguageModels, AIResearch]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

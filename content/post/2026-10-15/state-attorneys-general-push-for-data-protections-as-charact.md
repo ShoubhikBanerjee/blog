@@ -2,7 +2,7 @@
 title: "State Attorneys General Push for Data Protections as Character.AI Files for Bankruptcy"
 slug: "state-attorneys-general-push-for-data-protections-as-character-ai-files-for-bankruptcy"
 description: "Character.AI announced on Tuesday that it is filing for Chapter 11 bankruptcy and is selling some assets to Disney. The filing triggered a multi‑state investigation led by New York Attorney General..."
-date: 2026-10-15T12:03:07+05:30
+date: 2026-10-15T18:01:40+05:30
 tags: [CharacterAI, DataPrivacy, Bankruptcy]
 categories: ["AI", "Artificial Intelligence", "Privacy Law", "Consumer Protection"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK414_7_AI_CVIRGINIA_A.png?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

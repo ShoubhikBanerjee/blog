@@ -2,7 +2,7 @@
 title: "Tail Competition Theory Explains Best‑of‑N Sampling Scaling"
 slug: "tail-competition-theory-explains-bestofn-sampling-scaling"
 description: "A paper submitted on 14 Oct 2026 proposes a tail‑competition framework for understanding the scaling behavior of Best‑of‑N sampling in large language models."
-date: 2026-10-15T12:03:07+05:30
+date: 2026-10-15T18:01:40+05:30
 tags: [BestOfN, Sampling, ExtremeValueTheory, RewardModel]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Theory"]
 author: "Shoubhik Banerjee"

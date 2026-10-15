@@ -2,7 +2,7 @@
 title: "Google and Meta Release Frontier AI Models to Challenge OpenAI and Anthropic"
 slug: "google-and-meta-release-frontier-ai-models-to-challenge-openai-and-anthropic"
 description: "Google and Meta have unveiled new frontier AI models that they claim match or beat the industry's leading systems. This development marks a significant shift in the AI race, as both tech giants had..."
-date: 2026-10-15T12:03:07+05:30
+date: 2026-10-15T18:01:40+05:30
 tags: [GoogleGemini, MetaAI, OpenAI, GenerativeAI, AIBenchmarks]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Technology Strategy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/gettyimages-2296206566.jpg?quality=90&strip=all&crop=0%2C10.669135487166%2C100%2C78.661729025667&w=1200"
