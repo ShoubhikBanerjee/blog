@@ -2,7 +2,7 @@
 title: "TopicMerge Bridges Efficient Embeddings and LLMs for Scalable Topic Modeling"
 slug: "topicmerge-bridges-efficient-embeddings-and-llms-for-scalable-topic-modeling"
 description: "Recent work introduces TopicMerge, a multi‑stage pipeline that unites efficient embedding‑based clustering with large‑language‑model (LLM) reasoning to achieve state‑of‑the‑art topic clustering while..."
-date: 2026-10-15T18:01:40+05:30
+date: 2026-10-15T22:04:06+05:30
 tags: [TopicMerge, TopicModeling, LLM, Clustering]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

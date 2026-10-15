@@ -2,7 +2,7 @@
 title: "Fisher Utility Weighting Boosts On-Policy Distillation Efficiency"
 slug: "fisher-utility-weighting-boosts-on-policy-distillation-efficiency"
 description: "On‑policy distillation (OPD) is gaining traction as a cheaper alternative to reinforcement learning, but selecting which student‑generated tokens to supervise remains a challenge.  A new study..."
-date: 2026-10-15T18:01:40+05:30
+date: 2026-10-15T22:04:06+05:30
 tags: [OnPolicyDistillation, FisherUtility, MachineLearning, KnowledgeDistillation]
 categories: ["AI", "Machine Learning", "Knowledge Distillation", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

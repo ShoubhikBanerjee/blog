@@ -2,7 +2,7 @@
 title: "McKinsey pilots AI‑simulated client interviews for entry‑level candidates"
 slug: "mckinsey-pilots-aisimulated-client-interviews-for-entrylevel-candidates"
 description: "McKinsey & Company is adding a new step to its entry‑level interview process: a brief conversation with an AI‑generated client simulation."
-date: 2026-10-15T18:01:40+05:30
+date: 2026-10-15T22:04:06+05:30
 tags: [McKinsey, AIInterview, HiringAI, RecruitmentTech]
 categories: ["AI", "Business Consulting", "Artificial Intelligence", "Recruitment Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK414_AI_CVIRGINIA_2_C-2.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

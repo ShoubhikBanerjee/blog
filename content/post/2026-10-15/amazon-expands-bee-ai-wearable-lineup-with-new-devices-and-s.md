@@ -2,7 +2,7 @@
 title: "Amazon Expands Bee AI Wearable Lineup with New Devices and Subscription"
 slug: "amazon-expands-bee-ai-wearable-lineup-with-new-devices-and-subscription"
 description: "Amazon is expanding its Bee lineup with two new AI-powered devices, the Bee Frontier and the Bee Eclipse, alongside a new subscription service designed to enhance functionality and integration."
-date: 2026-10-15T18:01:40+05:30
+date: 2026-10-15T22:04:06+05:30
 tags: [Amazon, Bee, Wearables, AI, Hardware]
 categories: ["AI", "Artificial Intelligence", "Wearable Technology", "Consumer Electronics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/BEE_FAMILY_02_1600x900.jpg?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

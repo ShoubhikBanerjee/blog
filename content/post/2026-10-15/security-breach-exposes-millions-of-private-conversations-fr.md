@@ -2,7 +2,7 @@
 title: "Security Breach Exposes Millions of Private Conversations from Eiliko Robot Toys"
 slug: "security-breach-exposes-millions-of-private-conversations-from-eiliko-robot-toys"
 description: "Energize Lab’s “Eiliko” digital pet robot has been found to have severe security vulnerabilities that expose private user data and conversations. While the AI companion tells users their secrets are..."
-date: 2026-10-15T18:01:40+05:30
+date: 2026-10-15T22:04:06+05:30
 tags: [Cybersecurity, Privacy, Robotics, DataBreach]
 categories: ["AI", "Cybersecurity", "Artificial Intelligence", "Consumer Electronics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/eiliko-verge-sean-004.jpg?quality=90&strip=all&crop=0%2C3.4689741459833%2C100%2C93.062051708033&w=1200"

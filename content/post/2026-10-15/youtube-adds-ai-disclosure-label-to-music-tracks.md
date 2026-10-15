@@ -2,7 +2,7 @@
 title: "YouTube adds AI disclosure label to music tracks"
 slug: "youtube-adds-ai-disclosure-label-to-music-tracks"
 description: "YouTube is rolling out a “Made with AI” label for music tracks that were altered or fully generated using generative AI, beginning in the YouTube Music app and later expanding to the main YouTube app."
-date: 2026-10-15T18:01:40+05:30
+date: 2026-10-15T22:04:06+05:30
 tags: [YouTube, AI, Music, Labeling]
 categories: ["AI", "Artificial Intelligence", "Music Technology", "Digital Media"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/youtube-music-gen-ai-labels.width-1200.format-webp.webp?quality=90&strip=all&crop=4,48.489005235602,89.6,46.910994764398"

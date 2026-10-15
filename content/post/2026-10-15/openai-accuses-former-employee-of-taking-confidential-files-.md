@@ -2,7 +2,7 @@
 title: "OpenAI Accuses Former Employee of Taking Confidential Files to Apple"
 slug: "openai-accuses-former-employee-of-taking-confidential-files-to-apple"
 description: "OpenAI filed a new legal document alleging that a former employee who left to join Apple stole more than 100 confidential files containing its product plans and shared them with Apple leadership."
-date: 2026-10-15T18:01:40+05:30
+date: 2026-10-15T22:04:06+05:30
 tags: [OpenAI, Apple, TradeSecrets, Legal, AI]
 categories: ["AI", "Artificial Intelligence", "Intellectual Property", "Legal Disputes", "Consumer Electronics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK155_OPEN_AI_2025_CVirgiia_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

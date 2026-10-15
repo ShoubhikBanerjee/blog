@@ -2,7 +2,7 @@
 title: "Research explores the development and evaluation of in-context learning in language models"
 slug: "research-explores-the-development-and-evaluation-of-in-context-learning-in-language-models"
 description: "A study titled 'From Copying to Composition: How Language Models Develop In-Context Learning,' submitted on 13 October 2026, investigates how language models acquire and improve the ability to adapt..."
-date: 2026-10-15T18:01:40+05:30
+date: 2026-10-15T22:04:06+05:30
 tags: [MachineLearning, LanguageModels, InContextLearning, AIResearch]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

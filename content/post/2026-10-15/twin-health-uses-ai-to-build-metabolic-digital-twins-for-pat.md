@@ -2,7 +2,7 @@
 title: "Twin Health uses AI to build metabolic digital twins for patients"
 slug: "twin-health-uses-ai-to-build-metabolic-digital-twins-for-patients"
 description: "Digital twins are a new concept in health where a virtual model of a person is created using various data points, including lab results, wearable data, images, and genetic profiles. Twin Health is a..."
-date: 2026-10-15T18:01:40+05:30
+date: 2026-10-15T22:04:06+05:30
 tags: [DigitalTwin, HealthTech, AI, MetabolicHealth, Wearables]
 categories: ["AI", "Artificial Intelligence", "Health Technology", "Digital Health"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268801_DigitalTwin_made_me_a_doppelganger_to_test_my_health_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
