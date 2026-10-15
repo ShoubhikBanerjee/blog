@@ -2,7 +2,7 @@
 title: "Eight US States Sue OpenAI Over ChatGPT Safety and Data Practices"
 slug: "eight-us-states-sue-openai-over-chatgpt-safety-and-data-practices"
 description: "OpenAI is facing a new wave of lawsuits from eight U.S. states that accuse the company of harming children and misleading customers about the safety of its ChatGPT chatbot."
-date: 2026-10-15T06:04:53+05:30
+date: 2026-10-15T12:03:07+05:30
 tags: [OpenAI, ChatGPT, AIRegulation, ConsumerProtection, Lawsuits]
 categories: ["AI", "Artificial Intelligence", "Law And Policy", "Consumer Protection", "Ethics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25462005/STK155_OPEN_AI_CVirginia_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

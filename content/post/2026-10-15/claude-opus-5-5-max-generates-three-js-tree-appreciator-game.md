@@ -2,7 +2,7 @@
 title: "Claude Opus 5.5 Max Generates Three.js “Tree Appreciator” Game in 3 Hours"
 slug: "claude-opus-5-5-max-generates-three-js-tree-appreciator-game-in-3-hours"
 description: "On 14 October 2026 I ran another game experiment with Claude, this time using the default Claude iPhone app in chat mode (not Claude Code mode). I prompted Claude Opus 5.5 Max with a detailed request..."
-date: 2026-10-15T06:04:53+05:30
+date: 2026-10-15T12:03:07+05:30
 tags: [Claude, AIgeneratedGames, ThreeJS, Opus55]
 categories: ["AI", "Artificial Intelligence", "Generative AI", "Game Development", "Natural Language Processing"]
 image: "https://static.simonwillison.net/static/2026-10-14/IMG_9084.jpeg"
