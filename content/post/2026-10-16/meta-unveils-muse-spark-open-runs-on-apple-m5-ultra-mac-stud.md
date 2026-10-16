@@ -2,7 +2,7 @@
 title: "Meta unveils Muse Spark Open, runs on Apple M5 Ultra Mac Studios"
 slug: "meta-unveils-muse-spark-open-runs-on-apple-m5-ultra-mac-studios"
 description: "Meta announced the Muse Spark Open AI model today, calling it the “most capable US open-weight model to date.”"
-date: 2026-10-16T18:01:23+05:30
+date: 2026-10-16T22:06:38+05:30
 tags: [Meta, Apple, MuseSpark, MLX, OnDeviceAI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Hardware", "Industry Partnerships"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/268742_Mac_Studio_AKrales_0025.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

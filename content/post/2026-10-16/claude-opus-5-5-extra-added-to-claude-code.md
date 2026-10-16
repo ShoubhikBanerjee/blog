@@ -2,7 +2,7 @@
 title: "Claude Opus 5.5 Extra added to Claude Code"
 slug: "claude-opus-5-5-extra-added-to-claude-code"
 description: "On 15 October 2026, *Claude Opus 5.5 Extra* was referenced as part of **Claude Code**."
-date: 2026-10-16T18:01:23+05:30
+date: 2026-10-16T22:06:38+05:30
 tags: [Claude, AIModels, Release]
 categories: ["AI", "Artificial Intelligence", "Large Language Models", "AI Development"]
 author: "Shoubhik Banerjee"

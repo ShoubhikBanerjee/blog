@@ -2,7 +2,7 @@
 title: "SnapJudge Image‑Based Detector Improves AI‑Generated Math Content Detection"
 slug: "snapjudge-imagebased-detector-improves-aigenerated-math-content-detection"
 description: "As large language models become increasingly capable of generating and assisting with scientific writing, a new image‑based detector called **SnapJudge** has been introduced to improve the..."
-date: 2026-10-16T18:01:23+05:30
+date: 2026-10-16T22:06:38+05:30
 tags: [AIDetection, ScientificWriting, LargeLanguageModels]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Scientific Publishing"]
 author: "Shoubhik Banerjee"

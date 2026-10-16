@@ -2,7 +2,7 @@
 title: "Label-Free Reliability Estimation for Language Model Ensembles Demonstrated"
 slug: "label-free-reliability-estimation-for-language-model-ensembles-demonstrated"
 description: "A new paper submitted on 15 Oct 2026 proposes a label‑free method for estimating the reliability of language‑model ensembles."
-date: 2026-10-16T18:01:23+05:30
+date: 2026-10-16T22:06:38+05:30
 tags: [LanguageModels, EnsembleLearning, LabelFree, EM]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Computational Linguistics"]
 author: "Shoubhik Banerjee"

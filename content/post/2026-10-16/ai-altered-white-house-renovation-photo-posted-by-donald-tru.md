@@ -2,7 +2,7 @@
 title: "AI‑altered White House renovation photo posted by Donald Trump flagged by Google detector"
 slug: "aialtered-white-house-renovation-photo-posted-by-donald-trump-flagged-by-google-detector"
 description: "President Donald Trump posted a series of photos on Truth Social showing off renovations to the White House — but one of them appears to be modified with AI."
-date: 2026-10-16T18:01:23+05:30
+date: 2026-10-16T22:06:38+05:30
 tags: [AI, Deepfake, Trump, WhiteHouse]
 categories: ["AI", "Artificial Intelligence", "Political Communication", "Image Forensics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/27a4ed6e86bbf2cf-1.jpg?quality=90&strip=all&crop=0%2C10.71715720101%2C100%2C78.565685597979&w=1200"

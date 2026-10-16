@@ -2,7 +2,7 @@
 title: "RealtimeBench and TORSI Boost Real‑Time Performance of LLM Agents"
 slug: "realtimebench-and-torsi-boost-realtime-performance-of-llm-agents"
 description: "Large language model (LLM) agents can solve complex interactive tasks, yet reasoning and tool calls take time. In continuously changing environments, an otherwise correct action may arrive too late."
-date: 2026-10-16T18:01:23+05:30
+date: 2026-10-16T22:06:38+05:30
 tags: [RealtimeBench, LLMAgents, SelfImprovement, AIResearch]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents"]
 author: "Shoubhik Banerjee"

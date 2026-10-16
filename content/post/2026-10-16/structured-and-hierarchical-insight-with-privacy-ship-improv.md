@@ -2,7 +2,7 @@
 title: "Structured and Hierarchical Insight with Privacy (SHIP) Improves Private Data Analysis"
 slug: "structured-and-hierarchical-insight-with-privacy-ship-improves-private-data-analysis"
 description: "Extracting insights from textual data while protecting user privacy is increasingly important, and a new method called Structured and Hierarchical Insight with Privacy (SHIP) advances this goal."
-date: 2026-10-16T18:01:23+05:30
+date: 2026-10-16T22:06:38+05:30
 tags: [DifferentialPrivacy, SyntheticData, PrivacyPreservingAI]
 categories: ["AI", "Machine Learning", "Data Privacy", "Synthetic Data"]
 author: "Shoubhik Banerjee"
