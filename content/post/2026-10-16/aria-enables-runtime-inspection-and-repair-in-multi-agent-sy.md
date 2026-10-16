@@ -2,7 +2,7 @@
 title: "ARIA Enables Runtime Inspection and Repair in Multi-Agent Systems"
 slug: "aria-enables-runtime-inspection-and-repair-in-multi-agent-systems"
 description: "A new framework called **ARIA** learns when and how to repair ongoing multi‑agent executions, addressing the cascade of errors that can occur in LLM‑based multi‑agent systems."
-date: 2026-10-16T12:05:34+05:30
+date: 2026-10-16T18:01:23+05:30
 tags: [AIAgents, MultiAgentSystems, RuntimeRepair, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Multi-Agent Systems", "Safety"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Bluesky expands Attie AI tool to create lightweight social apps"
 slug: "bluesky-expands-attie-ai-tool-to-create-lightweight-social-apps"
 description: "Bluesky’s Attie AI tool, which launched earlier this year as a way to build your own feeds with AI, now lets users create small social apps – from games to polls – and publish them as individual..."
-date: 2026-10-16T12:05:34+05:30
+date: 2026-10-16T18:01:23+05:30
 tags: [Bluesky, Attie, AI, NoCode, SocialApps]
 categories: ["AI", "Social Media", "Artificial Intelligence", "No‑Code Development", "Emerging Platforms"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Screenshot-2026-10-15-at-12.53.19-PM.png?quality=90&strip=all&crop=0%2C10.814080979907%2C100%2C78.371838040185&w=1200"

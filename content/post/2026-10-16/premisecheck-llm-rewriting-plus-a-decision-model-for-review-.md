@@ -2,7 +2,7 @@
 title: "PremiseCheck: LLM rewriting plus a decision model for review comments"
 slug: "premisecheck-llm-rewriting-plus-a-decision-model-for-review-comments"
 description: "A new cross-disciplinary approach to evaluating factuality in review comments has been introduced. ReviewFact labels factual errors across NLP, machine learning, and the natural sciences, and it..."
-date: 2026-10-16T12:05:34+05:30
+date: 2026-10-16T18:01:23+05:30
 tags: [ReviewFact, PremiseCheck, Factuality, CrossDiscipline, ArtificialIntelligence]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "Artificial Intelligence", "Benchmarks"]
 author: "Shoubhik Banerjee"

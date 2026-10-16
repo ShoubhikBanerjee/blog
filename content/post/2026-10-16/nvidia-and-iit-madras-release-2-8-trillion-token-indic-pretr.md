@@ -2,7 +2,7 @@
 title: "NVIDIA and IIT Madras Release 2.8 Trillion‑Token Indic Pretraining Corpus"
 slug: "nvidia-and-iit-madras-release-2-8-trilliontoken-indic-pretraining-corpus"
 description: "NVIDIA, in collaboration with IIT Madras and its AI4Bharat lab, is releasing **Nemotron‑pretraining‑Indic‑v1**, a 2.8 trillion‑token dataset covering all 22 Indian Constitution languages, together..."
-date: 2026-10-16T12:05:34+05:30
+date: 2026-10-16T18:01:23+05:30
 tags: [NVIDIA, IndicAI, OpenData, AI4Bharat, Pretraining]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Data Engineering", "AI Research"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/68d2fec8856b85d927e44d32/x0aObe_0mduBjWFuKBGoV.png"

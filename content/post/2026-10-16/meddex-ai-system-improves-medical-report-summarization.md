@@ -2,7 +2,7 @@
 title: "MeddeX AI System Improves Medical Report Summarization"
 slug: "meddex-ai-system-improves-medical-report-summarization"
 description: "Modern healthcare generates increasingly complex medical reports that challenge clinical professionals in terms of time and interpretive burden. A new paper introduces **MeddeX**, a Medical Report..."
-date: 2026-10-16T12:05:34+05:30
+date: 2026-10-16T18:01:23+05:30
 tags: [MedicalAI, LLM, RAG, HealthcareTech]
 categories: ["AI", "Artificial Intelligence", "Healthcare", "Natural Language Processing", "Computer Vision"]
 author: "Shoubhik Banerjee"

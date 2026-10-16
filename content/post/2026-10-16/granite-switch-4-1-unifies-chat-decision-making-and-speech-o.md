@@ -2,7 +2,7 @@
 title: "Granite Switch 4.1 Unifies Chat, Decision‑Making and Speech on a Single Endpoint"
 slug: "granite-switch-4-1-unifies-chat-decisionmaking-and-speech-on-a-single-endpoint"
 description: "Granite Switch 4.1 introduces a family of models that pack chat, decision‑making and speech transcription capabilities into a single endpoint while using roughly the same GPU memory as the base model..."
-date: 2026-10-16T12:05:34+05:30
+date: 2026-10-16T18:01:23+05:30
 tags: [GraniteSwitch, AIAdapters, SpeechRecognition, DecisionModels]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence", "Speech Recognition"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/662836b742709fe826510597/gltB0o--PV_Jh0D3aDm8-.png"
