@@ -2,7 +2,7 @@
 title: "Meta’s Muse Spark Open model launches on Amazon SageMaker JumpStart"
 slug: "metas-muse-spark-open-model-launches-on-amazon-sagemaker-jumpstart"
 description: "Muse Spark Open, Meta’s coding‑optimized open‑weight model, is now available in Amazon SageMaker JumpStart, the machine‑learning hub of Amazon SageMaker AI."
-date: 2026-10-16T06:04:20+05:30
+date: 2026-10-16T12:05:34+05:30
 tags: [Meta, AWS, SageMaker, CodingAI, MoE]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Development", "Multimodal AI"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-22194-featured-image.png"

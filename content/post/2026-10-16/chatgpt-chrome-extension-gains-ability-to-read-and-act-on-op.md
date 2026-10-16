@@ -2,7 +2,7 @@
 title: "ChatGPT Chrome Extension Gains Ability to Read and Act on Open Tabs"
 slug: "chatgpt-chrome-extension-gains-ability-to-read-and-act-on-open-tabs"
 description: "OpenAI has refreshed its ChatGPT Chrome extension, letting the assistant look at the tabs you already have open and use that context for a variety of tasks."
-date: 2026-10-16T06:04:20+05:30
+date: 2026-10-16T12:05:34+05:30
 tags: [OpenAI, ChatGPT, ChromeExtension, AIProductivity]
 categories: ["AI", "Artificial Intelligence", "Productivity Tools", "Browser Extensions", "Human-Computer Interaction"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Screenshot-2026-10-15-at-6.35.44-PM.png?quality=90&strip=all&crop=0%2C0%2C100%2C93.077370564282&w=1200"

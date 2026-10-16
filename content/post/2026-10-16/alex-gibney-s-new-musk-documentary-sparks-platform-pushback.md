@@ -2,7 +2,7 @@
 title: "Alex Gibney’s New Musk Documentary Sparks Platform Pushback"
 slug: "alex-gibneys-new-musk-documentary-sparks-platform-pushback"
 description: "The latest Alex Gibney documentary about Elon Musk is now screening in select theaters. The film chronicles Musk’s past at xAI and SpaceX and asks why the public allowed him to amass so much power."
-date: 2026-10-16T06:04:20+05:30
+date: 2026-10-16T12:05:34+05:30
 tags: [ElonMusk, Documentary, TechPolitics, AILeadership]
 categories: ["AI", "Artificial Intelligence", "Documentary Film", "Technology Business", "Media Studies"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Screenshot-2026-10-15-at-5.28.21-PM.png?quality=90&strip=all&crop=0%2C15.21666481007%2C100%2C69.56667037986&w=1200"

@@ -2,7 +2,7 @@
 title: "Sega pulls Total War: Shogun 2 – Complete Edition after AI‑upscaled launch issues"
 slug: "sega-pulls-total-war-shogun-2-complete-edition-after-aiupscaled-launch-issues"
 description: "Sega is removing **Total War: Shogun 2 — Complete Edition** from storefronts following a disastrous launch where users reported bugs and AI‑generated upscaling problems."
-date: 2026-10-16T06:04:20+05:30
+date: 2026-10-16T12:05:34+05:30
 tags: [Sega, TotalWar, GameRemaster]
 categories: ["AI", "Video Games", "Game Development", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/ca.com_news_thumbnailshogun2complete.png.webp?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"
