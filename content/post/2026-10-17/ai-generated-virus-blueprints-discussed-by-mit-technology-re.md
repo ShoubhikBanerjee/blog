@@ -2,7 +2,7 @@
 title: "AI‑Generated Virus Blueprints Discussed by MIT Technology Review Innovator Samuel King"
 slug: "aigenerated-virus-blueprints-discussed-by-mit-technology-review-innovator-samuel-king"
 description: "In a subscriber‑only roundtable recorded on October 16 2026, MIT Technology Review’s senior AI reporter James O'Donnell speaks with Stanford bioengineering PhD candidate Samuel King about his 2025..."
-date: 2026-10-17T18:03:15+05:30
+date: 2026-10-17T22:02:31+05:30
 tags: [AI, Bioengineering, MITTechnologyReview, InnovatorsUnder35]
 categories: ["AI", "Artificial Intelligence", "Bioengineering", "Technology Review", "Science Communication"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2024/01/MIT-TR-Roundtables_Oct-2-Thumbnail.png?resize=1200,600"
