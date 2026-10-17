@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DeepSeekV3 on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/deepseekv3/</link><description>Recent content in DeepSeekV3 on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 15 Sep 2026 22:08:30 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/deepseekv3/index.xml" rel="self" type="application/rss+xml"/><item><title>Optimizing Mixture of Experts Training with JAX and NVIDIA Transformer Engine</title><link>https://shoubhikbanerjee.github.io/blog/p/optimizing-mixture-of-experts-training-with-jax-and-nvidia-transformer-engine/</link><pubDate>Tue, 15 Sep 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/optimizing-mixture-of-experts-training-with-jax-and-nvidia-transformer-engine/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/green-cube-660x370.png" alt="Featured image of post Optimizing Mixture of Experts Training with JAX and NVIDIA Transformer Engine" /&gt;&lt;h1 id="optimizing-mixture-of-experts-training-with-jax-and-nvidia-transformer-engine"&gt;Optimizing Mixture of Experts Training with JAX and NVIDIA Transformer Engine
+&lt;/h1&gt;&lt;p&gt;NVIDIA Transformer Engine, a library for accelerating Transformer models on NVIDIA GPUs, combined with the JAX Python library, has delivered significant performance improvements in Mixture of Experts (MoE) training operations. In DeepSeek-V3 training on NVIDIA GB200, an unoptimized baseline achieved just 103 TFLOPS/GPU with inter-GPU communication consuming 84% of accumulated kernel time. With JAX and targeted Transformer Engine kernel optimizations, that performance rose to 1,068 TFLOPS/GPU, a 10.4x improvement.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Mixture of experts (MoE) has become one of the defining architectural trends in large-scale AI model training. Models utilizing this architecture provide efficient training through conditional computation.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Key Models:&lt;/strong&gt; DeepSeek, Qwen, and Mixtral are examples of MoE models that match or exceed the performance of their dense model counterparts at a fraction of the training compute.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Core Mechanism:&lt;/strong&gt; Instead of a single dense feed-forward network (FFN) shared by all tokens, MoE replaces it with many smaller expert networks and a learned router that decides which Top-K experts to activate.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;In a dense FFN, every token passes through the same weight matrix. In MoE, tokens are routed dynamically to different experts, which distributes them unevenly and breaks the regular GEMM shape that typical kernels are optimized for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Routing and Dispatch:&lt;/strong&gt; The router assigns each token to an expert, and dispatch moves tokens to their expert&amp;rsquo;s GPU.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grouped MLP:&lt;/strong&gt; Runs two grouped GEMMs on variable-length groups.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Combine:&lt;/strong&gt; Reverses the exchange to restore the original token order.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Production-scale MoE training introduces bottlenecks that do not exist with dense models, including token routing, expert dispatch and gather, all-to-all communication, and ragged expert GEMMs. Because no two batches produce the same expert loads, one expert might receive many more tokens than another. With expert parallelism (EP), tokens must be dispatched and outputs must be combined and restored to original token order. A poorly optimized all-to-all forces GPUs to stall and wait for data before doing any useful work. Solving this requires specialized kernels that can natively handle ragged layouts.&lt;/p&gt;
+&lt;p&gt;These layout challenges are typically handled through different MoE training approaches:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;MoE Approach&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Token Handling&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Computational Impact&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Capacity-Based&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Each expert is assigned a fixed token budget; overflow is trimmed or padded to fit.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Batched GEMM computes worst-case token capacity even if fewer tokens are used because of padding, leading to extra compute. The loop requires Device-to-Host copies of token counts on the critical path, incurring latency and breaking CUDA graphs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Dropless MoE (MegaBlocks)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Every token is processed by its selected expert no matter how uneven the load.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Reformulates expert computation as block-sparse matrix multiplication, allowing each expert to operate on a different number of tokens without dropping or padding.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;To resolve these performance limitations, a grouped GEMM handles all expert matmuls in a single kernel call, each with its actual token count. It computes only the regions with valid tokens and is more performant as a result. The Transformer Engine &lt;code&gt;grouped_gemm&lt;/code&gt; and &lt;code&gt;ragged_dot&lt;/code&gt; operations back this with cuBLAS and cuBLASLt, mapping directly onto the best-performing NVIDIA GEMM libraries to deliver full Tensor Core utilization even with irregular expert shapes.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/capacity-based-versus-dropless-moe-comparison.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/ragged-tensore-moe-training.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/end-to-end-training-performance-moe-jax-transformer-engine.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #JAX #MixtureOfExperts #TransformerEngine #DeepSeekV3&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/accelerating-dropless-moe-training-in-jax-with-nvidia-transformer-engine/" target="_blank" rel="noopener"
+&gt;Accelerating Dropless MoE Training in JAX with NVIDIA Transformer Engine | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

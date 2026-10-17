@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reinforcement Learning on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/reinforcement-learning/</link><description>Recent content in Reinforcement Learning on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 07 Oct 2026 22:09:50 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/reinforcement-learning/index.xml" rel="self" type="application/rss+xml"/><item><title>Microsoft Research Asia releases Harnessed Agentic RL with Agent Lightning v1.0</title><link>https://shoubhikbanerjee.github.io/blog/p/microsoft-research-asia-releases-harnessed-agentic-rl-with-agent-lightning-v1-0/</link><pubDate>Wed, 07 Oct 2026 22:09:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/microsoft-research-asia-releases-harnessed-agentic-rl-with-agent-lightning-v1-0/</guid><description>&lt;img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2026/10/AgentLightning-TWLIFB-1200x627-1.jpg" alt="Featured image of post Microsoft Research Asia releases Harnessed Agentic RL with Agent Lightning v1.0" /&gt;&lt;h1 id="microsoft-research-asia-releases-harnessed-agentic-rl-with-agent-lightning-v10"&gt;Microsoft Research Asia releases Harnessed Agentic RL with Agent Lightning v1.0
+&lt;/h1&gt;&lt;p&gt;Microsoft Research Asia introduced the Harnessed Agentic RL training paradigm and open‑sourced Agent Lightning v1.0, a lightweight framework that lets the same agent harness used in deployment participate directly in reinforcement learning.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Harnessed Agentic RL removes the need to reimplement the agent inside the training framework.&lt;/li&gt;
+&lt;li&gt;Agent Lightning v1.0 provides a complete agent RL control plane in roughly &lt;strong&gt;3,500 lines of code&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The framework runs agents as standard &lt;strong&gt;Kubernetes jobs&lt;/strong&gt; on self‑managed clusters, cloud Kubernetes, or local infrastructure, without reliance on paid commercial sandbox services.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The agent continues to call the model through an &lt;strong&gt;LLM proxy&lt;/strong&gt;; the training system only observes the request‑response pairs.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;agent harness&lt;/strong&gt; that coordinates the deployed agent also handles the environment interaction loop during training.&lt;/li&gt;
+&lt;li&gt;Because only LLM calls are recorded, a single rollout can be split into a variable number of training samples.&lt;/li&gt;
+&lt;li&gt;Retokenization is required to obtain token IDs; re‑tokenizing text can shift token boundaries, so adjacent calls may not be merged into one sample.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lightweight design&lt;/strong&gt; – the entire codebase is about &lt;strong&gt;3,500 lines&lt;/strong&gt;, making it easy to understand, modify, and extend.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Native Kubernetes support&lt;/strong&gt; – agents run directly as Kubernetes jobs, supporting self‑managed, cloud, and local clusters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data‑efficient training recipe&lt;/strong&gt; – an end‑to‑end coding‑agent pipeline raised &lt;strong&gt;Qwen3.5‑9B&lt;/strong&gt; from &lt;strong&gt;41.8 %&lt;/strong&gt; to &lt;strong&gt;56.4 % Pass@1&lt;/strong&gt; on &lt;strong&gt;SWE‑bench Verified&lt;/strong&gt;, a &lt;strong&gt;14.6 percentage‑point&lt;/strong&gt; gain using only &lt;strong&gt;≈6,000&lt;/strong&gt; training samples from an open‑sourced dataset.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Traditional vs. harnessed RL&lt;/strong&gt; – conventional agentic RL assumes the training framework owns the interaction loop, requiring developers to rebuild the agent’s context management, tool protocols, and execution logic inside the RL framework. This rebuilding is costly and can produce a training agent that differs from the deployed agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-early-systems-and-agents"&gt;📊 Early systems and agents
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;verl&lt;/td&gt;
+&lt;td&gt;Early RL system built with training framework owning the loop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AReaL&lt;/td&gt;
+&lt;td&gt;Early RL system built with training framework owning the loop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;slime&lt;/td&gt;
+&lt;td&gt;Early RL system built with training framework owning the loop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;mini‑SWE‑agent&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OpenHands&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OpenCode&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Code&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Codex&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The researchers released &lt;strong&gt;Agent Lightning v1.0&lt;/strong&gt; as an open‑source project.&lt;/li&gt;
+&lt;li&gt;v1.0 emphasizes staying lightweight, integrating with real harnesses, and providing a reproducible agent RL training pipeline.&lt;/li&gt;
+&lt;li&gt;By pointing the endpoint that previously called the model API at Agent Lightning, developers can train using the same harness that will be deployed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AI agents now consist of complex full‑stack systems; their capabilities increasingly depend on the &lt;strong&gt;agent harness&lt;/strong&gt; that coordinates them from outside the model.&lt;/li&gt;
+&lt;li&gt;Harnessed Agentic RL aligns the training environment with the deployment environment, eliminating the mismatch that arises when agents are rebuilt for training.&lt;/li&gt;
+&lt;li&gt;The data‑efficient results demonstrate that strong performance gains are achievable with modest training data when the correct harness is used.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2026/09/AgentLightning-blog_EXT_FA_figure.1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIagents #ReinforcementLearning #Kubernetes #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/" target="_blank" rel="noopener"
+&gt;Agent Lightning: Lightweight RL agent-training framework&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Self-Evolving Curriculum Boosts RL Fine‑Tuning of Large Language Models</title><link>https://shoubhikbanerjee.github.io/blog/p/self-evolving-curriculum-boosts-rl-finetuning-of-large-language-models/</link><pubDate>Tue, 06 Oct 2026 22:08:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/self-evolving-curriculum-boosts-rl-finetuning-of-large-language-models/</guid><description>&lt;h1 id="self-evolving-curriculum-boosts-rl-finetuning-of-large-language-models"&gt;Self-Evolving Curriculum Boosts RL Fine‑Tuning of Large Language Models
+&lt;/h1&gt;&lt;p&gt;Reinforcement learning (RL) has proven effective for fine‑tuning large language models (LLMs), significantly enhancing their reasoning abilities in domains such as mathematics and code generation. A new automatic method called Self‑Evolving Curriculum (SEC) improves this process by learning a curriculum policy alongside the RL fine‑tuning itself.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;RL fine‑tuning success depends heavily on the &lt;strong&gt;training curriculum&lt;/strong&gt;, i.e., the order in which problems are presented.&lt;/li&gt;
+&lt;li&gt;Random curricula are common baselines but are &lt;strong&gt;suboptimal&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Manually designed curricula rely on heuristics, and online filtering methods can be &lt;strong&gt;computationally prohibitive&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;SEC is introduced to overcome these limitations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;SEC treats curriculum selection as a &lt;strong&gt;non‑stationary Multi‑Armed Bandit&lt;/strong&gt; problem, with each problem category (such as difficulty level or type) representing an arm.&lt;/li&gt;
+&lt;li&gt;It uses the &lt;strong&gt;absolute advantage from policy gradient methods&lt;/strong&gt; as a proxy for immediate learning gain.&lt;/li&gt;
+&lt;li&gt;At each training step, the curriculum policy &lt;strong&gt;selects categories that maximize this reward signal&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The policy is updated using the &lt;strong&gt;TD(0) method&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-results"&gt;⚙️ Key results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Experiments were run in three reasoning domains: &lt;strong&gt;planning, inductive reasoning, and mathematics&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;SEC &lt;strong&gt;significantly improves models’ reasoning capabilities&lt;/strong&gt;, leading to better generalization on harder, out‑of‑distribution test problems.&lt;/li&gt;
+&lt;li&gt;When fine‑tuning on multiple reasoning domains simultaneously, SEC achieves &lt;strong&gt;better skill balance&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The findings highlight SEC as a &lt;strong&gt;promising strategy for RL fine‑tuning of LLMs&lt;/strong&gt;, addressing curriculum design challenges while boosting performance across diverse reasoning tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#RL #CurriculumLearning #LLM #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.microsoft.com/en-us/research/publication/self-evolving-curriculum-for-llm-reasoning/" target="_blank" rel="noopener"
+&gt;Self-Evolving Curriculum for LLM Reasoning - Microsoft Research&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-featured-image.png" alt="Featured image of post Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization" /&gt;&lt;h1 id="amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization"&gt;Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization
+&lt;/h1&gt;&lt;p&gt;Amazon Payments applied AI‑based personalization to a product acquisition funnel, using a multi‑objective contextual multi‑armed bandit (MAB) on Amazon SageMaker AI.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;In this post, we share how Amazon Payments applied AI-based personalization to a product acquisition funnel, using a multi-objective contextual multi-armed bandit (MAB) on Amazon SageMaker AI.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;The customer journey in our use case comprises three steps: application start, submission, and approval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;In a seven-week online A/B test we currently see a high single-digit percentage relative lift in final-funnel conversion for one customer population, while another saw no improvement over the existing experience.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The problem turned out to be the content, not the model.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🤖 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;A multi-armed bandit (MAB) is a reinforcement learning method built for settings with many options and limited traffic.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It treats each content variation as an “arm,” tries each against live traffic, and steadily shifts impressions toward the arms that perform, while holding a fraction back to keep testing the rest.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;In Amazon Payments, we chose UCB, a strategy that selects the arm with the highest estimated reward plus an uncertainty bonus, naturally balancing exploitation and exploration.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Its deterministic selection rule gives an auditable, reproducible decision for every impression, which makes sure every serving decision can be explained and reproduced if needed.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Contextual bandits condition directly on a feature vector (a numeric representation of attributes), so a pattern learned in one context transfers to every similar visit without separate per-group traffic.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Our production system represents each customer as a context vector of behavioral signals (payment behavior, transaction mix, and similar features) in place of a fixed segment.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The entity ID (an opaque key such as entity_id) is used only to route the learned recommendation back to the right visitor.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The entity ID is never a model input.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;For a contextual approach, we selected Linear UCB (LinUCB), introduced by Li et al. (2010).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;LinUCB remains a battle-tested method that is computationally efficient, auditable (deterministic arm selection), and naturally handles a large arm space with limited warm-start data.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Its key assumption is that the expected reward for an arm is a linear function of the context vector, which lets it generalize to visitors it has not seen before.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Each arm keeps two running tallies updated on every impression: b , the reward ledger: which visitor signals led to conversions (b += reward · x).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;A , the experience ledger: which visitors the arm has seen (A += x·xᵀ, starting from identity).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Dividing reward by experience gives the estimate (θ = A⁻¹·b).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The experience ledger also shrinks the exploration bonus as evidence grows.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The bonus is context‑dependent.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It’s large for a kind of visitor the arm has rarely seen, and small for one it has seen often.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;A plain bandit explores at a single global rate, while LinUCB adjusts how much it explores for every visitor it scores.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Optimizing one stage in isolation can degrade another.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Our approach optimizes the entire funnel simultaneously by running one LinUCB model per stage (start, submit, approve) and combining their UCB scores through a linear combination.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The stage weights can be assigned based on business priorities or learned by a separate calibration step.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture--implementation"&gt;🛠️ Architecture &amp;amp; Implementation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;We also share a code repository that you can use to test this approach on synthetic data and understand the method hands‑on using Amazon SageMaker AI.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonPayments #MultiArmedBandit #Personalization #SageMaker&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-bandits-on-aws/" target="_blank" rel="noopener"
+&gt;Uplifting conversion across the acquisition funnel with personalization using contextual bandits on AWS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>EAGER Reinforcement Learning Framework Boosts Structured Event Extraction</title><link>https://shoubhikbanerjee.github.io/blog/p/eager-reinforcement-learning-framework-boosts-structured-event-extraction/</link><pubDate>Fri, 25 Sep 2026 22:04:20 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/eager-reinforcement-learning-framework-boosts-structured-event-extraction/</guid><description>&lt;h1 id="eager-reinforcement-learning-framework-boosts-structured-event-extraction"&gt;EAGER Reinforcement Learning Framework Boosts Structured Event Extraction
+&lt;/h1&gt;&lt;p&gt;A new reinforcement‑learning framework called EAGER has been introduced to improve generative event extraction.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;EAGER combines fine‑grained verifiable rewards with Schema‑Contrastive Advantage Estimation.&lt;/li&gt;
+&lt;li&gt;Designed to alleviate advantage collapse under sparse binary rewards.&lt;/li&gt;
+&lt;li&gt;Evaluated on seven benchmark datasets.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Reward design explicitly targets:
+&lt;ul&gt;
+&lt;li&gt;Structural validity&lt;/li&gt;
+&lt;li&gt;Extraction accuracy&lt;/li&gt;
+&lt;li&gt;Groundedness&lt;/li&gt;
+&lt;li&gt;Coverage&lt;/li&gt;
+&lt;li&gt;Over‑generation&lt;/li&gt;
+&lt;li&gt;Span precision&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Uses Schema‑Contrastive Advantage Estimation to compute advantages in a contrastive manner, addressing advantage collapse.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Experiments show EAGER consistently outperforms prompting, supervised fine‑tuning, and prior RL baselines.&lt;/li&gt;
+&lt;li&gt;Achieves a substantial improvement over the strongest prior method.&lt;/li&gt;
+&lt;li&gt;Results demonstrate that task‑aligned verifiable rewards and contrastive advantage estimation substantially improve structured extraction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Structured extraction benefits from more reliable reward signals, reducing errors in generated events.&lt;/li&gt;
+&lt;li&gt;The framework leverages large language models to enhance information extraction from complex texts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#EAGER #EventExtraction #ReinforcementLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.29230v1" target="_blank" rel="noopener"
+&gt;EAGER: Enhancing Generative Event Extraction via Reinforcement Learning with Verifiable Rewards&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.29370v1" target="_blank" rel="noopener"
+&gt;From Policy Documents to Structured Survey Responses: Evaluating Large Language Models for Policy Monitoring&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Evaluation Protocol and Method for Long-Horizon Reinforcement Learning Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/new-evaluation-protocol-and-method-for-long-horizon-reinforcement-learning-agents/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-evaluation-protocol-and-method-for-long-horizon-reinforcement-learning-agents/</guid><description>&lt;h1 id="new-evaluation-protocol-and-method-for-long-horizon-reinforcement-learning-agents"&gt;New Evaluation Protocol and Method for Long-Horizon Reinforcement Learning Agents
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced a new evaluation protocol called checkpoint handoff and a training method called Reward Stimulation Implicit Q-Learning (RSIQL) to improve and analyze language-model agents acting in live environments.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Reinforcement learning (RL) now trains agents capable of acting over dozens of steps in live environments. Because an agent in a closed loop writes its own inputs, the states it encounters late in an episode are partly of its own making. This creates a challenge when comparing Supervised Fine-Tuning (SFT) checkpoints and RL checkpoints, as they are scored from different states even on identical tasks.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To separate the factors contributing to endpoint success, the checkpoint handoff protocol clones a state reached by one released checkpoint and hands it to another without retraining. This splits endpoint gains into two metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;REACH&lt;/strong&gt;: How often a policy arrives at a state the environment confirms is a fixed number of actions from success.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SOLVE&lt;/strong&gt;: How often a policy finishes from an identical cloned state.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Regarding the RSIQL method for offline settings with sparse rewards and long-horizon dependencies:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Purpose&lt;/strong&gt;: It addresses issues where goal-completion information is temporally distant from early decisions and offline value estimation introduces error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mechanism&lt;/strong&gt;: It uses an auxiliary goal-conditioned value function to identify intermediate states that make progress toward the goal, applying reward stimulation for less-delayed training supervision.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Structure&lt;/strong&gt;: Unlike hierarchical methods, RSIQL is a simple non-hierarchical method that does not learn a separate high-level subgoal policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Evaluation and experimental results show:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The interaction between the reacher and solver is positive across two benchmarks and two independently released pipelines.&lt;/li&gt;
+&lt;li&gt;On ALFWorld, RL improves both REACH and SOLVE terms, and the SFT solver never succeeds where the RL solver fails.&lt;/li&gt;
+&lt;li&gt;An RL history is worth more to an RL solver than the same history is to an SFT solver.&lt;/li&gt;
+&lt;li&gt;RSIQL improves over goal-conditioned IQL on average and achieves performance competitive with hierarchical offline goal-conditioned methods on OGBench and D4RL goal-reaching benchmarks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#ReinforcementLearning #AIagents #MachineLearning #RSIQL&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.19636v1" target="_blank" rel="noopener"
+&gt;Reach or Solve? Attributing Agentic RL Gains with Checkpoint Handoffs&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.19414v1" target="_blank" rel="noopener"
+&gt;Improving Offline Goal-Conditioned Reinforcement Learning via Selective Reward Stimulation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Introduction of the Fork Ledger for Evaluating Deployment Stream Updates</title><link>https://shoubhikbanerjee.github.io/blog/p/introduction-of-the-fork-ledger-for-evaluating-deployment-stream-updates/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introduction-of-the-fork-ledger-for-evaluating-deployment-stream-updates/</guid><description>&lt;h1 id="introduction-of-the-fork-ledger-for-evaluating-deployment-stream-updates"&gt;Introduction of the Fork Ledger for Evaluating Deployment Stream Updates
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced the fork ledger, a mechanism designed to branch deployment streams at pre-registered decision points into matched update and hold continuations using common random numbers.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The system evaluates both update and hold continuations on the same episodes.&lt;/li&gt;
+&lt;li&gt;It records the difference in return as $\Delta R = R_{\mathrm{update}} - R_{\mathrm{hold}}$.&lt;/li&gt;
+&lt;li&gt;The task serves as the unit of inference, with each contributing 240 attempted forks across two drift directions and five pretrained checkpoints.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Applying one fixed update mechanism resulted in lowered returns across three simulated control tasks:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Task&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Return Change ($\Delta R$)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Checkpoint-Bootstrap 95% CI&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CartPole&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$-144.0$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$[-185.4,-116.1]$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Walker&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$-82.8$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$[-101.1,-61.7]$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cheetah&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$-18.6$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$[-29.0,-6.6]$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;When restricted to the 693 of 720 that did not collapse:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CartPole and Walker remained unchanged in sign ($-113.4$ and $-82.1$).&lt;/li&gt;
+&lt;li&gt;Cheetah became unresolved ($-3.9$; $[-17.5,+13.0]$).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AI #MachineLearning #SimulatedControl #DeploymentStreams&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.10954v1" target="_blank" rel="noopener"
+&gt;Measuring the Value of World-Model Updates: A Counterfactual Utility Protocol for Continual Adaptation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

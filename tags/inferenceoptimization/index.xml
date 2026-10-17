@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>InferenceOptimization on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/inferenceoptimization/</link><description>Recent content in InferenceOptimization on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 12 Oct 2026 22:04:14 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/inferenceoptimization/index.xml" rel="self" type="application/rss+xml"/><item><title>ReplaySSM Restores Fast Decoding for State‑Space Layers in Hybrid LLMs</title><link>https://shoubhikbanerjee.github.io/blog/p/replayssm-restores-fast-decoding-for-statespace-layers-in-hybrid-llms/</link><pubDate>Mon, 12 Oct 2026 22:04:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/replayssm-restores-fast-decoding-for-statespace-layers-in-hybrid-llms/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/cube-black-background-660x370.png" alt="Featured image of post ReplaySSM Restores Fast Decoding for State‑Space Layers in Hybrid LLMs" /&gt;&lt;h1 id="replayssm-restores-fast-decoding-for-statespace-layers-in-hybrid-llms"&gt;ReplaySSM Restores Fast Decoding for State‑Space Layers in Hybrid LLMs
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Hybrid large‑language models interleave state‑space model (SSM) layers with a few attention layers. Recent work – &lt;em&gt;ReplaySSM: Cache SSM Inputs, Not State&lt;/em&gt; – shows how to make those SSM layers fast again, removing a major latency bottleneck that appears at serving batch sizes.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;ReplaySSM changes the way an SSM’s internal state is stored during generation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The state is split into a &lt;strong&gt;checkpoint&lt;/strong&gt; (a full copy of the SSM state) and a &lt;strong&gt;buffer of recent inputs&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Output computation reads only the buffer, while the checkpoint is updated lazily.&lt;/li&gt;
+&lt;li&gt;This separation eliminates three known problems:
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;State traffic&lt;/strong&gt; – the full state no longer moves every token.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rollback for speculative decoding&lt;/strong&gt; – the buffer can be discarded without reverting a large state.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error accumulation in a quantized state&lt;/strong&gt; – rounding errors no longer re‑enter the recurrence each step.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid model examples&lt;/strong&gt; – NVIDIA Nemotron 3, Qwen 3.5 through 3.8, Kimi‑K3, and GLM‑5.3‑Flash all use this pattern, with Mamba‑2, Gated DeltaNet (GDN), or Kimi Delta Attention (KDA) as the SSM layer.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Decoding bottleneck&lt;/strong&gt; – at batch size 256 on a Blackwell Ultra B300 GPU, SSM layers dominate latency up to 100 K tokens of context (Figure 2, left). The model has five times as many SSM layers as attention layers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;State size comparison&lt;/strong&gt; – one SSM layer’s FP32 state is 4 MiB per sequence, while an FP8 KV entry is 0.5 KiB per token. Thus an SSM state equals an attention KV cache for roughly 8 K tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Speculative decoding&lt;/strong&gt; – a drafter proposes &lt;em&gt;T&lt;/em&gt; tokens, the target model verifies them, then rolls back to the last accepted token. Attention rolls back by moving a KV pointer; an SSM’s state has no cheap inverse, so engines store a full snapshot after each draft token. This costs one read and &lt;em&gt;T&lt;/em&gt; writes per step and limits how many requests fit in GPU memory, making speculative decoding barely helpful for SSMs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quantization issue&lt;/strong&gt; – the quantized state is both the output and the next update’s input, so rounding error recurs at every step.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The paper is on &lt;strong&gt;arXiv&lt;/strong&gt; and the implementation is on &lt;strong&gt;GitHub&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;ReplaySSM is integrated into &lt;strong&gt;NVIDIA TensorRT‑LLM&lt;/strong&gt;, &lt;strong&gt;vLLM&lt;/strong&gt;, and &lt;strong&gt;FlashInfer&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Production deployments include &lt;strong&gt;GLM‑5.3‑Flash&lt;/strong&gt; and &lt;strong&gt;Kimi‑K3&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;By turning the SSM state into a cache of recent inputs rather than a constantly moved full tensor, ReplaySSM restores the speed advantages of attention‑only models for hybrid architectures. This enables existing speed‑up techniques—speculative decoding and low‑precision quantization—to be applied to models that heavily rely on SSM layers, broadening the practical utility of state‑space approaches in large‑scale inference.&lt;/p&gt;
+&lt;h2 id="-modelssm-mapping"&gt;📊 Model‑SSM mapping
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;SSM layer&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NVIDIA Nemotron 3&lt;/td&gt;
+&lt;td&gt;Mamba‑2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen 3.5 – 3.8&lt;/td&gt;
+&lt;td&gt;Mamba‑2, GDN, or KDA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kimi‑K3&lt;/td&gt;
+&lt;td&gt;KDA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GLM‑5.3‑Flash&lt;/td&gt;
+&lt;td&gt;Mamba‑2 / GDN / KDA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-1-4.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-2-4.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#ReplaySSM #SSM #HybridModels #InferenceOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/replayssm-rethinking-state-storage-for-faster-hybrid-model-decoding/" target="_blank" rel="noopener"
+&gt;ReplaySSM: Rethinking State Storage for Faster Hybrid-Model Decoding | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA accelerates generative recommender inference with HSTU and Dynamo-Triton</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-accelerates-generative-recommender-inference-with-hstu-and-dynamo-triton/</link><pubDate>Thu, 01 Oct 2026 22:03:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-accelerates-generative-recommender-inference-with-hstu-and-dynamo-triton/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/recsys-660x370.jpg" alt="Featured image of post NVIDIA accelerates generative recommender inference with HSTU and Dynamo-Triton" /&gt;&lt;h1 id="nvidia-accelerates-generative-recommender-inference-with-hstu-and-dynamo-triton"&gt;NVIDIA accelerates generative recommender inference with HSTU and Dynamo-Triton
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced an optimized production workflow for Hierarchical Sequential Transduction Unit (HSTU) generative recommenders using Dynamo-Triton and PyTorch Ahead-of-Time Inductor (AOTI). This update addresses inference challenges in large-scale personalization systems.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Generative recommender (GR) systems model user behavior as sequential prediction problems rather than isolated retrieval/ranking stages. HSTUs process high-cardinality event streams of user interactions, context, and items as tokens. This approach excels with long histories and dynamic catalogs but demands low-latency inference despite computational complexity.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sequence modeling&lt;/strong&gt;: User interactions become token sequences for next-item prediction&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Input composition&lt;/strong&gt;: Contextual (user), item, and action tokens form categorical inputs&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Preprocessing&lt;/strong&gt;: Embeddings are retrieved, interleaved, and positionally encoded&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HSTU blocks&lt;/strong&gt;: Process sequences before multitask ranking outputs&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;KV caching&lt;/strong&gt;: Stores reusable key-value states from prior computations to avoid redundant calculations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;HSTU&lt;/td&gt;
+&lt;td&gt;Processes sequential token streams for recommendation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PyTorch AOTI&lt;/td&gt;
+&lt;td&gt;Compiles models to optimized artifacts for C++ runtime&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FlexKV&lt;/td&gt;
+&lt;td&gt;GPU/host-backed key-value cache for HSTU attention states&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NV embedding cache&lt;/td&gt;
+&lt;td&gt;Accelerates high-cardinality embedding lookups&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Performance&lt;/strong&gt;: On RTX PRO 6000 GPUs with 100% KV cache hits:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;4.47× speedup (3-layer HSTU) at batch size 8&lt;/li&gt;
+&lt;li&gt;5.93× speedup (8-layer HSTU) at batch size 8&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The end-to-end workflow is available through NVIDIA&amp;rsquo;s recsys-examples repository. Key steps include:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Exporting models via &lt;code&gt;torch.export&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;AOTI compilation to optimized artifacts&lt;/li&gt;
+&lt;li&gt;Validation in Python/C++&lt;/li&gt;
+&lt;li&gt;Deployment via Dynamo-Triton with FlexKV caching&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This workflow reduces latency in production GR systems by:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Eliminating redundant computations through KV caching&lt;/li&gt;
+&lt;li&gt;Optimizing jagged sequence handling and large embedding tables&lt;/li&gt;
+&lt;li&gt;Enabling efficient serving of long user histories with incremental updates&lt;/li&gt;
+&lt;li&gt;Maintaining sequence modeling benefits while improving throughput&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/hstu-gr-inferencing-stack.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/pytorch-aoti-workflow.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/dynamo-triton-backend-comparisons-hstu.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AIRecommenders #HSTU #PyTorch #InferenceOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/deploying-an-hstu-generative-recommender-with-nvidia-dynamo-triton/" target="_blank" rel="noopener"
+&gt;Deploying an HSTU Generative Recommender with NVIDIA Dynamo-Triton | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>DSpark Draft Model for LFM2.5-VL-3B Improves Vision-Language Inference Speed</title><link>https://shoubhikbanerjee.github.io/blog/p/dspark-draft-model-for-lfm2-5-vl-3b-improves-vision-language-inference-speed/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/dspark-draft-model-for-lfm2-5-vl-3b-improves-vision-language-inference-speed/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/644249b08443bce4c9890a0f/WgfT8N8Xyb6lBxSif7XLO.gif" alt="Featured image of post DSpark Draft Model for LFM2.5-VL-3B Improves Vision-Language Inference Speed" /&gt;&lt;h1 id="dspark-draft-model-for-lfm25-vl-3b-improves-vision-language-inference-speed"&gt;DSpark Draft Model for LFM2.5-VL-3B Improves Vision-Language Inference Speed
+&lt;/h1&gt;&lt;p&gt;An update to the LFM2.5-VL-3B model introduces a DSpark draft model designed to accelerate inference through speculative decoding.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The vision drafter uses the same architecture as the text LFM2.5-DSpark drafters. Key technical details include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Architecture&lt;/strong&gt;: A simplified attention-only drafter with 4 layers and a block size of 9.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mechanism&lt;/strong&gt;: It captures the target model&amp;rsquo;s hidden states at a fixed set of tapped layers and conditions on them to draft a block of k candidate tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Modality Handling&lt;/strong&gt;: Image patches and text tokens are projected into a shared representation before the layers, allowing the drafter to operate on hidden-state vectors of identical dimensionality regardless of input modality.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Verification&lt;/strong&gt;: Speculative decoding is exact, as the target verifies every proposed token, ensuring greedy output equals the target alone.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Parameter Count&lt;/strong&gt;: Approximately 280M parameters, increasing the deployed model’s parameter count by 8.9%.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Training&lt;/strong&gt;: The model was trained for 10 epochs on a mixture of vision-language SFT data weighted toward expected workloads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware Recommendation&lt;/strong&gt;: A block size of 8 or 9 is recommended depending on the hardware.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The DSpark draft model is available on Hugging Face in Safetensors and GGUF formats. It ships with day-one support for:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Integration&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Requirement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;llama.cpp&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Respective build (PR#29339)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;MLX-VLM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Respective build (PR#2280)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;SGLang&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Build with DSpark support for LFM2 targets (PR #40651)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Speculative decoding accelerates the decode stage of inference, though it does not speed up vision encoding or prefill. Because prefill is compute-bound and grows (sub)quadratically with prompt length, it can occupy a significant portion of end-to-end latency, particularly on edge devices. This follows Amdahl&amp;rsquo;s law, where overall speedup is capped by the non-accelerated parts of the workload.&lt;/p&gt;
+&lt;p&gt;Performance measurements across six diverse vision-based tasks (including general VQA, text VQA, image captioning, chart VQA, complex reasoning, and multi-turn conversation) show the following gains using a block size of 8:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MLX (M5 Max)&lt;/strong&gt;: Decoding speedups of 2.30x to 3.13x; end-to-end latency improvements of 1.56x to 2.62x.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;llama.cpp (M3 Ultra)&lt;/strong&gt;: Decoding improvements of 1.57x to 2.14x; end-to-end improvements of 1.30x to 1.77x.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;H100 GPU&lt;/strong&gt;: Decoding speedups of 20.4x to 2.66x; end-to-end improvements of 1.64x to 2.27x.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#LFM2.5 #SpeculativeDecoding #VLM #InferenceOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/LiquidAI/lfm2-5-vl-dspark" target="_blank" rel="noopener"
+&gt;Accelerating vision-language models with LFM2.5-VL-DSpark&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>WISE Method Optimizes Recurrent Language Model Inference via Support Exploitation</title><link>https://shoubhikbanerjee.github.io/blog/p/wise-method-optimizes-recurrent-language-model-inference-via-support-exploitation/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/wise-method-optimizes-recurrent-language-model-inference-via-support-exploitation/</guid><description>&lt;h1 id="wise-method-optimizes-recurrent-language-model-inference-via-support-exploitation"&gt;WISE Method Optimizes Recurrent Language Model Inference via Support Exploitation
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced WISE (Working-set Inference with Support Exploitation), a training-free method designed to improve the efficiency of recurrent language models by optimizing how they handle global attention during inference.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Recurrent language models refine latent representations by repeatedly applying shared network blocks. However, standard inference typically recomputes global attention at every recurrent step. The developers of WISE discovered that attention support and distributions stabilize substantially earlier than attention outputs and hidden states.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;WISE leverages the observation that early recurrent steps identify a sparse working set of relevant context, while subsequent steps refine representations using largely the same routing support. The method operates as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Early Recurrence:&lt;/strong&gt; Uses unrestricted global attention.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Later Recurrence:&lt;/strong&gt; Reuses the directly discovered block-structured support.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamic Control:&lt;/strong&gt; Keeps recurrent depth and within-support attention computation dynamic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Controlled interventions indicated that recurrent discovery is necessary and that support-only reuse preserves model behavior better than more restrictive attention-reuse options. Performance metrics include:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Multi-hop QA Performance&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Largely preserves full-attention performance&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Quality (2K context)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Largely preserved&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Quality (4K context)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Measurable loss&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Max Attention Speedup (4K)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Up to 1.76x over native FlashAttention&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Full 32-step Trajectory Speedup&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.36x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Context scaling reveals that as context increases, working sets become increasingly sparse, leading to greater efficiency gains.&lt;/p&gt;
+&lt;p&gt;#LLM #InferenceOptimization #AttentionMechanism #RecurrentLanguageModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.27373v1" target="_blank" rel="noopener"
+&gt;Attention Routing Stabilizes Early: Working-Set Inference for Recurrent Language Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

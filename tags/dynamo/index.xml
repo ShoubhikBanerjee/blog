@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dynamo on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/dynamo/</link><description>Recent content in Dynamo on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 10 Sep 2026 22:04:27 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/dynamo/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Dynamo Supports Encode-Prefill-Decode Disaggregation for Multimodal Model Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-supports-encode-prefill-decode-disaggregation-for-multimodal-model-inference/</link><pubDate>Thu, 10 Sep 2026 22:04:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-supports-encode-prefill-decode-disaggregation-for-multimodal-model-inference/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/multimodal-dynamo-660x370.jpg" alt="Featured image of post NVIDIA Dynamo Supports Encode-Prefill-Decode Disaggregation for Multimodal Model Inference" /&gt;&lt;h1 id="nvidia-dynamo-supports-encode-prefill-decode-disaggregation-for-multimodal-model-inference"&gt;NVIDIA Dynamo Supports Encode-Prefill-Decode Disaggregation for Multimodal Model Inference
+&lt;/h1&gt;&lt;p&gt;NVIDIA Dynamo, an open source inference framework for distributed environments, now supports Encode-Prefill-Decode (EPD) disaggregation. This optimization technique improves multimodal model performance by separating the vision encoder stage from the prefill and decode stages.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Dynamo implements EPD serving by separating encoder and PD (prefill-decode) worker roles. Instead of running these phases with tightly coupled scheduling, they are treated as independently scalable stages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Encoder Workers&lt;/strong&gt;: Produce vision embeddings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PD Workers&lt;/strong&gt;: Consume those embeddings and run the LLM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Transfer&lt;/strong&gt;: The NVIDIA Inference Transfer Library (NIXL) is used to pass embeddings from encoder workers to PD workers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;There are three primary placement options for these workers:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Placement Option&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Aggregated&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Each GPU runs a single worker managing encoding, prefill, and decode for the entire request lifecycle.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Colocated Encoder&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Each GPU runs one or more encoder workers alongside one PD worker; generally the better fit for homogeneous clusters.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Disaggregated Encoder&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Encoder workers are placed on a lower-cost GPU tier while the primary GPU tier hosts PD workers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In a test environment, two NVIDIA RTX 6000D GPUs were used for encoder workers, while four NVIDIA GB200 GPUs handled the PD workers. This configuration reserves the GB200 GPUs for the more memory- and compute-intensive LLM workload.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;EPD disaggregation isolates encoder work, which allows text requests to skip waiting for the encoder. This leads to improvements in batching, memory efficiency, and overall throughput.&lt;/p&gt;
+&lt;p&gt;Performance gains include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Up to 5x faster time to first token (TTFT).&lt;/li&gt;
+&lt;li&gt;Up to 7x faster end-to-end response time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The technique is most effective under the following conditions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Image-heavy prompts.&lt;/li&gt;
+&lt;li&gt;Short-to-medium outputs.&lt;/li&gt;
+&lt;li&gt;Quantized mixture-of-experts (MoE) and lower-precision models (e.g., Qwen3.5 122B A10B NVFP4).&lt;/li&gt;
+&lt;li&gt;Scenarios where vision encoding accounts for a significant share of processing time or limits throughput.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Large dense models see less gain from this optimization.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/how-nvidia-dynamo-handles-multimodal-request-aggregated-versus-epd.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/three-multimodal-encode-placement-options.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Dynamo #LLM #MultimodalAI #Inference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/when-to-use-encode-prefill-decode-disaggregation-to-accelerate-multimodal-model-serving/" target="_blank" rel="noopener"
+&gt;When to Use Encode-Prefill-Decode Disaggregation to Accelerate Multimodal Model Serving | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

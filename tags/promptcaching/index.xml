@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>PromptCaching on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/promptcaching/</link><description>Recent content in PromptCaching on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 15 Sep 2026 22:08:30 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/promptcaching/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock prompt caching reduces input token costs by up to 90 percent</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-prompt-caching-reduces-input-token-costs-by-up-to-90-percent/</link><pubDate>Tue, 15 Sep 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-prompt-caching-reduces-input-token-costs-by-up-to-90-percent/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-20790-featured-image.png" alt="Featured image of post Amazon Bedrock prompt caching reduces input token costs by up to 90 percent" /&gt;&lt;h1 id="amazon-bedrock-prompt-caching-reduces-input-token-costs-by-up-to-90-percent"&gt;Amazon Bedrock prompt caching reduces input token costs by up to 90 percent
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock now supports prompt caching, which allows users to store snapshots of partially processed input to reduce costs and time-to-first-token (TTFT) when repeatedly sending the same context to foundation models.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Prompt caching stores a snapshot of partially processed input so that subsequent requests with the same prefix skip redundant computation. This feature is applicable to parts of conversation context such as system prompts, documents, and tool definitions.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cost Savings:&lt;/strong&gt; For workloads with repeated context, savings can reach approximately 75 percent on input token costs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; Cache hits can reduce time-to-first-token (TTFT) and lower costs for cached input tokens by up to 90 percent.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consistency:&lt;/strong&gt; Caching occurs without changing the model or prompt quality.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Users include a &lt;code&gt;cachePoint&lt;/code&gt; marker in their request to indicate where a checkpoint should be placed. Amazon Bedrock evaluates whether the content preceding that marker matches an existing cache entry.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cache Hit:&lt;/strong&gt; If a match exists, the model skips reprocessing those tokens and begins generation from the cached state.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cache Miss:&lt;/strong&gt; If no match exists, the model processes the full content and writes the result to the cache for potential future requests.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Syntax:&lt;/strong&gt; The Converse API &lt;code&gt;cachePoint&lt;/code&gt; syntax is identical across supported model families, including Anthropic Claude and Amazon Nova. To implement this, a &lt;code&gt;cachePoint&lt;/code&gt; content block is placed after static content and before the dynamic question.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Cache entries are scoped to individual AWS accounts and AWS Regions. Each cache checkpoint must meet a minimum token threshold to activate.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model Family&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Minimum Token Threshold&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Anthropic Claude Sonnet 4.5 and 4.6&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,024 tokens&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Anthropic Claude Opus models&lt;/td&gt;
+&lt;td style="text-align: left"&gt;4,096 tokens&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Expiration (TTL):&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Default:&lt;/strong&gt; 5 minutes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Select models:&lt;/strong&gt; Up to 1 hour.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Pricing Structure:&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Token Type&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Cost relative to standard input&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;cacheWriteInputTokens&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;25% higher&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;cacheWriteInputTokens&lt;/code&gt; (1-hour TTL)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;100% higher (2x)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;cacheReadInputTokens&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;90% lower&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Implementation Requirements:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An AWS account with Amazon Bedrock access in a supported AWS Region (such as us-west-2).&lt;/li&gt;
+&lt;li&gt;Python 3.10 or later.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonBedrock #AWS #PromptCaching #MachineLearning #GenerativeAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/optimizing-cost-and-latency-with-amazon-bedrock-prompt-caching/" target="_blank" rel="noopener"
+&gt;Optimizing cost and latency with Amazon Bedrock prompt caching | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Cost‑saving techniques cut LLM spend for agentic AI workflows</title><link>https://shoubhikbanerjee.github.io/blog/p/costsaving-techniques-cut-llm-spend-for-agentic-ai-workflows/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/costsaving-techniques-cut-llm-spend-for-agentic-ai-workflows/</guid><description>&lt;img src="https://www.getreadyforagents.com/blog/agent-token-economics-cost-efficiency-production-hero.png" alt="Featured image of post Cost‑saving techniques cut LLM spend for agentic AI workflows" /&gt;&lt;h1 id="costsaving-techniques-cut-llm-spend-for-agentic-ai-workflows"&gt;Cost‑saving techniques cut LLM spend for agentic AI workflows
+&lt;/h1&gt;&lt;p&gt;ProjectDiscovery applied this to their security testing agent Neo in April 2026.
+The result was a 59 percent reduction in LLM costs within the first few days, reaching 70 percent by day ten.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;An agent runs a loop: it reasons, calls a tool, reads the result, updates its plan, and repeats.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Every iteration carries the full conversation history forward.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;By step five of a ten-step task, the model is reading everything that came before it on every single call.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Context length grows with each step, and cost scales with context length.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-cost-challenge"&gt;📊 Cost Challenge
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;According to research from Antino and Zylos, LLM API calls account for 70 to 85 percent of total agentic AI cost, and agents make three to ten times more LLM calls than simple chatbots.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Unoptimized production agents regularly reach $10 to $100 per session in API spend.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;That ceiling matters because 88 percent of organisations are experimenting with agents, but only 23 percent are actively scaling, and Gartner projects 40 percent of agentic AI projects will be cancelled by 2027.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-measuring-first"&gt;📏 Measuring First
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;You cannot optimise what you have not measured.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Instrument every LLM call before you write a single optimisation.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Record input tokens, output tokens, model name, task type, and step number.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Aggregate by task run, not by request, so you can see the full cost of one unit of work.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;If your cost‑per‑task spikes after step three, that tells you the context is accumulating faster than the task is progressing, which points directly at context compaction as the right fix.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Store these records somewhere you can query them by task type.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;After one week of load testing, you will have a cost distribution per task type that you can use to set per‑task budgets and to forecast monthly spend at your target volume.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-prompt-caching"&gt;💾 Prompt Caching
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;If your system prompt is long, your agent pays full price for it on every call.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Prompt caching lets the model provider store the computed representation of a static prefix and charge a fraction of the normal input rate for subsequent calls that reuse it.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The technique requires that the cacheable content sits at the start of the prompt and stays stable across calls, so structure your prompts with the static system instructions first and the variable task context after.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;One developer account dropped from $720 per month to $72.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-model-routing"&gt;🧩 Model Routing
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Not every step in an agentic workflow needs a frontier model.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Planning and synthesis benefit from the best reasoning available.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Classification, intent detection, filtering, and repeated sub‑tasks often produce equally reliable results from a model that costs a tenth as much.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Build a routing layer that maps task types to model tiers.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The decision criterion is whether the step requires open‑ended reasoning or whether it fits inside a well‑defined scope where a smaller model can be reliable.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Test each route with representative inputs before you trust it in production.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-context-summarisation"&gt;🛠️ Context Summarisation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;The most direct attack on the quadratic growth problem is to stop the context from growing unchecked.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;At each step, summarise completed sub‑tasks into a compact record and drop the raw turn history.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;This requires a small summarisation call, which adds a modest cost at each checkpoint, but that cost is fixed per step rather than proportional to total history length.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;For tasks beyond five or six steps, compaction almost always pays for itself.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#LLM #AgenticAI #PromptCaching #CostOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.getreadyforagents.com/blog/agent-token-economics-cost-efficiency-production/" target="_blank" rel="noopener"
+&gt;Agent Token Economics: Engineering Cost Efficiency Before Your First Production Deployment — Agentic Ready&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

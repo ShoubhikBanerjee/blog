@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>NVIDIAJetson on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/nvidiajetson/</link><description>Recent content in NVIDIAJetson on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 04 Sep 2026 22:05:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/nvidiajetson/index.xml" rel="self" type="application/rss+xml"/><item><title>Compact Open Models Bring Local Multi-Step Reasoning to NVIDIA Jetson Hardware</title><link>https://shoubhikbanerjee.github.io/blog/p/compact-open-models-bring-local-multi-step-reasoning-to-nvidia-jetson-hardware/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/compact-open-models-bring-local-multi-step-reasoning-to-nvidia-jetson-hardware/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image2-3-660x370.png" alt="Featured image of post Compact Open Models Bring Local Multi-Step Reasoning to NVIDIA Jetson Hardware" /&gt;&lt;h1 id="compact-open-models-bring-local-multi-step-reasoning-to-nvidia-jetson-hardware"&gt;Compact Open Models Bring Local Multi-Step Reasoning to NVIDIA Jetson Hardware
+&lt;/h1&gt;&lt;p&gt;Until recently, models capable of multi-step reasoning were too large to run locally on edge hardware. Developers building agents have had to route inference through a data center, which added network dependency, increased costs, and exposed data that may need to stay on device.&lt;/p&gt;
+&lt;p&gt;Several model families released throughout the summer have collectively marked a turning point for edge AI. This new generation of compact open models now delivers reasoning and agentic capabilities that required large data center systems only a few months ago, and NVIDIA Jetson can run them today.&lt;/p&gt;
+&lt;h2 id="-model-architecture-and-target-workflows"&gt;⚙️ Model Architecture and Target Workflows
+&lt;/h2&gt;&lt;p&gt;These compact open models feature high-quality quantized checkpoints and optimized deployment options across popular inference engines. Developers can use Nemotron 3.5 Lightning and Qwen3.8-27B as examples of these different architectural approaches:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Architecture&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Total Parameters&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Active Parameters (Per Token)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Best Fit Workflow&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Nemotron 3.5 Lightning&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Mixture-of-experts (MoE)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;30 billion&lt;/td&gt;
+&lt;td style="text-align: left"&gt;3 billion&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Response-heavy workflows, where faster token generation can shorten the overall process.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Qwen3.8-27B&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Dense&lt;/td&gt;
+&lt;td style="text-align: left"&gt;27 billion&lt;/td&gt;
+&lt;td style="text-align: left"&gt;27 billion&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tasks that require fewer, harder decisions and allow the agent to spend more time generating each response.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;Note: Distillation transfers some of Nemotron 3 Ultra’s capabilities into the smaller Nemotron 3.5 Lightning model.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-hardware-and-deployment-options"&gt;🚀 Hardware and Deployment Options
+&lt;/h2&gt;&lt;p&gt;Developers can deploy these models locally through popular frameworks, including vLLM and llama.cpp, ensuring the reasoning loop does not depend entirely on the data center. Deployment recommendations vary by hardware capability:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Jetson Orin Nano&lt;/strong&gt;: Gemma 4 E4B is a strong starting point.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Jetson AGX Orin &amp;amp; Jetson AGX Thor&lt;/strong&gt;: Nemotron 3.5 Lightning and Qwen3.8-27B are strong options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-optimization-techniques"&gt;🛠️ Performance Optimization Techniques
+&lt;/h2&gt;&lt;p&gt;Two complementary techniques can be used to improve inference performance on Jetson hardware:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NVFP4 Quantization&lt;/strong&gt;: Reduces the work and memory required for model operations. This format improves generation speed and reduces memory use while keeping quality close to BF16.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Speculative Decoding&lt;/strong&gt;: A smaller draft model proposes several tokens, and the main model verifies them together. This process generates multiple accepted tokens per verification step.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These two optimizations complement each other: NVFP4 reduces the cost of each pass, while speculative decoding increases the number of accepted tokens produced from each pass. Combined, they improve performance.&lt;/p&gt;
+&lt;p&gt;Below, Figure 2 compares both models in BF16 (which provides the baseline), NVFP4 (adding quantization), and NVFP4 combined with the fastest speculative decoding configuration tested for each model.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/techblog-5673-figure-2.webp"
+loading="lazy"
+alt="Figure 2"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/techblog-5673-figure-2.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#EdgeAI #NVIDIAJetson #LLM #AIagents #Quantization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/frontier-reasoning-reaches-the-edge-how-to-deploy-and-optimize-models-on-nvidia-jetson/" target="_blank" rel="noopener"
+&gt;Frontier Reasoning Reaches the Edge: How to Deploy and Optimize Models on NVIDIA Jetson | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

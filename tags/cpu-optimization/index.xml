@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CPU Optimization on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cpu-optimization/</link><description>Recent content in CPU Optimization on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 00:47:56 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cpu-optimization/index.xml" rel="self" type="application/rss+xml"/><item><title>Get Your VLM Running in 3 Simple Steps on Intel CPUs</title><link>https://shoubhikbanerjee.github.io/blog/p/get-your-vlm-running-in-3-simple-steps-on-intel-cpus/</link><pubDate>Tue, 28 Oct 2025 00:47:56 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/get-your-vlm-running-in-3-simple-steps-on-intel-cpus/</guid><description>&lt;img src="https://huggingface.co/datasets/OpenVINO/documentation/resolve/main/blog/openvino_vlm/quantization.png" alt="Featured image of post Get Your VLM Running in 3 Simple Steps on Intel CPUs" /&gt;&lt;h1 id="-get-your-vlm-running-in-3-simple-steps-on-intel-cpus"&gt;🚀 Get Your VLM Running in 3 Simple Steps on Intel CPUs
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://huggingface.co/datasets/OpenVINO/documentation/resolve/main/blog/openvino_vlm/quantization.png"
+loading="lazy"
+alt="Quantization"
+&gt;
+&lt;em&gt;Visual representation of the quantization process that optimizes model performance&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;With the growing capability of large language models (LLMs), a new class of models has emerged:
+&lt;strong&gt;Vision Language Models (VLMs)&lt;/strong&gt;. These models can analyze images and videos to describe
+scenes, create captions, and answer questions about visual content.&lt;/p&gt;
+&lt;p&gt;While running AI models on your own device can be difficult as these models are often
+computationally demanding, it also offers significant benefits: including improved privacy since
+your data stays on your machine, and enhanced speed and reliability because you&amp;rsquo;re not
+dependent on an internet connection or external servers. This is where tools like &lt;strong&gt;Optimum
+Intel&lt;/strong&gt; and &lt;strong&gt;OpenVINO&lt;/strong&gt; come in, along with a small, efficient model like &lt;strong&gt;SmolVLM&lt;/strong&gt;. In this
+blog post, we&amp;rsquo;ll walk you through three easy steps to get a VLM running locally, with no
+expensive hardware or GPUs required (though you can run all the code samples from this blog post on Intel GPUs).&lt;/p&gt;
+&lt;h2 id="-deploy-your-model-with-optimu"&gt;🛠️ Deploy Your Model with Optimu
+&lt;/h2&gt;&lt;p&gt;Small models like SmolVLM are built for low-resource consumption, but they can be further
+optimized. In this blog post we will see how to optimize your model, to lower memory usage and
+speedup inference, making it more efficient for deployment on devices with limited resources.&lt;/p&gt;
+&lt;p&gt;To follow this tutorial, you need to install &lt;code&gt;optimum&lt;/code&gt; and &lt;code&gt;openvino&lt;/code&gt;, which you can do with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install optimum-intel&lt;span class="o"&gt;[&lt;/span&gt;openvino&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="nv"&gt;transformers&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;4.52.*
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-step-1-convert-your-model"&gt;📝 Step 1: Convert Your Model
+&lt;/h2&gt;&lt;p&gt;First, you will need to convert your model to the &lt;strong&gt;OpenVINO IR&lt;/strong&gt;. There are multiple options to do it:&lt;/p&gt;
+&lt;h3 id="option-1-using-the-optimum-cli"&gt;Option 1: Using the Optimum CLI
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;optimum-cli &lt;span class="nb"&gt;export&lt;/span&gt; openvino -m HuggingFaceTB/SmolVLM2-256M-Video-Instruct smolvlm_ov/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="option-2-convert-on-the-fly"&gt;Option 2: Convert On-the-Fly
+&lt;/h3&gt;&lt;p&gt;Or you can convert it &lt;strong&gt;on the fly&lt;/strong&gt; when loading your model:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;optimum.intel&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OVModelForVisualCausalLM&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;HuggingFaceTB/SmolVLM2-256M-Video-Instruct&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OVModelForVisualCausalLM&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;smolvlm_ov&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-step-2-quantization"&gt;⚡ Step 2: Quantization
+&lt;/h2&gt;&lt;p&gt;Now it&amp;rsquo;s time to optimize your model. &lt;strong&gt;Quantization&lt;/strong&gt; reduces the precision of the model
+weights and/or activations, leading to smaller, faster models. Essentially, it&amp;rsquo;s a way to map
+values from a high-precision data type, such as 32-bit floating-point numbers (FP32), to a
+lower-precision format, typically 8-bit integers (INT8). While this process offers several key
+benefits, it can also impact in a potential loss of accuracy.&lt;/p&gt;
+&lt;p&gt;Optimum supports two main post-training quantization methods:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Weight Only Quantization (WOQ)&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Static Quantization&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let&amp;rsquo;s explore each of them.&lt;/p&gt;
+&lt;h3 id="-option-1-weight-only-quantization"&gt;🎯 Option 1: Weight Only Quantization
+&lt;/h3&gt;&lt;p&gt;Weight-only quantization means that only the weights are quantized but activations remain in
+their original precisions. As a result, the model becomes smaller and more memory-efficient,
+improving loading times. But since activations are not quantized, inference speed gains are
+limited. Weight-only quantization is a simple first step since it usually doesn&amp;rsquo;t result in
+significant accuracy degradation.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;💡 Since OpenVINO 2024.3, if the model&amp;rsquo;s weight have been quantized, the corresponding
+activations will also be quantized at runtime, leading to additional speedup depending on the device.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In order to run it, you will need to create a quantization configuration
+&lt;code&gt;OVWeightQuantizationConfig&lt;/code&gt; as follows:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;optimum.intel&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OVModelForVisualCausalLM&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;OVWeightQuantizationConfig&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;q_config&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OVWeightQuantizationConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bits&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;q_model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OVModelForVisualCausalLM&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quantization_config&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;q_config&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;q_model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;smolvlm_int8&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Or equivalently using the CLI:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;optimum-cli &lt;span class="nb"&gt;export&lt;/span&gt; openvino -m HuggingFaceTB/SmolVLM2-256M-Video-Instruct --weight-format int8 smolvlm_int8/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-option-2-static-quantization"&gt;🔧 Option 2: Static Quantization
+&lt;/h2&gt;&lt;p&gt;With Static Quantization, both weights and activations are quantized before inference. To
+achieve the best estimate for the activation quantization parameters, we perform a calibration
+step. During this step, a small representative dataset is fed through the model. In our case, we
+will use 50 samples of the &lt;strong&gt;contextual dataset&lt;/strong&gt; and will apply static quantization on the
+vision encoder while weight-only quantization will be applied on the rest of the model.
+Experiments show that applying static quantization on the vision encoder provides a noticeable
+performance improvement without significant accuracy degradation.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;optimum.intel&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OVModelForVisualCausalLM&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;OVPipelineQuantizationConfig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;OVQuantizationConfig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;OVWeightQuantizationConfig&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;q_config&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OVPipelineQuantizationConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;quantization_configs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;lm_model&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;OVWeightQuantizationConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bits&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;text_embeddings_model&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;OVWeightQuantizationConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bits&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;vision_embeddings_model&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;OVQuantizationConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bits&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;dataset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;dataset&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;num_samples&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;num_samples&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;q_model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OVModelForVisualCausalLM&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quantization_config&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;q_config&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;q_model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;smolvlm_static_int8&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Quantizing activations adds small errors that can build up and affect accuracy, so careful
+testing afterward is important. More information and examples can be found in &lt;strong&gt;our documentation&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="-step-3-run-inference"&gt;🚀 Step 3: Run Inference
+&lt;/h3&gt;&lt;p&gt;You can now run inference with your quantized model:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;generated_ids&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;q_model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;inputs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_new_tokens&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;generated_texts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;processor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;batch_decode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;generated_ids&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;skip_special_tokens&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;generated_texts&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;If you have a recent Intel laptop, Intel AI PC, or Intel discrete GPU, you can load the model on
+GPU by adding &lt;code&gt;device=&amp;quot;gpu&amp;quot;&lt;/code&gt; when loading your model:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OVModelForVisualCausalLM&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;model_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;gpu&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;We also &lt;strong&gt;created a space&lt;/strong&gt; so you can play with the &lt;strong&gt;original model&lt;/strong&gt; and its quantized
+variants obtained by respectively applying &lt;strong&gt;weight-only quantization&lt;/strong&gt; and &lt;strong&gt;mixed
+quantization&lt;/strong&gt;. This demo runs on 4th Generation Intel Xeon (Sapphire Rapids) processors.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/OpenVINO/documentation/resolve/main/blog/openvino_vlm/chat1.png"
+loading="lazy"
+alt="HF Space"
+&gt;
+&lt;em&gt;Interactive demo space showing the VLM in action&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;To reproduce our results, check out our &lt;strong&gt;notebook&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="-evaluation-and-conclusion"&gt;📊 Evaluation and Conclusion
+&lt;/h2&gt;&lt;p&gt;We ran a benchmark to compare the performance of the &lt;strong&gt;PyTorch&lt;/strong&gt;, &lt;strong&gt;OpenVINO&lt;/strong&gt;, and &lt;strong&gt;OpenVINO
+8-bit WOQ&lt;/strong&gt; versions of the original model. The goal was to evaluate the impact of weight-only
+quantization on latency and throughput on Intel CPU hardware. For this test, we used &lt;strong&gt;a single image&lt;/strong&gt; as input.&lt;/p&gt;
+&lt;p&gt;We measured the following metrics to evaluate the model&amp;rsquo;s performance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Time To First Token (TTFT)&lt;/strong&gt;: Time it takes to generate the first output token&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time Per Output Token (TPOT)&lt;/strong&gt;: Time it takes to generate each subsequent output tokens&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;End-to-End Latency&lt;/strong&gt;: Total time it takes to generate the output all output tokens&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Decoding Throughput&lt;/strong&gt;: Number of tokens per second the model generates during the decoding
+phase&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here are the results on Intel CPU:&lt;/p&gt;
+&lt;p&gt;| Configuration | Time To First Token (TTFT) | Time Per Output Token (TPOT) | End-to-End Latency&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Decoding Throughput&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;pytorch&lt;/td&gt;
+&lt;td&gt;5.150&lt;/td&gt;
+&lt;td&gt;1.385&lt;/td&gt;
+&lt;td&gt;25.927&lt;/td&gt;
+&lt;td&gt;0.722&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;openvino&lt;/td&gt;
+&lt;td&gt;0.420&lt;/td&gt;
+&lt;td&gt;0.021&lt;/td&gt;
+&lt;td&gt;0.738&lt;/td&gt;
+&lt;td&gt;47.237&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;openvino-8bit-woq&lt;/td&gt;
+&lt;td&gt;0.247&lt;/td&gt;
+&lt;td&gt;0.016&lt;/td&gt;
+&lt;td&gt;0.482&lt;/td&gt;
+&lt;td&gt;63.928&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;This benchmark demonstrates how small, optimized multimodal models, like &lt;strong&gt;SmolVLM2-256M&lt;/strong&gt;,
+perform on Intel CPUs across different configurations. According to the tests, the PyTorch
+version shows high latency, with a time to first token (TTFT) of over 5s with a decoding
+throughput of 0.7 tokens/s. Simply converting the model with Optimum and running it on OpenVINO
+drastically reduces the time to first token (TTFT) to 0.42s (&lt;strong&gt;x12&lt;/strong&gt; speedup) and raises
+throughput to 47 tokens/s (&lt;strong&gt;x65&lt;/strong&gt;). Applying 8-bit weight-only quantization further reduces
+TTFT (&lt;strong&gt;x1.7&lt;/strong&gt;) and increases throughput (&lt;strong&gt;x1.4&lt;/strong&gt;), while also reducing model size and improving efficiency.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Platform configuration&lt;/strong&gt; Platform Configuration for performance claims above:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;System Board:&lt;/strong&gt; MSI B860M GAMING PLUS WIFI (MS-7E42)
+&lt;strong&gt;CPU:&lt;/strong&gt; Intel® Core™ Ultra 7 265K &amp;gt; &lt;strong&gt;Sockets/Physical Cores:&lt;/strong&gt; 1/20 (20 threads)
+&lt;strong&gt;HyperThreading/Turbo Settings:&lt;/strong&gt; Disabled &amp;gt; &lt;strong&gt;Memory:&lt;/strong&gt; 64 GB DDR5 @ 6400 MHz
+&lt;strong&gt;TDP:&lt;/strong&gt; 665W &amp;gt; &lt;strong&gt;BIOS:&lt;/strong&gt; American Megatrends International, LLC. 2.A10
+&lt;strong&gt;BIOS Release Date:&lt;/strong&gt; 28.11.2024 &amp;gt; &lt;strong&gt;OS:&lt;/strong&gt; Ubuntu 24.10
+&lt;strong&gt;Kernel:&lt;/strong&gt; 6.11.0–25-generic &amp;gt; &lt;strong&gt;OpenVINO Version:&lt;/strong&gt; 2025.2.0
+&lt;strong&gt;torch:&lt;/strong&gt; 2.8.0 &amp;gt; &lt;strong&gt;torchvision:&lt;/strong&gt; 0.23.0+cpu
+&lt;strong&gt;optimum-intel:&lt;/strong&gt; 1.25.2 &amp;gt; &lt;strong&gt;transformers:&lt;/strong&gt; 4.53.3
+&lt;strong&gt;Benchmark Date:&lt;/strong&gt; 15.05.2025
+&lt;strong&gt;Benchmarked by:&lt;/strong&gt; Intel Corporation Performance may vary by use, configuration, and other
+factors. See the platform configuration below.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-useful-links--resources"&gt;🔗 Useful Links &amp;amp; Resources
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Notebook&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Try our Space&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Watch the webinar recording&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Optimum Intel Documentation&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/openvino-vlm" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/openvino-vlm&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;This tutorial demonstrates how to deploy Vision Language Models efficiently on Intel CPUs using
+just three simple steps. By leveraging Optimum Intel and OpenVINO, developers can achieve
+significant performance improvements - up to &lt;strong&gt;65x throughput increase&lt;/strong&gt; and &lt;strong&gt;12x faster
+time-to-first-token&lt;/strong&gt; compared to vanilla PyTorch implementations. The quantization techniques,
+particularly weight-only quantization, provide an excellent balance between performance gains
+and model accuracy preservation.&lt;/p&gt;
+&lt;p&gt;The results showcase that advanced AI capabilities are no longer limited to expensive GPU
+setups. With proper optimization, Intel CPUs can deliver impressive performance for VLM
+inference, making AI more accessible while maintaining privacy and reducing dependencies on
+external services.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re building applications for edge deployment, developing privacy-focused solutions,
+or simply want to run VLMs locally without expensive hardware, this approach provides a
+practical path forward with proven performance benefits.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#INTEL #OPENVINO #VLM #QUANTIZATION #OPTIMIZATION #CPU #AI #MACHINELEARNING #COMPUTERVISION&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

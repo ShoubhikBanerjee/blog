@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPU Architecture on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/gpu-architecture/</link><description>Recent content in GPU Architecture on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Oct 2026 22:07:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/gpu-architecture/index.xml" rel="self" type="application/rss+xml"/><item><title>Fused MoE Kernel Optimizes Decode Performance on NVIDIA Hopper GPUs</title><link>https://shoubhikbanerjee.github.io/blog/p/fused-moe-kernel-optimizes-decode-performance-on-nvidia-hopper-gpus/</link><pubDate>Tue, 13 Oct 2026 22:07:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/fused-moe-kernel-optimizes-decode-performance-on-nvidia-hopper-gpus/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/08/ML-22058-featured-image.png" alt="Featured image of post Fused MoE Kernel Optimizes Decode Performance on NVIDIA Hopper GPUs" /&gt;&lt;h1 id="fused-moe-kernel-optimizes-decode-performance-on-nvidia-hopper-gpus"&gt;Fused MoE Kernel Optimizes Decode Performance on NVIDIA Hopper GPUs
+&lt;/h1&gt;&lt;p&gt;Mixture‑of‑Experts (MoE) models boost LLM capacity while keeping per‑token compute low, but the decode phase suffers from high latency because the underlying GPU kernels are inefficient.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;MoE is a sparsely‑activated architecture that scales large language model capacity while keeping per‑token compute low.&lt;/li&gt;
+&lt;li&gt;MoE operations make up a large share of total compute time, so inefficiencies directly raise request latency and cost.&lt;/li&gt;
+&lt;li&gt;Optimizing MoE operations through kernel engineering offers the largest opportunity for performance gains.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-moe-and-fused-kernels-work"&gt;🧩 How MoE and Fused Kernels Work
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Fused MoE&lt;/strong&gt; merges token routing, data shuffling, and specialized network calculations into a single batched GPU operation, replacing separate sequential loop operations.&lt;/li&gt;
+&lt;li&gt;This fusion provides latency advantages but adds complexity to kernel implementation and debugging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-hopper-wgmma-constraints"&gt;⚙️ Hopper WGMMA Constraints
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;NVIDIA Hopper uses the Warp Group Matrix Multiply‑Accumulate (WGMMA) instruction, executed across a cooperative warp‑group of 128 threads.&lt;/li&gt;
+&lt;li&gt;In the &lt;code&gt;wgmma.mma_async&lt;/code&gt; definition, the hardware fixes the matrix row dimension &lt;strong&gt;M&lt;/strong&gt; to 64, defining the thread‑mapping topology.&lt;/li&gt;
+&lt;li&gt;Operand &lt;strong&gt;A&lt;/strong&gt; must occupy this fixed &lt;strong&gt;M = 64&lt;/strong&gt; dimension (using registers or shared memory); Operand &lt;strong&gt;B&lt;/strong&gt; occupies the variable &lt;strong&gt;N&lt;/strong&gt; dimension via a shared‑memory descriptor.&lt;/li&gt;
+&lt;li&gt;The operand slots are structurally non‑interchangeable, and peak tile utilization requires &lt;strong&gt;M ≥ 64&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The hardware enforces a minimum layout shape for the leading dimension of the first operand, locking the block height to exactly 64 rows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="table-operand-mapping-on-hopper-wgmma"&gt;Table: Operand Mapping on Hopper WGMMA
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Operand&lt;/th&gt;
+&lt;th&gt;Fixed/Variable Dimension&lt;/th&gt;
+&lt;th&gt;Mapping Requirement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A&lt;/td&gt;
+&lt;td&gt;Fixed &lt;strong&gt;M = 64&lt;/strong&gt; rows&lt;/td&gt;
+&lt;td&gt;Must fill a 64‑row layout bucket&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;B&lt;/td&gt;
+&lt;td&gt;Variable &lt;strong&gt;N&lt;/strong&gt; dimension&lt;/td&gt;
+&lt;td&gt;Can be large (e.g., 8192)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-decoding-bottleneck-and-the-flip-technique"&gt;📈 Decoding Bottleneck and the Flip Technique
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Decode processes a single token per user sequence, yielding a thin batch dimension &lt;strong&gt;M&lt;/strong&gt; (often &lt;strong&gt;M &amp;lt; 64&lt;/strong&gt;, sometimes &lt;strong&gt;M = 1&lt;/strong&gt;).&lt;/li&gt;
+&lt;li&gt;Matrix &lt;strong&gt;A&lt;/strong&gt; becomes a thin vector (e.g., 1 × 4096), while matrix &lt;strong&gt;B&lt;/strong&gt; (expert weights) remains a large dense block (e.g., 4096 × 8192).&lt;/li&gt;
+&lt;li&gt;Because &lt;strong&gt;M&lt;/strong&gt; is tiny, &lt;strong&gt;A&lt;/strong&gt; cannot fill the hardware’s 64‑row layout, leaving many Tensor Core lanes idle and causing poor utilization.&lt;/li&gt;
+&lt;li&gt;MoE layers fracture the workload across many experts, making them especially sensitive to these constraints.&lt;/li&gt;
+&lt;li&gt;For a &lt;code&gt;topk=8&lt;/code&gt; routine, the effective &lt;strong&gt;N&lt;/strong&gt; dimension inside the fused kernel expands to tens or hundreds of thousands of parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flipping the multiplication&lt;/strong&gt; (transposing the matrices before PTX assembly) moves the large expert dimension &lt;strong&gt;N = 8192&lt;/strong&gt; into the first operand position, satisfying the mandatory 64‑row requirement and unlocking hardware prefetching.&lt;/li&gt;
+&lt;li&gt;This re‑alignment matches the exact topography of Hopper silicon, allowing the expansive &lt;strong&gt;N&lt;/strong&gt; dimension to flood the required rows and dramatically improve hardware utilization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By addressing the structural asymmetry of Hopper’s WGMMA instruction, the fused MoE kernel reduces decode latency.&lt;/li&gt;
+&lt;li&gt;Better utilization of Tensor Core capacity lowers the compute cost of serving MoE‑based LLMs.&lt;/li&gt;
+&lt;li&gt;The technique enables MoE models to retain their capacity‑scaling benefits without incurring prohibitive inference overhead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#MixtureOfExperts #HopperGPU #KernelOptimization #LLMInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/mixture-of-experts-kernel-engineering-on-amazon-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Mixture-of-Experts kernel engineering on Amazon SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Releases CUDA Toolkit 13.4 with Windows on Arm and Rubin GPU Support</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cuda-toolkit-13-4-with-windows-on-arm-and-rubin-gpu-support/</link><pubDate>Thu, 10 Sep 2026 22:04:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cuda-toolkit-13-4-with-windows-on-arm-and-rubin-gpu-support/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/cuda-python-660x370.png" alt="Featured image of post NVIDIA Releases CUDA Toolkit 13.4 with Windows on Arm and Rubin GPU Support" /&gt;&lt;h1 id="nvidia-releases-cuda-toolkit-134-with-windows-on-arm-and-rubin-gpu-support"&gt;NVIDIA Releases CUDA Toolkit 13.4 with Windows on Arm and Rubin GPU Support
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released CUDA Toolkit 13.4, introducing support for Windows on Arm and early developer preview support for the next-generation Rubin GPU architecture. This update focuses on enhancing GPU management, improving data transport across NVLink fabric, and expanding memory management capabilities for high-performance computing.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;CUDA applications, which have long been supported on Arm platforms through Linux, can now be developed for the Windows on Arm platform. The release also adds functional support for the NVIDIA Rubin architecture (compute capability 107) as a preview, allowing developers to begin porting applications before general availability. Rubin is identified as the next-generation architecture powering agentic AI.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multi-process Server (MPS) V3:&lt;/strong&gt; Features a modernized control layer with a scriptable CLI, named server instances, and namespaces to organize concurrent workloads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CUDA Compute Fabric Transport (CFT):&lt;/strong&gt; A transport-centric method for moving data across NVLink fabric at scale using logical endpoints instead of virtual address mapping.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Locality Domains:&lt;/strong&gt; Exposes programmatic access to specific portions of a GPU containing streaming multiprocessors (SMs) and device memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Management:&lt;/strong&gt; The driver now defaults to Coherent Driver-based Memory Management (CDMM) on coherent platforms such as NVIDIA Grace Hopper, Grace Blackwell, and Vera Rubin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Installer Changes:&lt;/strong&gt; CUDA SDK installers no longer bundle the NVIDIA driver; the &lt;code&gt;nvidia-open&lt;/code&gt; driver or &lt;code&gt;cuda-toolkit&lt;/code&gt; packages must be installed separately.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Functionality&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;MPS V3&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides TOML configuration support, SM partition controls, and cgroup-integrated GPU memory limits for precise partitioning.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CFT&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supports asynchronous put, get, and reduction operations directly from the GPU; reports completion and error status for fabric transfers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;SM_107&lt;/td&gt;
+&lt;td style="text-align: left"&gt;New architecture target enabling compilation for Rubin GPUs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CUDA Python 1.1.0&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Expands the stable API with texture and surface programming and improved CUDA graph integration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Locality Domains&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Allows applications to allocate device memory and create green contexts with SM resources in the same domain.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Functional support for the NVIDIA Rubin architecture is currently in preview. CUDA Compute Fabric Transport is available exclusively through the CUDA Driver API and is intended for developers of communication libraries. Host compiler compatibility for this release has been extended to include GCC 16 and Clang 22.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;MPS V3 ensures that GPU resources can be maximized in containerized environments while maintaining strict resource isolation for every process. Additionally, the new CFT approach reduces virtual-address pressure in large multi-GPU systems, supporting both unicast and multicast communication patterns for advanced applications.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/cuda-python-1024x576.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/Agentic-AI-Qwen-660x370.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2021/06/CUDA-toolkit-featured.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#CUDA #NVIDIA #WindowsOnArm #Rubin #GPU&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/cuda-toolkit-13-4-adds-windows-on-arm-support-and-greater-control-over-shared-gpus/" target="_blank" rel="noopener"
+&gt;CUDA Toolkit 13.4 Adds Windows on Arm Support and Greater Control over Shared GPUs | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

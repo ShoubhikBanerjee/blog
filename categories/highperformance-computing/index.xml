@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>High‑Performance Computing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/highperformance-computing/</link><description>Recent content in High‑Performance Computing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 07 Oct 2026 22:09:50 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/highperformance-computing/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA launches cuOpt mPDLP, a multi‑GPU solver that speeds large LPs up to 10×</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-launches-cuopt-mpdlp-a-multigpu-solver-that-speeds-large-lps-up-to-10/</link><pubDate>Wed, 07 Oct 2026 22:09:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-launches-cuopt-mpdlp-a-multigpu-solver-that-speeds-large-lps-up-to-10/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/geometric-structure-1-660x370.jpg" alt="Featured image of post NVIDIA launches cuOpt mPDLP, a multi‑GPU solver that speeds large LPs up to 10×" /&gt;&lt;h1 id="nvidia-launches-cuopt-mpdlp-a-multigpu-solver-that-speeds-large-lps-up-to-10"&gt;NVIDIA launches cuOpt mPDLP, a multi‑GPU solver that speeds large LPs up to 10×
+&lt;/h1&gt;&lt;p&gt;Supply‑chain networks and modern energy grids are becoming more complex, stretching existing planning tools. To keep pace, teams must evaluate larger models and cope with higher uncertainty within practical planning windows, but today’s biggest problems often take hours to converge or exceed the memory of a single GPU, creating a bottleneck for business‑critical workflows.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Supply‑chain problems are expanding across more SKUs, lanes, and constraints than ever before.&lt;/li&gt;
+&lt;li&gt;Energy grids are balancing more distributed sources in real time.&lt;/li&gt;
+&lt;li&gt;GPU‑accelerated decision optimization already delivers &amp;gt;10× speedup over CPU solvers for large‑scale linear programming (LP) problems.&lt;/li&gt;
+&lt;li&gt;The new cuOpt Multi‑GPU Primal‑Dual hybrid gradient for Linear Programming (mPDLP) solver pushes the limits further by solving the benchmark zib03 on multiple GPUs with a solve rate nearly 10× faster than a year before.&lt;/li&gt;
+&lt;li&gt;Partner applications include Kinaxis (globally constrained supply and production planning) and PSR (large‑scale energy‑system capacity‑expansion models).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Primal‑Dual hybrid gradient (PDLP)&lt;/strong&gt;: a first‑order, gradient‑descent‑like method that is highly parallelizable and GPU‑friendly.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hot loop&lt;/strong&gt;: Sparse Matrix‑Vector Multiplication (SpMV) followed by several map operations. All map operations are trivial to distribute across GPUs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Distributed challenge&lt;/strong&gt;: SpMV is memory‑bound; increasing bandwidth directly speeds the operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bandwidth solutions&lt;/strong&gt;: either wait for the next GPU generation or add more GPUs, multiplying total bandwidth.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi‑GPU distribution&lt;/strong&gt;:
+&lt;ol&gt;
+&lt;li&gt;Reorder the matrix to improve load balancing.&lt;/li&gt;
+&lt;li&gt;Partition the matrix into sub‑blocks along rows and columns.&lt;/li&gt;
+&lt;li&gt;Perform an SpMV on each sub‑block, then sum partial results to reconstruct the full output.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;This approach builds on earlier D‑PDLP work and demonstrates the potential of multi‑GPU acceleration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: &amp;gt;10× speedup over CPU solvers on a single GPU; mPDLP is ~10× faster than the prior single‑GPU cuOpt version.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scale&lt;/strong&gt;: Handles the zib03 benchmark (over 104 million non‑zeros) that many solvers cannot fit in a single GPU’s memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware stack&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NVLink&lt;/strong&gt; – fast point‑to‑point GPU‑GPU data exchange.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NVSwitch&lt;/strong&gt; – orchestrates communication among many GPUs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Software stack&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NCCL&lt;/strong&gt; – C/C++ library for GPU‑direct point‑to‑point and collective operations (AllReduce, AllGather, Broadcast) that leverage NVLink/NVSwitch.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Result&lt;/strong&gt;: With NVLink, NVSwitch, and NCCL, multiple GPUs behave as one high‑bandwidth shared machine, keeping data on the GPU and allowing the algorithm to scale without CPU involvement.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NVLink&lt;/td&gt;
+&lt;td&gt;Fast, optimized GPU‑to‑GPU data exchange&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NVSwitch&lt;/td&gt;
+&lt;td&gt;Efficiently orchestrates communication among several GPUs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NCCL&lt;/td&gt;
+&lt;td&gt;Provides GPU‑direct point‑to‑point and collective operations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The mPDLP solver is now part of the NVIDIA cuOpt portfolio and can be deployed on systems equipped with NVLink/NVSwitch‑enabled GPUs.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Figures illustrating solve‑time improvements and benchmark performance are available in the image list.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/progression-solve-times-zib03.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/wall-clock-speedup-comparison-cuopt-mpdlp-versus-single-gpu-cuopt.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/performance-comparison-cuopt-mpdlp-d-pdlp-benchmark-datasets.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#LinearProgramming #GPUComputing #SupplyChain #EnergySystems&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/scaling-decision-optimization-to-100-million-variables-and-beyond-with-mpdlp-in-nvidia-cuopt/" target="_blank" rel="noopener"
+&gt;Scaling Decision Optimization to 100 Million Variables and Beyond with mPDLP in NVIDIA cuOpt | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Parallel Computing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/parallel-computing/</link><description>Recent content in Parallel Computing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 06 Oct 2026 22:08:14 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/parallel-computing/index.xml" rel="self" type="application/rss+xml"/><item><title>CUDA Runtime Gains Green Context Support for Explicit GPU Resource Partitioning</title><link>https://shoubhikbanerjee.github.io/blog/p/cuda-runtime-gains-green-context-support-for-explicit-gpu-resource-partitioning/</link><pubDate>Tue, 06 Oct 2026 22:08:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/cuda-runtime-gains-green-context-support-for-explicit-gpu-resource-partitioning/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image1-3-660x370.png" alt="Featured image of post CUDA Runtime Gains Green Context Support for Explicit GPU Resource Partitioning" /&gt;&lt;h1 id="cuda-runtime-gains-green-context-support-for-explicit-gpu-resource-partitioning"&gt;CUDA Runtime Gains Green Context Support for Explicit GPU Resource Partitioning
+&lt;/h1&gt;&lt;p&gt;Multiple independent components – latency‑sensitive kernels, background throughput work, data‑preprocessing, or workflow stages – now often share a single GPU process. Controlling how GPU resources are shared between them remains difficult; components can interfere unpredictably and existing tools offer limited ability to partition resources.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Green contexts let applications explicitly select a subset of GPU execution resources and target work to those resources directly. This addresses the shortcomings of traditional CUDA contexts, which are heavyweight, incur hardware context‑switch overhead, and were designed for a era when a single dominant workload typically occupied the GPU.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SM partitioning&lt;/strong&gt; – Assign a specific subset of Streaming Multiprocessors (SMs) to a green context; work submitted through that context runs only on those SMs, enabling concurrent workloads without competing for the same compute units.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work‑queue provisioning&lt;/strong&gt; – Explicitly allocate workqueues to a green context, avoiding unintended serialization when independent stream‑ordered workloads would otherwise map to the same underlying workqueues.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lightweight creation&lt;/strong&gt; – Green contexts are cheap to create and destroy and do not implicitly synchronize unrelated GPU work.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Explicit programming model&lt;/strong&gt; – Applications target work to a chosen green context rather than relying on implicit/current device state.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Availability (Driver API)&lt;/td&gt;
+&lt;td&gt;Green contexts have been available since NVIDIA CUDA 12.4.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Availability (Runtime API)&lt;/td&gt;
+&lt;td&gt;Starting with CUDA 13.1, they are accessible through the Runtime API.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Runtime type&lt;/td&gt;
+&lt;td&gt;Represented by &lt;code&gt;cudaExecutionContext_t&lt;/code&gt;, a Runtime abstraction for CUDA contexts.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Creation API&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;cudaGreenCtxCreate()&lt;/code&gt; returns a handle that can be passed to &lt;code&gt;cudaExecutionCtxStreamCreate()&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stream creation&lt;/td&gt;
+&lt;td&gt;Streams are created from the green context; work submitted to those streams uses the context’s resources.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Full‑device fallback&lt;/td&gt;
+&lt;td&gt;Applications can still use the traditional Runtime model or obtain the device‑wide context with &lt;code&gt;cudaDeviceGetExecutionCtx()&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Minimal code impact&lt;/td&gt;
+&lt;td&gt;Code changes are minimal; the mental model becomes clearer by explicitly choosing a green context.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Driver API&lt;/strong&gt; – green contexts have been supported since CUDA 12.4.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Runtime API&lt;/strong&gt; – support added in CUDA 13.1, enabling applications to define resource partitions without leaving the Runtime layer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;GPU workloads often need a small, latency‑sensitive kernel to coexist with a larger, throughput‑oriented worker (e.g., communication/GEMM overlap in distributed training, or latency‑sensitive operators in AI sensor platforms like NVIDIA Holoscan). While CUDA stream priority is a standard tool for prioritizing such critical work, green contexts provide a more robust mechanism: by partitioning SMs and provisioning dedicated workqueues, applications can reduce interference, express expected concurrency, and keep latency‑sensitive kernels from being delayed by background work.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2024/04/gpu-occupancy-workloads-featured-960x540.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2020/12/CUDA_3x2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image4-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#CUDA #GPU #GreenContexts #ParallelComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/control-how-your-gpu-shares-work-with-green-contexts/" target="_blank" rel="noopener"
+&gt;Control How Your GPU Shares Work with Green Contexts | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Releases CUDA Toolkit 13.4 with Windows on Arm and Rubin GPU Support</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cuda-toolkit-13-4-with-windows-on-arm-and-rubin-gpu-support/</link><pubDate>Thu, 10 Sep 2026 22:04:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cuda-toolkit-13-4-with-windows-on-arm-and-rubin-gpu-support/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/cuda-python-660x370.png" alt="Featured image of post NVIDIA Releases CUDA Toolkit 13.4 with Windows on Arm and Rubin GPU Support" /&gt;&lt;h1 id="nvidia-releases-cuda-toolkit-134-with-windows-on-arm-and-rubin-gpu-support"&gt;NVIDIA Releases CUDA Toolkit 13.4 with Windows on Arm and Rubin GPU Support
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released CUDA Toolkit 13.4, introducing support for Windows on Arm and early developer preview support for the next-generation Rubin GPU architecture. This update focuses on enhancing GPU management, improving data transport across NVLink fabric, and expanding memory management capabilities for high-performance computing.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;CUDA applications, which have long been supported on Arm platforms through Linux, can now be developed for the Windows on Arm platform. The release also adds functional support for the NVIDIA Rubin architecture (compute capability 107) as a preview, allowing developers to begin porting applications before general availability. Rubin is identified as the next-generation architecture powering agentic AI.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multi-process Server (MPS) V3:&lt;/strong&gt; Features a modernized control layer with a scriptable CLI, named server instances, and namespaces to organize concurrent workloads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CUDA Compute Fabric Transport (CFT):&lt;/strong&gt; A transport-centric method for moving data across NVLink fabric at scale using logical endpoints instead of virtual address mapping.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Locality Domains:&lt;/strong&gt; Exposes programmatic access to specific portions of a GPU containing streaming multiprocessors (SMs) and device memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Management:&lt;/strong&gt; The driver now defaults to Coherent Driver-based Memory Management (CDMM) on coherent platforms such as NVIDIA Grace Hopper, Grace Blackwell, and Vera Rubin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Installer Changes:&lt;/strong&gt; CUDA SDK installers no longer bundle the NVIDIA driver; the &lt;code&gt;nvidia-open&lt;/code&gt; driver or &lt;code&gt;cuda-toolkit&lt;/code&gt; packages must be installed separately.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Functionality&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;MPS V3&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides TOML configuration support, SM partition controls, and cgroup-integrated GPU memory limits for precise partitioning.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CFT&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supports asynchronous put, get, and reduction operations directly from the GPU; reports completion and error status for fabric transfers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;SM_107&lt;/td&gt;
+&lt;td style="text-align: left"&gt;New architecture target enabling compilation for Rubin GPUs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CUDA Python 1.1.0&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Expands the stable API with texture and surface programming and improved CUDA graph integration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Locality Domains&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Allows applications to allocate device memory and create green contexts with SM resources in the same domain.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Functional support for the NVIDIA Rubin architecture is currently in preview. CUDA Compute Fabric Transport is available exclusively through the CUDA Driver API and is intended for developers of communication libraries. Host compiler compatibility for this release has been extended to include GCC 16 and Clang 22.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;MPS V3 ensures that GPU resources can be maximized in containerized environments while maintaining strict resource isolation for every process. Additionally, the new CFT approach reduces virtual-address pressure in large multi-GPU systems, supporting both unicast and multicast communication patterns for advanced applications.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/cuda-python-1024x576.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/Agentic-AI-Qwen-660x370.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2021/06/CUDA-toolkit-featured.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#CUDA #NVIDIA #WindowsOnArm #Rubin #GPU&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/cuda-toolkit-13-4-adds-windows-on-arm-support-and-greater-control-over-shared-gpus/" target="_blank" rel="noopener"
+&gt;CUDA Toolkit 13.4 Adds Windows on Arm Support and Greater Control over Shared GPUs | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

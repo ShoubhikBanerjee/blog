@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Computer Systems on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/computer-systems/</link><description>Recent content in Computer Systems on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 08 Oct 2026 22:04:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/computer-systems/index.xml" rel="self" type="application/rss+xml"/><item><title>KVFetch adds temporal recall channel to improve KV‑cache compression</title><link>https://shoubhikbanerjee.github.io/blog/p/kvfetch-adds-temporal-recall-channel-to-improve-kvcache-compression/</link><pubDate>Thu, 08 Oct 2026 22:04:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/kvfetch-adds-temporal-recall-channel-to-improve-kvcache-compression/</guid><description>&lt;h1 id="kvfetch-adds-temporal-recall-channel-to-improve-kvcache-compression"&gt;KVFetch adds temporal recall channel to improve KV‑cache compression
+&lt;/h1&gt;&lt;p&gt;KVFetch: Temporal Prefetching for the Missing Half of KV Cache Compression was submitted on 23 Sep 2026. It introduces a new mechanism to address a key limitation of current KV‑cache compressors used during long‑context LLM inference.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;As context windows grow to tens or hundreds of thousands of tokens, KV‑cache compression becomes essential for efficient inference.&lt;/li&gt;
+&lt;li&gt;Existing compressors belong to three families: score‑based eviction, summary compensation, and offload‑and‑recall.&lt;/li&gt;
+&lt;li&gt;All three decide what to keep or recall solely by content relevance to the current query.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-problem-with-existing-kvcache-compressors"&gt;⚙️ Problem with existing KV‑cache compressors
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A cache supports two access modes: &lt;strong&gt;associative lookup by content&lt;/strong&gt; and &lt;strong&gt;sequential traversal by position&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Current compressors implement only the associative (content‑based) mode.&lt;/li&gt;
+&lt;li&gt;This omission matters for tasks such as retrieval‑augmented generation, code completion, and structured‑data extraction, which need verbatim reproduction of identifiers, field values, or code tokens.&lt;/li&gt;
+&lt;li&gt;Under compression, content‑based eviction keeps the head of a sequence but discards its continuation, causing &amp;ldquo;sequential forgetting&amp;rdquo; – a failure that persists despite better scoring, larger budgets, summary compensation, or dynamic re‑scoring.&lt;/li&gt;
+&lt;li&gt;Sequential forgetting is identified as the dominant source of remaining quality loss under compression.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-kvfetch-design"&gt;🛠️ KVFetch design
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;KVFetch is a &lt;strong&gt;training‑free, drop‑in framework&lt;/strong&gt; that adds a &lt;strong&gt;temporal recall channel&lt;/strong&gt; to any score‑based compressor.&lt;/li&gt;
+&lt;li&gt;It &lt;strong&gt;demotes evicted candidates to a quantized cold tier&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;It &lt;strong&gt;detects active copying&lt;/strong&gt; through a &lt;strong&gt;monotone read pointer&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;It &lt;strong&gt;prefetches positional successors&lt;/strong&gt; into fixed‑size hot‑tier slots &lt;strong&gt;without increasing attention cost&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Evaluation on &lt;strong&gt;RULER‑16K&lt;/strong&gt; under an iso‑budget control shows:
+&lt;ul&gt;
+&lt;li&gt;Verbatim copying recovery improves from &lt;strong&gt;0.8 % to 78.4 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The 13‑task average score rises by &lt;strong&gt;+8.4&lt;/strong&gt; points, with gains concentrated on tasks requiring sequential access.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;On &lt;strong&gt;LongBench&lt;/strong&gt;, where no task requires sequential access, the temporal channel stays dormant and imposes no cost.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;KVFetch is presented as a &lt;strong&gt;drop‑in framework&lt;/strong&gt;, implying it can be incorporated into existing score‑based compressors without additional training.&lt;/li&gt;
+&lt;li&gt;The work is hosted on arXiv Labs, a platform that encourages community collaboration and upholds values of openness, community, excellence, and user data privacy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;The story is based on the arXiv preprint titled “KVFetch: Temporal Prefetching for the Missing Half of KV Cache Compression.”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#KVCache #LLMInference #Compression&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.08811v1" target="_blank" rel="noopener"
+&gt;KVFetch: Temporal Prefetching for the Missing Half of KV Cache Compression&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.08820v1" target="_blank" rel="noopener"
+&gt;Task-Oriented Key-Layer KV Communication for Efficient Latent Multi-Agent Collaboration&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.09003v1" target="_blank" rel="noopener"
+&gt;Algorithmic Scratchpads and Curriculum Staging for Arithmetic Reasoning in Tiny Transformers&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.09025v1" target="_blank" rel="noopener"
+&gt;SPIN: Shadow Predictive Indexer for Sparse Attention&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.09051v1" target="_blank" rel="noopener"
+&gt;A Self-Pruning Transformer: Extreme KV-Cache Compression with Universal Attention&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.08858v1" target="_blank" rel="noopener"
+&gt;LRCC: Generalizing Low-Rank Compression with Conditional Computation&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.09346v1" target="_blank" rel="noopener"
+&gt;OnlineQAT: On-Policy Distillation for Ultra-Low-Bit Large Language Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

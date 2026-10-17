@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cosmos3 on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cosmos3/</link><description>Recent content in Cosmos3 on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 04 Sep 2026 22:05:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cosmos3/index.xml" rel="self" type="application/rss+xml"/><item><title>Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker</title><link>https://shoubhikbanerjee.github.io/blog/p/building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-featured-image.png" alt="Featured image of post Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker" /&gt;&lt;h1 id="building-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-amazon-sagemaker"&gt;Building a Physical AI Model Factory with NVIDIA Cosmos 3 on Amazon SageMaker
+&lt;/h1&gt;&lt;p&gt;Developing a Physical AI system, such as a robot or autonomous vehicle (AV) that translates real-world data into physical actions, cannot be achieved in a single training job. Instead, it requires a continuous pipeline that generates synthetic data, performs post-training on perception and policy models so the system can understand its surroundings and act, and evaluates both in a closed-loop simulation. A Physical AI model factory continuously runs this loop to turn streams of real-world data into improved models.&lt;/p&gt;
+&lt;p&gt;This development outlines how to build a Physical AI model factory using NVIDIA Cosmos 3 on Amazon SageMaker HyperPod with Amazon Elastic Kubernetes Service (Amazon EKS).&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NVIDIA Cosmos 3 is an open omnimodal world foundation model that treats video, image, action, and sound as a single token stream. Unlike common patterns that pair a diffusion-transformer video generator with a separate vision-language model for text conditioning, Cosmos 3 integrates both capabilities into a single trunk at every layer.&lt;/p&gt;
+&lt;p&gt;Key architectural aspects of Cosmos 3 include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mixture-of-Transformers (MoT) Design:&lt;/strong&gt; Features per-layer joint attention and a deliberate train-versus-inference asymmetry.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single Shared Sequence:&lt;/strong&gt; Every modality feeds into a single shared sequence, enabling one model to both read and generate across different modalities.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sequential Processing:&lt;/strong&gt; The model sequence positions an autoregressive (AR) zone (for the text and vision it reads) ahead of a diffusion zone (for the video, audio, and action it produces).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Cosmos 3 runs the same transformer trunk in three distinct modes and processes input modalities with specialized encoders:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component / Mode&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function / Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Forward-dynamics world model&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used for synthetic video generation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Inverse-dynamics action labeler&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used for labeling actions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Deployable action policy&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Acts as the final policy for system deployment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Vision Transformer (ViT)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles image understanding for the images the model reads&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Frozen Wan2.2 video VAE&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles pixel generation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Per-embodiment vector&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Encodes pose deltas and grasp state, allowing the same model to drive both an AV and a robot arm&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Because one model family covers generation, post-training, and evaluation, separate GPU capacity for each stage is unnecessary. Instead of provisioning isolated nodes for each stage, these workloads are scheduled onto a single persistent, resilient GPU node pool under a single cluster control plane using time-shared capacity.&lt;/p&gt;
+&lt;h3 id="capacity-and-cost-metrics"&gt;Capacity and Cost Metrics
+&lt;/h3&gt;&lt;p&gt;Running a continuous pipeline requires a committed capacity plan. Acquiring GPUs stage by stage introduces availability and lead-time variability, and risks landing capacity in an Availability Zone or AWS Region away from your data. Committing to the entire loop—either through a flexible training plan for bounded campaigns or a capacity reservation for open-ended ones—avoids this churn.&lt;/p&gt;
+&lt;p&gt;Since you pay for capacity continuously, the primary metric governing cost is not the peak throughput of any individual job. Instead, the system is optimized for &lt;strong&gt;GPU goodput&lt;/strong&gt;: the useful pipeline progress per reserved GPU-hour across the entire loop.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;NVIDIA has released Cosmos 3 under the Linux Foundation’s OpenMDW-1.1 license. Detailed architectural information can be found in the Cosmos 3 technical report.&lt;/p&gt;
+&lt;p&gt;To help developers get started, the &lt;code&gt;awsome-distributed-ai&lt;/code&gt; GitHub repository contains the runnable code, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Infrastructure templates and job manifests to set up the working cluster.&lt;/li&gt;
+&lt;li&gt;Deployment configurations for Amazon SageMaker HyperPod and Amazon EKS.&lt;/li&gt;
+&lt;li&gt;A shared multi-terabyte storage layer setup.&lt;/li&gt;
+&lt;li&gt;Distributed post-training setups for three representative workloads, featuring an end-to-end walkthrough of the robot-policy stage using the public DROID dataset.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21222-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AmazonSageMaker #PhysicalAI #Cosmos3 #Robotics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-a-physical-ai-model-factory-with-nvidia-cosmos-3-on-sagemaker-hyperpod/" target="_blank" rel="noopener"
+&gt;Build a Physical AI model factory with NVIDIA Cosmos 3 on SageMaker HyperPod | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
