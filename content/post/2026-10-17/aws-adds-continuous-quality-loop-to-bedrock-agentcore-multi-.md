@@ -2,7 +2,7 @@
 title: "AWS adds continuous quality loop to Bedrock AgentCore multi‑agent sales system"
 slug: "aws-adds-continuous-quality-loop-to-bedrock-agentcore-multiagent-sales-system"
 description: "AWS SMGS Operations team updated its production multi‑agent solution with a continuous quality loop built on Amazon Bedrock AgentCore. The loop monitors answer correctness and traces failures back to..."
-date: 2026-10-17T12:03:29+05:30
+date: 2026-10-17T18:03:15+05:30
 tags: [AWS, Bedrock, AIAgents, DataQuality]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21894-featured-image.png"

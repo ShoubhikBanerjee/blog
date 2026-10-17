@@ -2,7 +2,7 @@
 title: "Claude introduces continuous AI‑assisted code review"
 slug: "claude-introduces-continuous-aiassisted-code-review"
 description: "Claude Haiku 5.5 brings continuous AI‑assisted code review to the Claude Code team."
-date: 2026-10-17T12:03:29+05:30
+date: 2026-10-17T18:03:15+05:30
 tags: [Claude, CodeReview, AI]
 categories: ["AI", "Artificial Intelligence", "Software Engineering", "Developer Tools"]
 author: "Shoubhik Banerjee"
