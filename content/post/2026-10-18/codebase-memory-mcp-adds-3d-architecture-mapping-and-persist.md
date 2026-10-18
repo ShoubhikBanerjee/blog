@@ -2,7 +2,7 @@
 title: "codebase-memory-mcp Adds 3D Architecture Mapping and Persistent Knowledge Graphs for AI Agents"
 slug: "codebase-memory-mcp-adds-3d-architecture-mapping-and-persistent-knowledge-graphs-for-ai-agents"
 description: "codebase-memory-mcp is a local Model Context Protocol (MCP) server that provides AI coding agents with a persistent code knowledge graph. It indexes functions, classes, imports, and relationships..."
-date: 2026-10-18T12:02:27+05:30
+date: 2026-10-18T18:01:54+05:30
 tags: [MCP, CodeIntelligence, AItools, SoftwareArchitecture, KnowledgeGraph]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/81762164?v=4"

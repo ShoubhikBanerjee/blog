@@ -2,7 +2,7 @@
 title: "Lean Rada Describes Inline Rendering Trick Using document.currentScript"
 slug: "lean-rada-describes-inline-rendering-trick-using-document-currentscript"
 description: "On 17th October 2026, Lean Rada described a trick for inline rendering that utilizes the `document.currentScript` property. This method allows a tiny inline `<script>` element to replace itself with..."
-date: 2026-10-18T12:02:27+05:30
+date: 2026-10-18T18:01:54+05:30
 tags: [JavaScript, WebDevelopment, Frontend, Coding, HTML]
 categories: ["AI", "Web Development", "Software Engineering", "Programming"]
 author: "Shoubhik Banerjee"
