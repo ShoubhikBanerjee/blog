@@ -2,7 +2,7 @@
 title: "web-edit adds clipboard support for text and images"
 slug: "web-edit-adds-clipboard-support-for-text-and-images"
 description: "The web-edit web app now includes a copy‑to‑clipboard option for both text and image data."
-date: 2026-10-18T18:01:54+05:30
+date: 2026-10-18T22:01:16+05:30
 tags: [webedit, clipboard, Tailscale, DeepSeek]
 categories: ["AI", "Software Development", "Productivity Tools", "Web Applications", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"
