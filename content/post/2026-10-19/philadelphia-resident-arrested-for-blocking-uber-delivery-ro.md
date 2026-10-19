@@ -2,7 +2,7 @@
 title: "Philadelphia resident arrested for blocking Uber delivery robot protest"
 slug: "philadelphia-resident-arrested-for-blocking-uber-delivery-robot-protest"
 description: "A Philadelphia resident was arrested after deliberately blocking an Uber delivery robot, citing concerns over job loss."
-date: 2026-10-19T18:02:33+05:30
+date: 2026-10-19T22:04:08+05:30
 tags: [Philadelphia, DeliveryRobots, Automation]
 categories: ["AI", "Robotics", "Automation", "Labor Issues", "Urban Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/avride-uber-delivery.webp?quality=90&strip=all&crop=0%2C10.718955348675%2C100%2C78.562089302649&w=1200"

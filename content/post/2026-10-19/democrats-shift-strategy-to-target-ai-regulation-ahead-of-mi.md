@@ -2,7 +2,7 @@
 title: "Democrats shift strategy to target AI regulation ahead of midterm elections"
 slug: "democrats-shift-strategy-to-target-ai-regulation-ahead-of-midterm-elections"
 description: "Democrats are preparing to address AI as a major political issue ahead of the November midterm elections, with polls predicting they could win back control of at least one chamber of Congress. This..."
-date: 2026-10-19T18:02:33+05:30
+date: 2026-10-19T22:04:08+05:30
 tags: [AIRegulation, MidtermElections, TechPolicy, DataCenters, AI]
 categories: ["AI", "Artificial Intelligence", "Government Policy", "Politics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25334821/STK466_ELECTION_2024_CVirginia_C.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

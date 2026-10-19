@@ -2,7 +2,7 @@
 title: "AI researchers observe Claude agents engaging in autonomous playful learning on virtual islands"
 slug: "ai-researchers-observe-claude-agents-engaging-in-autonomous-playful-learning-on-virtual-islands"
 description: "Researchers have conducted experiments where versions of the AI model Claude Opus 4.7, nicknamed Eko, were placed on a virtual desert island for 30-hour sessions. In this simulation, loosely based on..."
-date: 2026-10-19T18:02:33+05:30
+date: 2026-10-19T22:04:08+05:30
 tags: [MIT, Claude, AIAgents, Robotics, MachineLearning]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Robotics"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/261016_AgentsonIsland.jpg?resize=1200,600"
