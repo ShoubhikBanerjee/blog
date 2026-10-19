@@ -2,7 +2,7 @@
 title: "Updated llm-echo Debug Plugin Simulates Token Usage for Tool Calls and System Prompts"
 slug: "updated-llm-echo-debug-plugin-simulates-token-usage-for-tool-calls-and-system-prompts"
 description: "A developer has enhanced the llm-echo debug plugin to simulate token usage tracking for additional components in LLM interactions. The update enables more accurate cost and performance testing during..."
-date: 2026-10-19T12:02:48+05:30
+date: 2026-10-19T18:02:33+05:30
 tags: [AIDevelopment, LLMTools, Debugging, TokenUsage]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Tools"]
 author: "Shoubhik Banerjee"
