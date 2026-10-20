@@ -2,7 +2,7 @@
 title: "Researcher Claims LLMs May Be Easier to Understand and Control"
 slug: "researcher-claims-llms-may-be-easier-to-understand-and-control"
 description: "Nick Cammarata, a researcher at the AI startup Goodfire, has published a 26,000-word blog post claiming that Large Language Models (LLMs) may be far easier to understand, monitor, and control than..."
-date: 2026-10-20T06:02:08+05:30
+date: 2026-10-20T12:01:18+05:30
 tags: [mechanisticinterpretability, Goodfire, LLMs, neuralnetworks]
 categories: ["AI", "Machine Learning", "AI Research", "Computer Vision"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/261016_LLMsNotcomplicated_V2.jpg?resize=1200,600"
