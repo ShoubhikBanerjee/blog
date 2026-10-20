@@ -2,7 +2,7 @@
 title: "CoreWeave’s AI Debt Hits Distressed Territory, Shares Fall Over 20%"
 slug: "coreweaves-ai-debt-hits-distressed-territory-shares-fall-over-20"
 description: "CoreWeave, an AI‑focused cloud provider, saw its bonds slip into distressed territory and its shares tumble more than 20% after a wave of commentary about a potential private‑credit bubble."
-date: 2026-10-20T12:01:18+05:30
+date: 2026-10-20T18:01:41+05:30
 tags: [CoreWeave, AIloans, DistressedDebt, PrivateCredit]
 categories: ["AI", "Artificial Intelligence", "Finance", "Cloud Computing", "Leveraged Finance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/10/Vrg_Illo_AI_Bubble.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

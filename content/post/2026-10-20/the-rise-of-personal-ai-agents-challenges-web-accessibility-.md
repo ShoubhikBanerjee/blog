@@ -2,7 +2,7 @@
 title: "The Rise of Personal AI Agents Challenges Web Accessibility for Humans"
 slug: "the-rise-of-personal-ai-agents-challenges-web-accessibility-for-humans"
 description: "The rapid adoption of personal AI agents, such as OpenAI's Dots and Meta's Muse, is creating a new category of web traffic that struggles to interact with an internet traditionally designed for human..."
-date: 2026-10-20T12:01:18+05:30
+date: 2026-10-20T18:01:41+05:30
 tags: [AIAgents, WebDevelopment, Internet, Automation]
 categories: ["AI", "Artificial Intelligence", "Technology", "Internet Infrastructure"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/261016_Algo.jpg?resize=1200,600"

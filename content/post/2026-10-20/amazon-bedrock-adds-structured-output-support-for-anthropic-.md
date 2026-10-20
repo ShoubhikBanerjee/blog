@@ -2,7 +2,7 @@
 title: "Amazon Bedrock Adds Structured Output Support for Anthropic Claude Models"
 slug: "amazon-bedrock-adds-structured-output-support-for-anthropic-claude-models"
 description: "Amazon Bedrock now supports structured outputs for all Anthropic Claude models, enabling developers to receive schema-compliant JSON responses across both bedrock-runtime and bedrock-mantle endpoints."
-date: 2026-10-20T12:01:18+05:30
+date: 2026-10-20T18:01:41+05:30
 tags: [AmazonBedrock, AnthropicClaude, JSON, GenerativeAI, API]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22211-featured-image.png"

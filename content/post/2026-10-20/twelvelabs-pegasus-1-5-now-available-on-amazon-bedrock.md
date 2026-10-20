@@ -2,7 +2,7 @@
 title: "TwelveLabs Pegasus 1.5 Now Available on Amazon Bedrock"
 slug: "twelvelabs-pegasus-1-5-now-available-on-amazon-bedrock"
 description: "On Oct 9, 2026, the availability of TwelveLabs’ Pegasus 1.5 was announced on Amazon Bedrock. Pegasus 1.5 is a video language model designed to turn long-form video into structured, timestamped..."
-date: 2026-10-20T12:01:18+05:30
+date: 2026-10-20T18:01:41+05:30
 tags: [TwelveLabs, AmazonBedrock, VideoAI, AWS, ComputerVision]
 categories: ["AI", "Machine Learning", "Computer Vision", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/16/ML-22008-featured-image.png"

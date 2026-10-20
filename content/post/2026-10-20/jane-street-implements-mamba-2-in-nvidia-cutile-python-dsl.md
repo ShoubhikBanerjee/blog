@@ -2,7 +2,7 @@
 title: "Jane Street Implements Mamba‑2 in NVIDIA cuTile Python DSL"
 slug: "jane-street-implements-mamba2-in-nvidia-cutile-python-dsl"
 description: "Machine learning engineers at Jane Street have implemented the state‑of‑the‑art Mamba‑2 sequence model using NVIDIA’s cuTile Python‑based DSL and partnered with NVIDIA to optimize the kernels."
-date: 2026-10-20T12:01:18+05:30
+date: 2026-10-20T18:01:41+05:30
 tags: [cuTile, Mamba2, TensorCores]
 categories: ["AI", "Machine Learning", "GPU Computing", "Deep Learning Models"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2025/11/Solving-Math-660x370.jpg"

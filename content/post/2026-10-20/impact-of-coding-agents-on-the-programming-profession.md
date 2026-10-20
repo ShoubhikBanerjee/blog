@@ -2,7 +2,7 @@
 title: "Impact of Coding Agents on the Programming Profession"
 slug: "impact-of-coding-agents-on-the-programming-profession"
 description: "The emergence of coding agents is altering the nature of professional programming, specifically regarding the role of solving logic puzzles in software development."
-date: 2026-10-20T12:01:18+05:30
+date: 2026-10-20T18:01:41+05:30
 tags: [LLMs, CodingAgents, Programming, SoftwareDevelopment]
 categories: ["AI", "AI Agents", "Software Engineering", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"
