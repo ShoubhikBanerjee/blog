@@ -2,7 +2,7 @@
 title: "US fossil fuel infrastructure surge as renewables slow and AI data center demand rises"
 slug: "us-fossil-fuel-infrastructure-surge-as-renewables-slow-and-ai-data-center-demand-rises"
 description: "The new report from the Environmental Defense Fund and Atlas Public Policy shows the United States is building more fossil fuel infrastructure than it has in a decade while renewable energy growth..."
-date: 2026-10-20T18:01:41+05:30
+date: 2026-10-20T22:03:21+05:30
 tags: [EnergyPolicy, FossilFuels, Renewables, AI]
 categories: ["AI", "Energy", "Policy", "Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25824781/STK438_CLIMATE_CHANGE_C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

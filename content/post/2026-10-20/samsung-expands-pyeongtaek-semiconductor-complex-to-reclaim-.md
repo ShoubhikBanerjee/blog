@@ -2,7 +2,7 @@
 title: "Samsung Expands Pyeongtaek Semiconductor Complex to Reclaim Lead in AI Memory Chips"
 slug: "samsung-expands-pyeongtaek-semiconductor-complex-to-reclaim-lead-in-ai-memory-chips"
 description: "Samsung is building a massive new semiconductor manufacturing complex in Pyeongtaek, South Korea, as it attempts to reclaim its lead in the global memory chip market. The build-out in the farming..."
-date: 2026-10-20T18:01:41+05:30
+date: 2026-10-20T22:03:21+05:30
 tags: [Samsung, Semiconductors, AIChips, SouthKorea]
 categories: ["AI", "Semiconductor Manufacturing", "Artificial Intelligence", "Memory Technology"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/GettyImages-2277893810.jpg?resize=1200,600"

@@ -2,7 +2,7 @@
 title: "PyTorch 2.15 Enhancements for Metal Performance Shaders on Mac"
 slug: "pytorch-2-15-enhancements-for-metal-performance-shaders-on-mac"
 description: "PyTorch 2.15 introduces significant performance and memory optimizations for Apple silicon Macs via Metal Performance Shaders (MPS), specifically targeting Large Language Model (LLM) decoding,..."
-date: 2026-10-20T18:01:41+05:30
+date: 2026-10-20T22:03:21+05:30
 tags: [PyTorch, AppleSilicon, Metal, LLM, MachineLearning]
 categories: ["AI", "Machine Learning", "Software Development", "Hardware Acceleration"]
 image: "https://huggingface.co/blog/assets/mps-pytorch-2-15/thumbnail.png"

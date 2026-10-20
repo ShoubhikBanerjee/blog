@@ -2,7 +2,7 @@
 title: "Amazon SageMaker Studio Simplifies Sign-up and Access for New Customers"
 slug: "amazon-sagemaker-studio-simplifies-sign-up-and-access-for-new-customers"
 description: "Amazon has introduced a streamlined sign-up process for new Amazon SageMaker AI customers, allowing them to land in a fully configured SageMaker Studio environment in just a few steps. This update..."
-date: 2026-10-20T18:01:41+05:30
+date: 2026-10-20T22:03:21+05:30
 tags: [AmazonSageMaker, AWS, CloudComputing, MachineLearning, DeveloperTools]
 categories: ["AI", "Cloud Computing", "Machine Learning", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22115-featured-image.png"
