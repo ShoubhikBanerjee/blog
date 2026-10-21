@@ -2,7 +2,7 @@
 title: "Google Rolls Out Personalized Gemini AI Features for Android Auto and Cars"
 slug: "google-rolls-out-personalized-gemini-ai-features-for-android-auto-and-cars"
 description: "Google is introducing Personal Intelligence to Gemini AI in vehicles, enabling the assistant to access and use information from a user's Google apps while they are driving. This update allows Gemini..."
-date: 2026-10-21T12:01:55+05:30
+date: 2026-10-21T18:02:44+05:30
 tags: [GoogleGemini, AndroidAuto, SmartCars, PersonalIntelligence]
 categories: ["AI", "Artificial Intelligence", "Automotive Technology", "Software Updates"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/google-gemini-personal-intelligence.png?quality=90&strip=all&crop=1.0809792843691%2C0%2C97.838041431262%2C100&w=1200"

@@ -2,7 +2,7 @@
 title: "US District Judge dismisses sexual abuse lawsuit against Sam Altman"
 slug: "us-district-judge-dismisses-sexual-abuse-lawsuit-against-sam-altman"
 description: "On Tuesday, US District Judge Zachary Bluestone dismissed a lawsuit filed last year by Ann Altman against her brother, OpenAI CEO Sam Altman. The lawsuit, which alleged that Sam Altman had sexually..."
-date: 2026-10-21T12:01:55+05:30
+date: 2026-10-21T18:02:44+05:30
 tags: [SamAltman, OpenAI, LegalNews, Litigation]
 categories: ["AI", "Legal", "Technology Leadership", "Corporate News"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/12/STK201_SAM_ALTMAN_CVIRGINIA_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

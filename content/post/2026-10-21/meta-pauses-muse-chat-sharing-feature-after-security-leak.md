@@ -2,7 +2,7 @@
 title: "Meta pauses Muse chat-sharing feature after security leak"
 slug: "meta-pauses-muse-chat-sharing-feature-after-security-leak"
 description: "Meta has temporarily disabled the Muse sharing feature that let users generate a public link to an AI conversation after researchers uncovered thousands of publicly discoverable links."
-date: 2026-10-21T12:01:55+05:30
+date: 2026-10-21T18:02:44+05:30
 tags: [Meta, MuseAI, Privacy]
 categories: ["AI", "Artificial Intelligence", "Privacy & Security", "Social Media"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKB394_MUSE_AI_CVIRGINIA_A.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"
