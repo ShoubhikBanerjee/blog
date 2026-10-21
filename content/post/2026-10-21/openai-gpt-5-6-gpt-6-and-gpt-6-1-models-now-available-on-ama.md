@@ -2,7 +2,7 @@
 title: "OpenAI GPT-5.6, GPT-6, and GPT-6.1 models now available on Amazon Bedrock in Canada"
 slug: "openai-gpt-5-6-gpt-6-and-gpt-6-1-models-now-available-on-amazon-bedrock-in-canada"
 description: "OpenAI’s latest GPT‑5.6, GPT‑6, and GPT‑6.1 model families have been added to Amazon Bedrock, and developers can now invoke them from the Canada (Central) and Canada West (Calgary) AWS regions."
-date: 2026-10-21T06:09:12+05:30
+date: 2026-10-21T12:01:55+05:30
 tags: [OpenAI, AmazonBedrock, AIModels]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/16/ML-21126-featured-image.png"

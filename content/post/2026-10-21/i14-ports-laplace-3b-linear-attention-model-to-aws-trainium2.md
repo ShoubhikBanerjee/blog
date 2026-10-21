@@ -2,7 +2,7 @@
 title: "i14 Ports Laplace 3B Linear Attention Model to AWS Trainium2"
 slug: "i14-ports-laplace-3b-linear-attention-model-to-aws-trainium2"
 description: "AI research company i14 has updated the implementation of Laplace 3B, a linear attention alternative to traditional transformer architectures, by bringing the model to AWS Trainium2 using TorchNeuron..."
-date: 2026-10-21T06:09:12+05:30
+date: 2026-10-21T12:01:55+05:30
 tags: [AWS, Trainium2, LinearAttention, LLM, i14]
 categories: ["AI", "Machine Learning", "AI Infrastructure", "Model Architecture"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21817-featured-image.png"

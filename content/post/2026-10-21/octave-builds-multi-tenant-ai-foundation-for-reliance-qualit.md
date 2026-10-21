@@ -2,7 +2,7 @@
 title: "Octave Builds Multi-Tenant AI Foundation for Reliance Quality Management System"
 slug: "octave-builds-multi-tenant-ai-foundation-for-reliance-quality-management-system"
 description: "Octave has developed a three-layer AI foundation using Cohere Embed v4 on Amazon Bedrock to enable secure AI capabilities within its cloud-native quality management system, Reliance. This horizontal..."
-date: 2026-10-21T06:09:12+05:30
+date: 2026-10-21T12:01:55+05:30
 tags: [Octave, AmazonBedrock, Cohere, MultiTenancy, QualityManagement]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Enterprise Software"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21094-featured-image.png"
