@@ -2,7 +2,7 @@
 title: "Battle Drones browser RTS developed using AI coding agents and vibe coding"
 slug: "battle-drones-browser-rts-developed-using-ai-coding-agents-and-vibe-coding"
 description: "Battle Drones is a new Command & Conquer style Real Time Strategy (RTS) game developed as a 'vibe coded' experiment. Built using AI coding agents, the browser-based game works on both mobile and..."
-date: 2026-10-21T18:02:44+05:30
+date: 2026-10-21T22:03:49+05:30
 tags: [AIagents, GameDev, ClaudeCode, RTS, VibeCoding]
 categories: ["AI", "Artificial Intelligence", "Game Development", "AI Agents"]
 image: "https://static.simonwillison.net/static/2026/battle-drones-card.webp"

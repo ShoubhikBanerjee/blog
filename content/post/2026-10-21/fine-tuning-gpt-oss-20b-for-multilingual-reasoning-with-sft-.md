@@ -2,7 +2,7 @@
 title: "Fine-tuning GPT-OSS-20B for Multilingual Reasoning with SFT and GRPO"
 slug: "fine-tuning-gpt-oss-20b-for-multilingual-reasoning-with-sft-and-grpo"
 description: "We fine‑tuned the open‑weight reasoning model **GPT‑OSS‑20B** to produce chain‑of‑thought and final answers in French, German, Spanish, and Italian rather than defaulting to English."
-date: 2026-10-21T18:02:44+05:30
+date: 2026-10-21T22:03:49+05:30
 tags: [GPTOSS, MultilingualAI, FineTuning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Infrastructure"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21403-featured-image.png"

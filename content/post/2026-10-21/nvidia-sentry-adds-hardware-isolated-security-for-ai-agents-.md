@@ -2,7 +2,7 @@
 title: "NVIDIA Sentry adds hardware‑isolated security for AI agents in OpenShell"
 slug: "nvidia-sentry-adds-hardwareisolated-security-for-ai-agents-in-openshell"
 description: "NVIDIA announced **Sentry**, a security software framework that monitors AI agents and enforces policies governing their access to models, tools, and data. Sentry is part of the NVIDIA OpenShell..."
-date: 2026-10-21T18:02:44+05:30
+date: 2026-10-21T22:03:49+05:30
 tags: [NVIDIA, AIsecurity, OpenShell, DPUs]
 categories: ["AI", "Artificial Intelligence", "Security", "Hardware", "Systems Architecture"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/bluefield-nvidia-sentry-featured-660x370.jpg"

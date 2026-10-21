@@ -2,7 +2,7 @@
 title: "NVIDIA Introduces Cosmos3-H-Dreams Real-Time Generative Surgical Simulator"
 slug: "nvidia-introduces-cosmos3-h-dreams-real-time-generative-surgical-simulator"
 description: "NVIDIA has released Cosmos3-H-Dreams, a real-time generative surgical simulator trained on clinical cholecystectomy recordings to support live kinematic control. This development advances previous..."
-date: 2026-10-21T18:02:44+05:30
+date: 2026-10-21T22:03:49+05:30
 tags: [NVIDIA, Cosmos3, SurgicalRobotics, GenerativeAI, MedicalSimulation]
 categories: ["AI", "Machine Learning", "Computer Vision", "Robotics"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/67a4f15057fb66b9db6dac82/45XSEtdQHqTdspRe3wkYs.png"

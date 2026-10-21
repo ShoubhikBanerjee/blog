@@ -2,7 +2,7 @@
 title: "Smartsheet Launches Model Context Protocol Server for AI Integration"
 slug: "smartsheet-launches-model-context-protocol-server-for-ai-integration"
 description: "Smartsheet has launched a generally available Model Context Protocol (MCP) Server, enabling AI assistants to read, write, and manage Smartsheet data through a standardized protocol. This integration..."
-date: 2026-10-21T18:02:44+05:30
+date: 2026-10-21T22:03:49+05:30
 tags: [Smartsheet, MCP, AI, Automation, Integration]
 categories: ["AI", "AI Agents", "Productivity Software", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21001-featured-image.png"

@@ -2,7 +2,7 @@
 title: "Compromise of Eight eMudhra Intermediate CA Certificates"
 slug: "compromise-of-eight-emudhra-intermediate-ca-certificates"
 description: "The private keys of eight eMudhra intermediate CA certificates have been compromised, affecting certificates that chain to roots trusted by several major root programs and downstream trust stores."
-date: 2026-10-21T18:02:44+05:30
+date: 2026-10-21T22:03:49+05:30
 tags: [eMudhra, Cybersecurity, Certificates, CACompromise]
 categories: ["AI", "Cybersecurity", "Software Updates", "Internet Infrastructure"]
 author: "Shoubhik Banerjee"
