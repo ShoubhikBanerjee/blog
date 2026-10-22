@@ -2,7 +2,7 @@
 title: "Meta Announces New Non‑Voting Share Class to Finance AI Initiatives"
 slug: "meta-announces-new-nonvoting-share-class-to-finance-ai-initiatives"
 description: "Meta disclosed that it will issue a new class of non‑voting shares to fund its artificial‑intelligence strategy, potential acquisitions, and employee compensation."
-date: 2026-10-22T06:10:45+05:30
+date: 2026-10-22T12:06:50+05:30
 tags: [Meta, AI, Finance, Shares]
 categories: ["AI", "Corporate Finance", "Artificial Intelligence", "Technology Business"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25546023/STK043_META_CVIRGINIA_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

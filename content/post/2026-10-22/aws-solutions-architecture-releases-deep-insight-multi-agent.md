@@ -2,7 +2,7 @@
 title: "AWS Solutions Architecture Releases Deep Insight Multi-Agent System for Data Analysis"
 slug: "aws-solutions-architecture-releases-deep-insight-multi-agent-system-for-data-analysis"
 description: "The AWS Solutions Architecture team has built and open-sourced Deep Insight, a production-grade multi-agent system that turns complex data analysis into automated insights and professional reports."
-date: 2026-10-22T06:10:45+05:30
+date: 2026-10-22T12:06:50+05:30
 tags: [AWS, AmazonBedrock, AIAgents, MultiAgent, DeepInsight]
 categories: ["AI", "AI Agents", "Cloud Computing", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21081-featured-image.png"

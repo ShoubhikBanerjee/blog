@@ -2,7 +2,7 @@
 title: "Wiz Research Uses AI Models to Discover PHP Remote Code Execution Vulnerabilities"
 slug: "wiz-research-uses-ai-models-to-discover-php-remote-code-execution-vulnerabilities"
 description: "Wiz Research discovered two remote code execution (RCE) vulnerabilities in PHP using a combination of AI tools, leading to a patched release on October 21, 2026."
-date: 2026-10-22T06:10:45+05:30
+date: 2026-10-22T12:06:50+05:30
 tags: [PHP, WizResearch, Cybersecurity, RCE, AI]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Software Development"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Adaptive Agentic Intelligence Framework Combines Local SLMs and Cloud Models"
 slug: "adaptive-agentic-intelligence-framework-combines-local-slms-and-cloud-models"
 description: "The Adaptive Agentic Intelligence Framework (AAIF), built with Strands Agents, introduces an orchestration framework that combines local small language models (SLMs) with cloud-hosted models in..."
-date: 2026-10-22T06:10:45+05:30
+date: 2026-10-22T12:06:50+05:30
 tags: [AAIF, StrandsAgents, AmazonBedrock, EdgeAI, SLM]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Cloud Computing", "Edge Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-19699-featured-image.png"

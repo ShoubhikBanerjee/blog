@@ -2,7 +2,7 @@
 title: "Data Center Expansion in Texas Risks Reversing Decades of Air Quality Gains"
 slug: "data-center-expansion-in-texas-risks-reversing-decades-of-air-quality-gains"
 description: "New research from the Houston Advanced Research Center (HARC) indicates that a surge of data centers in Texas could return air pollution to levels not seen since the 2000s. As Texas becomes a primary..."
-date: 2026-10-22T06:10:45+05:30
+date: 2026-10-22T12:06:50+05:30
 tags: [Texas, DataCenters, AirPollution, GenerativeAI, EnergyInfrastructure]
 categories: ["AI", "AI Infrastructure", "Environmental Impact", "Energy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/STKS528_DATA_CENTERS_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
