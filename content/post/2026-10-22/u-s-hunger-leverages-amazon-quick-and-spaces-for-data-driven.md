@@ -2,7 +2,7 @@
 title: "U.S. Hunger Leverages Amazon Quick and Spaces for Data‑Driven Food Assistance"
 slug: "u-s-hunger-leverages-amazon-quick-and-spaces-for-datadriven-food-assistance"
 description: "U.S. Hunger has adopted Amazon Quick and its Spaces capability to bring real‑time data insight to its food‑assistance operations."
-date: 2026-10-22T12:06:50+05:30
+date: 2026-10-22T18:03:17+05:30
 tags: [AWS, DataAnalytics, NonprofitTech, FoodAssistance]
 categories: ["AI", "Artificial Intelligence", "Data Management", "Nonprofit Technology", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/21/ML-22201-featured-image.png"

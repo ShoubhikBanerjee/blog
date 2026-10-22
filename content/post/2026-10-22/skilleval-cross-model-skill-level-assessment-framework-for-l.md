@@ -2,7 +2,7 @@
 title: "SkillEval: Cross-model Skill-Level Assessment Framework for LLMs"
 slug: "skilleval-cross-model-skill-level-assessment-framework-for-llms"
 description: "We propose **SkillEval**, a new evaluation framework that performs cross‑model, skill‑level analysis."
-date: 2026-10-22T12:06:50+05:30
+date: 2026-10-22T18:03:17+05:30
 tags: [SkillEval, LLMEvaluation, AIProfiling]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Evaluation Metrics"]
 author: "Shoubhik Banerjee"

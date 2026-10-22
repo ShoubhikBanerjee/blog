@@ -2,7 +2,7 @@
 title: "TrainBridge Improves NPU Training Efficiency via GPU Optimization Guidance"
 slug: "trainbridge-improves-npu-training-efficiency-via-gpu-optimization-guidance"
 description: "TrainBridge is an agentic approach for transferring GPU optimization guidance to NPU training, proposed to improve training efficiency on Ascend NPUs."
-date: 2026-10-22T12:06:50+05:30
+date: 2026-10-22T18:03:17+05:30
 tags: [N, P, U, O, p, t, i, m, i, z, a, t, i, o, n, G, P, U, T, r, a, i, n, i, n, g, A, s, c, e, n, d]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "H", "a", "r", "d", "w", "a", "r", "e", "A", "c", "c", "e", "l", "e", "r", "a", "t", "i", "o", "n", ",", "N", "P", "U", ",", "S", "o", "f", "t", "w", "a", "r", "e", "O", "p", "t", "i", "m", "i", "z", "a", "t", "i", "o", "n"]
 author: "Shoubhik Banerjee"

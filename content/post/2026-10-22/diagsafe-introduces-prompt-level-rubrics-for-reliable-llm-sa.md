@@ -2,7 +2,7 @@
 title: "DiagSafe Introduces Prompt-Level Rubrics for Reliable LLM Safety Evaluation"
 slug: "diagsafe-introduces-prompt-level-rubrics-for-reliable-llm-safety-evaluation"
 description: "A new research paper released on 21 Oct 2026 proposes DiagSafe, a diagnostic framework that moves LLM safety evaluation beyond simple binary labels."
-date: 2026-10-22T12:06:50+05:30
+date: 2026-10-22T18:03:17+05:30
 tags: [AIAlignment, LLMSafety, Diagnostics]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Safety"]
 author: "Shoubhik Banerjee"

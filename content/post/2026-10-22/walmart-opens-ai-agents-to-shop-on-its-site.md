@@ -2,7 +2,7 @@
 title: "Walmart Opens AI Agents to Shop on Its Site"
 slug: "walmart-opens-ai-agents-to-shop-on-its-site"
 description: "Walmart will soon let AI agents shop on its website for you."
-date: 2026-10-22T12:06:50+05:30
+date: 2026-10-22T18:03:17+05:30
 tags: [Walmart, AIagents, Ecommerce, ShoppingAutomation]
 categories: ["AI", "Retail", "Artificial Intelligence", "AI Agents", "E‑commerce"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/gettyimages-2247092603.jpg?quality=90&strip=all&crop=0%2C10.723165084465%2C100%2C78.55366983107&w=1200"

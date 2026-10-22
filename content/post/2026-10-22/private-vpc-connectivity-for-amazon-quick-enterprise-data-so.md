@@ -2,7 +2,7 @@
 title: "Private VPC Connectivity for Amazon Quick Enterprise Data Sources"
 slug: "private-vpc-connectivity-for-amazon-quick-enterprise-data-sources"
 description: "Amazon Quick now supports private connections to on‑premises data sources, letting enterprises keep regulated data behind firewalls while still using AI‑powered search, analytics, and automation."
-date: 2026-10-22T12:06:50+05:30
+date: 2026-10-22T18:03:17+05:30
 tags: [AWS, AmazonQuick, VPC, EnterpriseAI, DataSecurity]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Enterprise Data", "Networking"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20213-featured-image.png"

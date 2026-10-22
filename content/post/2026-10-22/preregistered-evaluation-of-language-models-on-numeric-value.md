@@ -2,7 +2,7 @@
 title: "Preregistered Evaluation of Language Models on Numeric Values in Norwegian Law"
 slug: "preregistered-evaluation-of-language-models-on-numeric-values-in-norwegian-law"
 description: "A preregistered study evaluated language models on extracting numeric values from Norwegian statutes, regulations, and parliamentary decisions."
-date: 2026-10-22T12:06:50+05:30
+date: 2026-10-22T18:03:17+05:30
 tags: [AIEvaluation, LanguageModels, NorwegianLaw, Preregistration]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Evaluation", "Legal Tech"]
 author: "Shoubhik Banerjee"

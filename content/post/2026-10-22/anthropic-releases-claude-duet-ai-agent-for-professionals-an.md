@@ -2,7 +2,7 @@
 title: "Anthropic releases Claude Duet AI agent for professionals and small businesses"
 slug: "anthropic-releases-claude-duet-ai-agent-for-professionals-and-small-businesses"
 description: "Anthropic announced Claude Duet, a new AI agent aimed at professionals and small business owners."
-date: 2026-10-22T12:06:50+05:30
+date: 2026-10-22T18:03:17+05:30
 tags: [Anthropic, ClaudeDuet, AIagents, Productivity]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Productivity Tools", "Machine Learning"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/STKB364_CLAUDE_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

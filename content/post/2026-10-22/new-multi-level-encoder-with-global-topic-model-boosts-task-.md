@@ -2,7 +2,7 @@
 title: "New Multi‑Level Encoder with Global Topic Model Boosts Task‑Oriented Dialogue Summarization"
 slug: "new-multilevel-encoder-with-global-topic-model-boosts-taskoriented-dialogue-summarization"
 description: "A new model called MLEGT (Multi‑Level Encoder with Global Topic) has been introduced to improve task‑oriented dialogue summarization."
-date: 2026-10-22T12:06:50+05:30
+date: 2026-10-22T18:03:17+05:30
 tags: [TaskOrientedAI, DialogueSummarization, MLEGT]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "AI Applications"]
 author: "Shoubhik Banerjee"
