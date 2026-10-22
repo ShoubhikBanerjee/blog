@@ -2,7 +2,7 @@
 title: "NVIDIA Kumo Relational Foundation Model Beats Traditional Pipelines on Enterprise Databases"
 slug: "nvidia-kumo-relational-foundation-model-beats-traditional-pipelines-on-enterprise-databases"
 description: "NVIDIA introduced Kumo Relational, a pre‑trained relational foundation model that predicts directly on enterprise databases without task‑specific training or feature engineering."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [NVIDIA, RelationalAI, MachineLearning, EnterpriseAI]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Data Engineering", "Enterprise Software"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6ad8e88370f69967fafc8703/i-Flass3NMPRmc6lVfwO_.png"

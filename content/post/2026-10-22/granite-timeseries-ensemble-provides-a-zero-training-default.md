@@ -2,7 +2,7 @@
 title: "Granite Timeseries Ensemble provides a zero‑training default forecast recipe"
 slug: "granite-timeseries-ensemble-provides-a-zerotraining-default-forecast-recipe"
 description: "Granite Timeseries Ensemble (Granite TSFM) introduces a default, zero‑training forecast recipe that combines four pre‑trained models."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [TimeSeries, Forecasting, Ensemble, Granite]
 categories: ["AI", "Machine Learning", "Time Series Forecasting", "AI Tools", "Open Source"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6806091ee92bd22fd8ce9719/P6P8ZzHR8yL7GOOO4hQOg.png"

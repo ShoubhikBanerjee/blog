@@ -2,7 +2,7 @@
 title: "New Techniques Boost Efficiency of Speculative Decoding via Target Distribution Reranking"
 slug: "new-techniques-boost-efficiency-of-speculative-decoding-via-target-distribution-reranking"
 description: "Speculative decoding, which verifies drafted tokens in parallel, has been updated with two key improvements: using target‑model probability distributions to guide tree selection, and applying gated..."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [SpeculativeDecoding, Distillation, LanguageModels, ModelOptimization]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Model Optimization", "Computer Vision"]
 author: "Shoubhik Banerjee"

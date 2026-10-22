@@ -2,7 +2,7 @@
 title: "LTEM: A Minimal Markdown Extension for LLM‑Friendly Table Representation"
 slug: "ltem-a-minimal-markdown-extension-for-llmfriendly-table-representation"
 description: "A new format called LTEM (LLM‑friendly Table‑Enhanced Markdown) has been introduced to let large language models work with complex tables while keeping token usage low."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [LLMs, Markdown, Tables, Benchmark]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Data Representation"]
 author: "Shoubhik Banerjee"

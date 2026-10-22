@@ -2,7 +2,7 @@
 title: "New AI Benchmarks Tackle Instruction Following and Text Complexity"
 slug: "new-ai-benchmarks-tackle-instruction-following-and-text-complexity"
 description: "Recent developments address two critical challenges in AI language models: instruction-following evaluation and the growing complexity of AI-generated text. Two new studies introduce tools and..."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [NLP, AIbenchmarks, Linguistics, ModelEvaluation]
 categories: ["AI", "Natural Language Processing", "AI Research", "Computational Linguistics", "Model Training"]
 author: "Shoubhik Banerjee"

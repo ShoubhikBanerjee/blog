@@ -2,7 +2,7 @@
 title: "Citrini and Anthropic Test Claude on Scorpion Antivenom Design"
 slug: "citrini-and-anthropic-test-claude-on-scorpion-antivenom-design"
 description: "An investment research firm wanted to prove AI could revolutionize drug development. They teamed up with Anthropic to see whether an unreleased version of Claude could make scorpion antivenom. The..."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [AI, DrugDiscovery, Anthropic, Citrini]
 categories: ["AI", "Artificial Intelligence", "Life Sciences", "Drug Development", "Biotechnology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/gettyimages-182124864.jpg?quality=90&strip=all&crop=0%2C10.763518520026%2C100%2C78.472962959947&w=1200"

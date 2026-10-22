@@ -2,7 +2,7 @@
 title: "Continuous Diffusion Language Models Struggle with Rare Words, GRAFT Restores Balance"
 slug: "continuous-diffusion-language-models-struggle-with-rare-words-graft-restores-balance"
 description: "Continuous diffusion language models (dLLMs) generate an entire sequence in parallel, converting embeddings to text only at the final step. Recent work shows that while models like ELF achieve..."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [continuousdiffusion, languagemodels, GRAFT, rarewords]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Generative Models", "AI Research"]
 author: "Shoubhik Banerjee"

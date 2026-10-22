@@ -2,7 +2,7 @@
 title: "Role-Enhanced Zero-Shot Chain-of-Thought Prompting Improves LLM Reasoning"
 slug: "role-enhanced-zero-shot-chain-of-thought-prompting-improves-llm-reasoning"
 description: "A new arXiv paper titled *A Large-Scale Evaluation of Role-Enhanced Zero-Shot Chain-of-Thought Prompting* (submitted 21 Oct 2026, Computer Science > Computation and Language) introduces a prompting..."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [ZeroShot, ChainOfThought, PromptEngineering, LLM]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Prompt Engineering", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Researchers Develop Compositional Concept Unlearning for Retrieval-Augmented Generation"
 slug: "researchers-develop-compositional-concept-unlearning-for-retrieval-augmented-generation"
 description: "Researchers have introduced Compositional Concept Unlearning (C$^2$U), a method designed to address the risk of Retrieval-Augmented Generation (RAG) systems exposing unwanted concepts through..."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [AI, MachineLearning, RAG, DataPrivacy]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Data Privacy"]
 author: "Shoubhik Banerjee"

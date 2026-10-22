@@ -2,7 +2,7 @@
 title: "OmniRoute launches unified free AI gateway with 375 providers and 1.62B tokens/month"
 slug: "omniroute-launches-unified-free-ai-gateway-with-375-providers-and-1-62b-tokens-month"
 description: "OmniRoute, an MIT AI gateway, has updated its platform to route requests through a single endpoint that aggregates 375 AI providers, more than 150 free‑tier services, and roughly 1.62 billion free..."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [AI, OpenSource, FreeTier, OmniRoute, DeveloperTools]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Open Source Software", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/320819803?v=4"

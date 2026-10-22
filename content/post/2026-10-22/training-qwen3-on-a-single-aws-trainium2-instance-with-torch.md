@@ -2,7 +2,7 @@
 title: "Training Qwen3 on a Single AWS Trainium2 Instance with TorchNeuron and NKI MoE"
 slug: "training-qwen3-on-a-single-aws-trainium2-instance-with-torchneuron-and-nki-moe"
 description: "This post demonstrates three ways to train the Qwen‑3 model on a single AWS trn2.48xlarge instance equipped with Trainium2 accelerators, using TorchNeuron, torchtitan‑neuron and optional NKI..."
-date: 2026-10-22T18:03:17+05:30
+date: 2026-10-22T22:11:45+05:30
 tags: [Trainium, TorchNeuron, Qwen3, MoE, Neuron]
 categories: ["AI", "Machine Learning", "Deep Learning", "Hardware Acceleration", "Natural Language Processing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-22120-featured-image.png"
