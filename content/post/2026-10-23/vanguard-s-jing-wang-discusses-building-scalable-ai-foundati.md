@@ -2,7 +2,7 @@
 title: "Vanguard’s Jing Wang Discusses Building Scalable AI Foundations at EmTech Future"
 slug: "vanguards-jing-wang-discusses-building-scalable-ai-foundations-at-emtech-future"
 description: "Jing Wang, Principal of Vanguard’s Center for AI & Insights, presented at MIT Technology Review’s EmTech Future conference, where the session explored how to build a strong foundation for scalable AI..."
-date: 2026-10-23T06:13:24+05:30
+date: 2026-10-23T12:04:45+05:30
 tags: [AIGovernance, ScalableAI, Vanguard, EmTech, ResponsibleAI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Financial Services", "Technology Governance"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/EmTech_092926_084.jpg?resize=1200,600"

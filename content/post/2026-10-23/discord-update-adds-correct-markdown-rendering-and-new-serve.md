@@ -2,7 +2,7 @@
 title: "Discord Update Adds Correct Markdown Rendering and New Server‑Organization Feature"
 slug: "discord-update-adds-correct-markdown-rendering-and-new-serverorganization-feature"
 description: "Discord released a new update today that fixes Markdown preview rendering and adds a few usability tweaks."
-date: 2026-10-23T06:13:24+05:30
+date: 2026-10-23T12:04:45+05:30
 tags: [Discord, Markdown, AI, Productivity]
 categories: ["AI", "Collaboration Tools", "Artificial Intelligence", "Productivity"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/09/acastro_STK062_03.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

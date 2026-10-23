@@ -2,7 +2,7 @@
 title: "Anthropic donates Agent Skills standard to Agentic AI Foundation"
 slug: "anthropic-donates-agent-skills-standard-to-agentic-ai-foundation"
 description: "On 22 October 2026 Anthropic announced that it is donating its Agent Skills standard to the Agentic AI Foundation (AAIF), which resides under the Linux Foundation."
-date: 2026-10-23T06:13:24+05:30
+date: 2026-10-23T12:04:45+05:30
 tags: [Anthropic, AgentSkills, OpenStandard, AAIF, LinuxFoundation]
 categories: ["AI", "Artificial Intelligence", "AI Standards", "Machine Learning", "AI Governance"]
 author: "Shoubhik Banerjee"

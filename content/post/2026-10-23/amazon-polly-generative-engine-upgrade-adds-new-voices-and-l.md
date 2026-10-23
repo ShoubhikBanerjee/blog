@@ -2,7 +2,7 @@
 title: "Amazon Polly Generative Engine Upgrade Adds New Voices and Low‑Latency Streaming"
 slug: "amazon-polly-generative-engine-upgrade-adds-new-voices-and-lowlatency-streaming"
 description: "Amazon Polly’s Generative engine has been upgraded and is now generally available, bringing more natural, expressive speech and low‑latency streaming."
-date: 2026-10-23T06:13:24+05:30
+date: 2026-10-23T12:04:45+05:30
 tags: [AmazonPolly, TextToSpeech, AWS, GenerativeAI]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Speech Synthesis", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/21/ML-22197-featured-image.png"

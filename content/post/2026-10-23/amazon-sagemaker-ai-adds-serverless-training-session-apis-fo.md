@@ -2,7 +2,7 @@
 title: "Amazon SageMaker AI adds serverless training session APIs for custom model fine‑tuning"
 slug: "amazon-sagemaker-ai-adds-serverless-training-session-apis-for-custom-model-finetuning"
 description: "Amazon SageMaker AI has expanded its serverless model‑customization offering with the general‑availability launch of **training sessions**. The new APIs let customers write and coordinate their own..."
-date: 2026-10-23T06:13:24+05:30
+date: 2026-10-23T12:04:45+05:30
 tags: [SageMaker, ModelCustomization, ServerlessAI, ReinforcementLearning]
 categories: ["AI", "Machine Learning", "AI Infrastructure", "Large Language Models", "Reinforcement Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21950-featured-image.png"
