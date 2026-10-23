@@ -2,7 +2,7 @@
 title: "Synthetic-to-Real Adaptation Lowers Error on Nepali-English Code-Switched ASR Benchmark"
 slug: "synthetic-to-real-adaptation-lowers-error-on-nepali-english-code-switched-asr-benchmark"
 description: "Researchers introduced a new benchmark for Nepali‑English code‑switched speech and a two‑stage synthetic‑to‑real adaptation pipeline that improves automatic speech recognition performance."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [codeSwitching, ASR, syntheticData, NeuralFineTuning]
 categories: ["AI", "Speech Recognition", "Computational Linguistics", "Machine Learning", "Data Resources"]
 author: "Shoubhik Banerjee"

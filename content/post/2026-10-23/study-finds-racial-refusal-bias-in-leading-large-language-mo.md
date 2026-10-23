@@ -2,7 +2,7 @@
 title: "Study Finds Racial Refusal Bias in Leading Large Language Models"
 slug: "study-finds-racial-refusal-bias-in-leading-large-language-models"
 description: "Large language models are aligned to avoid using protected attributes such as race, ethnicity, and gender to inform their responses. Consequently, they increasingly refuse or hedge when such..."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [LLM, bias, AIethics, trust]
 categories: ["AI", "Machine Learning", "AI Ethics", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

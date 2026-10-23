@@ -2,7 +2,7 @@
 title: "Compiled Parallel Inference Cuts Latency for Hierarchical Retrieval‑Augmented Generation"
 slug: "compiled-parallel-inference-cuts-latency-for-hierarchical-retrievalaugmented-generation"
 description: "A new paper titled *Compiling Autoregressive LLM Control into Policy-Exact Parallel Inference for Hierarchical RAG* shows how to replace serial autoregressive decoding with a compiled, policy‑exact..."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [LLMControl, HierarchicalRAG, ParallelInference, MetaX]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Information Retrieval"]
 author: "Shoubhik Banerjee"

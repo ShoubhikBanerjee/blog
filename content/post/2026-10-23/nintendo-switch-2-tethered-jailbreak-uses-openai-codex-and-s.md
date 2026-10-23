@@ -2,7 +2,7 @@
 title: "Nintendo Switch 2 Tethered Jailbreak Uses OpenAI Codex and SmileBASIC 4"
 slug: "nintendo-switch-2-tethered-jailbreak-uses-openai-codex-and-smilebasic-4"
 description: "A Nintendo Switch 2 console has been jailbroken, and a modder demonstrated a custom Mario Kart World with new playable characters using a software‑only, tethered exploit that leverages an older game..."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [NintendoSwitch2, jailbreak, OpenAI, Codex]
 categories: ["AI", "Gaming", "Console Hacking", "Artificial Intelligence", "Software Development"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Screenshot-2026-10-22-at-10.19.11-AM.png?quality=90&strip=all&crop=1.7484243697479%2C0%2C96.503151260504%2C100&w=1200"

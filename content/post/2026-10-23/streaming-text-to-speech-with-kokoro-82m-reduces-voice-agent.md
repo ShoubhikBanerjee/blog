@@ -2,7 +2,7 @@
 title: "Streaming Text-to-Speech with Kokoro-82M Reduces Voice Agent Latency"
 slug: "streaming-text-to-speech-with-kokoro-82m-reduces-voice-agent-latency"
 description: "A customer asks an AI voice agent a question and waits. The agent already has an answer and is midway through generating a long, multi‑paragraph response, but the customer hears nothing for five..."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [AI, TextToSpeech, SageMaker, Streaming]
 categories: ["AI", "Machine Learning", "AI Agents", "Speech Synthesis", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-featured-image.png"

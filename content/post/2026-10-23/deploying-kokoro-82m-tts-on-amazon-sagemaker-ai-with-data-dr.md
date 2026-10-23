@@ -2,7 +2,7 @@
 title: "Deploying Kokoro-82M TTS on Amazon SageMaker AI with Data-Driven Auto Scaling"
 slug: "deploying-kokoro-82m-tts-on-amazon-sagemaker-ai-with-data-driven-auto-scaling"
 description: "This project demonstrates the deployment of Kokoro-82M, an 82-million-parameter text-to-speech (TTS) model, as a custom container on an Amazon SageMaker AI real-time endpoint using AWS Cloud..."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [AmazonSageMaker, TTS, Kokoro82M, AWSCDK, AutoScaling]
 categories: ["AI", "Machine Learning", "Cloud Infrastructure", "Text to Speech"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21705-featured-image.png"

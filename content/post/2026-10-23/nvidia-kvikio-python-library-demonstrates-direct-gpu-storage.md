@@ -2,7 +2,7 @@
 title: "NVIDIA KvikIO Python Library Demonstrates Direct GPU Storage Access via GPUDirect Storage"
 slug: "nvidia-kvikio-python-library-demonstrates-direct-gpu-storage-access-via-gpudirect-storage"
 description: "NVIDIA’s Magnum IO GPUDirect Storage (GDS) now works with the KvikIO Python library to let AI applications move data directly from storage into GPU memory, bypassing the CPU."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [NVIDIA, GPUDirectStorage, KvikIO, AI, Python]
 categories: ["AI", "Machine Learning", "Hardware Acceleration", "Data Engineering", "Python Development"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/03/ai-data-660x370.png"

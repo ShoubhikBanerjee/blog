@@ -2,7 +2,7 @@
 title: "Meta Re-enables Muse Sharing After Addressing Security Vulnerabilities"
 slug: "meta-re-enables-muse-sharing-after-addressing-security-vulnerabilities"
 description: "Meta has re-enabled its Muse sharing feature after temporarily pausing it to address concerns raised by security researchers at Claroc. Researchers had reported that public links for shared Muse..."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [Meta, Muse, AI, Cybersecurity, Privacy]
 categories: ["AI", "Artificial Intelligence", "Data Privacy", "Technology News"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKB394_MUSE_AI_CVIRGINIA_C.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

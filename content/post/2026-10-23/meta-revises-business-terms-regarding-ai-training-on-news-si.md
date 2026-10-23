@@ -2,7 +2,7 @@
 title: "Meta Revises Business Terms Regarding AI Training on News Sites"
 slug: "meta-revises-business-terms-regarding-ai-training-on-news-sites"
 description: "Meta has updated its business terms to remove specific language suggesting the company could freely train its AI models on news sites, following backlash from the publishing industry."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [Meta, AI, WebScraping, Publishing, Legal]
 categories: ["AI", "Artificial Intelligence", "Legal Affairs", "Digital Media"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK043_VRG_Illo_N_Barclay_1_Meta.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

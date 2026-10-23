@@ -2,7 +2,7 @@
 title: "SpaceX and Tesla Explore AI Merger and Joint Superintelligence Projects"
 slug: "spacex-and-tesla-explore-ai-merger-and-joint-superintelligence-projects"
 description: "SpaceX and Tesla have officially created special committees to explore a merger while simultaneously collaborating on superintelligence software development. The move comes as SpaceX’s AI‑related..."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [SpaceX, Tesla, AI, Superintelligence, Merger]
 categories: ["AI", "Artificial Intelligence", "Corporate Strategy", "Space Technology", "Automotive"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/STKE012_SPACEX_IPO_2026_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

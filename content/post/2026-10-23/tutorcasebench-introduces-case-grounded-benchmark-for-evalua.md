@@ -2,7 +2,7 @@
 title: "TutorCaseBench Introduces Case-Grounded Benchmark for Evaluating LLM Tutors"
 slug: "tutorcasebench-introduces-case-grounded-benchmark-for-evaluating-llm-tutors"
 description: "A new benchmark called **TutorCaseBench** has been released to evaluate large language model (LLM) tutors on supporting students with challenging behaviors."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [LLM, AIeducation, Benchmarks, SpecialEducation]
 categories: ["AI", "Artificial Intelligence", "Education Technology", "Machine Learning"]
 author: "Shoubhik Banerjee"

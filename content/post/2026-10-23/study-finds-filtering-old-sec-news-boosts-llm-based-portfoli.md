@@ -2,7 +2,7 @@
 title: "Study Finds Filtering Old SEC News Boosts LLM‑Based Portfolio Returns"
 slug: "study-finds-filtering-old-sec-news-boosts-llmbased-portfolio-returns"
 description: "Financial news continues to affect investment decisions even after it is published. A new analysis compares how reinforcement‑learning (RL) policies and a large language model (LLM) handle aging news..."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [FinanceAI, ReinforcementLearning, LargeLanguageModels, PortfolioManagement]
 categories: ["AI", "Finance", "Machine Learning", "Artificial Intelligence", "Investment Strategies"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Enterprise AI Strategy Shifts Focus From Model Capabilities to Serving Harness Architecture"
 slug: "enterprise-ai-strategy-shifts-focus-from-model-capabilities-to-serving-harness-architecture"
 description: "As enterprise AI transitions from experimentation to production, focus is shifting from raw model capabilities to the engineering systems—or serving harnesses—surrounding the models. Building the..."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [EnterpriseAI, AIServing, AIInfrastructure, MachineLearning, LLMOps]
 categories: ["AI", "Enterprise AI", "Artificial Intelligence", "Software Architecture", "Machine Learning"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/GettyImages-2188328005_9f1d59-e1791493652782.jpg?resize=1200,600"

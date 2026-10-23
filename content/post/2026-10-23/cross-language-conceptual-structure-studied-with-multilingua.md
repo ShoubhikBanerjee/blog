@@ -2,7 +2,7 @@
 title: "Cross‑language Conceptual Structure studied with Multilingual Word Embeddings"
 slug: "crosslanguage-conceptual-structure-studied-with-multilingual-word-embeddings"
 description: "Researchers compared relations among 196 basic concepts across 81 languages, using word embeddings from two multilingual models to quantify the conceptual structure expressed in language."
-date: 2026-10-23T12:04:45+05:30
+date: 2026-10-23T18:02:55+05:30
 tags: [linguisticrelativity, multilingualAI, semanticembedding]
 categories: ["AI", "Cognitive Science", "Computational Linguistics", "Multilingual AI"]
 author: "Shoubhik Banerjee"
