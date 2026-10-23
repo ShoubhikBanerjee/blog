@@ -2,7 +2,7 @@
 title: "Word Duration Directly Cues Word Identity in Mandarin Homophones"
 slug: "word-duration-directly-cues-word-identity-in-mandarin-homophones"
 description: "A new study shows that listeners can use the length of a spoken word to identify it, even when other cues are unavailable."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [Psycholinguistics, Mandarin, WordDuration, SpeechRecognition]
 categories: ["AI", "Cognitive Science", "Linguistics", "Speech Processing"]
 author: "Shoubhik Banerjee"

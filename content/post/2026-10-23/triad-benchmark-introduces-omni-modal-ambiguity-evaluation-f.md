@@ -2,7 +2,7 @@
 title: "TRIAD Benchmark Introduces Omni-Modal Ambiguity Evaluation for Multimodal LLMs"
 slug: "triad-benchmark-introduces-omni-modal-ambiguity-evaluation-for-multimodal-llms"
 description: "On 22 Oct 2026, a paper titled **TRIAD: Benchmarking Omni-Modal Ambiguity in Multimodal Large Language Models** was submitted to the *Computer Science > Computation and Language* arXiv category. The..."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [MultimodalAI, Benchmark, AmbiguityResolution, LLM]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Computer Vision", "Audio Processing"]
 author: "Shoubhik Banerjee"

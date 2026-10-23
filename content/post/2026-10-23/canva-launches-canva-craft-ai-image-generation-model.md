@@ -2,7 +2,7 @@
 title: "Canva launches Canva Craft AI image generation model"
 slug: "canva-launches-canva-craft-ai-image-generation-model"
 description: "Canva announced the launch of Canva Craft, an AI image‑generation model that directly competes with offerings from OpenAI, Microsoft, and Google."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [Canva, AIImageGeneration, DesignAI]
 categories: ["AI", "Artificial Intelligence", "Design Tools", "Computer Vision", "Machine Learning"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/04-CRAFT-COLLAGE.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

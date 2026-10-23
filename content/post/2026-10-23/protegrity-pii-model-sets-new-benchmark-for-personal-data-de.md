@@ -2,7 +2,7 @@
 title: "Protegrity-PII model sets new benchmark for personal data detection"
 slug: "protegrity-pii-model-sets-new-benchmark-for-personal-data-detection"
 description: "On 21 Oct 2026 a technical report titled **Protegrity-PII** presented a new decision model for detecting personally identifiable information (PII) in both structured and unstructured text."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [PII, NLP, Privacy, AI]
 categories: ["AI", "Natural Language Processing", "Privacy", "Machine Learning"]
 author: "Shoubhik Banerjee"

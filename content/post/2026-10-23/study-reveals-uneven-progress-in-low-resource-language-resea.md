@@ -2,7 +2,7 @@
 title: "Study Reveals Uneven Progress in Low‑Resource Language Research"
 slug: "study-reveals-uneven-progress-in-lowresource-language-research"
 description: "The paper *Measuring Research Progress and Linguistic Inclusion in Low‑Resource Languages* was submitted to arXiv on 21 Oct 2026. It analyses the growth of low‑resource language (LRL) research and..."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [LowResourceNLP, LinguisticInclusion, ACL]
 categories: ["AI", "Natural Language Processing", "AI Ethics", "Computational Linguistics"]
 author: "Shoubhik Banerjee"

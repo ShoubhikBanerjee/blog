@@ -2,7 +2,7 @@
 title: "UniGuard introduces multi-view guardrail learning for cross‑interface safety"
 slug: "uniguard-introduces-multi-view-guardrail-learning-for-crossinterface-safety"
 description: "A new training framework called **UniGuard** tackles the reliability gap of existing guardrail models when safety cases appear in varied interaction formats such as conversations, agent trajectories,..."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [AIsafety, LLMguardrails, Multiviewlearning]
 categories: ["AI", "Machine Learning", "AI Safety", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

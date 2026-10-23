@@ -2,7 +2,7 @@
 title: "IskayPet Deploys Corporate Knowledge Assistant Using Amazon Bedrock Managed Knowledge Bases"
 slug: "iskaypet-deploys-corporate-knowledge-assistant-using-amazon-bedrock-managed-knowledge-bases"
 description: "IskayPet, a leading pet‑care company in Iberia, launched a corporate knowledge assistant that answers employee questions across retail, veterinary, procurement, and onboarding domains in four..."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [AI, RAG, AmazonBedrock, EnterpriseAI]
 categories: ["AI", "Machine Learning", "Enterprise Software", "Knowledge Management", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/16/ML-21903-featured-image.png"

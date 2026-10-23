@@ -2,7 +2,7 @@
 title: "Microsoft Diagnostic Orchestrator AI beats doctors in accuracy tests"
 slug: "microsoft-diagnostic-orchestrator-ai-beats-doctors-in-accuracy-tests"
 description: "Microsoft has published a study in *Science* showing its Diagnostic Orchestrator AI system can diagnose conditions up to four times more accurately than human doctors."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [Microsoft, AI, MedicalAI, DiagnosticOrchestrator]
 categories: ["AI", "Artificial Intelligence", "Healthcare Technology", "Machine Learning"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/gettyimages-2207866106.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

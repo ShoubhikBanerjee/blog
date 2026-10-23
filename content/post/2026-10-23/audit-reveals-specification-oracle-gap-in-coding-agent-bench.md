@@ -2,7 +2,7 @@
 title: "Audit Reveals Specification-Oracle Gap in Coding-Agent Benchmarks"
 slug: "audit-reveals-specification-oracle-gap-in-coding-agent-benchmarks"
 description: "Coding‑agent benchmarks often phrase a task in natural language while grading it with upstream tests that may require hidden implementation details."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [AIagents, Benchmarking, SoftwareEngineering, Evaluation]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Engineering", "Evaluation"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Researchers Introduce ULME Framework to Unify LLM Embedding and Generation"
 slug: "researchers-introduce-ulme-framework-to-unify-llm-embedding-and-generation"
 description: "Researchers have proposed ULME, a post-training framework designed to unify text embedding and language modeling capabilities within a single causal decoder-only large language model (LLM) through..."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [LLM, Embedding, MachineLearning, ULME]
 categories: ["AI", "Artificial Intelligence", "Natural Language Processing", "Machine Learning"]
 author: "Shoubhik Banerjee"

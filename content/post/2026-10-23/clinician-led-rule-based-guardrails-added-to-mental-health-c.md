@@ -2,7 +2,7 @@
 title: "Clinician‑Led Rule‑Based Guardrails Added to Mental‑Health Chatbots"
 slug: "clinicianled-rulebased-guardrails-added-to-mentalhealth-chatbots"
 description: "The latest submission (22 Oct 2026) introduces a clinician‑led guardrail for mental‑health chatbots. Two clinicians define a rule base that is formally verified and applied as a safety layer over..."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [MentalHealthAI, LLMsafety, AIguardrails]
 categories: ["AI", "Machine Learning", "Healthcare AI", "Safety Engineering"]
 author: "Shoubhik Banerjee"

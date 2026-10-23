@@ -2,7 +2,7 @@
 title: "Spectral Perturbations Reveal Structured Sensitivity in LLM Capabilities"
 slug: "spectral-perturbations-reveal-structured-sensitivity-in-llm-capabilities"
 description: "Researchers applied spectral perturbations to the feed‑forward projections of transformer models to study how singular‑value spectra affect downstream behavior."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [SpectralAnalysis, LLM, CapabilityProbing, Transformer]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

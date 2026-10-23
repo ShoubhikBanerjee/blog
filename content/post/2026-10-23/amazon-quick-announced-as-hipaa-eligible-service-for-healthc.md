@@ -2,7 +2,7 @@
 title: "Amazon Quick Announced as HIPAA-Eligible Service for Healthcare Data"
 slug: "amazon-quick-announced-as-hipaa-eligible-service-for-healthcare-data"
 description: "Amazon Quick is now a HIPAA-eligible service, allowing it to be used to process, store, and transmit Protected Health Information (PHI) under a signed AWS Business Associate Addendum (BAA)."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [AmazonQuick, HIPAA, AWS, HealthcareAI, HealthTech]
 categories: ["AI", "Cloud Computing", "Healthcare Technology", "AI Agents"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-21609-featured-image.png"

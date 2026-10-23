@@ -2,7 +2,7 @@
 title: "Microsoft and Hugging Face Introduce ThinkingBox for Agent Evaluation and Training"
 slug: "microsoft-and-hugging-face-introduce-thinkingbox-for-agent-evaluation-and-training"
 description: "Microsoft and Hugging Face have jointly developed ThinkingBox, a system designed to evaluate AI agents by comparing final database states with expected outcomes, and ThinkingBox-Training to improve..."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [AIagents, RLHF, Qwen, Microsoft, HuggingFace]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Evaluation"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/64b8491203124195cd795cad/oS8I8qx7iBS8EcNIXR3q9.png"

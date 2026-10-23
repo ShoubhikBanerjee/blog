@@ -2,7 +2,7 @@
 title: "AI tools accelerate retro game decompilation and porting, sparking community turmoil"
 slug: "ai-tools-accelerate-retro-game-decompilation-and-porting-sparking-community-turmoil"
 description: "Retro video games are popping up everywhere lately – often in places they weren’t designed for. Examples include Halo running in a web browser, *Wind Waker* on the iPhone, and *Super Smash Bros.* in..."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [AI, GamePreservation, RetroGaming, Decompilation]
 categories: ["AI", "Artificial Intelligence", "Game Development", "Digital Preservation", "Software Engineering"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/01/STK465_VIDEO_GAMES_EMULATOR__CVirginia_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

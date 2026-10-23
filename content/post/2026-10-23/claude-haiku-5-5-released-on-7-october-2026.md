@@ -2,7 +2,7 @@
 title: "Claude Haiku 5.5 released on 7 October 2026"
 slug: "claude-haiku-5-5-released-on-7-october-2026"
 description: "On 7 October 2026, a new version of the Claude Haiku model, 5.5, was announced."
-date: 2026-10-23T18:02:55+05:30
+date: 2026-10-23T22:04:00+05:30
 tags: [Claude, Anthropic, AI, LanguageModel]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Language Models"]
 image: "https://static.simonwillison.net/static/2026/freedom-pelican-poster.jpg"
