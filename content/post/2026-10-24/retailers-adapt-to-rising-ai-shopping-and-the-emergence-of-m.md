@@ -2,7 +2,7 @@
 title: "Retailers adapt to rising AI shopping and the emergence of Muse agents"
 slug: "retailers-adapt-to-rising-ai-shopping-and-the-emergence-of-muse-agents"
 description: "The Vergecast highlighted a recent surge in AI‑driven shopping and how it is pushing retailers to rethink customer interactions, now referred to as *Muse agents*."
-date: 2026-10-24T18:02:39+05:30
+date: 2026-10-24T22:01:45+05:30
 tags: [AIShopping, MuseAgents, RetailTech]
 categories: ["AI", "Artificial Intelligence", "E‑commerce", "Web Development"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/VRG_VST_102326_Site_attempt.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

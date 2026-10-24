@@ -2,7 +2,7 @@
 title: "Kimi K3.1 Pro launches on Moonshot API with competitive pricing and strong benchmark scores"
 slug: "kimi-k3-1-pro-launches-on-moonshot-api-with-competitive-pricing-and-strong-benchmark-scores"
 description: "Kimi K3.1 Pro landed on the Kimi API today. The model is not yet available with open weights, but Moonshot has promised full weight release by November 4, 2026."
-date: 2026-10-24T18:02:39+05:30
+date: 2026-10-24T22:01:45+05:30
 tags: [KimiAI, LLM, Benchmarks, OpenWeights]
 categories: ["AI", "Machine Learning", "Large Language Models", "AI Benchmarks", "APIs"]
 image: "https://static.simonwillison.net/static/2026/kimi-k3.1-card.jpg"

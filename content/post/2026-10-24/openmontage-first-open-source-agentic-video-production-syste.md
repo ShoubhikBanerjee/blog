@@ -2,7 +2,7 @@
 title: "OpenMontage: First Open‑Source Agentic Video Production System"
 slug: "openmontage-first-opensource-agentic-video-production-system"
 description: "The open‑source community released OpenMontage, described as the world’s first open‑source, agentic video production system."
-date: 2026-10-24T18:02:39+05:30
+date: 2026-10-24T22:01:45+05:30
 tags: [OpenMontage, OpenSource, AIProduction, VideoGeneration]
 categories: ["AI", "Artificial Intelligence", "Open Source Software", "Generative Media"]
 image: "https://avatars.githubusercontent.com/u/213189893?v=4"

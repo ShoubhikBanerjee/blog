@@ -2,7 +2,7 @@
 title: "New 11‑Hour Video Series Shows How to Build Reasoning Models from Scratch"
 slug: "new-11hour-video-series-shows-how-to-build-reasoning-models-from-scratch"
 description: "A fresh set of eight coding videos (totaling about 11 hours) has been released that walks through building a reasoning model from a small pre‑trained Qwen3 LLM using Python and PyTorch. The series is..."
-date: 2026-10-24T18:02:39+05:30
+date: 2026-10-24T22:01:45+05:30
 tags: [ReasoningModels, LLM, PyTorch, AIAgents]
 categories: ["AI", "Machine Learning", "AI Agents", "Deep Learning", "Natural Language Processing"]
 image: "https://substackcdn.com/image/fetch/$s_!1SoS!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F519db120-1320-411b-adec-a88865345f2c_4083x2916.jpeg"

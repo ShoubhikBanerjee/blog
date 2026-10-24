@@ -2,7 +2,7 @@
 title: "Amazon SageMaker AI Introduces Multi-Turn Reinforcement Learning for Agents"
 slug: "amazon-sagemaker-ai-introduces-multi-turn-reinforcement-learning-for-agents"
 description: "Amazon SageMaker AI has introduced Multi-Turn Reinforcement Learning (MTRL), a serverless capability designed to train models on sequences of actions where the only reliable feedback is whether the..."
-date: 2026-10-24T18:02:39+05:30
+date: 2026-10-24T22:01:45+05:30
 tags: [AmazonSageMaker, ReinforcementLearning, AIAgents, AWS, MachineLearning]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22014-featured-image.png"
