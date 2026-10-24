@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Granite on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/granite/</link><description>Recent content in Granite on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 22 Oct 2026 22:11:45 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/granite/index.xml" rel="self" type="application/rss+xml"/><item><title>Granite Timeseries Ensemble provides a zero‑training default forecast recipe</title><link>https://shoubhikbanerjee.github.io/blog/p/granite-timeseries-ensemble-provides-a-zerotraining-default-forecast-recipe/</link><pubDate>Thu, 22 Oct 2026 22:11:45 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/granite-timeseries-ensemble-provides-a-zerotraining-default-forecast-recipe/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6806091ee92bd22fd8ce9719/P6P8ZzHR8yL7GOOO4hQOg.png" alt="Featured image of post Granite Timeseries Ensemble provides a zero‑training default forecast recipe" /&gt;&lt;h1 id="granite-timeseries-ensemble-provides-a-zerotraining-default-forecast-recipe"&gt;Granite Timeseries Ensemble provides a zero‑training default forecast recipe
+&lt;/h1&gt;&lt;p&gt;Granite Timeseries Ensemble (Granite TSFM) introduces a default, zero‑training forecast recipe that combines four pre‑trained models.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Pre‑trained time‑series models can forecast without training on your dataset, but you still have to choose one.&lt;/li&gt;
+&lt;li&gt;Granite Timeseries Ensemble reduces that choice to a sensible default.&lt;/li&gt;
+&lt;li&gt;The default recipe combines four pre‑trained Granite models with different architectures, each capturing trends, seasonality, and local variation in different ways.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Two main ensemble recipes are provided:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Probabilistic Ensemble&lt;/strong&gt; (uniform probability pooling)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IQR Ensemble&lt;/strong&gt; (weights based on forecast spread)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Both recipes work with each member’s quantile forecasts (default 0.1 – 0.9) and produce a median and quantile forecasts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Probabilistic Ensemble&lt;/strong&gt; gives each member equal influence, pools quantile forecasts in probability space, and extracts the requested quantiles. No fitting step and no weighting hyperparameters are required.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IQR Ensemble&lt;/strong&gt; approximates each member’s inter‑quartile range from the nearest 25th and 75th percentiles, then weights members inversely to their interval width. Weights vary by sample, target, and horizon step; isotonic regression keeps combined quantiles from crossing. A temperature setting and optional cap let users move weights toward uniform or limit any single member’s influence.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Each member returns:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;result.prediction_outputs&lt;/code&gt; – the point forecast.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;result.quantile_outputs&lt;/code&gt; – quantile predictions ranging from 0.1 to 0.9.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The 0.1 and 0.9 quantiles define a central forecast interval with nominal 80 % coverage.&lt;/li&gt;
+&lt;li&gt;No retraining and no fitted ensemble weights; simple equal‑weight combinations have historically performed well in point forecasting.&lt;/li&gt;
+&lt;li&gt;The ensemble recipe stores the configuration rather than merged model weights; member checkpoints are downloaded at runtime, so allow extra time for the first run.&lt;/li&gt;
+&lt;li&gt;The recipe and its default Granite members are permissively licensed.&lt;/li&gt;
+&lt;li&gt;Both recipes were evaluated on 97 GIFT‑Eval dataset configurations (see the model card for full details, member checkpoints, evaluation, and limitations).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Install the package with:
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install &amp;#34;granite-tsfm&amp;gt;=0.3.11&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Load the recommended four‑model recipe directly from Hugging Face.&lt;/li&gt;
+&lt;li&gt;The model card provides the full configuration, member checkpoints, evaluation details, and known limitations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a ready‑to‑use, zero‑training forecast solution for a wide range of series, from smooth industrial signals to noisy retail demand.&lt;/li&gt;
+&lt;li&gt;Reduces the risk of selecting a poor single model by combining diverse architectures; a 50‑year review of forecast combinations notes that such ensembles can lower error risk when members are high‑quality and diverse.&lt;/li&gt;
+&lt;li&gt;Enables applications to use the median as a central prediction and selected quantiles to express forecast uncertainty without any hyperparameter tuning.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/buckets/rry003/blogcomponents/resolve/gift_eval_ranks_granite.png?download=true"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#TimeSeries #Forecasting #Ensemble #Granite&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/ibm-research/granite-timeseries-ensemble-r1" target="_blank" rel="noopener"
+&gt;Ensemble forecasting with IBM Granite time-series models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>IBM Updates Granite Speech Collection with New Multilingual and High-Speed Models</title><link>https://shoubhikbanerjee.github.io/blog/p/ibm-updates-granite-speech-collection-with-new-multilingual-and-high-speed-models/</link><pubDate>Wed, 21 Oct 2026 22:03:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ibm-updates-granite-speech-collection-with-new-multilingual-and-high-speed-models/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/653fb52cbfd890805461d691/M_JJyIOBOWVzHXdy7CVVG.png" alt="Featured image of post IBM Updates Granite Speech Collection with New Multilingual and High-Speed Models" /&gt;&lt;h1 id="ibm-updates-granite-speech-collection-with-new-multilingual-and-high-speed-models"&gt;IBM Updates Granite Speech Collection with New Multilingual and High-Speed Models
+&lt;/h1&gt;&lt;p&gt;IBM has announced three updates to its Granite Speech collection: a new speech-language model called granite-speech-5.0-2b, and revised versions of granite-speech-5.0-470m-turboctc and granite-speech-4.1-2b-plus. These models are designed to cover enterprise speech requirements, including high-accuracy transcription, translation, and long-form multi-speaker analysis.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Primary Use Case&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Key Attributes&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;granite-speech-5.0-2b&lt;/td&gt;
+&lt;td style="text-align: left"&gt;High-accuracy work&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2B parameters, multilingual transcription and translation, keyword biasing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;granite-speech-5.0-470m-turboctc&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Raw speed or edge use&lt;/td&gt;
+&lt;td style="text-align: left"&gt;470M parameters, 19,870 RTFx speed, native punctuation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;granite-speech-4.1-2b-plus&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Meetings and multi-speaker calls&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Speaker attribution, tighter timestamps, 24% lower long-form WER&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="granite-speech-50-2b"&gt;granite-speech-5.0-2b
+&lt;/h3&gt;&lt;p&gt;This model is the successor to granite-speech-4.1-2b and maintains the same parameter count. It was trained on 390,000 hours of public audio alongside synthetic data for Japanese ASR, translation, and keyword biasing.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multilingual Capabilities:&lt;/strong&gt; Transcribes English, French, German, Spanish, Portuguese, and Japanese. Translates to and from English for those languages, plus English to Italian and Mandarin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advanced Prompting:&lt;/strong&gt; Supports Language ID prompting and allows users to request formatted output; capitalization F1 ranges from 89.7 to 99.5 across test sets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Accuracy:&lt;/strong&gt; Features improved handling of noise, reverberation, and distant-microphone speech.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Keyword Biasing:&lt;/strong&gt; Supports lists of up to 2,000 terms to bias transcription toward product names and acronyms.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="granite-speech-50-470m-turboctc"&gt;granite-speech-5.0-470m-turboctc
+&lt;/h3&gt;&lt;p&gt;Formerly an English-only model, this 470M-parameter encoder is now optimized for speed and multilingual use.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multilingual Expansion:&lt;/strong&gt; Now supports English, Japanese, Spanish, German, French, Italian, and Portuguese.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance Gains:&lt;/strong&gt; The model is approximately 1.6x faster than its launch version, reaching 19,870 RTFx on the Open ASR Leaderboard by reusing a compiled Conformer block graph.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Edge Readiness:&lt;/strong&gt; Includes native punctuation and capitalization, and supports browser-based streaming via WebGPU.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="granite-speech-41-2b-plus"&gt;granite-speech-4.1-2b-plus
+&lt;/h3&gt;&lt;p&gt;This is a drop-in replacement for the original 4.1-2b model, utilizing the same architecture, API, and prompt format with improved weights for long-form enterprise recordings.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Speaker Attribution:&lt;/strong&gt; The word diarization error rate (WDER) and speaker-attributed WER (cpWER) both decreased by 7%.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Timing Precision:&lt;/strong&gt; The average timestamp shift (AAS) has been cut by more than half, improving captions and search.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Long-Speech Performance:&lt;/strong&gt; WER on long-form test sets decreased by 24%, while keyword biasing errors fell 45% when using 20-term lists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The models are released under the Apache 2.0 license and include support for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Transformers and vLLM&lt;/li&gt;
+&lt;li&gt;llama.cpp&lt;/li&gt;
+&lt;li&gt;mlx-audio for Apple Silicon&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/653fb52cbfd890805461d691/87yRtLq4X2CwMZrDhv0L_.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/662836b742709fe826510597/gltB0o--PV_Jh0D3aDm8-.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/65cc2c288ebd392213e58899/XHWV2L_wZsFe3ekksCgvQ.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#IBM #Granite #SpeechRecognition #MachineLearning #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/ibm-granite/granite-speech-5" target="_blank" rel="noopener"
+&gt;Granite Speech 5.0: Transcribe, Translate, and Attribute more Accurately and Faster&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

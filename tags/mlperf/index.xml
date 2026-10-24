@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MLPerf on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/mlperf/</link><description>Recent content in MLPerf on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 17 Sep 2026 22:02:13 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/mlperf/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA TensorRT Edge-LLM Performance in MLPerf Inference v6.1 Edge Agentic Benchmark</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-tensorrt-edge-llm-performance-in-mlperf-inference-v6-1-edge-agentic-benchmark/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-tensorrt-edge-llm-performance-in-mlperf-inference-v6-1-edge-agentic-benchmark/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image5-6-660x370.png" alt="Featured image of post NVIDIA TensorRT Edge-LLM Performance in MLPerf Inference v6.1 Edge Agentic Benchmark" /&gt;&lt;h1 id="nvidia-tensorrt-edge-llm-performance-in-mlperf-inference-v61-edge-agentic-benchmark"&gt;NVIDIA TensorRT Edge-LLM Performance in MLPerf Inference v6.1 Edge Agentic Benchmark
+&lt;/h1&gt;&lt;p&gt;NVIDIA TensorRT Edge-LLM has completed the MLPerf Inference v6.1 Edge Agentic benchmark running the Qwen3.6-27B model on a single NVIDIA Jetson AGX Thor Developer Kit.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The system was configured with the following specifications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hardware&lt;/strong&gt;: One NVIDIA Jetson AGX Thor Developer Kit&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory&lt;/strong&gt;: 128 GB of unified memory&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Power Mode&lt;/strong&gt;: MAXN&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution Mode&lt;/strong&gt;: SingleStream&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model&lt;/strong&gt;: Qwen3.6-27B&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-results"&gt;📊 Performance results
+&lt;/h2&gt;&lt;p&gt;The TensorRT Edge-LLM submission completed the performance workload in 24 minutes and 36 seconds, which is 6.4x faster than the llama.cpp reference submission of 2 hours and 37 minutes.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Output throughput&lt;/td&gt;
+&lt;td style="text-align: left"&gt;52.33 tokens per second&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Median time to first token&lt;/td&gt;
+&lt;td style="text-align: left"&gt;247.12 ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Median time per output token&lt;/td&gt;
+&lt;td style="text-align: left"&gt;14.68 ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;BFCL overall accuracy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;87.94%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The result was achieved using several optimization techniques:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Quantization&lt;/strong&gt;: The submission used NVFP4 (a 4-bit floating-point format supported by the NVIDIA Blackwell GPU) for weights and activations, including the language-model head, and FP8 for the KV cache. This smaller representation increases available unified memory for application workloads, speculative decoding state, and long context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;KV Cache Reuse&lt;/strong&gt;: TensorRT Edge-LLM identifies reusable prompt prefixes and restores cached attention KV pages. Because Qwen3.6 uses a hybrid model architecture, the runtime also restores partial KV-page state and the recurrent state. In this workload, approximately 96% of prompt tokens were served with hot cache, requiring the prefill of only ~0.5M of the 13.6M total prompt tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tree-based Multi-Token Prediction (MTP)&lt;/strong&gt;: A draft model predicts several future tokens which the target model verifies together in one forward pass. The server configuration utilized:
+&lt;ul&gt;
+&lt;li&gt;8 draft steps&lt;/li&gt;
+&lt;li&gt;Top-2 candidates at each drafting depth&lt;/li&gt;
+&lt;li&gt;A 16-node verification tree&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The MLPerf Edge Agentic benchmark measures OpenAI-compatible model endpoints across two phases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: The workload consists of 20 conversations and 1,007 generated turns. Input length grows to approximately 23.5K tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Accuracy&lt;/strong&gt;: This phase uses Berkeley Function Calling Leaderboard (BFCL) v4 prompts with reasoning off and single-turn only to balance evaluation time and accuracy on edge devices.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#MLPerf #TensorRT #JetsonAGXThor #EdgeAI #LLM&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/tensorrt-edge-llm-completes-the-mlperf-edge-agentic-benchmark-6-4x-faster-on-jetson-agx-thor/" target="_blank" rel="noopener"
+&gt;TensorRT Edge-LLM Completes the MLPerf Edge Agentic Benchmark 6.4x Faster on Jetson AGX Thor | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

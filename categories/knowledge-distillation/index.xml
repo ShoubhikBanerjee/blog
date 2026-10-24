@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Knowledge Distillation on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/knowledge-distillation/</link><description>Recent content in Knowledge Distillation on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 15 Oct 2026 22:04:06 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/knowledge-distillation/index.xml" rel="self" type="application/rss+xml"/><item><title>Fisher Utility Weighting Boosts On-Policy Distillation Efficiency</title><link>https://shoubhikbanerjee.github.io/blog/p/fisher-utility-weighting-boosts-on-policy-distillation-efficiency/</link><pubDate>Thu, 15 Oct 2026 22:04:06 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/fisher-utility-weighting-boosts-on-policy-distillation-efficiency/</guid><description>&lt;h1 id="fisher-utility-weighting-boosts-on-policy-distillation-efficiency"&gt;Fisher Utility Weighting Boosts On-Policy Distillation Efficiency
+&lt;/h1&gt;&lt;p&gt;On‑policy distillation (OPD) is gaining traction as a cheaper alternative to reinforcement learning, but selecting which student‑generated tokens to supervise remains a challenge. A new study derives token importance directly from the distillation objective and introduces &lt;strong&gt;Fisher Utility Weighting (FUW)&lt;/strong&gt;, a continuous, mean‑normalized weighting scheme that consistently improves OPD performance.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Traditional token‑selection methods for OPD prioritize positions visited by the student using signals such as &lt;strong&gt;uncertainty&lt;/strong&gt;, &lt;strong&gt;teacher‑student disagreement&lt;/strong&gt;, and &lt;strong&gt;mismatch direction&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The authors instead ask: &lt;em&gt;how much can each token’s loss decrease under an equal local KL budget on the student’s predictive distribution?&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The answer is a utility score \(s_t = g_t^{\top} F_t^{\dagger} g_t\), where \(g_t\) is the logit gradient and \(F_t\) is the categorical Fisher matrix.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Utility derivation&lt;/strong&gt;: The utility measures the maximum loss reduction achievable with a local trust‑region (KL) constraint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Objective‑specific forms&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;For &lt;strong&gt;reverse‑KL&lt;/strong&gt;, the utility equals the &lt;strong&gt;student‑weighted variance&lt;/strong&gt; of the student‑teacher log‑probability ratio.&lt;/li&gt;
+&lt;li&gt;For &lt;strong&gt;forward‑KL&lt;/strong&gt;, it equals the &lt;strong&gt;Pearson \(\chi^2\) divergence&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The appropriate utility follows automatically from the chosen KL direction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The utility is instantiated as &lt;strong&gt;Fisher Utility Weighting (FUW)&lt;/strong&gt;, a continuous token weight that is mean‑normalized across a sequence.&lt;/li&gt;
+&lt;li&gt;When evaluated on shared training checkpoints, several independently motivated criteria—&lt;strong&gt;student entropy&lt;/strong&gt;, &lt;strong&gt;KL disagreement&lt;/strong&gt;, and &lt;strong&gt;TIP&lt;/strong&gt;—concentrate importance on nearly the same tokens at a &lt;strong&gt;50 % selection fraction&lt;/strong&gt;; they diverge at stricter fractions and for direction‑specific criteria.&lt;/li&gt;
+&lt;li&gt;Controlled token flips illustrate the practical impact of teacher corrections:
+&lt;ul&gt;
+&lt;li&gt;Single‑token flips give modest gains on failed trajectories.&lt;/li&gt;
+&lt;li&gt;Repeated flips raise accuracy from &lt;strong&gt;28.4 %&lt;/strong&gt; to &lt;strong&gt;74.5 %&lt;/strong&gt;, approaching the teacher’s &lt;strong&gt;76.9 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Mass‑ and KL‑based selection outperform random flips by &lt;strong&gt;15–18 percentage points&lt;/strong&gt; at comparable counts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Selective intervention remains useful after OPD, although higher argmax agreement does not consistently improve accuracy across model pairs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Objective&lt;/th&gt;
+&lt;th&gt;Improvement Range (macro points)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Reverse‑KL&lt;/td&gt;
+&lt;td&gt;1.35 – 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Forward‑KL&lt;/td&gt;
+&lt;td&gt;1.08 – 2.71&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;These gains are measured across &lt;strong&gt;seven mathematical reasoning benchmarks&lt;/strong&gt; and &lt;strong&gt;three Qwen‑3 student‑teacher pairs&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;FUW matches or exceeds existing selective methods while relying on a &lt;strong&gt;single closed‑form score&lt;/strong&gt; derived from the training objective.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a principled, objective‑driven way to identify the most valuable teacher corrections, eliminating the need for handcrafted heuristics.&lt;/li&gt;
+&lt;li&gt;Improves OPD efficiency and final performance, making it a more viable alternative to full‑scale reinforcement learning for large language models.&lt;/li&gt;
+&lt;li&gt;Demonstrates that token‑level utility can be computed directly from the distillation loss, enabling better allocation of supervision budget during training.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#OnPolicyDistillation #FisherUtility #MachineLearning #KnowledgeDistillation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.18883v1" target="_blank" rel="noopener"
+&gt;Token Utility for On-Policy Distillation via Local Trust-Region Optimization&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.19145v1" target="_blank" rel="noopener"
+&gt;Demystifying On-Policy Distillation: Where Does the Teacher&amp;rsquo;s Advantage Live?&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.19367v1" target="_blank" rel="noopener"
+&gt;Beyond Corrected Actions: Training LLM Agents on Textual Critiques&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

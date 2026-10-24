@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Data Engineering on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/data-engineering/</link><description>Recent content in Data Engineering on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 23 Oct 2026 22:04:00 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/data-engineering/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA KvikIO Python Library Demonstrates Direct GPU Storage Access via GPUDirect Storage</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-kvikio-python-library-demonstrates-direct-gpu-storage-access-via-gpudirect-storage/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-kvikio-python-library-demonstrates-direct-gpu-storage-access-via-gpudirect-storage/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/03/ai-data-660x370.png" alt="Featured image of post NVIDIA KvikIO Python Library Demonstrates Direct GPU Storage Access via GPUDirect Storage" /&gt;&lt;h1 id="nvidia-kvikio-python-library-demonstrates-direct-gpu-storage-access-via-gpudirect-storage"&gt;NVIDIA KvikIO Python Library Demonstrates Direct GPU Storage Access via GPUDirect Storage
+&lt;/h1&gt;&lt;p&gt;NVIDIA’s Magnum IO GPUDirect Storage (GDS) now works with the KvikIO Python library to let AI applications move data directly from storage into GPU memory, bypassing the CPU.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;GPU applications are processing ever‑growing datasets with increasingly powerful accelerators.&lt;/li&gt;
+&lt;li&gt;The 2025 Stanford AI Index reports that compute for notable AI models has been doubling roughly every five months, while the size of datasets used to train LLMs has been doubling roughly every eight months.&lt;/li&gt;
+&lt;li&gt;As computation and data scale together, moving data efficiently from storage becomes a necessity for keeping accelerators supplied.&lt;/li&gt;
+&lt;li&gt;NVIDIA Magnum IO GPUDirect Storage (GDS) addresses this challenge by enabling a direct data path between supported storage and GPU memory.&lt;/li&gt;
+&lt;li&gt;The direct path avoids unnecessary staging through CPU memory and reduces overall CPU utilization in the system.&lt;/li&gt;
+&lt;li&gt;GDS is supported by a growing ecosystem that includes many major storage vendors.&lt;/li&gt;
+&lt;li&gt;At the application layer, Python plays a central role in modern AI development; as of August 2025, nearly half of all new AI projects on GitHub were built primarily in Python.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;GPUDirect Storage (GDS)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Enables a direct data path between supported storage and GPU memory.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;cuFile&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;C library and API through which applications and frameworks access GDS.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;KvikIO&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Python and C++ library that sits above cuFile, providing high‑level, idiomatic interfaces and additional controls over how I/O requests are performed.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;The application supplies a file‑system path and a GPU buffer.&lt;/li&gt;
+&lt;li&gt;KvikIO decides whether to route the request through cuFile (direct path) or use its POSIX compatibility path, which stages data through host memory.&lt;/li&gt;
+&lt;li&gt;When cuFile is selected, KvikIO registers the file and issues the I/O using the target GPU buffer.&lt;/li&gt;
+&lt;li&gt;cuFile then determines the actual transfer path based on system support, the file system, and its configuration; it may use the accelerated GDS path or fall back to a CPU‑staged compatibility path.&lt;/li&gt;
+&lt;li&gt;Reaching the cuFile API confirms that KvikIO selected cuFile, but does not by itself confirm that the accelerated GDS path was activated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-tutorial-highlights"&gt;⚙️ Tutorial Highlights
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Demonstrates how to use the NVIDIA KvikIO Python API to configure storage I/O, read data into GPU memory, and confirm that the accelerated path within GDS was activated.&lt;/li&gt;
+&lt;li&gt;Shows how to inspect KvikIO and cuFile settings that influence the path each operation takes.&lt;/li&gt;
+&lt;li&gt;Tested on an x86_64 system with an NVIDIA H100 GPU, CUDA 13.3, and cuFile 1.18.&lt;/li&gt;
+&lt;li&gt;The system used a local NVMe device formatted with ext4; a PIX connection between the GPU and NVMe device means the path traverses at most one PCIe bridge.&lt;/li&gt;
+&lt;li&gt;IOMMU and ACS were disabled to preserve PCIe peer‑to‑peer transfers, and the &lt;code&gt;nvidia-fs&lt;/code&gt; kernel module was loaded to provide the accelerated path.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Doubling compute and dataset sizes increase pressure on the storage‑to‑GPU data pipeline.&lt;/li&gt;
+&lt;li&gt;Direct storage‑to‑GPU transfers reduce CPU overhead, freeing CPU resources for other parts of the AI workload.&lt;/li&gt;
+&lt;li&gt;Providing a high‑level Python interface (KvikIO) aligns with the fact that nearly half of new AI projects are Python‑centric, lowering the barrier for developers to adopt accelerated I/O.&lt;/li&gt;
+&lt;li&gt;A growing storage‑vendor ecosystem around GDS broadens hardware compatibility for future AI systems.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/execution-flow-nvidia-kvikio.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/terminal-check-session-kvikio-gds-diagnostic.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/03/ai-data-1024x576.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #GPUDirectStorage #KvikIO #AI #Python&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/how-to-read-data-into-gpu-memory-in-python-with-nvidia-gpudirect-storage/" target="_blank" rel="noopener"
+&gt;How to Read Data into GPU Memory in Python with NVIDIA GPUDirect Storage | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Kumo Relational Foundation Model Beats Traditional Pipelines on Enterprise Databases</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-kumo-relational-foundation-model-beats-traditional-pipelines-on-enterprise-databases/</link><pubDate>Thu, 22 Oct 2026 22:11:45 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-kumo-relational-foundation-model-beats-traditional-pipelines-on-enterprise-databases/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6ad8e88370f69967fafc8703/i-Flass3NMPRmc6lVfwO_.png" alt="Featured image of post NVIDIA Kumo Relational Foundation Model Beats Traditional Pipelines on Enterprise Databases" /&gt;&lt;h1 id="nvidia-kumo-relational-foundation-model-beats-traditional-pipelines-on-enterprise-databases"&gt;NVIDIA Kumo Relational Foundation Model Beats Traditional Pipelines on Enterprise Databases
+&lt;/h1&gt;&lt;p&gt;NVIDIA introduced Kumo Relational, a pre‑trained relational foundation model that predicts directly on enterprise databases without task‑specific training or feature engineering.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Operates on the database itself, respecting tables, foreign keys, and timestamps.&lt;/li&gt;
+&lt;li&gt;Accepts a &lt;strong&gt;Predictive Query Language (PQL)&lt;/strong&gt; statement that describes &lt;em&gt;what&lt;/em&gt; to predict rather than &lt;em&gt;how&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Returns predictions in a single forward pass after gathering up to 10,000 historical examples as context.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pre‑training&lt;/strong&gt;: Trained once on synthetic relational data that mirrors real‑world datasets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;In‑context learning&lt;/strong&gt;: At inference time the model reads up to 10,000 context examples, each consisting of a local subgraph around an entity and its ground‑truth target (e.g., churn, demand, fraud).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Temporal handling&lt;/strong&gt;: For time‑based tasks the model replays historical database states, sampling entity‑centric subgraphs up to an anchor timestamp and using only data from before that point to avoid leakage.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Architecture&lt;/strong&gt;: A lightweight network processes each table independently, alternating column attention (relating values within a column) and row attention (relating features within a row). The model learns which columns and rows matter for the current prediction.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Agent integration&lt;/strong&gt;: Built to be called by agents; the PQL interface provides a simple way for agents to ask predictive questions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance"&gt;⚙️ Performance
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Benchmark&lt;/th&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;Improvement over baseline&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;RelBench V1 classification&lt;/td&gt;
+&lt;td&gt;AUROC&lt;/td&gt;
+&lt;td&gt;+~4 points vs. gradient‑boosted trees on expert‑engineered features&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SAP SALT (out‑of‑the‑box)&lt;/td&gt;
+&lt;td&gt;MRR&lt;/td&gt;
+&lt;td&gt;+7 points vs. XGBoost on engineered features&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SAP SALT (fine‑tuned)&lt;/td&gt;
+&lt;td&gt;MRR&lt;/td&gt;
+&lt;td&gt;+13 points vs. XGBoost&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;41 tasks on 15 databases (overall)&lt;/td&gt;
+&lt;td&gt;MRR&lt;/td&gt;
+&lt;td&gt;+8% vs. AutoGluon ensembles&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Across 41 tasks on 15 databases, Kumo Relational beats supervised relational deep‑learning models, expert‑engineered gradient‑boosted tree pipelines, and AutoGluon ensembles. It also outperforms gradient‑boosted trees on RelBench V1 by nearly 4 AUROC points on average.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Accessible through NVIDIA’s open‑source, GPU‑native &lt;strong&gt;structured‑data‑models&lt;/strong&gt; library.&lt;/li&gt;
+&lt;li&gt;Also offered as an NVIDIA &lt;strong&gt;NIM&lt;/strong&gt; (NVIDIA Inference Model).&lt;/li&gt;
+&lt;li&gt;Scales to databases with &lt;strong&gt;500 B+ rows&lt;/strong&gt; and works for both humans and agents.&lt;/li&gt;
+&lt;li&gt;Paper: &lt;a class="link" href="https://arxiv.org/abs/2604.12596" target="_blank" rel="noopener"
+&gt;https://arxiv.org/abs/2604.12596&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Documentation: &lt;a class="link" href="https://docs.nvidia.com/sdgm/rfm/overview" target="_blank" rel="noopener"
+&gt;https://docs.nvidia.com/sdgm/rfm/overview&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Eliminates weeks of feature engineering, task‑specific training, and pipeline tuning traditionally required for relational data.&lt;/li&gt;
+&lt;li&gt;A single pre‑trained model replaces separate pipelines for individual tasks, turning a new prediction into a query rather than a full project.&lt;/li&gt;
+&lt;li&gt;Demonstrates that foundation models for structured data can outperform the best supervised models, simplifying production deployment and enabling broader use of predictive analytics across organizations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6ad8e88370f69967fafc8703/FY-lkWrNmBYRFrosRD2Le.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6ad8e88370f69967fafc8703/OFX2a7xwBTfUEcbedTsfe.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6ad8e88370f69967fafc8703/9ITlubGvqGVnoy7j_NZDi.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #RelationalAI #MachineLearning #EnterpriseAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/nvidia/kumo-relational" target="_blank" rel="noopener"
+&gt;NVIDIA Kumo Relational Outperforms Supervised Machine Learning on Relational Data, No Training Required&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA and IIT Madras Release 2.8 Trillion‑Token Indic Pretraining Corpus</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-and-iit-madras-release-2-8-trilliontoken-indic-pretraining-corpus/</link><pubDate>Fri, 16 Oct 2026 22:06:38 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-and-iit-madras-release-2-8-trilliontoken-indic-pretraining-corpus/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68d2fec8856b85d927e44d32/x0aObe_0mduBjWFuKBGoV.png" alt="Featured image of post NVIDIA and IIT Madras Release 2.8 Trillion‑Token Indic Pretraining Corpus" /&gt;&lt;h1 id="nvidia-and-iitmadras-release-28trilliontoken-indic-pretraining-corpus"&gt;NVIDIA and IIT Madras Release 2.8 Trillion‑Token Indic Pretraining Corpus
+&lt;/h1&gt;&lt;p&gt;NVIDIA, in collaboration with IIT Madras and its AI4Bharat lab, is releasing &lt;strong&gt;Nemotron‑pretraining‑Indic‑v1&lt;/strong&gt;, a 2.8 trillion‑token dataset covering all 22 Indian Constitution languages, together with an open GPU‑accelerated data‑generation pipeline.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Approx. 2.8 trillion tokens across &lt;strong&gt;22 Indian languages&lt;/strong&gt; (the languages listed in India’s Constitution, spoken by 97 % of Indians – about 1.2 billion citizens at the 2011 Census).\&lt;/li&gt;
+&lt;li&gt;Developed by &lt;strong&gt;NVIDIA&lt;/strong&gt;, &lt;strong&gt;IIT Madras&lt;/strong&gt;, and &lt;strong&gt;AI4Bharat&lt;/strong&gt;.\&lt;/li&gt;
+&lt;li&gt;Released alongside an open, GPU‑accelerated synthetic‑data pipeline that captures prompts, LLM workflows, and quality checks.\&lt;/li&gt;
+&lt;li&gt;Extends prior resources such as AI4Bharat’s &lt;strong&gt;Sangraha&lt;/strong&gt; open pretraining corpus.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The pipeline is built with &lt;strong&gt;NeMo Data Designer&lt;/strong&gt;, NVIDIA’s open‑source framework for generating synthetic data.\&lt;/li&gt;
+&lt;li&gt;It follows a &lt;strong&gt;four‑stage synthetic‑data workflow&lt;/strong&gt; (translation → quality assessment → targeted repair → final validation) implemented using &lt;strong&gt;Gemma‑4‑31B‑it&lt;/strong&gt;.\&lt;/li&gt;
+&lt;li&gt;Each output retains a source identifier, allowing developers to trace synthetic text back to its original document.\&lt;/li&gt;
+&lt;li&gt;Quality checks preserve technical content such as equations, tables, and code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Token composition&lt;/strong&gt; (Gemma‑4 tokenizer):\
+&lt;ul&gt;
+&lt;li&gt;2,601.0 billion native‑script tokens\&lt;/li&gt;
+&lt;li&gt;224.6 billion romanized tokens\&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Script coverage&lt;/strong&gt;: native‑script data for all 22 languages and romanized text for 12 languages, giving &lt;strong&gt;34 language‑script configurations&lt;/strong&gt;.\&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Languages by script&lt;/strong&gt;:
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Language&lt;/th&gt;
+&lt;th&gt;Script Type&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Assamese&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Bodo&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dogri&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Gujarati&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hindi&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kannada&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Malayalam&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Marathi&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nepali&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Odia&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Punjabi&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tamil&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Telugu&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Urdu&lt;/td&gt;
+&lt;td&gt;Native / Romanized&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kashmiri&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Konkani&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Maithili&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Manipuri&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sanskrit&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Santali&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sindhi&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;Romanized text means Indic‑language text written in Latin script, &lt;strong&gt;not&lt;/strong&gt; an English translation.\&lt;/li&gt;
+&lt;li&gt;The corpus was assembled from &lt;strong&gt;15 Nemotron‑CC‑v2 subsets&lt;/strong&gt; covering web text, question‑answer material, mathematics, code, and other specialized content.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Nemotron‑pretraining‑Indic‑v1 and the accompanying data‑generation pipeline will be released &lt;strong&gt;soon&lt;/strong&gt; as open resources for model builders.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AI4Bharat’s director Mitesh Khapra identified the lack of data as the core reason Indian language technology lags behind English.\&lt;/li&gt;
+&lt;li&gt;Providing a massive, high‑quality multilingual corpus—including technical content such as mathematics and code—gives researchers and developers a foundation to build models that can explain concepts, solve problems, and answer questions in Indian languages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68d2fec8856b85d927e44d32/VmVFMKjOsoNkEKfQ7cRnh.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68d2fec8856b85d927e44d32/PCtm5uAGrdrp8kgHXb6y3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68d2fec8856b85d927e44d32/ZPR2A2wDoNW6OVb4-GX63.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #IndicAI #OpenData #AI4Bharat #Pretraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/nvidia/scaling-indic-pretraining" target="_blank" rel="noopener"
+&gt;Scaling Indic Pretraining: 2.8 Trillion Tokens and an Open Data Generation Pipeline&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Guide to Building Production AI Memory Systems</title><link>https://shoubhikbanerjee.github.io/blog/p/guide-to-building-production-ai-memory-systems/</link><pubDate>Wed, 14 Oct 2026 22:09:38 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/guide-to-building-production-ai-memory-systems/</guid><description>&lt;img src="https://dealon.ai/blog/api/media/file/AI%20Memory%20Systems" alt="Featured image of post Guide to Building Production AI Memory Systems" /&gt;&lt;h1 id="guide-to-building-production-ai-memory-systems"&gt;Guide to Building Production AI Memory Systems
+&lt;/h1&gt;&lt;p&gt;AI language models are stateless, so every request starts from a blank slate. What feels like memory in a chat window is actually an application trick that resends earlier messages. To give assistants persistent, user‑specific knowledge, developers add a separate engineering layer called an &lt;strong&gt;AI memory system&lt;/strong&gt;. This guide explains the components, workflow, and practical considerations for deploying such a system in production.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Definition&lt;/strong&gt; – An AI memory system is a storage and retrieval layer that lets an AI application save useful information, retrieve the relevant parts later, and use them to improve future responses.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stateless models&lt;/strong&gt; – Large language models are stateless by design; every request receives a prompt, produces a completion, and retains nothing. This is true of GPT‑style models, Claude, Gemini, and open‑source models such as Llama and Mistral alike.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Illusion of chat memory&lt;/strong&gt; – What looks like memory in a chat window is an illusion produced by the application, which resends the earlier messages with each new request. That approach hits a hard ceiling because context windows are finite, long prompts cost more and respond slower, and models tend to use information in the middle of a very long context less reliably than information at the edges.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The core of every memory system follows a six‑step pipeline:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Step&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Capture&lt;/td&gt;
+&lt;td&gt;After each interaction, an extractor decides whether anything is worth keeping and rewrites it as a clean, self‑contained statement (e.g., “Prefers deployment on AWS.”).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Store&lt;/td&gt;
+&lt;td&gt;The statement and its metadata (user ID, timestamp, source, confidence) are stored in a vector database.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Index&lt;/td&gt;
+&lt;td&gt;An embedding model converts the text into a vector, placing similar meanings close together.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retrieve&lt;/td&gt;
+&lt;td&gt;At query time the system looks for the closest matches, then re‑ranks them by relevance, recency, and importance.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Inject&lt;/td&gt;
+&lt;td&gt;The top memories are formatted into the prompt within a strict token budget.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Generate&lt;/td&gt;
+&lt;td&gt;The language model generates a response using the injected memories; the memory lives in the prompt for minutes and is limited by the context window.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;External decision making&lt;/strong&gt; – The memory system decides what to save, where to keep it, and what to place in front of the model on each turn.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory types&lt;/strong&gt; –
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Episodic memory&lt;/em&gt; lets an agent learn from experience rather than start over each time.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Distilled facts and domain knowledge&lt;/em&gt; such as “the user writes Python” or “refunds are allowed within 30 days.”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory updates&lt;/strong&gt; – New facts are compared with old ones; duplicates are merged, contradictions are resolved, and stale items are expired.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Production definition&lt;/strong&gt; – A governed data service with write policies, retrieval quality metrics, expiration rules, access controls, and user‑facing edit and delete tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Without a memory system, developers must rely on ever‑growing prompts, which incur higher costs, slower responses, and reduced reliability of information deep inside the context.&lt;/li&gt;
+&lt;li&gt;An external memory can persist for months or years, enabling assistants to adapt to individual users over long periods.&lt;/li&gt;
+&lt;li&gt;Adding a memory layer transforms a stateless language model into an assistant that remembers preferences, policies, and domain facts across sessions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AImemory #LLM #ProductionAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://dealon.ai/ai-memory-systems" target="_blank" rel="noopener"
+&gt;AI Memory Systems: The Practical Guide to Architecture and Real-World Examples - Dealon.ai&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA KGMON Team Secures Second Place at KDD Cup 2026 with Agent Harness</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-kgmon-team-secures-second-place-at-kdd-cup-2026-with-agent-harness/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-kgmon-team-secures-second-place-at-kdd-cup-2026-with-agent-harness/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/KGMON-660x370.png" alt="Featured image of post NVIDIA KGMON Team Secures Second Place at KDD Cup 2026 with Agent Harness" /&gt;&lt;h1 id="nvidia-kgmon-team-secures-second-place-at-kdd-cup-2026-with-agent-harness"&gt;NVIDIA KGMON Team Secures Second Place at KDD Cup 2026 with Agent Harness
+&lt;/h1&gt;&lt;p&gt;The NVIDIA KGMON team placed second in the KDD Cup 2026 Data Agents competition with a system that streamlines the agent harness to be smaller, clearer, and easier to verify.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The competition required agents to answer natural‑language questions over heterogeneous data sources such as databases, CSV/JSON files, prose documents, PDFs, and briefing videos.&lt;/li&gt;
+&lt;li&gt;Every task demanded more than simple retrieval: agents had to inspect data, choose appropriate tools, reason across sources, produce a final answer file, and navigate traps common in analytical workflows.&lt;/li&gt;
+&lt;li&gt;Teams were limited to a small, fixed LLM, making the harness the primary optimization surface.&lt;/li&gt;
+&lt;li&gt;KGMON’s approach focused on preprocessing, constrained tools, persistent state, and systematic evaluation to make the task easier for the available model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture--workflow"&gt;🛠️ Architecture &amp;amp; Workflow
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Unified data access&lt;/strong&gt; – CSV and JSON files were converted into tables inside a single SQLite database, giving the agent one SQL interface for all structured data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single tool set&lt;/strong&gt; – The environment exposed only a few helpers: schema inspection, SQL queries, document lookup, prose extraction, and answer writing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Schema‑scouting step&lt;/strong&gt; – Before the main reasoning loop the system inspected tables, columns, join keys, duplicate names, units, null patterns, and row‑grain issues, then supplied this context to the agent.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Middleware repair&lt;/strong&gt; – Malformed tool calls were automatically fixed so a single bad call would not abort the attempt.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stateful Python environment&lt;/strong&gt; – Variables persisted between tool calls, allowing reuse of intermediate results.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Predefined functions&lt;/strong&gt; – &lt;code&gt;schema()&lt;/code&gt;, &lt;code&gt;sql(query)&lt;/code&gt;, and &lt;code&gt;write_answer(df)&lt;/code&gt; reduced boilerplate, syntax errors, and file‑handling mistakes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution tracing&lt;/strong&gt; – Repeated attempts and trajectory inspection helped identify failures and refine the harness.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Function / Helper&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;schema()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Provide the agent with table and column metadata discovered during scouting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;sql(query)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Execute a SQL statement against the unified SQLite database&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;write_answer(df)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Write the final answer file in the required format&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Document lookup&lt;/td&gt;
+&lt;td&gt;Retrieve relevant prose or PDF content&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Prose extraction&lt;/td&gt;
+&lt;td&gt;Pull specific text snippets from unstructured documents&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Figure 1 (see below) illustrates the overall workflow from data ingestion to final answer generation.&lt;/p&gt;
+&lt;h2 id="-reliability-techniques"&gt;⚙️ Reliability Techniques
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Preprocessing data into a uniform SQL schema reduced routing failures and saved turns for reasoning.&lt;/li&gt;
+&lt;li&gt;Constrained tool set limited the ways the agent could interact with the environment, lowering the chance of mistakes.&lt;/li&gt;
+&lt;li&gt;Persistent state and middleware repair prevented a single error from ending an attempt.&lt;/li&gt;
+&lt;li&gt;Short, valid attempts conserved the limited turn budget for additional runs, evaluation, and ensembling.&lt;/li&gt;
+&lt;li&gt;Execution traces and trajectory inspection were used to pinpoint failures such as bad tool calls or answer‑format issues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-common-failure-modes"&gt;🚩 Common Failure Modes
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Bad tool call (e.g., syntax error)&lt;/li&gt;
+&lt;li&gt;Incorrect join key leading to wrong results&lt;/li&gt;
+&lt;li&gt;Missed document rule or threshold in unstructured sources&lt;/li&gt;
+&lt;li&gt;Answer‑format mismatch causing the final output to be rejected&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The techniques are especially useful when building reliable systems around smaller open models.&lt;/li&gt;
+&lt;li&gt;Reliability often stems more from a well‑designed harness than from expanding the openness of the model itself.&lt;/li&gt;
+&lt;li&gt;A streamlined harness leaves more capacity for the fixed LLM to focus on analysis rather than plumbing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Figure 1: Overall workflow of the KGMON system&lt;/em&gt;&lt;br&gt;
+&lt;img src="https://shoubhikbanerjee.github.io/blog/image1"
+loading="lazy"
+alt="Workflow"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-1-3.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/KGMON-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#KDD2026 #AIAgents #NVIDIA #LLM #DataIntegration&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/building-reliable-data-analytics-agents-lessons-from-the-kdd-cup/" target="_blank" rel="noopener"
+&gt;Building Reliable Data Analytics Agents: Lessons from the KDD Cup | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>QAD ERP Reporting Extends to Microsoft Fabric via Open Mirroring</title><link>https://shoubhikbanerjee.github.io/blog/p/qad-erp-reporting-extends-to-microsoft-fabric-via-open-mirroring/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/qad-erp-reporting-extends-to-microsoft-fabric-via-open-mirroring/</guid><description>&lt;img src="https://kanerika.com/wp-content/uploads/2025/04/kanerika.jpg" alt="Featured image of post QAD ERP Reporting Extends to Microsoft Fabric via Open Mirroring" /&gt;&lt;h1 id="qad-erp-reporting-extends-to-microsoft-fabric-via-open-mirroring"&gt;QAD ERP Reporting Extends to Microsoft Fabric via Open Mirroring
+&lt;/h1&gt;&lt;p&gt;Manufacturers using QAD ERP can combine multiple reporting layers, and a new mirroring path now moves QAD data into Microsoft Fabric.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Layer 1 – Native QAD tools&lt;/strong&gt; – Provide operational lookups, formatted documents and financial statements inside the ERP.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Layer 2 – Power BI&lt;/strong&gt; – Adds interactive analysis; the simplest connection imports QAD data over OpenEdge ODBC on a schedule.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Layer 3 – Data warehouse / Microsoft Fabric&lt;/strong&gt; – Uses a QAD Fabric mirroring process that runs through Open Mirroring because Microsoft Fabric has no native mirroring source for QAD.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;An extraction layer reads tables from the Progress OpenEdge database behind QAD.&lt;/li&gt;
+&lt;li&gt;It writes those tables as Parquet files into a landing zone in OneLake.&lt;/li&gt;
+&lt;li&gt;Microsoft Fabric turns the Parquet files into Delta tables and keeps them current.&lt;/li&gt;
+&lt;li&gt;Each table requires a stable key.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The three layers can be used simultaneously by a manufacturer.&lt;/li&gt;
+&lt;li&gt;Power BI connects via OpenEdge ODBC and can be scheduled for regular imports.&lt;/li&gt;
+&lt;li&gt;Fabric mirroring relies on Open Mirroring; there is no built‑in source connector for QAD.&lt;/li&gt;
+&lt;li&gt;Delta tables in Fabric provide a continuously refreshed view of the ERP data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-layer-comparison"&gt;📊 Layer comparison
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Layer&lt;/th&gt;
+&lt;th&gt;What it provides&lt;/th&gt;
+&lt;th&gt;Integration method&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Native QAD tools&lt;/td&gt;
+&lt;td&gt;Operational lookups, formatted documents, financial statements&lt;/td&gt;
+&lt;td&gt;Built‑in ERP functionality&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Power BI&lt;/td&gt;
+&lt;td&gt;Interactive analysis&lt;/td&gt;
+&lt;td&gt;OpenEdge ODBC import on a schedule&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Microsoft Fabric&lt;/td&gt;
+&lt;td&gt;Mirrored, current Delta tables&lt;/td&gt;
+&lt;td&gt;Open Mirroring → Parquet → OneLake → Delta&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Combining native ERP reports with Power BI and Fabric gives manufacturers flexible, up‑to‑date analytics.&lt;/li&gt;
+&lt;li&gt;The mirroring flow keeps the data warehouse synchronized without a native QAD connector.&lt;/li&gt;
+&lt;li&gt;Stable keys ensure reliable table joins and updates within Fabric.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://kanerika.com/wp-content/uploads/2026/10/kanerika-qad-erp-reporting-banner-1024x363.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://kanerika.com/wp-content/uploads/2026/10/kanerika-qad-fabric-mirroring-banner-1024x363.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#QAD #MicrosoftFabric #PowerBI #DataMirroring&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://kanerika.com/resources/blogs/" target="_blank" rel="noopener"
+&gt;Kanerika Blog | Latest Articles on AI, ML, Data &amp;amp; Automation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>End-to-End Approach for Generating Context-Specific LLM Benchmark Datasets</title><link>https://shoubhikbanerjee.github.io/blog/p/end-to-end-approach-for-generating-context-specific-llm-benchmark-datasets/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/end-to-end-approach-for-generating-context-specific-llm-benchmark-datasets/</guid><description>&lt;h1 id="end-to-end-approach-for-generating-context-specific-llm-benchmark-datasets"&gt;End-to-End Approach for Generating Context-Specific LLM Benchmark Datasets
+&lt;/h1&gt;&lt;p&gt;A new paper presents an end-to-end approach for creating large language model (LLM) benchmark datasets by combining synthetic data generation with expert input.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Existing benchmark construction methods typically face a trade-off between validity and scalability:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Expert-designed datasets:&lt;/strong&gt; Produce high-quality evaluations but are slow and costly to create.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Synthetically generated data:&lt;/strong&gt; Scale efficiently but often result in redundant, unrealistic, or out-of-scope examples.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To address these gaps, the approach utilizes the following mechanisms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Schema Elicitation:&lt;/strong&gt; A schema is used to elicit key information regarding the context, scope, and goals of an evaluation task, which then guides the synthetic data generation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Expert-Informed Scaffolds:&lt;/strong&gt; These scaffolds guide synthetic generation toward more valid benchmarks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The researchers defined four criteria grounded in measurement validity to assess dataset quality:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Criterion&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Coverage&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Assessing dataset quality&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Diversity&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Assessing dataset quality&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Content Realism&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Assessing dataset quality&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Stylistic Realism&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Assessing dataset quality&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Through quantitative evaluations and a real-world case study with domain experts, the authors demonstrate that this approach improves benchmark data quality over existing methods while preserving validity. Additionally, the research analyzes how different types of schema information affect specific quality criteria to provide guidance on prioritizing information collection under resource constraints.&lt;/p&gt;
+&lt;p&gt;#LLM #Benchmarks #SyntheticData #AIevaluation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.16592v1" target="_blank" rel="noopener"
+&gt;A Framework for Generating Valid Context-Specific Benchmarks through Expert Guidance&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

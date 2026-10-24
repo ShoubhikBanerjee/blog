@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Model Alignment on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/model-alignment/</link><description>Recent content in Model Alignment on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 00:53:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/model-alignment/index.xml" rel="self" type="application/rss+xml"/><item><title>Projected Abliteration: Refining Language Model Safety Removal</title><link>https://shoubhikbanerjee.github.io/blog/p/projected-abliteration-refining-language-model-safety-removal/</link><pubDate>Tue, 28 Oct 2025 00:53:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/projected-abliteration-refining-language-model-safety-removal/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Projected Abliteration: Refining Language Model Safety Removal" /&gt;&lt;h1 id="-projected-abliteration-refining-language-model-safety-removal"&gt;🧩 Projected Abliteration: Refining Language Model Safety Removal
+&lt;/h1&gt;&lt;p&gt;Abliteration is a technique for removing refusal behaviors from language models by identifying
+and intervening on &amp;ldquo;refusal directions&amp;rdquo; in activation space, notionally represented via a single
+mean refusal direction. We present a refinement called &amp;ldquo;projected abliteration&amp;rdquo; that improves
+upon the conventional approach by removing only the mechanistically relevant components of the refusal direction.&lt;/p&gt;
+&lt;p&gt;Below we propose a refinement to conventional abliteration.&lt;/p&gt;
+&lt;h2 id="-refusal-direction"&gt;⚙️ Refusal Direction
+&lt;/h2&gt;&lt;p&gt;In conventional abliteration, the refusal direction is often calculated as:&lt;/p&gt;
+&lt;p&gt;**r⃗ = μ⃗_H - μ⃗_&lt;/p&gt;
+&lt;p&gt;Where μ_H is the mean of harmful-refusal activations/directions, and μ_A is the mean of
+harmless-acceptance activations/directions.&lt;/p&gt;
+&lt;p&gt;We observe that the refusal direction can be decomposed into two projections based on our choice
+of either of the two mean directions.&lt;/p&gt;
+&lt;h2 id="-decomposition-relative-to-μ_a-harmless-mean"&gt;🔍 Decomposition Relative to μ⃗_A (Harmless Mean
+&lt;/h2&gt;&lt;p&gt;**r⃗ = r⃗_∥μ_A + r⃗_⊥μ_&lt;/p&gt;
+&lt;p&gt;Can be expressed as:&lt;/p&gt;
+&lt;p&gt;**(r⃗ · μ⃗_A)/(∥μ⃗_A∥²) μ⃗_A + r⃗_⊥&lt;/p&gt;
+&lt;p&gt;Where r⃗_∥μ_A is the component parallel to harmless direction, and r⃗_⊥μ_A is the componen
+orthogonal to harmless direction.&lt;/p&gt;
+&lt;p&gt;Furthermore, if μ_A is (normalized to) a unit vector, the parallel contribution simplifies to:&lt;/p&gt;
+&lt;p&gt;**r⃗_∥μ_A = (r⃗ · μ⃗_A) μ⃗&lt;/p&gt;
+&lt;h3 id="-understanding-the-components"&gt;🤔 Understanding the Components
+&lt;/h3&gt;&lt;p&gt;*&lt;em&gt;The meaning of the parallel component r⃗_∥μ_A is unclear:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It represents the extent to which the refusal direction aligns with the model&amp;rsquo;s general
+&amp;ldquo;helpful/harmless assistance&amp;rdquo; representation&lt;/li&gt;
+&lt;li&gt;This could mean:
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Confounded interpretation&lt;/strong&gt;: An unimportant difference in how &amp;ldquo;helpfulness&amp;rdquo; is represented between contexts&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Necessary coupling&lt;/strong&gt;: Refusal may require modulating helpfulness representations&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Artifact&lt;/strong&gt;: Statistical noise from finite sampling of activation space&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;*&lt;em&gt;The meaning of the orthogonal component r⃗_⊥μ_A is relatively straightforward:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It captures what distinguishes refusal &lt;em&gt;beyond&lt;/em&gt; general helpfulness patterns&lt;/li&gt;
+&lt;li&gt;Is more likely to represent refusal-specific mechanism&lt;/li&gt;
+&lt;li&gt;But we can&amp;rsquo;t be certain &lt;em&gt;a priori&lt;/em&gt; it&amp;rsquo;s the &amp;ldquo;complete&amp;rdquo; refusal direction without the parallel
+part&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However, in an empirical measurement of directions over the layers of Gemma 3 12B Instruct, we
+found that the cosine similarity between the refusal direction and the harmful direction was
+positive (as expected and predicted), while the cosine similarity between the refusal direction
+and the harmless direction was &lt;em&gt;negative&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;We propose that the conventional interpretation of refusal being characterized by a single
+direction (Arditi et al, 2024) is inaccurate, that it is instead of composed of a direction
+which pushes toward refusal and another direction which pushes away from compliance.&lt;/p&gt;
+&lt;p&gt;However, for the purposes of abliteration, where the refusal direction is to be ablated to allow
+a model to comply with a harmful prompt, removing a push away from compliance is ungrounded as
+compliance is the goal. Removing the component which comprises a push away from correct
+compliance, however, has no theoretical justification. As released Instruct models are intended
+to be correctly trained and fine-tuned, it is likely that unprincipled intervention away from
+compliance would degrade model performance. (Performance drop was noted by Labonne, 2024.)
+Therefore, we argue that this component should be removed from the refusal direction prior to
+ablation. To this end, we propose a modification to abliteration that we term &lt;em&gt;projected abliteration&lt;/em&gt;.&lt;/p&gt;
+&lt;h2 id="-projected-abliteration"&gt;🚀 Projected Abliteration
+&lt;/h2&gt;&lt;p&gt;For projected abliteration, we decompose r⃗ and remove only the theoretically principled component as follows:&lt;/p&gt;
+&lt;p&gt;**r⃗_proj = r⃗_⊥μ_A = r⃗ - (r⃗ · μ⃗_A)&lt;/p&gt;
+&lt;p&gt;Where μ⃗_A is normalized to a unit vector here to simplify the computation, avoiding potential
+introduction of precision errors.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Rationale:&lt;/strong&gt; The component r⃗_∥μ_A represents variation in the magnitude of general helpfulnes
+representations between contexts—a confound. The orthogonal component r⃗_⊥μ_A captures the
+mechanistically specific refusal behavior.&lt;/p&gt;
+&lt;p&gt;This projection approach is conceptually related to other orthogonalization-based refusal
+modulation techniques, though it differs in removing specific directional components rather than
+scaling intervention strength (Wang et al., 2024).&lt;/p&gt;
+&lt;p&gt;The additional computation required for this modification is trivial, and all required
+information is on hand when computing the conventional refusal direction.&lt;/p&gt;
+&lt;h2 id="-methodology-and-implementation-details"&gt;🔧 Methodology and Implementation Details
+&lt;/h2&gt;&lt;p&gt;In our empirical measurements using Gemma 3 12B Instruct, we encountered several numerical challenges:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;High magnitude outliers&lt;/strong&gt;: Activation measurements contained high-magnitude outlier values
+that complicated discrimination between harmful and harmless directions, resulting in
+artificially high cosine alignment between the two mean directions. These outliers are
+symptomatic of the GeGLU activation function employed in Gemma 3.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Precision requirements&lt;/strong&gt;: We found it necessary to perform intermediate calculations in full
+32-bit floating point precision, rather than the bfloat16 precision that the model weights
+shipped with, to avoid numerical instability.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Winsorization&lt;/strong&gt;: To separate the directions effectively, we applied magnitude clipping via
+Winsorization at a strength of 0.995 (clipping values beyond the 99.5th percentile) to each
+activation measurement prior to feeding into Welford accumulation (an online algorithm for
+numerically stable mean calculation) for each of the harmful and harmless mean calculations.
+Without this preprocessing step, conventional abliteration resulted in incoherent models
+(outputs were no longer grammatical). Winsorization strength was determined empirically via
+trial and error, though not optimized.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Quantized measurement feasibility&lt;/strong&gt;: We measured activations from prompts on a 4-bit
+bitsandbytes quantized version of the model, computed refusal directions from these
+measurements, then applied these directions as interventions on the full bfloat16-precision
+model, achieving model coherence in subsequent inference. This result is interesting despite the
+introduction of quantization error. We posit that mean accumulation across many samples
+moderates quantization error, and that this cross-precision transfer reflects the fundamental
+robustness of refusal and compliance encodings in the model&amp;rsquo;s representation space.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Cross-model quantization validity&lt;/strong&gt;: To validate this approach, we separately measured
+activations on both 4-bit quantized and full-weight versions of Nemo Instruct 2407 12B, finding
+that cosine similarities of the refusal directions across layers also tracked closely between
+precision levels, with only mild divergence reflecting quantization error. Notably, the Nemo
+model required no Winsorization preprocessing, suggesting the outlier challenges were specific
+to Gemma 3&amp;rsquo;s architecture.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Batched inference&lt;/strong&gt;: We performed inference and activation measurement with batch size 32
+for efficiency. This partially replicates the activation shifts present in production batched
+inference environments, improving ecological validity of our measurements.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Layer-wise intervention strategy&lt;/strong&gt;: Gemma 3 comprises repeating blocks of 5 local attention
+layers followed by 1 global attention layer (48 layers total, numbered 0-47). We measured
+refusal directions at two global attention layers (23 and 29), reasoning that global attention
+captures semantically coherent refusal awareness, particularly in middle to late-middle layers
+as previously observed in abliteration efforts. We then applied these measured directions across
+spans of both local and global layers: the direction from layer 23 was applied to layers 11-23,
+and the direction from layer 29 to layers 24-41. This strategy assumes that local attention
+layers propagate refusal signal between global layers despite their more limited attention
+scope. The need for such extensive multi-layer intervention indicates that refusal mechanisms
+are robustly distributed across the model&amp;rsquo;s depth rather than localized to specific layers.
+Safety refusal persisted when early layers were not modified; extending interventions to later
+layers improved the quality and consistency of refusal removal. This demonstrates that effective
+abliteration may require spatially consistent intervention to counter a robustly distributed
+encoding of safety refusal. This is a departure from naive abliteration which intervenes only on a single layer.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-pythonpytorch-implementation"&gt;💻 Python/PyTorch Implementation
+&lt;/h2&gt;&lt;p&gt;Winsorization is easily defined as a function in PyTorch:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;magnitude_clip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Tensor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;percentile&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.995&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Tensor&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34; Perform symmetric magnitude Winsorization.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; Clip components to [-threshold, threshold] where threshold is at the percentile.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; Args:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; vector: Input tensor
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; percentile: Percentile of absolute values to clip at (0.0 to 1.0)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; Returns:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; Clipped vector &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;original_dtype&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vector&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dtype&lt;/span&gt; &lt;span class="n"&gt;vector_float&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vector&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;float&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;abs_vector&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vector_float&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;threshold&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;quantile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;abs_vector&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;percentile&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;clipped&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;clamp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vector_float&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt;&lt;span class="n"&gt;threshold&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;threshold&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;clipped&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;original_dtype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The projection can be implemented concisely in PyTorch:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Calculate refusal direction&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;refusal_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;harmful_mean&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;harmless_mean&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Normalize harmless_mean to avoid numerical issues&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;harmless_normalized&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;nn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;functional&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;harmless_mean&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;dim&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Project and subtract contribution along harmless direction&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;projection_scalar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;refusal_dir&lt;/span&gt; &lt;span class="o"&gt;@&lt;/span&gt; &lt;span class="n"&gt;harmless_normalized&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;refined_refusal_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;refusal_dir&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;projection_scalar&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;harmless_normalized&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-result"&gt;✅ Result
+&lt;/h2&gt;&lt;p&gt;We abliterated Gemma 3 12B Instruct with the revised formula, and were able to bypass refusal
+with harmful test prompts. Additionally, we confirmed the finding (Zhao et al, 2025) that
+harmfulness and refusal were encoded separately, as the resulting model demonstrated awareness
+of harms (e.g., couching for safety, providing disclaimers) despite compliance.&lt;/p&gt;
+&lt;h2 id="-references"&gt;📚 References
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Arditi et al, &amp;ldquo;Refusal in LLMs is mediated by a single direction&amp;rdquo;, lesswrong.com, 2024.&lt;/li&gt;
+&lt;li&gt;Labonne, &amp;ldquo;Uncensor any LLM with abliteration&amp;rdquo;, huggingface.co, 2024.&lt;/li&gt;
+&lt;li&gt;Wang et al, &amp;ldquo;Surgical, Cheap, and Flexible: Mitigating False Refusal in Language Models via
+Single Vector Ablation&amp;rdquo;, arXiv preprint, 2024.&lt;/li&gt;
+&lt;li&gt;Zhao et al, &amp;ldquo;LLMs Encode Harmfulness and Refusal Separately&amp;rdquo;, arXiv preprint, 2025.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/grimjim/projected-abliteration" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/grimjim/projected-abliteration&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Projected abliteration represents a significant refinement to conventional abliteration
+techniques by addressing the theoretical and practical limitations of simple directional
+interventions. By decomposing the refusal direction and removing only the mechanistically
+relevant orthogonal component, this approach provides a more principled method for modifying
+language model behavior while preserving model coherence and performance.&lt;/p&gt;
+&lt;p&gt;The empirical findings demonstrate that modern language models like Gemma 3 require more
+sophisticated intervention strategies due to their distributed refusal mechanisms and numerical
+sensitivities. The successful cross-precision transfer and robust implementation details provide
+practical guidance for researchers working on model alignment and safety removal techniques.&lt;/p&gt;
+&lt;p&gt;This work contributes to our understanding of how safety mechanisms are encoded in large
+language models and offers a more targeted approach to intervention that minimizes unintended
+side effects while achieving the desired behavioral modifications.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#MACHINELEARNING #LANGUAGEMODELS #ABLITERATION #SAFETY #PYTORCH #GEMMA #AI&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

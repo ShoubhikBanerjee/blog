@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>InfinityRuntime on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/infinityruntime/</link><description>Recent content in InfinityRuntime on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Oct 2026 12:01:24 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/infinityruntime/index.xml" rel="self" type="application/rss+xml"/><item><title>Infinity Runtime Open‑Source Release Enables Lightweight, Suspended AI Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/infinity-runtime-opensource-release-enables-lightweight-suspended-ai-agents/</link><pubDate>Sat, 24 Oct 2026 12:01:24 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/infinity-runtime-opensource-release-enables-lightweight-suspended-ai-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2026/10/21/Screenshot-2026-10-21-at-4.13.06 PM-1160x630.png" alt="Featured image of post Infinity Runtime Open‑Source Release Enables Lightweight, Suspended AI Agents" /&gt;&lt;h1 id="infinity-runtime-opensource-release-enables-lightweight-suspended-ai-agents"&gt;Infinity Runtime Open‑Source Release Enables Lightweight, Suspended AI Agents
+&lt;/h1&gt;&lt;p&gt;Infinity, a new research runtime for AI agents, is now released under the Apache 2.0 license as part of the Hydro project, a joint effort between AWS and UC Berkeley.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Traditional agent harnesses run a &lt;strong&gt;blocking loop&lt;/strong&gt;: call the model, invoke a tool, wait for the tool to return, then repeat.&lt;/li&gt;
+&lt;li&gt;While waiting, the agent &lt;strong&gt;holds a process and its memory&lt;/strong&gt; and cannot handle new events.&lt;/li&gt;
+&lt;li&gt;Typical wait times include a 20‑minute build for a coding agent, hours for a triage agent to see a new pull request, or an overnight pause for an assistant awaiting approval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Infinity applies the same principles that modern programming languages use for &lt;strong&gt;asynchronous functions&lt;/strong&gt; (&lt;code&gt;async&lt;/code&gt;/&lt;code&gt;await&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;When an agent calls a tool, Infinity:
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Dispatches&lt;/strong&gt; the tool call.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Saves&lt;/strong&gt; the conversation history (the complete state needed to resume).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Suspends&lt;/strong&gt; the agent.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;When the tool result arrives, the runtime &lt;strong&gt;loads the saved history&lt;/strong&gt; and &lt;strong&gt;resumes&lt;/strong&gt; the agent from that point.&lt;/li&gt;
+&lt;li&gt;Execution is broken into &lt;strong&gt;bounded slices&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Load history from a pluggable store.&lt;/li&gt;
+&lt;li&gt;Run one model completion.&lt;/li&gt;
+&lt;li&gt;Persist the output.&lt;/li&gt;
+&lt;li&gt;Dispatch at most one tool call.&lt;/li&gt;
+&lt;li&gt;End the slice.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Tool calls act as &lt;strong&gt;await points&lt;/strong&gt;; a slice never blocks for a tool, timer, or other external operation.&lt;/li&gt;
+&lt;li&gt;All resumable events (user text, tool results) are delivered via a &lt;strong&gt;shared input queue&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="statesaving-techniques-context-for-infinity"&gt;State‑saving techniques (context for Infinity)
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Technique&lt;/th&gt;
+&lt;th&gt;Memory behavior&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;OS threads / stackful coroutines&lt;/td&gt;
+&lt;td&gt;Keep the task’s entire call stack in memory while it waits&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stackless coroutines (e.g., Rust &lt;code&gt;async fn&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;Compiler transforms the function into a state machine that holds only the values needed at each &lt;code&gt;await&lt;/code&gt;, giving a smaller memory footprint&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Open source&lt;/strong&gt;: Released under the Apache 2.0 license.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Collaboration&lt;/strong&gt;: Developed by AWS and UC Berkeley as part of the Hydro project.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lightweight concurrency&lt;/strong&gt;: 75,000 concurrent agents can fit in the 8 GB RAM of a Raspberry Pi 5.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Serverless friendly&lt;/strong&gt;: When an agent is suspended, the serverless function can terminate, so even multi‑day tool calls consume no compute while waiting.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Early research release&lt;/strong&gt;: Intended to gather early feedback from the community.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Infinity is publicly available today as an open‑source project under the Apache 2.0 license. It can be integrated with standard serverless platforms and any pluggable storage for persisting conversation history.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Eliminates the &lt;strong&gt;idle waiting&lt;/strong&gt; problem that forces agents to hold resources without doing work.&lt;/li&gt;
+&lt;li&gt;Enables &lt;strong&gt;massive scaling&lt;/strong&gt; of agents on modest hardware and serverless environments.&lt;/li&gt;
+&lt;li&gt;Leverages proven async patterns from languages like Rust, JavaScript, and Python, offering a proven path to efficient, resumable AI agent workloads.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2026/10/21/Fig1infinity.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2026/10/21/Fig3Infinity.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2026/10/21/image_1024.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIAgents #InfinityRuntime #ServerlessAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/opensource/introducing-infinity-a-runtime-for-extreme-agent-concurrency/" target="_blank" rel="noopener"
+&gt;Introducing Infinity: a runtime for extreme agent concurrency | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

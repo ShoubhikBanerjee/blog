@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Uniopen on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/uniopen/</link><description>Recent content in Uniopen on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 01 Oct 2026 22:03:23 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/uniopen/index.xml" rel="self" type="application/rss+xml"/><item><title>Uniopen integrates Amazon Nova 2 models with AWS workflow for business‑specific moderation</title><link>https://shoubhikbanerjee.github.io/blog/p/uniopen-integrates-amazon-nova-2-models-with-aws-workflow-for-businessspecific-moderation/</link><pubDate>Thu, 01 Oct 2026 22:03:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/uniopen-integrates-amazon-nova-2-models-with-aws-workflow-for-businessspecific-moderation/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/14/ML-21411-featured-image.png" alt="Featured image of post Uniopen integrates Amazon Nova 2 models with AWS workflow for business‑specific moderation" /&gt;&lt;h1 id="uniopen-integrates-amazon-nova-2-models-with-aws-workflow-for-businessspecific-moderation"&gt;Uniopen integrates Amazon Nova 2 models with AWS workflow for business‑specific moderation
+&lt;/h1&gt;&lt;p&gt;Uniopen, the digital communication and membership platform from Taiwan’s Uni‑President Enterprises Group, has updated its moderation system by fine‑tuning Amazon Nova 2 Lite and adding a controlled workflow using AWS services.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;uniopen connects customers to e‑commerce, membership benefits, and other retail experiences across web, tablet, and mobile channels.&lt;/li&gt;
+&lt;li&gt;Its moderation policy classifies each interaction along two axes: the behavior (nine categories) and the subject (brand, other, or forbidden). Both classifications must be correct for a decision to be useful, and the taxonomy is specific to uniopen’s business.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The team adapted &lt;strong&gt;Amazon Nova 2 Lite&lt;/strong&gt; to the business‑specific moderation policies through supervised fine‑tuning in &lt;strong&gt;Amazon SageMaker AI&lt;/strong&gt; and a final prompt‑level output optimization.&lt;/li&gt;
+&lt;li&gt;The AWS approach kept correction data, managed training, evaluation, and deployment controls in one repeatable workflow.&lt;/li&gt;
+&lt;li&gt;Model availability varies by AWS Region.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;⚙️ Architecture
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Nova 2 Lite&lt;/td&gt;
+&lt;td&gt;Handles primary moderation requests&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Nova 2 Pro&lt;/td&gt;
+&lt;td&gt;Generates candidate corrections for reported errors (human‑verified before training)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon S3&lt;/td&gt;
+&lt;td&gt;Stores verified correction set and training data&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon DynamoDB&lt;/td&gt;
+&lt;td&gt;Tracks active and candidate model configurations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Argo Workflows on Amazon EKS&lt;/td&gt;
+&lt;td&gt;Orchestrates prompt optimization, evaluation, and deployment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Argo CD&lt;/td&gt;
+&lt;td&gt;Applies approved configurations to production&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon SNS &amp;amp; CloudWatch&lt;/td&gt;
+&lt;td&gt;Notify operators of hard‑gate failures or candidate attention needed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Bedrock Guardrails&lt;/td&gt;
+&lt;td&gt;Content filters applied to inputs and outputs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-controls--governance"&gt;📊 Controls &amp;amp; Governance
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Human review is mandatory for ambiguous cases and for corrections reused as training data.&lt;/li&gt;
+&lt;li&gt;Fixed test sets and regression checks prevent automatic promotion when quality declines.&lt;/li&gt;
+&lt;li&gt;Two kinds of gates control promotion:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hard gates&lt;/strong&gt; – must‑pass regression tests; a failure stops the workflow and triggers an alert.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Soft gates&lt;/strong&gt; – warning signals such as low confidence or a drop in performance for a specific class.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Responsible AI controls complement model customization, including monitoring errors across behavior and subject categories, minimizing retained customer data, and revalidating thresholds as moderation policies change.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The moderation models run across uniopen’s web, tablet, and mobile experiences, using the same taxonomy and release criteria to maintain consistent decisions as interaction formats and topics evolve.&lt;/li&gt;
+&lt;li&gt;Deployment to production occurs only after a candidate passes all required hard and soft gates.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/14/ML-21411-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/14/ML-21411-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/14/ML-21411-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#uniopen #AmazonNova #AWS #moderation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-uniopen-customized-amazon-nova-to-their-retail-moderation-policies-for-production-deployment/" target="_blank" rel="noopener"
+&gt;How uniopen customized Amazon Nova to their retail moderation policies for production deployment | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

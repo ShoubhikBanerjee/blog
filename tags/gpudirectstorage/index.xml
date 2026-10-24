@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPUDirectStorage on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/gpudirectstorage/</link><description>Recent content in GPUDirectStorage on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 23 Oct 2026 22:04:00 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/gpudirectstorage/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA KvikIO Python Library Demonstrates Direct GPU Storage Access via GPUDirect Storage</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-kvikio-python-library-demonstrates-direct-gpu-storage-access-via-gpudirect-storage/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-kvikio-python-library-demonstrates-direct-gpu-storage-access-via-gpudirect-storage/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/03/ai-data-660x370.png" alt="Featured image of post NVIDIA KvikIO Python Library Demonstrates Direct GPU Storage Access via GPUDirect Storage" /&gt;&lt;h1 id="nvidia-kvikio-python-library-demonstrates-direct-gpu-storage-access-via-gpudirect-storage"&gt;NVIDIA KvikIO Python Library Demonstrates Direct GPU Storage Access via GPUDirect Storage
+&lt;/h1&gt;&lt;p&gt;NVIDIA’s Magnum IO GPUDirect Storage (GDS) now works with the KvikIO Python library to let AI applications move data directly from storage into GPU memory, bypassing the CPU.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;GPU applications are processing ever‑growing datasets with increasingly powerful accelerators.&lt;/li&gt;
+&lt;li&gt;The 2025 Stanford AI Index reports that compute for notable AI models has been doubling roughly every five months, while the size of datasets used to train LLMs has been doubling roughly every eight months.&lt;/li&gt;
+&lt;li&gt;As computation and data scale together, moving data efficiently from storage becomes a necessity for keeping accelerators supplied.&lt;/li&gt;
+&lt;li&gt;NVIDIA Magnum IO GPUDirect Storage (GDS) addresses this challenge by enabling a direct data path between supported storage and GPU memory.&lt;/li&gt;
+&lt;li&gt;The direct path avoids unnecessary staging through CPU memory and reduces overall CPU utilization in the system.&lt;/li&gt;
+&lt;li&gt;GDS is supported by a growing ecosystem that includes many major storage vendors.&lt;/li&gt;
+&lt;li&gt;At the application layer, Python plays a central role in modern AI development; as of August 2025, nearly half of all new AI projects on GitHub were built primarily in Python.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;GPUDirect Storage (GDS)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Enables a direct data path between supported storage and GPU memory.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;cuFile&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;C library and API through which applications and frameworks access GDS.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;KvikIO&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Python and C++ library that sits above cuFile, providing high‑level, idiomatic interfaces and additional controls over how I/O requests are performed.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;The application supplies a file‑system path and a GPU buffer.&lt;/li&gt;
+&lt;li&gt;KvikIO decides whether to route the request through cuFile (direct path) or use its POSIX compatibility path, which stages data through host memory.&lt;/li&gt;
+&lt;li&gt;When cuFile is selected, KvikIO registers the file and issues the I/O using the target GPU buffer.&lt;/li&gt;
+&lt;li&gt;cuFile then determines the actual transfer path based on system support, the file system, and its configuration; it may use the accelerated GDS path or fall back to a CPU‑staged compatibility path.&lt;/li&gt;
+&lt;li&gt;Reaching the cuFile API confirms that KvikIO selected cuFile, but does not by itself confirm that the accelerated GDS path was activated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-tutorial-highlights"&gt;⚙️ Tutorial Highlights
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Demonstrates how to use the NVIDIA KvikIO Python API to configure storage I/O, read data into GPU memory, and confirm that the accelerated path within GDS was activated.&lt;/li&gt;
+&lt;li&gt;Shows how to inspect KvikIO and cuFile settings that influence the path each operation takes.&lt;/li&gt;
+&lt;li&gt;Tested on an x86_64 system with an NVIDIA H100 GPU, CUDA 13.3, and cuFile 1.18.&lt;/li&gt;
+&lt;li&gt;The system used a local NVMe device formatted with ext4; a PIX connection between the GPU and NVMe device means the path traverses at most one PCIe bridge.&lt;/li&gt;
+&lt;li&gt;IOMMU and ACS were disabled to preserve PCIe peer‑to‑peer transfers, and the &lt;code&gt;nvidia-fs&lt;/code&gt; kernel module was loaded to provide the accelerated path.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Doubling compute and dataset sizes increase pressure on the storage‑to‑GPU data pipeline.&lt;/li&gt;
+&lt;li&gt;Direct storage‑to‑GPU transfers reduce CPU overhead, freeing CPU resources for other parts of the AI workload.&lt;/li&gt;
+&lt;li&gt;Providing a high‑level Python interface (KvikIO) aligns with the fact that nearly half of new AI projects are Python‑centric, lowering the barrier for developers to adopt accelerated I/O.&lt;/li&gt;
+&lt;li&gt;A growing storage‑vendor ecosystem around GDS broadens hardware compatibility for future AI systems.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/execution-flow-nvidia-kvikio.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/terminal-check-session-kvikio-gds-diagnostic.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/03/ai-data-1024x576.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #GPUDirectStorage #KvikIO #AI #Python&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/how-to-read-data-into-gpu-memory-in-python-with-nvidia-gpudirect-storage/" target="_blank" rel="noopener"
+&gt;How to Read Data into GPU Memory in Python with NVIDIA GPUDirect Storage | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

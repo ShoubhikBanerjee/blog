@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TPU on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/tpu/</link><description>Recent content in TPU on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 20 Oct 2026 22:03:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/tpu/index.xml" rel="self" type="application/rss+xml"/><item><title>TorchTPU Brings Native PyTorch Support to Google Cloud TPUs</title><link>https://shoubhikbanerjee.github.io/blog/p/torchtpu-brings-native-pytorch-support-to-google-cloud-tpus/</link><pubDate>Tue, 20 Oct 2026 22:03:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/torchtpu-brings-native-pytorch-support-to-google-cloud-tpus/</guid><description>&lt;img src="https://huggingface.co/blog/assets/hf-torchtpu/thumbnail.png" alt="Featured image of post TorchTPU Brings Native PyTorch Support to Google Cloud TPUs" /&gt;&lt;h1 id="torchtpu-brings-native-pytorch-support-to-google-cloud-tpus"&gt;TorchTPU Brings Native PyTorch Support to Google Cloud TPUs
+&lt;/h1&gt;&lt;p&gt;With TorchTPU, a native PyTorch backend, TPU is now just another device. The integration lets Transformers, Diffusers and custom kernels run natively on Google’s Tensor Processing Units (TPUs).&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;TPU stands for Tensor Processing Unit and is Google’s own AI accelerator.\&lt;/li&gt;
+&lt;li&gt;Google has been designing TPUs for about ten years and uses them for its models, including Gemini.\&lt;/li&gt;
+&lt;li&gt;TPUs are available on Google Cloud, from a single chip up to pods of thousands of chips.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;TorchTPU&lt;/strong&gt; adds TPU as a new backend to PyTorch.\&lt;/li&gt;
+&lt;li&gt;It includes &lt;strong&gt;Pallas kernels&lt;/strong&gt; tuned for TPUs, support for distributed training, and a &lt;code&gt;torch.compile&lt;/code&gt; integration for extra speed.\&lt;/li&gt;
+&lt;li&gt;TPU kernels are written in &lt;strong&gt;Pallas&lt;/strong&gt;, giving low‑level hardware control.\&lt;/li&gt;
+&lt;li&gt;Additional kernels can be imported from the &lt;strong&gt;Tokamax library&lt;/strong&gt;.\&lt;/li&gt;
+&lt;li&gt;Installation on a TPU VM is a single command:
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install torch-tpu --extra-index-url https://download.pytorch.org/whl/cpu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;To load a model on a TPU, set &lt;code&gt;device_map=&amp;quot;tpu&amp;quot;&lt;/code&gt;.\&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;TensorParallelConfig&lt;/strong&gt; can be passed to &lt;code&gt;from_pretrained&lt;/code&gt; to shard the model across chips, so the full model never has to fit in one place.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Transformers v5&lt;/strong&gt; is built to be the source of truth for model definitions, enabling them to run anywhere, including TPUs.\&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Diffusers&lt;/strong&gt; now treats TPU as a first‑class device.\&lt;/li&gt;
+&lt;li&gt;Example runs on a Cloud TPU v6e‑4 with 4 chips (TP=4), bf16 precision, batch size 1.\&lt;/li&gt;
+&lt;li&gt;At batch size 64, decoding is &lt;strong&gt;21.5× faster&lt;/strong&gt; on Qwen3‑30B‑A3B and &lt;strong&gt;12.8× faster&lt;/strong&gt; on Gemma 4 26B‑A4B.\&lt;/li&gt;
+&lt;li&gt;Decode throughput comparisons on a TPU v6e‑8 show Hub kernels outperforming the default implementation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The &lt;strong&gt;Kernels Hub&lt;/strong&gt; provides ready‑to‑use TPU kernels.\&lt;/li&gt;
+&lt;li&gt;TorchTPU is publicly installable via &lt;code&gt;pip&lt;/code&gt;.\&lt;/li&gt;
+&lt;li&gt;A nightly CI on TPU is being added, with results to appear in the Transformers dashboard.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By making TPU a first‑class device in PyTorch, developers can train and serve large language models on Google Cloud without rewriting code.\&lt;/li&gt;
+&lt;li&gt;Sharding with &lt;code&gt;TensorParallelConfig&lt;/code&gt; removes the need for a single device to hold the entire model, enabling very large models to run on TPU pods.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="component-summary"&gt;Component Summary
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;TorchTPU&lt;/td&gt;
+&lt;td&gt;Adds TPU as a PyTorch backend&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pallas kernels&lt;/td&gt;
+&lt;td&gt;Tuned TPU kernels, low‑level control&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tokamax library&lt;/td&gt;
+&lt;td&gt;Additional kernels that can be imported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/buckets/huggingface/hf-torchtpu-blog-assets/resolve/images/kernel-ragged-dot-speedup.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/buckets/huggingface/hf-torchtpu-blog-assets/resolve/images/tpu-ci-dashboard.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/buckets/huggingface/hf-torchtpu-blog-assets/resolve/images/banner.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PyTorch #TPU #TorchTPU #Transformers #Diffusers&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/hf-torchtpu" target="_blank" rel="noopener"
+&gt;Hugging Face ❤️ TorchTPU: TPUs, Natively&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Google to Launch AI Processor Satellite via Project Suncatcher</title><link>https://shoubhikbanerjee.github.io/blog/p/google-to-launch-ai-processor-satellite-via-project-suncatcher/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/google-to-launch-ai-processor-satellite-via-project-suncatcher/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/project-suncatcher.png?quality=90&amp;strip=all&amp;crop=5.5871440897325%2C0%2C88.825711820535%2C100&amp;w=1200" alt="Featured image of post Google to Launch AI Processor Satellite via Project Suncatcher" /&gt;&lt;h1 id="google-to-launch-ai-processor-satellite-via-project-suncatcher"&gt;Google to Launch AI Processor Satellite via Project Suncatcher
+&lt;/h1&gt;&lt;p&gt;Google is launching a satellite equipped with its AI processors on October 1st to test their performance in space. This mission is part of Project Suncatcher, an experimental initiative that could eventually put AI data centers into orbit.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Launch Date:&lt;/strong&gt; October 1st&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Launch Vehicle:&lt;/strong&gt; SpaceX Falcon 9 rocket&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware:&lt;/strong&gt; Google&amp;rsquo;s Tensor Processing Units (TPUs)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Orbit:&lt;/strong&gt; Low Earth orbit, where the satellite will harness the power of the sun&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The goal of the mission is to measure how well TPUs &amp;ldquo;handle the physical stress of spaceflight and the radiation and thermal extremes of space.&amp;rdquo; While Google found during testing that its TPUs can withstand radiation and high levels of g-force, the company notes that &amp;ldquo;some things can only be tested in space.&amp;rdquo;&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Google is testing a cooling system using radiators and heat pipes while the chips are in orbit. According to Travis Beals, Project Suncatcher’s senior director of product management, the chips can only run for approximately 15 minutes before they must be turned off to cool down.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Following this initial launch, Google plans to put two satellites into orbit next year.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/project-suncatcher.png?quality=90&amp;amp;strip=all&amp;amp;crop=15.120793787748%2C0%2C69.758412424504%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Google #ProjectSuncatcher #TPU #SpaceX #SpaceAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/tech/1000015/google-ai-satellite-space-project-suncatcher" target="_blank" rel="noopener"
+&gt;Google is sending an AI satellite into space next week&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

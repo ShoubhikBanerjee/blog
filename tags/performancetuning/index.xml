@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>PerformanceTuning on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/performancetuning/</link><description>Recent content in PerformanceTuning on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Oct 2026 12:01:24 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/performancetuning/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA TensorRT 11.1 Introduces Global Performance Tuner for Automatic Model Optimization</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-tensorrt-11-1-introduces-global-performance-tuner-for-automatic-model-optimization/</link><pubDate>Sat, 24 Oct 2026 12:01:24 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-tensorrt-11-1-introduces-global-performance-tuner-for-automatic-model-optimization/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/desktop-computer-overlay-light-660x370.jpg" alt="Featured image of post NVIDIA TensorRT 11.1 Introduces Global Performance Tuner for Automatic Model Optimization" /&gt;&lt;h1 id="nvidia-tensorrt-111-introduces-global-performance-tuner-for-automatic-model-optimization"&gt;NVIDIA TensorRT 11.1 Introduces Global Performance Tuner for Automatic Model Optimization
+&lt;/h1&gt;&lt;p&gt;The Global Performance Tuner (GPT) is a new feature for automatic performance tuning released in NVIDIA TensorRT 11.1.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Global Performance Tuner is a feature for automatic performance tuning released in NVIDIA TensorRT 11.1.&lt;/li&gt;
+&lt;li&gt;It provides automatic, accuracy‑aware and end‑to‑end performance tuning by customizing different optimizations for different models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Central design idea&lt;/strong&gt;: represent alternative scheduling strategies as explicit and searchable build routes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compiler knob&lt;/strong&gt;: a configuration setting that changes some aspect of the compilation pipeline (heuristic, fusion decision, or code‑generation path).
+&lt;ul&gt;
+&lt;li&gt;Each tunable knob exposes a finite set of allowed values and has a default value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Build route&lt;/strong&gt;: a concrete combination of knob values.
+&lt;ul&gt;
+&lt;li&gt;When no build route is specified, TensorRT uses the default build route, where every knob retains its default value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Fusion strategies (horizontal vs. vertical) are not universally better; the better route may depend on the model, tensor shapes, and target GPU.&lt;/li&gt;
+&lt;li&gt;Selecting the better route therefore requires building candidate engines for each route, measuring end‑to‑end performance, and choosing the fastest engine that satisfies accuracy requirements.&lt;/li&gt;
+&lt;li&gt;The knob combination is a build‑route specification, not a complete description of the resulting engine; TensorRT still performs later stages such as tactic selection and may reconcile knob values with network constraints.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;API surface&lt;/strong&gt; (C++):
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;API&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;bool IBuilderConfig::setBuildRoute(const char* buildRoute);&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Apply a fixed route to the builder configuration&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;const char* IBuilderConfig::getBuildRoute() const;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Return the currently specified route&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;const char* IBuilderConfig::getAllBuildRoutes() const;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Describe the available knobs, their allowed values, defaults, and purposes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;These APIs can be used to implement custom tuners. A sample C++ implementation is provided in &lt;code&gt;trtexec&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;trtexec&lt;/code&gt; workflow&lt;/strong&gt;:
+&lt;ol&gt;
+&lt;li&gt;User supplies a model and a regex‑like tunable build‑route expression.&lt;/li&gt;
+&lt;li&gt;The expression is expanded into a list of concrete build routes.&lt;/li&gt;
+&lt;li&gt;For each route, the model is built, then accuracy and performance are measured.&lt;/li&gt;
+&lt;li&gt;Routes that crash during building or fail accuracy are excluded.&lt;/li&gt;
+&lt;li&gt;The engine with the best measured end‑to‑end performance is selected.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;TensorRT 11.1 provides &lt;strong&gt;more than 200 knobs&lt;/strong&gt; for tuning.&lt;/li&gt;
+&lt;li&gt;The same implementation will be released in Python with &lt;strong&gt;Torch‑TensorRT 2.15&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Across ten evaluated workloads, tuning delivered performance improvements ranging from &lt;strong&gt;1.14× to 1.63×&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Global Performance Tuner ships with NVIDIA TensorRT 11.1.&lt;/li&gt;
+&lt;li&gt;A Python version will be available in Torch‑TensorRT 2.15.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/global-performance-tuner-comparison.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/two-parallel-paths-model-quantization-inference.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#TensorRT #PerformanceTuning #AIInference #DeepLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/scaling-nvidia-tensorrt-performance-optimization-beyond-a-single-build-route-with-the-global-performance-tuner-part-2/" target="_blank" rel="noopener"
+&gt;Scaling NVIDIA TensorRT Performance Optimization Beyond a Single Build Route with the Global Performance Tuner, Part 2 | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

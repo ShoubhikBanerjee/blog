@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ClaudePlatform on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/claudeplatform/</link><description>Recent content in ClaudePlatform on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 02 Oct 2026 22:04:29 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/claudeplatform/index.xml" rel="self" type="application/rss+xml"/><item><title>Claude Platform on AWS: Multi‑environment Inference Setup with Cross‑Account Roles</title><link>https://shoubhikbanerjee.github.io/blog/p/claude-platform-on-aws-multienvironment-inference-setup-with-crossaccount-roles/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/claude-platform-on-aws-multienvironment-inference-setup-with-crossaccount-roles/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21203-featured-image.png" alt="Featured image of post Claude Platform on AWS: Multi‑environment Inference Setup with Cross‑Account Roles" /&gt;&lt;h1 id="claude-platform-on-aws-multienvironment-inference-setup-with-crossaccount-roles"&gt;Claude Platform on AWS: Multi‑environment Inference Setup with Cross‑Account Roles
+&lt;/h1&gt;&lt;p&gt;Claude Platform on AWS (CPonAWS) now supports a unified subscription that can serve production workloads, developer laptops, and external services across different cloud or on‑prem environments.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Inference is needed from three environments: production workloads on AWS, developer laptops for local iteration, and external services on other cloud providers or on‑prem CI/CD pipelines.&lt;/li&gt;
+&lt;li&gt;All environments share a single CPonAWS subscription while keeping production and development traffic isolated at the workspace level.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🏗️ Architecture
+&lt;/h2&gt;&lt;p&gt;The recommended structure uses three AWS accounts:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Payer (management) account&lt;/strong&gt; – handles billing and governance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI Services account&lt;/strong&gt; – holds the CPonAWS subscription, workspaces, API keys, and cross‑account roles.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workload accounts&lt;/strong&gt; – assume roles in the AI Services account to make inference calls; they never touch the subscription directly.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="access-patterns"&gt;Access Patterns
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Access Pattern&lt;/th&gt;
+&lt;th&gt;Authentication Method&lt;/th&gt;
+&lt;th&gt;Key Characteristics&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS workload accounts&lt;/td&gt;
+&lt;td&gt;Cross‑account SigV4&lt;/td&gt;
+&lt;td&gt;Pods in Amazon EKS assume a role in the AI Services account and make SigV4‑signed inference calls. No API keys are stored and no secrets need rotation.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Developer laptops&lt;/td&gt;
+&lt;td&gt;Workspace‑scoped API key&lt;/td&gt;
+&lt;td&gt;Long‑lived API key locked to a development workspace; used locally with the standard Anthropic SDK.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;External workloads&lt;/td&gt;
+&lt;td&gt;OIDC federation with short‑term keys&lt;/td&gt;
+&lt;td&gt;Workloads outside AWS authenticate via OIDC, obtain temporary AWS credentials, generate a short‑lived token, and call inference with zero persistent credentials.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-stepbystep-setup"&gt;⚙️ Step‑by‑Step Setup
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Deploy a dedicated &lt;strong&gt;AI Services account&lt;/strong&gt; within your organization and configure cross‑account SigV4 for AWS workloads.&lt;/li&gt;
+&lt;li&gt;Generate &lt;strong&gt;workspace‑scoped API keys&lt;/strong&gt; for developers.&lt;/li&gt;
+&lt;li&gt;Wire up &lt;strong&gt;OIDC federation&lt;/strong&gt; for external environments.&lt;/li&gt;
+&lt;li&gt;Use AWS CLI v2 with named profiles for both the payer and AI Services accounts.&lt;/li&gt;
+&lt;li&gt;Follow the &lt;em&gt;Introducing Claude Platform on AWS&lt;/em&gt; guide to subscribe the AI Services account to CPonAWS.&lt;/li&gt;
+&lt;li&gt;Every step includes a CLI command, console instruction, or code snippet.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-workspaces"&gt;📦 Workspaces
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Open the AWS Management Console on the AI Services account and navigate to &lt;strong&gt;Claude Platform on AWS&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;In the Claude Console, select the drop‑down menu top‑left and choose &lt;strong&gt;Create Workspace&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Create a workspace named &lt;strong&gt;production&lt;/strong&gt; and record its ARN (e.g., &lt;code&gt;wrkspc_PROD&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Repeat to create a workspace named &lt;strong&gt;development&lt;/strong&gt; (e.g., &lt;code&gt;wrkspc_DEV&lt;/code&gt;). Record both ARNs.&lt;/li&gt;
+&lt;li&gt;Workspaces are region‑specific; API calls must target the matching regional endpoint (e.g., &lt;code&gt;aws-external-anthropic.us-east-1.api.aws&lt;/code&gt;). The workspace region determines the API endpoint, not the inference location.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-why-it-matters"&gt;🚀 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Centralized subscription reduces management overhead while preserving isolation.&lt;/li&gt;
+&lt;li&gt;Cross‑account roles eliminate the need for long‑lived API keys in production workloads.&lt;/li&gt;
+&lt;li&gt;OIDC federation enables secure, short‑lived credentials for external services.&lt;/li&gt;
+&lt;li&gt;The pattern scales to additional teams or workloads by creating a workspace per team and repeating the role pattern.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21203-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21203-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21203-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#ClaudePlatform #AWS #AIInference #CrossAccount&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/implementing-multi-environment-access-for-claude-platform-on-aws/" target="_blank" rel="noopener"
+&gt;Implementing Multi-Environment Access for Claude Platform on AWS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
