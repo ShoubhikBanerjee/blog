@@ -2,7 +2,7 @@
 title: "Google Updates Privacy Policy to Allow Targeted Ads from AI‑Linked Data"
 slug: "google-updates-privacy-policy-to-allow-targeted-ads-from-ailinked-data"
 description: "Google has updated its privacy policy, adding language that could let the company serve personalized ads based on data you share with its AI features such as Personal Intelligence."
-date: 2026-10-24T12:01:24+05:30
+date: 2026-10-24T18:02:39+05:30
 tags: [Google, Privacy, TargetedAds, AI]
 categories: ["AI", "Privacy", "Artificial Intelligence", "Online Advertising"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK093_GOOGLE_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

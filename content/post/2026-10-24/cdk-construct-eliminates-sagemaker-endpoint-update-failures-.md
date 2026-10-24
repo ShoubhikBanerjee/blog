@@ -2,7 +2,7 @@
 title: "CDK Construct Eliminates SageMaker Endpoint Update Failures with Auto Scaling"
 slug: "cdk-construct-eliminates-sagemaker-endpoint-update-failures-with-auto-scaling"
 description: "Updating an Amazon SageMaker AI real‑time endpoint configuration (changing instance type, count, or environment variables) through AWS CloudFormation or the AWS CDK can cause deployment failures."
-date: 2026-10-24T12:01:24+05:30
+date: 2026-10-24T18:02:39+05:30
 tags: [SageMaker, CDK, AutoScaling, CloudFormation]
 categories: ["AI", "Machine Learning", "DevOps", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/Orchestrating-SageMaker-AI-endpoint-auto-scaling-with-AWS-CDK.png"

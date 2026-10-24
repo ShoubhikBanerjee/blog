@@ -2,7 +2,7 @@
 title: "Rapid Canvas Paintbrush Rendering Powered by Claude Fable"
 slug: "rapid-canvas-paintbrush-rendering-powered-by-claude-fable"
 description: "On 23rd October 2026 a new web‑based artifact was released that opens a photo and, within a few seconds, paints a version of that photo using a canvas element and a simulated paintbrush. The work..."
-date: 2026-10-24T12:01:24+05:30
+date: 2026-10-24T18:02:39+05:30
 tags: [AIArt, Claude, WebGraphics, P5js]
 categories: ["AI", "Artificial Intelligence", "Creative Computing", "Web Development", "Computer Vision"]
 image: "https://static.simonwillison.net/static/2026/heron-oil.webp"
