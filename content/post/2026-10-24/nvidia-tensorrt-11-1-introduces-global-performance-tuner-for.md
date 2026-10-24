@@ -2,7 +2,7 @@
 title: "NVIDIA TensorRT 11.1 Introduces Global Performance Tuner for Automatic Model Optimization"
 slug: "nvidia-tensorrt-11-1-introduces-global-performance-tuner-for-automatic-model-optimization"
 description: "The Global Performance Tuner (GPT) is a new feature for automatic performance tuning released in NVIDIA TensorRT 11.1."
-date: 2026-10-24T06:05:12+05:30
+date: 2026-10-24T12:01:24+05:30
 tags: [TensorRT, PerformanceTuning, AIInference, DeepLearning]
 categories: ["AI", "Machine Learning", "Deep Learning", "Performance Optimization", "Software Development"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/desktop-computer-overlay-light-660x370.jpg"

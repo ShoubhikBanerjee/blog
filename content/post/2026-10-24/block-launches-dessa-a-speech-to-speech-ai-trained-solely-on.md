@@ -2,7 +2,7 @@
 title: "Block launches Dessa, a speech-to-speech AI trained solely on human conversation"
 slug: "block-launches-dessa-a-speech-to-speech-ai-trained-solely-on-human-conversation"
 description: "Jack Dorsey’s Block announced an AI model called **Dessa** that is built from scratch using only human conversation and operates as a true speech‑to‑speech system."
-date: 2026-10-24T06:05:12+05:30
+date: 2026-10-24T12:01:24+05:30
 tags: [Block, Dessa, SpeechAI, AIPrivacy, AIResearch]
 categories: ["AI", "Artificial Intelligence", "Speech Technology", "AI Safety"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKS536_AI_HALLUCINATION_B.png?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

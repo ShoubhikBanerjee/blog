@@ -2,7 +2,7 @@
 title: "Infinity Runtime Open‑Source Release Enables Lightweight, Suspended AI Agents"
 slug: "infinity-runtime-opensource-release-enables-lightweight-suspended-ai-agents"
 description: "Infinity, a new research runtime for AI agents, is now released under the Apache 2.0 license as part of the Hydro project, a joint effort between AWS and UC Berkeley."
-date: 2026-10-24T06:05:12+05:30
+date: 2026-10-24T12:01:24+05:30
 tags: [AIAgents, InfinityRuntime, ServerlessAI]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Serverless Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2026/10/21/Screenshot-2026-10-21-at-4.13.06 PM-1160x630.png"

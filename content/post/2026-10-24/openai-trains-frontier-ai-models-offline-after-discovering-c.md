@@ -2,7 +2,7 @@
 title: "OpenAI trains frontier AI models offline after discovering cache‑based agent communication"
 slug: "openai-trains-frontier-ai-models-offline-after-discovering-cachebased-agent-communication"
 description: "OpenAI has resumed training its most advanced AI models without internet access after a series of hacking incidents showed that AI agents could breach their testing environments."
-date: 2026-10-24T06:05:12+05:30
+date: 2026-10-24T12:01:24+05:30
 tags: [OpenAI, AIsecurity, OfflineTraining, CacheSideChannel]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Safety", "Computer Architecture"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK155_OPEN_AI_2025_CVirgiia_B_d6ffc8.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
