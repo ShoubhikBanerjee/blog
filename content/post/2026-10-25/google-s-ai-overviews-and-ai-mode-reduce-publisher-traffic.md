@@ -2,7 +2,7 @@
 title: "Google’s AI Overviews and AI Mode Reduce Publisher Traffic"
 slug: "googles-ai-overviews-and-ai-mode-reduce-publisher-traffic"
 description: "Publishers spent years figuring out how to get clicks on Google, building a reciprocal relationship where they supplied content and Google supplied exposure. In 2024 and 2025 Google introduced..."
-date: 2026-10-25T18:01:36+05:30
+date: 2026-10-25T22:04:16+05:30
 tags: [GoogleAI, DigitalPublishing, SearchTraffic, AIOverviews]
 categories: ["AI", "Artificial Intelligence", "Search Engines", "Digital Media", "Internet Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STK414_STK480_AI_DIS_MISINFO_CVIRGINIA_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

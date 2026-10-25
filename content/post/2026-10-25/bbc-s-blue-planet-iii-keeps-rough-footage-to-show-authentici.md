@@ -2,7 +2,7 @@
 title: "BBC’s Blue Planet III Keeps Rough Footage to Show Authenticity in AI Age"
 slug: "bbcs-blue-planet-iii-keeps-rough-footage-to-show-authenticity-in-ai-age"
 description: "BBC’s Blue Planet III is deliberately keeping imperfect footage to prove its authenticity in an era where AI‑generated polish can be a giveaway."
-date: 2026-10-25T18:01:36+05:30
+date: 2026-10-25T22:04:16+05:30
 tags: [BluePlanetIII, AI, Authenticity]
 categories: ["AI", "Media Production", "Artificial Intelligence", "Documentary Filmmaking"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/blue_planet_iii_episode_03_051_screengrab.avif?quality=90&strip=all&crop=0%2C3.4695867913185%2C100%2C93.060826417363&w=1200"
