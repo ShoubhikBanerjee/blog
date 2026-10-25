@@ -2,7 +2,7 @@
 title: "Pennsylvania Enacts AI Deceptive Advertising Disclosure Law"
 slug: "pennsylvania-enacts-ai-deceptive-advertising-disclosure-law"
 description: "On Thursday, Pennsylvania Governor Josh Shapiro signed the Artificial Intelligence Deceptive Advertising Act into law, mandating disclosures on AI‑generated ads."
-date: 2026-10-25T06:01:53+05:30
+date: 2026-10-25T12:01:39+05:30
 tags: [AIRegulation, Pennsylvania, Advertising]
 categories: ["AI", "Artificial Intelligence", "Law and Policy", "Advertising", "Consumer Protection"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/09/STK445_ADVERTISING_STK093_GOOGLE_C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
