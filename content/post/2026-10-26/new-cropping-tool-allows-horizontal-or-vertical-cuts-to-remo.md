@@ -2,7 +2,7 @@
 title: "New Cropping Tool Allows Horizontal or Vertical Cuts to Remove Image Middle Sections"
 slug: "new-cropping-tool-allows-horizontal-or-vertical-cuts-to-remove-image-middle-sections"
 description: "On 25th October 2026 a new cropping tool was released that lets users create a horizontal or vertical cut across an image and slide the two sides relative to each other, effectively cropping out a..."
-date: 2026-10-26T18:01:51+05:30
+date: 2026-10-26T22:04:31+05:30
 tags: [ImageEditing, Productivity, iOS]
 categories: ["AI", "Computer Vision", "Productivity Tools", "Mobile Apps"]
 author: "Shoubhik Banerjee"
