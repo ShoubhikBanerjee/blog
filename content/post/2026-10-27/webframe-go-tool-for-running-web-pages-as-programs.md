@@ -2,7 +2,7 @@
 title: "Webframe: Go Tool for Running Web Pages as Programs"
 slug: "webframe-go-tool-for-running-web-pages-as-programs"
 description: "Jeff Lindsay released **webframe**, a Go project that lets you run a web page like a program. It executes the page in a hidden headless web view, streaming `console.log()` output to standard output..."
-date: 2026-10-27T06:05:34+05:30
+date: 2026-10-27T12:03:19+05:30
 tags: [webframe, Go, WebScraping, Sandboxing]
 categories: ["AI", "Software Development", "Web Scraping", "Programming Languages", "Security"]
 author: "Shoubhik Banerjee"

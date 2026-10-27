@@ -2,7 +2,7 @@
 title: "OpenAI launches GPT‑6.1 Terra focused on visual reasoning and computer use"
 slug: "openai-launches-gpt6-1-terra-focused-on-visual-reasoning-and-computer-use"
 description: "On 26 October 2026 OpenAI announced GPT‑6.1 Terra, a fast, efficient model that combines detailed visual reasoning and precise computer use with clearer, more natural writing."
-date: 2026-10-27T06:05:34+05:30
+date: 2026-10-27T12:03:19+05:30
 tags: [OpenAI, GPT61, AIModels, VisualReasoning, ComputerUse]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Computer Vision", "AI Platforms"]
 image: "https://static.simonwillison.net/static/2026-10-26/terra-max.webp"

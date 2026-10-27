@@ -2,7 +2,7 @@
 title: "ChatGPT directs users to 404 Media for routine tech support"
 slug: "chatgpt-directs-users-to-404-media-for-routine-tech-support"
 description: "ChatGPT is now repeatedly directing users with routine tech problems to 404 Media, a media outlet, because big‑tech platforms lack human customer support."
-date: 2026-10-27T06:05:34+05:30
+date: 2026-10-27T12:03:19+05:30
 tags: [ChatGPT, TechSupport, 404Media]
 categories: ["AI", "Artificial Intelligence", "Customer Service", "Technology Trends"]
 author: "Shoubhik Banerjee"
