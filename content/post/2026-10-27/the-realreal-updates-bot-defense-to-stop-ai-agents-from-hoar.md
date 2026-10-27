@@ -2,7 +2,7 @@
 title: "The RealReal Updates Bot Defense to Stop AI Agents from Hoarding Designer Clothing"
 slug: "the-realreal-updates-bot-defense-to-stop-ai-agents-from-hoarding-designer-clothing"
 description: "The RealReal, a secondhand luxury fashion consignment retailer, said it’s updating its bot defense system, effectively making it harder for AI agents to shop on its site. The retailer won’t let AI..."
-date: 2026-10-27T12:03:19+05:30
+date: 2026-10-27T18:02:05+05:30
 tags: [AIagents, Shopping, Meta, Botdefense, TheRealReal, Ecommerce]
 categories: ["AI", "AI Agents", "Machine Learning", "E-commerce", "Cybersecurity"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STKS539_AI_AGENTS_SHOPPING_E.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

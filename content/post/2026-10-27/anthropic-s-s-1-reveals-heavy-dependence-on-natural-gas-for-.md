@@ -2,7 +2,7 @@
 title: "Anthropic’s S‑1 Reveals Heavy Dependence on Natural Gas for AI Data Centers"
 slug: "anthropics-s1-reveals-heavy-dependence-on-natural-gas-for-ai-data-centers"
 description: "Anthropic’s S‑1 filing, released as the company prepares to go public, makes its reliance on natural‑gas‑fired data centers explicit."
-date: 2026-10-27T12:03:19+05:30
+date: 2026-10-27T18:02:05+05:30
 tags: [Anthropic, NaturalGas, DataCenters, AI]
 categories: ["AI", "Artificial Intelligence", "Energy Infrastructure", "Business Strategy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/01/STK269_ANTHROPIC_2_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

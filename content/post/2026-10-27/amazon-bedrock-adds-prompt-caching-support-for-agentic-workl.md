@@ -2,7 +2,7 @@
 title: "Amazon Bedrock adds prompt‑caching support for agentic workloads"
 slug: "amazon-bedrock-adds-promptcaching-support-for-agentic-workloads"
 description: "Amazon Bedrock now supports prompt caching that reduces the repeated work of sending large, unchanging prompt prefixes for each model call."
-date: 2026-10-27T12:03:19+05:30
+date: 2026-10-27T18:02:05+05:30
 tags: [AmazonBedrock, PromptCaching, AIAgents]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-22246-featured-image.png"

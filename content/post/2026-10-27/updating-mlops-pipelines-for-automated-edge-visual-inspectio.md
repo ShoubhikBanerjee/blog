@@ -2,7 +2,7 @@
 title: "Updating MLOps Pipelines for Automated Edge Visual Inspection with SageMaker"
 slug: "updating-mlops-pipelines-for-automated-edge-visual-inspection-with-sagemaker"
 description: "An updated architecture pattern automates fleet-wide computer vision lifecycle management for visual quality inspection at the edge using the Amazon SageMaker Python SDK v3. The solution automates..."
-date: 2026-10-27T12:03:19+05:30
+date: 2026-10-27T18:02:05+05:30
 tags: [AWS, SageMaker, MLOps, ComputerVision, EdgeComputing]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Computer Vision", "Edge Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20483-featured-image.png"
