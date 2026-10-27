@@ -2,7 +2,7 @@
 title: "Together AI releases Hallmark anti‑AI‑slop design skill for Claude, Cursor, Codex"
 slug: "together-ai-releases-hallmark-antiaislop-design-skill-for-claude-cursor-codex"
 description: "Together AI has launched Hallmark, an anti‑AI‑slop design skill that works with Claude Code, Cursor, Codex and OpenCode and *refuses to look AI‑generated*."
-date: 2026-10-27T18:02:05+05:30
+date: 2026-10-27T22:02:24+05:30
 tags: [AIdesign, TogetherAI, HallmarkSkill]
 categories: ["AI", "Artificial Intelligence", "Design Tools", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/63742054?v=4"

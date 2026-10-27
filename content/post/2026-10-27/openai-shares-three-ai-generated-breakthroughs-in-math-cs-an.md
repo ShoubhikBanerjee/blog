@@ -2,7 +2,7 @@
 title: "OpenAI shares three AI‑generated breakthroughs in math, CS, and physics"
 slug: "openai-shares-three-aigenerated-breakthroughs-in-math-cs-and-physics"
 description: "- Less than a month after releasing hundreds of manuscripts with claimed solutions to long‑standing mathematics questions, OpenAI announced three new major discoveries in mathematics, computer..."
-date: 2026-10-27T18:02:05+05:30
+date: 2026-10-27T22:02:24+05:30
 tags: [OpenAI, AIResearch, Mathematics, ComputerScience, Physics]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "Computer Science", "Physics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STKS537_AI_MATH_2.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

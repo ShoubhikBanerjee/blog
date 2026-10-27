@@ -2,7 +2,7 @@
 title: "AI Integration Enables Drawing and Editing draw.io Diagrams via Chat"
 slug: "ai-integration-enables-drawing-and-editing-draw-io-diagrams-via-chat"
 description: "Users can now draw and edit draw.io diagrams by chatting with an AI across web, desktop, and Model Context Protocol (MCP) server environments."
-date: 2026-10-27T18:02:05+05:30
+date: 2026-10-27T22:02:24+05:30
 tags: [drawio, Diagramming, MCPServer, ClaudeCode, AITools]
 categories: ["AI", "Developer Tools", "Artificial Intelligence", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/34411969?v=4"

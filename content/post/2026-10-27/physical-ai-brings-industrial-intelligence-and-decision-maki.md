@@ -2,7 +2,7 @@
 title: "Physical AI Brings Industrial Intelligence and Decision-Making to Manufacturing Processes"
 slug: "physical-ai-brings-industrial-intelligence-and-decision-making-to-manufacturing-processes"
 description: "Physical AI and industrial intelligence are bringing business intelligence to physical manufacturing processes by integrating production data, operating practices, and accumulated know-how into..."
-date: 2026-10-27T18:02:05+05:30
+date: 2026-10-27T22:02:24+05:30
 tags: [PhysicalAI, IndustrialAI, Manufacturing, Automation, SmartFactory]
 categories: ["AI", "Manufacturing", "Artificial Intelligence", "Industrial Automation", "Physical AI"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/iStock-1367303200.jpg?resize=1200,600"

@@ -2,7 +2,7 @@
 title: "Super PACs Pour Millions into AI and Data Center Policy Battles"
 slug: "super-pacs-pour-millions-into-ai-and-data-center-policy-battles"
 description: "A wave of money‑driven campaigning is shaping AI and data‑center policy ahead of key 2026 elections."
-date: 2026-10-27T18:02:05+05:30
+date: 2026-10-27T22:02:24+05:30
 tags: [AIpolicy, DataCenters, Elections2026, SuperPACs]
 categories: ["AI", "Artificial Intelligence", "Public Policy", "Elections", "Energy Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268813_ELECTIONS_DATA_CENTERS_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

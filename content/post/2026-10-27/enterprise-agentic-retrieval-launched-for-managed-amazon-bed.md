@@ -2,7 +2,7 @@
 title: "Enterprise agentic retrieval launched for Managed Amazon Bedrock Knowledge Bases"
 slug: "enterprise-agentic-retrieval-launched-for-managed-amazon-bedrock-knowledge-bases"
 description: "Amazon Bedrock has introduced enterprise agentic retrieval for Managed Knowledge Bases, evolving standard Retrieval Augmented Generation (RAG) into a reasoning-driven system. This update moves beyond..."
-date: 2026-10-27T18:02:05+05:30
+date: 2026-10-27T22:02:24+05:30
 tags: [AmazonBedrock, AWSCDK, AIagents, RAG, MachineLearning]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21614-featured-image.png"
