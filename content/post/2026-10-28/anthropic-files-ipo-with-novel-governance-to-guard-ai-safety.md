@@ -2,7 +2,7 @@
 title: "Anthropic Files IPO with Novel Governance to Guard AI Safety Mission"
 slug: "anthropic-files-ipo-with-novel-governance-to-guard-ai-safety-mission"
 description: "Anthropic, the AI safety‑focused startup, announced that it will pursue an initial public offering while retaining a governance model designed to keep the company’s mission front and centre."
-date: 2026-10-28T12:05:05+05:30
+date: 2026-10-28T18:02:11+05:30
 tags: [Anthropic, IPO, AIGovernance, PublicBenefit]
 categories: ["AI", "Artificial Intelligence", "Corporate Governance", "Public Benefit Corporations"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/gettyimages-2280291188.jpg?quality=90&strip=all&crop=0%2C10.752607989199%2C100%2C78.494784021602&w=1200"

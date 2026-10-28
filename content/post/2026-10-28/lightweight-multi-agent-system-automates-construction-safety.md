@@ -2,7 +2,7 @@
 title: "Lightweight Multi‑Agent System Automates Construction Safety Bulletins"
 slug: "lightweight-multiagent-system-automates-construction-safety-bulletins"
 description: "Construction safety management still struggles to produce daily safety bulletins (DSBs), structured daily communications that identify site‑specific hazards, convey safety protocols, and set..."
-date: 2026-10-28T12:05:05+05:30
+date: 2026-10-28T18:02:11+05:30
 tags: [ConstructionAI, SafetyAutomation, MultiAgentSystems, LLM, RAG]
 categories: ["AI", "Construction Technology", "Artificial Intelligence", "Natural Language Processing", "AI Agents"]
 author: "Shoubhik Banerjee"

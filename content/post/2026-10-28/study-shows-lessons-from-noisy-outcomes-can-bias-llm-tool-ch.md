@@ -2,7 +2,7 @@
 title: "Study Shows Lessons from Noisy Outcomes Can Bias LLM Tool Choices"
 slug: "study-shows-lessons-from-noisy-outcomes-can-bias-llm-tool-choices"
 description: "A registered study measured how a self‑improving language model’s written lessons can carry the luck of a noisy outcome into its next decision. When a model recorded a chance failure, the lesson it..."
-date: 2026-10-28T12:05:05+05:30
+date: 2026-10-28T18:02:11+05:30
 tags: [AIagents, LLM, SelfImproving, MemoryWriting]
 categories: ["AI", "Machine Learning", "AI Safety", "Language Models"]
 author: "Shoubhik Banerjee"

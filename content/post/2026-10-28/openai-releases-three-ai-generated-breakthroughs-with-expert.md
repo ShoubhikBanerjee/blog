@@ -2,7 +2,7 @@
 title: "OpenAI releases three AI‑generated breakthroughs with expert shepherds"
 slug: "openai-releases-three-aigenerated-breakthroughs-with-expert-shepherds"
 description: "On Monday, OpenAI announced impressive breakthroughs in mathematics, computer science, and physics, and said it would use expert “shepherds” to decide how to share the findings."
-date: 2026-10-28T12:05:05+05:30
+date: 2026-10-28T18:02:11+05:30
 tags: [OpenAI, AIresearch, Mathematics, ComputerScience, Physics]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Mathematics", "Computer Science"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STKS537_AI_MATH_7.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

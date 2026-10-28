@@ -2,7 +2,7 @@
 title: "Property Finder uncovers label bias and improves vision AI with Amazon Bedrock"
 slug: "property-finder-uncovers-label-bias-and-improves-vision-ai-with-amazon-bedrock"
 description: "Property Finder’s engineering team discovered that 96.8 percent of their image‑evaluation labels were inherited directly from a single vision‑language model instead of being verified by human..."
-date: 2026-10-28T12:05:05+05:30
+date: 2026-10-28T18:02:11+05:30
 tags: [PropertyFinder, ComputerVision, AmazonBedrock, DataQuality]
 categories: ["AI", "Computer Vision", "Machine Learning", "Data Engineering", "Generative AI"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/26/ML-21124-featured-image.png"

@@ -2,7 +2,7 @@
 title: "RouteDRAG introduces learned control for agentic execution in multimodal document RAG"
 slug: "routedrag-introduces-learned-control-for-agentic-execution-in-multimodal-document-rag"
 description: "The arXiv preprint “RouteDRAG: Learning to Route and Control Agentic Execution for Multimodal Document RAG” introduces a learning‑based framework that decides when and how to invoke an agent during..."
-date: 2026-10-28T12:05:05+05:30
+date: 2026-10-28T18:02:11+05:30
 tags: [MultimodalRAG, AgenticExecution, RouteDRAG, DocumentAI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Information Retrieval", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Cross‑Lingual Fairness Gaps in Homoglyph and Invisible‑Character Watermarks"
 slug: "crosslingual-fairness-gaps-in-homoglyph-and-invisiblecharacter-watermarks"
 description: "A new study updates our understanding of edit‑based watermarks that hide signals in text after it is written. By comparing 40 language varieties across 24 scripts, the researchers show that fairness..."
-date: 2026-10-28T12:05:05+05:30
+date: 2026-10-28T18:02:11+05:30
 tags: [AIWatermarking, Fairness, MultilingualNLP]
 categories: ["AI", "Computation And Language", "Machine Learning", "Natural Language Processing", "Ethics"]
 author: "Shoubhik Banerjee"

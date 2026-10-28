@@ -2,7 +2,7 @@
 title: "New Handoff State Continuity Benchmark Evaluates AI Agent Task Takeover"
 slug: "new-handoff-state-continuity-benchmark-evaluates-ai-agent-task-takeover"
 description: "A benchmark called the Handoff State Continuity Benchmark (HSC‑Bench) was introduced to measure how well AI agents can take over tasks from one another."
-date: 2026-10-28T12:05:05+05:30
+date: 2026-10-28T18:02:11+05:30
 tags: [AIagents, Benchmark, HSCBench]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents", "Evaluation"]
 author: "Shoubhik Banerjee"

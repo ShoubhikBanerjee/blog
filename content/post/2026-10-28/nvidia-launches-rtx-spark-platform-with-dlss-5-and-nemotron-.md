@@ -2,7 +2,7 @@
 title: "NVIDIA Launches RTX Spark Platform with DLSS 5 and Nemotron 3.5 AI Model"
 slug: "nvidia-launches-rtx-spark-platform-with-dlss-5-and-nemotron-3-5-ai-model"
 description: "NVIDIA introduced RTX Spark, a new Windows PC platform that combines a Blackwell RTX GPU and Grace CPU for AI development, creation, and gaming in slim laptops and compact desktops."
-date: 2026-10-28T12:05:05+05:30
+date: 2026-10-28T18:02:11+05:30
 tags: [NVIDIA, DLSS5, AIModels, Gaming, RTXSpark]
 categories: ["AI", "Hardware", "Graphics Technology", "Artificial Intelligence", "Gaming"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image6-2-660x370.png"

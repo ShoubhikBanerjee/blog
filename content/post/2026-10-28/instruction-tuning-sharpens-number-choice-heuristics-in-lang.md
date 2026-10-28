@@ -2,7 +2,7 @@
 title: "Instruction Tuning Sharpens Number-Choice Heuristics in Language Models"
 slug: "instruction-tuning-sharpens-number-choice-heuristics-in-language-models"
 description: "'3, 7, 14, 17, 42: Instruction Tuning Installs and Sharpens Number-Choice Heuristics in Language Models' was submitted on **26 Oct 2026**. The paper investigates how instruction‑tuned checkpoints..."
-date: 2026-10-28T12:05:05+05:30
+date: 2026-10-28T18:02:11+05:30
 tags: [instructiontuning, numberchoice, languagemodels]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Research"]
 author: "Shoubhik Banerjee"
