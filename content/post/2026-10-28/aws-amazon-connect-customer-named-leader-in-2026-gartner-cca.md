@@ -2,7 +2,7 @@
 title: "AWS Amazon Connect Customer Named Leader in 2026 Gartner CCaaS Magic Quadrant"
 slug: "aws-amazon-connect-customer-named-leader-in-2026-gartner-ccaas-magic-quadrant"
 description: "Amazon Web Services (AWS) has been named a Leader in the 2026 Gartner Magic Quadrant for Contact Center as a Service (CCaaS) for Amazon Connect for the fourth consecutive year."
-date: 2026-10-28T06:05:03+05:30
+date: 2026-10-28T12:05:05+05:30
 tags: [AWS, ContactCenter, AI]
 categories: ["AI", "Artificial Intelligence", "Customer Experience", "Cloud Services"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/26/AWS-named-a-Leader-in-the-2026-Gartner-Magic-Quadrant-for-Contact-Center-as-a-Service.png"

@@ -2,7 +2,7 @@
 title: "Exowatt Deploys Edge AI Agents for Solar‑Powered Data Center Alarm Triage"
 slug: "exowatt-deploys-edge-ai-agents-for-solarpowered-data-center-alarm-triage"
 description: "Exowatt has expanded its modular, dispatchable solar platform with AI agents that autonomously triage alarms and perform energy‑market analysis, using a serverless model‑customization pipeline on AWS."
-date: 2026-10-28T06:05:03+05:30
+date: 2026-10-28T12:05:05+05:30
 tags: [Exowatt, AIagents, SolarPower, AWS, EdgeAI]
 categories: ["AI", "Renewable Energy", "Artificial Intelligence", "Edge Computing", "Cloud Services"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22072-featured-image.png"

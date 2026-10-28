@@ -2,7 +2,7 @@
 title: "Amazon SageMaker adds Seekable OCI indexing to lazy‑load deep learning container images"
 slug: "amazon-sagemaker-adds-seekable-oci-indexing-to-lazyload-deep-learning-container-images"
 description: "Amazon SageMaker AI Training and Processing jobs now support Seekable OCI (SOCI) indexing, which removes the full container image download from the critical path and lets jobs start in seconds."
-date: 2026-10-28T06:05:03+05:30
+date: 2026-10-28T12:05:05+05:30
 tags: [SageMaker, ContainerImages, SOCI, AWS, MLTraining]
 categories: ["AI", "Machine Learning", "Cloud Computing", "DevOps", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-21882-featured-image-4.png"

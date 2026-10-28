@@ -2,7 +2,7 @@
 title: "LFM3 Unifies Text, Vision, Audio, Omni, and Decision Models on a 2‑Billion‑Parameter Backbone"
 slug: "lfm3-unifies-text-vision-audio-omni-and-decision-models-on-a-2billionparameter-backbone"
 description: "The latest release, LFM3, is the new generation of Liquid Foundation Models that unifies text, vision, audio, omni, and decision capabilities on a shared ~2 B‑parameter backbone."
-date: 2026-10-28T06:05:03+05:30
+date: 2026-10-28T12:05:05+05:30
 tags: [LiquidFoundationModels, MultimodalAI, EdgeAI, ModelOptimization]
 categories: ["AI", "Machine Learning", "Multimodal AI", "Edge Computing", "Artificial Intelligence"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/644249b08443bce4c9890a0f/wEKXxH6qGa7vmHjn5KA-W.png"

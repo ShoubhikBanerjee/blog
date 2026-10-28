@@ -2,7 +2,7 @@
 title: "Marvel’s VisionQuest Mirrors Real‑World Concerns About Rogue AI"
 slug: "marvels-visionquest-mirrors-realworld-concerns-about-rogue-ai"
 description: "VisionQuest, a new Marvel series featuring a synthezoid version of Vision, puts a super‑powered robot on a path of self‑discovery while exploring ideas that dominate the conversation about generative..."
-date: 2026-10-28T06:05:03+05:30
+date: 2026-10-28T12:05:05+05:30
 tags: [Marvel, AI, RogueAI, GenerativeAI, AIethics]
 categories: ["AI", "Entertainment", "Artificial Intelligence", "AI Ethics", "Science Fiction"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/107-90190_RC.jpg?quality=90&strip=all&crop=0%2C10.721948032455%2C100%2C78.556103935089&w=1200"
