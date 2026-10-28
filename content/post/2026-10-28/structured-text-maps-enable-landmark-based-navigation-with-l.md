@@ -2,7 +2,7 @@
 title: "Structured Text Maps Enable Landmark-Based Navigation with LLMs"
 slug: "structured-text-maps-enable-landmark-based-navigation-with-llms"
 description: "A new research paper introduces a structured text representation for map data that lets large language models generate landmark‑based route instructions while directly accessing spatial and semantic..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [AI, NavigationAI, LLM, SpatialReasoning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Geographic Information Systems"]
 author: "Shoubhik Banerjee"

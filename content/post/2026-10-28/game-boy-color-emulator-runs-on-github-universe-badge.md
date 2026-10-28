@@ -2,7 +2,7 @@
 title: "Game Boy Color Emulator Runs on GitHub Universe Badge"
 slug: "game-boy-color-emulator-runs-on-github-universe-badge"
 description: "I’m at GitHub Universe this week and, similar to last year, the conference badge is a full‑blown color screen computer. After hacking around with it again, I ran into Steve Francia… who worked with..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [GitHubUniverse, GameBoy, Emulation, RetroGaming]
 categories: ["AI", "Hardware", "Software Development", "Retro Gaming"]
 image: "https://static.simonwillison.net/static/2026/zelda-card.jpg"

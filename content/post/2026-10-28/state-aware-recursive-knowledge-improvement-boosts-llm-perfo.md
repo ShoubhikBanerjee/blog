@@ -2,7 +2,7 @@
 title: "State-Aware Recursive Knowledge Improvement Boosts LLM Performance"
 slug: "state-aware-recursive-knowledge-improvement-boosts-llm-performance"
 description: "A new research paper titled *Weakness Localization Is Not Enough: State-Aware Recursive Knowledge Improvement for Large Language Models* introduces Recursive Knowledge Improvement (RKI), a..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [LLM, KnowledgeUpdate, AIResearch]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Research"]
 author: "Shoubhik Banerjee"

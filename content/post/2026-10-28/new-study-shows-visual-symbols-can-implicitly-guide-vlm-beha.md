@@ -2,7 +2,7 @@
 title: "New Study Shows Visual Symbols Can Implicitly Guide VLM Behavior"
 slug: "new-study-shows-visual-symbols-can-implicitly-guide-vlm-behavior"
 description: "A paper submitted on 27 Oct 2026 investigates whether vision‑language models (VLMs) share our ability to communicate visually."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [VisionLanguageModels, VisualCommunication, AIResearch]
 categories: ["AI", "Artificial Intelligence", "Computer Vision", "Machine Learning"]
 author: "Shoubhik Banerjee"

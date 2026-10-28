@@ -2,7 +2,7 @@
 title: "CONCUR Introduces Concordant Auxiliary Rewards for Multi‑Task RL"
 slug: "concur-introduces-concordant-auxiliary-rewards-for-multitask-rl"
 description: "When a Large Language Model (LLM) is trained with Reinforcement Learning (RL) on multiple tasks, the primary reward can gate auxiliary rewards such as a length reward. Existing group‑relative..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [ReinforcementLearning, MultiTaskLearning, LanguageModels, AIResearch]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Reinforcement Learning"]
 author: "Shoubhik Banerjee"

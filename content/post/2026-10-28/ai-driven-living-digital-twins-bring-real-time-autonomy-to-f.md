@@ -2,7 +2,7 @@
 title: "AI‑Driven Living Digital Twins Bring Real‑Time Autonomy to Factories"
 slug: "aidriven-living-digital-twins-bring-realtime-autonomy-to-factories"
 description: "Living digital twins infused with AI are moving from off‑line simulation to real‑time, agentic systems that can actively control industrial plants."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [digitaltwins, agenticAI, industrialIoT, smartmanufacturing]
 categories: ["AI", "Industrial Automation", "Artificial Intelligence", "Digital Twin", "Manufacturing"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/iStock-2264572193.jpg?resize=1200,600"

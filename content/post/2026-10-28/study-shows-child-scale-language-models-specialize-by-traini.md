@@ -2,7 +2,7 @@
 title: "Study Shows Child‑Scale Language Models Specialize by Training Environment"
 slug: "study-shows-childscale-language-models-specialize-by-training-environment"
 description: "Small GPT‑2 language models trained on child‑directed speech reveal that the amount **and** source of data shape learning outcomes."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [ChildLanguageModels, SmallDataML, LanguageLearning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Cognitive Modeling"]
 author: "Shoubhik Banerjee"

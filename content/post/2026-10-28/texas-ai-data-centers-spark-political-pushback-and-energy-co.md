@@ -2,7 +2,7 @@
 title: "Texas AI Data Centers Spark Political Pushback and Energy Concerns"
 slug: "texas-ai-data-centers-spark-political-pushback-and-energy-concerns"
 description: "Texas is experiencing a surge of AI‑focused data center construction that has ignited political battles, tax‑exemption controversy, and rising energy‑use concerns."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [Texas, DataCenters, AIInfrastructure, EnergyPolicy]
 categories: ["AI", "Artificial Intelligence", "Energy & Environment", "Public Policy", "Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268813_TEXAS_DATA_CENTERS_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

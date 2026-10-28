@@ -2,7 +2,7 @@
 title: "Claude Haiku 5.5 released on 7 October 2026"
 slug: "claude-haiku-5-5-released-on-7-october-2026"
 description: "Claude Haiku 5.5 was released on 7 October 2026."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [ClaudeHaiku, AIModels, MachineLearning]
 categories: ["AI", "Machine Learning", "Large Language Models", "AI Research"]
 author: "Shoubhik Banerjee"

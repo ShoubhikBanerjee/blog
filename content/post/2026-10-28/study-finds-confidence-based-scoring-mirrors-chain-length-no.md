@@ -2,7 +2,7 @@
 title: "Study Finds Confidence‑Based Scoring Mirrors Chain Length, Not Correctness"
 slug: "study-finds-confidencebased-scoring-mirrors-chain-length-not-correctness"
 description: "Reasoning language models generate long chains of thought to solve math problems. Researchers sampled many chains per problem and used a majority vote to boost accuracy, but the approach creates a..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [AI, ReasoningModels, ChainofThought, SignalProcessing]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

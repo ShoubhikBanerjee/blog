@@ -2,7 +2,7 @@
 title: "Lipi-Ghor: Large-Scale Diarized Bengali Speech Corpus Released"
 slug: "lipi-ghor-large-scale-diarized-bengali-speech-corpus-released"
 description: "A new open Bengali speech resource, Lipi‑Ghor, has been introduced. It provides 885 hours of speaker‑diarized, long‑form audio drawn from YouTube and includes a reproducible pipeline for building..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [Bengali, SpeechCorpus, ASR]
 categories: ["AI", "Speech Recognition", "Natural Language Processing", "Datasets", "Computational Linguistics"]
 author: "Shoubhik Banerjee"

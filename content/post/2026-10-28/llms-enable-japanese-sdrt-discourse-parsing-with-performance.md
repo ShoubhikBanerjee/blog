@@ -2,7 +2,7 @@
 title: "LLMs Enable Japanese SDRT Discourse Parsing with Performance Matching English"
 slug: "llms-enable-japanese-sdrt-discourse-parsing-with-performance-matching-english"
 description: "Discourse parsing based on Segmented Discourse Representation Theory (SDRT) has been extended to Japanese using large language models (LLMs). The work constructs a Japanese SDRT corpus by translating..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [JapaneseNLP, DiscourseParsing, SDRT, LLMs]
 categories: ["AI", "Natural Language Processing", "Computational Linguistics", "Machine Learning", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

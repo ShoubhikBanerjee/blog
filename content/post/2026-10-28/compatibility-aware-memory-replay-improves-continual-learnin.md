@@ -2,7 +2,7 @@
 title: "Compatibility-Aware Memory Replay Improves Continual Learning in Large Language Models"
 slug: "compatibility-aware-memory-replay-improves-continual-learning-in-large-language-models"
 description: "We propose Compatibility-Aware Memory Replay (CAMR), an adaptive framework that jointly controls current-example supervision and historical replay."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [ContinualLearning, MemoryReplay, AIResearch]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

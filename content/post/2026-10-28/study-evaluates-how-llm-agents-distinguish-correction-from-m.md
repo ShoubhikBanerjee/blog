@@ -2,7 +2,7 @@
 title: "Study Evaluates How LLM Agents Distinguish Correction From Manipulation"
 slug: "study-evaluates-how-llm-agents-distinguish-correction-from-manipulation"
 description: "LLM agents that answer questions and act on behalf of users must decide when to yield to a user who disagrees. A new study investigates whether these models can tell a genuine correction apart from a..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [LLMAgents, Concession, AIAlignment, SignalDetection]
 categories: ["AI", "Machine Learning", "AI Agents", "Human-Computer Interaction", "AI Safety"]
 author: "Shoubhik Banerjee"

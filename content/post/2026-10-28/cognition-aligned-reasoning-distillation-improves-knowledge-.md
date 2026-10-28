@@ -2,7 +2,7 @@
 title: "Cognition-Aligned Reasoning Distillation Improves Knowledge Transfer from Large Models"
 slug: "cognition-aligned-reasoning-distillation-improves-knowledge-transfer-from-large-models"
 description: "From Solver Trajectories to Teaching Trajectories: Cognition-Aligned Reasoning Distillation was submitted on 27 Oct 2026 to the Computer Science > Artificial Intelligence category. The paper..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [knowledgedistillation, largemodels, reinforcementlearning]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Knowledge Distillation"]
 author: "Shoubhik Banerjee"

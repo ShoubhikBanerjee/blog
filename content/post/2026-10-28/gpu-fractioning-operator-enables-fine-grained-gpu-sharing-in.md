@@ -2,7 +2,7 @@
 title: "GPU Fractioning Operator Enables Fine‑Grained GPU Sharing in Kubernetes"
 slug: "gpu-fractioning-operator-enables-finegrained-gpu-sharing-in-kubernetes"
 description: "Many AI workloads need only a fraction of a GPU, and allocating a whole device to each workload can leave capacity idle. An open‑source Kubernetes operator called **gpu‑fractioning** now lets..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [GPUSharing, Kubernetes, CUDA, AIWorkloads]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Container Orchestration", "Hardware Acceleration"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/CUDAMemoryKV-660x370.webp"

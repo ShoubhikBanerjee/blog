@@ -2,7 +2,7 @@
 title: "kw-bench shows frontier models solve complex VAT reconstruction in minutes"
 slug: "kw-bench-shows-frontier-models-solve-complex-vat-reconstruction-in-minutes"
 description: "A new benchmark, kw-bench, evaluates coding‑agent harnesses on real‑world investigative knowledge work."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [AIbenchmark, knowledgework, frontiermodels, codingagents]
 categories: ["AI", "Machine Learning", "AI Agents", "Evaluation", "Knowledge Work"]
 author: "Shoubhik Banerjee"

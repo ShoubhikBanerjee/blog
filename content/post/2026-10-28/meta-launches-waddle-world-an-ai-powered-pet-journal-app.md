@@ -2,7 +2,7 @@
 title: "Meta launches Waddle World, an AI‑powered pet journal app"
 slug: "meta-launches-waddle-world-an-aipowered-pet-journal-app"
 description: "Meta has quietly released a new app called **Waddle World**, described as a tamagotchi‑style pet that chats with users and doubles as a daily journal."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [Meta, AI, PetJournal, ChatBots]
 categories: ["AI", "Artificial Intelligence", "Consumer Apps", "Human-Computer Interaction"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Waddle-World-meta-app-hero.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Personality Latents Enable Label‑Free Personality Modeling in Language Models"
 slug: "personality-latents-enable-labelfree-personality-modeling-in-language-models"
 description: "A new method called Personality Latents (PL) learns a latent representation of each person directly from their writing, removes the need for explicit personality labels or authored profiles, and..."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [PersonalityAI, LanguageModels, LatentOptimization]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Personalization"]
 author: "Shoubhik Banerjee"

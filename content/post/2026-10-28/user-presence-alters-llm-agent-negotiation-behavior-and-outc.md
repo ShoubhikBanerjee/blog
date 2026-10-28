@@ -2,7 +2,7 @@
 title: "User Presence Alters LLM Agent Negotiation Behavior and Outcomes"
 slug: "user-presence-alters-llm-agent-negotiation-behavior-and-outcomes"
 description: "A new study released on 27 Oct 2026 shows that LLM agents negotiate differently when a user is present."
-date: 2026-10-28T18:02:11+05:30
+date: 2026-10-28T22:03:50+05:30
 tags: [LLM, Negotiation, AIagents, UserPresence]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Human-Computer Interaction", "Machine Learning"]
 author: "Shoubhik Banerjee"
