@@ -2,7 +2,7 @@
 title: "Google Releases Gemini 4 Carbon Frontier Model with Advanced Cybersecurity Capabilities"
 slug: "google-releases-gemini-4-carbon-frontier-model-with-advanced-cybersecurity-capabilities"
 description: "Google has announced Gemini 4 Carbon, its latest frontier model featuring advanced cybersecurity defense, coding, and long-horizon engineering capabilities. Building on the Gemini 4 Argon model..."
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [Google, Gemini4Carbon, Cybersecurity, ArtificialIntelligence, LLM]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Machine Learning"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/03/STK255_Google_Gemini_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

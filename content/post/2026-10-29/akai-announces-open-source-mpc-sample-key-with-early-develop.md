@@ -2,7 +2,7 @@
 title: "Akai Announces Open-Source MPC Sample Key with Early Developer Access"
 slug: "akai-announces-open-source-mpc-sample-key-with-early-developer-access"
 description: "Akai is previewing an upcoming 37‑key version of its budget‑friendly MPC Sample, called the **MPC Sample Key**. Although the device has not been formally announced, Akai is already sharing vibe‑coded..."
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [Akai, OpenSource, MusicTech, MPC]
 categories: ["AI", "Music Technology", "Hardware", "Open Source Software"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Akai-MPC-Sample-Key.jpg?quality=90&strip=all&crop=0,20.395548367643,100,59.208903264713"

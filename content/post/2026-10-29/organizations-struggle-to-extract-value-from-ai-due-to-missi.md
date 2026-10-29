@@ -2,7 +2,7 @@
 title: "Organizations Struggle to Extract Value From AI Due to Missing Context Layer"
 slug: "organizations-struggle-to-extract-value-from-ai-due-to-missing-context-layer"
 description: "While organizations are widely adopting sophisticated AI platforms and conversational assistants, many are failing to see transformative returns on their investments. An MIT Technology Review..."
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [EnterpriseAI, MITTechReview, AIContext, DataStrategy]
 categories: ["AI", "Enterprise Software", "Artificial Intelligence", "Data Architecture"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/MITTR2026_CovSocial1200_1028-e1793220807248.png?resize=1200,600"

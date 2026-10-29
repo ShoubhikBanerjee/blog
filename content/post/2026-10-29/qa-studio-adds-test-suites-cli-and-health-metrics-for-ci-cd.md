@@ -2,7 +2,7 @@
 title: "QA Studio adds test suites, CLI and health metrics for CI/CD"
 slug: "qa-studio-adds-test-suites-cli-and-health-metrics-for-ci-cd"
 description: "We announced an update to QA Studio – the reference solution built with Amazon Nova Act – that expands the platform with batch regression testing, a command‑line interface, and richer..."
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [AmazonNovaAct, QAStudio, CICD, Testing]
 categories: ["AI", "Software Testing", "AI Operations", "DevOps", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21434-featured-image.png"

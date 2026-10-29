@@ -2,7 +2,7 @@
 title: "Instagram Head Adam Mosseri Addresses AI Negativity, Ranking, and Account Labeling"
 slug: "instagram-head-adam-mosseri-addresses-ai-negativity-ranking-and-account-labeling"
 description: "In an interview on the Colin and Samir podcast, Instagram head Adam Mosseri addressed growing anxiety surrounding artificial intelligence, discussing creator concerns, platform ranking, and..."
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [Instagram, Meta, GenerativeAI, SocialMedia, AIContent]
 categories: ["AI", "Artificial Intelligence", "Social Media", "Digital Media", "Technology Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/07/gettyimages-2239561028.jpg?quality=90&strip=all&crop=0%2C10.634570719994%2C100%2C78.730858560013&w=1200"

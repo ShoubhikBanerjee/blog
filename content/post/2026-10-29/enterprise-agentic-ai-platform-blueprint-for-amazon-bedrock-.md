@@ -2,7 +2,7 @@
 title: "Enterprise Agentic AI Platform Blueprint for Amazon Bedrock and AgentCore"
 slug: "enterprise-agentic-ai-platform-blueprint-for-amazon-bedrock-and-agentcore"
 description: "This update details the architecture and reference implementation of an enterprise Agentic AI Platform on Amazon Bedrock and Amazon Bedrock AgentCore. The platform is designed to manage the..."
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [AmazonBedrock, AgentCore, AIPlatform, EnterpriseAI, AWS]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Infrastructure"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21798-featured-image.png"

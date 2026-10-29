@@ -2,7 +2,7 @@
 title: "LLM Performance and Naming Conventions Explained"
 slug: "llm-performance-and-naming-conventions-explained"
 description: "On October 28, 2026, Ted Sanders provided insights into the complexities of LLM performance and OpenAI's model naming conventions."
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [O, p, e, n, A, I, L, a, r, g, e, L, a, n, g, u, a, g, e, M, o, d, e, l, s, A, I, M, o, d, e, l, s, T, e, c, h, N, e, w, s, S, o, f, t, w, a, r, e, E, n, g, i, n, e, e, r, i, n, g]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "r", "t", "i", "f", "i", "c", "i", "a", "l", "I", "n", "t", "e", "l", "l", "i", "g", "e", "n", "c", "e", ",", "S", "o", "f", "t", "w", "a", "r", "e", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t", ",", "T", "e", "c", "h", "I", "n", "d", "u", "s", "t", "r", "y"]
 author: "Shoubhik Banerjee"

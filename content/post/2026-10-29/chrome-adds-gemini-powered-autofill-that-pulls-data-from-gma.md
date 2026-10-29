@@ -2,7 +2,7 @@
 title: "Chrome adds Gemini‑powered autofill that pulls data from Gmail"
 slug: "chrome-adds-geminipowered-autofill-that-pulls-data-from-gmail"
 description: "Chrome’s enhanced autofill is expanding. Starting today it will use Gemini with Personal Intelligence to suggest information sourced from your Gmail, helping you fill forms without hunting for emails."
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [Chrome, Autofill, Gemini, PersonalIntelligence]
 categories: ["AI", "Artificial Intelligence", "Web Browsers", "Productivity Tools"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/chrome.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

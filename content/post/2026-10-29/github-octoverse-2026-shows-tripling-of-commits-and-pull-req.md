@@ -2,7 +2,7 @@
 title: "GitHub Octoverse 2026 Shows Tripling of Commits and Pull Requests Driven by Agentic Engineering"
 slug: "github-octoverse-2026-shows-tripling-of-commits-and-pull-requests-driven-by-agentic-engineering"
 description: "GitHub’s 2026 Octoverse report, announced by EVP Jay Parikh, reveals a sharp rise in development activity that the report links to the rise of “agentic engineering.”"
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [GitHub, Octoverse, AgenticEngineering, LLM]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Data Analytics", "Open Source"]
 author: "Shoubhik Banerjee"

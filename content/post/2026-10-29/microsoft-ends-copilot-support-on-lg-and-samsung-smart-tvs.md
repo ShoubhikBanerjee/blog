@@ -2,7 +2,7 @@
 title: "Microsoft Ends Copilot Support on LG and Samsung Smart TVs"
 slug: "microsoft-ends-copilot-support-on-lg-and-samsung-smart-tvs"
 description: "Microsoft announced that it will discontinue the Copilot AI assistant on all smart TVs, including the LG and Samsung models that launched with the feature at CES 2025."
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [Microsoft, Copilot, SmartTV, AI]
 categories: ["AI", "Artificial Intelligence", "Consumer Electronics", "Software"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/copilot.jpg?quality=90&strip=all&crop=0%2C10.841832569581%2C100%2C78.316334860837&w=1200"

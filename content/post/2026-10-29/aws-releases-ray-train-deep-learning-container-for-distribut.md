@@ -2,7 +2,7 @@
 title: "AWS releases Ray Train Deep Learning Container for distributed PyTorch training"
 slug: "aws-releases-ray-train-deep-learning-container-for-distributed-pytorch-training"
 description: "AWS has released the Ray Train Deep Learning Container (DLC), a pre-integrated software stack designed to simplify distributed machine learning training. The image is built, tested as a single unit,..."
-date: 2026-10-29T06:03:15+05:30
+date: 2026-10-29T12:01:24+05:30
 tags: [AWS, Ray, PyTorch, MachineLearning, Kubernetes]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Distributed Systems"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22002-featured-image.png"
