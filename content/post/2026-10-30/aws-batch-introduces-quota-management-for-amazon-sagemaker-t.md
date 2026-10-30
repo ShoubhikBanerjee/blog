@@ -2,7 +2,7 @@
 title: "AWS Batch Introduces Quota Management for Amazon SageMaker Training Jobs"
 slug: "aws-batch-introduces-quota-management-for-amazon-sagemaker-training-jobs"
 description: "AWS has introduced quota management for AWS Batch, providing a new capability for administrators to manage compute capacity for Amazon SageMaker Training workloads. This feature allows users to..."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [AWSBatch, SageMaker, MachineLearning, CloudInfrastructure]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Infrastructure Management"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-featured-image.png"

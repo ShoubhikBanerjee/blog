@@ -2,7 +2,7 @@
 title: "Anthropic Files 335‑Page S‑1 Prospectus Aiming for Public Benefit IPO"
 slug: "anthropic-files-335page-s1-prospectus-aiming-for-public-benefit-ipo"
 description: "Anthropic submitted a 335‑page S‑1 prospectus on Monday, marking a new milestone in Big Tech’s outreach to Wall Street."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [Anthropic, IPO, AIrisk, PublicBenefit]
 categories: ["AI", "Artificial Intelligence", "Finance", "Corporate Governance", "Risk Management"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Anthropic_miracles_K_Radtke_b5ca50.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

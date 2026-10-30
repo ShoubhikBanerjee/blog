@@ -2,7 +2,7 @@
 title: "Wikimedia Files Amicus Brief Seeking Balanced AI Copyright Rulings"
 slug: "wikimedia-files-amicus-brief-seeking-balanced-ai-copyright-rulings"
 description: "The Wikimedia Foundation has filed an amicus brief in the high‑profile AI copyright lawsuits involving The New York Times, OpenAI and Microsoft. The nonprofit argues for a nuanced legal approach:..."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [Wikimedia, AIcopyright, LLM, OpenAI, Microsoft]
 categories: ["AI", "Intellectual Property", "Artificial Intelligence", "Machine Learning", "Open Knowledge"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/02/STK037_WIKIPEDIA_A.jpg?quality=90&strip=all&crop=0%2C10.728364100735%2C100%2C78.54327179853&w=1200"

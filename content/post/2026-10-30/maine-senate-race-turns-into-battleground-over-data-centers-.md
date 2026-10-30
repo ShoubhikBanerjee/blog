@@ -2,7 +2,7 @@
 title: "Maine Senate Race Turns Into Battleground Over Data Centers and AI Policy"
 slug: "maine-senate-race-turns-into-battleground-over-data-centers-and-ai-policy"
 description: "Maine’s high‑profile Senate race has become a flashpoint for the clash between rapid data‑center expansion, AI industry influence, and local voters worried about jobs, utilities and the future of..."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [Maine, DataCenters, AIpolicy, Election2024]
 categories: ["AI", "Politics", "Artificial Intelligence", "Energy Infrastructure", "Regional Economics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268813_MAINE_DATA_CENTERS_CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

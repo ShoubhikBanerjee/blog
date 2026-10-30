@@ -2,7 +2,7 @@
 title: "Amazon Quick UK User Group Shares 2026 Yearly Roundup Following Three Meetups"
 slug: "amazon-quick-uk-user-group-shares-2026-yearly-roundup-following-three-meetups"
 description: "The Amazon Quick User Group – United Kingdom has released its 2026 yearly roundup, highlighting the progress and momentum across all three quarterly meetups held since the community's launch."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [AmazonQuick, AWS, AgenticAI, DataAnalytics, UserGroup]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Data Analytics"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21295-featured-image.png"

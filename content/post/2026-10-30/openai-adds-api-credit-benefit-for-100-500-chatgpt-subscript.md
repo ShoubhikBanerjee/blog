@@ -2,7 +2,7 @@
 title: "OpenAI adds API credit benefit for $100‑$500 ChatGPT subscriptions"
 slug: "openai-adds-api-credit-benefit-for-100-500-chatgpt-subscriptions"
 description: "OpenAI announced that subscribers paying $100, $200, or $500 per month for ChatGPT now receive an equivalent amount of credits that can be applied to one of their API organizations. The move mirrors..."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [OpenAI, Anthropic, APIcredits, ChatGPT, Subscriptions]
 categories: ["AI", "Artificial Intelligence", "Cloud Services", "Machine Learning", "Business Models"]
 author: "Shoubhik Banerjee"

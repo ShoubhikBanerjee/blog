@@ -2,7 +2,7 @@
 title: "Epsilon Deploys Intent‑Driven UI Testing with Amazon Nova Act and Bedrock AgentCore Browser"
 slug: "epsilon-deploys-intentdriven-ui-testing-with-amazon-nova-act-and-bedrock-agentcore-browser"
 description: "Epsilon, the data, technology, and marketing‑services firm in Publicis Groupe, has extended its shared Agentic Platform to offer intent‑driven UI testing as a managed service. By wiring..."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [AmazonWebServices, AIagents, IntentTesting, UIAutomation]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Software Testing", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21285-featured-image.png"

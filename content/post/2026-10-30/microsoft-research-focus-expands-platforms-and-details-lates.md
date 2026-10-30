@@ -2,7 +2,7 @@
 title: "Microsoft Research Focus Expands Platforms and Details Latest AI Frameworks"
 slug: "microsoft-research-focus-expands-platforms-and-details-latest-ai-frameworks"
 description: "Microsoft has expanded the reach of Microsoft Research Focus beyond its LinkedIn newsletter to social channels, YouTube, and major podcast platforms. Hosted by Sowbhagya Suresh, the latest edition..."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [MicrosoftResearch, AIAgents, ForkPilot, TeleTune, ShikshaCopilot]
 categories: ["AI", "Artificial Intelligence", "AI Research", "AI Agents"]
 image: "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/10/ResearchFocus-BlogHeroFeature-1400x788-1-scaled-1.jpg"

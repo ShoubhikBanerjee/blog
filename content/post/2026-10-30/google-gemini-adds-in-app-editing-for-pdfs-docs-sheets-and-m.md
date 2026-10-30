@@ -2,7 +2,7 @@
 title: "Google Gemini adds in‑app editing for PDFs, Docs, Sheets, and more"
 slug: "google-gemini-adds-inapp-editing-for-pdfs-docs-sheets-and-more"
 description: "Google Gemini now lets users generate, preview, and edit a variety of file types without leaving the chat interface."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [GoogleGemini, AIEditing, Productivity]
 categories: ["AI", "Artificial Intelligence", "Productivity Tools", "Google Services"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/STK255_Google_Gemini_B_474198.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

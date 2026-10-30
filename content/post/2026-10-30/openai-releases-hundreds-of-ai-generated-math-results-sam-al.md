@@ -2,7 +2,7 @@
 title: "OpenAI releases hundreds of AI‑generated math results, Sam Altman acknowledges impact"
 slug: "openai-releases-hundreds-of-aigenerated-math-results-sam-altman-acknowledges-impact"
 description: "Sam Altman told the Cheeky Pint podcast that humanity 'deserves fundamental knowledge' and that the world should not be left waiting on major scientific discoveries. His comments come as OpenAI..."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [OpenAI, MathematicsAI, SamAltman, AIResearch]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "Research Policy", "Machine Learning"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/Vrg_illo_Sam_Altman_stock_trial.jpg?quality=90&strip=all&crop=0%2C12.339110464558%2C100%2C75.321779070884&w=1200"

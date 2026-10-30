@@ -2,7 +2,7 @@
 title: "Spawn Game Uses Autonomous AI Agents to Ship Code Hourly"
 slug: "spawn-game-uses-autonomous-ai-agents-to-ship-code-hourly"
 description: "Spawn, a massively multiplayer gaming environment, is being built and updated by a swarm of AI agents that modify live code and ship changes every hour."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [AIAgents, GameDevelopment, AutonomousCoding, SoftwareEngineering]
 categories: ["AI", "Artificial Intelligence", "Game Development", "Software Engineering"]
 image: "https://static.simonwillison.net/static/2026-10-29/IMG_9406.webp"

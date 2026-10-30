@@ -2,7 +2,7 @@
 title: "Kiro AI IDE and AWS Transform Enable Repeatable PHP‑to‑Java Migration"
 slug: "kiro-ai-ide-and-aws-transform-enable-repeatable-phptojava-migration"
 description: "A new AI‑enabled workflow lets teams move mature PHP applications to Java with a measurable, repeatable process."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [PHP, Java, AI, Migration, AWS]
 categories: ["AI", "Software Development", "AI Tools", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21579-featured-image.png"

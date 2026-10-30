@@ -2,7 +2,7 @@
 title: "NVIDIA releases gds-diag tool to simplify GPUDirect Storage diagnostics"
 slug: "nvidia-releases-gds-diag-tool-to-simplify-gpudirect-storage-diagnostics"
 description: "NVIDIA has introduced **gds‑diag**, an open‑source command‑line utility (with an optional AI‑agent skill) that assesses environments, identifies problems, and suggests improvements for GPUDirect..."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [NVIDIA, GPUDirectStorage, AIagents, Linux, Diagnostics]
 categories: ["AI", "Hardware Acceleration", "System Administration", "AI Agents"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/inline-image-1-e1793140900880-660x370.webp"

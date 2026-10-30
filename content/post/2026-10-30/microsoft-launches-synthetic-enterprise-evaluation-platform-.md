@@ -2,7 +2,7 @@
 title: "Microsoft launches synthetic enterprise evaluation platform for Copilot"
 slug: "microsoft-launches-synthetic-enterprise-evaluation-platform-for-copilot"
 description: "Microsoft introduced the Industry Evaluation Data Generation Platform, a system that creates full‑scale synthetic enterprise environments for evaluating Microsoft Copilot while preserving privacy."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [MicrosoftCopilot, SyntheticData, AIEvaluation]
 categories: ["AI", "Artificial Intelligence", "Enterprise Software", "Data Privacy", "Machine Learning"]
 image: "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/10/FromSyntheticEnterprise-TWLIFB-1200x627-1.jpg"

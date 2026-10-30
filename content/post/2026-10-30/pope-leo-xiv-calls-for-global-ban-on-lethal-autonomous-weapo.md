@@ -2,7 +2,7 @@
 title: "Pope Leo XIV Calls for Global Ban on Lethal Autonomous Weapons"
 slug: "pope-leo-xiv-calls-for-global-ban-on-lethal-autonomous-weapons"
 description: "In a Friday papal address, Pope Leo XIV urged United Nations member states to take concrete steps toward banning lethal autonomous weapons and called for the disarmament of AI systems."
-date: 2026-10-30T21:54:47+05:30
+date: 2026-10-30T22:02:41+05:30
 tags: [AI, Ethics, LethalWeapons, PopeLeo]
 categories: ["AI", "Artificial Intelligence", "Ethics", "International Policy", "Religion"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/gettyimages-2226124908.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
