@@ -2,7 +2,7 @@
 title: "ChatGPT Desktop App and Codex Now Available on Amazon Bedrock GovCloud (US)"
 slug: "chatgpt-desktop-app-and-codex-now-available-on-amazon-bedrock-govcloud-us"
 description: "The ChatGPT desktop app is now available on Amazon Bedrock in AWS GovCloud (US). The deployment gives organizations access to OpenAI’s frontier models through two components and adds a..."
-date: 2026-10-31T18:02:12+05:30
+date: 2026-10-31T22:01:44+05:30
 tags: [ChatGPT, AmazonBedrock, GovCloud, AIcoding]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Developer Tools", "Security"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-22175-featured-image.png"

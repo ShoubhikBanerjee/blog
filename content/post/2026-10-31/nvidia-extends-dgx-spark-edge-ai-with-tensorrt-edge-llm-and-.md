@@ -2,7 +2,7 @@
 title: "NVIDIA Extends DGX Spark Edge AI with TensorRT Edge-LLM and Nemotron-3.5 Lightning"
 slug: "nvidia-extends-dgx-spark-edge-ai-with-tensorrt-edge-llm-and-nemotron-3-5-lightning"
 description: "AI workloads are moving beyond the data center. Developers are building agents that run at the edge—monitoring driver attention, helping robots navigate, and coordinating production‑line fleets...."
-date: 2026-10-31T18:02:12+05:30
+date: 2026-10-31T22:01:44+05:30
 tags: [NVIDIA, EdgeAI, TensorRT, LLM]
 categories: ["AI", "Artificial Intelligence", "Edge Computing", "Machine Learning", "Hardware"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/nvidia-trtedge-chat-terminal-1920x1080-1-660x370.png"

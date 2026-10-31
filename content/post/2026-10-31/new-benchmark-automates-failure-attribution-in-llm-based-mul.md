@@ -2,7 +2,7 @@
 title: "New benchmark automates failure attribution in LLM‑based multi‑agent systems"
 slug: "new-benchmark-automates-failure-attribution-in-llmbased-multiagent-systems"
 description: "A benchmark for automated failure attributions in agentic systems was presented as the ICML 2025 Spotlight paper *Which Agent Causes Task Failures and When?*."
-date: 2026-10-31T18:02:12+05:30
+date: 2026-10-31T22:01:44+05:30
 tags: [AIAgents, LLM, Benchmark, Debugging]
 categories: ["AI", "Machine Learning", "AI Agents", "Benchmarking", "Natural Language Processing"]
 image: "https://avatars.githubusercontent.com/u/188122941?v=4"

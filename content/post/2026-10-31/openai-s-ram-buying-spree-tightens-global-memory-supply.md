@@ -2,7 +2,7 @@
 title: "OpenAI’s RAM Buying Spree Tightens Global Memory Supply"
 slug: "openais-ram-buying-spree-tightens-global-memory-supply"
 description: "OpenAI’s rapid acquisition of DRAM has drawn attention to a growing shortage of RAM worldwide. CEO Sam Altman warned that keeping large amounts of memory in personal computers is “terrible” when the..."
-date: 2026-10-31T18:02:12+05:30
+date: 2026-10-31T22:01:44+05:30
 tags: [OpenAI, RAM, SupplyChain, DataCenters]
 categories: ["AI", "Artificial Intelligence", "Hardware", "Supply Chain"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/gettyimages-1778705436.jpg?quality=90&strip=all&crop=0%2C12.629941573716%2C100%2C74.740116852568&w=1200"

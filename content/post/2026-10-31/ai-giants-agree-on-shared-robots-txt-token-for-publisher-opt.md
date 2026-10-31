@@ -2,7 +2,7 @@
 title: "AI giants agree on shared robots.txt token for publisher opt‑out"
 slug: "ai-giants-agree-on-shared-robots-txt-token-for-publisher-optout"
 description: "OpenAI, Google, Microsoft, and Anthropic announced they will adopt a new standard that lets publishers opt out of AI‑powered scraping via a shared signal placed in a site’s robots.txt file."
-date: 2026-10-31T18:02:12+05:30
+date: 2026-10-31T22:01:44+05:30
 tags: [OpenAI, AITraining, RobotsTxt, Publishing, IETF]
 categories: ["AI", "Artificial Intelligence", "Web Standards", "Content Publishing", "Machine Learning"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25330660/STK414_AI_CHATBOT_H.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
