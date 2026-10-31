@@ -2,7 +2,7 @@
 title: "Drew Breunig bakes a functional NES emulator into Qwen3.5-4B model weights"
 slug: "drew-breunig-bakes-a-functional-nes-emulator-into-qwen3-5-4b-model-weights"
 description: "On October 30, 2026, developer Drew Breunig released 'nesformer,' a project that integrates a working Nintendo Entertainment System (NES) 6502 CPU emulator directly into the weights of the Qwen3.5-4B..."
-date: 2026-10-31T12:02:07+05:30
+date: 2026-10-31T18:02:12+05:30
 tags: [Qwen, Emulation, RetroGaming, LLM]
 categories: ["AI", "Large Language Models", "Software Engineering", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

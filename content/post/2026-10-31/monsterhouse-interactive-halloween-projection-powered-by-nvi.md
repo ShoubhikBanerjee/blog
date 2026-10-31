@@ -2,7 +2,7 @@
 title: "MonsterHouse interactive Halloween projection powered by NVIDIA Nemotron Voice Agent"
 slug: "monsterhouse-interactive-halloween-projection-powered-by-nvidia-nemotron-voice-agent"
 description: "MonsterHouse is an interactive Halloween projection designed to listen and respond to trick-or-treaters. The system uses the personality of a grumpy old pirate ship, which softens when visitors..."
-date: 2026-10-31T12:02:07+05:30
+date: 2026-10-31T18:02:12+05:30
 tags: [NVIDIA, Nemotron, GenerativeAI, UnrealEngine5, Halloween]
 categories: ["AI", "Conversational AI", "Computer Vision", "Interactive Media"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6ab2a746c7d0655b3d8dfbb9/fownH6rn05tSp1jDBTz8m.png"
