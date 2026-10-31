@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>PKI on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/pki/</link><description>Recent content in PKI on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 20 Oct 2026 22:03:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/pki/index.xml" rel="self" type="application/rss+xml"/><item><title>Adding PKI‑Based Authentication to the Model Context Protocol with Keyfactor EJBCA and AWS</title><link>https://shoubhikbanerjee.github.io/blog/p/adding-pkibased-authentication-to-the-model-context-protocol-with-keyfactor-ejbca-and-aws/</link><pubDate>Tue, 20 Oct 2026 22:03:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/adding-pkibased-authentication-to-the-model-context-protocol-with-keyfactor-ejbca-and-aws/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/16/ML-21717-featured-image.png" alt="Featured image of post Adding PKI‑Based Authentication to the Model Context Protocol with Keyfactor EJBCA and AWS" /&gt;&lt;h1 id="adding-pkibased-authentication-to-the-model-context-protocol-with-keyfactor-ejbca-and-aws"&gt;Adding PKI‑Based Authentication to the Model Context Protocol with Keyfactor EJBCA and AWS
+&lt;/h1&gt;&lt;p&gt;Multi‑agent AI frameworks increasingly use the Model Context Protocol (MCP) to connect agents to external tools and data sources. MCP defines how a large language model (LLM)-powered agent invokes tools such as database queries or email operations, but MCP has no built-in authentication standard. This post shows how to fill that gap using Keyfactor EJBCA together with AWS services.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Multi‑agent AI frameworks increasingly use the Model Context Protocol (MCP) to connect agents to external tools and data sources.&lt;/li&gt;
+&lt;li&gt;MCP defines how a large language model (LLM)-powered agent invokes tools such as database queries or email operations.&lt;/li&gt;
+&lt;li&gt;MCP has no built‑in authentication standard.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🛠️ Architecture
+&lt;/h2&gt;&lt;p&gt;The solution combines Keyfactor EJBCA with several AWS managed services and implements three authentication layers that protect each trust boundary in the agent communication chain.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;AWS Service&lt;/th&gt;
+&lt;th&gt;Role in the architecture&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Bedrock (via Strands Agents SDK)&lt;/td&gt;
+&lt;td&gt;LLM inference for agents&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon RDS for MySQL&lt;/td&gt;
+&lt;td&gt;Application database accessed through MCP tools&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Simple Email Service (SES)&lt;/td&gt;
+&lt;td&gt;Email delivery for the Email Agent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS Secrets Manager&lt;/td&gt;
+&lt;td&gt;Secure storage for PKCS12 bundles, tokens, and metadata&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon EC2&lt;/td&gt;
+&lt;td&gt;Hosts Keycloak identity provider and EJBCA PKI server&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-authentication-layers"&gt;🔐 Authentication Layers
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Layer 1 – User Auth (User → System)&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses OAuth together with an X.509 certificate and delegation minting.&lt;/li&gt;
+&lt;li&gt;Provides user identity and credential binding.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Layer 2 – Agent‑to‑Agent (Agent → Agent)&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Relies on signed request envelopes containing proof‑of‑possession, a nonce, and a timestamp.&lt;/li&gt;
+&lt;li&gt;Guarantees caller identity, request freshness, and prevents replay.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Layer 3 – MCP Auth (Agent → Tool Server)&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Combines a scoped token, the signed envelope, and a delegation assertion.&lt;/li&gt;
+&lt;li&gt;Covers all identities, creates a full authorization chain, and incorporates OCSP validation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-components--controls"&gt;⚙️ Key Components &amp;amp; Controls
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Signed request envelopes&lt;/strong&gt; – give cryptographic proof‑of‑possession on every agent call.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;User‑signed delegation assertions&lt;/strong&gt; – authorize agents without sharing credentials.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RFC 8693 audience‑scoped tokens&lt;/strong&gt; – limit exposure if a token is disclosed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Real‑time OCSP revocation checking&lt;/strong&gt; – propagates credential changes instantly across agents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;EJBCA Enterprise&lt;/strong&gt; – a PKI platform that supports high‑availability deployment, REST API automation, X.509 certificate issuance, OCSP validation, certificate revocation list distribution, and full certificate lifecycle management via web console and REST API.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Keyfactor&lt;/strong&gt; – a machine‑identity management platform used by more than 1,500 enterprise customers worldwide.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment-options"&gt;🚀 Deployment Options
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;EJBCA can be deployed &lt;strong&gt;on‑premises&lt;/strong&gt;, in &lt;strong&gt;containers&lt;/strong&gt;, or on &lt;strong&gt;Amazon EC2&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Designed for &lt;strong&gt;high‑availability&lt;/strong&gt; and &lt;strong&gt;REST API automation&lt;/strong&gt; to integrate with AWS services.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The added layers supply authentication and authorization that MCP originally lacked.&lt;/li&gt;
+&lt;li&gt;Cryptographic proof‑of‑possession, delegations, scoped tokens, and immediate revocation together reduce the risk of credential misuse while preserving the flexibility of multi‑agent AI workflows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/16/ML-21717-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/16/ML-21717-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/16/ML-21717-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIAgents #PKI #AWS #MCP&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/securing-ai-agent-identity-with-x-509-pki-on-aws/" target="_blank" rel="noopener"
+&gt;Securing AI agent identity with X.509 PKI on AWS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

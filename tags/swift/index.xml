@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Swift on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/swift/</link><description>Recent content in Swift on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 29 Oct 2026 18:01:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/swift/index.xml" rel="self" type="application/rss+xml"/><item><title>AnyLanguageModel adds on‑device speech and decision packages for Swift</title><link>https://shoubhikbanerjee.github.io/blog/p/anylanguagemodel-adds-ondevice-speech-and-decision-packages-for-swift/</link><pubDate>Thu, 29 Oct 2026 18:01:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/anylanguagemodel-adds-ondevice-speech-and-decision-packages-for-swift/</guid><description>&lt;img src="https://huggingface.co/blog/assets/anydecisionmodel/banner.png" alt="Featured image of post AnyLanguageModel adds on‑device speech and decision packages for Swift" /&gt;&lt;h1 id="anylanguagemodel-adds-ondevice-speech-and-decision-packages-for-swift"&gt;AnyLanguageModel adds on‑device speech and decision packages for Swift
+&lt;/h1&gt;&lt;p&gt;Today the AnyLanguageModel project announced two new Swift packages — &lt;strong&gt;AnySpeechRecognizer&lt;/strong&gt; and &lt;strong&gt;AnyDecisionModel&lt;/strong&gt; — that extend its 1.x Swift API approach to speech transcription and decision‑making while keeping a familiar Apple‑style API.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AnySpeechRecognizer&lt;/strong&gt; implements Apple’s new SpeechAnalyzer API but lets you pick the underlying engine, including NVIDIA’s Parakeet and Alibaba’s Qwen3‑ASR running locally via Core ML.&lt;/li&gt;
+&lt;li&gt;It adds speaker diarization to track who is speaking when.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AnyDecisionModel&lt;/strong&gt; answers yes‑or‑no, multiple‑choice, and rating‑scale questions, returning typed results and probabilities derived from model logits rather than generated text.&lt;/li&gt;
+&lt;li&gt;Both packages can download open models from the Hugging Face Hub and run them entirely on‑device.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-anyspeechrecognizer"&gt;🗣️ AnySpeechRecognizer
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Mirrors Apple’s SpeechAnalyzer, SpeechTranscriber, DictationTranscriber, SpeechDetector, and AssetInventory components.&lt;/li&gt;
+&lt;li&gt;Uses Apple’s Speech framework as the default engine; swapping to a different engine only requires changing the import.&lt;/li&gt;
+&lt;li&gt;Supports file‑based and live audio input, volatile results, word timing, and confidence scores when the selected engine provides them.&lt;/li&gt;
+&lt;li&gt;Includes built‑in speaker diarization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-anydecisionmodel"&gt;🤖 AnyDecisionModel
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides typed answers (yes/no, multiple‑choice, rating‑scale) with associated probabilities.&lt;/li&gt;
+&lt;li&gt;Derives answers from model probabilities, not from text generation.&lt;/li&gt;
+&lt;li&gt;Runs on‑device with MLX, Core AI, llama.cpp, or a decision model from Jev or Ollama.&lt;/li&gt;
+&lt;li&gt;Can be integrated with the same Swift API style used for language and speech models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-model-options"&gt;📦 Model Options
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Size(s)&lt;/th&gt;
+&lt;th&gt;Languages / Dialects&lt;/th&gt;
+&lt;th&gt;Notable Traits&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Parakeet v3 (NVIDIA)&lt;/td&gt;
+&lt;td&gt;0.6 B&lt;/td&gt;
+&lt;td&gt;25 European languages (auto‑detect locale)&lt;/td&gt;
+&lt;td&gt;Runs on Core ML runtime, supports file &amp;amp; live input, volatile results, word timing, confidence&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Parakeet Ultra (Moondream)&lt;/td&gt;
+&lt;td&gt;0.6 B (post‑trained)&lt;/td&gt;
+&lt;td&gt;Same as v3&lt;/td&gt;
+&lt;td&gt;More accurate in most measurements&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Parakeet Unified (NVIDIA)&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;td&gt;English only&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen3‑ASR (Alibaba)&lt;/td&gt;
+&lt;td&gt;0.6 B, 1.7 B&lt;/td&gt;
+&lt;td&gt;30 languages + 22 Chinese dialects (Mandarin, Cantonese, Japanese, Korean)&lt;/td&gt;
+&lt;td&gt;Provides a single final result per ≤40 s segment, no volatile results, no word timing or confidence, runs on GPU, slower than Parakeet, better for file transcription&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;You create a &lt;strong&gt;SpeechAnalyzer&lt;/strong&gt; (or &lt;strong&gt;AnySpeechRecognizer&lt;/strong&gt;) and attach modules such as &lt;strong&gt;SpeechTranscriber&lt;/strong&gt; and &lt;strong&gt;SpeechDetector&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Provide an audio file or a stream of audio buffers; results are delivered via asynchronous sequences as they become available.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AssetInventory&lt;/strong&gt; handles model installation; downloads occur only when the app requests them.&lt;/li&gt;
+&lt;li&gt;Models are stored in the standard Hugging Face cache, allowing a macOS app outside the sandbox to share them with Python or other Hugging Face tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Packages are available as Swift packages; they depend on the 1.x releases of &lt;strong&gt;AnyLanguageModel&lt;/strong&gt; and &lt;strong&gt;swift‑huggingface&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Approximate download sizes (per model):
+&lt;ul&gt;
+&lt;li&gt;Parakeet variants: ~600 MB each + ~590 MB for the live encoder.&lt;/li&gt;
+&lt;li&gt;Qwen3‑ASR: 0.9 GB to 2.4 GB depending on model size.&lt;/li&gt;
+&lt;li&gt;Sortformer (used for speaker diarization): ~250 MB.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Once downloaded, models run entirely on‑device, with no ongoing cloud usage required.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/anylanguagemodel-1-0/banner.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/anylanguagemodel/banner.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Swift #SpeechRecognition #OnDeviceAI #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/anydecisionmodel" target="_blank" rel="noopener"
+&gt;Introducing AnySpeechRecognizer and AnyDecisionModel: Open Models for Speech and Decisions on Apple Platforms&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Shopify Returns to Swift and Kotlin Codebases for Native Apps</title><link>https://shoubhikbanerjee.github.io/blog/p/shopify-returns-to-swift-and-kotlin-codebases-for-native-apps/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/shopify-returns-to-swift-and-kotlin-codebases-for-native-apps/</guid><description>&lt;h1 id="shopify-returns-to-swift-and-kotlin-codebases-for-native-apps"&gt;Shopify Returns to Swift and Kotlin Codebases for Native Apps
+&lt;/h1&gt;&lt;p&gt;Shopify is moving from React Native back to separate Swift and Kotlin codebases for its native applications.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;In 2020, Shopify switched to React Native for three reasons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Stop building the same features twice&lt;/li&gt;
+&lt;li&gt;Allow developers to work across the stack&lt;/li&gt;
+&lt;li&gt;Spend less time chasing feature parity and more time shipping value&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Shopify states that agents can now handle enough of the implementation, translation, testing, and review work that those factors are no longer the deciding factors they were in 2020.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Shopify is the maintainer of three significant React Native libraries. Their status is as follows:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Library&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Status&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;react-native-skia&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Finding a new home&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;flash-list&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Finding a new home&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;restyle&lt;/td&gt;
+&lt;td style="text-align: left"&gt;To be archived at the end of 2026 (noted as having a smaller user base than other libraries)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#Shopify #ReactNative #Swift #Kotlin #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/10/shopify-react-native/" target="_blank" rel="noopener"
+&gt;Native is now the future of mobile at Shopify&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

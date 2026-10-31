@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HyperPod on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/hyperpod/</link><description>Recent content in HyperPod on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 08 Oct 2026 22:04:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/hyperpod/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker HyperPod adds multi‑tenant EKS support with Identity Center integration</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-hyperpod-adds-multitenant-eks-support-with-identity-center-integration/</link><pubDate>Thu, 08 Oct 2026 22:04:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-hyperpod-adds-multitenant-eks-support-with-identity-center-integration/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/ML-22020-featured-image.png" alt="Featured image of post Amazon SageMaker HyperPod adds multi‑tenant EKS support with Identity Center integration" /&gt;&lt;h1 id="amazon-sagemaker-hyperpod-adds-multitenant-eks-support-with-identity-center-integration"&gt;Amazon SageMaker HyperPod adds multi‑tenant EKS support with Identity Center integration
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker HyperPod now supports purpose‑built, multi‑tenant AI clusters that simplify the management of large‑scale gen‑AI workloads while providing per‑team isolation, cost visibility, and automated operations.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;HyperPod delivers resilient, optimized clusters orchestrated by &lt;strong&gt;Amazon Elastic Kubernetes Service (EKS)&lt;/strong&gt; or &lt;strong&gt;Slurm&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The service automatically handles &lt;strong&gt;node health monitoring, fault recovery, and cluster lifecycle management&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;It is designed for distributed training, interactive development, and model inference at scale.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture-overview"&gt;🧩 Architecture Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS IAM Identity Center&lt;/strong&gt; provides centralized authentication and federates with external providers such as &lt;strong&gt;Microsoft Entra ID&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Each team gets a dedicated &lt;strong&gt;SageMaker AI domain&lt;/strong&gt; that hosts a private &lt;strong&gt;SageMaker Studio&lt;/strong&gt; GUI.&lt;/li&gt;
+&lt;li&gt;Workloads run in separate &lt;strong&gt;Kubernetes namespaces&lt;/strong&gt;, ensuring isolation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod Task Governance&lt;/strong&gt; enforces fair resource allocation and compute‑quota management.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod Observability&lt;/strong&gt; supplies monitoring dashboards for the entire cluster.&lt;/li&gt;
+&lt;li&gt;Storage is split into two tiers:
+&lt;ul&gt;
+&lt;li&gt;A POSIX‑compliant file system (Amazon FSx for Lustre or OpenZFS) with per‑team shared directories (&lt;code&gt;/fsx/TeamA&lt;/code&gt;, &lt;code&gt;/fsx/TeamB&lt;/code&gt;) and per‑user home directories (&lt;code&gt;/home/User1&lt;/code&gt;, &lt;code&gt;/home/User2&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Per‑team or shared Amazon S3 buckets governed by the team’s IAM execution role.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS IAM Identity Center&lt;/td&gt;
+&lt;td&gt;Centralized authentication; federates with external IdP; provisions permission‑set roles (e.g., &lt;code&gt;TeamA-permissionset-role&lt;/code&gt;).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SageMaker AI domain (per team)&lt;/td&gt;
+&lt;td&gt;Dedicated Studio GUI; uses team‑specific execution role (e.g., &lt;code&gt;TeamA-role&lt;/code&gt;).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kubernetes namespace (per team)&lt;/td&gt;
+&lt;td&gt;Isolates workloads; scoped RBAC policies restrict access to the team’s resources.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HyperPod Task Governance&lt;/td&gt;
+&lt;td&gt;Provides compute‑quota management and scheduling priorities across teams.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HyperPod Observability&lt;/td&gt;
+&lt;td&gt;Offers monitoring dashboards and health metrics for the cluster.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="authentication-paths"&gt;Authentication Paths
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CLI path&lt;/strong&gt;: Users run &lt;code&gt;aws sso login&lt;/code&gt;, are redirected to the Identity Center portal, obtain temporary credentials from their team’s permission set, and submit tasks to the EKS cluster with &lt;code&gt;kubectl&lt;/code&gt; using the provisioned &lt;code&gt;TeamA-permissionset-role&lt;/code&gt; or &lt;code&gt;TeamB-permissionset-role&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Studio path&lt;/strong&gt;: Users select the SageMaker Studio application in the Identity Center portal, which routes them to their team‑specific SageMaker AI domain. The domain’s execution role (&lt;code&gt;TeamA-role&lt;/code&gt; or &lt;code&gt;TeamB-role&lt;/code&gt;) authorizes GUI‑driven tasks.&lt;/li&gt;
+&lt;li&gt;Access entries map both the Studio execution roles and the CLI/Console roles to Kubernetes permissions, all tied to managed or custom RBAC policies scoped to the appropriate namespace.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-usage-example"&gt;🚀 Usage Example
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Two teams, &lt;strong&gt;Team A&lt;/strong&gt; and &lt;strong&gt;Team B&lt;/strong&gt;, share a single HyperPod EKS cluster.&lt;/li&gt;
+&lt;li&gt;Each team operates within its own isolated namespace (&lt;code&gt;Namespace A&lt;/code&gt;, &lt;code&gt;Namespace B&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Within a namespace, teams can launch:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod Spaces&lt;/strong&gt; – interactive development environments.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod PyTorch jobs&lt;/strong&gt; – distributed training workloads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod Inference endpoints&lt;/strong&gt; – model serving services.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cost allocation is performed at the namespace level, giving each team visibility into spend and supporting charge‑back.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a single, managed compute platform that reduces the operational overhead of large‑scale AI workloads.&lt;/li&gt;
+&lt;li&gt;Guarantees workload isolation and security through namespace‑scoped RBAC and distinct IAM roles.&lt;/li&gt;
+&lt;li&gt;Enables per‑team cost tracking and fair resource distribution via Task Governance.&lt;/li&gt;
+&lt;li&gt;Integrates with existing AWS identity and storage services, allowing teams to use familiar tools (CLI, SageMaker Studio) without custom configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/multi-tenant-hp-eks.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/teama-domain.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #HyperPod #AWS #Kubernetes&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod/" target="_blank" rel="noopener"
+&gt;Share GPU clusters across teams with isolation and fairness using Amazon SageMaker HyperPod | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SageMaker HyperPod integrates with Unified Studio and adds Spaces for governed GPU workloads</title><link>https://shoubhikbanerjee.github.io/blog/p/sagemaker-hyperpod-integrates-with-unified-studio-and-adds-spaces-for-governed-gpu-workloads/</link><pubDate>Tue, 06 Oct 2026 22:08:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sagemaker-hyperpod-integrates-with-unified-studio-and-adds-spaces-for-governed-gpu-workloads/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-21129-featured-image.png" alt="Featured image of post SageMaker HyperPod integrates with Unified Studio and adds Spaces for governed GPU workloads" /&gt;&lt;h1 id="sagemaker-hyperpod-integrates-with-unified-studio-and-adds-spaces-for-governed-gpu-workloads"&gt;SageMaker HyperPod integrates with Unified Studio and adds Spaces for governed GPU workloads
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker HyperPod gives machine learning (ML) teams access to large pools of accelerated compute for training and fine‑tuning models. When several teams share a single cluster the technical setup is straightforward, but governance becomes the challenging part.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SageMaker HyperPod&lt;/strong&gt; is a capability of Amazon SageMaker AI that provides purpose‑built infrastructure for foundation model training and inference at scale.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SageMaker Unified Studio&lt;/strong&gt; is the data and AI development environment where teams build with their data and tools.&lt;/li&gt;
+&lt;li&gt;Unified Studio can &lt;strong&gt;connect a HyperPod cluster to a project&lt;/strong&gt;, letting team members launch workloads, review cluster and task information, and open a JupyterLab workflow.&lt;/li&gt;
+&lt;li&gt;The integration keeps cluster management in SageMaker AI interfaces and APIs, allowing infrastructure teams to use established cloud‑operations processes while presenting approved compute to ML teams in their project context.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-governance-model"&gt;⚙️ Governance Model
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Governance decisions include:
+&lt;ul&gt;
+&lt;li&gt;Which teams may use the cluster.&lt;/li&gt;
+&lt;li&gt;How much capacity each team receives.&lt;/li&gt;
+&lt;li&gt;How to handle competition for resources.&lt;/li&gt;
+&lt;li&gt;Who is accountable when usage drifts from policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;When multiple teams share visibility into the same cluster, &lt;strong&gt;controls that govern who can do what become even more important&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;A well‑governed environment separates:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Organizational administration&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Project access&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cluster operations&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workload execution&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Each layer answers a different question and uses different controls.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-four-layers-of-control"&gt;🏗️ Four Layers of Control
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Organization layer&lt;/strong&gt; – identity and capacity policies that apply across the entire account.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Project layer&lt;/strong&gt; – collaboration boundaries defined in SageMaker Unified Studio (not strong runtime security boundaries).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cluster layer&lt;/strong&gt; – AWS IAM, Amazon EKS, and Slurm controls that govern cluster‑level access.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workload layer&lt;/strong&gt; – workload identity, data and KMS key policies, network policy, task‑view restrictions, and scheduler policy.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“A SageMaker HyperPod connection adds an approved cluster to a project. It doesn’t replace the cluster’s AWS Identity and Access Management (IAM), Amazon Elastic Kubernetes Service (Amazon EKS), or Slurm controls.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;All four layers must be aligned before the cluster is made available.&lt;/p&gt;
+&lt;h2 id="-sagemaker-spaces-on-hyperpod"&gt;🧩 SageMaker Spaces on HyperPod
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Earlier this year Amazon launched &lt;strong&gt;SageMaker Spaces for HyperPod&lt;/strong&gt;, an add‑on that lets developers create interactive development environments directly on HyperPod EKS clusters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benefits&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Run JupyterLab or Code Editor environments without leaving the browser or using CLI tools.&lt;/li&gt;
+&lt;li&gt;Reduce time from cluster access to productive development to a few clicks.&lt;/li&gt;
+&lt;li&gt;Run interactive workloads alongside training jobs and model deployment, with support for fractional GPU allocations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Management UI&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;The new &lt;strong&gt;IDE and Notebooks tab&lt;/strong&gt; on the HyperPod cluster detail page provides a complete user interface for Space management, removing the need for daily CLI commands.&lt;/li&gt;
+&lt;li&gt;Create Spaces with configurable compute, namespaces, storage, and HyperPod Task Governance for compute‑quota management via a guided form.&lt;/li&gt;
+&lt;li&gt;View all Spaces in a searchable table showing name, application type, status, access type, storage, GPU, and vCPU allocations.&lt;/li&gt;
+&lt;li&gt;Start or stop Spaces with a single selection to free compute when not in use.&lt;/li&gt;
+&lt;li&gt;Open Spaces directly in the browser (JupyterLab or Code Editor) or connect through a remote IDE such as VS Code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-installing-and-using-spaces"&gt;🚀 Installing and Using Spaces
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Install the Spaces add‑on&lt;/strong&gt; on the HyperPod EKS cluster from the SageMaker AI console → IDE and Notebooks tab. Choose &lt;strong&gt;Quick install&lt;/strong&gt; (one‑click defaults) or &lt;strong&gt;Custom install&lt;/strong&gt; (required for web UI access).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configure EKS access entries&lt;/strong&gt; by attaching the managed policies:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;AmazonSagemakerHyperpodSpacePolicy&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AmazonSagemakerHyperpodUserClusterPolicy&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AmazonSagemakerHyperpodSpaceTemplatePolicy&lt;/code&gt;
+to the IAM roles used by data scientists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enable per‑user identity propagation&lt;/strong&gt; on the Studio domain if it existed before the integration. This ensures each Studio user’s actions on the cluster are attributed in EKS access entries and AWS CloudTrail, enforcing strict Space ownership.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Create and launch a Space&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;In Studio, go to &lt;strong&gt;Compute → HyperPod&lt;/strong&gt;, select the &lt;strong&gt;IDE and Notebooks&lt;/strong&gt; tab.&lt;/li&gt;
+&lt;li&gt;After the Space status shows &lt;strong&gt;Running&lt;/strong&gt; (a few minutes on a cold cluster, ~30–40 seconds with over‑provisioning), click &lt;strong&gt;Open&lt;/strong&gt; to launch JupyterLab or Code Editor, or &lt;strong&gt;Open in VS Code&lt;/strong&gt; for a remote IDE experience.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-summary"&gt;📚 Summary
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By connecting SageMaker HyperPod clusters to Unified Studio projects, organizations can provide approved, high‑performance GPU compute to ML teams while retaining strong governance through four layered controls.&lt;/li&gt;
+&lt;li&gt;The new SageMaker Spaces UI gives data scientists a visual, click‑based workflow to create, manage, and use interactive development environments on the same HyperPod infrastructure that powers large‑scale training and inference.&lt;/li&gt;
+&lt;li&gt;This combination delivers a repeatable, governed model that separates infrastructure operations from project‑level development, enabling efficient use of shared GPU resources.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#SageMaker #HyperPod #MLOps #AIInfrastructure #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/" target="_blank" rel="noopener"
+&gt;Best practices for Amazon SageMaker HyperPod administration and governance | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/manage-amazon-sagemaker-hyperpod-spaces-directly-from-sagemaker-studio/" target="_blank" rel="noopener"
+&gt;Manage Amazon SageMaker HyperPod Spaces directly from SageMaker Studio | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker Inference on HyperPod Launches Model Caching</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-inference-on-hyperpod-launches-model-caching/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-inference-on-hyperpod-launches-model-caching/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21820-featured-image.png" alt="Featured image of post Amazon SageMaker Inference on HyperPod Launches Model Caching" /&gt;&lt;h1 id="amazon-sagemaker-inference-on-hyperpod-launches-model-caching"&gt;Amazon SageMaker Inference on HyperPod Launches Model Caching
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker Inference on HyperPod has launched model caching, a feature that pre-loads model weights and container images onto cluster nodes before pods require them.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Model caching eliminates latency sources associated with downloading data over the network. Without caching, start times can take tens of minutes due to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Container Images:&lt;/strong&gt; Multi-gigabyte inference server images (such as LMI or vLLM) typically take 5–7 minutes to pull.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Weights:&lt;/strong&gt; A 145 GB model on Amazon S3 can take 20+ minutes, while a 600+ GB model like DeepSeek-R1 can take upwards of 30 minutes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With model caching enabled, pods can typically start serving traffic in seconds, reading from local NVMe storage at approximately 7 GB/s.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Model caching is managed via two Custom Resource Definitions (CRDs) introduced by the operator:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Mechanism&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Weights Cache&lt;/td&gt;
+&lt;td style="text-align: left"&gt;ModelDataCacheConfig&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Downloads model weights to local NVMe on target nodes from sources including Amazon S3, Amazon FSx for Lustre, HuggingFace Hub, or JumpStart.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Image Cache&lt;/td&gt;
+&lt;td style="text-align: left"&gt;DaemonSet&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Pre-pulls inference server container images onto nodes to avoid ECR downloads.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="deployment-process"&gt;Deployment Process
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Users add &lt;code&gt;modelCacheConfig&lt;/code&gt; with &lt;code&gt;weightsCache&lt;/code&gt; or &lt;code&gt;imageCache&lt;/code&gt; enabled to their &lt;code&gt;InferenceEndpointConfig&lt;/code&gt; or &lt;code&gt;JumpStartModel&lt;/code&gt; resource.&lt;/li&gt;
+&lt;li&gt;For weights, the HyperPod Inference Operator creates a &lt;code&gt;ModelDataCacheConfig&lt;/code&gt; resource and downloads weights to local NVMe. Once complete, the node is labeled as cache-ready.&lt;/li&gt;
+&lt;li&gt;The operator waits for all target nodes to be cache-ready before creating the inference deployment.&lt;/li&gt;
+&lt;li&gt;For images, the operator creates a DaemonSet to pull the image. Multiple deployments using the same image share a single image cache resource.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Persistence:&lt;/strong&gt; Configured caches remain available across pod restarts on the same node.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scheduling:&lt;/strong&gt; Caching uses preferred scheduling rather than required scheduling. If a pod is placed on a node without a warm cache—such as during rapid scale-out—it pulls the image from Amazon ECR and reads weights from the original Amazon S3/Amazon FSx source.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fallback:&lt;/strong&gt; Pods started before the image cache is complete on a node will pull from ECR normally.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonSageMaker #HyperPod #ModelCaching #MachineLearning #MLOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/reduce-inference-cold-starts-on-amazon-sagemaker-hyperpod-with-model-caching/" target="_blank" rel="noopener"
+&gt;Reduce inference cold starts on Amazon SageMaker HyperPod with model caching | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

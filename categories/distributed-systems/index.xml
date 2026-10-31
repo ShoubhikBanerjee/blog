@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Distributed Systems on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/distributed-systems/</link><description>Recent content in Distributed Systems on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 29 Oct 2026 18:01:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/distributed-systems/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS releases Ray Train Deep Learning Container for distributed PyTorch training</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-releases-ray-train-deep-learning-container-for-distributed-pytorch-training/</link><pubDate>Thu, 29 Oct 2026 18:01:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-releases-ray-train-deep-learning-container-for-distributed-pytorch-training/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22002-featured-image.png" alt="Featured image of post AWS releases Ray Train Deep Learning Container for distributed PyTorch training" /&gt;&lt;h1 id="aws-releases-ray-train-deep-learning-container-for-distributed-pytorch-training"&gt;AWS releases Ray Train Deep Learning Container for distributed PyTorch training
+&lt;/h1&gt;&lt;p&gt;AWS has released the Ray Train Deep Learning Container (DLC), a pre-integrated software stack designed to simplify distributed machine learning training. The image is built, tested as a single unit, and maintained by AWS to ensure compatibility across the various libraries required for multi-node workloads.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The Ray Train DLC is a PyTorch training image with Ray’s training libraries layered on top. It includes the full HuggingFace training stack, allowing users to run fine-tuning jobs without building or pushing new images. AWS publishes these images to the Amazon Elastic Container Registry (Amazon ECR) Public, where they can be pulled without credentials.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CUDA Runtime&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides the foundational environment for GPU acceleration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;PyTorch&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Compiled against the specific CUDA runtime in the image.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;NCCL&lt;/td&gt;
+&lt;td style="text-align: left"&gt;NVIDIA Collective Communications Library for GPU communication.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;EFA Libraries&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Userspace libraries for the Elastic Fabric Adapter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AWS OFI NCCL Plugin&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Connects NCCL to EFA for high-performance networking.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Ray&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Coordinates the cluster and manages training libraries.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Ray runs a job across machines as a single cluster with two distinct roles, both of which use the same tagged image. Whether running on Amazon Elastic Kubernetes Service (Amazon EKS) via KubeRay or on Amazon Elastic Compute Cloud (Amazon EC2), the container&amp;rsquo;s role is determined by the startup command.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Ray Head:&lt;/strong&gt; Coordinates the cluster, tracks state in the global control store, and runs the dashboard and job server.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ray Worker:&lt;/strong&gt; Supplies GPUs and executes the training processes, connecting to the head’s address at startup.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On Kubernetes, the KubeRay operator adds a RayCluster resource that builds and maintains these groups from a single manifest.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The Ray Train DLC is designed to be configured entirely from outside the image. Users specify instance types, GPU counts, and network transport settings through external configuration files rather than by modifying the container.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Compatibility:&lt;/strong&gt; The image entrypoint automatically enables bundled CUDA forward-compatibility libraries if the host&amp;rsquo;s NVIDIA driver is older than the image&amp;rsquo;s CUDA version.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; Collective operations between instances run over EFA automatically as soon as pods request it, as the EFA stack is pre-installed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Testing:&lt;/strong&gt; AWS gates each release on multi-node EFA and multi-node KubeRay training tests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The Ray Train DLC is available in the Amazon ECR repository under the &lt;code&gt;train-ml&lt;/code&gt; tag prefix, sharing a repository with Ray Serve and Ray LLM DLCs.&lt;/p&gt;
+&lt;p&gt;A provided sample demonstrates the DLC&amp;rsquo;s capabilities by fine-tuning a Qwen2.5-1.5B model using PyTorch Fully Sharded Data Parallel (FSDP) across eight NVIDIA L4 GPUs on two g6.12xlarge instances.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22002-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22002-2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22002-3-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #Ray #PyTorch #MachineLearning #Kubernetes&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/distributed-training-with-ray-train-dlcs-and-efa-on-eks/" target="_blank" rel="noopener"
+&gt;Distributed training with Ray Train DLCs and EFA on EKS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>FedAlphaEdit Enables Privacy-Preserving Collaborative Knowledge Editing</title><link>https://shoubhikbanerjee.github.io/blog/p/fedalphaedit-enables-privacy-preserving-collaborative-knowledge-editing/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/fedalphaedit-enables-privacy-preserving-collaborative-knowledge-editing/</guid><description>&lt;h1 id="fedalphaedit-enables-privacy-preserving-collaborative-knowledge-editing"&gt;FedAlphaEdit Enables Privacy-Preserving Collaborative Knowledge Editing
+&lt;/h1&gt;&lt;p&gt;Multiple institutions may each hold private knowledge edits and wish to integrate them into a single large language model without sharing raw edit requests. A new paper titled &lt;strong&gt;FedAlphaEdit: Null-Space-Aligned Merging for Collaborative Knowledge Editing&lt;/strong&gt; (submitted on 8 Oct 2026) proposes a solution.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Null-space‑constrained editing methods such as &lt;strong&gt;AlphaEdit&lt;/strong&gt; guarantee that each update leaves unrelated knowledge intact.&lt;/li&gt;
+&lt;li&gt;Collaborative frameworks such as &lt;strong&gt;CollabEdit&lt;/strong&gt; aggregate edits from multiple clients without data sharing.&lt;/li&gt;
+&lt;li&gt;A naive combination of these two approaches fails structurally; the paper identifies the cause.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FedAlphaEdit&lt;/strong&gt; is introduced to resolve this failure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Aligns local editing (AlphaEdit) and server‑side merging (CollabEdit) under a single null‑space principle.&lt;/li&gt;
+&lt;li&gt;Clients share &lt;em&gt;projected statistics&lt;/em&gt; rather than raw edit requests.&lt;/li&gt;
+&lt;li&gt;The server provably recovers the result of editing everything in one place under a one‑shot idealization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Described as the &lt;strong&gt;first&lt;/strong&gt; collaborative knowledge editing framework that aligns both local editing and server‑side merging under a null‑space principle for preserving existing knowledge.&lt;/li&gt;
+&lt;li&gt;Empirical results show the method repairs the collapse and brings edit success and preservation &lt;strong&gt;close to the level of centralized editing&lt;/strong&gt; across two architecture families.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Allows institutions that cannot share raw edit data—such as hospitals and financial firms—to jointly maintain a shared model.&lt;/li&gt;
+&lt;li&gt;The shared model &lt;strong&gt;closely approximates editing all facts in one place&lt;/strong&gt;, enabling collaborative updates while respecting data privacy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#FedAlphaEdit #KnowledgeEditing #NullSpace #CollaborativeAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.11033v1" target="_blank" rel="noopener"
+&gt;FedAlphaEdit: Null-Space-Aligned Merging for Collaborative Knowledge Editing&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

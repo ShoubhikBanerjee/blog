@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SurgicalRobotics on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/surgicalrobotics/</link><description>Recent content in SurgicalRobotics on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 21 Oct 2026 22:03:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/surgicalrobotics/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Introduces Cosmos3-H-Dreams Real-Time Generative Surgical Simulator</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-cosmos3-h-dreams-real-time-generative-surgical-simulator/</link><pubDate>Wed, 21 Oct 2026 22:03:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-cosmos3-h-dreams-real-time-generative-surgical-simulator/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/67a4f15057fb66b9db6dac82/45XSEtdQHqTdspRe3wkYs.png" alt="Featured image of post NVIDIA Introduces Cosmos3-H-Dreams Real-Time Generative Surgical Simulator" /&gt;&lt;h1 id="nvidia-introduces-cosmos3-h-dreams-real-time-generative-surgical-simulator"&gt;NVIDIA Introduces Cosmos3-H-Dreams Real-Time Generative Surgical Simulator
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released Cosmos3-H-Dreams, a real-time generative surgical simulator trained on clinical cholecystectomy recordings to support live kinematic control. This development advances previous interactive generative simulation capabilities by learning from video and robot kinematics recorded during clinical procedures on the CMR Surgical Versius platform.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Cosmos3-H-Dreams provides action-conditioned interaction in scenes featuring complex anatomy, tissue motion, and occlusion. The system is designed to maintain fidelity and responsiveness in a live control loop through low-latency generation, running interactively on a single NVIDIA RTX PRO 6000 GPU.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Cosmos3-H-Dreams is built upon Cosmos3-H-Embodied-Nano, a 16-billion-parameter model pretrained on Open-H-Embodiment. The development process utilizes a teacher-to-student training pipeline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Teacher Adaptation:&lt;/strong&gt; A bidirectional teacher is adapted on curated cholecystectomy video and kinematics, first on 24 future frames and then extended to 72 frames (2.4 and 7.2 seconds at 10 Hz) to learn surgical dynamics.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Distillation:&lt;/strong&gt; The bidirectional teacher is distilled into a causal student capable of generating video in short blocks as new actions arrive.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Causal Teacher Forcing:&lt;/strong&gt; This prepares the student for sequential generation using recorded context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Self-Forcing:&lt;/strong&gt; The student is trained on its own generated context, guided by the teacher and a learned critic to address error accumulation during interactive rollouts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Training Data&lt;/td&gt;
+&lt;td style="text-align: left"&gt;832 x 480 video with actions aligned at 10 Hz&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Action Dimensions&lt;/td&gt;
+&lt;td style="text-align: left"&gt;28 (pose and gripper info for both arms, energy controls, thumbstick axes and buttons)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Targeted Instruments&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Left Cadiere grasper and right monopolar hook&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Acceleration Library&lt;/td&gt;
+&lt;td style="text-align: left"&gt;FlashDreams (streaming-inference library)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Memory Management&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Adapted FadeMem module for consolidating key/value cache&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Cosmos3-H-Dreams offers two released student checkpoints for developers to balance visual quality and inference cost:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Four-step model:&lt;/strong&gt; Uses four denoising steps per generated block.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Two-step model:&lt;/strong&gt; Separately trained with a two-step schedule for faster inference time at the expense of lower visual quality.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;By combining distillation for learning from generated history with cache consolidation for storing that history, the system can generate physically accurate tissue deformations conditioned on instrument actions.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/68d2fec8856b85d927e44d32/x0aObe_0mduBjWFuKBGoV.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Cosmos3 #SurgicalRobotics #GenerativeAI #MedicalSimulation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/nvidia/cosmos3-h-dreams" target="_blank" rel="noopener"
+&gt;NVIDIA Cosmos3-H-Dreams: Bringing Clinical Surgery to Life Through Generative Simulation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

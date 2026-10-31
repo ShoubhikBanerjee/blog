@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ArabicDialects on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/arabicdialects/</link><description>Recent content in ArabicDialects on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 01 Oct 2026 22:03:23 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/arabicdialects/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA NeMo fine‑tunes Nemotron 3.5 ASR for Saudi Arabic dialects</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-nemo-finetunes-nemotron-3-5-asr-for-saudi-arabic-dialects/</link><pubDate>Thu, 01 Oct 2026 22:03:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-nemo-finetunes-nemotron-3-5-asr-for-saudi-arabic-dialects/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image3-18-660x370.png" alt="Featured image of post NVIDIA NeMo fine‑tunes Nemotron 3.5 ASR for Saudi Arabic dialects" /&gt;&lt;h1 id="nvidia-nemo-finetunes-nemotron35-asr-for-saudi-arabic-dialects"&gt;NVIDIA NeMo fine‑tunes Nemotron 3.5 ASR for Saudi Arabic dialects
+&lt;/h1&gt;&lt;p&gt;NVIDIA’s Nemotron 3.5 multilingual ASR model can be specialized for under‑represented Saudi Arabic dialects such as Najdi and Hijazi by following a reproducible fine‑tuning workflow built on the NeMo framework.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Automatic speech recognition must handle how people actually speak, not only the dominant languages and styles in pre‑training data.&lt;/li&gt;
+&lt;li&gt;Regional dialects and local recording conditions are often under‑represented; a multilingual model that scores well on broad benchmarks may still fall short in deployment.&lt;/li&gt;
+&lt;li&gt;Saudi Arabic illustrates the gap: a model may recognize Modern Standard Arabic or English yet struggle with Najdi and Hijazi speech or local recording conditions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-adaptation-recipe"&gt;🛠️ Adaptation recipe
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Select target dialects&lt;/strong&gt; – the experiment (SADA) focused on Najdi and Hijazi.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Curate a low‑resource corpus&lt;/strong&gt; – remove references the model cannot learn and clips that are probably misaligned. Minimal curation retains usable speech while discarding unusable labels and obvious alignment failures.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Apply quality filters&lt;/strong&gt; – use NVIDIA NeMo Curator stages:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;MonoConversionStage&lt;/code&gt; converts audio to mono.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;UTMOSFilterStage&lt;/code&gt; and &lt;code&gt;SIGMOSFilterStage&lt;/code&gt; score perceived quality and background noise.&lt;/li&gt;
+&lt;li&gt;Instead of default thresholds, run in score‑only mode, inspect distributions, then set corpus‑specific cut‑offs: UTMOS ≥ 1.25, SIGMOS noise ≥ 1.5, SIGMOS overall ≥ 1.5.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Build a weighted replay mix&lt;/strong&gt; – interleave a small amount of previously learned data to reduce catastrophic forgetting.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fine‑tune&lt;/strong&gt; –
+&lt;ul&gt;
+&lt;li&gt;Use partial encoder unfreezing to limit the number of changed parameters (cheaper and faster than a full fine‑tune, with some accuracy trade‑off).&lt;/li&gt;
+&lt;li&gt;Apply length bucketing to reduce padding and make training practical for streaming encoders.&lt;/li&gt;
+&lt;li&gt;Train on two NVIDIA RTX PRO 6000 Blackwell Workstation Edition GPUs for 12,000 steps (baseline experiment).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluate&lt;/strong&gt; – test transcription quality on an independent set; offline accuracy can be boosted with beam search and a larger attention context, at the cost of latency and compute.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;After curation, &lt;strong&gt;103,559 of 125,490 utterances&lt;/strong&gt; were kept, representing &lt;strong&gt;133.7 hours&lt;/strong&gt; (82.5 % of the starting set).&lt;/li&gt;
+&lt;li&gt;A default UTMOS threshold of 3.0 would have rejected almost everything; the corpus‑specific cut‑offs preserved challenging but usable dialect speech that a generic threshold would have discarded.&lt;/li&gt;
+&lt;li&gt;Replay mixing protects only the data it represents; partial unfreezing may need re‑tuning when the mix changes.&lt;/li&gt;
+&lt;li&gt;The workflow does &lt;strong&gt;not&lt;/strong&gt; generalize to every Arabic dialect or deployment environment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GPUs used&lt;/td&gt;
+&lt;td&gt;2 × NVIDIA RTX PRO 6000 Blackwell Workstation Edition&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retained utterances&lt;/td&gt;
+&lt;td&gt;103,559 / 125,490 (82.5 %)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retained duration&lt;/td&gt;
+&lt;td&gt;133.7 h&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;UTMOS cutoff&lt;/td&gt;
+&lt;td&gt;≥ 1.25&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SIGMOS noise cutoff&lt;/td&gt;
+&lt;td&gt;≥ 1.5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SIGMOS overall cutoff&lt;/td&gt;
+&lt;td&gt;≥ 1.5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-technical-choices-not-universal-defaults"&gt;⚙️ Technical choices (not universal defaults)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Minimal curation&lt;/strong&gt; – removes unusable labels without discarding scarce, difficult speech.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Replay mixing&lt;/strong&gt; – interleaves a small amount of prior data to mitigate catastrophic forgetting.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Partial encoder unfreezing&lt;/strong&gt; – limits parameter updates for faster, cheaper fine‑tuning.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Length bucketing&lt;/strong&gt; – reduces padding for streaming encoders.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Beam search / larger attention context&lt;/strong&gt; – can improve offline accuracy without retraining, but adds latency and compute.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Nemotron 3.5 ASR supports multilingual streaming transcription across &lt;strong&gt;40 language‑locales&lt;/strong&gt;, including transcription‑ready Arabic.&lt;/li&gt;
+&lt;li&gt;Deployment‑specific dialects and recording conditions still benefit from the fine‑tuning workflow described above.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Adapting a high‑capacity multilingual ASR model to local dialects improves transcription quality for speakers whose speech patterns are under‑represented in pre‑training data, while still retaining the model’s ability to handle other languages.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2024/03/asr-nemo-canary-featured-960x540.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2023/06/speech-ai-summit-graphic-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#ASR #NeMo #ArabicDialects #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/fine-tuning-nvidia-nemotron-for-saudi-arabic-dialects-with-a-path-to-other-languages/" target="_blank" rel="noopener"
+&gt;Fine-Tuning NVIDIA Nemotron for Saudi Arabic Dialects, with a Path to Other Languages | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.38574v1" target="_blank" rel="noopener"
+&gt;Towards Model as a Library: Offline, Community-Sourced AI for Low-Resource African Languages&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dynamo on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/dynamo/</link><description>Recent content in Dynamo on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 31 Oct 2026 22:01:44 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/dynamo/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA releases Dynamo 1.4.2 with AICR‑packaged recipes for Kubernetes inference</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-dynamo-1-4-2-with-aicrpackaged-recipes-for-kubernetes-inference/</link><pubDate>Sat, 31 Oct 2026 22:01:44 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-dynamo-1-4-2-with-aicrpackaged-recipes-for-kubernetes-inference/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/inline-image-1-1-660x370.png" alt="Featured image of post NVIDIA releases Dynamo 1.4.2 with AICR‑packaged recipes for Kubernetes inference" /&gt;&lt;h1 id="nvidia-releases-dynamo-142-with-aicrpackaged-recipes-for-kubernetes-inference"&gt;NVIDIA releases Dynamo 1.4.2 with AICR‑packaged recipes for Kubernetes inference
+&lt;/h1&gt;&lt;p&gt;NVIDIA has updated its Dynamo distributed inference framework to version 1.4.2 and delivered it through the NVIDIA AI Cluster Runtime (AICR) as validated recipes that simplify deployment on Kubernetes.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Dynamo is a distributed inference framework that coordinates model serving across GPU workers.&lt;/li&gt;
+&lt;li&gt;It is part of the NVIDIA DSX AI Factory Platform, which helps the ecosystem design, build, and operate more efficient AI factories.&lt;/li&gt;
+&lt;li&gt;AICR (AI Cluster Runtime) packages Dynamo and its supporting infrastructure into reproducible recipes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Running a model with Dynamo on Kubernetes begins with a &lt;strong&gt;DynamoGraphDeployment&lt;/strong&gt; custom resource that specifies how &lt;strong&gt;vLLM&lt;/strong&gt;, &lt;strong&gt;SGLang&lt;/strong&gt;, or &lt;strong&gt;NVIDIA TensorRT LLM&lt;/strong&gt; should run in pods.&lt;/li&gt;
+&lt;li&gt;Frontends, workers, and optional &lt;strong&gt;Gateway API Inference Extension (GAIE) / Endpoint Picker Plugin (EPP)&lt;/strong&gt; components discover each other through Kubernetes resources.&lt;/li&gt;
+&lt;li&gt;Dynamo routes requests to workers that already hold the relevant KV‑cache blocks via its frontend router or through GAIE/EPP integration at the Gateway API layer.&lt;/li&gt;
+&lt;li&gt;The framework can separate prompt processing (prefill) from token generation (decode), a pattern called &lt;strong&gt;disaggregated serving&lt;/strong&gt;. On KV‑cache misses the prefill pool reprocesses the prompt, after which decode workers generate tokens token‑by‑token.&lt;/li&gt;
+&lt;li&gt;In Dynamo 1.4.2 the default AICR Kubernetes path uses &lt;strong&gt;TCP&lt;/strong&gt; for the request plane and &lt;strong&gt;ZMQ&lt;/strong&gt; for KV‑cache events. Each vLLM worker emits raw KV‑cache events through a local ZMQ publisher.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AICR ships version &lt;strong&gt;1.4.2&lt;/strong&gt; of the &lt;strong&gt;dynamo‑platform chart&lt;/strong&gt;, which includes the Dynamo operator, runtime images, and the &lt;code&gt;nvidia.com/v1beta1&lt;/code&gt; &lt;strong&gt;DynamoGraphDeployment&lt;/strong&gt; CRD (replacing the former &lt;code&gt;v1alpha1&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;The AICR Dynamo recipe &lt;strong&gt;pins component versions&lt;/strong&gt; and records configuration values, node selectors, tolerations, checksums, and validation expectations to make deployment reproducible.&lt;/li&gt;
+&lt;li&gt;The default path no longer installs &lt;strong&gt;NATS&lt;/strong&gt;; it remains available as an opt‑in for deployments that need it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role / Note&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;DynamoGraphDeployment CRD (v1beta1)&lt;/td&gt;
+&lt;td&gt;Defines deployment of vLLM, SGLang, or TensorRT LLM pods&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;dynamo‑platform chart 1.4.2&lt;/td&gt;
+&lt;td&gt;Packages Dynamo operator, runtime images, and related resources&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AICR Dynamo recipe&lt;/td&gt;
+&lt;td&gt;Pins versions, records config, node selectors, tolerations, checksums, validation expectations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GAIE / EPP (optional)&lt;/td&gt;
+&lt;td&gt;Provides Gateway API routing integration&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NATS (optional)&lt;/td&gt;
+&lt;td&gt;Message bus that is not installed by default&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The AICR distribution includes the &lt;strong&gt;1.4.2&lt;/strong&gt; chart and the associated validated recipe.&lt;/li&gt;
+&lt;li&gt;Support for &lt;strong&gt;vLLM&lt;/strong&gt;, &lt;strong&gt;SGLang&lt;/strong&gt;, and &lt;strong&gt;NVIDIA TensorRT LLM&lt;/strong&gt; is built into the DynamoGraphDeployment specification.&lt;/li&gt;
+&lt;li&gt;Operators can choose between the default TCP + ZMQ transport or opt‑in to NATS if required.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AICR gives platform teams a repeatable way to deploy and validate the runtime, providing developers with a consistent foundation for serving models and testing applications.&lt;/li&gt;
+&lt;li&gt;Disaggregated serving lets operators &lt;strong&gt;scale and tune prefill and decode capacity independently&lt;/strong&gt;, accommodating different request mixes such as long‑running agentic sessions versus one‑off chat requests.&lt;/li&gt;
+&lt;li&gt;By routing requests to workers that already hold the needed KV‑cache blocks, Dynamo reduces the need to reprocess intermediate tokens on cache misses.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/03/inference-press-dynamo-gtc26-4960950-1920x1080-1-660x370.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-1-12.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-2-11.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Dynamo #Kubernetes #AIInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/build-a-validated-kubernetes-runtime-for-nvidia-dynamo/" target="_blank" rel="noopener"
+&gt;Build a Validated Kubernetes Runtime for NVIDIA Dynamo | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Dynamo Supports Encode-Prefill-Decode Disaggregation for Multimodal Model Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-supports-encode-prefill-decode-disaggregation-for-multimodal-model-inference/</link><pubDate>Thu, 10 Sep 2026 22:04:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-supports-encode-prefill-decode-disaggregation-for-multimodal-model-inference/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/multimodal-dynamo-660x370.jpg" alt="Featured image of post NVIDIA Dynamo Supports Encode-Prefill-Decode Disaggregation for Multimodal Model Inference" /&gt;&lt;h1 id="nvidia-dynamo-supports-encode-prefill-decode-disaggregation-for-multimodal-model-inference"&gt;NVIDIA Dynamo Supports Encode-Prefill-Decode Disaggregation for Multimodal Model Inference
+&lt;/h1&gt;&lt;p&gt;NVIDIA Dynamo, an open source inference framework for distributed environments, now supports Encode-Prefill-Decode (EPD) disaggregation. This optimization technique improves multimodal model performance by separating the vision encoder stage from the prefill and decode stages.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Dynamo implements EPD serving by separating encoder and PD (prefill-decode) worker roles. Instead of running these phases with tightly coupled scheduling, they are treated as independently scalable stages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Encoder Workers&lt;/strong&gt;: Produce vision embeddings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PD Workers&lt;/strong&gt;: Consume those embeddings and run the LLM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Transfer&lt;/strong&gt;: The NVIDIA Inference Transfer Library (NIXL) is used to pass embeddings from encoder workers to PD workers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;There are three primary placement options for these workers:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Placement Option&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Aggregated&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Each GPU runs a single worker managing encoding, prefill, and decode for the entire request lifecycle.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Colocated Encoder&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Each GPU runs one or more encoder workers alongside one PD worker; generally the better fit for homogeneous clusters.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Disaggregated Encoder&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Encoder workers are placed on a lower-cost GPU tier while the primary GPU tier hosts PD workers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In a test environment, two NVIDIA RTX 6000D GPUs were used for encoder workers, while four NVIDIA GB200 GPUs handled the PD workers. This configuration reserves the GB200 GPUs for the more memory- and compute-intensive LLM workload.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;EPD disaggregation isolates encoder work, which allows text requests to skip waiting for the encoder. This leads to improvements in batching, memory efficiency, and overall throughput.&lt;/p&gt;
+&lt;p&gt;Performance gains include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Up to 5x faster time to first token (TTFT).&lt;/li&gt;
+&lt;li&gt;Up to 7x faster end-to-end response time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The technique is most effective under the following conditions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Image-heavy prompts.&lt;/li&gt;
+&lt;li&gt;Short-to-medium outputs.&lt;/li&gt;
+&lt;li&gt;Quantized mixture-of-experts (MoE) and lower-precision models (e.g., Qwen3.5 122B A10B NVFP4).&lt;/li&gt;
+&lt;li&gt;Scenarios where vision encoding accounts for a significant share of processing time or limits throughput.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Large dense models see less gain from this optimization.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/how-nvidia-dynamo-handles-multimodal-request-aggregated-versus-epd.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/three-multimodal-encode-placement-options.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Dynamo #LLM #MultimodalAI #Inference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/when-to-use-encode-prefill-decode-disaggregation-to-accelerate-multimodal-model-serving/" target="_blank" rel="noopener"
+&gt;When to Use Encode-Prefill-Decode Disaggregation to Accelerate Multimodal Model Serving | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

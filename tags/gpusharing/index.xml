@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPUSharing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/gpusharing/</link><description>Recent content in GPUSharing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 28 Oct 2026 22:03:50 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/gpusharing/index.xml" rel="self" type="application/rss+xml"/><item><title>GPU Fractioning Operator Enables Fine‑Grained GPU Sharing in Kubernetes</title><link>https://shoubhikbanerjee.github.io/blog/p/gpu-fractioning-operator-enables-finegrained-gpu-sharing-in-kubernetes/</link><pubDate>Wed, 28 Oct 2026 22:03:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/gpu-fractioning-operator-enables-finegrained-gpu-sharing-in-kubernetes/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/CUDAMemoryKV-660x370.webp" alt="Featured image of post GPU Fractioning Operator Enables Fine‑Grained GPU Sharing in Kubernetes" /&gt;&lt;h1 id="gpu-fractioning-operator-enables-finegrained-gpu-sharing-in-kubernetes"&gt;GPU Fractioning Operator Enables Fine‑Grained GPU Sharing in Kubernetes
+&lt;/h1&gt;&lt;p&gt;Many AI workloads need only a fraction of a GPU, and allocating a whole device to each workload can leave capacity idle. An open‑source Kubernetes operator called &lt;strong&gt;gpu‑fractioning&lt;/strong&gt; now lets platform teams share GPUs at the memory and compute level, using new CUDA 13.4 enforcement features and NVIDIA’s existing sharing mechanisms.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AI workloads often require only part of a GPU’s memory and compute resources.&lt;/li&gt;
+&lt;li&gt;Sharing GPUs lets platform teams serve more workloads with the same hardware.&lt;/li&gt;
+&lt;li&gt;NVIDIA GPUs already support several sharing approaches: MIG, time‑slicing, and Multi‑Process Service (MPS).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CUDA 13.4 memory enforcement&lt;/strong&gt;: a workload requests a memory size; CUDA reserves it and rejects allocations that exceed the limit, giving the workload a guaranteed minimum and a maximum it can grow into when memory is free.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compute modes&lt;/strong&gt;: each workload can run in the default time‑sharing mode or choose the sm‑sharing mode (MPS) that runs processes concurrently in separate address spaces.&lt;/li&gt;
+&lt;li&gt;The enforcement logic runs on the node; it is independent of the scheduler that placed the workload.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-components"&gt;⚙️ Key components
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;gpu‑fractioning operator&lt;/strong&gt; (hosted under the KAI Scheduler GitHub organization) – sets up MPS on every GPU node, applies per‑workload memory limits and compute mode, and measures usage per fraction.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NVIDIA GPU Operator&lt;/strong&gt; – provides the driver and container‑runtime setup; gpu‑fractioning runs alongside it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pod annotations&lt;/strong&gt; – developers specify resource limits and compute mode in the pod YAML; the scheduler writes the chosen GPU slice and mode into per‑container annotations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU Fractioning Operator&lt;/strong&gt; – reads those annotations and configures the assigned GPUs to enforce the requested memory and compute settings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;KAI Scheduler&lt;/strong&gt; – first scheduler integrated with gpu‑fractioning; from version v0.18.0 it offers a sharing mode called &lt;strong&gt;NvFractions&lt;/strong&gt; that selects a slice of a GPU for each workload and writes the required annotations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The gpu‑fractioning operator is open source and lives on GitHub under the KAI Scheduler organization.&lt;/li&gt;
+&lt;li&gt;It works with any Kubernetes scheduler capable of writing the required annotations; KAI Scheduler is the reference implementation.&lt;/li&gt;
+&lt;li&gt;Starting with KAI Scheduler v0.18.0, the NvFractions mode is available out‑of‑the‑box.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enables multiple AI workloads to run on a single GPU without idle capacity.&lt;/li&gt;
+&lt;li&gt;Provides transparent memory enforcement and optional compute sharing modes.&lt;/li&gt;
+&lt;li&gt;Allows administrators to choose the sharing strategy that best fits their cluster.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="gpu-sharing-techniques-in-nvidia-gpus"&gt;GPU sharing techniques in NVIDIA GPUs
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Technique&lt;/th&gt;
+&lt;th&gt;Key property&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Multi‑Instance GPU (MIG)&lt;/td&gt;
+&lt;td&gt;Splits a GPU into hardware‑isolated instances that are transparent to the application&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Time‑slicing&lt;/td&gt;
+&lt;td&gt;Lets several processes take turns without memory enforcement&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Multi‑Process Service (MPS) – sm‑sharing&lt;/td&gt;
+&lt;td&gt;Runs processes concurrently in separate address spaces&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/CUDAMemoryKV-1024x576.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/kai-scheduler-representation-660x370.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#GPUSharing #Kubernetes #CUDA #AIWorkloads&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/memory-enforced-gpu-sharing-in-kubernetes-with-nvidia-cuda-13-4/" target="_blank" rel="noopener"
+&gt;Memory-Enforced GPU Sharing in Kubernetes with NVIDIA CUDA 13.4 | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

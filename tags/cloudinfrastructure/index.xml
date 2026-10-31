@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CloudInfrastructure on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cloudinfrastructure/</link><description>Recent content in CloudInfrastructure on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 30 Oct 2026 22:02:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cloudinfrastructure/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Batch Introduces Quota Management for Amazon SageMaker Training Jobs</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-batch-introduces-quota-management-for-amazon-sagemaker-training-jobs/</link><pubDate>Fri, 30 Oct 2026 22:02:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-batch-introduces-quota-management-for-amazon-sagemaker-training-jobs/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-featured-image.png" alt="Featured image of post AWS Batch Introduces Quota Management for Amazon SageMaker Training Jobs" /&gt;&lt;h1 id="aws-batch-introduces-quota-management-for-amazon-sagemaker-training-jobs"&gt;AWS Batch Introduces Quota Management for Amazon SageMaker Training Jobs
+&lt;/h1&gt;&lt;p&gt;AWS has introduced quota management for AWS Batch, providing a new capability for administrators to manage compute capacity for Amazon SageMaker Training workloads. This feature allows users to queue, schedule, and retry machine learning training jobs without building their own infrastructure, utilizing the managed scheduling features of AWS Batch.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Quota management enables administrators to divide compute capacity into quota shares, which are organized by specific teams, projects, or workloads. These quota shares act as virtual queues nested hierarchically within an associated job queue. This system is designed to maximize GPU utilization while honoring each team&amp;rsquo;s specific allocation during peak demand.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;AWS Batch prioritizes quota shares that are under their capacity limits when scheduling jobs. Each quota share includes defined compute quotas and specific strategies for handling idle compute resources.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Strategy&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;RESERVE&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Idle compute is reserved until jobs arrive for that specific quota share.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LEND&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Idle compute is lent to other quota shares that have work available.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LEND_AND_BORROW&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Idle compute is lent when idle and borrowed when the share has work that could benefit from extra capacity.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;If a quota share has lent out its capacity and new jobs arrive, AWS Batch performs cross-share preemption. This automatically reclaims resources for the lending share, eliminating the need for administrators to manually track and terminate borrowing jobs. Conversely, if a share is at its limit and other capacity is idle, workloads can borrow that capacity to run.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The system also supports priority-based in-share preemption. When enabled, higher priority jobs within a single quota share can preempt lower priority jobs that are in the SCHEDULED, STARTING, or RUNNING states.&lt;/p&gt;
+&lt;p&gt;To implement these new capabilities, administrators must configure three main components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A Scheduling Policy containing a &lt;code&gt;quotaSharePolicy&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;A Service Environment that defines capacity limits for specific instances (such as &lt;code&gt;ml.g5.xlarge&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;A SageMaker Training job queue connected to both the policy and the environment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;These features are integrated with the SageMaker Python SDK v3. Configuration can be managed through the AWS Command Line Interface (AWS CLI), the AWS console, or via sample notebooks using the &lt;code&gt;aws_batch&lt;/code&gt; module.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWSBatch #SageMaker #MachineLearning #CloudInfrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/lend-and-borrow-resources-across-teams-with-aws-batchs-quota-management-for-sagemaker-training-jobs/" target="_blank" rel="noopener"
+&gt;Lend and borrow resources across teams with AWS Batch’s quota management for SageMaker Training jobs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>HPE Private Cloud AI Provides Integrated Foundation for Enterprise AI Economics</title><link>https://shoubhikbanerjee.github.io/blog/p/hpe-private-cloud-ai-provides-integrated-foundation-for-enterprise-ai-economics/</link><pubDate>Tue, 20 Oct 2026 22:03:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/hpe-private-cloud-ai-provides-integrated-foundation-for-enterprise-ai-economics/</guid><description>&lt;img src="https://wp.technologyreview.com/wp-content/uploads/2026/10/HPE-iStock-1168748420.jpg?resize=1200,600" alt="Featured image of post HPE Private Cloud AI Provides Integrated Foundation for Enterprise AI Economics" /&gt;&lt;h1 id="hpe-private-cloud-ai-provides-integrated-foundation-for-enterprise-ai-economics"&gt;HPE Private Cloud AI Provides Integrated Foundation for Enterprise AI Economics
+&lt;/h1&gt;&lt;p&gt;HPE has introduced HPE Private Cloud AI, a production-ready foundation designed to reduce the integration burden of operating private AI at scale by combining infrastructure, software, models, tools, governance, and services.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;As AI evolves from isolated experiments into a foundational business layer, the focus is shifting from the cost of tokens or GPU-hours to the &amp;ldquo;effective cost per useful outcome.&amp;rdquo; This metric tracks the total cost of the platform, models, operations, and capacity required to complete a business-usable workflow or resolved request.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Utilization is central to AI economics. While idle GPUs and oversized models raise costs, directing more work to paid-for capacity lowers the effective unit cost. HPE Private Cloud AI allows teams to manage specific operational levers to align capacity and service levels with workload requirements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Scheduling&lt;/strong&gt;: Managing how tasks are assigned.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Selection&lt;/strong&gt;: Routing tasks to the least costly model that meets quality requirements.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU Partitioning&lt;/strong&gt;: Dividing hardware resources efficiently.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cache Management&lt;/strong&gt;: Using techniques such as KV-cache management to reuse context and reduce wasted capacity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Enterprises can choose from different infrastructure approaches based on their demand and operational discipline:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Approach&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Characteristics&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Bespoke Stack&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Procuring infrastructure and controls in-house.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;On-demand Consumption&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Hyperscalers reduce assembly burden; charges rise with every prompt or agent action.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Integrated Private AI Platform&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Owned or dedicated capacity paired with a validated stack.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Additional details regarding HPE Private Cloud AI include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Implementation Support&lt;/strong&gt;: Includes a 90-day engagement with forward-deployed engineers to help deploy initial use cases and establish operating practices.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: In independent testing commissioned by HPE, an integrated platform serving multiple workloads at high utilization delivered a lower effective cost per token than repeatedly renting equivalent capacity (results vary based on utilization and workload mix).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;For low-volume or unpredictable demand, APIs and hyperscalers remain rational. However, as workloads become sustained and business-critical, owning GPUs and controlling the environment allows enterprises to amortize fixed costs across more useful work. Without operational discipline and the ability to manage efficiency levers, committed infrastructure can become stranded capital.&lt;/p&gt;
+&lt;p&gt;#HPE #PrivateAI #EnterpriseAI #GPUUtilization #CloudInfrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.technologyreview.com/2026/10/20/1146937/the-new-economics-of-enterprise-ai/" target="_blank" rel="noopener"
+&gt;The new economics of enterprise AI&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Deployment Specifications for Kubernetes Cluster Infrastructure</title><link>https://shoubhikbanerjee.github.io/blog/p/new-deployment-specifications-for-kubernetes-cluster-infrastructure/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-deployment-specifications-for-kubernetes-cluster-infrastructure/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/36015203?v=4" alt="Featured image of post New Deployment Specifications for Kubernetes Cluster Infrastructure" /&gt;&lt;h1 id="new-deployment-specifications-for-kubernetes-cluster-infrastructure"&gt;New Deployment Specifications for Kubernetes Cluster Infrastructure
+&lt;/h1&gt;&lt;p&gt;A new infrastructure deployment specification has been released, supporting highly available clusters across a wide range of cloud providers and Linux distributions.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The system can be deployed on the following platforms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS&lt;/li&gt;
+&lt;li&gt;GCE&lt;/li&gt;
+&lt;li&gt;Azure&lt;/li&gt;
+&lt;li&gt;OpenStack&lt;/li&gt;
+&lt;li&gt;vSphere&lt;/li&gt;
+&lt;li&gt;Equinix Metal (bare metal)&lt;/li&gt;
+&lt;li&gt;Oracle Cloud Infrastructure (Experimental)&lt;/li&gt;
+&lt;li&gt;Baremetal&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="supported-operating-systems"&gt;Supported Operating Systems
+&lt;/h3&gt;&lt;p&gt;The system supports most popular Linux distributions, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Debian Bookworm, Trixie&lt;/li&gt;
+&lt;li&gt;Ubuntu 22.04, 24.04, 26.04&lt;/li&gt;
+&lt;li&gt;CentOS Stream / RHEL 9, 10&lt;/li&gt;
+&lt;li&gt;Fedora 39, 40, 41, 42&lt;/li&gt;
+&lt;li&gt;Fedora CoreOS&lt;/li&gt;
+&lt;li&gt;openSUSE Leap 16.x/Tumbleweed&lt;/li&gt;
+&lt;li&gt;Oracle Linux 9, 10&lt;/li&gt;
+&lt;li&gt;Alma Linux 9, 10&lt;/li&gt;
+&lt;li&gt;Rocky Linux 9, 10 (experimental in 10)&lt;/li&gt;
+&lt;li&gt;Flatcar Container Linux by Kinvolk&lt;/li&gt;
+&lt;li&gt;Kylin Linux Advanced Server V10 (experimental)&lt;/li&gt;
+&lt;li&gt;Amazon Linux 2 (experimental)&lt;/li&gt;
+&lt;li&gt;UOS Linux (experimental)&lt;/li&gt;
+&lt;li&gt;openEuler (experimental)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Upstart/SysV init based OS types are not supported.&lt;/p&gt;
+&lt;h3 id="component-versions"&gt;Component Versions
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Version&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;kubernetes&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.36.4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;etcd&lt;/td&gt;
+&lt;td style="text-align: left"&gt;3.6.14&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;docker&lt;/td&gt;
+&lt;td style="text-align: left"&gt;28.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;containerd&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.3.5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;cri-o&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.36.5 (experimental; Fedora, Ubuntu, and CentOS based OS only)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;cni-plugins&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.9.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;calico&lt;/td&gt;
+&lt;td style="text-align: left"&gt;3.31.7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;cilium&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.20.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;flannel&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.28.9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;kube-ovn&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.12.21&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;kube-router&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.1.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;multus&lt;/td&gt;
+&lt;td style="text-align: left"&gt;4.2.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;kube-vip&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.0.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Composable:&lt;/strong&gt; Users have a choice of the network plugin for instances.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Testing:&lt;/strong&gt; The system utilizes continuous integration tests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Kubernetes #CloudInfrastructure #Linux #DevOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/kubernetes-sigs/kubespray" target="_blank" rel="noopener"
+&gt;kubernetes-sigs/kubespray&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Serverless Framework V.4 Updates and New AI Integration Features</title><link>https://shoubhikbanerjee.github.io/blog/p/serverless-framework-v-4-updates-and-new-ai-integration-features/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/serverless-framework-v-4-updates-and-new-ai-integration-features/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/13742415?v=4" alt="Featured image of post Serverless Framework V.4 Updates and New AI Integration Features" /&gt;&lt;h1 id="serverless-framework-v4-updates-and-new-ai-integration-features"&gt;Serverless Framework V.4 Updates and New AI Integration Features
+&lt;/h1&gt;&lt;p&gt;Serverless Inc. continues to maintain the Serverless Framework, with V.4 featuring significant updates as of July 2026 to simplify the deployment of code and cloud infrastructure.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The Serverless Framework is a multi-language command-line tool using YAML syntax to build auto-scaling applications that cost nothing when idle. It supports Node.js, Typescript, Python, Go, and Java, and is extensible via over 1,000 plugins.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Sandboxes&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Isolated, ephemeral compute on AWS Lambda for workloads like AI agents and code execution&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore Support&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Define AI agents, memory, tools, gateways, browsers, and code interpreters in &lt;code&gt;serverless.yml&lt;/code&gt; via the &lt;code&gt;ai&lt;/code&gt; property&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Managed Instances&lt;/td&gt;
+&lt;td style="text-align: left"&gt;EC2-backed Lambda execution for higher throughput and long-running workloads&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Durable Functions&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Built-in support for stateful workflows and long-running orchestrations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Serverless MCP&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Integration for AI-powered IDEs (Cursor, Windsurf) to debug apps by fetching logs, state, and config from AWS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Lambda tenant isolation mode&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Distinct compute environments per tenant to reduce noisy neighbor effects&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;HTTP response streaming&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Stream logs, reports, or AI LLM responses from Lambda with API Gateway HTTP APIs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AWS Login &amp;amp; SSO&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Browser-based credential setup via &lt;code&gt;serverless login aws&lt;/code&gt; and &lt;code&gt;serverless login aws sso&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Deployment Diffs&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Preview live AWS CloudFormation stack changes using &lt;code&gt;serverless diff&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Reconcile Command&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Sync usage records with AWS accounts when stacks are removed outside the CLI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Per-function IAM roles&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Ability to add per-function IAM policies&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The framework provides integrated support for several Infrastructure as Code (IaC) project files, allowing users to deploy AWS SAM, AWS CloudFormation, and traditional Serverless Framework projects with one tool.&lt;/p&gt;
+&lt;p&gt;Additional integrated capabilities include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Built-in plugins:&lt;/strong&gt; Former community plugins such as AppSync, Prune, API Gateway Service Proxy, and Python requirements are now first-class features.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Custom Domain Support:&lt;/strong&gt; Automatic configuration of custom domains and SSL certificates is now built into the CLI.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Doppler Integration:&lt;/strong&gt; Secrets can be fetched from Doppler via Serverless Framework Variables.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Serverless #AWS #CloudInfrastructure #AIagents #IaC&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/serverless/serverless" target="_blank" rel="noopener"
+&gt;serverless/serverless&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

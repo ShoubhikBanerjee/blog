@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Systems on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/systems/</link><description>Recent content in Systems on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 07 Oct 2026 22:09:50 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/systems/index.xml" rel="self" type="application/rss+xml"/><item><title>Microsoft Research Asia releases Harnessed Agentic RL with Agent Lightning v1.0</title><link>https://shoubhikbanerjee.github.io/blog/p/microsoft-research-asia-releases-harnessed-agentic-rl-with-agent-lightning-v1-0/</link><pubDate>Wed, 07 Oct 2026 22:09:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/microsoft-research-asia-releases-harnessed-agentic-rl-with-agent-lightning-v1-0/</guid><description>&lt;img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2026/10/AgentLightning-TWLIFB-1200x627-1.jpg" alt="Featured image of post Microsoft Research Asia releases Harnessed Agentic RL with Agent Lightning v1.0" /&gt;&lt;h1 id="microsoft-research-asia-releases-harnessed-agentic-rl-with-agent-lightning-v10"&gt;Microsoft Research Asia releases Harnessed Agentic RL with Agent Lightning v1.0
+&lt;/h1&gt;&lt;p&gt;Microsoft Research Asia introduced the Harnessed Agentic RL training paradigm and open‑sourced Agent Lightning v1.0, a lightweight framework that lets the same agent harness used in deployment participate directly in reinforcement learning.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Harnessed Agentic RL removes the need to reimplement the agent inside the training framework.&lt;/li&gt;
+&lt;li&gt;Agent Lightning v1.0 provides a complete agent RL control plane in roughly &lt;strong&gt;3,500 lines of code&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The framework runs agents as standard &lt;strong&gt;Kubernetes jobs&lt;/strong&gt; on self‑managed clusters, cloud Kubernetes, or local infrastructure, without reliance on paid commercial sandbox services.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The agent continues to call the model through an &lt;strong&gt;LLM proxy&lt;/strong&gt;; the training system only observes the request‑response pairs.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;agent harness&lt;/strong&gt; that coordinates the deployed agent also handles the environment interaction loop during training.&lt;/li&gt;
+&lt;li&gt;Because only LLM calls are recorded, a single rollout can be split into a variable number of training samples.&lt;/li&gt;
+&lt;li&gt;Retokenization is required to obtain token IDs; re‑tokenizing text can shift token boundaries, so adjacent calls may not be merged into one sample.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lightweight design&lt;/strong&gt; – the entire codebase is about &lt;strong&gt;3,500 lines&lt;/strong&gt;, making it easy to understand, modify, and extend.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Native Kubernetes support&lt;/strong&gt; – agents run directly as Kubernetes jobs, supporting self‑managed, cloud, and local clusters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data‑efficient training recipe&lt;/strong&gt; – an end‑to‑end coding‑agent pipeline raised &lt;strong&gt;Qwen3.5‑9B&lt;/strong&gt; from &lt;strong&gt;41.8 %&lt;/strong&gt; to &lt;strong&gt;56.4 % Pass@1&lt;/strong&gt; on &lt;strong&gt;SWE‑bench Verified&lt;/strong&gt;, a &lt;strong&gt;14.6 percentage‑point&lt;/strong&gt; gain using only &lt;strong&gt;≈6,000&lt;/strong&gt; training samples from an open‑sourced dataset.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Traditional vs. harnessed RL&lt;/strong&gt; – conventional agentic RL assumes the training framework owns the interaction loop, requiring developers to rebuild the agent’s context management, tool protocols, and execution logic inside the RL framework. This rebuilding is costly and can produce a training agent that differs from the deployed agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-early-systems-and-agents"&gt;📊 Early systems and agents
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;verl&lt;/td&gt;
+&lt;td&gt;Early RL system built with training framework owning the loop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AReaL&lt;/td&gt;
+&lt;td&gt;Early RL system built with training framework owning the loop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;slime&lt;/td&gt;
+&lt;td&gt;Early RL system built with training framework owning the loop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;mini‑SWE‑agent&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OpenHands&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OpenCode&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Code&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Codex&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The researchers released &lt;strong&gt;Agent Lightning v1.0&lt;/strong&gt; as an open‑source project.&lt;/li&gt;
+&lt;li&gt;v1.0 emphasizes staying lightweight, integrating with real harnesses, and providing a reproducible agent RL training pipeline.&lt;/li&gt;
+&lt;li&gt;By pointing the endpoint that previously called the model API at Agent Lightning, developers can train using the same harness that will be deployed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AI agents now consist of complex full‑stack systems; their capabilities increasingly depend on the &lt;strong&gt;agent harness&lt;/strong&gt; that coordinates them from outside the model.&lt;/li&gt;
+&lt;li&gt;Harnessed Agentic RL aligns the training environment with the deployment environment, eliminating the mismatch that arises when agents are rebuilt for training.&lt;/li&gt;
+&lt;li&gt;The data‑efficient results demonstrate that strong performance gains are achievable with modest training data when the correct harness is used.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2026/09/AgentLightning-blog_EXT_FA_figure.1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIagents #ReinforcementLearning #Kubernetes #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/" target="_blank" rel="noopener"
+&gt;Agent Lightning: Lightweight RL agent-training framework&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Dogwood Local Engine released as Apache‑2.0 library for temporal policy enforcement</title><link>https://shoubhikbanerjee.github.io/blog/p/dogwood-local-engine-released-as-apache2-0-library-for-temporal-policy-enforcement/</link><pubDate>Thu, 01 Oct 2026 22:03:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/dogwood-local-engine-released-as-apache2-0-library-for-temporal-policy-enforcement/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2026/09/29/Screenshot-2026-09-29-at-1.23.31 PM-1156x630.png" alt="Featured image of post Dogwood Local Engine released as Apache‑2.0 library for temporal policy enforcement" /&gt;&lt;h1 id="dogwood-local-engine-released-as-apache20-library-for-temporal-policy-enforcement"&gt;Dogwood Local Engine released as Apache‑2.0 library for temporal policy enforcement
+&lt;/h1&gt;&lt;p&gt;Today we are releasing the Dogwood Local Engine under the Apache 2.0 license. The engine embeds the Dogwood governance language to enforce agent actions with temporal conditions.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Dogwood is an open source governance language for agents and their actions, released in August.&lt;/li&gt;
+&lt;li&gt;Policies specify which actions an agent may take and under what conditions, including temporal conditions that refer to past actions and outcomes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The engine can be embedded as a library into an enforcement layer that regulates agents’ tool calls.&lt;/li&gt;
+&lt;li&gt;It maintains a durable record of past actions, tracking the order, timing, and outcomes so it can survive crashes and restart.&lt;/li&gt;
+&lt;li&gt;Only request events receive allow/deny verdicts; response events record outcomes (e.g., test pass/fail) used by temporal clauses.&lt;/li&gt;
+&lt;li&gt;An event is a timestamped record of one step of a tool call. A tool call typically generates a request event and a response event, forming the history evaluated by the engine.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Supports dynamic policy updates without pausing workflows.&lt;/li&gt;
+&lt;li&gt;Example policies:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;run_tests&lt;/code&gt;: the agent may always run the tests.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;push_after_green_tests&lt;/code&gt;: the agent may push only when a test run has passed within the last fifteen minutes and no run has failed since. The &lt;code&gt;when&lt;/code&gt; temporal clause expresses this condition.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The temporal clause is evaluated against the event history; it depends on events that happened before the request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Released under the Apache 2.0 open source license.&lt;/li&gt;
+&lt;li&gt;Available as a local engine library that can be embedded.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Allows policies to depend on past actions, their outcomes, order, and timing.&lt;/li&gt;
+&lt;li&gt;Guarantees enforcement after crashes because the engine stores history durably.&lt;/li&gt;
+&lt;li&gt;Supports policy changes during a session without stopping the workflow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Dogwood #AIAgents #OpenSource #PolicyEngine&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/opensource/introducing-the-dogwood-local-engine-temporal-governance-for-agent-actions/" target="_blank" rel="noopener"
+&gt;Introducing the Dogwood Local Engine: temporal governance for agent actions | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

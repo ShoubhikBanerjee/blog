@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Computational Biology on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/computational-biology/</link><description>Recent content in Computational Biology on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 21 Oct 2026 22:03:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/computational-biology/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA releases RFD4-Proteina, an open BioNeMo model for joint protein sequence and structure design</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-rfd4-proteina-an-open-bionemo-model-for-joint-protein-sequence-and-structure-design/</link><pubDate>Wed, 21 Oct 2026 22:03:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-rfd4-proteina-an-open-bionemo-model-for-joint-protein-sequence-and-structure-design/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image4-2-660x370.png" alt="Featured image of post NVIDIA releases RFD4-Proteina, an open BioNeMo model for joint protein sequence and structure design" /&gt;&lt;h1 id="nvidia-releases-rfd4-proteina-an-open-bionemo-model-for-joint-protein-sequence-and-structure-design"&gt;NVIDIA releases RFD4-Proteina, an open BioNeMo model for joint protein sequence and structure design
+&lt;/h1&gt;&lt;p&gt;NVIDIA released RFD4-Proteina, an open BioNeMo model co-developed with the University of Washington’s Institute for Protein Design, that jointly designs protein sequences and all-atom structures using reward-guided inference-time search.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Co-developed with Institute for Protein Design at UW School of Medicine.&lt;/li&gt;
+&lt;li&gt;Uses patterns learned from nature to navigate protein design space.&lt;/li&gt;
+&lt;li&gt;Co-designs sequences and all-atom structures.&lt;/li&gt;
+&lt;li&gt;Employs reward-guided inference-time search to focus compute on promising candidates.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Combines explicit backbone coordinates with latent representation, learned sequence and atomistic variables.&lt;/li&gt;
+&lt;li&gt;Autoencoder decoder outputs sequence and all-atom structure together, removing need for separate inverse-folding step (e.g., ProteinMPNN).&lt;/li&gt;
+&lt;li&gt;During inference-time reasoning search, model denoises generation trajectories, scores designs, retains/branches promising partial states, continues until criteria met.&lt;/li&gt;
+&lt;li&gt;Rewards can measure geometry, interactions, or independent prediction confidence.&lt;/li&gt;
+&lt;li&gt;Uses residue-level latent representation (vs atom-level) to avoid memory blow-up.&lt;/li&gt;
+&lt;li&gt;Diffusion process engineered to cut sampling steps from ~400 (Proteina-Complexa) to ~60, focusing compute where reasoning matters.&lt;/li&gt;
+&lt;li&gt;Inference-time search accelerated via CUDA-accelerated oracles (OF3, physics methods like tmol).&lt;/li&gt;
+&lt;li&gt;Model and kernels co-designed with cuEquivariance and BioNeMo Inference Runtime (BIR) teams for speed/scalability.&lt;/li&gt;
+&lt;li&gt;AtomWorks provides molecular data layer for structure preparation and design annotations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Supports Linux GPU host, Python 3.12; follow repo setup guide, need supported NVIDIA GPU.&lt;/li&gt;
+&lt;li&gt;Self-host requirements: x86_64 or arm64 Linux meeting NIM prerequisites, Docker, NVIDIA Driver, NVIDIA Container Toolkit, NGC API key.&lt;/li&gt;
+&lt;li&gt;NIM API endpoint (not for production): HTTP via build.nvidia.com, Shell/Python scripts, no local GPU/model install.&lt;/li&gt;
+&lt;li&gt;Accepts annotated CIFs or condition specification plus source structure.&lt;/li&gt;
+&lt;li&gt;Uses repository’s cropped PD-L1 structure from PDB 5O45 as target; fix sequence/backbone, allow side-chain repack, direct binder generation to hotspot atoms Tyr56, Met115, Tyr123.&lt;/li&gt;
+&lt;li&gt;Generated binder length 100–150 residues, free sequence and coordinates.&lt;/li&gt;
+&lt;li&gt;Install repo environment with current uv release (validated 0.12.24); update uv if present to recognize CUDA 13.2.&lt;/li&gt;
+&lt;li&gt;Setup caches Hugging Face model bundle including paired autoencoder.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Available as open model for training, inference, method development, direct control over sampling code.&lt;/li&gt;
+&lt;li&gt;Also available as NIM microservice for rapid inference deployment with HTTP interface.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Faster and uses less memory than prior RFD3 due to residue-level latent representation, reduced diffusion steps, CUDA-accelerated oracles, and co-designed kernels.&lt;/li&gt;
+&lt;li&gt;Enables efficient protein binder design with integrated sequence-structure generation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image4-2-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image2-6.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/03/Proteina-Complexa-Binder-1920x1080-1-660x370.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#ProteinDesign #BioNeMo #NVIDIA #DrugDiscovery&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/design-proteins-with-rfd4-proteina-using-reward-guided-inference-time-search/" target="_blank" rel="noopener"
+&gt;Design Proteins with RFD4-Proteina Using Reward-Guided Inference-Time Search | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Microsoft Research Introduces Quine Multimodal World Model for Biology</title><link>https://shoubhikbanerjee.github.io/blog/p/microsoft-research-introduces-quine-multimodal-world-model-for-biology/</link><pubDate>Tue, 29 Sep 2026 22:02:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/microsoft-research-introduces-quine-multimodal-world-model-for-biology/</guid><description>&lt;img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2026/09/ProjectQuine-BlogHeroFeature-1400x788-2.jpg" alt="Featured image of post Microsoft Research Introduces Quine Multimodal World Model for Biology" /&gt;&lt;h1 id="microsoft-research-introduces-quine-multimodal-world-model-for-biology"&gt;Microsoft Research Introduces Quine Multimodal World Model for Biology
+&lt;/h1&gt;&lt;p&gt;Microsoft Research has introduced Quine, a research effort to create a multimodal world model of biology and an interactive harness that connects models, scientific tools, literature, and researchers.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Quine is designed to work across various biological boundaries, reflecting a vision for a discovery system that evolves through scientific use. It consists of two primary components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;A world model of biology&lt;/strong&gt;: A system capable of representing the state of a biological system, predicting how that state evolves in response to interventions, and reasoning over the consequences of those interventions multiple steps into the future.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;An interactive harness&lt;/strong&gt;: A system that connects the world model to orchestration and reasoning models, scientific tools, literature, and research teams.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The core world model learns shared representations across biological modalities and scales, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sequence&lt;/li&gt;
+&lt;li&gt;Structure&lt;/li&gt;
+&lt;li&gt;Function&lt;/li&gt;
+&lt;li&gt;Cellular state&lt;/li&gt;
+&lt;li&gt;Imaging data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;By training across these modalities jointly, Quine can use evidence from one modality to inform predictions in another, capturing relationships that might be lost when separate single-domain specialist models are used. This integration allows researchers to generate predictions across modalities and reason about the consequences of biological interventions before wet-lab testing.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Microsoft Research has applied Quine in collaboration with researchers at the Broad Institute of MIT and Harvard to study pancreatic ductal adenocarcinoma (PDAC). Through this work, they have used the system to prioritize compounds predicted to drive therapeutic tumor-state shifts and validated several top-ranked candidates across multiple wet-lab assays.&lt;/p&gt;
+&lt;p&gt;Quine is experimental research technology intended only for research, not for clinical or medical use. Its outputs may be incomplete or inaccurate and require review by qualified researchers and appropriate scientific and experimental validation.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Quine Fellows program&lt;/strong&gt;: A cohort of scientists will be given access to the system to accelerate their research and provide scientific feedback.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Future Access&lt;/strong&gt;: As the technology matures, Microsoft expects to expand access through products such as Microsoft Discovery.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2026/09/ProjectQuine-BlogHeroFeature-1400x788-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#MicrosoftResearch #Biology #WorldModels #Biotech #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.microsoft.com/en-us/research/blog/introducing-quine-an-ai-research-system-designed-for-the-complexity-of-biology/" target="_blank" rel="noopener"
+&gt;Introducing Quine: An AI research system designed for the complexity of biology&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

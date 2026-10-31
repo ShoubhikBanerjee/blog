@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>PropertyFinder on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/propertyfinder/</link><description>Recent content in PropertyFinder on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 28 Oct 2026 22:03:50 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/propertyfinder/index.xml" rel="self" type="application/rss+xml"/><item><title>Property Finder uncovers label bias and improves vision AI with Amazon Bedrock</title><link>https://shoubhikbanerjee.github.io/blog/p/property-finder-uncovers-label-bias-and-improves-vision-ai-with-amazon-bedrock/</link><pubDate>Wed, 28 Oct 2026 22:03:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/property-finder-uncovers-label-bias-and-improves-vision-ai-with-amazon-bedrock/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/26/ML-21124-featured-image.png" alt="Featured image of post Property Finder uncovers label bias and improves vision AI with Amazon Bedrock" /&gt;&lt;h1 id="property-finder-uncovers-label-bias-and-improves-vision-ai-with-amazon-bedrock"&gt;Property Finder uncovers label bias and improves vision AI with Amazon Bedrock
+&lt;/h1&gt;&lt;p&gt;Property Finder’s engineering team discovered that 96.8 percent of their image‑evaluation labels were inherited directly from a single vision‑language model instead of being verified by human experts. By building an unbiased ground‑truth set and applying evolutionary prompt optimization on Amazon Bedrock, they achieved higher accuracy while cutting costs by 86 percent.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Co‑authored with Khaled Thabit, Meriem Boughrara, and Mohamed Desouky from Property Finder.&lt;/li&gt;
+&lt;li&gt;The issue was uncovered while migrating the vision AI workload to a more cost‑effective option on Amazon Bedrock.&lt;/li&gt;
+&lt;li&gt;Property Finder processes &lt;strong&gt;tens of thousands of property images each day&lt;/strong&gt; across the MENA region, with &lt;strong&gt;thousands of new listings averaging 15 images&lt;/strong&gt; that must be quality‑checked before going live.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-evaluation-bias-discovery"&gt;🏗️ Evaluation Bias Discovery
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;96.8 %&lt;/strong&gt; of the existing evaluation labels came from the predictions of a single VLM, never independently verified.&lt;/li&gt;
+&lt;li&gt;This left any alternative model &lt;strong&gt;structurally disadvantaged&lt;/strong&gt; before any image was processed.&lt;/li&gt;
+&lt;li&gt;Specific problems identified:
+&lt;ul&gt;
+&lt;li&gt;Watermark text extraction showed character‑level mistakes marked as correct, including hallucinated brand names and missing characters.&lt;/li&gt;
+&lt;li&gt;Photo classification forced a single label onto images that contained &lt;strong&gt;multiple room types&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;In the remaining &lt;strong&gt;3.2 %&lt;/strong&gt; of human‑labeled samples, annotators introduced categories outside the original specification (e.g., “Office” where no such label existed in the prompt).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-building-unbiased-ground-truth"&gt;🛠️ Building Unbiased Ground Truth
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The team hand‑annotated &lt;strong&gt;356 UAE images&lt;/strong&gt; and a separate set of Egypt images, selected from unlabeled production listings across representative industry segments.&lt;/li&gt;
+&lt;li&gt;The first &lt;strong&gt;256 UAE images&lt;/strong&gt; formed the &lt;strong&gt;development set&lt;/strong&gt; for prompt tuning.&lt;/li&gt;
+&lt;li&gt;An &lt;strong&gt;evaluation set&lt;/strong&gt; uses all &lt;strong&gt;356 images plus 100 newly annotated images&lt;/strong&gt; to compare the final model.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;strategy and analytics expert&lt;/strong&gt; annotated all images; the AWS Generative AI Innovation Center team performed systematic quality reviews to resolve ambiguous cases and keep labeling consistent.&lt;/li&gt;
+&lt;li&gt;A set of &lt;strong&gt;356 images&lt;/strong&gt; is considered roughly sufficient to detect moderate differences between models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-prompt-optimization-on-amazon-bedrock"&gt;🤖 Prompt Optimization on Amazon Bedrock
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Property Finder processed each image with Amazon Bedrock, which returns predicted attributes in &lt;strong&gt;JSON&lt;/strong&gt; format.&lt;/li&gt;
+&lt;li&gt;During optimization, predictions were scored with &lt;strong&gt;Micro F1&lt;/strong&gt; against the 256‑image expert‑annotated development set.&lt;/li&gt;
+&lt;li&gt;The optimization loop ran from &lt;strong&gt;v0 to v27&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Early versions used AI assistants to refine prompts.&lt;/li&gt;
+&lt;li&gt;Later versions employed automated optimization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Switching from &lt;strong&gt;single‑label to multi‑label classification&lt;/strong&gt; removed a major source of artificial ambiguity and allowed measurement of correct secondary predictions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The selected model on Amazon Bedrock delivered &lt;strong&gt;higher accuracy&lt;/strong&gt; while reducing inference cost by &lt;strong&gt;86 percent&lt;/strong&gt; compared with the legacy approach.&lt;/li&gt;
+&lt;li&gt;The unbiased ground‑truth data eliminated the structural disadvantage previously faced by alternative models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Property Finder evaluates &lt;strong&gt;11 quality attributes per image&lt;/strong&gt;, covering:
+&lt;ul&gt;
+&lt;li&gt;Watermark detection&lt;/li&gt;
+&lt;li&gt;Room classification&lt;/li&gt;
+&lt;li&gt;Furnishing status&lt;/li&gt;
+&lt;li&gt;Photo quality&lt;/li&gt;
+&lt;li&gt;Construction indicators&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Reliable quality assessment is essential for &lt;strong&gt;tens of thousands of daily listings&lt;/strong&gt; before they appear to users.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;hybrid approach&lt;/strong&gt;—combining models from different families, surfacing candidate labels and disagreements, and having human experts adjudicate—ensures no model output is used directly as a label.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="attribute-coverage-sample"&gt;Attribute Coverage (sample)
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Attribute Category&lt;/th&gt;
+&lt;th&gt;Example&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Watermark detection&lt;/td&gt;
+&lt;td&gt;Detects embedded branding or text watermarks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Room classification&lt;/td&gt;
+&lt;td&gt;Identifies living room, kitchen, bedroom, etc.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Furnishing status&lt;/td&gt;
+&lt;td&gt;Determines whether a room is furnished&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Photo quality&lt;/td&gt;
+&lt;td&gt;Assesses resolution, lighting, and composition&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Construction indicators&lt;/td&gt;
+&lt;td&gt;Flags signs of construction or renovation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/26/ML-21124-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/26/ML-21124-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/26/ML-21124-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PropertyFinder #ComputerVision #AmazonBedrock #DataQuality&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/fix-evaluation-bias-to-unlock-better-models-on-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Fix evaluation bias to unlock better models on Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

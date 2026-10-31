@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SpeechRecognition on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/speechrecognition/</link><description>Recent content in SpeechRecognition on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 29 Oct 2026 18:01:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/speechrecognition/index.xml" rel="self" type="application/rss+xml"/><item><title>AnyLanguageModel adds on‑device speech and decision packages for Swift</title><link>https://shoubhikbanerjee.github.io/blog/p/anylanguagemodel-adds-ondevice-speech-and-decision-packages-for-swift/</link><pubDate>Thu, 29 Oct 2026 18:01:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/anylanguagemodel-adds-ondevice-speech-and-decision-packages-for-swift/</guid><description>&lt;img src="https://huggingface.co/blog/assets/anydecisionmodel/banner.png" alt="Featured image of post AnyLanguageModel adds on‑device speech and decision packages for Swift" /&gt;&lt;h1 id="anylanguagemodel-adds-ondevice-speech-and-decision-packages-for-swift"&gt;AnyLanguageModel adds on‑device speech and decision packages for Swift
+&lt;/h1&gt;&lt;p&gt;Today the AnyLanguageModel project announced two new Swift packages — &lt;strong&gt;AnySpeechRecognizer&lt;/strong&gt; and &lt;strong&gt;AnyDecisionModel&lt;/strong&gt; — that extend its 1.x Swift API approach to speech transcription and decision‑making while keeping a familiar Apple‑style API.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AnySpeechRecognizer&lt;/strong&gt; implements Apple’s new SpeechAnalyzer API but lets you pick the underlying engine, including NVIDIA’s Parakeet and Alibaba’s Qwen3‑ASR running locally via Core ML.&lt;/li&gt;
+&lt;li&gt;It adds speaker diarization to track who is speaking when.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AnyDecisionModel&lt;/strong&gt; answers yes‑or‑no, multiple‑choice, and rating‑scale questions, returning typed results and probabilities derived from model logits rather than generated text.&lt;/li&gt;
+&lt;li&gt;Both packages can download open models from the Hugging Face Hub and run them entirely on‑device.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-anyspeechrecognizer"&gt;🗣️ AnySpeechRecognizer
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Mirrors Apple’s SpeechAnalyzer, SpeechTranscriber, DictationTranscriber, SpeechDetector, and AssetInventory components.&lt;/li&gt;
+&lt;li&gt;Uses Apple’s Speech framework as the default engine; swapping to a different engine only requires changing the import.&lt;/li&gt;
+&lt;li&gt;Supports file‑based and live audio input, volatile results, word timing, and confidence scores when the selected engine provides them.&lt;/li&gt;
+&lt;li&gt;Includes built‑in speaker diarization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-anydecisionmodel"&gt;🤖 AnyDecisionModel
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides typed answers (yes/no, multiple‑choice, rating‑scale) with associated probabilities.&lt;/li&gt;
+&lt;li&gt;Derives answers from model probabilities, not from text generation.&lt;/li&gt;
+&lt;li&gt;Runs on‑device with MLX, Core AI, llama.cpp, or a decision model from Jev or Ollama.&lt;/li&gt;
+&lt;li&gt;Can be integrated with the same Swift API style used for language and speech models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-model-options"&gt;📦 Model Options
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Size(s)&lt;/th&gt;
+&lt;th&gt;Languages / Dialects&lt;/th&gt;
+&lt;th&gt;Notable Traits&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Parakeet v3 (NVIDIA)&lt;/td&gt;
+&lt;td&gt;0.6 B&lt;/td&gt;
+&lt;td&gt;25 European languages (auto‑detect locale)&lt;/td&gt;
+&lt;td&gt;Runs on Core ML runtime, supports file &amp;amp; live input, volatile results, word timing, confidence&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Parakeet Ultra (Moondream)&lt;/td&gt;
+&lt;td&gt;0.6 B (post‑trained)&lt;/td&gt;
+&lt;td&gt;Same as v3&lt;/td&gt;
+&lt;td&gt;More accurate in most measurements&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Parakeet Unified (NVIDIA)&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;td&gt;English only&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen3‑ASR (Alibaba)&lt;/td&gt;
+&lt;td&gt;0.6 B, 1.7 B&lt;/td&gt;
+&lt;td&gt;30 languages + 22 Chinese dialects (Mandarin, Cantonese, Japanese, Korean)&lt;/td&gt;
+&lt;td&gt;Provides a single final result per ≤40 s segment, no volatile results, no word timing or confidence, runs on GPU, slower than Parakeet, better for file transcription&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;You create a &lt;strong&gt;SpeechAnalyzer&lt;/strong&gt; (or &lt;strong&gt;AnySpeechRecognizer&lt;/strong&gt;) and attach modules such as &lt;strong&gt;SpeechTranscriber&lt;/strong&gt; and &lt;strong&gt;SpeechDetector&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Provide an audio file or a stream of audio buffers; results are delivered via asynchronous sequences as they become available.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AssetInventory&lt;/strong&gt; handles model installation; downloads occur only when the app requests them.&lt;/li&gt;
+&lt;li&gt;Models are stored in the standard Hugging Face cache, allowing a macOS app outside the sandbox to share them with Python or other Hugging Face tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Packages are available as Swift packages; they depend on the 1.x releases of &lt;strong&gt;AnyLanguageModel&lt;/strong&gt; and &lt;strong&gt;swift‑huggingface&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Approximate download sizes (per model):
+&lt;ul&gt;
+&lt;li&gt;Parakeet variants: ~600 MB each + ~590 MB for the live encoder.&lt;/li&gt;
+&lt;li&gt;Qwen3‑ASR: 0.9 GB to 2.4 GB depending on model size.&lt;/li&gt;
+&lt;li&gt;Sortformer (used for speaker diarization): ~250 MB.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Once downloaded, models run entirely on‑device, with no ongoing cloud usage required.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/anylanguagemodel-1-0/banner.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/anylanguagemodel/banner.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Swift #SpeechRecognition #OnDeviceAI #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/anydecisionmodel" target="_blank" rel="noopener"
+&gt;Introducing AnySpeechRecognizer and AnyDecisionModel: Open Models for Speech and Decisions on Apple Platforms&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Word Duration Directly Cues Word Identity in Mandarin Homophones</title><link>https://shoubhikbanerjee.github.io/blog/p/word-duration-directly-cues-word-identity-in-mandarin-homophones/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/word-duration-directly-cues-word-identity-in-mandarin-homophones/</guid><description>&lt;h1 id="word-duration-directly-cues-word-identity-in-mandarin-homophones"&gt;Word Duration Directly Cues Word Identity in Mandarin Homophones
+&lt;/h1&gt;&lt;p&gt;A new study shows that listeners can use the length of a spoken word to identify it, even when other cues are unavailable.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The research investigates whether word‑level phonetic cues, specifically word duration, are stored in the mental lexicon and can influence spoken word recognition.&lt;/li&gt;
+&lt;li&gt;Across languages, including Mandarin Chinese, high‑frequency words tend to be shorter than low‑frequency words.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Researchers used a homophone ordering task with Mandarin Chinese, a language rich in disyllabic homophones.&lt;/li&gt;
+&lt;li&gt;Participants heard pairs of homophones that differed in lexical frequency and were asked to identify the order.&lt;/li&gt;
+&lt;li&gt;The only systematic difference between the stimuli was word duration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Participants reliably mapped the shorter‑duration auditory stimulus to the higher‑frequency word.&lt;/li&gt;
+&lt;li&gt;This mapping held even under high noise levels and when no other cues were available.&lt;/li&gt;
+&lt;li&gt;Results indicate that word duration can serve as a direct cue to word identity, suggesting it may be a phonetic detail incorporated into lexical representations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides evidence that the mental lexicon stores specific phonetic details (duration) that are functionally relevant for word recognition.&lt;/li&gt;
+&lt;li&gt;Supports a “direct cueing” account of how duration influences lexical access, alongside alternative explanations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Psycholinguistics #Mandarin #WordDuration #SpeechRecognition&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.30682v1" target="_blank" rel="noopener"
+&gt;Direct cueing of word identity through word duration: evidence from Mandarin homophones&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>IBM Updates Granite Speech Collection with New Multilingual and High-Speed Models</title><link>https://shoubhikbanerjee.github.io/blog/p/ibm-updates-granite-speech-collection-with-new-multilingual-and-high-speed-models/</link><pubDate>Wed, 21 Oct 2026 22:03:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ibm-updates-granite-speech-collection-with-new-multilingual-and-high-speed-models/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/653fb52cbfd890805461d691/M_JJyIOBOWVzHXdy7CVVG.png" alt="Featured image of post IBM Updates Granite Speech Collection with New Multilingual and High-Speed Models" /&gt;&lt;h1 id="ibm-updates-granite-speech-collection-with-new-multilingual-and-high-speed-models"&gt;IBM Updates Granite Speech Collection with New Multilingual and High-Speed Models
+&lt;/h1&gt;&lt;p&gt;IBM has announced three updates to its Granite Speech collection: a new speech-language model called granite-speech-5.0-2b, and revised versions of granite-speech-5.0-470m-turboctc and granite-speech-4.1-2b-plus. These models are designed to cover enterprise speech requirements, including high-accuracy transcription, translation, and long-form multi-speaker analysis.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Primary Use Case&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Key Attributes&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;granite-speech-5.0-2b&lt;/td&gt;
+&lt;td style="text-align: left"&gt;High-accuracy work&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2B parameters, multilingual transcription and translation, keyword biasing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;granite-speech-5.0-470m-turboctc&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Raw speed or edge use&lt;/td&gt;
+&lt;td style="text-align: left"&gt;470M parameters, 19,870 RTFx speed, native punctuation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;granite-speech-4.1-2b-plus&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Meetings and multi-speaker calls&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Speaker attribution, tighter timestamps, 24% lower long-form WER&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="granite-speech-50-2b"&gt;granite-speech-5.0-2b
+&lt;/h3&gt;&lt;p&gt;This model is the successor to granite-speech-4.1-2b and maintains the same parameter count. It was trained on 390,000 hours of public audio alongside synthetic data for Japanese ASR, translation, and keyword biasing.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multilingual Capabilities:&lt;/strong&gt; Transcribes English, French, German, Spanish, Portuguese, and Japanese. Translates to and from English for those languages, plus English to Italian and Mandarin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advanced Prompting:&lt;/strong&gt; Supports Language ID prompting and allows users to request formatted output; capitalization F1 ranges from 89.7 to 99.5 across test sets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Accuracy:&lt;/strong&gt; Features improved handling of noise, reverberation, and distant-microphone speech.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Keyword Biasing:&lt;/strong&gt; Supports lists of up to 2,000 terms to bias transcription toward product names and acronyms.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="granite-speech-50-470m-turboctc"&gt;granite-speech-5.0-470m-turboctc
+&lt;/h3&gt;&lt;p&gt;Formerly an English-only model, this 470M-parameter encoder is now optimized for speed and multilingual use.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multilingual Expansion:&lt;/strong&gt; Now supports English, Japanese, Spanish, German, French, Italian, and Portuguese.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance Gains:&lt;/strong&gt; The model is approximately 1.6x faster than its launch version, reaching 19,870 RTFx on the Open ASR Leaderboard by reusing a compiled Conformer block graph.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Edge Readiness:&lt;/strong&gt; Includes native punctuation and capitalization, and supports browser-based streaming via WebGPU.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="granite-speech-41-2b-plus"&gt;granite-speech-4.1-2b-plus
+&lt;/h3&gt;&lt;p&gt;This is a drop-in replacement for the original 4.1-2b model, utilizing the same architecture, API, and prompt format with improved weights for long-form enterprise recordings.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Speaker Attribution:&lt;/strong&gt; The word diarization error rate (WDER) and speaker-attributed WER (cpWER) both decreased by 7%.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Timing Precision:&lt;/strong&gt; The average timestamp shift (AAS) has been cut by more than half, improving captions and search.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Long-Speech Performance:&lt;/strong&gt; WER on long-form test sets decreased by 24%, while keyword biasing errors fell 45% when using 20-term lists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The models are released under the Apache 2.0 license and include support for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Transformers and vLLM&lt;/li&gt;
+&lt;li&gt;llama.cpp&lt;/li&gt;
+&lt;li&gt;mlx-audio for Apple Silicon&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/653fb52cbfd890805461d691/87yRtLq4X2CwMZrDhv0L_.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/662836b742709fe826510597/gltB0o--PV_Jh0D3aDm8-.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/65cc2c288ebd392213e58899/XHWV2L_wZsFe3ekksCgvQ.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#IBM #Granite #SpeechRecognition #MachineLearning #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/ibm-granite/granite-speech-5" target="_blank" rel="noopener"
+&gt;Granite Speech 5.0: Transcribe, Translate, and Attribute more Accurately and Faster&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Granite Switch 4.1 Unifies Chat, Decision‑Making and Speech on a Single Endpoint</title><link>https://shoubhikbanerjee.github.io/blog/p/granite-switch-4-1-unifies-chat-decisionmaking-and-speech-on-a-single-endpoint/</link><pubDate>Fri, 16 Oct 2026 22:06:38 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/granite-switch-4-1-unifies-chat-decisionmaking-and-speech-on-a-single-endpoint/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/662836b742709fe826510597/gltB0o--PV_Jh0D3aDm8-.png" alt="Featured image of post Granite Switch 4.1 Unifies Chat, Decision‑Making and Speech on a Single Endpoint" /&gt;&lt;h1 id="granite-switch-41-unifies-chat-decisionmaking-and-speech-on-a-single-endpoint"&gt;Granite Switch 4.1 Unifies Chat, Decision‑Making and Speech on a Single Endpoint
+&lt;/h1&gt;&lt;p&gt;Granite Switch 4.1 introduces a family of models that pack chat, decision‑making and speech transcription capabilities into a single endpoint while using roughly the same GPU memory as the base model alone.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;New model variants: &lt;strong&gt;Granite‑Switch‑4.1‑8B&lt;/strong&gt; and &lt;strong&gt;Granite‑Switch‑4.1‑30B&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Each variant bundles three activated LoRA (aLoRA) adapters:
+&lt;ul&gt;
+&lt;li&gt;a &lt;strong&gt;Decision aLoRA&lt;/strong&gt; for general‑purpose decision tasks (e.g., &lt;code&gt;v1/systemone&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;a &lt;strong&gt;Guardian aLoRA&lt;/strong&gt; that, on average, outperforms Jev 1.13, Microsoft‑Decision‑1, GPT‑Luna‑Decisions and Clef‑Flash on safety‑related decision tasks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Granite‑Speech‑5.0‑Turbo‑CTC&lt;/strong&gt;, the fastest ASR model on the OpenASR Leaderboard, used for transcription.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The combined model occupies approximately the same VRAM as the underlying base model, delivering “more capabilities with fewer GPUs.”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The adapters are built as &lt;strong&gt;cache‑efficient Activated LoRAs&lt;/strong&gt;. The KV cache generated by the base model during one generation can be reused for any subsequent adapter‑based request.&lt;/li&gt;
+&lt;li&gt;Recent &lt;strong&gt;vLLM&lt;/strong&gt; contributions accelerate low‑rank adapter inference.&lt;/li&gt;
+&lt;li&gt;A co‑located ASR encoder enables the model to &lt;strong&gt;switch&lt;/strong&gt; between chat, decision and spoken requests with “blazing fast speeds.”&lt;/li&gt;
+&lt;li&gt;An example Space – &lt;em&gt;Speech‑to‑Decisions&lt;/em&gt; – shows &lt;code&gt;granite-switch-4.1-8b&lt;/code&gt; transcribing audio, generating summaries, screening for harmful content and evaluating 15 user‑defined flags &lt;strong&gt;in real time on a single endpoint&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Size&lt;/th&gt;
+&lt;th&gt;Built‑in adapters&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Granite‑Switch‑4.1‑8B&lt;/td&gt;
+&lt;td&gt;8 B parameters&lt;/td&gt;
+&lt;td&gt;Decision aLoRA, Guardian aLoRA, Granite‑Speech‑5.0‑Turbo‑CTC&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Granite‑Switch‑4.1‑30B&lt;/td&gt;
+&lt;td&gt;30 B parameters&lt;/td&gt;
+&lt;td&gt;Decision aLoRA, Guardian aLoRA, Granite‑Speech‑5.0‑Turbo‑CTC&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: In a “race” against Jev‑27B (frozen Qwen base + 1 generic decision LoRA), &lt;strong&gt;Granite‑Switch‑4.1‑30B&lt;/strong&gt; completed a real‑world, 5‑step RAG workflow faster.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Custom use case&lt;/strong&gt;: A 3 B‑parameter Granite Switch model navigated the classic Doom game at &lt;strong&gt;60–100 decisions / second&lt;/strong&gt;, compared with Jev’s reported 10 decisions / second, and could also narrate and answer questions while playing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Granite Libraries&lt;/strong&gt; provide a repository of specialized adapters that can be mixed with the general‑purpose decision adapter at little extra cost because they share the base model’s KV cache.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The 8B and 30B models are released &lt;strong&gt;with “batteries included”&lt;/strong&gt;, i.e., pre‑compiled with a helpful set of adapters.&lt;/li&gt;
+&lt;li&gt;Users may compose their own Granite Switch models by mixing adapters from &lt;strong&gt;Granite Libraries&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;An &lt;strong&gt;Adapter SDK&lt;/strong&gt; for training adapters in Mellea, along with tutorials and support, is planned for future release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Consolidates three major AI functionalities—chat, decision‑making and speech—into one model, simplifying deployment and reducing hardware requirements.&lt;/li&gt;
+&lt;li&gt;Cache‑efficient design and vLLM acceleration make multi‑modal switching &lt;strong&gt;real‑time&lt;/strong&gt;, opening possibilities for interactive applications such as live transcription with instant safety screening.&lt;/li&gt;
+&lt;li&gt;The open‑adapter ecosystem encourages community extensions and custom task specialization without large memory overhead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/662836b742709fe826510597/LHBbw-MVVQgnYcpDK_DWC.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/65cc2c288ebd392213e58899/XHWV2L_wZsFe3ekksCgvQ.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#GraniteSwitch #AIAdapters #SpeechRecognition #DecisionModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/ibm-granite/granite-switch-4-1" target="_blank" rel="noopener"
+&gt;Granite Switch 4.1: Chat, Decisions, and Speech from One Endpoint&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Study Improves Child Speech Recognition While Preserving Adult ASR Performance</title><link>https://shoubhikbanerjee.github.io/blog/p/study-improves-child-speech-recognition-while-preserving-adult-asr-performance/</link><pubDate>Thu, 08 Oct 2026 22:04:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/study-improves-child-speech-recognition-while-preserving-adult-asr-performance/</guid><description>&lt;h1 id="study-improves-child-speech-recognition-while-preserving-adult-asr-performance"&gt;Study Improves Child Speech Recognition While Preserving Adult ASR Performance
+&lt;/h1&gt;&lt;p&gt;Researchers have released an empirical study on adapting automatic speech recognition (ASR) systems for child speech while retaining adult performance.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Standard ASR models work well for adult speech but often underperform for children and non‑native speakers.&lt;/li&gt;
+&lt;li&gt;Directly adapting adult models to child speech can cause &amp;ldquo;adult‑speech forgetting,&amp;rdquo; degrading performance on existing adult benchmarks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The study investigates &lt;strong&gt;child ASR adaptation with adult retention&lt;/strong&gt; across Arabic and English.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model families examined&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Encoder–decoder (e.g., Whisper)&lt;/li&gt;
+&lt;li&gt;Encoder–CTC&lt;/li&gt;
+&lt;li&gt;AudioLLM‑based ASR&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Adaptation strategies compared&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Full fine‑tuning&lt;/li&gt;
+&lt;li&gt;LoRA (low‑rank adaptation)&lt;/li&gt;
+&lt;li&gt;Post‑hoc weight‑space merging (LERP and TIES)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Datasets&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Arabic native child speech&lt;/li&gt;
+&lt;li&gt;Arabic non‑native child speech&lt;/li&gt;
+&lt;li&gt;English MyST child speech&lt;/li&gt;
+&lt;li&gt;Adult benchmarks: MGB‑2 (Arabic) and LibriSpeech test‑clean (English)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation metrics&lt;/strong&gt;: Word Error Rate (WER), Retention Index, Child Adaptation Gain, Adaptation Recovery.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-findings"&gt;⚙️ Key findings
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Child adaptation is &lt;strong&gt;necessary&lt;/strong&gt;, especially for non‑native Arabic and English child speech.&lt;/li&gt;
+&lt;li&gt;Direct adaptation often &lt;strong&gt;reduces adult ASR performance&lt;/strong&gt; on the adult benchmarks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bilingual adaptation&lt;/strong&gt; (training on both Arabic and English child data) yields a more &lt;strong&gt;stable trade‑off&lt;/strong&gt; than language‑specific adaptation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Weight‑space merging&lt;/strong&gt; improves the adaptation‑retention balance:
+&lt;ul&gt;
+&lt;li&gt;Most effective for encoder–CTC, Whisper, and AudioLLM models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LERP&lt;/strong&gt; favours adult retention.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TIES&lt;/strong&gt; recovers stronger child performance gains.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;For the encoder–decoder model, &lt;strong&gt;direct bilingual fine‑tuning&lt;/strong&gt; remains the strongest approach in raw WER.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-tradeoff-details"&gt;📊 Trade‑off details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Adaptation method&lt;/th&gt;
+&lt;th&gt;Effect on adult retention&lt;/th&gt;
+&lt;th&gt;Effect on child gain&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Full fine‑tuning&lt;/td&gt;
+&lt;td&gt;May cause adult forgetting&lt;/td&gt;
+&lt;td&gt;Improves child WER&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LoRA&lt;/td&gt;
+&lt;td&gt;Less adult impact than full fine‑tuning&lt;/td&gt;
+&lt;td&gt;Improves child WER&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Weight‑space merging (LERP)&lt;/td&gt;
+&lt;td&gt;Keeps adult performance higher&lt;/td&gt;
+&lt;td&gt;Moderate child gain&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Weight‑space merging (TIES)&lt;/td&gt;
+&lt;td&gt;Slight adult loss&lt;/td&gt;
+&lt;td&gt;Stronger child gain&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Code and pretrained models are released at the provided HTTPS URL (see the original paper).&lt;/li&gt;
+&lt;li&gt;The paper is titled &lt;strong&gt;&amp;ldquo;Child ASR Adaptation with Adult Retention: An Empirical Study&amp;rdquo;&lt;/strong&gt; and was submitted on 25 Sep 2026 (v1).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#ASR #ChildSpeech #ModelAdaptation #SpeechRecognition&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.08827v1" target="_blank" rel="noopener"
+&gt;Child ASR Adaptation with Adult Retention: An Empirical Study&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.08828v1" target="_blank" rel="noopener"
+&gt;When Forgetting Looks Like Improvement: Metric Masking in Streaming Diarizer Adaptation and the Price of Rehearsal&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.09321v1" target="_blank" rel="noopener"
+&gt;Dialect-Robust Speech Language Models with Synthetic Pseudo-Dialect Augmentation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

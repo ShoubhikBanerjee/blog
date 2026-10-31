@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Streaming on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/streaming/</link><description>Recent content in Streaming on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 23 Oct 2026 22:04:00 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/streaming/index.xml" rel="self" type="application/rss+xml"/><item><title>Streaming Text-to-Speech with Kokoro-82M Reduces Voice Agent Latency</title><link>https://shoubhikbanerjee.github.io/blog/p/streaming-text-to-speech-with-kokoro-82m-reduces-voice-agent-latency/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/streaming-text-to-speech-with-kokoro-82m-reduces-voice-agent-latency/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-featured-image.png" alt="Featured image of post Streaming Text-to-Speech with Kokoro-82M Reduces Voice Agent Latency" /&gt;&lt;h1 id="streaming-text-to-speech-with-kokoro-82m-reduces-voice-agent-latency"&gt;Streaming Text-to-Speech with Kokoro-82M Reduces Voice Agent Latency
+&lt;/h1&gt;&lt;p&gt;A customer asks an AI voice agent a question and waits. The agent already has an answer and is midway through generating a long, multi‑paragraph response, but the customer hears nothing for five seconds. By the time an answer arrives, the customer is frustrated, confused, and no longer paying attention. Text‑to‑speech integrations create exactly that gap: a one‑sentence response might generate in 600 ms, but the full response takes five seconds, and the integration waits for all of it before synthesis starts.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Problem: Silent gap between language generation and audio playback causes user frustration.&lt;/li&gt;
+&lt;li&gt;Solution: Stream each sentence to a hosted &lt;strong&gt;Kokoro‑82M&lt;/strong&gt; text‑to‑speech (TTS) model on Amazon SageMaker AI as soon as the agent produces it, so synthesis begins on sentence one instead of after the full response.&lt;/li&gt;
+&lt;li&gt;The approach also covers the transport needed to get audio back to a browser and the practical cost considerations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;The AI agent generates text sentence by sentence.&lt;/li&gt;
+&lt;li&gt;Each sentence is sent immediately to a SageMaker real‑time endpoint hosting the Kokoro‑82M model.&lt;/li&gt;
+&lt;li&gt;The TTS model synthesizes the audio for that sentence while the agent continues generating subsequent sentences.&lt;/li&gt;
+&lt;li&gt;Audio streams to the client browser as soon as it is ready, eliminating the initial silent gap.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model&lt;/strong&gt;: Kokoro‑82M has 82 million parameters, small enough to run cheaply on a single mid‑tier GPU instance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Endpoint&lt;/strong&gt;: Runs in a custom container on a SageMaker AI real‑time endpoint (ml.g5.xlarge GPU instance).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Container routes&lt;/strong&gt;:
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Route&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;POST /invocations&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Streams a response for one complete input&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;WS /invocations-bidirectional-stream&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Keeps one connection open across many messages in both directions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bidirectional transport&lt;/strong&gt; uses binary WebSocket frames; a typical Starlette &lt;code&gt;receive_text()&lt;/code&gt; handler fails because the message lacks a &lt;code&gt;text&lt;/code&gt; key, raising &lt;code&gt;KeyError('text')&lt;/code&gt;. A generic exception handler that forwards &lt;code&gt;str(e)&lt;/code&gt; masks the framing issue as a missing field error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure requirements&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;AWS account with permissions to create SageMaker AI endpoints and invoke Bedrock models.&lt;/li&gt;
+&lt;li&gt;IAM actions: &lt;code&gt;sagemaker:CreateEndpoint&lt;/code&gt;, &lt;code&gt;sagemaker:CreateEndpointConfig&lt;/code&gt;, &lt;code&gt;sagemaker:CreateModel&lt;/code&gt;, &lt;code&gt;sagemaker:InvokeEndpointWithBidirectionalStream&lt;/code&gt;, &lt;code&gt;bedrock:InvokeModelWithResponseStream&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Amazon ECR repository for the container image.&lt;/li&gt;
+&lt;li&gt;AWS CDK v2 (installed and bootstrapped), Python 3.12+, &lt;code&gt;uv&lt;/code&gt;, Docker, and Boto3 supporting &lt;code&gt;invoke_endpoint_with_bidirectional_stream&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The sample container pins an older PyTorch version with advisory &lt;strong&gt;PYSEC‑2026‑2286&lt;/strong&gt;; review and upgrade before any non‑proof‑of‑value use.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment-steps"&gt;🚀 Deployment steps
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;speech‑infra deploy&lt;/strong&gt; – provisions the Kokoro‑82M endpoint:
+&lt;ul&gt;
+&lt;li&gt;Creates foundation and model‑cache stacks that set up IAM roles and sync model weights to Amazon S3.&lt;/li&gt;
+&lt;li&gt;Builds the container image, creates the SageMaker AI model, endpoint configuration, and the endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;agent‑infra deploy&lt;/strong&gt; – provisions the Amazon Bedrock AgentCore runtime that hosts the Strands agent and calls the newly created endpoint (deploy the endpoint first).&lt;/li&gt;
+&lt;li&gt;Ensure the SageMaker AI real‑time endpoint’s Docker image declares &lt;code&gt;com.amazonaws.sagemaker.capabilities.bidirectional-streaming=true&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Use the provided CLI tools (wrapping AWS CDK stacks) to apply the infrastructure.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Latency&lt;/strong&gt;: Audio playback can start after the first sentence is generated (≈600 ms) instead of waiting for the full response (≈5 s).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: Kokoro‑82M runs on a single ml.g5.xlarge GPU, keeping inference cost low for a voice agent handling real traffic.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;User experience&lt;/strong&gt;: Removes the silent gap, keeping customers engaged and attentive.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reusable transport&lt;/strong&gt;: The blog also explains both HTTP and bidirectional WebSocket transports and their practical cost in a browser setting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ml-21706-edit-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AI #TextToSpeech #SageMaker #Streaming&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Stream low-latency speech from AI agents using Kokoro TTS on Amazon SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>IBM and Confluent launch stream-native time series foundation models</title><link>https://shoubhikbanerjee.github.io/blog/p/ibm-and-confluent-launch-stream-native-time-series-foundation-models/</link><pubDate>Wed, 02 Sep 2026 22:08:32 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ibm-and-confluent-launch-stream-native-time-series-foundation-models/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64e8143f6de557454220921e/1oB5vm47VNu42diDOsp0p.png" alt="Featured image of post IBM and Confluent launch stream-native time series foundation models" /&gt;&lt;h1 id="ibm-and-confluent-launch-stream-native-time-series-foundation-models"&gt;IBM and Confluent launch stream-native time series foundation models
+&lt;/h1&gt;&lt;p&gt;IBM and Confluent have introduced stream-native time series foundation models (TSFM) for real-time forecasting, anomaly detection, and optimization, integrated with Confluent’s data streaming platform.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Until now, time series forecasting and decision-making relied on bespoke models built one at a time, requiring months of expert work. Teams often covered gaps with safety margins, extra inventory, or post-facto adjustments, incurring recurring costs for decisions that couldn’t be forecasted.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;A time series foundation model generalizes across vast, varied signals. Given a window of measurements, it can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Forecast what comes next&lt;/li&gt;
+&lt;li&gt;Detect how far behavior sits from normal&lt;/li&gt;
+&lt;li&gt;Identify similar historical patterns&lt;/li&gt;
+&lt;li&gt;Recommend optimal settings for a target&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These models are designed to be used by domain experts—such as demand planners, fraud analysts, or process engineers—without requiring a data science team. IBM has built functions around the models to shift work left, delivering capabilities like forecasting, anomaly detection, optimization, and semantic intelligence as callable services rather than custom projects.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Capability&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Forecasting&lt;/td&gt;
+&lt;td&gt;Predicts future values in a time series (e.g., a tempering line’s output through a shift)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Anomaly detection&lt;/td&gt;
+&lt;td&gt;Scores current behavior against historical norms (e.g., detecting a slow drift in a chocolate line before defects occur)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Similarity search&lt;/td&gt;
+&lt;td&gt;Finds the closest historical match to current conditions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Optimization&lt;/td&gt;
+&lt;td&gt;Conditions on controllable settings and fine-tunes for accuracy&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The models run stream-native, hosted in Confluent Cloud and called from Apache Flink. Flink manages stateful operations (e.g., forecasting and detection) with fault tolerance, ensuring each model receives the necessary history without separate data stores or database calls per invocation.&lt;/p&gt;
+&lt;p&gt;Confluent’s platform continuously streams, connects, governs, and processes real-time data, enabling IBM Granite Time Series models to perform forecasting, anomaly detection, similarity search, classification, gap-filling, and optimization on live business signals.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Access to the models opens on Confluent Cloud on AWS. Confluent Platform will follow, bringing the same models and capabilities to on-premises and hybrid environments.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Every point of accuracy in forecasting or detection can be worth millions, with productivity gains reported at 5 to 10×. Work that previously required specialists can now be handled by domain experts. The integration of IBM Granite Time Series models with Confluent’s platform reduces the time and complexity of deploying models into production, unifying data and ML workflows for real-time processing.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64e8143f6de557454220921e/V5JlP6rnQZG8psqofXSf6.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64e8143f6de557454220921e/wlsMI5mra9TvaO7wA53CF.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AI #TimeSeries #Confluent #IBM #Streaming #FoundationModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/ibm-research/real-time-intelligence" target="_blank" rel="noopener"
+&gt;Real-Time Intelligence with IBM Time Series Models on Confluent&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
