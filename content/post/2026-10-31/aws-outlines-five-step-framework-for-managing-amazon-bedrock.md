@@ -2,7 +2,7 @@
 title: "AWS Outlines Five-Step Framework for Managing Amazon Bedrock Costs via IAM Attribution"
 slug: "aws-outlines-five-step-framework-for-managing-amazon-bedrock-costs-via-iam-attribution"
 description: "Cost management for generative AI is a shared responsibility between application development teams and those accountable for cloud spend. AWS has established a five-step framework to manage Amazon..."
-date: 2026-10-31T06:04:25+05:30
+date: 2026-10-31T12:02:07+05:30
 tags: [AmazonBedrock, FinOps, CloudSpend, GenerativeAI, AWS]
 categories: ["AI", "Generative AI", "Cloud Computing", "Financial Operations"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21654-featured-image.png"

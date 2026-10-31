@@ -2,7 +2,7 @@
 title: "Starbucks pilots AI‑driven personalized drive‑thru menus"
 slug: "starbucks-pilots-aidriven-personalized-drivethru-menus"
 description: "Starbucks announced that it will experiment with artificial‑intelligence tools to recognize customers as they arrive at its drive‑thrus and serve each car a personalized digital menu."
-date: 2026-10-31T06:04:25+05:30
+date: 2026-10-31T12:02:07+05:30
 tags: [Starbucks, AI, DriveThru, Personalization]
 categories: ["AI", "Artificial Intelligence", "Retail Technology", "Customer Experience"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/gettyimages-2268681559.jpg?quality=90&strip=all&crop=0%2C10.727816900681%2C100%2C78.544366198639&w=1200"

@@ -2,7 +2,7 @@
 title: "Google’s AI‑powered satellite sends first haiku from orbit"
 slug: "googles-aipowered-satellite-sends-first-haiku-from-orbit"
 description: "Google’s AI chip‑equipped satellite transmitted its first response from space – a haiku written by the on‑board Gemma 4 model."
-date: 2026-10-31T06:04:25+05:30
+date: 2026-10-31T12:02:07+05:30
 tags: [Google, AI, Satellites, TPU, ProjectSuncatcher]
 categories: ["AI", "Artificial Intelligence", "Space Technology", "Machine Learning", "Hardware"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/project-suncatcher-google.png?quality=90&strip=all&crop=0%2C1.4420367390612%2C100%2C97.115926521878&w=1200"

@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore adds Session Endpoints for secure in‑session app access"
 slug: "amazon-bedrock-agentcore-adds-session-endpoints-for-secure-insession-app-access"
 description: "Amazon Bedrock AgentCore now offers **Session Endpoints**, a way to open an application that runs inside an isolated agent session directly from a browser."
-date: 2026-10-31T06:04:25+05:30
+date: 2026-10-31T12:02:07+05:30
 tags: [AmazonBedrock, AIAgents, SessionEndpoints]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "AI Agents", "Developer Tools"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-22062-featured-image.png"

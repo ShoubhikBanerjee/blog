@@ -2,7 +2,7 @@
 title: "Worldwide Express Deploys Multi-Agent AI for LTL Billing Exception Automation"
 slug: "worldwide-express-deploys-multi-agent-ai-for-ltl-billing-exception-automation"
 description: "Worldwide Express, the $5 billion LTL freight arm of ShipStation Global, launched a multi‑agent AI solution built on Amazon Bedrock and Amazon EC2 that plugs into its SpeedShip transportation..."
-date: 2026-10-31T06:04:25+05:30
+date: 2026-10-31T12:02:07+05:30
 tags: [AI, Logistics, Automation, AWS]
 categories: ["AI", "Artificial Intelligence", "Logistics", "Enterprise Software", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-20953-featured-image.png"

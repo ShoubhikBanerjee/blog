@@ -2,7 +2,7 @@
 title: "NVIDIA releases Dynamo 1.4.2 with AICR‑packaged recipes for Kubernetes inference"
 slug: "nvidia-releases-dynamo-1-4-2-with-aicrpackaged-recipes-for-kubernetes-inference"
 description: "NVIDIA has updated its Dynamo distributed inference framework to version 1.4.2 and delivered it through the NVIDIA AI Cluster Runtime (AICR) as validated recipes that simplify deployment on..."
-date: 2026-10-31T06:04:25+05:30
+date: 2026-10-31T12:02:07+05:30
 tags: [NVIDIA, Dynamo, Kubernetes, AIInference]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Infrastructure", "Cloud Computing"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/inline-image-1-1-660x370.png"

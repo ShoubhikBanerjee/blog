@@ -2,7 +2,7 @@
 title: "Apple rolls out Apple Intelligence features to China with iOS 27.3"
 slug: "apple-rolls-out-apple-intelligence-features-to-china-with-ios-27-3"
 description: "Apple announced that its Apple Intelligence suite is coming to China with the upcoming iOS 27.3 release."
-date: 2026-10-31T06:04:25+05:30
+date: 2026-10-31T12:02:07+05:30
 tags: [AppleIntelligence, iOS27, ChinaAI]
 categories: ["AI", "Artificial Intelligence", "Mobile Operating Systems", "International Tech Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25699392/DSC08596_processed.jpg?quality=90&strip=all&crop=0%2C10.723165084465%2C100%2C78.55366983107&w=1200"
