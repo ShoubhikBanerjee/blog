@@ -2,7 +2,7 @@
 title: "Datasette Agent Auto-Detects Default LLM Model"
 slug: "datasette-agent-auto-detects-default-llm-model"
 description: "On 31st October 2026, the datasette‑llm plugin received a small user‑experience improvement that lets Datasette Agent automatically pick up the default model used by the underlying LLM."
-date: 2026-11-01T18:02:58+05:30
+date: 2026-11-01T22:01:19+05:30
 tags: [Datasette, LLM, AI, OpenSource, UX]
 categories: ["AI", "Artificial Intelligence", "Data Management", "Software Development"]
 author: "Shoubhik Banerjee"
