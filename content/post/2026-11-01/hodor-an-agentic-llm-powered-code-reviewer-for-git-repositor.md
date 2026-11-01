@@ -2,7 +2,7 @@
 title: "Hodor: An Agentic LLM‑Powered Code Reviewer for Git Repositories"
 slug: "hodor-an-agentic-llmpowered-code-reviewer-for-git-repositories"
 description: "A new AI tool called Hodor provides an agentic code reviewer that can be run on GitHub pull requests, GitLab merge requests, Gitea/Forgejo pull requests, and local diffs."
-date: 2026-11-01T06:02:40+05:30
+date: 2026-11-01T12:02:53+05:30
 tags: [AI, CodeReview, DevOps, LLM]
 categories: ["AI", "Artificial Intelligence", "Developer Tools", "Machine Learning", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/5689132?v=4"
