@@ -2,7 +2,7 @@
 title: "Awesome‑Kubernetes List Published as GitBook Release"
 slug: "awesomekubernetes-list-published-as-gitbook-release"
 description: "The community‑maintained Awesome‑Kubernetes repository has been packaged into a GitBook, allowing anyone to download and read the curated list as a book."
-date: 2026-11-01T12:02:53+05:30
+date: 2026-11-01T18:02:58+05:30
 tags: [Kubernetes, OpenSource, GitBook, Containers]
 categories: ["AI", "Cloud Computing", "Open Source Software", "Container Orchestration"]
 image: "https://avatars.githubusercontent.com/u/8342133?v=4"
