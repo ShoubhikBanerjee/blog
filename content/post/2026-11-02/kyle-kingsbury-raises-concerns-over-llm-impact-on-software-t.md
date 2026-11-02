@@ -2,7 +2,7 @@
 title: "Kyle Kingsbury Raises Concerns Over LLM Impact on Software Trust"
 slug: "kyle-kingsbury-raises-concerns-over-llm-impact-on-software-trust"
 description: "On 1st November 2026, Kyle Kingsbury addressed the impact of LLMs on documentation and software reliability in the Jepsen results for ParticleDB 1.1.4."
-date: 2026-11-02T06:03:10+05:30
+date: 2026-11-02T12:03:18+05:30
 tags: [LLMs, SoftwareEngineering, Jepsen, ParticleDB, Documentation]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Developer Tools"]
 author: "Shoubhik Banerjee"

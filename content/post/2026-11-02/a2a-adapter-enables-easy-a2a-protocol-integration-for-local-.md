@@ -2,7 +2,7 @@
 title: "a2a-adapter Enables Easy A2A Protocol Integration for Local AI Agents"
 slug: "a2a-adapter-enables-easy-a2a-protocol-integration-for-local-ai-agents"
 description: "The new **a2a-adapter** tool wraps existing agent CLIs, local agents, workflow engines, and Python agent frameworks behind the A2A (Agent-to-Agent) Protocol."
-date: 2026-11-02T06:03:10+05:30
+date: 2026-11-02T12:03:18+05:30
 tags: [A2A, AIAgents, Python, Tooling]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Software Development", "Tools"]
 image: "https://avatars.githubusercontent.com/u/186759928?v=4"
