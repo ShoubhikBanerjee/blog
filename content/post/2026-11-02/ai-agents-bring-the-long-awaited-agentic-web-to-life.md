@@ -2,7 +2,7 @@
 title: "AI agents bring the long‑awaited agentic web to life"
 slug: "ai-agents-bring-the-longawaited-agentic-web-to-life"
 description: "A new generation of AI‑driven software agents can now navigate the open web on their own, turning Tim Berners‑Lee’s early vision of autonomous‑web interactions into a practical reality."
-date: 2026-11-02T18:01:40+05:30
+date: 2026-11-02T22:02:19+05:30
 tags: [AIagents, AgenticWeb, LLM, OpenAI, SemanticWeb]
 categories: ["AI", "Artificial Intelligence", "Web Technology", "Machine Learning", "Internet Architecture"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/MAIN-top.jpg?resize=1200,600"

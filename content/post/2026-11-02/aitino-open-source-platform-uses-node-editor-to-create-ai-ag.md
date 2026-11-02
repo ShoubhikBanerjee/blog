@@ -2,7 +2,7 @@
 title: "Aitino Open-Source Platform Uses Node Editor to Create AI Agent Teams"
 slug: "aitino-open-source-platform-uses-node-editor-to-create-ai-agent-teams"
 description: "Aitino is an open-source platform designed for creating teams of AI Agents to automate high-level tasks and solve complex problems without lengthy and complicated setups."
-date: 2026-11-02T18:01:40+05:30
+date: 2026-11-02T22:02:19+05:30
 tags: [Aitino, AIAgents, OpenSource, Autogen, DeveloperTools]
 categories: ["AI", "AI Agents", "Open Source", "Developer Tools", "Workflow Automation"]
 image: "https://avatars.githubusercontent.com/u/120509511?v=4"

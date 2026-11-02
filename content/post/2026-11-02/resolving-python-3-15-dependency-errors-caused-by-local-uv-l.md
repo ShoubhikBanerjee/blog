@@ -2,7 +2,7 @@
 title: "Resolving Python 3.15 Dependency Errors Caused by Local uv.lock Files"
 slug: "resolving-python-3-15-dependency-errors-caused-by-local-uv-lock-files"
 description: "Switching to Python 3.15 can cause occasional dependency errors when local `uv.lock` files pin dependency versions that lack Python 3.15 wheels."
-date: 2026-11-02T18:01:40+05:30
+date: 2026-11-02T22:02:19+05:30
 tags: [Python, uv, PyO3, SoftwareDevelopment]
 categories: ["AI", "Python", "Software Development", "Package Management"]
 author: "Shoubhik Banerjee"
