@@ -2,7 +2,7 @@
 title: "NVIDIA Attribution Service Delivers Structured Failure Diagnosis for Distributed AI Workloads"
 slug: "nvidia-attribution-service-delivers-structured-failure-diagnosis-for-distributed-ai-workloads"
 description: "NVIDIA has updated its Attribution and Recovery software stack to give production‑grade, workload‑centric diagnosis and automated repair for distributed AI training jobs."
-date: 2026-11-03T18:02:05+05:30
+date: 2026-11-03T22:02:32+05:30
 tags: [NVIDIA, AIInfrastructure, FaultDiagnosis, DistributedTraining]
 categories: ["AI", "Artificial Intelligence", "Systems", "Machine Learning", "Infrastructure"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-1-660x370.jpg"

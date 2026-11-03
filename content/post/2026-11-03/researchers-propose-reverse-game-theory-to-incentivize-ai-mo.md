@@ -2,7 +2,7 @@
 title: "Researchers Propose Reverse Game Theory to Incentivize AI Model Alignment"
 slug: "researchers-propose-reverse-game-theory-to-incentivize-ai-model-alignment"
 description: "Alignment researchers are exploring 'reverse game theory,' also known as mechanism design, to control powerful AI models. This approach seeks to ensure agents are aligned with human desires by..."
-date: 2026-11-03T18:02:05+05:30
+date: 2026-11-03T22:02:32+05:30
 tags: [AIAlignment, MechanismDesign, GameTheory, AISafety, MachineLearning]
 categories: ["AI", "AI Safety", "Research", "Machine Learning"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/cake.jpg?resize=1200,600"

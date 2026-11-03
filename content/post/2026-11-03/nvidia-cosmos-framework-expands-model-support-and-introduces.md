@@ -2,7 +2,7 @@
 title: "NVIDIA Cosmos Framework Expands Model Support and Introduces Cosmos 3 Nano Simulation Recipes"
 slug: "nvidia-cosmos-framework-expands-model-support-and-introduces-cosmos-3-nano-simulation-recipes"
 description: "NVIDIA has updated its Cosmos platform, adding broader model compatibility, new training and inference skills, and Cosmos 3 Nano simulation recipes for robotics and autonomous‑driving scenarios."
-date: 2026-11-03T18:02:05+05:30
+date: 2026-11-03T22:02:32+05:30
 tags: [Cosmos, AI, Simulation, Robotics, NVIDIA]
 categories: ["AI", "Machine Learning", "AI Platforms", "Robotics", "Computer Vision"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/cosmos-framework-tech-blog-600x338-5784057.webp"

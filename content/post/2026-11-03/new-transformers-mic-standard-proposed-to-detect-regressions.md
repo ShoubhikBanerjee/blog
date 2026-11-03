@@ -2,7 +2,7 @@
 title: "New transformers-mic Standard Proposed to Detect Regressions Using Tiny Model Fixtures"
 slug: "new-transformers-mic-standard-proposed-to-detect-regressions-using-tiny-model-fixtures"
 description: "On July 30, 2026, an update to the Transformers library enabled PyTorch's scaled dot-product attention (SDPA) for T5, which unintentionally allowed UMT5's decoder to attend to future tokens during..."
-date: 2026-11-03T18:02:05+05:30
+date: 2026-11-03T22:02:32+05:30
 tags: [Transformers, PyTorch, MachineLearning, SoftwareTesting, OpenSource]
 categories: ["AI", "Machine Learning", "Software Development", "AI Infrastructure"]
 image: "https://huggingface.co/blog/assets/transformers-mic/mic-logo.png"

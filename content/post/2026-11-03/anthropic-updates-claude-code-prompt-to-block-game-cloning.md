@@ -2,7 +2,7 @@
 title: "Anthropic Updates Claude Code Prompt to Block Game Cloning"
 slug: "anthropic-updates-claude-code-prompt-to-block-game-cloning"
 description: "Anthropic has modified Claude Code’s system prompt to prevent the model from being used to recreate existing video games."
-date: 2026-11-03T18:02:05+05:30
+date: 2026-11-03T22:02:32+05:30
 tags: [Anthropic, ClaudeCode, AIethics, VideoGames]
 categories: ["AI", "Artificial Intelligence", "Generative AI", "Intellectual Property", "Gaming"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/01/STK269_ANTHROPIC_2_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

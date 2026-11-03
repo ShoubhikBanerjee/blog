@@ -2,7 +2,7 @@
 title: "New LLM Release Adds Model Features and Integrates AI-Assisted Fixes"
 slug: "new-llm-release-adds-model-features-and-integrates-ai-assisted-fixes"
 description: "A new release of the LLM CLI tool and Python library has been issued, bringing together around two months of accumulated features and fixes."
-date: 2026-11-03T18:02:05+05:30
+date: 2026-11-03T22:02:32+05:30
 tags: [LLM, Python, OpenSource, AI]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Open Source"]
 author: "Shoubhik Banerjee"
