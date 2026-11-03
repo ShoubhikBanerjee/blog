@@ -2,7 +2,7 @@
 title: "Analytics agents boost actionable insights to 48% but half remain ineffective"
 slug: "analytics-agents-boost-actionable-insights-to-48-but-half-remain-ineffective"
 description: "Generative AI has broadened enterprise analytics, and the next wave—agentic AI—aims to automate whole workflows and act on the insights they generate."
-date: 2026-11-03T12:01:52+05:30
+date: 2026-11-03T18:02:05+05:30
 tags: [AIAnalytics, AgenticAI, EnterpriseAI, DataGovernance]
 categories: ["AI", "Artificial Intelligence", "Data Analytics", "Enterprise Software", "Machine Learning"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/Snowflake-Social-Card-2026.png?resize=1200,600"

@@ -2,7 +2,7 @@
 title: "SeqKD Cuts Cost of Agentic Shopping Assistant While Preserving Quality"
 slug: "seqkd-cuts-cost-of-agentic-shopping-assistant-while-preserving-quality"
 description: "You built a shopping assistant on a frontier model, and it works. When a shopper asks for “a black waist bag under twenty dollars from a shop with at least 4.5 stars,” the agent searches the catalog,..."
-date: 2026-11-03T12:01:52+05:30
+date: 2026-11-03T18:02:05+05:30
 tags: [AI, KnowledgeDistillation, AgenticAI, ECommerce]
 categories: ["AI", "Machine Learning", "AI Agents", "Natural Language Processing", "E‑Commerce"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-22281-featured-image.png"

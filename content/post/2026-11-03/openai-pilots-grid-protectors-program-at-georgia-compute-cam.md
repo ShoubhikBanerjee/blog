@@ -2,7 +2,7 @@
 title: "OpenAI Pilots Grid Protectors Program at Georgia Compute Campus"
 slug: "openai-pilots-grid-protectors-program-at-georgia-compute-campus"
 description: "OpenAI announced it will pilot a 'Grid Protectors Program' at an upcoming data center in Effingham County, Georgia. The initiative aims to position its AI data centers—which the company now calls..."
-date: 2026-11-03T12:01:52+05:30
+date: 2026-11-03T18:02:05+05:30
 tags: [OpenAI, DataCenters, EnergyGrid, Stargate]
 categories: ["AI", "Artificial Intelligence", "Energy & Utilities", "Cloud Computing", "Public Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/08/STK155_OPEN_AI_4_CVirginia_A.png?quality=90&strip=all&crop=0%2C10.742221417566%2C100%2C78.515557164868&w=1200"

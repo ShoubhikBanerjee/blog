@@ -2,7 +2,7 @@
 title: "New York Times and Other Publishers Sue Brave Over AI Scraping and Paywall Bypass"
 slug: "new-york-times-and-other-publishers-sue-brave-over-ai-scraping-and-paywall-bypass"
 description: "Several major news organizations, including The New York Times, have filed lawsuits against Brave Software, the company behind the Brave web browser. The suits allege that Brave unlawfully scraped..."
-date: 2026-11-03T12:01:52+05:30
+date: 2026-11-03T18:02:05+05:30
 tags: [NYT, Brave, AI, Copyright, Legal]
 categories: ["AI", "Technology Law", "Artificial Intelligence", "Digital Media", "Intellectual Property"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2289911637.jpg?quality=90&strip=all&crop=0%2C10.232235952618%2C100%2C79.535528094764&w=1200"

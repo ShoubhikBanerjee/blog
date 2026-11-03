@@ -2,7 +2,7 @@
 title: "Multi‑Agent Engineering Assistant Automates Aerospace Part Substitution"
 slug: "multiagent-engineering-assistant-automates-aerospace-part-substitution"
 description: "An updated multi‑agent engineering assistant that cuts manual cross‑referencing for aerospace part substitution has been demonstrated using Amazon Bedrock AgentCore, Nova Multimodal Embeddings, and..."
-date: 2026-11-03T12:01:52+05:30
+date: 2026-11-03T18:02:05+05:30
 tags: [AWS, AIAgents, MultimodalAI, Aerospace]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Aerospace Engineering", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21854-featured-image.png"

@@ -2,7 +2,7 @@
 title: "Release of October Newsletter Covering Vibe Game Development and LLM Updates"
 slug: "release-of-october-newsletter-covering-vibe-game-development-and-llm-updates"
 description: "On 3rd November 2026, the October edition of the sponsors-only monthly newsletter was released. The update outlines recent progress in software development, including updates to large language models..."
-date: 2026-11-03T12:01:52+05:30
+date: 2026-11-03T18:02:05+05:30
 tags: [SoftwareDevelopment, LLM, VibeCoding]
 categories: ["AI", "Software Engineering", "Artificial Intelligence", "Game Development"]
 author: "Shoubhik Banerjee"

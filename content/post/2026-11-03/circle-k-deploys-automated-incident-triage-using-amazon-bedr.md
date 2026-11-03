@@ -2,7 +2,7 @@
 title: "Circle K Deploys Automated Incident Triage Using Amazon Bedrock"
 slug: "circle-k-deploys-automated-incident-triage-using-amazon-bedrock"
 description: "This post was co‑written with Marek Klatowicz, Cloud DevOps Engineer at Circle K."
-date: 2026-11-03T12:01:52+05:30
+date: 2026-11-03T18:02:05+05:30
 tags: [AI, IncidentTriage, AmazonBedrock, DevOps]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "DevOps", "Incident Management"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21514-featured-image.png"

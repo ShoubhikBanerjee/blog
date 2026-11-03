@@ -2,7 +2,7 @@
 title: "Vibe game development reaches recognized inflection point in October 2026"
 slug: "vibe-game-development-reaches-recognized-inflection-point-in-october-2026"
 description: "October 2026 saw a transition in vibe game development, moving from individual project releases to a broader industry inflection point. This trend was marked by new technical implementations in the..."
-date: 2026-11-03T12:01:52+05:30
+date: 2026-11-03T18:02:05+05:30
 tags: [VibeCoding, GameDev, RTS, AIdevelopment]
 categories: ["AI", "Artificial Intelligence", "Game Development", "Software Engineering"]
 author: "Shoubhik Banerjee"

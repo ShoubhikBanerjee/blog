@@ -2,7 +2,7 @@
 title: "Amazon Bedrock Knowledge Bases adds Crawl4AI‑driven scheduled web ingestion"
 slug: "amazon-bedrock-knowledge-bases-adds-crawl4aidriven-scheduled-web-ingestion"
 description: "Amazon Bedrock Knowledge Bases is the fully managed RAG capability of Amazon Bedrock."
-date: 2026-11-03T12:01:52+05:30
+date: 2026-11-03T18:02:05+05:30
 tags: [AmazonBedrock, RAG, Crawl4AI, ManagedKnowledgeBase, AWS]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21438-featured-image.png"

@@ -2,7 +2,7 @@
 title: "Trump Issues Executive Order Rebranding Artificial Intelligence to Super Intelligence"
 slug: "trump-issues-executive-order-rebranding-artificial-intelligence-to-super-intelligence"
 description: "President Trump has signed an executive order directing government agencies to rebrand 'artificial intelligence' as 'Super Intelligence.' This update, signed at the end of September, establishes..."
-date: 2026-11-03T12:01:52+05:30
+date: 2026-11-03T18:02:05+05:30
 tags: [SuperIntelligence, ExecutiveOrder, WhiteHouse, TechPolicy, SI]
 categories: ["AI", "Government Policy", "Artificial Intelligence", "Tech Industry"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/10/superai-trump.jpg?resize=1200,600"
