@@ -2,7 +2,7 @@
 title: "Steam review backlog grows as AI-generated game content slows approvals"
 slug: "steam-review-backlog-grows-as-ai-generated-game-content-slows-approvals"
 description: "Indie developers are reporting unusually long wait times for Steam store and page approvals, causing missed launch dates."
-date: 2026-11-04T06:03:46+05:30
+date: 2026-11-04T12:02:19+05:30
 tags: [Steam, GameDev, AIContent, IndieGames]
 categories: ["AI", "Game Development", "Digital Distribution", "Artificial Intelligence", "Industry News"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/ss_51fdf31162fecb3570ff97b0248b2706248e3281.1920x1080.jpg?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

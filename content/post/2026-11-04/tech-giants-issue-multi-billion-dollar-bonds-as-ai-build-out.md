@@ -2,7 +2,7 @@
 title: "Tech Giants Issue Multi‑Billion Dollar Bonds as AI Build‑Out Drives Debt Markets"
 slug: "tech-giants-issue-multibillion-dollar-bonds-as-ai-buildout-drives-debt-markets"
 description: "Large technology firms are tapping debt markets with multi‑billion‑dollar bond offerings to fund AI projects, while leading investors flag the scale of financing as a potential bubble risk."
-date: 2026-11-04T06:03:46+05:30
+date: 2026-11-04T12:02:19+05:30
 tags: [AIFinance, BondMarket, AIrisk]
 categories: ["AI", "Artificial Intelligence", "Finance", "Capital Markets", "Investment Management"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2302813651.jpg?quality=90&strip=all&crop=0%2C10.852336924521%2C100%2C78.295326150957&w=1200"

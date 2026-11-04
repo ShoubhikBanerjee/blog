@@ -2,7 +2,7 @@
 title: "Apple expands Siri AI to act across all third‑party iOS apps"
 slug: "apple-expands-siri-ai-to-act-across-all-thirdparty-ios-apps"
 description: "Apple announced that Siri AI can now perform actions across third‑party apps as part of the iOS 27.3 update."
-date: 2026-11-04T06:03:46+05:30
+date: 2026-11-04T12:02:19+05:30
 tags: [Apple, SiriAI, iOS, ThirdPartyApps, AI]
 categories: ["AI", "Artificial Intelligence", "Mobile Operating Systems", "Voice Assistants"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/07/Siri-AI-Being-invoked-6.jpg?quality=90&strip=all&crop=0%2C10.736302165243%2C100%2C78.527395669513&w=1200"

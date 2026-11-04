@@ -2,7 +2,7 @@
 title: "Open‑Weight Model Generates Design‑Language‑Consistent Slide Decks"
 slug: "openweight-model-generates-designlanguageconsistent-slide-decks"
 description: "Ask a frontier model for a slide deck and you'll get a good one. Ask for ten and they start to look alike: the same tasteful defaults, the same house style, a faint “AI‑generated deck” look. Frontier..."
-date: 2026-11-04T06:03:46+05:30
+date: 2026-11-04T12:02:19+05:30
 tags: [OpenSource, PresentationAI, FineTuning, DesignSystems]
 categories: ["AI", "Machine Learning", "Generative AI", "Productivity Tools"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/63890e3843d8b0797a0ad606/5pHD09UHuAK-6OyKGKimD.png"

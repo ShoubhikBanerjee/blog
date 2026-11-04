@@ -2,7 +2,7 @@
 title: "Apple Releases watchOS 27.3 Beta Featuring Siri Audio Intelligence"
 slug: "apple-releases-watchos-27-3-beta-featuring-siri-audio-intelligence"
 description: "Apple has introduced the watchOS 27.3 developer beta, which enables Siri to utilize the Apple Watch’s microphone for new Audio Intelligence features. This update includes Siri Recap and Live Rewind,..."
-date: 2026-11-04T06:03:46+05:30
+date: 2026-11-04T12:02:19+05:30
 tags: [AppleWatch, watchOS, Siri, AppleIntelligence]
 categories: ["AI", "Mobile Technology", "Artificial Intelligence", "Data Privacy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Siri-Recap-example.jpg?quality=90&strip=all&crop=0%2C26.334151505894%2C100%2C67.420228175335&w=1200"

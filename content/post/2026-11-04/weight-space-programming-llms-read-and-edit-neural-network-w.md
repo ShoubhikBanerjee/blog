@@ -2,7 +2,7 @@
 title: "Weight‑Space Programming: LLMs Read and Edit Neural Network Weights"
 slug: "weightspace-programming-llms-read-and-edit-neural-network-weights"
 description: "Yesterday’s hot paper *Sparks of Weight‑Space Programming: LLMs can natively read & write neural network weights* introduced a new capability called **Weight‑Space Programming**. The authors (Rikiya..."
-date: 2026-11-04T06:03:46+05:30
+date: 2026-11-04T12:02:19+05:30
 tags: [WeightSpace, LLM, NeuralNetworks, AIResearch]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Neural Networks"]
 author: "Shoubhik Banerjee"
