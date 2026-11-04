@@ -2,7 +2,7 @@
 title: "Amazon Quick adds unified conversational AI over structured and unstructured data"
 slug: "amazon-quick-adds-unified-conversational-ai-over-structured-and-unstructured-data"
 description: "Amazon Quick addresses this with a unified experience."
-date: 2026-11-04T18:01:54+05:30
+date: 2026-11-04T22:02:53+05:30
 tags: [AmazonQuick, ConversationalAI, DataIntegration]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Data Management", "Enterprise Software"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-22035-featured-image.png"

@@ -2,7 +2,7 @@
 title: "Google disables Search for K‑12 accounts that reject Gemini AI"
 slug: "google-disables-search-for-k12-accounts-that-reject-gemini-ai"
 description: "Google announced that any K‑12 school that opts out of its Gemini AI suite will lose access to Google Search. The policy applies automatically unless administrators explicitly enable the AI features."
-date: 2026-11-04T18:01:54+05:30
+date: 2026-11-04T22:02:53+05:30
 tags: [GoogleAI, Education, Search, Gemini]
 categories: ["AI", "Education Technology", "Artificial Intelligence", "Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/03/STK093_GOOGLE_A-1.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

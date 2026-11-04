@@ -2,7 +2,7 @@
 title: "Fake Hair Transplant Photos of Jeff Bezos and Jason Statham Debunked as AI Fakery"
 slug: "fake-hair-transplant-photos-of-jeff-bezos-and-jason-statham-debunked-as-ai-fakery"
 description: "Amazon founder Jeff Bezos and actor Jason Statham have a distinctive feature in common: They’re both famously bald, and that definitely hasn’t changed in the last few days."
-date: 2026-11-04T18:01:54+05:30
+date: 2026-11-04T22:02:53+05:30
 tags: [AIfakery, Deepfakes, MediaLiteracy]
 categories: ["AI", "Artificial Intelligence", "Digital Media", "Misinformation", "Verification"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Fake-Jeff-Bezos-Jason-Statham-hair-photo-edits.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Google Antigravity’s Cheminformatics Skills Speed Up Lung‑Cancer Drug Design"
 slug: "google-antigravitys-cheminformatics-skills-speed-up-lungcancer-drug-design"
 description: "Designing new medicines typically takes multiple days for a single iteration, requiring curating complex data from charts, figures and literature, training predictive models, and proposing candidate..."
-date: 2026-11-04T18:01:54+05:30
+date: 2026-11-04T22:02:53+05:30
 tags: [AI, Cheminformatics, DrugDiscovery, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Cheminformatics", "Drug Discovery", "Computational Chemistry"]
 image: "https://lh3.googleusercontent.com/UFTBrp1IrRBrc6_f4ibNgtV35iY8F2iTYaqOb1lzR-qZNy-Mb5726xrLKTozohfdZ_3quHe50uyn8z-Wh_Eril_8CVh7py7gH0188sl_EXkoJknlqg=w1200-h630-n-nu-rw"

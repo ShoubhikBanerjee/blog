@@ -2,7 +2,7 @@
 title: "OpenAI says ChatGPT handles 20% of Google’s search query volume"
 slug: "openai-says-chatgpt-handles-20-of-googles-search-query-volume"
 description: "In many circles, “Ask Chat” has replaced “Google it,” and that’s reflected in a new announcement from OpenAI: the volume of search queries run through ChatGPT now equals 20 percent of the volume run..."
-date: 2026-11-04T18:01:54+05:30
+date: 2026-11-04T22:02:53+05:30
 tags: [OpenAI, ChatGPT, Search, Ads, AI]
 categories: ["AI", "Artificial Intelligence", "Search Engines", "Business Models", "Technology Trends"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/STK155_OPEN_AI_CVirginia_C-1.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

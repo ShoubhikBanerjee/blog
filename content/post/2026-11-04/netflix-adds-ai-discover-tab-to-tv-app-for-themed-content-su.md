@@ -2,7 +2,7 @@
 title: "Netflix adds AI Discover tab to TV app for themed content suggestions"
 slug: "netflix-adds-ai-discover-tab-to-tv-app-for-themed-content-suggestions"
 description: "Netflix’s TV app is getting a new “AI Discover” tab where the company will show experimental, AI‑powered features to help you find new shows and movies to watch."
-date: 2026-11-04T18:01:54+05:30
+date: 2026-11-04T22:02:53+05:30
 tags: [Netflix, AI, Streaming, Recommendations]
 categories: ["AI", "Streaming Services", "Artificial Intelligence", "User Experience"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/AIDiscover-Product-02.jpg?quality=90&strip=all&crop=0%2C3.5340314136126%2C100%2C92.931937172775&w=1200"

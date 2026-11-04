@@ -2,7 +2,7 @@
 title: "Google’s AI‑Mode Search Boosts Queries but Slows Ad Revenue Growth"
 slug: "googles-aimode-search-boosts-queries-but-slows-ad-revenue-growth"
 description: "Google reported that search queries are growing at their fastest rate in five years, but the monetization of those queries is lagging as the company rolls out AI‑Mode."
-date: 2026-11-04T18:01:54+05:30
+date: 2026-11-04T22:02:53+05:30
 tags: [Google, AI, Advertising, Search]
 categories: ["AI", "Artificial Intelligence", "Digital Advertising", "Search Engines", "Business"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-106058340.jpg?quality=90&strip=all&crop=0%2C9.3445766662078%2C100%2C81.310846667584&w=1200"

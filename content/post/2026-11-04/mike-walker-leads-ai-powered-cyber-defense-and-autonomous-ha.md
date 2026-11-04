@@ -2,7 +2,7 @@
 title: "Mike Walker Leads AI‑Powered Cyber Defense and Autonomous Hacking Tournament"
 slug: "mike-walker-leads-aipowered-cyber-defense-and-autonomous-hacking-tournament"
 description: "Mike Walker, a research manager at Microsoft Research, is advancing the use of artificial intelligence in cybersecurity. In a Microsoft Research Podcast he discusses his work on autonomous AI systems..."
-date: 2026-11-04T18:01:54+05:30
+date: 2026-11-04T22:02:53+05:30
 tags: [AI, Cybersecurity, DARPA, MicrosoftResearch]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Research", "Distributed Systems"]
 image: "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/10/WeishungMike-MSRPod_TW_LI_FB_1920x1080-1.jpg"
