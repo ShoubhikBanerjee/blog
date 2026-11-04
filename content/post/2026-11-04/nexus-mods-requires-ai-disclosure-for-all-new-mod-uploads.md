@@ -2,7 +2,7 @@
 title: "Nexus Mods Requires AI Disclosure for All New Mod Uploads"
 slug: "nexus-mods-requires-ai-disclosure-for-all-new-mod-uploads"
 description: "Nexus Mods, the largest PC‑gaming mod repository, announced today that every newly uploaded mod must include a clear statement about whether artificial‑intelligence tools were used in its creation."
-date: 2026-11-04T12:02:19+05:30
+date: 2026-11-04T18:01:54+05:30
 tags: [NexusMods, AITransparency, GameModding]
 categories: ["AI", "Game Modding", "Artificial Intelligence", "Platform Policies"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK414_AI_CVIRGINIA_2_C-2.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

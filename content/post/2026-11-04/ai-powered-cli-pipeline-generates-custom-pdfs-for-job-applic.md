@@ -2,7 +2,7 @@
 title: "AI‑Powered CLI Pipeline Generates Custom PDFs for Job Applications"
 slug: "aipowered-cli-pipeline-generates-custom-pdfs-for-job-applications"
 description: "Um conjunto de agentes de IA (CrewAI + AWS Bedrock/Claude) lê a descrição de uma vaga e a base profissional da pessoa e gera currículos personalizados em PDF/LaTeX, em PT ou EN, sem inventar..."
-date: 2026-11-04T12:02:19+05:30
+date: 2026-11-04T18:01:54+05:30
 tags: [AIAgents, ResumeAutomation, CLI, CareerTech]
 categories: ["AI", "Artificial Intelligence", "Automation", "Career Development", "Software Tools"]
 image: "https://avatars.githubusercontent.com/u/141029718?v=4"

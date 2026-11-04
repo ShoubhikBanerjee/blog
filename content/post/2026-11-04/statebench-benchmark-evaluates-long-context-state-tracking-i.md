@@ -2,7 +2,7 @@
 title: "StateBench benchmark evaluates long‑context state tracking in language models"
 slug: "statebench-benchmark-evaluates-longcontext-state-tracking-in-language-models"
 description: "A new benchmark called StateBench has been introduced to measure how well language models keep track of information about entities in long documents as those entities evolve."
-date: 2026-11-04T12:02:19+05:30
+date: 2026-11-04T18:01:54+05:30
 tags: [StateBench, LongContext, AIbenchmarks]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Benchmarks", "AI Architecture"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/5g9HfQLFFaQE0fslWrxh0.png"

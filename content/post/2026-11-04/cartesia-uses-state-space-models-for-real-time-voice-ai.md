@@ -2,7 +2,7 @@
 title: "Cartesia Uses State Space Models for Real-Time Voice AI"
 slug: "cartesia-uses-state-space-models-for-real-time-voice-ai"
 description: "Cartesia, an AWS Partner specializing in real-time voice AI, uses purpose-built State Space Models (SSMs) and AWS infrastructure for its Sonic speech-generation and Ink transcription models, which..."
-date: 2026-11-04T12:02:19+05:30
+date: 2026-11-04T18:01:54+05:30
 tags: [VoiceAI, StateSpaceModels, TextToSpeech, SpeechToText]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Speech Technology", "AI Agents"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21700-featured-image.png"

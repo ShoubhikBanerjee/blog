@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore adds on‑behalf‑of token exchange for identity‑preserving API calls"
 slug: "amazon-bedrock-agentcore-adds-onbehalfof-token-exchange-for-identitypreserving-api-calls"
 description: "AI agents that interact with enterprise APIs must keep the calling user’s identity throughout the request chain. Without identity propagation, downstream services see the request as coming from the..."
-date: 2026-11-04T12:02:19+05:30
+date: 2026-11-04T18:01:54+05:30
 tags: [AmazonBedrock, AIAgents, OAuth, IdentityPropagation]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Security", "Enterprise Integration"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-21070-featured-image.png"

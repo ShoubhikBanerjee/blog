@@ -2,7 +2,7 @@
 title: "Kimi K3 Available on Amazon Bedrock with In‑Country India Inference and Cost‑Saving Features"
 slug: "kimi-k3-available-on-amazon-bedrock-with-incountry-india-inference-and-costsaving-features"
 description: "Moonshot AI’s Kimi K3 foundation model is now accessible through Amazon Bedrock with in‑country inference in India and new cost‑saving prompt‑caching."
-date: 2026-11-04T12:02:19+05:30
+date: 2026-11-04T18:01:54+05:30
 tags: [KimiK3, AmazonBedrock, AIInference, MultiModal]
 categories: ["AI", "Machine Learning", "Generative AI", "Cloud Computing", "Computer Vision"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-22220-featured-image.png"
