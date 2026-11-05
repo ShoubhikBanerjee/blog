@@ -2,7 +2,7 @@
 title: "Amazon Quick adds Smart Approvals for automated action review"
 slug: "amazon-quick-adds-smart-approvals-for-automated-action-review"
 description: "Smart Approvals in Amazon Quick addresses this challenge by reviewing eligible actions within your existing controls."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [AmazonQuick, SmartApprovals, AI, CloudTrail, Automation]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Security", "Enterprise Software"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22232-featured-image-1.png"

@@ -2,7 +2,7 @@
 title: "Banks Test LLM Harnesses for Compliance with EU‑style Rules"
 slug: "banks-test-llm-harnesses-for-compliance-with-eustyle-rules"
 description: "Banks are validating language models not in isolation but inside *harnesses*—software wrappers that choose what the model sees, which external tools it may call, and who reviews its actions. An..."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [AICompliance, BankingAI, LLMTesting]
 categories: ["AI", "Machine Learning", "AI Governance", "Financial Services", "Risk Management"]
 author: "Shoubhik Banerjee"

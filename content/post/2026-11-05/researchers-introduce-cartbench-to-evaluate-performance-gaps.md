@@ -2,7 +2,7 @@
 title: "Researchers Introduce CARTBench to Evaluate Performance Gaps in LLM Shopping Assistants"
 slug: "researchers-introduce-cartbench-to-evaluate-performance-gaps-in-llm-shopping-assistants"
 description: "While large language model (LLM) shopping assistants now recommend products through multi-turn conversations, reliable evaluation has faced obstacles including data scarcity and difficulty..."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [LLM, CARTBench, Ecommerce, ArtificialIntelligence, Benchmarking]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Evaluation"]
 author: "Shoubhik Banerjee"

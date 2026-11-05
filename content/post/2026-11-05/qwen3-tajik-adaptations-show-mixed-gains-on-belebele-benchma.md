@@ -2,7 +2,7 @@
 title: "Qwen3 Tajik Adaptations Show Mixed Gains on Belebele Benchmark"
 slug: "qwen3-tajik-adaptations-show-mixed-gains-on-belebele-benchmark"
 description: "We updated Qwen3 models with Tajik‑focused LoRA adapters, continued pretraining, and supervised fine‑tuning. The experiments lowered text loss across model sizes but produced limited and uneven..."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [Tajik, LoRA, Benchmark, AIResearch]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Benchmarking", "AI Development"]
 author: "Shoubhik Banerjee"

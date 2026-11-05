@@ -2,7 +2,7 @@
 title: "GlyphMind uses familiar scripts to unlock unseen languages without translation data"
 slug: "glyphmind-uses-familiar-scripts-to-unlock-unseen-languages-without-translation-data"
 description: "Researchers released an update on GlyphMind, a tokenizer‑free vision transformer that reads text as pixels and can show any sentence in any script. By transliterating unseen languages into scripts..."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [multilingualAI, tokenizerFree, lowResourceLanguages]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Computer Vision", "Multilingual Systems"]
 author: "Shoubhik Banerjee"

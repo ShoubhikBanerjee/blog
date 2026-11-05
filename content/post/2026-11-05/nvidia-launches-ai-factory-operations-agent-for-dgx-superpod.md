@@ -2,7 +2,7 @@
 title: "NVIDIA launches AI Factory Operations Agent for DGX SuperPOD automation"
 slug: "nvidia-launches-ai-factory-operations-agent-for-dgx-superpod-automation"
 description: "NVIDIA introduced the AI Factory Operations Agent to streamline internal DGX SuperPOD operations and reduce the manual effort required by NVIDIA SREs."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [NVIDIA, AIAgents, Kubernetes, Observability]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Infrastructure Operations", "Kubernetes"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image2-3-660x370.jpg"

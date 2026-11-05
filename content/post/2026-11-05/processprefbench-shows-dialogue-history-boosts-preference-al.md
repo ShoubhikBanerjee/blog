@@ -2,7 +2,7 @@
 title: "ProcessPrefBench Shows Dialogue History Boosts Preference Alignment but Increases Fabricated Evidence"
 slug: "processprefbench-shows-dialogue-history-boosts-preference-alignment-but-increases-fabricated-evidence"
 description: "In natural human‑AI dialogue, users' corrections, requests, and self‑descriptions provide reusable signals about how they want work to be done. ProcessPrefBench investigates whether a preference..."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [AIAlignment, DialogueSystems, Benchmark, ProcessPreferences]
 categories: ["AI", "Artificial Intelligence", "Human-Computer Interaction", "Machine Learning", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

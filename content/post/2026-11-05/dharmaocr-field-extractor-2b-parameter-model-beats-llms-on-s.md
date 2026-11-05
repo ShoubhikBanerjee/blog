@@ -2,7 +2,7 @@
 title: "DharmaOCR Field Extractor: 2B‑Parameter Model Beats LLMs on Structured Document Extraction"
 slug: "dharmaocr-field-extractor-2bparameter-model-beats-llms-on-structured-document-extraction"
 description: "A new 2‑billion‑parameter model called the **Field Extractor**, built on the DharmaOCR‑LITE v1.1 checkpoint, extracts exactly the fields you ask for from any document image and returns typed JSON. It..."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [OCR, DocumentAI, LLMComparison]
 categories: ["AI", "Machine Learning", "Computer Vision", "Natural Language Processing", "AI Applications"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6a725daa5ca641a21ab61956/c1ik58RednXjcqrx5s2Fo.png"

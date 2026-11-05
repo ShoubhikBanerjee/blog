@@ -2,7 +2,7 @@
 title: "Texas AI Data Center Boom Meets New Political and Regulatory Hurdles"
 slug: "texas-ai-data-center-boom-meets-new-political-and-regulatory-hurdles"
 description: "Texas has become the new epicenter of the AI data‑center build‑out, but recent election results and a governor‑directed permit halt are reshaping the landscape."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [AIDataCenters, TexasPolitics, Infrastructure]
 categories: ["AI", "Artificial Intelligence", "Data Centers", "Public Policy", "Energy Infrastructure"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/GettyImages-2303431102.jpg?resize=1200,600"

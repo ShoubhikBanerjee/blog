@@ -2,7 +2,7 @@
 title: "TandemBench Introduces Benchmark for Multi-Agent Decision Models"
 slug: "tandembench-introduces-benchmark-for-multi-agent-decision-models"
 description: "On 4 Nov 2026, a paper titled **TandemBench: Benchmarking Decision Models for Multi‑Agent Collaboration** was submitted to the Computer Science > Computation and Language category. The work presents..."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [AI, MultiAgent, DecisionModels, Benchmark]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Multi-Agent Systems", "Benchmarking"]
 author: "Shoubhik Banerjee"

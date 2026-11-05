@@ -2,7 +2,7 @@
 title: "Study Finds Limited Gains from Better Confidence in LLM‑Built Knowledge‑Graph Audits"
 slug: "study-finds-limited-gains-from-better-confidence-in-llmbuilt-knowledgegraph-audits"
 description: "Confidence estimates are used to steer human review of knowledge graphs constructed by large language models (LLMs), but this new work shows that higher‑quality confidence predictions do not..."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [knowledgegraphs, LLM, audit, confidence, NLP]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Knowledge Graphs", "AI Evaluation"]
 author: "Shoubhik Banerjee"

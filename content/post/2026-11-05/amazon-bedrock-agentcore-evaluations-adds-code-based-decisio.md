@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore Evaluations adds code‑based decision model support"
 slug: "amazon-bedrock-agentcore-evaluations-adds-codebased-decision-model-support"
 description: "Amazon Bedrock AgentCore Evaluations now lets you hook external decision‑model back‑ends through custom code‑based evaluators, enabling calibrated probability scores to be used alongside built‑in LLM..."
-date: 2026-11-05T12:04:51+05:30
+date: 2026-11-05T18:02:42+05:30
 tags: [AmazonBedrock, AgentCore, DecisionModels, LLMEvaluations]
 categories: ["AI", "Machine Learning", "AI Agents", "Evaluation", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22136-featured-image.png"
