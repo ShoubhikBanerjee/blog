@@ -2,7 +2,7 @@
 title: "Causal Study Reveals How Language Models Favor Certain Numbers"
 slug: "causal-study-reveals-how-language-models-favor-certain-numbers"
 description: "When a language model picks a number between 1 and 30, every integer is valid, yet the model can show a systematic preference. A new arXiv paper submitted on 4 Nov 2026 investigates where that..."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [numericalpreference, languagemodels, causalanalysis, interpretability]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Interpretability", "Computational Linguistics"]
 author: "Shoubhik Banerjee"

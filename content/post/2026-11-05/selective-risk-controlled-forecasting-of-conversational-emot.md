@@ -2,7 +2,7 @@
 title: "Selective, Risk‑Controlled Forecasting of Conversational Emotion Shifts"
 slug: "selective-riskcontrolled-forecasting-of-conversational-emotion-shifts"
 description: "A new paper submitted on 4 Nov 2026 introduces a reformulation of emotion forecasting in conversation, shifting focus from predicting the next emotional state to detecting departures from persistence..."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [EmotionForecasting, ConformalPrediction, ConversationAI]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Computational Linguistics", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

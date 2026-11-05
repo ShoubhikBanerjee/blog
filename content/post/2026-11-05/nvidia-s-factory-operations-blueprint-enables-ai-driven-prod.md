@@ -2,7 +2,7 @@
 title: "NVIDIA’s Factory Operations Blueprint Enables AI‑Driven Production Management"
 slug: "nvidias-factory-operations-blueprint-enables-aidriven-production-management"
 description: "NVIDIA released the Factory Operations Blueprint (FOX), a reference architecture that lets factories add a long‑running AI‑powered Factory Manager Agent to existing systems. Siemens demonstrated the..."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [AIAgents, ManufacturingAI, FactoryAutomation]
 categories: ["AI", "Artificial Intelligence", "Industrial Automation", "Digital Twin"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/FOC-Blueprint-660x370.png"

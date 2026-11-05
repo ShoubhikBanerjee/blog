@@ -2,7 +2,7 @@
 title: "Phonon: Open‑source On‑device Text‑to‑Speech Model Released"
 slug: "phonon-opensource-ondevice-texttospeech-model-released"
 description: "Two weeks ago, we opened up Phonon, our small text‑to‑speech model that runs on your own device."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [TextToSpeech, OnDeviceAI, OpenSource, EdgeComputing]
 categories: ["AI", "Machine Learning", "Speech Synthesis", "Open Source Software", "Edge Computing"]
 image: "https://huggingface.co/blog/assets/phonon-closer-look/thumbnail.png"

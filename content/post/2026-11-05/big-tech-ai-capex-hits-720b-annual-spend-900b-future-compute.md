@@ -2,7 +2,7 @@
 title: "Big Tech AI CapEx Hits $720B Annual Spend, $900B Future Compute"
 slug: "big-tech-ai-capex-hits-720b-annual-spend-900b-future-compute"
 description: "Amazon, Microsoft, Alphabet, and Meta announced they will collectively spend at least $720 billion on capital expenditures this year, adding to more than $1 trillion of spending commitments arranged..."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [AI, CapEx, DataCenters, BigTech]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Corporate Finance", "Data Centers"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/STKS528_DATA_CENTERS2_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

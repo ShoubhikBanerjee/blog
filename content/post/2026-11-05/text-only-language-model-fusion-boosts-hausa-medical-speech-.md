@@ -2,7 +2,7 @@
 title: "Text‑Only Language‑Model Fusion Boosts Hausa Medical Speech Recognition"
 slug: "textonly-languagemodel-fusion-boosts-hausa-medical-speech-recognition"
 description: "Automatic speech recognition (ASR) systems often struggle with specialised medical vocabulary, especially in low‑resource languages where domain‑specific speech data are scarce. A new study released..."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [ASR, LowResource, MedicalAI, Hausa]
 categories: ["AI", "Machine Learning", "Speech Recognition", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

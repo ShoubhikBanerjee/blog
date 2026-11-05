@@ -2,7 +2,7 @@
 title: "Language Models Assist in Detecting Joint Constraint Families for Dantzig‑Wolfe Reformulations"
 slug: "language-models-assist-in-detecting-joint-constraint-families-for-dantzigwolfe-reformulations"
 description: "A new study investigates whether large language models can predict which families of constraints need to be added together to strengthen mixed‑integer program relaxations."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [MIP, LanguageModels, Optimization]
 categories: ["AI", "Machine Learning", "Optimization", "Operations Research", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

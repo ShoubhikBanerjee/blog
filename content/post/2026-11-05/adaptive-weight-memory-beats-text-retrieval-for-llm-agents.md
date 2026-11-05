@@ -2,7 +2,7 @@
 title: "Adaptive Weight Memory Beats Text Retrieval for LLM Agents"
 slug: "adaptive-weight-memory-beats-text-retrieval-for-llm-agents"
 description: "A new paper titled **'Route to Remember: Adaptive Memory Selection for LLM Agents'** (submitted on 3 Nov 2026, Computer Science > Artificial Intelligence) demonstrates that a weight‑memory approach..."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [LLM, WeightMemory, AIAgents, SelfDistillation]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "AI Agents", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

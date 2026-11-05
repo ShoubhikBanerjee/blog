@@ -2,7 +2,7 @@
 title: "Robust Algorithmic Recourse Proposed for Predictive Multiplicity via ORPM"
 slug: "robust-algorithmic-recourse-proposed-for-predictive-multiplicity-via-orpm"
 description: "Algorithmic recourse seeks modifications that turn an unfavorable model prediction into a favorable one. However, **predictive multiplicity**—the existence of multiple similarly‑performing models..."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [algorithmicrecourse, predictivemultiplicity, machinelearning]
 categories: ["AI", "Machine Learning", "Algorithmic Fairness", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

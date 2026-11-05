@@ -2,7 +2,7 @@
 title: "Study Finds Limited Authorship Impersonation by Leading LLMs, Highlights Copying Risks"
 slug: "study-finds-limited-authorship-impersonation-by-leading-llms-highlights-copying-risks"
 description: "A new arXiv study evaluated how well six widely used large language models can impersonate a target author when generating short product‑review texts. The results show that genuine stylistic mimicry..."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [LLM, AuthorshipImpersonation, ForensicAI]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Ethics", "Forensic Analysis"]
 author: "Shoubhik Banerjee"

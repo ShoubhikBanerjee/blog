@@ -2,7 +2,7 @@
 title: "Inference-Time Expert Deactivation Performance Linked to Training-Time Weight Rule Alignment"
 slug: "inference-time-expert-deactivation-performance-linked-to-training-time-weight-rule-alignment"
 description: "A study submitted on November 4, 2026, investigates how deactivating experts at inference time in Mixture of Experts (MoE) models affects token routing and expert weights. The research highlights..."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [MixtureOfExperts, AIResearch, MachineLearning, ModelInference, OLMoE]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Model Optimization"]
 author: "Shoubhik Banerjee"

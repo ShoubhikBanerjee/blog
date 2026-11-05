@@ -2,7 +2,7 @@
 title: "NTCIR‑19 Introduces SciClaimEval Task for Scientific Claim Verification"
 slug: "ntcir19-introduces-sciclaimeval-task-for-scientific-claim-verification"
 description: "A new pilot task, **SciClaimEval**, was launched at NTCIR‑19 to assess how well AI systems can verify scientific claims using the tables and figures from the papers where the claims appear."
-date: 2026-11-05T18:02:42+05:30
+date: 2026-11-05T22:04:09+05:30
 tags: [SciClaimEval, NTCIR19, MultimodalLLM, ClaimVerification]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "Information Retrieval"]
 author: "Shoubhik Banerjee"
