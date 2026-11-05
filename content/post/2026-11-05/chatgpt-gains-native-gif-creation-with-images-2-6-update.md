@@ -2,7 +2,7 @@
 title: "ChatGPT gains native GIF creation with Images 2.6 update"
 slug: "chatgpt-gains-native-gif-creation-with-images-2-6-update"
 description: "OpenAI has rolled out an update to ChatGPT that adds native animated GIF generation."
-date: 2026-11-05T06:03:43+05:30
+date: 2026-11-05T12:04:51+05:30
 tags: [OpenAI, ChatGPT, GIF, ImageGeneration]
 categories: ["AI", "Machine Learning", "Computer Vision", "Generative AI", "Natural Language Processing"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/03/STK155_OPEN_AI_CVirginia__C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Qualcomm pivots to AI data‑center chips as smartphone sales slump"
 slug: "qualcomm-pivots-to-ai-datacenter-chips-as-smartphone-sales-slump"
 description: "Qualcomm announced a shift toward AI data‑center chips to offset a roughly 20 % decline in smartphone sales compared with 2025."
-date: 2026-11-05T06:03:43+05:30
+date: 2026-11-05T12:04:51+05:30
 tags: [Qualcomm, AI, DataCenters, Smartphones]
 categories: ["AI", "Semiconductors", "Artificial Intelligence", "Data Centers", "Business Strategy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24007992/acastro_STK082_qualcomm_02.jpg?quality=90&strip=all&crop=0%2C0%2C100%2C78.534031413613&w=1200"

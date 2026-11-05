@@ -2,7 +2,7 @@
 title: "Amazon Bee Frontier AI wearable records, summarizes and confuses reality"
 slug: "amazon-bee-frontier-ai-wearable-records-summarizes-and-confuses-reality"
 description: "A user recounts their experience with the Amazon Bee Frontier, an always‑recording AI wearable that listens to conversations, transcribes them, and provides context‑aware suggestions."
-date: 2026-11-05T06:03:43+05:30
+date: 2026-11-05T12:04:51+05:30
 tags: [AIWearables, Privacy, HumanComputerInteraction]
 categories: ["AI", "Artificial Intelligence", "Wearable Technology", "Human-Computer Interaction", "Privacy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/268817_Bee_Frontier_AKrales_0098.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

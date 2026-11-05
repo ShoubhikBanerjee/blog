@@ -2,7 +2,7 @@
 title: "Qwen 3.8 27B Runs Locally on a Laptop, Interpreting Model Weights"
 slug: "qwen-3-8-27b-runs-locally-on-a-laptop-interpreting-model-weights"
 description: "A new update shows that the Qwen 3.8 27B large language model can be run on a typical laptop and is capable of interpreting its own model weights."
-date: 2026-11-05T06:03:43+05:30
+date: 2026-11-05T12:04:51+05:30
 tags: [Qwen, LocalLLM, ModelWeights]
 categories: ["AI", "Machine Learning", "Large Language Models", "AI Infrastructure"]
 author: "Shoubhik Banerjee"

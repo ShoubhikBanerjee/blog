@@ -2,7 +2,7 @@
 title: "NVIDIA CUDA 13.5 Features Vera Rubin Support and Enhanced Multi-Process Service"
 slug: "nvidia-cuda-13-5-features-vera-rubin-support-and-enhanced-multi-process-service"
 description: "NVIDIA CUDA 13.5 has reached general availability, bringing the NVIDIA Vera Rubin architecture to enterprise production. This update provides new platform support, including Windows on Arm for DGX..."
-date: 2026-11-05T06:03:43+05:30
+date: 2026-11-05T12:04:51+05:30
 tags: [CUDA, NVIDIA, VeraRubin, MPS, GPU]
 categories: ["AI", "Software Development", "Parallel Computing", "Enterprise Infrastructure"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image1-16-660x370.png"

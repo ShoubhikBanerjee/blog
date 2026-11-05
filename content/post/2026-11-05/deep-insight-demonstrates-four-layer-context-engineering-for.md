@@ -2,7 +2,7 @@
 title: "Deep Insight Demonstrates Four‑Layer Context Engineering for Production AI Agents"
 slug: "deep-insight-demonstrates-fourlayer-context-engineering-for-production-ai-agents"
 description: "Production AI agents that handle tasks such as data analysis and report generation can hit a major bottleneck: managing the limited context window of the underlying LLM. Even with Anthropic..."
-date: 2026-11-05T06:03:43+05:30
+date: 2026-11-05T12:04:51+05:30
 tags: [AIAgents, ContextEngineering, Anthropic, AmazonBedrock, OpenSource]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Engineering", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21082-featured-image.png"

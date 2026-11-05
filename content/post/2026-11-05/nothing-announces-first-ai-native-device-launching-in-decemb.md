@@ -2,7 +2,7 @@
 title: "Nothing announces first AI‑native device launching in December"
 slug: "nothing-announces-first-ainative-device-launching-in-december"
 description: "Carl Pei, the CEO of Nothing, used his X post to confirm that the company’s first AI‑native device will ship next month, in December.  The announcement follows earlier statements about “AI‑native”..."
-date: 2026-11-05T06:03:43+05:30
+date: 2026-11-05T12:04:51+05:30
 tags: [Nothing, AIdevice, CarlPei]
 categories: ["AI", "Artificial Intelligence", "Consumer Electronics", "Hardware", "Tech Industry"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/03/nothing-phone-4a-2.jpg?quality=90&strip=all&crop=0%2C10.741906587151%2C100%2C78.516186825698&w=1200"

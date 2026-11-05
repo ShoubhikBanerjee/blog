@@ -2,7 +2,7 @@
 title: "AT&T Integrates Gemini AI Into Connected Life Home Security System"
 slug: "at-t-integrates-gemini-ai-into-connected-life-home-security-system"
 description: "AT&T has integrated its Connected Life smart home security system with Gemini for Home, making it the first home security product to support Google Home Premium. This update enables a suite of..."
-date: 2026-11-05T06:03:43+05:30
+date: 2026-11-05T12:04:51+05:30
 tags: [ATT, Gemini, SmartHome, HomeSecurity, GoogleHome]
 categories: ["AI", "Smart Home", "Artificial Intelligence", "Consumer Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/att-connected-life.webp?quality=90&strip=all&crop=0,12.378907107251,100,75.242185785497"
