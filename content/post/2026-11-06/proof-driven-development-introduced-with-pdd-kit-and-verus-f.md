@@ -2,7 +2,7 @@
 title: "Proof‑Driven Development introduced with PDD Kit and Verus for Rust"
 slug: "proofdriven-development-introduced-with-pdd-kit-and-verus-for-rust"
 description: "Proof‑Driven Development (PDD) arrives as a new software‑development paradigm supported by **PDD Kit**.  The toolkit helps teams turn their intent into formal specifications, automatically proves the..."
-date: 2026-11-06T06:03:11+05:30
+date: 2026-11-06T12:11:11+05:30
 tags: [ProofDrivenDevelopment, FormalVerification, AIcodingAgents, Rust]
 categories: ["AI", "Software Engineering", "Artificial Intelligence", "Formal Methods", "Programming Languages"]
 image: "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/10/PDDKitRecap-TWLIFB-1200x627-1.jpg"

@@ -2,7 +2,7 @@
 title: "Google launches Gemini Omni 1.2 Flash with 15‑second native video and lower price"
 slug: "google-launches-gemini-omni-1-2-flash-with-15second-native-video-and-lower-price"
 description: "Today, Google is rolling out Gemini Omni 1.2 Flash and making it generally available across the Gemini API and Gemini for business."
-date: 2026-11-06T06:03:11+05:30
+date: 2026-11-06T12:11:11+05:30
 tags: [GeminiOmni, VideoAI, GoogleAI, GenerativeMedia]
 categories: ["AI", "Artificial Intelligence", "Generative Media", "Cloud Computing", "Computer Vision"]
 image: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini-omni-1.2_FZLql41.width-1300.png"

@@ -2,7 +2,7 @@
 title: "Airbnb to Launch AI‑Native Travel Agent in Early 2027"
 slug: "airbnb-to-launch-ainative-travel-agent-in-early-2027"
 description: "Airbnb announced that it will roll out an AI‑native travel‑agent experience in the first half of 2027, according to its Q3 2026 earnings shareholder letter."
-date: 2026-11-06T06:03:11+05:30
+date: 2026-11-06T12:11:11+05:30
 tags: [Airbnb, AITravel, AIagents, TravelTech]
 categories: ["AI", "Artificial Intelligence", "Travel Technology", "AI Agents", "Consumer Platforms"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/04/acastro_STK090_06.jpg?quality=90&strip=all&crop=0%2C10.761835884455%2C100%2C78.47632823109&w=1200"

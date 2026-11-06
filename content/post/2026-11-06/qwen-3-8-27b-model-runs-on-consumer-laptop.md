@@ -2,7 +2,7 @@
 title: "Qwen 3.8 27B Model Runs on Consumer Laptop"
 slug: "qwen-3-8-27b-model-runs-on-consumer-laptop"
 description: "On 3 November 2026 a user reported that the Qwen 3.8 27B model can interpret its own weights on a standard laptop."
-date: 2026-11-06T06:03:11+05:30
+date: 2026-11-06T12:11:11+05:30
 tags: [Qwen, EdgeAI, LargeLanguageModel]
 categories: ["AI", "Machine Learning", "Large Language Models", "Edge Computing"]
 author: "Shoubhik Banerjee"

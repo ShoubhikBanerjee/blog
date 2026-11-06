@@ -2,7 +2,7 @@
 title: "NVIDIA DSX AI Factory Platform adds open‑source tools for reliable GPU‑Kubernetes clusters"
 slug: "nvidia-dsx-ai-factory-platform-adds-opensource-tools-for-reliable-gpukubernetes-clusters"
 description: "One underperforming GPU can slow an entire distributed training job, so measuring **goodput** – the volume of work successfully completed – is a more useful way to gauge cluster efficiency. NVIDIA’s..."
-date: 2026-11-06T06:03:11+05:30
+date: 2026-11-06T12:11:11+05:30
 tags: [NVIDIA, Kubernetes, AIInfrastructure, GPUClusters]
 categories: ["AI", "Machine Learning", "Infrastructure", "Open Source", "Kubernetes"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/dsx-os-cluster-readiness-featured-660x370.png"

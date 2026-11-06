@@ -2,7 +2,7 @@
 title: "Perplexity launches always‑on “Teammates” AI agents for workplace collaboration"
 slug: "perplexity-launches-alwayson-teammates-ai-agents-for-workplace-collaboration"
 description: "Perplexity is taking on OpenAI and Anthropic with its own work‑focused AI agents."
-date: 2026-11-06T06:03:11+05:30
+date: 2026-11-06T12:11:11+05:30
 tags: [Perplexity, AIAgents, Productivity, EnterpriseAI]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Productivity Tools", "Enterprise Software"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25472503/STK271_PERPLEXITY_C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

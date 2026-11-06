@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore adds General Availability of Web Answer tool"
 slug: "amazon-bedrock-agentcore-adds-general-availability-of-web-answer-tool"
 description: "Today Amazon announced the general availability of Web Answer on Amazon Bedrock AgentCore."
-date: 2026-11-06T06:03:11+05:30
+date: 2026-11-06T12:11:11+05:30
 tags: [AmazonBedrock, WebAnswer, AIAgents]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22248-featured-image.png"
