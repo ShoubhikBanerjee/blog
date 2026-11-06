@@ -2,7 +2,7 @@
 title: "FlashOffloading Boosts LLM Serving Throughput by Offloading KV Cache to Host DRAM"
 slug: "flashoffloading-boosts-llm-serving-throughput-by-offloading-kv-cache-to-host-dram"
 description: "FlashOffloading is a new host‑DRAM‑centric inference architecture that fully offloads the key‑value (KV) cache in large language model (LLM) serving, delivering higher throughput while meeting a..."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [LLM, Inference, KVCache, DRAM]
 categories: ["AI", "Machine Learning", "Systems Engineering", "Artificial Intelligence", "Hardware Acceleration"]
 author: "Shoubhik Banerjee"

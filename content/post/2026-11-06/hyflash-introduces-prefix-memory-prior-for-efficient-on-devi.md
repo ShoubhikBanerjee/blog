@@ -2,7 +2,7 @@
 title: "HyFlash introduces prefix-memory prior for efficient on-device speculative decoding"
 slug: "hyflash-introduces-prefix-memory-prior-for-efficient-on-device-speculative-decoding"
 description: "A new technique named HyFlash was submitted on 5 Nov 2026 to address memory constraints in on‑device speculative decoding of language models."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [SpeculativeDecoding, OnDeviceAI, MemoryEfficient, LanguageModels]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Computer Systems"]
 author: "Shoubhik Banerjee"

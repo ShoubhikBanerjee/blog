@@ -2,7 +2,7 @@
 title: "Speed and Accuracy of PII Redaction Methods for LLM Pipelines"
 slug: "speed-and-accuracy-of-pii-redaction-methods-for-llm-pipelines"
 description: "Enterprises are increasingly sending free‑text inputs that contain personally identifiable information (PII) – names, phone numbers, email addresses, home addresses and dates of birth – to large..."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [PII, LLM, Redaction, Privacy]
 categories: ["AI", "Machine Learning", "Data Privacy", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

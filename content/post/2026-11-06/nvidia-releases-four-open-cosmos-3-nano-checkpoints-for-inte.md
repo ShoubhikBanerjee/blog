@@ -2,7 +2,7 @@
 title: "NVIDIA Releases Four Open Cosmos 3‑Nano Checkpoints for Interactive World Simulation"
 slug: "nvidia-releases-four-open-cosmos-3nano-checkpoints-for-interactive-world-simulation"
 description: "NVIDIA has added four open‑weight checkpoints to its Cosmos 3 model family, enabling interactive world simulation and multi‑sensor, multi‑view driving scene generation."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [NVIDIA, WorldSimulation, OpenModels, AI, LiDAR]
 categories: ["AI", "Machine Learning", "Computer Vision", "Robotics", "Simulation"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/677c471f8b4c4e271e57eaa5/rtmGVvFdD6JqkjBc26vsp.png"

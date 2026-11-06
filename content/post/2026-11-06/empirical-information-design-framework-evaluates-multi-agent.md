@@ -2,7 +2,7 @@
 title: "Empirical Information Design Framework Evaluates Multi-Agent LLM Disclosure Policies"
 slug: "empirical-information-design-framework-evaluates-multi-agent-llm-disclosure-policies"
 description: "Researchers have introduced empirical information design, an experimental framework created to systematically compare disclosure policies across economic markets populated by LLM agents."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [LLMs, MultiAgentSystems, InformationDesign, ArtificialIntelligence, Economics]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "AI Agents"]
 author: "Shoubhik Banerjee"

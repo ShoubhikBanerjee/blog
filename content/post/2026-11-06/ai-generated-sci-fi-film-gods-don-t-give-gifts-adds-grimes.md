@@ -2,7 +2,7 @@
 title: "AI‑Generated Sci‑Fi Film *Gods Don’t Give Gifts* Adds Grimes"
 slug: "aigenerated-scifi-film-gods-dont-give-gifts-adds-grimes"
 description: "AI‑generated sci‑fi anthology *Gods Don’t Give Gifts* is set to open in theatres on Dec 4, and it has added pop‑star Grimes, who will provide both her likeness and vocal performance."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [AIFilm, Grimes, SyntheticMedia, Fable]
 categories: ["AI", "Artificial Intelligence", "Film & Media", "Synthetic Media", "Entertainment Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/GDGG_Grimes_2.png?quality=90&strip=all&crop=0%2C12.21468233833%2C100%2C41.841457730372&w=1200"

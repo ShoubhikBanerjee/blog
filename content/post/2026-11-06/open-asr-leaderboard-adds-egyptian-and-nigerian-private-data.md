@@ -2,7 +2,7 @@
 title: "Open ASR Leaderboard Adds Egyptian and Nigerian Private Data Splits"
 slug: "open-asr-leaderboard-adds-egyptian-and-nigerian-private-data-splits"
 description: "A new collaboration with Liva AI expands the Open ASR Leaderboard with two private, conversational English splits for Egyptian 🇪🇬 and Nigerian 🇳🇬 accents, continuing the effort to improve..."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [ASR, OpenLeaderboard, DataDiversity, SpeechRecognition]
 categories: ["AI", "Speech Recognition", "Data Curation", "Machine Learning"]
 image: "https://huggingface.co/blog/assets/open-asr-leaderboard-liva/thumbnail.png"

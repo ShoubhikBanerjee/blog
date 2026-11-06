@@ -2,7 +2,7 @@
 title: "ReviewMap Framework Automates Classification of Peer‑Review Comments for ICLR 2026"
 slug: "reviewmap-framework-automates-classification-of-peerreview-comments-for-iclr-2026"
 description: "A new framework called **ReviewMap** has been evaluated on 500 ICLR 2026 papers to automatically separate reviewer comments into assessment and calibration acts, establishing a measured boundary for..."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [PeerReview, LLM, arXivLabs, AcademicPublishing]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Academic Publishing", "Open Science"]
 author: "Shoubhik Banerjee"

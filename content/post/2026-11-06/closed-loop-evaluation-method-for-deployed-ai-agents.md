@@ -2,7 +2,7 @@
 title: "Closed‑Loop Evaluation Method for Deployed AI Agents"
 slug: "closedloop-evaluation-method-for-deployed-ai-agents"
 description: "Researchers have introduced a closed‑loop evaluation framework that continuously monitors the performance of AI agents after they are deployed."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [AIevaluation, ClosedLoop, AgentMonitoring]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Evaluation Methods", "Machine Learning"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Midterm Blue Wave Triggers Political Backlash Against AI and Data Centers"
 slug: "midterm-blue-wave-triggers-political-backlash-against-ai-and-data-centers"
 description: "On Tuesday night voters delivered a historic Democratic sweep—taking control of the House and Senate, electing the nation’s first Black woman governor in Georgia, the first Native American woman..."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [AIRegulation, DataCenters, Midterms, PoliticalBacklash]
 categories: ["AI", "Artificial Intelligence", "Public Policy", "Infrastructure", "Technology Regulation"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STK423_ELECTIONS2.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

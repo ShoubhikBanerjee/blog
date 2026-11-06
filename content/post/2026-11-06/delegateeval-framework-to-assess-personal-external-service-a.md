@@ -2,7 +2,7 @@
 title: "DelegateEval Framework to Assess Personal External Service Agent Platforms"
 slug: "delegateeval-framework-to-assess-personal-external-service-agent-platforms"
 description: "A new evaluation framework called **DelegateEval** has been introduced to assess platforms that host personal external service agents."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [AIagents, Evaluation, DelegateEval, Platforms]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Evaluation"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Protesters Break Into Microsoft Data Center Construction Site in Amsterdam"
 slug: "protesters-break-into-microsoft-data-center-construction-site-in-amsterdam"
 description: "Protesters broke into the construction site of a new Microsoft data center in Amsterdam, marking the latest incident in a wave of data center protests across Europe."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [Microsoft, DataCenters, TechProtests, ArtificialIntelligence]
 categories: ["AI", "Artificial Intelligence", "Technology Policy", "Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2303323844.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

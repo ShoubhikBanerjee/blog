@@ -2,7 +2,7 @@
 title: "RecSA Enables Million-Token Context Lengths with Logarithmic Selection Cost"
 slug: "recsa-enables-million-token-context-lengths-with-logarithmic-selection-cost"
 description: "A new development in context length extrapolation, Recursive Sparse Attention (RecSA), has been introduced to address the scaling limitations of dense attention. While dense attention becomes..."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [RecSA, LLM, MachineLearning, KVcache]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "AI Infrastructure"]
 author: "Shoubhik Banerjee"

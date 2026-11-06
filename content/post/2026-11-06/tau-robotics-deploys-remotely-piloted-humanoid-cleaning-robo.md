@@ -2,7 +2,7 @@
 title: "Tau Robotics Deploys Remotely Piloted Humanoid Cleaning Robots in San Francisco"
 slug: "tau-robotics-deploys-remotely-piloted-humanoid-cleaning-robots-in-san-francisco"
 description: "I watched a humanoid robot clean my apartment. It felt like a taste of the future."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [TauRobotics, HumanoidRobots, HomeCleaning, Robotics, AI]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Home Automation", "Machine Learning"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/TauRobot-3up.jpg?resize=1200,600"

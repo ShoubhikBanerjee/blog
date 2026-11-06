@@ -2,7 +2,7 @@
 title: "Recursive Self-Improvement Framework Boosts Long-Horizon Role-Playing Dialogue Quality"
 slug: "recursive-self-improvement-framework-boosts-long-horizon-role-playing-dialogue-quality"
 description: "A new paper submitted on 5 Nov 2026 introduces a bounded recursive self‑improvement (RSI) framework aimed at improving long‑horizon role‑playing dialogue."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [AI, DialogueSystems, RecursiveImprovement]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Dialogue Systems"]
 author: "Shoubhik Banerjee"

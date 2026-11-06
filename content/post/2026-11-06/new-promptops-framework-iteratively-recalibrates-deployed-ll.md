@@ -2,7 +2,7 @@
 title: "New PromptOps Framework Iteratively Recalibrates Deployed LLM-as-a-Judge Systems"
 slug: "new-promptops-framework-iteratively-recalibrates-deployed-llm-as-a-judge-systems"
 description: "Researchers have introduced PromptOps, a closed-loop framework for the iterative recalibration of Large Language Model-as-a-Judge (LLMaaJ) systems. While LLMs are increasingly used to evaluate..."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [LLM, PromptOps, AIJudges, MLOps, AIAlignment]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "AI Operations"]
 author: "Shoubhik Banerjee"

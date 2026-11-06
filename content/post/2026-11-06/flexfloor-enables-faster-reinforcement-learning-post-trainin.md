@@ -2,7 +2,7 @@
 title: "FlexFloor Enables Faster Reinforcement Learning Post‑Training for Large Language Models"
 slug: "flexfloor-enables-faster-reinforcement-learning-posttraining-for-large-language-models"
 description: "FlexFloor is a system that reduces the compute bottleneck of reinforcement‑learning (RL) post‑training for large language models by releasing resources earlier during synchronous response generation."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [ReinforcementLearning, LLM, ResourceEfficiency, AITraining]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Reinforcement Learning", "Large Language Models"]
 author: "Shoubhik Banerjee"

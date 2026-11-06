@@ -2,7 +2,7 @@
 title: "Open‑Source AI Security Operations Center (AiSOC) Enables Self‑Hosted Threat Detection"
 slug: "opensource-ai-security-operations-center-aisoc-enables-selfhosted-threat-detection"
 description: "An open‑source AI Security Operations Center called **AiSOC** has been released. It runs on‑premises, requires no external API keys, and provides end‑to‑end alert fusion, automated triage, and..."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [AISEC, OpenSource, Cybersecurity, LLM]
 categories: ["AI", "Cybersecurity", "Artificial Intelligence", "Open Source Software", "Security Operations"]
 image: "https://avatars.githubusercontent.com/u/19245630?v=4"

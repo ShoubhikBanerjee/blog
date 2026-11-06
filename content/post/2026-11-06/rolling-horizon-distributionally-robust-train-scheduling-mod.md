@@ -2,7 +2,7 @@
 title: "Rolling-Horizon Distributionally Robust Train Scheduling Model Cuts Delays by Up to 20%"
 slug: "rolling-horizon-distributionally-robust-train-scheduling-model-cuts-delays-by-up-to-20"
 description: "- Uncertainty in resource reopening times makes train holding and rerouting decisions difficult when closures coincide with arrival delays and longer processing times."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [trainscheduling, robustoptimization, graphneuralnetworks, bendersdecomposition]
 categories: ["AI", "Operations Research", "Artificial Intelligence", "Transportation Systems", "Optimization"]
 author: "Shoubhik Banerjee"

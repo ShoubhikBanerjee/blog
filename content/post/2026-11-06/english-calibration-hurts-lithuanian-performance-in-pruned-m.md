@@ -2,7 +2,7 @@
 title: "English Calibration Hurts Lithuanian Performance in Pruned MoE Language Models"
 slug: "english-calibration-hurts-lithuanian-performance-in-pruned-moe-language-models"
 description: "English calibration, which works well for many high‑resource languages, was found to severely damage Lithuanian performance when applied to expert‑pruned Mixture‑of‑Experts (MoE) language models."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [MixtureOfExperts, ModelCompression, MultilingualAI]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Model Compression"]
 author: "Shoubhik Banerjee"

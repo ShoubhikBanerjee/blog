@@ -2,7 +2,7 @@
 title: "PharmAgents2 Enables Autonomous End-to-End Drug Discovery"
 slug: "pharmagents2-enables-autonomous-end-to-end-drug-discovery"
 description: "PharmAgents2, an autonomous system for end‑to‑end drug discovery, has been introduced, showing that a virtual pharmaceutical company can operate without human intervention throughout the research..."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [DrugDiscovery, AIResearch, AutonomousSystems, PharmaAI]
 categories: ["AI", "Artificial Intelligence", "Drug Discovery", "Automation", "Computational Biology"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Two‑stage AI framework ranks ports by cyclone impact duration"
 slug: "twostage-ai-framework-ranks-ports-by-cyclone-impact-duration"
 description: "A new AI‑driven two‑stage recommendation framework was evaluated on Gulf of Mexico ports to anticipate which ports will be most affected by an approaching tropical cyclone and how long disruptions..."
-date: 2026-11-06T18:03:32+05:30
+date: 2026-11-06T22:02:31+05:30
 tags: [tropicalcyclones, portlogistics, machinelearning]
 categories: ["AI", "Machine Learning", "Disaster Management", "Transportation"]
 author: "Shoubhik Banerjee"
