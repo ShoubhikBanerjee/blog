@@ -2,7 +2,7 @@
 title: "Behavior-Conditioned Symbolic Synthesis Enables Scalable Modeling of Human and Machine Reasoning"
 slug: "behavior-conditioned-symbolic-synthesis-enables-scalable-modeling-of-human-and-machine-reasoning"
 description: "Symbolic models offer a powerful account of cognition, but their scope has historically been limited by the need for hand‑engineering and computational tractability. A new study shows how advances in..."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [symbolicAI, interpretability, cognitiveModeling, AIresearch]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Cognitive Science", "Interpretability"]
 author: "Shoubhik Banerjee"

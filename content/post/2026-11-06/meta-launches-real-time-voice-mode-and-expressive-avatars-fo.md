@@ -2,7 +2,7 @@
 title: "Meta launches real‑time voice mode and expressive avatars for Muse AI agent"
 slug: "meta-launches-realtime-voice-mode-and-expressive-avatars-for-muse-ai-agent"
 description: "Meta announced that its Muse AI agent now supports real‑time voice conversations with expressive animated avatars."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [Meta, MuseAI, VoiceAI, AIavatars]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Human-Computer Interaction", "Consumer Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STKB394_MUSE_AI_CVIRGINIA_D.png?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

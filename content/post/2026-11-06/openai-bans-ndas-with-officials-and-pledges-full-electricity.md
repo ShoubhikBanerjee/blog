@@ -2,7 +2,7 @@
 title: "OpenAI bans NDAs with officials and pledges full electricity costs for data centers"
 slug: "openai-bans-ndas-with-officials-and-pledges-full-electricity-costs-for-data-centers"
 description: "OpenAI announced a set of new community commitments for its upcoming compute campuses after voter backlash against data‑center expansion."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [OpenAI, DataCenters, Transparency, AIPolicy]
 categories: ["AI", "Artificial Intelligence", "Infrastructure", "Public Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/STKS528_DATA_CENTERS2_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

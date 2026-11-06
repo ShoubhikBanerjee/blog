@@ -2,7 +2,7 @@
 title: "Vision-Language Model Pipeline for Holistic Evaluation of Amazon A+ Content"
 slug: "vision-language-model-pipeline-for-holistic-evaluation-of-amazon-a-content"
 description: "Amazon announced a new AI pipeline that uses vision‑language models (VLMs) to evaluate A+ Content as a whole and to generate improved visual assets."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [APlusContent, VisionLanguageModel, EcommerceAI]
 categories: ["AI", "Machine Learning", "Computer Vision", "E‑commerce", "Natural Language Processing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/30/ML-20598-featured-image.png"

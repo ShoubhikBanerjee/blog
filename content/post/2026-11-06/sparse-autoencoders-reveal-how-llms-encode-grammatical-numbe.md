@@ -2,7 +2,7 @@
 title: "Sparse Autoencoders Reveal How LLMs Encode Grammatical Number"
 slug: "sparse-autoencoders-reveal-how-llms-encode-grammatical-number"
 description: "Large Language Models (LLMs) can be probed with Sparse Autoencoders (SAEs) to expose how they represent grammatical number. Researchers trained SAEs on a 70‑million‑parameter model (Pythia‑70M) and..."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [SparseAutoencoders, GrammaticalNumber, LLMInterpretability]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Interpretability", "Large Language Models"]
 author: "Shoubhik Banerjee"

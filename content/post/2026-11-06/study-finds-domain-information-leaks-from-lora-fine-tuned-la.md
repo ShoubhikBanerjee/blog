@@ -2,7 +2,7 @@
 title: "Study Finds Domain Information Leaks from LoRA‑Fine‑Tuned Language Models"
 slug: "study-finds-domain-information-leaks-from-lorafinetuned-language-models"
 description: "A new study investigates how much of the training‑data domain can be inferred from a LoRA‑fine‑tuned language model without ever seeing the original data."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [LoRA, DomainLeakage, ModelAnalysis, AIPrivacy]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Safety", "Privacy"]
 author: "Shoubhik Banerjee"

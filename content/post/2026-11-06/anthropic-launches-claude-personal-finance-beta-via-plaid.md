@@ -2,7 +2,7 @@
 title: "Anthropic launches Claude Personal Finance beta via Plaid"
 slug: "anthropic-launches-claude-personal-finance-beta-via-plaid"
 description: "Anthropic is adding a Personal Finance feature to Claude that connects to users’ bank and card accounts through the Plaid platform."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [Anthropic, Claude, PersonalFinance, AI, Fintech]
 categories: ["AI", "Artificial Intelligence", "Fintech", "Natural Language Processing", "Consumer Applications"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Personal-Finance-in-Claude-hed.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

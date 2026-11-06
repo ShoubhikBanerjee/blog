@@ -2,7 +2,7 @@
 title: "Token Identity Brier Flow Improves Continued Training of Language Flow Models"
 slug: "token-identity-brier-flow-improves-continued-training-of-language-flow-models"
 description: "Continued training of continuous language flow models has been updated with a new supervision technique called Token Identity Brier Flow (TIBF). This method applies squared supervision directly to..."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [languagemodels, flowmodels, continualtraining, brierloss]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Computational Linguistics", "Deep Learning"]
 author: "Shoubhik Banerjee"

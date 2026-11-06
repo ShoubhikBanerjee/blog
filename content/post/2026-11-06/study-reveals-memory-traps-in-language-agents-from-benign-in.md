@@ -2,7 +2,7 @@
 title: "Study Reveals Memory Traps in Language Agents from Benign Interactions"
 slug: "study-reveals-memory-traps-in-language-agents-from-benign-interactions"
 description: "Language agents are increasingly endowed with persistent memory to store user preferences and procedures across sessions. A new arXiv paper titled *The Memory Trap: Language Agents Overgeneralize..."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [AIagents, MemoryTrap, LanguageModels, AIsafety]
 categories: ["AI", "Machine Learning", "AI Agents", "Natural Language Processing", "Safety"]
 author: "Shoubhik Banerjee"

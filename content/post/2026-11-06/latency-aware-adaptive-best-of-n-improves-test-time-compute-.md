@@ -2,7 +2,7 @@
 title: "Latency-Aware Adaptive Best-of-N Improves Test-Time Compute Efficiency"
 slug: "latency-aware-adaptive-best-of-n-improves-test-time-compute-efficiency"
 description: "A new arXiv paper titled *Latency-Aware Adaptive Best-of-$N$* introduces a two‑stage algorithm that adapts test‑time compute (TTC) based on observed latency, achieving lower cost than traditional..."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [testtimecompute, latency, adaptivesampling, AIresearch]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Efficiency"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Goal-Branching LaCAM Improves Dense Multi-Agent Pathfinding"
 slug: "goal-branching-lacam-improves-dense-multi-agent-pathfinding"
 description: "Goal-Branching LaCAM introduces temporary goals to help a multi‑agent pathfinding solver handle dense, corridor‑heavy environments."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [MultiAgentPathfinding, AIPlanning, GoalBranching]
 categories: ["AI", "Artificial Intelligence", "Robotics", "Algorithms", "Computer Science"]
 author: "Shoubhik Banerjee"

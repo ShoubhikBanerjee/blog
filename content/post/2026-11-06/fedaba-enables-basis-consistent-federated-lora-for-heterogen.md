@@ -2,7 +2,7 @@
 title: "FedAbA Enables Basis-Consistent Federated LoRA for Heterogeneous Ranks"
 slug: "fedaba-enables-basis-consistent-federated-lora-for-heterogeneous-ranks"
 description: "A new arXiv preprint titled **'Align Before Aggregation: Basis-Consistent Federated LoRA under Heterogeneous Ranks'** (submitted 5 Nov 2026) proposes a novel aggregation framework—FedAbA—that..."
-date: 2026-11-06T12:11:11+05:30
+date: 2026-11-06T18:03:32+05:30
 tags: [FederatedLearning, LoRA, LLM, RankHeterogeneity]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Distributed Computing"]
 author: "Shoubhik Banerjee"
