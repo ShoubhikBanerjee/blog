@@ -2,7 +2,7 @@
 title: "AI Becomes a Dealbreaker in San Francisco Dating Scene"
 slug: "ai-becomes-a-dealbreaker-in-san-francisco-dating-scene"
 description: "When Irene moved to San Francisco last year and started using dating apps, she quickly discovered that AI has become a dealbreaker for many users."
-date: 2026-11-07T06:05:49+05:30
+date: 2026-11-07T12:02:34+05:30
 tags: [AI, Dating, SanFrancisco, AIJobs, AIEthics]
 categories: ["AI", "Artificial Intelligence", "Social Dynamics", "Labor Market", "Technology and Society"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/268841_When_it_comes_to_dating_is_AI_the_new_politics__CVirginia.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

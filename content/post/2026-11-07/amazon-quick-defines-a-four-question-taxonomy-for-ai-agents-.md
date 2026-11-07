@@ -2,7 +2,7 @@
 title: "Amazon Quick defines a four‑question taxonomy for AI agents and triggers"
 slug: "amazon-quick-defines-a-fourquestion-taxonomy-for-ai-agents-and-triggers"
 description: "Over the past year, Amazon Quick’s agents have moved from answering questions to taking actions such as scheduling meetings, running research, and generating reports."
-date: 2026-11-07T06:05:49+05:30
+date: 2026-11-07T12:02:34+05:30
 tags: [Amazon, AIAgents, Automation, LLM, AgenticAI]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Automation", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21505-featured-image.png"

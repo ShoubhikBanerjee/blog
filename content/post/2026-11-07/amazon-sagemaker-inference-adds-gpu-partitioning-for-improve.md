@@ -2,7 +2,7 @@
 title: "Amazon SageMaker Inference Adds GPU Partitioning for Improved Utilization and Isolation"
 slug: "amazon-sagemaker-inference-adds-gpu-partitioning-for-improved-utilization-and-isolation"
 description: "Amazon SageMaker Inference now supports GPU partitioning, a feature that uses NVIDIA Multi-Instance GPU (MIG) technology to divide a physical GPU into independent partitions. This update allows..."
-date: 2026-11-07T06:05:49+05:30
+date: 2026-11-07T12:02:34+05:30
 tags: [AmazonSageMaker, NVIDIA, GPU, MachineLearning, CloudInfrastructure]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/05/ML-22216-featured-image.png"

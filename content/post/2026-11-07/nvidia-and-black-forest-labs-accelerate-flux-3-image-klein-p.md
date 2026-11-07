@@ -2,7 +2,7 @@
 title: "NVIDIA and Black Forest Labs Accelerate FLUX 3 Image Klein Performance"
 slug: "nvidia-and-black-forest-labs-accelerate-flux-3-image-klein-performance"
 description: "Black Forest Labs (BFL) has introduced FLUX 3 Image Klein, an image editing and generation model optimized for NVIDIA GPUs. Trained on NVIDIA GB200 NVL72, the model leverages TensorRT LLM VisualGen..."
-date: 2026-11-07T06:05:49+05:30
+date: 2026-11-07T12:02:34+05:30
 tags: [NVIDIA, BlackForestLabs, ComputerVision, TensorRT, GenerativeAI]
 categories: ["AI", "Machine Learning", "Computer Vision", "Generative AI"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/techblog-5893-article-kix-ulkeecvizi09-660x370.png"

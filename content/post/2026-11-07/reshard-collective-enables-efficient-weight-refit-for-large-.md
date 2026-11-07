@@ -2,7 +2,7 @@
 title: "Reshard Collective Enables Efficient Weight Refit for Large‑Scale RL Training"
 slug: "reshard-collective-enables-efficient-weight-refit-for-largescale-rl-training"
 description: "During reinforcement learning (RL) post‑training, training trajectories are generated on the fly by running inference with the current policy model. In large‑scale setups inference and training run..."
-date: 2026-11-07T06:05:49+05:30
+date: 2026-11-07T12:02:34+05:30
 tags: [RL, WeightRefit, Reshard, NCCL]
 categories: ["AI", "Machine Learning", "Distributed Computing", "Deep Learning", "Reinforcement Learning"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/green-cube.webp"

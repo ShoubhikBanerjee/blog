@@ -2,7 +2,7 @@
 title: "Voters Oppose AI Data Center Expansion in 2026 Midterms Prompting Policy Shift"
 slug: "voters-oppose-ai-data-center-expansion-in-2026-midterms-prompting-policy-shift"
 description: "Following widespread voter opposition to AI data center expansion in the 2026 midterm elections, tech giants including OpenAI and Amazon are altering their community engagement policies and..."
-date: 2026-11-07T06:05:49+05:30
+date: 2026-11-07T12:02:34+05:30
 tags: [OpenAI, DataCenters, AILaw, BigTech, Energy]
 categories: ["AI", "Artificial Intelligence", "Data Centers", "Government Policy", "Energy Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/STKS528_DATA_CENTERS_C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
