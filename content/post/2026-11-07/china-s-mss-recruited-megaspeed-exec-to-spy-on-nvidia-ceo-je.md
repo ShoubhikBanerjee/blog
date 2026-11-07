@@ -2,7 +2,7 @@
 title: "China’s MSS recruited Megaspeed exec to spy on Nvidia CEO Jensen Huang"
 slug: "chinas-mss-recruited-megaspeed-exec-to-spy-on-nvidia-ceo-jensen-huang"
 description: "China’s Ministry of State Security (MSS) recruited Alice Huang, an executive at Megaspeed, to gather intelligence on Nvidia’s CEO Jensen Huang and U.S. AI chip technology."
-date: 2026-11-07T18:01:21+05:30
+date: 2026-11-07T22:01:49+05:30
 tags: [China, Nvidia, AIchips, Espionage, USPolitics]
 categories: ["AI", "Artificial Intelligence", "Semiconductor Industry", "International Relations", "U.S. Politics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/07/STKP210_JENSEN_HUANG_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

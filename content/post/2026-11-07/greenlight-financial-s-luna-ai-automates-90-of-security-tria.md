@@ -2,7 +2,7 @@
 title: "Greenlight Financial’s Luna AI automates 90% of security triage using Amazon Bedrock AgentCore"
 slug: "greenlight-financials-luna-ai-automates-90-of-security-triage-using-amazon-bedrock-agentcore"
 description: "Greenlight Financial has updated its Luna AI platform to automatically resolve more than 90 % of up to 4,000 security and risk cases each month, relying on Amazon Bedrock AgentCore for the underlying..."
-date: 2026-11-07T18:01:21+05:30
+date: 2026-11-07T22:01:49+05:30
 tags: [AIagents, SecurityAutomation, AmazonBedrock]
 categories: ["AI", "Artificial Intelligence", "Security Operations", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21973-featured-image.png"
