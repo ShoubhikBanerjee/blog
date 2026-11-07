@@ -2,7 +2,7 @@
 title: "Midterm Election Shifts AI Landscape Amid Big Tech Loss and Monetization Uncertainty"
 slug: "midterm-election-shifts-ai-landscape-amid-big-tech-loss-and-monetization-uncertainty"
 description: "On Tuesday, millions of American voters went to the polls and voted overwhelmingly for Democrats and against AI. The results have major implications for the technology sector, especially AI..."
-date: 2026-11-07T12:02:34+05:30
+date: 2026-11-07T18:01:21+05:30
 tags: [AI, Election2026, BigTech, WebSearch, AIRevenue]
 categories: ["AI", "Artificial Intelligence", "Tech Policy", "Business", "Search Engines"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/VRG_VST_110626_Site.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

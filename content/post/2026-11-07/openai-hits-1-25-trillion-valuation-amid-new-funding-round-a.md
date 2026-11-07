@@ -2,7 +2,7 @@
 title: "OpenAI hits $1.25 trillion valuation amid new funding round and IPO delay"
 slug: "openai-hits-1-25-trillion-valuation-amid-new-funding-round-and-ipo-delay"
 description: "OpenAI announced a new funding round that pushes its valuation to $1.25 trillion, while CEO Sam Altman reiterated that the company is postponing an IPO to focus on safety."
-date: 2026-11-07T12:02:34+05:30
+date: 2026-11-07T18:01:21+05:30
 tags: [OpenAI, Funding, IPO, AISafety]
 categories: ["AI", "Artificial Intelligence", "Business", "Finance", "Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STK155_OPEN_AI_CVirginia_2_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

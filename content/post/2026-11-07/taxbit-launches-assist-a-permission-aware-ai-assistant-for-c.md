@@ -2,7 +2,7 @@
 title: "Taxbit launches Assist, a permission‑aware AI assistant for compliance teams"
 slug: "taxbit-launches-assist-a-permissionaware-ai-assistant-for-compliance-teams"
 description: "Taxbit, the digital‑asset tax and accounting compliance platform founded in 2018, has added a cited, permission‑aware AI assistant – Taxbit Assist – directly inside its product dashboard. The..."
-date: 2026-11-07T12:02:34+05:30
+date: 2026-11-07T18:01:21+05:30
 tags: [Taxbit, AIassistants, AmazonBedrock, ComplianceAI]
 categories: ["AI", "FinTech", "AI Agents", "Machine Learning", "RegTech"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21532-featured-image.png"

@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore adds EKS‑run agent with Okta‑driven governance"
 slug: "amazon-bedrock-agentcore-adds-eksrun-agent-with-oktadriven-governance"
 description: "A second coding agent was added on Amazon Elastic Kubernetes Service (Amazon EKS) and wired through the same Amazon Bedrock AgentCore Gateway. The update shows that the gateway‑based front door works..."
-date: 2026-11-07T12:02:34+05:30
+date: 2026-11-07T18:01:21+05:30
 tags: [AWS, Bedrock, AIagents, Okta, Security]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Security", "Developer Tools"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-p2-featured-image.png"

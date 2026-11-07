@@ -2,7 +2,7 @@
 title: "Serverless Model Context Protocol Server Enables Shared Enterprise Data Access for AI Agents"
 slug: "serverless-model-context-protocol-server-enables-shared-enterprise-data-access-for-ai-agents"
 description: "Organizations building applications powered by artificial intelligence (AI) face a recurring challenge: giving large language model (LLM) agents access to enterprise data lakes without duplicating..."
-date: 2026-11-07T12:02:34+05:30
+date: 2026-11-07T18:01:21+05:30
 tags: [AIAgents, ModelContextProtocol, AWS, EnterpriseData]
 categories: ["AI", "Artificial Intelligence", "Enterprise Computing", "Cloud Services", "Data Engineering"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-20343-featured-image.png"

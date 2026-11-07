@@ -2,7 +2,7 @@
 title: "inMusic Opens Up Gear for Community Modding with Open‑Source Toolkits"
 slug: "inmusic-opens-up-gear-for-community-modding-with-opensource-toolkits"
 description: "inMusic, the parent company behind Akai, Moog, Native Instruments and others, announced that it will actively support the music‑gear modding community by releasing source code and development tools..."
-date: 2026-11-07T12:02:34+05:30
+date: 2026-11-07T18:01:21+05:30
 tags: [inMusic, modding, openSource, musicGear]
 categories: ["AI", "Music Technology", "Hardware", "Open Source", "Industry Trends"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/assets_47c5d023e7b3451a86ac03602c65dce8_43f25647cf8a4cbb8786829bc29ee2fb.webp?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

@@ -2,7 +2,7 @@
 title: "Meta Launches Custom Spaces Feature and AI Model Updates in Muse"
 slug: "meta-launches-custom-spaces-feature-and-ai-model-updates-in-muse"
 description: "Meta has introduced a new feature called 'spaces' within its Muse app, allowing users to build customized, app-like experiences. In addition, Meta announced that it is bringing new capabilities from..."
-date: 2026-11-07T12:02:34+05:30
+date: 2026-11-07T18:01:21+05:30
 tags: [Meta, Muse, MetaAI, AI]
 categories: ["AI", "Artificial Intelligence", "Generative AI", "Product Updates"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/meta-muse-spaces.png?quality=90&strip=all&crop=8.0752843063528%2C7.2758349524933%2C91.924715693647%2C59.9199899822&w=1200"

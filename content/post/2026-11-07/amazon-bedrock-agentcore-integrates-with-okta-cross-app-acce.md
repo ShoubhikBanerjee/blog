@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore Integrates with Okta Cross App Access for Secure Agent Governance"
 slug: "amazon-bedrock-agentcore-integrates-with-okta-cross-app-access-for-secure-agent-governance"
 description: "Amazon Bedrock AgentCore is a platform to build, connect, and optimize agents at scale using any framework or model. A new integration with Okta Cross App Access (XAA) allows organizations to manage..."
-date: 2026-11-07T12:02:34+05:30
+date: 2026-11-07T18:01:21+05:30
 tags: [AWS, AmazonBedrock, Okta, AIagents, Cybersecurity]
 categories: ["AI", "AI Agents", "Cloud Security", "Identity Management"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-featured-image.png"
