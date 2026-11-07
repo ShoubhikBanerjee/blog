@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ProductionAI on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/productionai/</link><description>Recent content in ProductionAI on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 14 Oct 2026 22:09:38 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/productionai/index.xml" rel="self" type="application/rss+xml"/><item><title>Guide to Building Production AI Memory Systems</title><link>https://shoubhikbanerjee.github.io/blog/p/guide-to-building-production-ai-memory-systems/</link><pubDate>Wed, 14 Oct 2026 22:09:38 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/guide-to-building-production-ai-memory-systems/</guid><description>&lt;img src="https://dealon.ai/blog/api/media/file/AI%20Memory%20Systems" alt="Featured image of post Guide to Building Production AI Memory Systems" /&gt;&lt;h1 id="guide-to-building-production-ai-memory-systems"&gt;Guide to Building Production AI Memory Systems
+&lt;/h1&gt;&lt;p&gt;AI language models are stateless, so every request starts from a blank slate. What feels like memory in a chat window is actually an application trick that resends earlier messages. To give assistants persistent, user‑specific knowledge, developers add a separate engineering layer called an &lt;strong&gt;AI memory system&lt;/strong&gt;. This guide explains the components, workflow, and practical considerations for deploying such a system in production.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Definition&lt;/strong&gt; – An AI memory system is a storage and retrieval layer that lets an AI application save useful information, retrieve the relevant parts later, and use them to improve future responses.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stateless models&lt;/strong&gt; – Large language models are stateless by design; every request receives a prompt, produces a completion, and retains nothing. This is true of GPT‑style models, Claude, Gemini, and open‑source models such as Llama and Mistral alike.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Illusion of chat memory&lt;/strong&gt; – What looks like memory in a chat window is an illusion produced by the application, which resends the earlier messages with each new request. That approach hits a hard ceiling because context windows are finite, long prompts cost more and respond slower, and models tend to use information in the middle of a very long context less reliably than information at the edges.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The core of every memory system follows a six‑step pipeline:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Step&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Capture&lt;/td&gt;
+&lt;td&gt;After each interaction, an extractor decides whether anything is worth keeping and rewrites it as a clean, self‑contained statement (e.g., “Prefers deployment on AWS.”).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Store&lt;/td&gt;
+&lt;td&gt;The statement and its metadata (user ID, timestamp, source, confidence) are stored in a vector database.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Index&lt;/td&gt;
+&lt;td&gt;An embedding model converts the text into a vector, placing similar meanings close together.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retrieve&lt;/td&gt;
+&lt;td&gt;At query time the system looks for the closest matches, then re‑ranks them by relevance, recency, and importance.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Inject&lt;/td&gt;
+&lt;td&gt;The top memories are formatted into the prompt within a strict token budget.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Generate&lt;/td&gt;
+&lt;td&gt;The language model generates a response using the injected memories; the memory lives in the prompt for minutes and is limited by the context window.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;External decision making&lt;/strong&gt; – The memory system decides what to save, where to keep it, and what to place in front of the model on each turn.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory types&lt;/strong&gt; –
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Episodic memory&lt;/em&gt; lets an agent learn from experience rather than start over each time.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Distilled facts and domain knowledge&lt;/em&gt; such as “the user writes Python” or “refunds are allowed within 30 days.”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory updates&lt;/strong&gt; – New facts are compared with old ones; duplicates are merged, contradictions are resolved, and stale items are expired.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Production definition&lt;/strong&gt; – A governed data service with write policies, retrieval quality metrics, expiration rules, access controls, and user‑facing edit and delete tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Without a memory system, developers must rely on ever‑growing prompts, which incur higher costs, slower responses, and reduced reliability of information deep inside the context.&lt;/li&gt;
+&lt;li&gt;An external memory can persist for months or years, enabling assistants to adapt to individual users over long periods.&lt;/li&gt;
+&lt;li&gt;Adding a memory layer transforms a stateless language model into an assistant that remembers preferences, policies, and domain facts across sessions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AImemory #LLM #ProductionAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://dealon.ai/ai-memory-systems" target="_blank" rel="noopener"
+&gt;AI Memory Systems: The Practical Guide to Architecture and Real-World Examples - Dealon.ai&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

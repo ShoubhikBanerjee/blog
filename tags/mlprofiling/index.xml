@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MLprofiling on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/mlprofiling/</link><description>Recent content in MLprofiling on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 21 Oct 2026 22:03:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/mlprofiling/index.xml" rel="self" type="application/rss+xml"/><item><title>Systematically Analyzing Inference Performance on AWS Trainium with TorchNeuron</title><link>https://shoubhikbanerjee.github.io/blog/p/systematically-analyzing-inference-performance-on-aws-trainium-with-torchneuron/</link><pubDate>Wed, 21 Oct 2026 22:03:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/systematically-analyzing-inference-performance-on-aws-trainium-with-torchneuron/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6ac67ea29579ea34f1f7e470/hEodPVvQZI24jETLbPooP.png" alt="Featured image of post Systematically Analyzing Inference Performance on AWS Trainium with TorchNeuron" /&gt;&lt;h1 id="systematically-analyzing-inference-performance-on-aws-trainium-with-torchneuron"&gt;Systematically Analyzing Inference Performance on AWS Trainium with TorchNeuron
+&lt;/h1&gt;&lt;p&gt;A new guide provides a walkthrough for ML practitioners to systematically analyze inference performance and identify where time is spent during model execution, starting from scratch with no prior profiling experience.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The profiling process utilizes AWS Trainium, a purpose-built AI chip for deep learning training and inference, and TorchNeuron, its open source native PyTorch backend. TorchNeuron integrates with PyTorch via the PrivateUse1 extension point, allowing the accelerator to integrate without adding a dedicated dispatch key like cuda. The &lt;code&gt;torch_neuronx&lt;/code&gt; package registers Neuron as a native backend for PyTorch code.&lt;/p&gt;
+&lt;p&gt;TorchNeuron supports standard PyTorch workflows with minimal code changes, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Eager execution&lt;/li&gt;
+&lt;li&gt;torch.compile&lt;/li&gt;
+&lt;li&gt;Standard PyTorch APIs&lt;/li&gt;
+&lt;li&gt;Integration with Neuron Kernel Interface (NKI) for custom operators and performance optimization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Profiling is managed through &lt;code&gt;torch.profiler.profile&lt;/code&gt; using a &lt;code&gt;NeuronConfig&lt;/code&gt; passed as &lt;code&gt;experimental_config&lt;/code&gt;.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Parameter&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;modes&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Selects data streams to capture, such as runtime traces and device instructions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;capture_enabled_for_nc&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Selects the NeuronCores to trace&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;correlate_device_time=True&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Propagates device time into the &lt;code&gt;key_averages()&lt;/code&gt; table to compare CPU and Neuron device time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;To ensure accuracy, &lt;code&gt;torch.neuron.synchronize()&lt;/code&gt; must be called inside the profiler loop; otherwise, the profiler may export before the device finishes, leaving the Neuron time column empty. The recommended schedule uses &lt;code&gt;wait=2&lt;/code&gt;, &lt;code&gt;warmup=1&lt;/code&gt;, and &lt;code&gt;active=1&lt;/code&gt; across four &lt;code&gt;prof.step()&lt;/code&gt; calls to record one warm iteration without initial setup overhead.&lt;/p&gt;
+&lt;h2 id="-analysis-and-output"&gt;🔍 Analysis and Output
+&lt;/h2&gt;&lt;p&gt;After profiling, the output directory contains system traces and, if device data was captured, paired files identified by a numeric hash:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NEFF (Neuron Executable File Format):&lt;/strong&gt; Contains the compiled Neuron executable.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NTFF:&lt;/strong&gt; Contains the hardware instruction trace.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Users can analyze these results using Neuron Explorer, a browser-based viewer for the device timeline, system trace, and per-engine breakdown, accessible via a Visual Studio Code extension or SSH tunnel.&lt;/p&gt;
+&lt;p&gt;As a practical example, the walkthrough compares a naive RMSNorm (using individual PyTorch operations like multiply, mean, add, reciprocal square root, and multiply) against &lt;code&gt;torch.rms_norm()&lt;/code&gt;, which is lowered to a single fused Neuron kernel.&lt;/p&gt;
+&lt;p&gt;#AWSTrainium #TorchNeuron #PyTorch #MLprofiling #InferencePerformance&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/amazon/profiling-torchneuron-part-1-system-level-profilin" target="_blank" rel="noopener"
+&gt;Profiling TorchNeuron (Part 1): System-level profiling on AWS Trainium.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AIautomation on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/aiautomation/</link><description>Recent content in AIautomation on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 05 Oct 2026 22:07:36 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/aiautomation/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Quick resource migration automated with Bedrock AgentCore MCP server</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-quick-resource-migration-automated-with-bedrock-agentcore-mcp-server/</link><pubDate>Mon, 05 Oct 2026 22:07:36 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-quick-resource-migration-automated-with-bedrock-agentcore-mcp-server/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-21611-featured-image.png" alt="Featured image of post Amazon Quick resource migration automated with Bedrock AgentCore MCP server" /&gt;&lt;h1 id="amazon-quick-resource-migration-automated-with-bedrock-agentcore-mcp-server"&gt;Amazon Quick resource migration automated with Bedrock AgentCore MCP server
+&lt;/h1&gt;&lt;p&gt;Amazon Quick is Amazon’s agentic AI companion built for work. Moving its resources – chat agents, action connectors, knowledge bases, flows, and spaces – from a development AWS account to a production account has traditionally been a manual, error‑prone chore.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enterprises often run separate AWS accounts for development, QA, and production.&lt;/li&gt;
+&lt;li&gt;There is no native one‑click way to promote validated Quick resources into the next account; teams must rebuild each resource by hand.&lt;/li&gt;
+&lt;li&gt;The Quick Resource Migrator is a sample Model Context Protocol (MCP) server hosted on Amazon Bedrock AgentCore that automates this cross‑account promotion with a single tool call.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The migrator composes the &lt;strong&gt;Create&lt;/strong&gt;, &lt;strong&gt;Read&lt;/strong&gt;, &lt;strong&gt;Update&lt;/strong&gt;, and &lt;strong&gt;List&lt;/strong&gt; API calls of the Amazon Quick API into a repeatable workflow; it never issues a delete, so a run only adds or updates.&lt;/li&gt;
+&lt;li&gt;It is &lt;strong&gt;resource‑driven&lt;/strong&gt; – you pick a resource type (agent, connector, knowledge base, flow, or space) and select resources by ID, name, or all.&lt;/li&gt;
+&lt;li&gt;The server runs on Amazon Bedrock AgentCore runtime and can be triggered from Amazon Quick or any MCP‑compatible client.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Resource Type&lt;/th&gt;
+&lt;th&gt;Migration actions&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Chat agents&lt;/td&gt;
+&lt;td&gt;Recreate with custom instructions, identity, tone, starter prompts, welcome message; re‑attach action connectors (remapped to target).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Action connectors&lt;/td&gt;
+&lt;td&gt;Recreate configuration; secret values never read – placeholders are created then re‑authenticated in target.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Knowledge bases&lt;/td&gt;
+&lt;td&gt;Register in target, recreate data source, copy permissions; for S3‑backed bases also provision target bucket and bucket policy (documents are not copied).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Flows&lt;/td&gt;
+&lt;td&gt;Recreate from definition; matched by name – same‑named flow is updated, otherwise a new flow is created.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spaces&lt;/td&gt;
+&lt;td&gt;Recreate in target and re‑link to agents, connectors, and knowledge bases with ARN remapping; agents are automatically re‑linked when a space migrates.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-features"&gt;⚙️ Key features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Idempotent&lt;/strong&gt; – safe to re‑run; performs upserts (creates missing resources, updates existing ones).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Permission fidelity&lt;/strong&gt; – calls &lt;code&gt;Describe*Permissions&lt;/code&gt; on the source and replays identical actions in the target, remapping ARNs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Versioned backup&lt;/strong&gt; – every update is preceded by a backup written to Amazon S3, giving a full history for review or rollback.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Read‑only preview&lt;/strong&gt; – reports exactly what would be created or updated before committing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single‑call promotion&lt;/strong&gt; – a chosen set of resources is promoted in one operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Programmable&lt;/strong&gt; – all resources are managed through the Amazon Quick API (full CRUDL lifecycle).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Open source&lt;/strong&gt; – full source code is available in the &lt;code&gt;aws-samples&lt;/code&gt; repository.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The MCP server is hosted on Amazon Bedrock AgentCore runtime.&lt;/li&gt;
+&lt;li&gt;It can be invoked from Amazon Quick or any client that supports MCP.&lt;/li&gt;
+&lt;li&gt;Source code and deployment instructions are published in the public &lt;code&gt;aws-samples&lt;/code&gt; GitHub repository.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enterprises with separate development and production AWS accounts can eliminate a manual, error‑prone promotion process.&lt;/li&gt;
+&lt;li&gt;Consistent permission copying and versioned backups reduce risk of misconfiguration in production.&lt;/li&gt;
+&lt;li&gt;Idempotent upserts and preview mode enable safe, repeatable migrations, supporting CI/CD pipelines and governance.&lt;/li&gt;
+&lt;li&gt;By automating promotion, teams can focus on building and evaluating agentic AI solutions rather than on repetitive infrastructure work.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/Figure-1-8.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/Figure-2-8.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/Figure-3-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonQuick #Bedrock #MCP #AIautomation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/making-amazon-quick-enterprise-ready-automated-auditable-cross-account-resource-promotion/" target="_blank" rel="noopener"
+&gt;Making Amazon Quick enterprise-ready: Automated, auditable cross-account resource promotion | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/evaluating-multi-agent-systems-for-explainability-and-helpfulness-with-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Evaluating multi-agent systems for explainability and helpfulness with Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Wiz Hires Support Engineer with AI-Driven Automation Focus</title><link>https://shoubhikbanerjee.github.io/blog/p/wiz-hires-support-engineer-with-ai-driven-automation-focus/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/wiz-hires-support-engineer-with-ai-driven-automation-focus/</guid><description>&lt;img src="https://www.google.com/s2/favicons?domain=wiz.com&amp;sz=64" alt="Featured image of post Wiz Hires Support Engineer with AI-Driven Automation Focus" /&gt;&lt;h1 id="wiz-hires-support-engineer-with-ai-driven-automation-focus"&gt;Wiz Hires Support Engineer with AI-Driven Automation Focus
+&lt;/h1&gt;&lt;p&gt;Wiz, a cloud security company, published a job advertisement for a Remote Solutions Support Engineer based in Ireland, indicating a new role that combines deep technical troubleshooting with a growing emphasis on AI-driven automation to scale support operations.&lt;/p&gt;
+&lt;h2 id="-role-overview"&gt;🔍 Role Overview
+&lt;/h2&gt;&lt;p&gt;The Remote Solutions Support Engineer will be part of a global team delivering expert-level technical support across the Wiz cloud-native security platform. The role involves investigating complex, multi-domain issues spanning cloud infrastructure, workload protection, vulnerability management, and runtime defense across AWS, Azure, and GCP environments.&lt;/p&gt;
+&lt;h2 id="-key-requirements"&gt;⚙️ Key Requirements
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;5+ years of relevant customer-facing technical experience.&lt;/li&gt;
+&lt;li&gt;2+ years working with cloud platforms (AWS, Azure, GCP) including IAM, networking, and core compute/storage services.&lt;/li&gt;
+&lt;li&gt;1+ years of hands-on experience deploying, managing, and troubleshooting production Kubernetes clusters and containerized applications.&lt;/li&gt;
+&lt;li&gt;Experience reading and debugging code in Python, Shell, JavaScript/JSON, Java, Go, or Terraform/HCL.&lt;/li&gt;
+&lt;li&gt;Proficiency with command-line tools and Linux operating system environments.&lt;/li&gt;
+&lt;li&gt;Familiarity with the current AI landscape, including LLM architectures and the integration of AI-driven tooling into technical workflows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Wiz states it is redefining security for the AI era and is &amp;ldquo;powered by Google,&amp;rdquo; offering an AI-powered platform that harnesses Google’s Threat Intelligence and Security Operations. The job description emphasizes a growing emphasis on AI-driven automation to scale support operations and improve resolution quality, with preferred qualifications including experience building or supporting agentic workflows, RAG architectures, or AI-powered automation.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Visa sponsorship is not offered for this role. The position includes an after-hours, holiday, and weekend on-call rotation.&lt;/p&gt;
+&lt;p&gt;#Wiz #CloudSecurity #AIAutomation #Kubernetes #SupportEngineer&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://wfh.team/job/27073-solutions-support-engineer-wiz-inc" target="_blank" rel="noopener"
+&gt;Remote Solutions Support Engineer at Wiz, Inc.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>ConTech AI Shifts Toward Operational Workflow Automation</title><link>https://shoubhikbanerjee.github.io/blog/p/contech-ai-shifts-toward-operational-workflow-automation/</link><pubDate>Mon, 31 Aug 2026 22:56:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/contech-ai-shifts-toward-operational-workflow-automation/</guid><description>&lt;img src="https://media.licdn.com/dms/image/v2/D5612AQGWVXvuUhc57w/article-cover_image-shrink_720_1280/B56aBI02cNHIAQ-/0/1787928211892?e=2147483647&amp;v=beta&amp;t=zh54B0pcbXpkccy2jBTMgVwejkyhEvSnCQClmC_ZRMM" alt="Featured image of post ConTech AI Shifts Toward Operational Workflow Automation" /&gt;&lt;h1 id="contech-ai-shifts-toward-operational-workflow-automation"&gt;ConTech AI Shifts Toward Operational Workflow Automation
+&lt;/h1&gt;&lt;p&gt;AI adoption in construction technology is progressing beyond conversational interfaces to the automation of operational workflows. This shift is part of a broader new phase in the US AEC software market characterized by increased venture funding and strategic M&amp;amp;A activity.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;AI is shifting from chat interfaces into executing specific construction tasks. Capabilities now include the automation of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Estimating&lt;/li&gt;
+&lt;li&gt;Preconstruction&lt;/li&gt;
+&lt;li&gt;Document review&lt;/li&gt;
+&lt;li&gt;RFIs&lt;/li&gt;
+&lt;li&gt;Field reporting&lt;/li&gt;
+&lt;li&gt;Scheduling&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This transition represents a move from tools that simply assist users to platforms focused on executing work. Procore&amp;rsquo;s positioning of AI-powered &amp;ldquo;digital coworkers&amp;rdquo; illustrates this focus on executing operational workflows rather than relying on conversational interfaces.&lt;/p&gt;
+&lt;p&gt;#ConTech #AEC #AIautomation #ConstructionTechnology&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.linkedin.com/pulse/best-linkedin-cw-34-35-digital-construction-thomas-allgeyer-epbwf" target="_blank" rel="noopener"
+&gt;Best of LinkedIn CW 34/ 35: Digital Construction&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>CrewAI introduces open-source multi-agent framework and AMP Suite</title><link>https://shoubhikbanerjee.github.io/blog/p/crewai-introduces-open-source-multi-agent-framework-and-amp-suite/</link><pubDate>Mon, 31 Aug 2026 22:56:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/crewai-introduces-open-source-multi-agent-framework-and-amp-suite/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/170677839?v=4" alt="Featured image of post CrewAI introduces open-source multi-agent framework and AMP Suite" /&gt;&lt;h1 id="crewai-introduces-open-source-multi-agent-framework-and-amp-suite"&gt;CrewAI introduces open-source multi-agent framework and AMP Suite
+&lt;/h1&gt;&lt;p&gt;CrewAI has launched an open-source Python framework for building production-ready multi-agent workflows, alongside the CrewAI AMP Suite for enterprise-grade deployment and management.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;CrewAI is an open-source Python framework designed to enable autonomous agent collaboration through Crews and precise, event-driven control through Flows. It fosters collaborative intelligence, allowing agents to work together seamlessly on complex tasks.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Crews&lt;/strong&gt;: Optimize for autonomy and collaborative intelligence with role-based AI agents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flows&lt;/strong&gt;: Build event-driven automations combining precise workflow control, single LLM calls, and native support for Crews.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;High-level abstractions and low-level APIs&lt;/strong&gt;: Provides flexibility for developers to build production-ready multi-agent systems.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;CrewAI offers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Role-based AI agents with defined goals, backstories, and tools.&lt;/li&gt;
+&lt;li&gt;Structured task descriptions and dependencies for workflow automation.&lt;/li&gt;
+&lt;li&gt;Community-driven learning with over 100,000 developers certified through courses at learn.crewai.com.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The CrewAI AMP Suite adds:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Managed deployment, observability, governance, security, and enterprise support.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Crew Control Plane&lt;/strong&gt; with key features:
+&lt;ul&gt;
+&lt;li&gt;Tracing &amp;amp; Observability: Real-time monitoring of agents and workflows, including metrics, logs, and traces.&lt;/li&gt;
+&lt;li&gt;Unified Control Plane: Centralized platform for managing, monitoring, and scaling AI agents and workflows.&lt;/li&gt;
+&lt;li&gt;Seamless Integrations: Connectivity with existing enterprise systems, data sources, and cloud infrastructure.&lt;/li&gt;
+&lt;li&gt;Advanced Security: Robust security and compliance measures.&lt;/li&gt;
+&lt;li&gt;Actionable Insights: Real-time analytics and reporting.&lt;/li&gt;
+&lt;li&gt;24/7 Support: Dedicated enterprise support.&lt;/li&gt;
+&lt;li&gt;On-premise and Cloud Deployment Options: Flexible deployment based on security and compliance requirements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The CrewAI framework is open-source and available for developers.&lt;/li&gt;
+&lt;li&gt;The Crew Control Plane, part of the AMP Suite, is available for free trial.&lt;/li&gt;
+&lt;li&gt;CrewAI AMP Suite is designed for enterprises seeking scalable, intelligent automation solutions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;CrewAI is rapidly becoming the standard for production-ready agentic automation, offering both a flexible open-source framework and an enterprise-grade suite for managed deployment and control.&lt;/p&gt;
+&lt;p&gt;#CrewAI #MultiAgentAI #AIAutomation #OpenSource #EnterpriseAI #AgenticWorkflow&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/crewAIInc/crewAI" target="_blank" rel="noopener"
+&gt;crewAIInc/crewAI&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>n8n launches fair-code AI workflow automation platform</title><link>https://shoubhikbanerjee.github.io/blog/p/n8n-launches-fair-code-ai-workflow-automation-platform/</link><pubDate>Mon, 31 Aug 2026 22:56:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/n8n-launches-fair-code-ai-workflow-automation-platform/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/45487711?v=4" alt="Featured image of post n8n launches fair-code AI workflow automation platform" /&gt;&lt;h1 id="n8n-launches-fair-code-ai-workflow-automation-platform"&gt;n8n launches fair-code AI workflow automation platform
+&lt;/h1&gt;&lt;p&gt;n8n has introduced a fair-code workflow automation platform with native AI capabilities, enabling users to build and deploy AI agents and workflows. The platform combines visual building with custom code, supports self-hosting or cloud deployment, and offers 1500+ integrations.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Fair-code platform for building and deploying AI agents and workflows.&lt;/li&gt;
+&lt;li&gt;Combines a visual canvas with custom code (JavaScript, Python, npm packages).&lt;/li&gt;
+&lt;li&gt;AI automation designed for real-world use, from prototype to production.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Design multi-step AI workflows with logic, tool use, human approvals, and full observability.&lt;/li&gt;
+&lt;li&gt;Connect to OpenAI, Anthropic, Google, or open-source models and switch providers without changing architecture.&lt;/li&gt;
+&lt;li&gt;Build and operationalize AI workflows and multi-step agents using your own data, models, and tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Self-hostable or deployable in the cloud with role-based access, audit trails, and support for sensitive data.&lt;/li&gt;
+&lt;li&gt;1500+ integrations and 9,000+ workflow templates to connect AI with existing systems.&lt;/li&gt;
+&lt;li&gt;Source-available under the Sustainable Use License and n8n Enterprise License.&lt;/li&gt;
+&lt;li&gt;Pronounced as &amp;ldquo;n-eight-n&amp;rdquo; (derived from &amp;ldquo;nodemation&amp;rdquo;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Try n8n instantly with Docker using the install script:
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://get.n8n.io &lt;span class="p"&gt;|&lt;/span&gt; sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker volume create n8n_data
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker run -it --rm --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Access the editor at &lt;code&gt;http://localhost:5678&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Enterprise licenses available for additional features and support.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#n8n #AIautomation #workflow #faircode #selfhosting&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/n8n-io/n8n" target="_blank" rel="noopener"
+&gt;n8n-io/n8n&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://github.com/langgenius/dify" target="_blank" rel="noopener"
+&gt;langgenius/dify&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://github.com/langfuse/langfuse" target="_blank" rel="noopener"
+&gt;langfuse/langfuse&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://github.com/AgentOps-AI/agentops" target="_blank" rel="noopener"
+&gt;AgentOps-AI/agentops&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://github.com/OpenHands/OpenHands" target="_blank" rel="noopener"
+&gt;OpenHands/OpenHands&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://github.com/OpenHands/software-agent-sdk" target="_blank" rel="noopener"
+&gt;OpenHands/software-agent-sdk&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://github.com/QuantaAlpha/RepoMaster" target="_blank" rel="noopener"
+&gt;QuantaAlpha/RepoMaster&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://github.com/SWE-agent/mini-swe-agent" target="_blank" rel="noopener"
+&gt;SWE-agent/mini-swe-agent&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

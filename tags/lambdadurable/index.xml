@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LambdaDurable on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/lambdadurable/</link><description>Recent content in LambdaDurable on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 07 Oct 2026 22:09:50 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/lambdadurable/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS adds automated remediation workflow using Lambda Durable Functions, EventBridge, and Bedrock</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-adds-automated-remediation-workflow-using-lambda-durable-functions-eventbridge-and-bedrock/</link><pubDate>Wed, 07 Oct 2026 22:09:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-adds-automated-remediation-workflow-using-lambda-durable-functions-eventbridge-and-bedrock/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-featured-image.png" alt="Featured image of post AWS adds automated remediation workflow using Lambda Durable Functions, EventBridge, and Bedrock" /&gt;&lt;h1 id="aws-adds-automated-remediation-workflow-using-lambda-durable-functions-eventbridge-and-bedrock"&gt;AWS adds automated remediation workflow using Lambda Durable Functions, EventBridge, and Bedrock
+&lt;/h1&gt;&lt;p&gt;AWS announced an update that extends the AWS DevOps Agent with an automated remediation workflow built on AWS Lambda Durable Functions, Amazon EventBridge, and Amazon Bedrock. The new flow keeps the DevOps Agent in its safe observe‑and‑report mode while adding a controlled, programmable step that can apply fixes after a single approval.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Reducing the time between incident detection, investigation, and remediation is a critical priority for organizations running production workloads on AWS.&lt;/li&gt;
+&lt;li&gt;When an issue arises, on‑call engineers often need to diagnose the problem across components, identify the root cause, and apply a fix, sometimes in the middle of the night.&lt;/li&gt;
+&lt;li&gt;AWS DevOps Agent automatically triages incidents, provides root‑cause analysis (RCA) and recommended actions, but typically does &lt;strong&gt;not&lt;/strong&gt; modify production resources directly.&lt;/li&gt;
+&lt;li&gt;The update demonstrates how to combine AWS Lambda Durable Functions, Amazon EventBridge, and Amazon Bedrock to automate the remediation step, turning investigation summaries into pre‑validated fixes ready for a single approval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Investigation completed&lt;/strong&gt; – AWS DevOps Agent emits an event containing symptoms, findings, and RCA.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Event receipt&lt;/strong&gt; – Amazon EventBridge receives the investigation‑completion event and triggers the &lt;code&gt;devops-agent-trigger&lt;/code&gt; Lambda function with the investigation content.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Orchestration start&lt;/strong&gt; – The trigger function packages the summary and starts the &lt;code&gt;devops-agent-remediation-durable&lt;/code&gt; durable function.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bedrock analysis&lt;/strong&gt; – The durable function sends the investigation context to Amazon Bedrock. Bedrock analyzes the findings and searches an allowlist of approved Lambda tools (e.g., &lt;code&gt;devops-agent-lambda-tool&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tool selection&lt;/strong&gt; – Bedrock proposes specific remediation actions based on the findings and the available tools.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Read‑only execution&lt;/strong&gt; – For read‑only actions, the durable function runs the selected tools autonomously.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mutating actions&lt;/strong&gt; – For infrastructure‑changing actions, the workflow pauses and waits for a human approval signal.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Approval &amp;amp; execution&lt;/strong&gt; – After approval, the durable function applies the remediation actions using the selected tools.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iterative loop&lt;/strong&gt; – The function operates as an agentic loop, repeatedly invoking Bedrock, executing approved tools, and feeding results back until remediation is complete.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lambda Durable Functions&lt;/strong&gt; can run for up to one year without extra infrastructure, automatically checkpoint progress, suspend during long‑running tasks, and recover from failures.&lt;/li&gt;
+&lt;li&gt;The orchestrator enforces a &lt;strong&gt;curated allowlist&lt;/strong&gt; of remediation tools; each tool is a purpose‑built Lambda function that performs a single, well‑scoped action (e.g., reading a Lambda configuration or updating an IAM policy statement).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Read‑only tools&lt;/strong&gt; run autonomously; &lt;strong&gt;mutating tools&lt;/strong&gt; cause the durable function to pause and wait for an approve/reject signal.&lt;/li&gt;
+&lt;li&gt;The approval signal accepts an arbitrary JSON payload, allowing parameter overrides or reviewer observations to be fed back into the Bedrock conversation before execution.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tool (allowlist)&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;devops-agent-lambda-tool&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Performs a specific, well‑scoped action such as reading a Lambda configuration or updating an IAM policy statement&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-benefits"&gt;🚀 Benefits
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Reduces mean time to resolution (MTTR) by preparing pre‑validated changes that require only a single approval click.&lt;/li&gt;
+&lt;li&gt;Frees on‑call engineers from repetitive diagnostic and manual remediation steps.&lt;/li&gt;
+&lt;li&gt;Keeps automated actions auditable and safe by limiting execution to an approved set of Lambda tools.&lt;/li&gt;
+&lt;li&gt;Allows the workflow to pause for minutes, hours, or days without consuming compute resources, then resume exactly where it left off.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-realworld-impact--cornerstone-orionai"&gt;📈 Real‑world impact – Cornerstone Orion AI
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Cornerstone OnDemand’s Orion AI, built with Amazon Bedrock and Strands Agents, reduced database incident diagnosis time from &lt;strong&gt;45 minutes&lt;/strong&gt; to &lt;strong&gt;10 minutes&lt;/strong&gt; (a 78 % reduction).&lt;/li&gt;
+&lt;li&gt;A three‑person team delivered Orion AI in six months.&lt;/li&gt;
+&lt;li&gt;Orion AI also eliminated a 15‑minute reporting lag between SRE and data teams, reduced redundant alerts by a median of 65 %, and collapsed a four‑step manual handoff into a single interaction.&lt;/li&gt;
+&lt;li&gt;The system illustrates the same principles: AI‑driven investigation, curated tool execution, and human‑in‑the‑loop approval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The updated workflow shows how AWS services can be combined to automate the full incident‑response loop while preserving control and auditability.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-20995-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #DevOpsAgent #LambdaDurable #Bedrock #Automation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/automate-remediation-post-aws-devops-agent-investigation/" target="_blank" rel="noopener"
+&gt;Automate remediation post AWS DevOps Agent investigation | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-cornerstone-ondemand-cut-database-diagnosis-by-78-with-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;How Cornerstone OnDemand cut database diagnosis by 78% with Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

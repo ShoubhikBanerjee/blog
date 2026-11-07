@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HopperGPU on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/hoppergpu/</link><description>Recent content in HopperGPU on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Oct 2026 22:07:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/hoppergpu/index.xml" rel="self" type="application/rss+xml"/><item><title>Fused MoE Kernel Optimizes Decode Performance on NVIDIA Hopper GPUs</title><link>https://shoubhikbanerjee.github.io/blog/p/fused-moe-kernel-optimizes-decode-performance-on-nvidia-hopper-gpus/</link><pubDate>Tue, 13 Oct 2026 22:07:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/fused-moe-kernel-optimizes-decode-performance-on-nvidia-hopper-gpus/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/08/ML-22058-featured-image.png" alt="Featured image of post Fused MoE Kernel Optimizes Decode Performance on NVIDIA Hopper GPUs" /&gt;&lt;h1 id="fused-moe-kernel-optimizes-decode-performance-on-nvidia-hopper-gpus"&gt;Fused MoE Kernel Optimizes Decode Performance on NVIDIA Hopper GPUs
+&lt;/h1&gt;&lt;p&gt;Mixture‑of‑Experts (MoE) models boost LLM capacity while keeping per‑token compute low, but the decode phase suffers from high latency because the underlying GPU kernels are inefficient.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;MoE is a sparsely‑activated architecture that scales large language model capacity while keeping per‑token compute low.&lt;/li&gt;
+&lt;li&gt;MoE operations make up a large share of total compute time, so inefficiencies directly raise request latency and cost.&lt;/li&gt;
+&lt;li&gt;Optimizing MoE operations through kernel engineering offers the largest opportunity for performance gains.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-moe-and-fused-kernels-work"&gt;🧩 How MoE and Fused Kernels Work
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Fused MoE&lt;/strong&gt; merges token routing, data shuffling, and specialized network calculations into a single batched GPU operation, replacing separate sequential loop operations.&lt;/li&gt;
+&lt;li&gt;This fusion provides latency advantages but adds complexity to kernel implementation and debugging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-hopper-wgmma-constraints"&gt;⚙️ Hopper WGMMA Constraints
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;NVIDIA Hopper uses the Warp Group Matrix Multiply‑Accumulate (WGMMA) instruction, executed across a cooperative warp‑group of 128 threads.&lt;/li&gt;
+&lt;li&gt;In the &lt;code&gt;wgmma.mma_async&lt;/code&gt; definition, the hardware fixes the matrix row dimension &lt;strong&gt;M&lt;/strong&gt; to 64, defining the thread‑mapping topology.&lt;/li&gt;
+&lt;li&gt;Operand &lt;strong&gt;A&lt;/strong&gt; must occupy this fixed &lt;strong&gt;M = 64&lt;/strong&gt; dimension (using registers or shared memory); Operand &lt;strong&gt;B&lt;/strong&gt; occupies the variable &lt;strong&gt;N&lt;/strong&gt; dimension via a shared‑memory descriptor.&lt;/li&gt;
+&lt;li&gt;The operand slots are structurally non‑interchangeable, and peak tile utilization requires &lt;strong&gt;M ≥ 64&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The hardware enforces a minimum layout shape for the leading dimension of the first operand, locking the block height to exactly 64 rows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="table-operand-mapping-on-hopper-wgmma"&gt;Table: Operand Mapping on Hopper WGMMA
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Operand&lt;/th&gt;
+&lt;th&gt;Fixed/Variable Dimension&lt;/th&gt;
+&lt;th&gt;Mapping Requirement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A&lt;/td&gt;
+&lt;td&gt;Fixed &lt;strong&gt;M = 64&lt;/strong&gt; rows&lt;/td&gt;
+&lt;td&gt;Must fill a 64‑row layout bucket&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;B&lt;/td&gt;
+&lt;td&gt;Variable &lt;strong&gt;N&lt;/strong&gt; dimension&lt;/td&gt;
+&lt;td&gt;Can be large (e.g., 8192)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-decoding-bottleneck-and-the-flip-technique"&gt;📈 Decoding Bottleneck and the Flip Technique
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Decode processes a single token per user sequence, yielding a thin batch dimension &lt;strong&gt;M&lt;/strong&gt; (often &lt;strong&gt;M &amp;lt; 64&lt;/strong&gt;, sometimes &lt;strong&gt;M = 1&lt;/strong&gt;).&lt;/li&gt;
+&lt;li&gt;Matrix &lt;strong&gt;A&lt;/strong&gt; becomes a thin vector (e.g., 1 × 4096), while matrix &lt;strong&gt;B&lt;/strong&gt; (expert weights) remains a large dense block (e.g., 4096 × 8192).&lt;/li&gt;
+&lt;li&gt;Because &lt;strong&gt;M&lt;/strong&gt; is tiny, &lt;strong&gt;A&lt;/strong&gt; cannot fill the hardware’s 64‑row layout, leaving many Tensor Core lanes idle and causing poor utilization.&lt;/li&gt;
+&lt;li&gt;MoE layers fracture the workload across many experts, making them especially sensitive to these constraints.&lt;/li&gt;
+&lt;li&gt;For a &lt;code&gt;topk=8&lt;/code&gt; routine, the effective &lt;strong&gt;N&lt;/strong&gt; dimension inside the fused kernel expands to tens or hundreds of thousands of parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flipping the multiplication&lt;/strong&gt; (transposing the matrices before PTX assembly) moves the large expert dimension &lt;strong&gt;N = 8192&lt;/strong&gt; into the first operand position, satisfying the mandatory 64‑row requirement and unlocking hardware prefetching.&lt;/li&gt;
+&lt;li&gt;This re‑alignment matches the exact topography of Hopper silicon, allowing the expansive &lt;strong&gt;N&lt;/strong&gt; dimension to flood the required rows and dramatically improve hardware utilization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By addressing the structural asymmetry of Hopper’s WGMMA instruction, the fused MoE kernel reduces decode latency.&lt;/li&gt;
+&lt;li&gt;Better utilization of Tensor Core capacity lowers the compute cost of serving MoE‑based LLMs.&lt;/li&gt;
+&lt;li&gt;The technique enables MoE models to retain their capacity‑scaling benefits without incurring prohibitive inference overhead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#MixtureOfExperts #HopperGPU #KernelOptimization #LLMInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/mixture-of-experts-kernel-engineering-on-amazon-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Mixture-of-Experts kernel engineering on Amazon SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

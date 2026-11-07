@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/kubernetes/</link><description>Recent content in Kubernetes on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 06 Nov 2026 22:02:31 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA DSX AI Factory Platform adds open‑source tools for reliable GPU‑Kubernetes clusters</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-dsx-ai-factory-platform-adds-opensource-tools-for-reliable-gpukubernetes-clusters/</link><pubDate>Fri, 06 Nov 2026 22:02:31 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-dsx-ai-factory-platform-adds-opensource-tools-for-reliable-gpukubernetes-clusters/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/dsx-os-cluster-readiness-featured-660x370.png" alt="Featured image of post NVIDIA DSX AI Factory Platform adds open‑source tools for reliable GPU‑Kubernetes clusters" /&gt;&lt;h1 id="nvidia-dsx-ai-factory-platform-adds-opensource-tools-for-reliable-gpukubernetes-clusters"&gt;NVIDIA DSX AI Factory Platform adds open‑source tools for reliable GPU‑Kubernetes clusters
+&lt;/h1&gt;&lt;p&gt;One underperforming GPU can slow an entire distributed training job, so measuring &lt;strong&gt;goodput&lt;/strong&gt; – the volume of work successfully completed – is a more useful way to gauge cluster efficiency. NVIDIA’s DSX AI Factory Platform bundles the technologies needed to design, build, and operate efficient, resilient AI factories.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The platform’s open‑source software layer, &lt;strong&gt;NVIDIA DSX OS&lt;/strong&gt;, provides tools for configuring, certifying, and maintaining the health of accelerated Kubernetes infrastructure.&lt;/li&gt;
+&lt;li&gt;It aims to keep every GPU, node, and network component in a ready state so that goodput remains high across large training jobs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-components"&gt;🛠️ Components
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;What it does&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;NVIDIA DSX OS&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Configures, certifies, and maintains accelerated Kubernetes clusters.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;NVIDIA AI Cluster Runtime (AICR)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Establishes a reproducible, version‑locked baseline for GPU‑optimized Kubernetes infrastructure; renders configuration recipes as bundles for existing deployment tools.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;NVIDIA Cluster Readiness Engine (NVCRE)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Validates cluster readiness for production workloads; tests GPUs, networking, and storage with AI workloads and diagnostics; records certification results and flags faulty nodes.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;NVSentinel&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Monitors cluster health; publishes node conditions based on GPU, node, and network health; cordons or taints unhealthy nodes, drains workloads, remediates faults, and can trigger re‑validation with NVCRE before returning nodes to service.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;All three projects are licensed under Apache 2.0 and welcome external contributions.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AICR&lt;/strong&gt; defines the cluster’s software baseline in version‑controlled files and renders them into artifacts that any deployment tool can apply.&lt;/li&gt;
+&lt;li&gt;Declarative templates detect configuration drift from manual changes and keep node configurations consistent after repairs.&lt;/li&gt;
+&lt;li&gt;Each recipe entry pins a component version, declares required healthy dependencies, and includes a &lt;code&gt;healthCheckAsserts&lt;/code&gt; block that runs after installation.&lt;/li&gt;
+&lt;li&gt;The health assertions filter on the container &lt;em&gt;waiting&lt;/em&gt; reason rather than the pod phase alone.&lt;/li&gt;
+&lt;li&gt;The bundle command produces ready‑to‑use artifacts:
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;aicr bundle --recipe recipe.yaml --deployer argocd --output ./bundles
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;--deployer&lt;/code&gt; flag accepts &lt;strong&gt;helm&lt;/strong&gt;, &lt;strong&gt;argocd&lt;/strong&gt;, &lt;strong&gt;argocd‑helm&lt;/strong&gt;, &lt;strong&gt;flux&lt;/strong&gt;, or &lt;strong&gt;helmfile&lt;/strong&gt;, so the same validated recipe can become Argo CD Application manifests, Flux resources, a Helmfile release graph, or plain Helm commands.&lt;/li&gt;
+&lt;li&gt;Because the recipe is a file, standard version‑control workflows (history, code review, drift detection) manage the baseline.&lt;/li&gt;
+&lt;li&gt;Drift detection can be enforced as a CI gate:
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;aicr diff --baseline ./golden.yaml --target cm://default/aicr-snapshot --fail-on-drift
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-measuring-efficiency"&gt;📊 Measuring Efficiency
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Goodput focuses on the actual work completed, highlighting the impact of any slow GPU on overall training performance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The DSX OS, AICR, NVCRE, and NVSentinel projects are all open source under the Apache 2.0 license.&lt;/li&gt;
+&lt;li&gt;External contributions are encouraged, and the tools integrate with common GitOps deployment pipelines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/dsx-os-cluster-readiness-featured-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/kubernetes-clusters-660x370-jpg.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Kubernetes #AIInfrastructure #GPUClusters&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/configure-certify-and-operate-kubernetes-gpu-clusters-with-nvidia-dsx-os/" target="_blank" rel="noopener"
+&gt;Configure, Certify, and Operate Kubernetes GPU Clusters with NVIDIA DSX OS | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ModelSupport on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/modelsupport/</link><description>Recent content in ModelSupport on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 23 Oct 2026 22:04:00 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/modelsupport/index.xml" rel="self" type="application/rss+xml"/><item><title>TorchNeuron Model Support Space Shows Which Transformers Run on AWS Trainium</title><link>https://shoubhikbanerjee.github.io/blog/p/torchneuron-model-support-space-shows-which-transformers-run-on-aws-trainium/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/torchneuron-model-support-space-shows-which-transformers-run-on-aws-trainium/</guid><description>&lt;img src="https://huggingface.co/blog/assets/torch-neuronx-model-support/thumbnail.jpg" alt="Featured image of post TorchNeuron Model Support Space Shows Which Transformers Run on AWS Trainium" /&gt;&lt;h1 id="torchneuron-model-support-space-shows-which-transformers-run-on-aws-trainium"&gt;TorchNeuron Model Support Space Shows Which Transformers Run on AWS Trainium
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;A new Hugging Face Space, &lt;strong&gt;torch‑neuronx‑model‑support&lt;/strong&gt;, lets you see whether a given Transformers model runs unmodified on AWS Trainium and provides the exact script to run it yourself.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Uses the &lt;code&gt;torch‑neuronx&lt;/code&gt; package, the native PyTorch backend for AWS Trainium.&lt;/li&gt;
+&lt;li&gt;Runs Transformers models on Trainium the same way they run on any other device.&lt;/li&gt;
+&lt;li&gt;The provided &lt;code&gt;run.py&lt;/code&gt; script loads the model with &lt;code&gt;from_pretrained&lt;/code&gt;, shards it when needed, then generates with a static cache and &lt;code&gt;torch.compile(backend=&amp;quot;neuron&amp;quot;)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-what-the-space-displays"&gt;📊 What the Space displays
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;PASS/FAIL result for each model.&lt;/li&gt;
+&lt;li&gt;Number of Trainium cores the model is sharded over.&lt;/li&gt;
+&lt;li&gt;Wall‑time of the run (compilation included).&lt;/li&gt;
+&lt;li&gt;Peak device memory usage.&lt;/li&gt;
+&lt;li&gt;The Neuron stack version, required packages, and the &lt;code&gt;run.py&lt;/code&gt; script used.&lt;/li&gt;
+&lt;li&gt;If a model is omitted, the Space explains why (e.g., not prioritized or truly incompatible).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-testing-methodology"&gt;📈 Testing methodology
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tests run on a Trainium2 (&lt;code&gt;trn2&lt;/code&gt;) instance, typically in the AWS Neuron Deep Learning Container.&lt;/li&gt;
+&lt;li&gt;Each model is sharded over the smallest number of Trainium cores that can hold its weights (maximum 16 cores, i.e., four Trainium2 devices).&lt;/li&gt;
+&lt;li&gt;Most models use tensor parallelism; Mixture‑of‑Experts models without a tensor‑parallel plan use expert parallelism only.&lt;/li&gt;
+&lt;li&gt;The test generates 32 tokens and checks them.
+&lt;ul&gt;
+&lt;li&gt;On a single core, the tokens are compared with a CPU run of the same checkpoint.&lt;/li&gt;
+&lt;li&gt;When sharded, a small judge model verifies that the text is fluent English.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;A PASS only confirms correctness of the 32‑token output; it says nothing about throughput or longer generations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-configurability"&gt;⚙️ Configurability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Space opens on the &lt;strong&gt;Selected&lt;/strong&gt; view (our own selection of top‑downloaded and trending models).&lt;/li&gt;
+&lt;li&gt;You can switch to &lt;strong&gt;Trending&lt;/strong&gt; or &lt;strong&gt;Downloads&lt;/strong&gt; views and type part of a model name to look it up.&lt;/li&gt;
+&lt;li&gt;Versions of the Neuron compiler (&lt;code&gt;neuronx‑cc&lt;/code&gt;) and Transformers library can be chosen.&lt;/li&gt;
+&lt;li&gt;When a model is left out on purpose, the Space tells you the reason.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-current-scope"&gt;📌 Current scope
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Only Transformers models are tested.&lt;/li&gt;
+&lt;li&gt;The selection is limited to text‑generation and image‑text‑to‑text models.&lt;/li&gt;
+&lt;li&gt;Only models that fit on four Trainium2 devices (up to 16 cores) are included.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-getting-started"&gt;🚀 Getting started
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Open the Space (it starts on the Selected view).&lt;/li&gt;
+&lt;li&gt;Choose the desired &lt;code&gt;neuronx‑cc&lt;/code&gt; and Transformers versions.&lt;/li&gt;
+&lt;li&gt;Follow the displayed &lt;code&gt;run.py&lt;/code&gt; script: install the listed packages, then run on a &lt;code&gt;trn2&lt;/code&gt; instance.&lt;/li&gt;
+&lt;li&gt;The first run compiles the model’s graphs; subsequent runs can reuse compiled graphs by copying them from the public NEFF cache bucket.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-where-the-data-comes-from"&gt;🔎 Where the data comes from
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;All rows are sourced from the public &lt;code&gt;aws‑neuron/torch‑neuronx‑model‑support&lt;/code&gt; dataset.&lt;/li&gt;
+&lt;li&gt;The dataset contains one Parquet file per pair of &lt;code&gt;neuronx‑cc&lt;/code&gt; and library versions.&lt;/li&gt;
+&lt;li&gt;Each row stores the model’s result, any error, the stack versions, and the &lt;code&gt;run.py&lt;/code&gt; script that was executed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Next time you wonder whether a model runs on Trainium, look it up.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/spaces/aws-neuron/torch-neuronx-model-support/resolve/main/thumbnail.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/hf-torchneuron/thumbnail.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#TorchNeuron #AWS #Trainium #Transformers #ModelSupport&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/torch-neuronx-model-support" target="_blank" rel="noopener"
+&gt;Does Your Model Run on AWS Trainium? Look It Up&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

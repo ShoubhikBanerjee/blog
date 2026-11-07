@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>BlackForestLabs on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/blackforestlabs/</link><description>Recent content in BlackForestLabs on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 07 Nov 2026 18:01:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/blackforestlabs/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA and Black Forest Labs Accelerate FLUX 3 Image Klein Performance</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-and-black-forest-labs-accelerate-flux-3-image-klein-performance/</link><pubDate>Sat, 07 Nov 2026 18:01:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-and-black-forest-labs-accelerate-flux-3-image-klein-performance/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/techblog-5893-article-kix-ulkeecvizi09-660x370.png" alt="Featured image of post NVIDIA and Black Forest Labs Accelerate FLUX 3 Image Klein Performance" /&gt;&lt;h1 id="nvidia-and-black-forest-labs-accelerate-flux-3-image-klein-performance"&gt;NVIDIA and Black Forest Labs Accelerate FLUX 3 Image Klein Performance
+&lt;/h1&gt;&lt;p&gt;Black Forest Labs (BFL) has introduced FLUX 3 Image Klein, an image editing and generation model optimized for NVIDIA GPUs. Trained on NVIDIA GB200 NVL72, the model leverages TensorRT LLM VisualGen to achieve significant performance improvements in high-resolution image generation.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;FLUX 3 Image Klein is designed for both image editing and generation, offering different checkpoints to meet specific latency and fidelity requirements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Base Checkpoint&lt;/strong&gt;: Uses 50 denoising steps with a classifier-free guidance (CFG) scale of 3.5.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Distilled Checkpoint&lt;/strong&gt;: Uses 16 denoising steps without CFG.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The model architecture combines multiple components to process text and imagery:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Text Conditioning&lt;/strong&gt;: Uses Qwen3-VL-4B-Instruct.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Latent Refinement&lt;/strong&gt;: Employs a diffusion transformer (DiT).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Decoding/Encoding&lt;/strong&gt;: Uses an autoencoder for decoding latents into images and encoding image-to-image (I2I) reference inputs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Klein processes text, noisy target-image, and optional reference-image streams independently before combining them through joint attention.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;TensorRT LLM VisualGen provides a dedicated runtime that supports BF16, FP8, and NVFP4 variants at launch. Technical optimizations include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;FlashInfer PrimsTS Kernels&lt;/strong&gt;: These kernels combine optimized general matrix multiplication (GEMM) with fused epilogues, including SwiGLU and query/key/value (QKV) projections with rotary position embeddings (RoPE).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Attention Bottleneck Mitigation&lt;/strong&gt;: In 2048x2048 tests, attention accounts for approximately 60% of DiT GPU kernel time. VisualGen supports quantized attention (cuDNN FP8 or VC-Attention FP8) and sparse attention (Sol-Attention) to reduce these costs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Precision Support&lt;/strong&gt;: VisualGen supports BFL’s prequantized NVFP4 DiT checkpoints for both Base and distilled variants.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-metrics"&gt;🚀 Performance metrics
+&lt;/h2&gt;&lt;p&gt;In 2048x2048 tests on a single NVIDIA B200 GPU, combined optimizations for FLUX 3 Image Klein Base delivered the following improvements compared with uncompiled BF16 inference:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Text-to-Image (T2I)&lt;/strong&gt;: Up to 3.46x faster generation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Image-to-Image (I2I)&lt;/strong&gt;: Up to 4.45x faster generation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On NVIDIA Blackwell GPUs, the NVFP4 variant specifically improved performance over BF16 by up to 1.62x for T2I and 1.58x for I2I. Additionally, pinned NVFP4 PrimsTS kernels delivered 1.02–1.10x faster T2I generation on B200 than the autotuned TensorRT LLM NVFP4 GEMM implementation.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Optimization Method&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Speedup (Base)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Speedup (Distilled)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;LPIPS Score (Base)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;LPIPS Score (Distilled)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;cuDNN FP8&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.08x&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.09x&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.072&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.161&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;VC-Attention FP8&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.18x&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.16x&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.086&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.151&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;Note: Learned Perceptual Image Patch Similarity (LPIPS) measures perceptual differences between generated images. VC-Attention FP8 tests used a repair budget of ρ=0.005 to select tokens for residual correction.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Generating high-resolution images requires multiple sequential passes through models with billions of parameters. Because attention is a major bottleneck in these workloads, the integration of optimized kernels and low-precision formats like NVFP4 is necessary to maintain fidelity while increasing generation speed.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/techblog-5893-figure-1-image-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/techblog-5893-figure-1-image-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/techblog-5893-figure-4-image-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #BlackForestLabs #ComputerVision #TensorRT #GenerativeAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/speed-up-image-generation-with-flux-3-image-klein-on-nvidia-blackwell-gpus/" target="_blank" rel="noopener"
+&gt;Speed Up Image Generation with FLUX 3 Image Klein on NVIDIA Blackwell GPUs | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

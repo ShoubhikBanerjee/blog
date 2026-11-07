@@ -1,0 +1,1484 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SageMaker on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/sagemaker/</link><description>Recent content in SageMaker on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 30 Oct 2026 22:02:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/sagemaker/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Batch Introduces Quota Management for Amazon SageMaker Training Jobs</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-batch-introduces-quota-management-for-amazon-sagemaker-training-jobs/</link><pubDate>Fri, 30 Oct 2026 22:02:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-batch-introduces-quota-management-for-amazon-sagemaker-training-jobs/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-featured-image.png" alt="Featured image of post AWS Batch Introduces Quota Management for Amazon SageMaker Training Jobs" /&gt;&lt;h1 id="aws-batch-introduces-quota-management-for-amazon-sagemaker-training-jobs"&gt;AWS Batch Introduces Quota Management for Amazon SageMaker Training Jobs
+&lt;/h1&gt;&lt;p&gt;AWS has introduced quota management for AWS Batch, providing a new capability for administrators to manage compute capacity for Amazon SageMaker Training workloads. This feature allows users to queue, schedule, and retry machine learning training jobs without building their own infrastructure, utilizing the managed scheduling features of AWS Batch.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Quota management enables administrators to divide compute capacity into quota shares, which are organized by specific teams, projects, or workloads. These quota shares act as virtual queues nested hierarchically within an associated job queue. This system is designed to maximize GPU utilization while honoring each team&amp;rsquo;s specific allocation during peak demand.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;AWS Batch prioritizes quota shares that are under their capacity limits when scheduling jobs. Each quota share includes defined compute quotas and specific strategies for handling idle compute resources.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Strategy&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;RESERVE&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Idle compute is reserved until jobs arrive for that specific quota share.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LEND&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Idle compute is lent to other quota shares that have work available.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LEND_AND_BORROW&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Idle compute is lent when idle and borrowed when the share has work that could benefit from extra capacity.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;If a quota share has lent out its capacity and new jobs arrive, AWS Batch performs cross-share preemption. This automatically reclaims resources for the lending share, eliminating the need for administrators to manually track and terminate borrowing jobs. Conversely, if a share is at its limit and other capacity is idle, workloads can borrow that capacity to run.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The system also supports priority-based in-share preemption. When enabled, higher priority jobs within a single quota share can preempt lower priority jobs that are in the SCHEDULED, STARTING, or RUNNING states.&lt;/p&gt;
+&lt;p&gt;To implement these new capabilities, administrators must configure three main components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A Scheduling Policy containing a &lt;code&gt;quotaSharePolicy&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;A Service Environment that defines capacity limits for specific instances (such as &lt;code&gt;ml.g5.xlarge&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;A SageMaker Training job queue connected to both the policy and the environment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;These features are integrated with the SageMaker Python SDK v3. Configuration can be managed through the AWS Command Line Interface (AWS CLI), the AWS console, or via sample notebooks using the &lt;code&gt;aws_batch&lt;/code&gt; module.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWSBatch #SageMaker #MachineLearning #CloudInfrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/lend-and-borrow-resources-across-teams-with-aws-batchs-quota-management-for-sagemaker-training-jobs/" target="_blank" rel="noopener"
+&gt;Lend and borrow resources across teams with AWS Batch’s quota management for SageMaker Training jobs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker adds Seekable OCI indexing to lazy‑load deep learning container images</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-adds-seekable-oci-indexing-to-lazyload-deep-learning-container-images/</link><pubDate>Wed, 28 Oct 2026 22:03:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-adds-seekable-oci-indexing-to-lazyload-deep-learning-container-images/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-21882-featured-image-4.png" alt="Featured image of post Amazon SageMaker adds Seekable OCI indexing to lazy‑load deep learning container images" /&gt;&lt;h1 id="amazon-sagemaker-adds-seekable-oci-indexing-to-lazyload-deep-learning-container-images"&gt;Amazon SageMaker adds Seekable OCI indexing to lazy‑load deep learning container images
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker AI Training and Processing jobs now support Seekable OCI (SOCI) indexing, which removes the full container image download from the critical path and lets jobs start in seconds.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Every minute your deep learning container image spends downloading is a minute you pay for and a minute your team waits.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Container image download is pure overhead: billable job time that produces no model progress.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;For modern deep learning images, that overhead is several minutes on every single job.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Today, we’re excited to announce Seekable OCI (SOCI) indexing for Amazon SageMaker AI Training and Amazon SageMaker AI processing jobs, which takes full container image download off the critical path of every job.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;With SOCI indexing, SageMaker AI lazy‑loads your container image.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It fetches only the files needed to start the container and streams the rest in the background as your code runs, so your job begins in seconds instead of minutes.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Seekable OCI (SOCI) is an open source technology that lazy loads container images.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Instead of downloading the whole image before starting, the runtime uses a SOCI index to fetch only the files needed to launch the container immediately.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It then streams the rest in the background as your code accesses it.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;A SOCI index is metadata that maps every file inside your image.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;You store it in Amazon ECR as an OCI‑compliant artifact linked to your original image.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Because the index is a separate artifact, your image digest and any existing signatures remain valid.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-measured-results"&gt;📈 Measured results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;As we show in the What we measured section, this reduced GPU idle time during image pulls by up to 90 percent in our benchmarks.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;SOCI‑indexed images start Amazon SageMaker AI training containers in seconds, with no impact on training performance.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-adoption"&gt;⚙️ Adoption
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;You adopt it by pointing to a pre‑indexed AWS Deep Learning Container (DLC) or adding an index to your own image.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Neither approach requires changes to your job definition, entry point, or data channels.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;When you create a training or processing job, SageMaker AI checks whether the image you specified has a SOCI index and behaves accordingly:&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Because jobs always fall back to a standard download when needed, adding a SOCI index never prevents your job from running.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;You only gain faster startup.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;You never risk breaking an existing workflow.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;The result is faster job starts, lower job cost, and more time spent building models rather than waiting on infrastructure.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;SageMaker AI training and processing jobs run inside container images stored in Amazon Elastic Container Registry (Amazon ECR).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Before a job can execute your code, the service downloads the entire image to the instance.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It decompresses and writes every layer to disk.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;For small images this takes seconds.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;But deep learning images routinely exceed 10 GB or more.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;That download adds minutes to every job, and you pay for it as job time.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The impact is largest exactly where iteration speed matters most: hyperparameter tuning sweeps for hundreds of jobs, quick experiments, and short processing jobs, where image download can dominate total runtime.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;We pulled the same container images two ways on real SageMaker AI training jobs: standard download and SOCI‑indexed lazy loading.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-21882-1-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-21882-2-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/ML-21882-3-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #ContainerImages #SOCI #AWS #MLTraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/announcing-soci-indexed-images-for-faster-sagemaker-ai-jobs/" target="_blank" rel="noopener"
+&gt;Announcing SOCI-indexed images for faster SageMaker AI jobs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Updating MLOps Pipelines for Automated Edge Visual Inspection with SageMaker</title><link>https://shoubhikbanerjee.github.io/blog/p/updating-mlops-pipelines-for-automated-edge-visual-inspection-with-sagemaker/</link><pubDate>Tue, 27 Oct 2026 22:02:24 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/updating-mlops-pipelines-for-automated-edge-visual-inspection-with-sagemaker/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20483-featured-image.png" alt="Featured image of post Updating MLOps Pipelines for Automated Edge Visual Inspection with SageMaker" /&gt;&lt;h1 id="updating-mlops-pipelines-for-automated-edge-visual-inspection-with-sagemaker"&gt;Updating MLOps Pipelines for Automated Edge Visual Inspection with SageMaker
+&lt;/h1&gt;&lt;p&gt;An updated architecture pattern automates fleet-wide computer vision lifecycle management for visual quality inspection at the edge using the Amazon SageMaker Python SDK v3. The solution automates per-camera training, evaluation, compilation, and registration without requiring manual intervention, replacing the deprecated Amazon SageMaker Edge Manager with Amazon SageMaker Neo for edge optimization.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;When scaling visual inspection from a single proof-of-concept camera to dozens of plant lines with multiple cameras, a single computer vision model trained on pooled footage underperforms. Differences in camera angles, ambient light from bay doors, and glare off stainless surfaces require fine-tuned models for individual cameras. Managing thousands of models manually is impractical, creating the need for automated fleet-wide model lifecycle management.&lt;/p&gt;
+&lt;p&gt;This update builds on the pattern from the 2023 series &lt;em&gt;Build an end-to-end MLOps pipeline for visual quality inspection at the edge&lt;/em&gt; by updating to Amazon SageMaker Python SDK v3 and integrating SageMaker Neo for edge model compilation.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Re-training requests arrive via an Amazon Simple Queue Service (Amazon SQS) FIFO queue. An AWS Lambda function initiates an AWS Step Functions execution per request, which acquires a slot via a DynamoDB semaphore to limit concurrent executions to at most five by default. This queuing mechanism drains request bursts steadily while keeping concurrent SageMaker training jobs within standard account quotas without needing a quota increase.&lt;/p&gt;
+&lt;p&gt;Each execution runs a 13-step, dual-branch SageMaker Pipeline parameterized by camera ID:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Parallel Entry Steps&lt;/strong&gt;: Three entry steps execute in parallel: Preprocess, Fetch Latest Anomaly, and Fetch Latest Classifier. Warm-start steps filter by camera ID metadata to resume training from that camera&amp;rsquo;s specific history.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dual-Branch Training&lt;/strong&gt;: One branch trains a small convolutional autoencoder that learns normal product appearance and flags anomalies using reconstruction error. The second branch fine-tunes a ResNet18 classifier to confirm defects.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation and Quality Gates&lt;/strong&gt;: Both branches export trained models to ONNX and evaluate them against held-out data. Quality gates block underperforming models from proceeding.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compilation and Registration&lt;/strong&gt;: Models passing the quality gate are compiled with SageMaker Neo for the specific edge target and registered in the SageMaker Model Registry as device-ready artifacts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Notifications&lt;/strong&gt;: Pipeline completions publish to an Amazon Simple Notification Service (Amazon SNS) topic. Operational failures are routed to the same topic via Amazon EventBridge, preserving the original error details.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Pipeline Component&lt;/th&gt;
+&lt;th&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon SQS FIFO Queue&lt;/td&gt;
+&lt;td&gt;Queues re-training requests&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS Lambda &amp;amp; Step Functions&lt;/td&gt;
+&lt;td&gt;Orchestrates pipeline execution flow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DynamoDB Semaphore&lt;/td&gt;
+&lt;td&gt;Restricts concurrency to 5 active jobs to fit standard quotas&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Convolutional Autoencoder&lt;/td&gt;
+&lt;td&gt;Learns normal product traits and detects anomalies via reconstruction error&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ResNet18 Classifier&lt;/td&gt;
+&lt;td&gt;Fine-tuned model that confirms defects&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon SageMaker Neo&lt;/td&gt;
+&lt;td&gt;Compiles ONNX artifacts for specified edge device targets&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SageMaker Model Registry&lt;/td&gt;
+&lt;td&gt;Stores versioned, device-optimized model packages&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon SNS &amp;amp; EventBridge&lt;/td&gt;
+&lt;td&gt;Handles success notifications and operational failure alerts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-cost-and-deployment"&gt;💡 Cost and deployment
+&lt;/h2&gt;&lt;p&gt;The entire solution is deployed using the AWS Cloud Development Kit (AWS CDK). Note that older CLI versions fail due to a cloud assembly schema mismatch with recent &lt;code&gt;aws-cdk-lib&lt;/code&gt; versions. Running a full pipeline execution on synthetic data costs approximately $0.07 in compute, and the complete sample code is published in the &lt;code&gt;aws-samples&lt;/code&gt; GitHub repository.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20483-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20483-2-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #SageMaker #MLOps #ComputerVision #EdgeComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/fleet-wide-computer-vision-lifecycle-at-the-edge-with-sagemaker-sdk-v3/" target="_blank" rel="noopener"
+&gt;Fleet-wide computer vision lifecycle at the edge with SageMaker SDK v3 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>CDK Construct Eliminates SageMaker Endpoint Update Failures with Auto Scaling</title><link>https://shoubhikbanerjee.github.io/blog/p/cdk-construct-eliminates-sagemaker-endpoint-update-failures-with-auto-scaling/</link><pubDate>Sat, 24 Oct 2026 22:01:45 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/cdk-construct-eliminates-sagemaker-endpoint-update-failures-with-auto-scaling/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/23/Orchestrating-SageMaker-AI-endpoint-auto-scaling-with-AWS-CDK.png" alt="Featured image of post CDK Construct Eliminates SageMaker Endpoint Update Failures with Auto Scaling" /&gt;&lt;h1 id="cdk-construct-eliminates-sagemaker-endpoint-update-failures-with-auto-scaling"&gt;CDK Construct Eliminates SageMaker Endpoint Update Failures with Auto Scaling
+&lt;/h1&gt;&lt;p&gt;Updating an Amazon SageMaker AI real‑time endpoint configuration (changing instance type, count, or environment variables) through AWS CloudFormation or the AWS CDK can cause deployment failures.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;CloudFormation tries to update the endpoint while the scalable target is still registered.&lt;/li&gt;
+&lt;li&gt;SageMaker blocks the endpoint update before CloudFormation reaches the auto‑scaling resources.&lt;/li&gt;
+&lt;li&gt;If the scalable target is deregistered manually via the AWS CLI, the deployment succeeds, but CloudFormation does &lt;strong&gt;not&lt;/strong&gt; re‑register the auto‑scaling resources. The endpoint runs without scaling and no error is reported.&lt;/li&gt;
+&lt;li&gt;The stack’s rollback also fails (&lt;code&gt;UPDATE_ROLLBACK_FAILED&lt;/code&gt;), leaving the stack in a broken state that requires manual console intervention.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How It Works
+&lt;/h2&gt;&lt;p&gt;A reusable CDK construct replaces the native &lt;code&gt;AWS::ApplicationAutoScaling::ScalableTarget&lt;/code&gt; and &lt;code&gt;AWS::ApplicationAutoScaling::ScalingPolicy&lt;/code&gt; resources with three custom resources that orchestrate the deregister‑register cycle around the endpoint update.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Custom Resource&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Deregister&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Removes the scalable target before the endpoint update begins.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Register Scalable Target&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Waits for the endpoint to reach &lt;em&gt;InService&lt;/em&gt; status, then registers the scalable target.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Attach Scaling Policy&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Waits for the scalable target to be queryable, then applies the target‑tracking scaling policy.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;The construct enforces explicit dependency ordering with &lt;code&gt;node.add_dependency&lt;/code&gt; calls in CDK.&lt;/li&gt;
+&lt;li&gt;Each custom resource is backed by a Step Functions state machine and Lambda functions.&lt;/li&gt;
+&lt;li&gt;A &lt;code&gt;ConfigHash&lt;/code&gt; property forces CloudFormation to re‑invoke the Lambda functions whenever a configuration value changes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-implementation-details"&gt;📦 Implementation Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The deployed stack contains:
+&lt;ul&gt;
+&lt;li&gt;3 custom resources (Deregister, Register Scalable Target, Attach Scaling Policy)&lt;/li&gt;
+&lt;li&gt;2 Step Functions state machines&lt;/li&gt;
+&lt;li&gt;12 Lambda functions
+&lt;ul&gt;
+&lt;li&gt;5 functions are the construct’s own handlers (one for Deregister and an &lt;code&gt;on_event&lt;/code&gt;/&lt;code&gt;is_complete&lt;/code&gt; pair for each asynchronous resource).&lt;/li&gt;
+&lt;li&gt;7 functions are generated by the CDK provider framework.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Provider &lt;code&gt;total_timeout&lt;/code&gt; limits:
+&lt;ul&gt;
+&lt;li&gt;1 hour for Register Scalable Target&lt;/li&gt;
+&lt;li&gt;15 minutes for Attach Scaling Policy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;You do not need to write or maintain the framework‑generated functions; they are included automatically.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-benefits"&gt;✅ Benefits
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Update endpoint configuration &lt;strong&gt;and&lt;/strong&gt; auto‑scaling parameters in a single deployment without manual steps.&lt;/li&gt;
+&lt;li&gt;Eliminates the hidden failure where the endpoint runs without auto scaling and no error is shown.&lt;/li&gt;
+&lt;li&gt;Prevents &lt;code&gt;UPDATE_ROLLBACK_FAILED&lt;/code&gt; scenarios, keeping the CloudFormation stack healthy.&lt;/li&gt;
+&lt;li&gt;Provides deterministic ordering of deregister → endpoint update → register → attach policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-getting-started"&gt;🚀 Getting Started
+&lt;/h2&gt;&lt;p&gt;The walkthrough deploys a SageMaker AI endpoint with auto scaling using the provided example stack and then verifies that configuration updates succeed.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The solution is fully reusable and can be incorporated into any CDK project that manages SageMaker endpoints.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20841-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-20841-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #CDK #AutoScaling #CloudFormation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/orchestrating-sagemaker-ai-endpoint-auto-scaling-with-aws-cdk/" target="_blank" rel="noopener"
+&gt;Orchestrating SageMaker AI endpoint auto scaling with AWS CDK | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker AI adds serverless training session APIs for custom model fine‑tuning</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-serverless-training-session-apis-for-custom-model-finetuning/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-serverless-training-session-apis-for-custom-model-finetuning/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21950-featured-image.png" alt="Featured image of post Amazon SageMaker AI adds serverless training session APIs for custom model fine‑tuning" /&gt;&lt;h1 id="amazon-sagemaker-ai-adds-serverless-training-session-apis-for-custom-model-finetuning"&gt;Amazon SageMaker AI adds serverless training session APIs for custom model fine‑tuning
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon SageMaker AI has expanded its serverless model‑customization offering with the general‑availability launch of &lt;strong&gt;training sessions&lt;/strong&gt;. The new APIs let customers write and coordinate their own post‑training logic—such as custom loss functions or reward signals—while SageMaker AI handles all GPU infrastructure, fault recovery, and checkpoint storage.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Training sessions expose low‑level operations (e.g., &lt;code&gt;forward_backward()&lt;/code&gt;, &lt;code&gt;optim_step()&lt;/code&gt;, &lt;code&gt;sample()&lt;/code&gt;) as SageMaker API calls. Users write the training loop in their own Python process; each call is executed on a live, stateful GPU‑backed session. The service takes care of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GPU allocation and distributed execution&lt;/li&gt;
+&lt;li&gt;Gradient synchronization and checkpoint storage&lt;/li&gt;
+&lt;li&gt;Fault recovery, tenant isolation, and scaling&lt;/li&gt;
+&lt;li&gt;Security configuration via IAM roles, optional KMS keys, and VPC settings&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Your data, checkpoints, and any custom weights stay in your Amazon S3 bucket in the region you choose, and SageMaker does not reuse them to train other models.&lt;/p&gt;
+&lt;h2 id="-key-features"&gt;⚙️ Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;No instance‑type or cluster management&lt;/strong&gt; – the service automatically provisions serverless GPUs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fine‑grained algorithmic control&lt;/strong&gt; – write custom loss, reward, or preference functions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi‑turn reinforcement learning&lt;/strong&gt; – managed, serverless support for agents that require several interaction rounds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flexible adaptation&lt;/strong&gt; – choose Low‑Rank Adaptation (LoRA) or full fine‑tuning, and chain techniques through continuous customization.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pay‑per‑token&lt;/strong&gt; pricing model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Secure execution&lt;/strong&gt; – IAM execution role, optional KMS key, VPC configuration, data stays in your S3 bucket.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation before deployment&lt;/strong&gt; – built‑in steps for accuracy, bias, and safety checks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-programming-model"&gt;📚 Programming Model
+&lt;/h2&gt;&lt;p&gt;Training sessions are accessed through three SageMaker Python SDK clients:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;ServiceClient&lt;/strong&gt; – sets platform‑level settings (execution role, model package, S3 output location, optional KMS/VPC) and starts a session.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TrainingClient&lt;/strong&gt; – provides operations such as &lt;code&gt;forward()&lt;/code&gt;, &lt;code&gt;forward_backward()&lt;/code&gt;, &lt;code&gt;optim_step()&lt;/code&gt;, and checkpoint handling.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SamplingClient&lt;/strong&gt; – handles &lt;code&gt;sample()&lt;/code&gt; and &lt;code&gt;compute_logprobs()&lt;/code&gt; for generation and scoring during roll‑outs.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Each API call maps to a single step in your loop. An active session also exposes an OpenAI‑compatible chat completions endpoint, enabling existing client code to sample from the customized model.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The training‑session APIs are now generally available as part of SageMaker AI serverless model customization. A companion &lt;em&gt;training sessions cookbook&lt;/em&gt; provides ready‑to‑run SFT and RL recipes.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Customizing an open‑weight model with post‑training techniques such as reinforcement learning or preference optimization yields more accurate results for a specific business context (e.g., product catalogs, clinical vocabularies) and reduces inference cost. The new serverless APIs remove the operational burden of managing GPU clusters, allowing teams to focus on algorithmic innovation while still retaining full control over the training procedure.&lt;/p&gt;
+&lt;h3 id="techniques-supported"&gt;Techniques supported
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Technique&lt;/th&gt;
+&lt;th&gt;What it enables&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;SFT (Supervised Fine‑Tuning)&lt;/td&gt;
+&lt;td&gt;Custom loss or data curriculum&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DPO (Direct Preference Optimization)&lt;/td&gt;
+&lt;td&gt;Preference‑based alignment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RLVR&lt;/td&gt;
+&lt;td&gt;Reinforcement‑learning variant&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RLAIF (RL from AI Feedback)&lt;/td&gt;
+&lt;td&gt;Feedback‑driven RL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Multi‑turn RL&lt;/td&gt;
+&lt;td&gt;Agent training requiring several interaction rounds&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LoRA (Low‑Rank Adaptation)&lt;/td&gt;
+&lt;td&gt;Update a subset of model weights&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Full fine‑tuning&lt;/td&gt;
+&lt;td&gt;Update the entire model&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="realworld-usage-examples"&gt;Real‑world usage examples
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;A healthcare claim‑denial triage model built with training sessions validated the platform from day one.&lt;/li&gt;
+&lt;li&gt;Fine‑tuning &lt;code&gt;gpt‑oss‑20b&lt;/code&gt; for agentic multi‑turn tool calling against an Amazon Neptune knowledge graph succeeded with no manual GPU tuning, out‑of‑memory issues, or checkpoint‑resume problems.&lt;/li&gt;
+&lt;li&gt;The cookbook demonstrates reinforcement learning on competitive‑programming problems where generated code is scored against unit tests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/training-sessions-image.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21950-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21950-4.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #ModelCustomization #ServerlessAI #ReinforcementLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/announcing-new-ways-to-customize-models-with-sagemaker-ai-without-managing-gpus/" target="_blank" rel="noopener"
+&gt;Announcing new ways to customize models with SageMaker AI, without managing GPUs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/write-your-own-training-loop-without-managing-gpus-with-amazon-sagemaker-training-sessions/" target="_blank" rel="noopener"
+&gt;Write your own training loop — without managing GPUs — with Amazon SageMaker training session APIs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Streaming Text-to-Speech with Kokoro-82M Reduces Voice Agent Latency</title><link>https://shoubhikbanerjee.github.io/blog/p/streaming-text-to-speech-with-kokoro-82m-reduces-voice-agent-latency/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/streaming-text-to-speech-with-kokoro-82m-reduces-voice-agent-latency/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-featured-image.png" alt="Featured image of post Streaming Text-to-Speech with Kokoro-82M Reduces Voice Agent Latency" /&gt;&lt;h1 id="streaming-text-to-speech-with-kokoro-82m-reduces-voice-agent-latency"&gt;Streaming Text-to-Speech with Kokoro-82M Reduces Voice Agent Latency
+&lt;/h1&gt;&lt;p&gt;A customer asks an AI voice agent a question and waits. The agent already has an answer and is midway through generating a long, multi‑paragraph response, but the customer hears nothing for five seconds. By the time an answer arrives, the customer is frustrated, confused, and no longer paying attention. Text‑to‑speech integrations create exactly that gap: a one‑sentence response might generate in 600 ms, but the full response takes five seconds, and the integration waits for all of it before synthesis starts.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Problem: Silent gap between language generation and audio playback causes user frustration.&lt;/li&gt;
+&lt;li&gt;Solution: Stream each sentence to a hosted &lt;strong&gt;Kokoro‑82M&lt;/strong&gt; text‑to‑speech (TTS) model on Amazon SageMaker AI as soon as the agent produces it, so synthesis begins on sentence one instead of after the full response.&lt;/li&gt;
+&lt;li&gt;The approach also covers the transport needed to get audio back to a browser and the practical cost considerations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;The AI agent generates text sentence by sentence.&lt;/li&gt;
+&lt;li&gt;Each sentence is sent immediately to a SageMaker real‑time endpoint hosting the Kokoro‑82M model.&lt;/li&gt;
+&lt;li&gt;The TTS model synthesizes the audio for that sentence while the agent continues generating subsequent sentences.&lt;/li&gt;
+&lt;li&gt;Audio streams to the client browser as soon as it is ready, eliminating the initial silent gap.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model&lt;/strong&gt;: Kokoro‑82M has 82 million parameters, small enough to run cheaply on a single mid‑tier GPU instance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Endpoint&lt;/strong&gt;: Runs in a custom container on a SageMaker AI real‑time endpoint (ml.g5.xlarge GPU instance).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Container routes&lt;/strong&gt;:
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Route&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;POST /invocations&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Streams a response for one complete input&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;WS /invocations-bidirectional-stream&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Keeps one connection open across many messages in both directions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bidirectional transport&lt;/strong&gt; uses binary WebSocket frames; a typical Starlette &lt;code&gt;receive_text()&lt;/code&gt; handler fails because the message lacks a &lt;code&gt;text&lt;/code&gt; key, raising &lt;code&gt;KeyError('text')&lt;/code&gt;. A generic exception handler that forwards &lt;code&gt;str(e)&lt;/code&gt; masks the framing issue as a missing field error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure requirements&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;AWS account with permissions to create SageMaker AI endpoints and invoke Bedrock models.&lt;/li&gt;
+&lt;li&gt;IAM actions: &lt;code&gt;sagemaker:CreateEndpoint&lt;/code&gt;, &lt;code&gt;sagemaker:CreateEndpointConfig&lt;/code&gt;, &lt;code&gt;sagemaker:CreateModel&lt;/code&gt;, &lt;code&gt;sagemaker:InvokeEndpointWithBidirectionalStream&lt;/code&gt;, &lt;code&gt;bedrock:InvokeModelWithResponseStream&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Amazon ECR repository for the container image.&lt;/li&gt;
+&lt;li&gt;AWS CDK v2 (installed and bootstrapped), Python 3.12+, &lt;code&gt;uv&lt;/code&gt;, Docker, and Boto3 supporting &lt;code&gt;invoke_endpoint_with_bidirectional_stream&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The sample container pins an older PyTorch version with advisory &lt;strong&gt;PYSEC‑2026‑2286&lt;/strong&gt;; review and upgrade before any non‑proof‑of‑value use.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment-steps"&gt;🚀 Deployment steps
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;speech‑infra deploy&lt;/strong&gt; – provisions the Kokoro‑82M endpoint:
+&lt;ul&gt;
+&lt;li&gt;Creates foundation and model‑cache stacks that set up IAM roles and sync model weights to Amazon S3.&lt;/li&gt;
+&lt;li&gt;Builds the container image, creates the SageMaker AI model, endpoint configuration, and the endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;agent‑infra deploy&lt;/strong&gt; – provisions the Amazon Bedrock AgentCore runtime that hosts the Strands agent and calls the newly created endpoint (deploy the endpoint first).&lt;/li&gt;
+&lt;li&gt;Ensure the SageMaker AI real‑time endpoint’s Docker image declares &lt;code&gt;com.amazonaws.sagemaker.capabilities.bidirectional-streaming=true&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Use the provided CLI tools (wrapping AWS CDK stacks) to apply the infrastructure.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Latency&lt;/strong&gt;: Audio playback can start after the first sentence is generated (≈600 ms) instead of waiting for the full response (≈5 s).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: Kokoro‑82M runs on a single ml.g5.xlarge GPU, keeping inference cost low for a voice agent handling real traffic.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;User experience&lt;/strong&gt;: Removes the silent gap, keeping customers engaged and attentive.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reusable transport&lt;/strong&gt;: The blog also explains both HTTP and bidirectional WebSocket transports and their practical cost in a browser setting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ml-21706-edit-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21706-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AI #TextToSpeech #SageMaker #Streaming&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/stream-low-latency-speech-from-ai-agents-using-kokoro-tts-on-amazon-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Stream low-latency speech from AI agents using Kokoro TTS on Amazon SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker JumpStart Adds One‑Click Model Deployment and Pre‑Configured Endpoints (2026 Update)</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-jumpstart-adds-oneclick-model-deployment-and-preconfigured-endpoints-2026-update/</link><pubDate>Wed, 14 Oct 2026 22:09:38 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-jumpstart-adds-oneclick-model-deployment-and-preconfigured-endpoints-2026-update/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22153-featured-image.png" alt="Featured image of post Amazon SageMaker JumpStart Adds One‑Click Model Deployment and Pre‑Configured Endpoints (2026 Update)" /&gt;&lt;h1 id="amazon-sagemaker-jumpstart-adds-oneclick-model-deployment-and-preconfigured-endpoints-2026-update"&gt;Amazon SageMaker JumpStart Adds One‑Click Model Deployment and Pre‑Configured Endpoints (2026 Update)
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker JumpStart, the service that gives users access to a broad catalog of pretrained models, announced two 2026 improvements that make finding and deploying models easier.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Model Hub section of the Amazon SageMaker AI console lets you browse the JumpStart catalog, view sample notebooks, and open them directly in SageMaker Studio.&lt;/li&gt;
+&lt;li&gt;Two new capabilities were added in 2026:
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Deep‑link integration&lt;/strong&gt; – a single click takes you from a Hugging Face model discovery page to SageMaker AI deployment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pre‑configured endpoint deployment options&lt;/strong&gt; – named configurations tuned for low cost, low latency, or general‑purpose workloads, including Neuron‑optimized settings for generative AI models.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-new-features"&gt;🛠️ New Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;One‑click model deployment&lt;/strong&gt; from Hugging Face to SageMaker via the deep link.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Named endpoint configurations&lt;/strong&gt; that automatically select instance types and settings based on the chosen priority:
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Priority&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Low Cost&lt;/td&gt;
+&lt;td&gt;Optimized for minimal expense&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Low Latency&lt;/td&gt;
+&lt;td&gt;Optimized for fastest response&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;General‑Purpose&lt;/td&gt;
+&lt;td&gt;Balanced cost and performance&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;Support for a wide range of generative AI models, with Neuron‑optimized options where applicable.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-to-use"&gt;📦 How to Use
+&lt;/h2&gt;&lt;p&gt;A reusable Python script demonstrates the workflow in three steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Discover and deploy&lt;/strong&gt; a model from JumpStart.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Run sample prompts&lt;/strong&gt; to measure latency, output length, and single‑request generation rate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Clean up&lt;/strong&gt; the endpoint.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;REGION&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;us-east-1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;MODEL_ID&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;huggingface-vlm-qwen3-5-27b&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;MODEL_VERSION&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;1.13.0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.core.jumpstart.notebook_utils&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;list_jumpstart_models&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.core.jumpstart.accessors&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;JumpStartModelsAccessor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.core.jumpstart.configs&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;JumpStartConfig&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.core.training.configs&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Compute&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.serve&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ModelBuilder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.core.payloads&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;retrieve_all_examples&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;The SageMaker Python SDK runs a lightweight, repeatable performance test.&lt;/li&gt;
+&lt;li&gt;The pattern works for many compatible JumpStart models, although model‑specific payload formats, required instance types, EULA requirements, and response schemas may need adjustments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-technical-details"&gt;⚙️ Technical Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Deployment time varies by model, instance type, quota, and AWS Region.&lt;/li&gt;
+&lt;li&gt;Pre‑configured endpoint options provide ready‑made configurations for different workload priorities, simplifying the selection of compute resources.&lt;/li&gt;
+&lt;li&gt;The deep‑link integration eliminates manual steps between Hugging Face model discovery and SageMaker deployment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;These improvements were introduced in 2026 and are accessible through the SageMaker console in supported AWS Regions (e.g., &lt;code&gt;us-east-1&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22153-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22153-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22153-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #SageMaker #JumpStart #AIModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploy-and-evaluate-models-with-amazon-sagemaker-jumpstart/" target="_blank" rel="noopener"
+&gt;Deploy and evaluate models with Amazon SageMaker JumpStart | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Serving llama.cpp Decision Models on SageMaker with Text and Structured Paths</title><link>https://shoubhikbanerjee.github.io/blog/p/serving-llama-cpp-decision-models-on-sagemaker-with-text-and-structured-paths/</link><pubDate>Mon, 12 Oct 2026 22:04:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/serving-llama-cpp-decision-models-on-sagemaker-with-text-and-structured-paths/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/09/ML-22079-featured-image.png" alt="Featured image of post Serving llama.cpp Decision Models on SageMaker with Text and Structured Paths" /&gt;&lt;h1 id="serving-llamacpp-decision-models-on-sagemaker-with-text-and-structured-paths"&gt;Serving llama.cpp Decision Models on SageMaker with Text and Structured Paths
+&lt;/h1&gt;&lt;p&gt;Deploy decision models with llama.cpp on Amazon SageMaker AI gives you a managed path for serving quantized models on CPU or GPU infrastructure.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Two deployment paths are available from the same packaged model (Figure 1).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Text‑generation path&lt;/strong&gt; uses the AWS Deep Learning Container (DLC) for llama.cpp and returns generated responses through the OpenAI‑compatible chat completions API.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Structured‑decision path&lt;/strong&gt; builds a child image that replaces the default server with a SemIf adapter and returns probabilities for declared options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;h3 id="standard-textgeneration-path"&gt;Standard text‑generation path
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Package the model as &lt;code&gt;model.tar.gz&lt;/code&gt; in Amazon S3.&lt;/li&gt;
+&lt;li&gt;Reference the published AWS DLC image for llama.cpp directly.&lt;/li&gt;
+&lt;li&gt;At container start, the DLC scans &lt;code&gt;/opt/ml/model&lt;/code&gt; for the first &lt;strong&gt;.gguf&lt;/strong&gt; file.&lt;/li&gt;
+&lt;li&gt;The container maps &lt;code&gt;POST /invocations&lt;/code&gt; to &lt;strong&gt;llama‑server&lt;/strong&gt; at &lt;code&gt;/v1/chat/completions&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SM_LLAMA_CPP_*&lt;/code&gt; environment variables are passed as arguments to llama.cpp.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="structureddecision-path-semif"&gt;Structured‑decision path (SemIf)
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Use AWS CodeBuild to build a &lt;strong&gt;child image&lt;/strong&gt; that keeps the DLC’s compiled CPU or CUDA libraries.&lt;/li&gt;
+&lt;li&gt;Replace the default entry point with a SageMaker‑compatible SemIf adapter.&lt;/li&gt;
+&lt;li&gt;Store the child image in Amazon Elastic Container Registry (ECR).&lt;/li&gt;
+&lt;li&gt;The adapter reads the final‑position logits and state that the llama‑server API does not expose, and returns a &lt;strong&gt;decision schema&lt;/strong&gt; with &lt;code&gt;option_ids&lt;/code&gt;, &lt;code&gt;probabilities&lt;/code&gt;, &lt;code&gt;option_logits&lt;/code&gt;, plus prompt, timing, and model metadata.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The AWS DLC for llama.cpp accepts the OpenAI Chat Completions schema.&lt;/li&gt;
+&lt;li&gt;Generated text is found in &lt;code&gt;choices[0].message.content&lt;/code&gt; of the response.&lt;/li&gt;
+&lt;li&gt;SemIf uses a constrained decision schema (no chat messages) and returns:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;option_ids&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;probabilities&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;raw option_logits&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;prompt&lt;/code&gt;, &lt;code&gt;timing&lt;/code&gt;, and pinned model metadata.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Stable option IDs let applications apply thresholds, fallbacks, and policy checks without parsing free‑form text.&lt;/li&gt;
+&lt;li&gt;SemIf belongs to a broader class of decision models that score application‑defined outcomes from unstructured state. Other implementations mentioned are Jev, TypeSafe’s decision model, Kev, and Strands Decider 2B.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-when-to-use-which-path"&gt;🚀 When to Use Which Path
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Standard text‑generation&lt;/strong&gt; – Use when you need OpenAI‑compatible chat completions via &lt;code&gt;InvokeEndpoint&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Structured‑decision (SemIf)&lt;/strong&gt; – Build a child image only when you need direct access to logits or state, such as:
+&lt;ul&gt;
+&lt;li&gt;Routing a case to a specific queue&lt;/li&gt;
+&lt;li&gt;Extracting a single value from a known set&lt;/li&gt;
+&lt;li&gt;Assigning incident priority&lt;/li&gt;
+&lt;li&gt;Checking a policy outcome&lt;/li&gt;
+&lt;li&gt;Selecting an agent action&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Keep authorization and deterministic business rules outside the model and validate probabilities before treating them as operational confidence.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The managed SageMaker AI path removes the need to run custom inference servers for quantized llama.cpp models.&lt;/li&gt;
+&lt;li&gt;By swapping in a SemIf adapter, the same model can serve both free‑form text and structured decision outputs, reducing model duplication.&lt;/li&gt;
+&lt;li&gt;Applications gain deterministic, audit‑ready probabilities while still leveraging a single underlying LLM.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/09/ML-22079-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2025/07/09/ML-19067-image-19-1.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/06/16/ML-21172-6.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #llama.cpp #SemIf #AIInference #DecisionModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploy-decision-models-with-llama-cpp-on-amazon-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Deploy decision models with llama.cpp on Amazon SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker HyperPod adds multi‑tenant EKS support with Identity Center integration</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-hyperpod-adds-multitenant-eks-support-with-identity-center-integration/</link><pubDate>Thu, 08 Oct 2026 22:04:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-hyperpod-adds-multitenant-eks-support-with-identity-center-integration/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/01/ML-22020-featured-image.png" alt="Featured image of post Amazon SageMaker HyperPod adds multi‑tenant EKS support with Identity Center integration" /&gt;&lt;h1 id="amazon-sagemaker-hyperpod-adds-multitenant-eks-support-with-identity-center-integration"&gt;Amazon SageMaker HyperPod adds multi‑tenant EKS support with Identity Center integration
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker HyperPod now supports purpose‑built, multi‑tenant AI clusters that simplify the management of large‑scale gen‑AI workloads while providing per‑team isolation, cost visibility, and automated operations.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;HyperPod delivers resilient, optimized clusters orchestrated by &lt;strong&gt;Amazon Elastic Kubernetes Service (EKS)&lt;/strong&gt; or &lt;strong&gt;Slurm&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The service automatically handles &lt;strong&gt;node health monitoring, fault recovery, and cluster lifecycle management&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;It is designed for distributed training, interactive development, and model inference at scale.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture-overview"&gt;🧩 Architecture Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS IAM Identity Center&lt;/strong&gt; provides centralized authentication and federates with external providers such as &lt;strong&gt;Microsoft Entra ID&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Each team gets a dedicated &lt;strong&gt;SageMaker AI domain&lt;/strong&gt; that hosts a private &lt;strong&gt;SageMaker Studio&lt;/strong&gt; GUI.&lt;/li&gt;
+&lt;li&gt;Workloads run in separate &lt;strong&gt;Kubernetes namespaces&lt;/strong&gt;, ensuring isolation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod Task Governance&lt;/strong&gt; enforces fair resource allocation and compute‑quota management.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod Observability&lt;/strong&gt; supplies monitoring dashboards for the entire cluster.&lt;/li&gt;
+&lt;li&gt;Storage is split into two tiers:
+&lt;ul&gt;
+&lt;li&gt;A POSIX‑compliant file system (Amazon FSx for Lustre or OpenZFS) with per‑team shared directories (&lt;code&gt;/fsx/TeamA&lt;/code&gt;, &lt;code&gt;/fsx/TeamB&lt;/code&gt;) and per‑user home directories (&lt;code&gt;/home/User1&lt;/code&gt;, &lt;code&gt;/home/User2&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Per‑team or shared Amazon S3 buckets governed by the team’s IAM execution role.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS IAM Identity Center&lt;/td&gt;
+&lt;td&gt;Centralized authentication; federates with external IdP; provisions permission‑set roles (e.g., &lt;code&gt;TeamA-permissionset-role&lt;/code&gt;).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SageMaker AI domain (per team)&lt;/td&gt;
+&lt;td&gt;Dedicated Studio GUI; uses team‑specific execution role (e.g., &lt;code&gt;TeamA-role&lt;/code&gt;).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kubernetes namespace (per team)&lt;/td&gt;
+&lt;td&gt;Isolates workloads; scoped RBAC policies restrict access to the team’s resources.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HyperPod Task Governance&lt;/td&gt;
+&lt;td&gt;Provides compute‑quota management and scheduling priorities across teams.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HyperPod Observability&lt;/td&gt;
+&lt;td&gt;Offers monitoring dashboards and health metrics for the cluster.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="authentication-paths"&gt;Authentication Paths
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CLI path&lt;/strong&gt;: Users run &lt;code&gt;aws sso login&lt;/code&gt;, are redirected to the Identity Center portal, obtain temporary credentials from their team’s permission set, and submit tasks to the EKS cluster with &lt;code&gt;kubectl&lt;/code&gt; using the provisioned &lt;code&gt;TeamA-permissionset-role&lt;/code&gt; or &lt;code&gt;TeamB-permissionset-role&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Studio path&lt;/strong&gt;: Users select the SageMaker Studio application in the Identity Center portal, which routes them to their team‑specific SageMaker AI domain. The domain’s execution role (&lt;code&gt;TeamA-role&lt;/code&gt; or &lt;code&gt;TeamB-role&lt;/code&gt;) authorizes GUI‑driven tasks.&lt;/li&gt;
+&lt;li&gt;Access entries map both the Studio execution roles and the CLI/Console roles to Kubernetes permissions, all tied to managed or custom RBAC policies scoped to the appropriate namespace.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-usage-example"&gt;🚀 Usage Example
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Two teams, &lt;strong&gt;Team A&lt;/strong&gt; and &lt;strong&gt;Team B&lt;/strong&gt;, share a single HyperPod EKS cluster.&lt;/li&gt;
+&lt;li&gt;Each team operates within its own isolated namespace (&lt;code&gt;Namespace A&lt;/code&gt;, &lt;code&gt;Namespace B&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Within a namespace, teams can launch:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod Spaces&lt;/strong&gt; – interactive development environments.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod PyTorch jobs&lt;/strong&gt; – distributed training workloads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod Inference endpoints&lt;/strong&gt; – model serving services.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cost allocation is performed at the namespace level, giving each team visibility into spend and supporting charge‑back.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a single, managed compute platform that reduces the operational overhead of large‑scale AI workloads.&lt;/li&gt;
+&lt;li&gt;Guarantees workload isolation and security through namespace‑scoped RBAC and distinct IAM roles.&lt;/li&gt;
+&lt;li&gt;Enables per‑team cost tracking and fair resource distribution via Task Governance.&lt;/li&gt;
+&lt;li&gt;Integrates with existing AWS identity and storage services, allowing teams to use familiar tools (CLI, SageMaker Studio) without custom configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/multi-tenant-hp-eks.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/teama-domain.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #HyperPod #AWS #Kubernetes&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/share-gpu-clusters-across-teams-with-isolation-and-fairness-using-amazon-sagemaker-hyperpod/" target="_blank" rel="noopener"
+&gt;Share GPU clusters across teams with isolation and fairness using Amazon SageMaker HyperPod | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SageMaker HyperPod integrates with Unified Studio and adds Spaces for governed GPU workloads</title><link>https://shoubhikbanerjee.github.io/blog/p/sagemaker-hyperpod-integrates-with-unified-studio-and-adds-spaces-for-governed-gpu-workloads/</link><pubDate>Tue, 06 Oct 2026 22:08:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sagemaker-hyperpod-integrates-with-unified-studio-and-adds-spaces-for-governed-gpu-workloads/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/02/ML-21129-featured-image.png" alt="Featured image of post SageMaker HyperPod integrates with Unified Studio and adds Spaces for governed GPU workloads" /&gt;&lt;h1 id="sagemaker-hyperpod-integrates-with-unified-studio-and-adds-spaces-for-governed-gpu-workloads"&gt;SageMaker HyperPod integrates with Unified Studio and adds Spaces for governed GPU workloads
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker HyperPod gives machine learning (ML) teams access to large pools of accelerated compute for training and fine‑tuning models. When several teams share a single cluster the technical setup is straightforward, but governance becomes the challenging part.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SageMaker HyperPod&lt;/strong&gt; is a capability of Amazon SageMaker AI that provides purpose‑built infrastructure for foundation model training and inference at scale.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SageMaker Unified Studio&lt;/strong&gt; is the data and AI development environment where teams build with their data and tools.&lt;/li&gt;
+&lt;li&gt;Unified Studio can &lt;strong&gt;connect a HyperPod cluster to a project&lt;/strong&gt;, letting team members launch workloads, review cluster and task information, and open a JupyterLab workflow.&lt;/li&gt;
+&lt;li&gt;The integration keeps cluster management in SageMaker AI interfaces and APIs, allowing infrastructure teams to use established cloud‑operations processes while presenting approved compute to ML teams in their project context.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-governance-model"&gt;⚙️ Governance Model
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Governance decisions include:
+&lt;ul&gt;
+&lt;li&gt;Which teams may use the cluster.&lt;/li&gt;
+&lt;li&gt;How much capacity each team receives.&lt;/li&gt;
+&lt;li&gt;How to handle competition for resources.&lt;/li&gt;
+&lt;li&gt;Who is accountable when usage drifts from policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;When multiple teams share visibility into the same cluster, &lt;strong&gt;controls that govern who can do what become even more important&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;A well‑governed environment separates:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Organizational administration&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Project access&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cluster operations&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workload execution&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Each layer answers a different question and uses different controls.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-four-layers-of-control"&gt;🏗️ Four Layers of Control
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Organization layer&lt;/strong&gt; – identity and capacity policies that apply across the entire account.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Project layer&lt;/strong&gt; – collaboration boundaries defined in SageMaker Unified Studio (not strong runtime security boundaries).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cluster layer&lt;/strong&gt; – AWS IAM, Amazon EKS, and Slurm controls that govern cluster‑level access.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workload layer&lt;/strong&gt; – workload identity, data and KMS key policies, network policy, task‑view restrictions, and scheduler policy.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“A SageMaker HyperPod connection adds an approved cluster to a project. It doesn’t replace the cluster’s AWS Identity and Access Management (IAM), Amazon Elastic Kubernetes Service (Amazon EKS), or Slurm controls.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;All four layers must be aligned before the cluster is made available.&lt;/p&gt;
+&lt;h2 id="-sagemaker-spaces-on-hyperpod"&gt;🧩 SageMaker Spaces on HyperPod
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Earlier this year Amazon launched &lt;strong&gt;SageMaker Spaces for HyperPod&lt;/strong&gt;, an add‑on that lets developers create interactive development environments directly on HyperPod EKS clusters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benefits&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Run JupyterLab or Code Editor environments without leaving the browser or using CLI tools.&lt;/li&gt;
+&lt;li&gt;Reduce time from cluster access to productive development to a few clicks.&lt;/li&gt;
+&lt;li&gt;Run interactive workloads alongside training jobs and model deployment, with support for fractional GPU allocations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Management UI&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;The new &lt;strong&gt;IDE and Notebooks tab&lt;/strong&gt; on the HyperPod cluster detail page provides a complete user interface for Space management, removing the need for daily CLI commands.&lt;/li&gt;
+&lt;li&gt;Create Spaces with configurable compute, namespaces, storage, and HyperPod Task Governance for compute‑quota management via a guided form.&lt;/li&gt;
+&lt;li&gt;View all Spaces in a searchable table showing name, application type, status, access type, storage, GPU, and vCPU allocations.&lt;/li&gt;
+&lt;li&gt;Start or stop Spaces with a single selection to free compute when not in use.&lt;/li&gt;
+&lt;li&gt;Open Spaces directly in the browser (JupyterLab or Code Editor) or connect through a remote IDE such as VS Code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-installing-and-using-spaces"&gt;🚀 Installing and Using Spaces
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Install the Spaces add‑on&lt;/strong&gt; on the HyperPod EKS cluster from the SageMaker AI console → IDE and Notebooks tab. Choose &lt;strong&gt;Quick install&lt;/strong&gt; (one‑click defaults) or &lt;strong&gt;Custom install&lt;/strong&gt; (required for web UI access).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configure EKS access entries&lt;/strong&gt; by attaching the managed policies:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;AmazonSagemakerHyperpodSpacePolicy&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AmazonSagemakerHyperpodUserClusterPolicy&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AmazonSagemakerHyperpodSpaceTemplatePolicy&lt;/code&gt;
+to the IAM roles used by data scientists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enable per‑user identity propagation&lt;/strong&gt; on the Studio domain if it existed before the integration. This ensures each Studio user’s actions on the cluster are attributed in EKS access entries and AWS CloudTrail, enforcing strict Space ownership.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Create and launch a Space&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;In Studio, go to &lt;strong&gt;Compute → HyperPod&lt;/strong&gt;, select the &lt;strong&gt;IDE and Notebooks&lt;/strong&gt; tab.&lt;/li&gt;
+&lt;li&gt;After the Space status shows &lt;strong&gt;Running&lt;/strong&gt; (a few minutes on a cold cluster, ~30–40 seconds with over‑provisioning), click &lt;strong&gt;Open&lt;/strong&gt; to launch JupyterLab or Code Editor, or &lt;strong&gt;Open in VS Code&lt;/strong&gt; for a remote IDE experience.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-summary"&gt;📚 Summary
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By connecting SageMaker HyperPod clusters to Unified Studio projects, organizations can provide approved, high‑performance GPU compute to ML teams while retaining strong governance through four layered controls.&lt;/li&gt;
+&lt;li&gt;The new SageMaker Spaces UI gives data scientists a visual, click‑based workflow to create, manage, and use interactive development environments on the same HyperPod infrastructure that powers large‑scale training and inference.&lt;/li&gt;
+&lt;li&gt;This combination delivers a repeatable, governed model that separates infrastructure operations from project‑level development, enabling efficient use of shared GPU resources.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#SageMaker #HyperPod #MLOps #AIInfrastructure #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/best-practices-for-amazon-sagemaker-hyperpod-administration-and-governance/" target="_blank" rel="noopener"
+&gt;Best practices for Amazon SageMaker HyperPod administration and governance | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/manage-amazon-sagemaker-hyperpod-spaces-directly-from-sagemaker-studio/" target="_blank" rel="noopener"
+&gt;Manage Amazon SageMaker HyperPod Spaces directly from SageMaker Studio | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-featured-image.png" alt="Featured image of post Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization" /&gt;&lt;h1 id="amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization"&gt;Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization
+&lt;/h1&gt;&lt;p&gt;Amazon Payments applied AI‑based personalization to a product acquisition funnel, using a multi‑objective contextual multi‑armed bandit (MAB) on Amazon SageMaker AI.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;In this post, we share how Amazon Payments applied AI-based personalization to a product acquisition funnel, using a multi-objective contextual multi-armed bandit (MAB) on Amazon SageMaker AI.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;The customer journey in our use case comprises three steps: application start, submission, and approval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;In a seven-week online A/B test we currently see a high single-digit percentage relative lift in final-funnel conversion for one customer population, while another saw no improvement over the existing experience.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The problem turned out to be the content, not the model.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🤖 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;A multi-armed bandit (MAB) is a reinforcement learning method built for settings with many options and limited traffic.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It treats each content variation as an “arm,” tries each against live traffic, and steadily shifts impressions toward the arms that perform, while holding a fraction back to keep testing the rest.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;In Amazon Payments, we chose UCB, a strategy that selects the arm with the highest estimated reward plus an uncertainty bonus, naturally balancing exploitation and exploration.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Its deterministic selection rule gives an auditable, reproducible decision for every impression, which makes sure every serving decision can be explained and reproduced if needed.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Contextual bandits condition directly on a feature vector (a numeric representation of attributes), so a pattern learned in one context transfers to every similar visit without separate per-group traffic.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Our production system represents each customer as a context vector of behavioral signals (payment behavior, transaction mix, and similar features) in place of a fixed segment.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The entity ID (an opaque key such as entity_id) is used only to route the learned recommendation back to the right visitor.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The entity ID is never a model input.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;For a contextual approach, we selected Linear UCB (LinUCB), introduced by Li et al. (2010).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;LinUCB remains a battle-tested method that is computationally efficient, auditable (deterministic arm selection), and naturally handles a large arm space with limited warm-start data.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Its key assumption is that the expected reward for an arm is a linear function of the context vector, which lets it generalize to visitors it has not seen before.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Each arm keeps two running tallies updated on every impression: b , the reward ledger: which visitor signals led to conversions (b += reward · x).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;A , the experience ledger: which visitors the arm has seen (A += x·xᵀ, starting from identity).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Dividing reward by experience gives the estimate (θ = A⁻¹·b).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The experience ledger also shrinks the exploration bonus as evidence grows.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The bonus is context‑dependent.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It’s large for a kind of visitor the arm has rarely seen, and small for one it has seen often.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;A plain bandit explores at a single global rate, while LinUCB adjusts how much it explores for every visitor it scores.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Optimizing one stage in isolation can degrade another.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Our approach optimizes the entire funnel simultaneously by running one LinUCB model per stage (start, submit, approve) and combining their UCB scores through a linear combination.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The stage weights can be assigned based on business priorities or learned by a separate calibration step.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture--implementation"&gt;🛠️ Architecture &amp;amp; Implementation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;We also share a code repository that you can use to test this approach on synthetic data and understand the method hands‑on using Amazon SageMaker AI.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonPayments #MultiArmedBandit #Personalization #SageMaker&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-bandits-on-aws/" target="_blank" rel="noopener"
+&gt;Uplifting conversion across the acquisition funnel with personalization using contextual bandits on AWS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS Introduces vLLM-Omni Deep Learning Container for Multimodal Generation</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-introduces-vllm-omni-deep-learning-container-for-multimodal-generation/</link><pubDate>Mon, 28 Sep 2026 22:02:06 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-introduces-vllm-omni-deep-learning-container-for-multimodal-generation/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21837-featured-image.png" alt="Featured image of post AWS Introduces vLLM-Omni Deep Learning Container for Multimodal Generation" /&gt;&lt;h1 id="aws-introduces-vllm-omni-deep-learning-container-for-multimodal-generation"&gt;AWS Introduces vLLM-Omni Deep Learning Container for Multimodal Generation
+&lt;/h1&gt;&lt;p&gt;AWS has released the vLLM-Omni Deep Learning Container (DLC) for Amazon SageMaker AI, extending vLLM capabilities beyond text generation to serve models that process and generate text, audio, images, and video.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The vLLM-Omni project provides a heterogeneous pipeline abstraction to coordinate multi-stage model workflows, including autoregressive and diffusion stages. The AWS vLLM-Omni DLC packages tracked vLLM-Omni releases into AWS images and adds routing middleware for SageMaker AI, offering OpenAI-compatible APIs and streaming outputs.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The solution uses specialized inference runtimes and DLCs to provide a consistent image-based path to AWS compute and managed inference services. Depending on the use case, it supports different streaming and inference modes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Bidirectional Streaming:&lt;/strong&gt; Uses a full-duplex WebSocket transported over HTTP/2. The client connects to the SageMaker Runtime endpoint on port 8443, and a sidecar forwards the connection to the vLLM-Omni native WebSocket route.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Real-time Inference:&lt;/strong&gt; Used when applications require a direct response before constructing the next request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Asynchronous Inference:&lt;/strong&gt; Queues requests and utilizes Amazon S3 for input and output, allowing clients to poll for results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Supported modalities and models include:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Capability&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Example Model/Implementation&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Text-to-Speech (TTS)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Qwen3-TTS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Speech-to-Text (STT)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Voxtral-Mini-4B Realtime&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Image Generation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;FLUX.2-klein-4B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Video Generation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Wan2.1-VACE-1.3B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Technical specifications for deployment include the use of &lt;code&gt;ml.g6.xlarge&lt;/code&gt; and &lt;code&gt;ml.g6e.xlarge&lt;/code&gt; instance types in the US East (N. Virginia) AWS Region. The &lt;code&gt;SM_VLLM_MODEL&lt;/code&gt; environment variable is used to specify which model to load into the container.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Real-time voice applications—such as accessibility tools, interactive learning applications, customer service assistants, and voice agents—require responses without long silent pauses. This development enables a full voice pipeline where microphone audio is streamed to an STT model and the resulting response text is streamed back as speech via the vLLM-Omni DLC.&lt;/p&gt;
+&lt;p&gt;#AWS #SageMaker #vLLM #MultimodalAI #GenerativeAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-real-time-voice-applications-with-vllm-omni-on-sagemaker-ai-part-1/" target="_blank" rel="noopener"
+&gt;Build real-time voice applications with vLLM-Omni on SageMaker AI – Part 1 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/generate-images-and-video-with-vllm-omni-on-sagemaker-ai-part-2/" target="_blank" rel="noopener"
+&gt;Generate images and video with vLLM-Omni on SageMaker AI – Part 2 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Positron IDE Now Available on Amazon SageMaker AI</title><link>https://shoubhikbanerjee.github.io/blog/p/positron-ide-now-available-on-amazon-sagemaker-ai/</link><pubDate>Tue, 22 Sep 2026 22:03:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/positron-ide-now-available-on-amazon-sagemaker-ai/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21876-featured-image.png" alt="Featured image of post Positron IDE Now Available on Amazon SageMaker AI" /&gt;&lt;h1 id="positron-ide-now-available-on-amazon-sagemaker-ai"&gt;Positron IDE Now Available on Amazon SageMaker AI
+&lt;/h1&gt;&lt;p&gt;Positron, an integrated development environment for data science, is now available to run on Amazon SageMaker AI. Platform administrators can deploy Positron by building a container image based on the Amazon SageMaker Distribution and attaching it to a SageMaker Studio domain.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Positron operates within a Space on SageMaker, allowing teams to reserve capacity for scheduled training. Within this environment, users can leverage the Space execution role to query Amazon Athena, the AWS Glue Data Catalog, and Amazon S3 directly. Users have the ability to run multiple independent Spaces simultaneously or share a single Space for collaboration.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AI Integration:&lt;/strong&gt; Posit Assistant, the AI coding assistant, integrates with Amazon Bedrock. This allows AI operations to run within your own AWS account and Region, ensuring customer content is encrypted and not used to improve base models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workflow Management:&lt;/strong&gt; The IDE supports a complete data science lifecycle, including project exploration, R and Python session management, variable tracking, terminal access, and application previews.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security:&lt;/strong&gt; Private connectivity can be configured using AWS PrivateLink.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-demonstration-workflow"&gt;💡 Demonstration Workflow
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon S3&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Stores source data&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AWS Glue Data Catalog&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Registers source data&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Athena&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Queries data&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;R&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Validates features&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Python&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Trains XGBoost classifier&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Shiny for Python&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Invokes deployed endpoint&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Quarto&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Records the workflow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21876-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21876-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21876-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Positron #SageMaker #AWS #DataScience #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/run-positron-on-amazon-sagemaker-ai-for-data-science-workflows/" target="_blank" rel="noopener"
+&gt;Run Positron on Amazon SageMaker AI for data science workflows | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker AI Updates Inference Capabilities and OpenAI Compatibility</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-updates-inference-capabilities-and-openai-compatibility/</link><pubDate>Sat, 19 Sep 2026 22:01:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-updates-inference-capabilities-and-openai-compatibility/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21809-featured-image-1.png" alt="Featured image of post Amazon SageMaker AI Updates Inference Capabilities and OpenAI Compatibility" /&gt;&lt;h1 id="amazon-sagemaker-ai-updates-inference-capabilities-and-openai-compatibility"&gt;Amazon SageMaker AI Updates Inference Capabilities and OpenAI Compatibility
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker AI has introduced new capabilities for deploying and consuming AI models, offering users paths for managed infrastructure or Kubernetes-native control with Amazon SageMaker HyperPod Inference. In 2026, the platform delivered 13 new features to improve model deployment and optimization.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;SageMaker AI now supports two primary deployment paths:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Managed endpoints: AWS handles infrastructure, operations, GPU provisioning, scaling, and monitoring.&lt;/li&gt;
+&lt;li&gt;Amazon SageMaker HyperPod Inference: Provides Kubernetes-native control for dedicated GPU clusters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Inference recommendations automate the process of optimizing models based on performance goals such as cost, latency, or throughput. The system performs a three-step process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Narrow: Filters instance types by analyzing model architecture and requirements.&lt;/li&gt;
+&lt;li&gt;Optimize: Applies techniques such as EAGLE 3.0 speculative decoding, kernel tuning, and tensor parallelism.&lt;/li&gt;
+&lt;li&gt;Benchmark: Runs NVIDIA AIPerf on real GPU infrastructure with multi-run confidence reporting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;SageMaker now exposes an /openai/v1 path supporting Chat Completions with streaming, allowing for migration by simply updating the endpoint URL. Other technical improvements include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Heterogeneous fleets: Customers can prioritize up to five instance types, with SageMaker automatically handling fallback and scaling based on capacity.&lt;/li&gt;
+&lt;li&gt;Optimized configurations: Each pool entry can reference unique configurations like quantization or speculative decoding generated by inference recommendations.&lt;/li&gt;
+&lt;li&gt;Metrics: Output includes validated metrics such as time to first token (TTFT), inter-token latency (ITL), and throughput.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;These features are supported for single-model, inference component, and async endpoints in all commercial AWS Regions. There is no additional cost for generating recommendations, and customers with ML Reservations can benchmark on reserved capacity at no extra charge.&lt;/p&gt;
+&lt;h2 id="-comparison-of-inference-paths"&gt;💡 Comparison of Inference Paths
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Managed SageMaker Inference&lt;/th&gt;
+&lt;th style="text-align: left"&gt;SageMaker HyperPod Inference&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Infrastructure&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Fully managed by AWS&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Managed Kubernetes stack&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Deploy target&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Console, SDK, CLI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;kubectl, Terraform, Console, CLI, SDK&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Scaling&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Managed auto scaling&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Auto scaling with Karpenter, KEDA, CloudWatch&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;API protocol&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OpenAI compatible&lt;/td&gt;
+&lt;td style="text-align: left"&gt;HTTP, gRPC and custom load balancer&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21809-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21809-2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/18/ML-21809-3-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #SageMaker #MachineLearning #CloudComputing #Inference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-inference-2026-year-to-date-launches-in-review/" target="_blank" rel="noopener"
+&gt;Amazon SageMaker Inference: 2026 year-to-date launches in review | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Bedrock AgentCore for Managed Agent Deployment and Optimization</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-for-managed-agent-deployment-and-optimization/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-for-managed-agent-deployment-and-optimization/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21510-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore for Managed Agent Deployment and Optimization" /&gt;&lt;h1 id="amazon-bedrock-agentcore-for-managed-agent-deployment-and-optimization"&gt;Amazon Bedrock AgentCore for Managed Agent Deployment and Optimization
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore is a platform designed to build, connect, and optimize agents at scale, supporting any framework or model. This update introduces AgentCore runtime, a managed deployment capability that handles operational concerns including container lifecycle, scaling, identity, and observability.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;AgentCore runtime utilizes a decorator pattern to wrap agent logic, allowing developers to deploy existing agent code via a bring-your-own (BYO) agent approach without rewriting for a specific framework. As a reference implementation, the solution supports the Hugging Face smolagents open source Python library.&lt;/p&gt;
+&lt;p&gt;In a healthcare agent implementation, the system orchestrates across three model backends using Hugging Face Messages API compatibility for consistent request and response formats:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model Backend&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock (Llama 3.1 70B Instruct)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Complex medical reasoning&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon SageMaker AI (BioM-ELECTRA-Large-SQuAD2)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Specialized biomedical queries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Containerized model server (BioM-ELECTRA)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Self-hosted model deployment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Knowledge Retrieval&lt;/strong&gt;: Uses Amazon OpenSearch Service for vector similarity matching and contextual medical knowledge indexing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security and Controls&lt;/strong&gt;: Implements AWS Identity and Access Management (IAM) for access control and Amazon Bedrock Guardrails for content filtering and grounding validation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure&lt;/strong&gt;: The healthcare agent container is hosted via AgentCore runtime and connects to a client web interface.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deployment Options&lt;/strong&gt;: The containerized model server can be deployed on Amazon ECS, Amazon Elastic Kubernetes Service (Amazon EKS), or other container environments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-integration-with-hugging-face-skills"&gt;🛠️ Integration with Hugging Face Skills
+&lt;/h2&gt;&lt;p&gt;Coding agents can use six open source skills from the Hugging Face Skills GitHub repository to deploy models on Amazon SageMaker AI. These skills, written in Python and the AWS CLI, use a planner skill to orchestrate the workflow.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Operational Capabilities&lt;/strong&gt;: Supports real-time endpoints (default), real-time with scale-to-zero, serverless inference, asynchronous inference, batch transform, and Amazon Bedrock Custom Model Import.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Resource Management&lt;/strong&gt;: Automates the creation of target tracking autoscaling (1–2 instances) and CloudWatch alarms for latency, errors, and overhead.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Container Handling&lt;/strong&gt;: Resolves images from the AWS Deep Learning Containers (DLC) catalog, with the ability to pivot between serving containers such as TGI and vLLM based on model architecture requirements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/15/ML-21283-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #HuggingFace #SageMaker #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/migrating-multi-model-ai-agents-to-amazon-bedrock-agentcore-runtime/" target="_blank" rel="noopener"
+&gt;Migrating multi-model AI agents to Amazon Bedrock AgentCore runtime | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploy-hugging-face-models-on-amazon-sagemaker-ai-with-coding-agents/" target="_blank" rel="noopener"
+&gt;Deploy Hugging Face models on Amazon SageMaker AI with coding agents | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker Introduces Instance Preference Lists for Faster GPU Capacity Access</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-introduces-instance-preference-lists-for-faster-gpu-capacity-access/</link><pubDate>Tue, 15 Sep 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-introduces-instance-preference-lists-for-faster-gpu-capacity-access/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21790-featured-image.png" alt="Featured image of post Amazon SageMaker Introduces Instance Preference Lists for Faster GPU Capacity Access" /&gt;&lt;h1 id="amazon-sagemaker-introduces-instance-preference-lists-for-faster-gpu-capacity-access"&gt;Amazon SageMaker Introduces Instance Preference Lists for Faster GPU Capacity Access
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker AI announced instance preference lists for training and processing jobs, allowing users to provide an ordered list of up to five instance types so the service can automatically launch on the first type with available capacity.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Access to the right GPUs is a major challenge for large‑scale AI training and customization.&lt;/li&gt;
+&lt;li&gt;During peak demand a preferred GPU may be unavailable, forcing teams to wait or manually try alternatives.&lt;/li&gt;
+&lt;li&gt;The new feature lets users specify up to five acceptable instance types, and SageMaker selects the first one with capacity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Submit&lt;/strong&gt; a training or processing job with an ordered preference list (max 5 types).&lt;/li&gt;
+&lt;li&gt;SageMaker &lt;strong&gt;validates&lt;/strong&gt; the job configuration and the list against supported types and resource limits.&lt;/li&gt;
+&lt;li&gt;The scheduler performs a &lt;strong&gt;single in‑memory sweep&lt;/strong&gt; of the ordered list and picks the first instance type that has capacity.&lt;/li&gt;
+&lt;li&gt;The chosen instance type is provisioned &lt;strong&gt;immediately&lt;/strong&gt;, and the job starts execution.&lt;/li&gt;
+&lt;li&gt;If none of the listed types have capacity, the job enters an &lt;strong&gt;event‑driven queue&lt;/strong&gt; and automatically retries when capacity becomes available. The retry window is limited by &lt;strong&gt;MaxPendingTimeInSeconds&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Preference list size: up to &lt;strong&gt;five&lt;/strong&gt; instance types.&lt;/li&gt;
+&lt;li&gt;Automatic evaluation follows the &lt;strong&gt;priority order&lt;/strong&gt; supplied by the user.&lt;/li&gt;
+&lt;li&gt;Removes the need for manual retry loops, monitoring scripts, or custom resubmission logic.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MaxPendingTimeInSeconds&lt;/strong&gt; applies only to jobs requesting accelerated computing instances (ml.p, ml.g, ml.trn families) and bounds the total time spent working through the list.&lt;/li&gt;
+&lt;li&gt;The timeout is &lt;strong&gt;not&lt;/strong&gt; applied per instance type, and it has no effect on CPU‑only jobs.&lt;/li&gt;
+&lt;li&gt;Works with &lt;strong&gt;Flexible Training Plans&lt;/strong&gt;, allowing reserved GPU capacity to be considered before falling back to on‑demand alternatives.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The feature is announced and available for use with Amazon SageMaker training and processing jobs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Faster job starts and higher capacity utilization.&lt;/li&gt;
+&lt;li&gt;Reduces operational overhead from custom retry scripts and monitoring.&lt;/li&gt;
+&lt;li&gt;Enables time‑critical workloads (nightly retraining, production fine‑tuning, scheduled processing) to start promptly, preserving model freshness.&lt;/li&gt;
+&lt;li&gt;Provides a unified way to leverage both reserved capacity (FTP) and on‑demand capacity without manual intervention.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21790-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21790-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21790-4.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #InstancePreferences #GPUCapacity #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/announcing-instance-preference-lists-for-amazon-sagemaker-ai-training-jobs/" target="_blank" rel="noopener"
+&gt;Announcing instance preference lists for Amazon SageMaker AI training jobs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker AI Managed MLflow Now Supports Cross-Account Governance Topologies</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-managed-mlflow-now-supports-cross-account-governance-topologies/</link><pubDate>Wed, 09 Sep 2026 00:51:34 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-managed-mlflow-now-supports-cross-account-governance-topologies/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-featured-image.png" alt="Featured image of post Amazon SageMaker AI Managed MLflow Now Supports Cross-Account Governance Topologies" /&gt;&lt;h1 id="amazon-sagemaker-ai-managed-mlflow-now-supports-cross-account-governance-topologies"&gt;Amazon SageMaker AI Managed MLflow Now Supports Cross-Account Governance Topologies
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker AI has expanded the capabilities of managed MLflow to support cross-account governance. This update allows larger organizations to separate development and production environments at the account level while maintaining a central governance function through two distinct topologies.&lt;/p&gt;
+&lt;h2 id="-architecture-topologies"&gt;🧩 Architecture Topologies
+&lt;/h2&gt;&lt;p&gt;Organizations can now implement cross-account governance using two primary patterns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hub-and-Spoke Pattern:&lt;/strong&gt; This model centralizes governance by sharing a single MLflow app from a hub account across multiple development (spoke) accounts using AWS Resource Access Manager (AWS RAM).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid Pattern:&lt;/strong&gt; Designed for regulated environments, this pattern keeps development accounts fully isolated from the governance hub, requiring model owners to approve models locally before they are promoted to the central hub.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;The system utilizes AWS RAM to share the MLflow app, enabling it to work even when accounts are not within the same organization by using external principals.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Role&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Environment/Tooling&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Responsibility&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Data Scientist&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Jupyter notebook&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Registers models against the shared MLflow app from a spoke account&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Governance Officer&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Amazon SageMaker Studio Models UI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Validates synced metrics and lineage; approves models centrally&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Administrator&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Console or CLI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Performs one-time setup of RAM shares, bucket policies, and destination groups&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;ML Engineer&lt;/td&gt;
+&lt;td style="text-align: left"&gt;CI/CD pipeline&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Deploys approved models to Amazon SageMaker endpoints in the spoke account&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-implementation-and-workflow"&gt;🔄 Implementation and Workflow
+&lt;/h2&gt;&lt;p&gt;The technical setup requires configuring named AWS CLI profiles for both the spoke and hub accounts. A CloudFormation template provisions the necessary SageMaker AI Studio domain, user profile, and Managed MLflow app with &lt;code&gt;AutoModelRegistrationEnabled&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;When a data scientist in a spoke account registers a model, a Model Package Group and version are created synchronously in the hub account. To facilitate deployment, the hub attaches a resource policy to the group and shares it back to the spoke with &lt;code&gt;AllowDeploy&lt;/code&gt; permissions. Model artifacts are stored in the hub account&amp;rsquo;s S3 bucket, with bucket policies granting the spoke account necessary permissions for artifact access during deployment.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Administrators can configure these topologies using the AWS Management Console or CLI. Working notebooks for these cross-account governance implementations are available in the accompanying GitHub repository.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #MLflow #AWS #MLOps #CloudGovernance&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/govern-models-with-mlflow-and-amazon-sagemaker-ai-model-registry-sync-part-2/" target="_blank" rel="noopener"
+&gt;Govern models with MLflow and Amazon SageMaker AI Model Registry sync: Part 2 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker Enhances MLflow Integration with Automated Model Registry Sync</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-enhances-mlflow-integration-with-automated-model-registry-sync/</link><pubDate>Wed, 09 Sep 2026 00:51:34 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-enhances-mlflow-integration-with-automated-model-registry-sync/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-featured-image-1.png" alt="Featured image of post Amazon SageMaker Enhances MLflow Integration with Automated Model Registry Sync" /&gt;&lt;h1 id="amazon-sagemaker-enhances-mlflow-integration-with-automated-model-registry-sync"&gt;Amazon SageMaker Enhances MLflow Integration with Automated Model Registry Sync
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker has introduced an enhanced synchronization capability between Managed MLflow and the SageMaker Model Registry. This update automates the transfer of critical model metadata, streamlining governance and deployment workflows.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The new integration automatically synchronizes MLflow-registered models to the SageMaker Model Registry, including training metrics, evaluation results, lineage, and lifecycle stages. This eliminates manual metadata management and provides governance teams with complete model context directly in SageMaker.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Automatic Sync&lt;/strong&gt;: When activated, every MLflow model registration triggers creation of a corresponding Model Package Group and version in SageMaker.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metadata Transfer&lt;/strong&gt;: Four categories of metadata are automatically carried over:
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Run metadata&lt;/strong&gt;: Parameters, training metrics, dataset location, model artifact path&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation metrics&lt;/strong&gt;: Attached as model cards for performance review&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference specification&lt;/strong&gt;: Container image, model data location, supported instance types&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lineage&lt;/strong&gt;: Relationships between MLflow experiments, models, containers, and packages&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metadata Type&lt;/th&gt;
+&lt;th&gt;Included Content&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Run metadata&lt;/td&gt;
+&lt;td&gt;Model parameters, training metrics, dataset location, artifact path&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Evaluation metrics&lt;/td&gt;
+&lt;td&gt;Model card with performance measures (rendered in SageMaker Studio Evaluate tab)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Inference spec&lt;/td&gt;
+&lt;td&gt;Container image, model data location, instance types (requires inference handler)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Lineage&lt;/td&gt;
+&lt;td&gt;MLflow experiment → model version → container → Model Package Group relationships&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Opt-in feature&lt;/strong&gt;: Enabled via &lt;code&gt;AutoModelRegistrationEnabled&lt;/code&gt; setting in MLflow apps&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IAM requirements&lt;/strong&gt;: Service role needs permissions for package creation, tagging, and lineage recording&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Activation&lt;/strong&gt;: Single MLflow call registers models and triggers sync&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data scientists&lt;/strong&gt;: Maintain experimentation workflows in MLflow without manual lineage tracking&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Governance officers&lt;/strong&gt;: Access complete, consistent metadata for lifecycle management in SageMaker&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Organizations&lt;/strong&gt;: Unified system of record for experiments (MLflow) and production models (SageMaker)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Working implementation notebooks are available in the accompanying GitHub repository.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/mlflow-artifacts.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/model-metrics.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/model-lineage.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#MLflow #SageMaker #MLOps #ModelGovernance #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/govern-models-with-mlflow-and-amazon-sagemaker-ai-model-registry-sync-part-1/" target="_blank" rel="noopener"
+&gt;Govern models with MLflow and Amazon SageMaker AI Model Registry sync: Part 1 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS benchmarks G7 Blackwell GPUs for 30B MoE models on SageMaker</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-benchmarks-g7-blackwell-gpus-for-30b-moe-models-on-sagemaker/</link><pubDate>Wed, 09 Sep 2026 00:51:34 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-benchmarks-g7-blackwell-gpus-for-30b-moe-models-on-sagemaker/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/ML-21730-featured-image.png" alt="Featured image of post AWS benchmarks G7 Blackwell GPUs for 30B MoE models on SageMaker" /&gt;&lt;h1 id="aws-benchmarks-g7-blackwell-gpus-for-30b-moe-models-on-sagemaker"&gt;AWS benchmarks G7 Blackwell GPUs for 30B MoE models on SageMaker
+&lt;/h1&gt;&lt;p&gt;Amazon Web Services (AWS) has published new benchmarks comparing NVIDIA Blackwell-powered G7 GPU instances against G5 and G6 families for deploying 30B-parameter Mixture-of-Experts (MoE) models on SageMaker. The tests focus on cost and performance improvements for large-scale AI inference workloads.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AWS evaluated two 30B MoE models—&lt;strong&gt;Qwen3-Coder-30B&lt;/strong&gt; (for enterprise coding tasks) and &lt;strong&gt;NVIDIA Nemotron-3-Nano-30B&lt;/strong&gt; (for reasoning/agentic workloads)—across GPU instance families using SageMaker&amp;rsquo;s Generative AI Inference Recommendations. The study highlights G7 instances&amp;rsquo; efficiency gains despite using fewer accelerators and less memory.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Direct benchmarking&lt;/strong&gt;: Used DJL Large Model Inference (LMI) containers to compare:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ml.g5.12xlarge&lt;/code&gt; (A10G, 4 GPUs, 96GB memory)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ml.g6.12xlarge&lt;/code&gt; (L4, 4 GPUs, 96GB memory)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ml.g7.12xlarge&lt;/code&gt; (RTX PRO 4500 Blackwell, 2 GPUs, 64GB memory)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated optimization&lt;/strong&gt;: Leveraged SageMaker recommendations with vLLM to evaluate G6, G6e (L40S), and G7 configurations for throughput, latency, and cost-per-token.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;G7 advantages&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Native FP4 Tensor Core support (reduces model size to ~4 bits/weight with minimal quality loss)&lt;/li&gt;
+&lt;li&gt;Higher memory bandwidth improves MoE decoding efficiency&lt;/li&gt;
+&lt;li&gt;Achieves comparable performance to G5/G6 with half the GPUs and less memory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Instance comparisons&lt;/strong&gt;:
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Instance Family&lt;/th&gt;
+&lt;th&gt;GPUs&lt;/th&gt;
+&lt;th&gt;Aggregate GPU Memory&lt;/th&gt;
+&lt;th&gt;Key Feature&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;G5&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;96GB&lt;/td&gt;
+&lt;td&gt;A10G (no FP4 acceleration)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;G6&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;96GB&lt;/td&gt;
+&lt;td&gt;L4 (no FP4 acceleration)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;G7&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;64GB&lt;/td&gt;
+&lt;td&gt;Blackwell (native FP4)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;G7 instances are &lt;strong&gt;generally available only in US East (Ohio) and US West (Oregon) regions&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The benchmarks demonstrate that G7 instances deliver measurable improvements in throughput and latency for MoE architectures while optimizing costs. Native FP4 support provides a structural advantage for memory-bandwidth-bound MoE deployments, enabling efficient enterprise use of 30B-parameter models with reduced infrastructure footprint.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/ML-21730-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/ML-21730-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #SageMaker #NVIDIA #Blackwell #MoE #AIInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/benchmarking-small-llm-inference-on-sagemaker-ai-g7-vs-g5-and-g6/" target="_blank" rel="noopener"
+&gt;Benchmarking small LLM inference on SageMaker AI: G7 vs G5 and G6 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>HyperPod InstantStart launched to simplify Amazon SageMaker HyperPod cluster composition</title><link>https://shoubhikbanerjee.github.io/blog/p/hyperpod-instantstart-launched-to-simplify-amazon-sagemaker-hyperpod-cluster-composition/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/hyperpod-instantstart-launched-to-simplify-amazon-sagemaker-hyperpod-cluster-composition/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-21539-featured-image.png" alt="Featured image of post HyperPod InstantStart launched to simplify Amazon SageMaker HyperPod cluster composition" /&gt;&lt;h1 id="hyperpod-instantstart-launched-to-simplify-amazon-sagemaker-hyperpod-cluster-composition"&gt;HyperPod InstantStart launched to simplify Amazon SageMaker HyperPod cluster composition
+&lt;/h1&gt;&lt;p&gt;Running foundation model (FM) workloads on Amazon SageMaker HyperPod is a chain of dependent tasks rather than a single action. Infrastructure teams must create the network and control plane, attach accelerator capacity, install cluster dependencies, prepare storage and identity, and deploy model servers. To address the operational challenges of managing these handoffs, HyperPod InstantStart has been introduced as an open-source control plane built for resource composition.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;While Amazon Elastic Kubernetes Service (Amazon EKS) provides direct Kubernetes access as a user-managed orchestration surface, it traditionally requires teams to compose AWS resources, add-ons, workloads, and day-two operations manually. Each step has its own API, failure modes, and waiting periods.&lt;/p&gt;
+&lt;p&gt;Amazon SageMaker HyperPod reduces this operational burden by offering managed, resilient compute and Amazon EKS integrated capabilities. HyperPod InstantStart directly resolves the remaining composition challenges by automating multi-stage workflows.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;HyperPod InstantStart runs as a single, out-of-band management container in your AWS account. It calls AWS service APIs and the Kubernetes API, but does not sit in the data path of your training jobs or inference requests.&lt;/p&gt;
+&lt;p&gt;The control plane offers two ways to drive its operations, both entering through the same single container:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AI Agent Orchestration:&lt;/strong&gt; An AI agent plans the multi-stage workflow, launches each stage, and polls asynchronous AWS operations until completion. The agent pauses only for user-defined decisions—such as selecting the Availability Zone, instance type, and capacity type—before handing back a running cluster with storage mounted.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Unified Interfaces:&lt;/strong&gt; The web UI, the REST API, and the Model Context Protocol (MCP) tools represent three faces of the same container. Both interfaces call the same backend APIs, pass the same validations, and read the same persisted operation state, ensuring neither interface has private logic the other lacks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Because everything created by HyperPod InstantStart is a standard AWS or Kubernetes resource, infrastructure teams can inspect all outputs directly using the AWS Command Line Interface (AWS CLI) and &lt;code&gt;kubectl&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The capabilities managed across AWS and Amazon SageMaker HyperPod are structured as follows:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Operational Category&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Managed Capabilities&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Infrastructure&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Health monitoring, deep health checks, and automatic node recovery&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Capacity&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Continuous provisioning and managed Karpenter autoscaling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Training&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Process-level recovery and managed tiered checkpointing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Inference&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Intelligent routing and tiered key-value (KV) caching&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Storage &amp;amp; Registry&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Amazon Simple Storage Service (Amazon S3), Amazon FSx for Lustre, and Amazon Elastic Container Registry (Amazon ECR) to carry images, data, and checkpoints&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/01/figure-1-managed-boundary.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-21539-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #SageMaker #Kubernetes #AIagents #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/run-agent-driven-amazon-sagemaker-hyperpod-operations-with-instantstart/" target="_blank" rel="noopener"
+&gt;Run agent-driven Amazon SageMaker HyperPod operations with InstantStart | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>🤖 Democratizing Data Science: How Amazon Q Developer is Revolutionizing Machine Learning for Everyone</title><link>https://shoubhikbanerjee.github.io/blog/p/democratizing-data-science-how-amazon-q-developer-is-revolutionizing-machine-learning-for-everyone/</link><pubDate>Thu, 29 May 2025 18:56:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/democratizing-data-science-how-amazon-q-developer-is-revolutionizing-machine-learning-for-everyone/</guid><description>&lt;img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" alt="Featured image of post 🤖 Democratizing Data Science: How Amazon Q Developer is Revolutionizing Machine Learning for Everyone" /&gt;&lt;h1 id="-democratizing-data-science-how-amazon-q-developer-is-revolutionizing-machine-learning-for-everyone"&gt;🤖 Democratizing Data Science: How Amazon Q Developer is Revolutionizing Machine Learning for Everyone
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;𝙎𝙪𝙢𝙢𝙖𝙧𝙮: Amazon Q Developer in SageMaker Canvas transforms ML model creation from a weeks-long expert task into a natural language conversation. This AI agent system lets non-technical users build sophisticated machine learning models in minutes through simple dialogue, automatically handling data preparation, model selection, and optimization while providing transparency into the entire process.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="-the-machine-learning-revolution-just-got-more-accessible"&gt;🚀 The Machine Learning Revolution Just Got More Accessible
+&lt;/h2&gt;&lt;p&gt;Machine learning has traditionally stood behind a wall of technical expertise. Building predictive models typically requires specialized knowledge in data science, machine learning algorithms, and a thorough understanding of business contexts. Even for experts, the process from data acquisition to model deployment can stretch across days or weeks.&lt;/p&gt;
+&lt;p&gt;But what if you could simply &lt;em&gt;ask&lt;/em&gt; for the machine learning model you need?&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s exactly what Amazon Q Developer in SageMaker Canvas delivers. Generally available since February 28, 2025 (after its beta preview at re:Invent 2024), this generative-AI-powered assistant lets anyone build and deploy sophisticated machine learning models through natural language conversation—no ML expertise required.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration above showing the chatbot interface of Amazon Q Developer for SageMaker Canvas&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-how-amazon-q-developer-works-ai-agency-in-action"&gt;🧠 How Amazon Q Developer Works: AI Agency in Action
+&lt;/h2&gt;&lt;p&gt;At its core, Amazon Q Developer functions as an 𝗮𝗴𝗲𝗻𝘁𝗶𝗰 𝘀𝘆𝘀𝘁𝗲𝗺—an autonomous AI that acts on your behalf. Here&amp;rsquo;s the fascinating part: the system combines a large language model (LLM) interface with a structured nonvolatile-memory block that retains critical information throughout your conversation.&lt;/p&gt;
+&lt;p&gt;The workflow begins with you describing your business problem in plain language. For example, you might say: &amp;ldquo;I&amp;rsquo;m a credit risk analyst at a bank and want to classify loan applicants as default or non-default based on their financial characteristics and economic indicators.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;From there, you can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Select an existing dataset&lt;/li&gt;
+&lt;li&gt;Create a new dataset from S3, Redshift, SQL, or Snowflake&lt;/li&gt;
+&lt;li&gt;Simply upload a CSV file from your computer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The system expects tabular data with target columns (what you want to predict) and feature columns (data points used for prediction). For time-series forecasting, you&amp;rsquo;ll also need a timestamp column.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing the architecture of Q Developer data science assistant&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;What makes this system truly powerful is its dependency graph structure—each node represents a problem variable like &lt;code&gt;problem_type&lt;/code&gt;, &lt;code&gt;evaluation_metric&lt;/code&gt;, or &lt;code&gt;target_column&lt;/code&gt;. This architecture helps the agent infer missing variables necessary for building your ML model.&lt;/p&gt;
+&lt;h2 id="-automatic-intelligence-from-data-to-predictions"&gt;🔍 Automatic Intelligence: From Data to Predictions
+&lt;/h2&gt;&lt;p&gt;Once you&amp;rsquo;ve provided your dataset and described your problem, Amazon Q Developer takes over with remarkable autonomy:&lt;/p&gt;
+&lt;h3 id="-intelligent-data-preparation"&gt;🧹 Intelligent Data Preparation
+&lt;/h3&gt;&lt;p&gt;The system automatically:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cleans data and fills missing values&lt;/li&gt;
+&lt;li&gt;Encodes categorical features&lt;/li&gt;
+&lt;li&gt;Handles outliers&lt;/li&gt;
+&lt;li&gt;Removes duplicate rows/columns&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Throughout this process, you can ask follow-up questions about your dataset (e.g., &amp;ldquo;What percentage of rows have missing values?&amp;rdquo; or &amp;ldquo;Are there outliers?&amp;rdquo;) and use DataWrangler for advanced analytics and visualization.&lt;/p&gt;
+&lt;h3 id="-sophisticated-model-building"&gt;🤖 Sophisticated Model Building
+&lt;/h3&gt;&lt;p&gt;Amazon Q Developer doesn&amp;rsquo;t just build a single machine learning model—it creates an 𝗲𝗻𝘀𝗲𝗺𝗯𝗹𝗲 of models including XGBoost, CatBoost, LightGBM, linear models, and neural networks.&lt;/p&gt;
+&lt;p&gt;The system automatically:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Identifies the appropriate ML task type (classification, regression, or forecasting)&lt;/li&gt;
+&lt;li&gt;Suggests appropriate loss functions based on your needs&lt;/li&gt;
+&lt;li&gt;Conducts hyperparameter optimization (HPO)&lt;/li&gt;
+&lt;li&gt;Manages feature engineering&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All of these complex processes are handled behind the scenes, without requiring any technical input from you.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;See illustration showing dataset analysis with Q Developer in SageMaker Canvas&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-transparent-results-and-deployment"&gt;📊 Transparent Results and Deployment
+&lt;/h3&gt;&lt;p&gt;After training, you can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Run inference on test datasets&lt;/li&gt;
+&lt;li&gt;Deploy your model as a SageMaker inference endpoint in just a few clicks&lt;/li&gt;
+&lt;li&gt;Access an automatically generated explainability report&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The explainability report is particularly valuable, offering visualizations and insights into:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Dataset properties&lt;/li&gt;
+&lt;li&gt;Feature attribution scores (which variables matter most)&lt;/li&gt;
+&lt;li&gt;The model training process&lt;/li&gt;
+&lt;li&gt;Performance metrics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-this-matters-the-democratization-of-ml"&gt;💡 Why This Matters: The Democratization of ML
+&lt;/h2&gt;&lt;p&gt;The significance of Amazon Q Developer extends far beyond convenience. This tool represents a fundamental shift in who can access the power of machine learning:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Breaking down technical barriers&lt;/strong&gt;: Business analysts, domain experts, and other non-technical professionals can now leverage advanced ML without waiting for data science teams.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Accelerating development cycles&lt;/strong&gt;: What once took weeks can now be accomplished in minutes or hours.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Maintaining quality&lt;/strong&gt;: By using ensemble methods and automatic optimization, the system often achieves performance comparable to models built by experienced data scientists.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Preserving transparency&lt;/strong&gt;: Unlike many AI systems, Q Developer provides clear explanations about model decisions and feature importance.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For organizations looking to become more data-driven, this technology offers a path to widespread ML adoption without massive investments in specialized talent or extended development timelines.&lt;/p&gt;
+&lt;h2 id="-the-future-of-human-ai-collaboration-in-data-science"&gt;🔮 The Future of Human-AI Collaboration in Data Science
+&lt;/h2&gt;&lt;p&gt;Amazon Q Developer represents an early glimpse into a future where AI agents work alongside humans, handling the technical complexities while humans focus on problem definition and business insights.&lt;/p&gt;
+&lt;p&gt;Rather than replacing data scientists, tools like this expand the ecosystem, allowing experts to focus on more complex challenges while empowering non-specialists to solve predictive problems independently.&lt;/p&gt;
+&lt;p&gt;As these systems evolve, we can expect even more intuitive interfaces, better automated feature engineering, and deeper integration with business intelligence systems—ultimately making ML as accessible as spreadsheet formulas are today.&lt;/p&gt;
+&lt;p&gt;Ready to transform your data into powerful ML models without extensive data science expertise? Start exploring Amazon Q Developer in SageMaker Canvas today and experience the simplicity of building ML models using natural-language commands.&lt;/p&gt;
+&lt;p&gt;What business problem could you solve with a conversational ML assistant at your fingertips? 🤔&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://www.amazon.science/blog/an-ai-agent-for-data-science-amazon-q-developer-in-sagemaker-canvas" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/an-ai-agent-for-data-science-amazon-q-developer-in-sagemaker-canvas&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#MachineLearning #ArtificialIntelligence #DataScience #AmazonQ #SageMaker #AutoML #AIAgents #NaturalLanguageProcessing #DataAnalytics #TechInnovation&lt;/p&gt;</description></item></channel></rss>

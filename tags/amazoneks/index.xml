@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AmazonEKS on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/amazoneks/</link><description>Recent content in AmazonEKS on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 17 Sep 2026 22:02:13 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/amazoneks/index.xml" rel="self" type="application/rss+xml"/><item><title>Integrating NVIDIA Resiliency Extension with PyTorch FSDP on Amazon EKS</title><link>https://shoubhikbanerjee.github.io/blog/p/integrating-nvidia-resiliency-extension-with-pytorch-fsdp-on-amazon-eks/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/integrating-nvidia-resiliency-extension-with-pytorch-fsdp-on-amazon-eks/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-20900-featured-image.png" alt="Featured image of post Integrating NVIDIA Resiliency Extension with PyTorch FSDP on Amazon EKS" /&gt;&lt;h1 id="integrating-nvidia-resiliency-extension-with-pytorch-fsdp-on-amazon-eks"&gt;Integrating NVIDIA Resiliency Extension with PyTorch FSDP on Amazon EKS
+&lt;/h1&gt;&lt;p&gt;NVIDIA Resiliency Extension (NVRx) has been integrated into PyTorch Fully Sharded Data Parallel (FSDP) training on Amazon Elastic Kubernetes Service (Amazon EKS) to address training interruptions and I/O bottlenecks in large-scale distributed jobs.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Large-scale distributed training jobs running across dozens of nodes for hours or days face statistically inevitable interruptions such as network partitions, memory errors, software exceptions, or infrastructure events. A single GPU fault can trigger a cascade where NVIDIA Collective Communication Library (NCCL) timeouts propagate to healthy workers and pods crash, resulting in expensive GPU hours with zero training progress. Additionally, synchronous checkpointing can consume up to 40% of total wall time by blocking all ranks on I/O.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NVRx is a pip-installable Python layer (&lt;code&gt;pip install nvidia-resiliency-ext&lt;/code&gt;) that adds fault-tolerance primitives to PyTorch without requiring custom kernels, a PyTorch fork, or recompilation. These primitives drop into existing FSDP scripts as ordinary imports, leaving the model and training code untouched.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Fault Class Handled&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Async Checkpointing&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses &lt;code&gt;TorchAsyncCheckpoint&lt;/code&gt; to replace &lt;code&gt;torch.save&lt;/code&gt; with &lt;code&gt;async_save()&lt;/code&gt;, handing state dicts to a background process to overlap I/O with training.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;I/O Bottlenecks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;In-process Restart&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses &lt;code&gt;inprocess.Wrapper&lt;/code&gt; to wrap the train function; it aborts the active process group, runs health checks, and re-rendezvouses survivors.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Soft faults (unhandled exceptions, NCCL hangs)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;ft_launcher&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;An in-job restart launcher that uses &lt;code&gt;RankMonitorClient&lt;/code&gt; to check heartbeats and respawn fresh workers on stall or death.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Hard faults (SIGKILL, OOM kill, OS-level hangs)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Async Checkpointing:&lt;/strong&gt; Paired with FSDP &lt;code&gt;LOCAL_STATE_DICT&lt;/code&gt;, each rank writes its own shard directly to avoid all-gather and rank-0 bottlenecks. A &lt;code&gt;finalize_async_save()&lt;/code&gt; call commits the write before the next save.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;In-process Recovery:&lt;/strong&gt; The CUDA allocator, interpreter, and outer-scope objects survive the restart.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;In-job Recovery:&lt;/strong&gt; The launcher kills survivors, reclaims GPU memory, and respawns workers who reload from the latest checkpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure:&lt;/strong&gt; The solution runs on Amazon EKS using self-managed node groups of p5.48xlarge instances, featuring 8 NVIDIA H100 80 GB GPUs and 32 Elastic Fabric Adapter (EFA) network interfaces per instance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validation:&lt;/strong&gt; Benchmark results were collected on H100 GPUs at a scale of 2 to 8 nodes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#PyTorch #NVIDIA #AmazonEKS #FSDP #GPU&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/fault-tolerant-distributed-training-on-amazon-eks-using-nvrx/" target="_blank" rel="noopener"
+&gt;Fault tolerant distributed training on Amazon EKS using NVRx | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docling on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/docling/</link><description>Recent content in Docling on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 25 Oct 2026 22:04:16 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/docling/index.xml" rel="self" type="application/rss+xml"/><item><title>Rust‑Based docling.rs Speeds Up Document Conversion for LLM Pipelines</title><link>https://shoubhikbanerjee.github.io/blog/p/rustbased-docling-rs-speeds-up-document-conversion-for-llm-pipelines/</link><pubDate>Sun, 25 Oct 2026 22:04:16 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/rustbased-docling-rs-speeds-up-document-conversion-for-llm-pipelines/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/188446108?v=4" alt="Featured image of post Rust‑Based docling.rs Speeds Up Document Conversion for LLM Pipelines" /&gt;&lt;h1 id="rustbased-doclingrs-speeds-up-document-conversion-for-llm-pipelines"&gt;Rust‑Based docling.rs Speeds Up Document Conversion for LLM Pipelines
+&lt;/h1&gt;&lt;p&gt;The docling.rs project released a Rust port of IBM’s docling that delivers faster, lower‑memory document conversion for LLM and RAG pipelines.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔧 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Converts PDF, Office, HTML, scanned documents, and audio into Markdown, docling JSON, and other formats that LLMs or RAG pipelines can consume.&lt;/li&gt;
+&lt;li&gt;Produces output that is &lt;em&gt;byte‑for‑byte&lt;/em&gt; identical to the original IBM docling implementation.&lt;/li&gt;
+&lt;li&gt;Operates as a single static binary – no Python runtime and no PyTorch dependency.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Layout analysis, table recognition, and OCR&lt;/strong&gt; are performed by built‑in ONNX models (layout, OCR, TableFormer, Whisper). These models are bundled (under 1 GB) and can be downloaded once via the provided scripts.&lt;/li&gt;
+&lt;li&gt;Office, HTML, Markdown, and e‑mail formats require no ML models.&lt;/li&gt;
+&lt;li&gt;PDF, images, and audio trigger the ONNX models for full‑fidelity extraction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance"&gt;🚀 Performance
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Format&lt;/th&gt;
+&lt;th&gt;Speedup vs. Python docling&lt;/th&gt;
+&lt;th&gt;RAM usage&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;PDF&lt;/td&gt;
+&lt;td&gt;4.3× faster&lt;/td&gt;
+&lt;td&gt;under half&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Office &amp;amp; HTML&lt;/td&gt;
+&lt;td&gt;20–60× faster&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Table extraction retains structure with &lt;strong&gt;cell recall 0.94&lt;/strong&gt;, compared to MarkItDown&amp;rsquo;s 0.31 (see &lt;a class="link" href="#conformance-with-microsoft-markitdown" &gt;numbers&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-compatibility-with-existing-stacks"&gt;🔗 Compatibility with existing stacks
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MarkItDown&lt;/strong&gt;: &lt;code&gt;pip install docling-rs&lt;/code&gt; and replace the import with &lt;code&gt;from docling_rs.markitdown import MarkItDown&lt;/code&gt;. All original formats, layout analysis, tables, and OCR remain functional.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Marker&lt;/strong&gt;: Swap imports to &lt;code&gt;from docling_rs.marker.converters.pdf import PdfConverter&lt;/code&gt; and keep the original API (&lt;code&gt;create_model_dict&lt;/code&gt;, &lt;code&gt;text_from_rendered&lt;/code&gt;, JSON block tree, etc.).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MinerU&lt;/strong&gt;: Replace imports to &lt;code&gt;from docling_rs.mineru.parser import parse&lt;/code&gt; and retain MinerU 4’s SDK (&lt;code&gt;ParseResult&lt;/code&gt;, &lt;code&gt;markdown()&lt;/code&gt;, JSON, Content Lists, &lt;code&gt;save()&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Each compatibility guide includes side‑by‑side measurements (&lt;a class="link" href="#conformance-with-microsoft-markitdown" &gt;MarkItDown&lt;/a&gt;, &lt;a class="link" href="#conformance-with-marker" &gt;Marker&lt;/a&gt;, &lt;a class="link" href="#conformance-with-mineru" &gt;MinerU&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🌐 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Install with &lt;strong&gt;pip&lt;/strong&gt;: &lt;code&gt;pip install docling-rs&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Install with &lt;strong&gt;npm&lt;/strong&gt; or from source checkout.&lt;/li&gt;
+&lt;li&gt;Download models once with:
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;docling_rs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;docling_rs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;download_models&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;or via &lt;code&gt;download_dependencies.sh&lt;/code&gt; for non‑Python workflows.&lt;/li&gt;
+&lt;li&gt;Windows support documented in &lt;a class="link" href="./docs/WINDOWS.md" &gt;&lt;code&gt;docs/WINDOWS.md&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Try the converter directly in the browser (WebAssembly, OCR included) at &lt;a class="link" href="https://docling-project.github.io/docling.rs/" target="_blank" rel="noopener"
+&gt;https://docling-project.github.io/docling.rs/&lt;/a&gt; – processing stays on your device.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-documentation"&gt;📚 Documentation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Detailed performance and profiling notes: &lt;code&gt;./docs/PDF_CONFORMANCE.md#performance--review--profiling-notes&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Model download instructions: see the &lt;strong&gt;Getting the ML models&lt;/strong&gt; section referenced in the docs.&lt;/li&gt;
+&lt;li&gt;API migration guides for MarkItDown, Marker, and MinerU are linked in each bullet above.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#docling #Rust #documentconversion #LLM #RAG&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/docling-project/docling.rs" target="_blank" rel="noopener"
+&gt;docling-project/docling.rs&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Development on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/development/</link><description>Recent content in Development on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 06 Jun 2025 21:16:00 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/development/index.xml" rel="self" type="application/rss+xml"/><item><title>🎵 AI Sound Generation at Your Fingertips: Building a Real-Time Audio Creator on Arm CPUs</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-sound-generation-at-your-fingertips-building-a-real-time-audio-creator-on-arm-cpus/</link><pubDate>Fri, 06 Jun 2025 21:16:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-sound-generation-at-your-fingertips-building-a-real-time-audio-creator-on-arm-cpus/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6682a9252200824e2ddc667f/MaH3l1Ox9OZ7c8mIG_mtS.png" alt="Featured image of post 🎵 AI Sound Generation at Your Fingertips: Building a Real-Time Audio Creator on Arm CPUs" /&gt;&lt;h1 id="-ai-sound-generation-at-your-fingertips-building-a-real-time-audio-creator-on-arm-cpus"&gt;🎵 AI Sound Generation at Your Fingertips: Building a Real-Time Audio Creator on Arm CPUs
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Discover how a software engineer built a personal AI sound generator that creates unique audio samples in seconds—running entirely on Arm CPUs without cloud dependencies. This on-device solution integrates seamlessly with music production workflows, showing how efficient computing architectures can power creative AI tools locally.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-from-imagination-to-sound-in-seconds"&gt;🚀 From Imagination to Sound in Seconds
+&lt;/h2&gt;&lt;p&gt;Have you ever been in the flow of creation when suddenly you need &lt;em&gt;that perfect sound&lt;/em&gt;—but searching through libraries breaks your momentum? 𝗧𝗵𝗶𝘀 𝗶𝘀 𝘁𝗵𝗲 𝗽𝗿𝗼𝗯𝗹𝗲𝗺 I set out to solve as both a software engineer and music producer.&lt;/p&gt;
+&lt;p&gt;The result? A personal tool that generates unique, studio-ready sounds from simple text prompts—running 𝘤𝘰𝘮𝘱𝘭𝘦𝘵𝘦𝘭𝘺 on-device with an Arm-based CPU. No cloud services, no waiting, no interruptions to the creative process.&lt;/p&gt;
+&lt;p&gt;This isn&amp;rsquo;t just another AI demo. It&amp;rsquo;s a glimpse into how efficient computing architectures can transform creative workflows by bringing AI capabilities directly to the tools we already use.&lt;/p&gt;
+&lt;h2 id="-the-technical-stack-power-meets-efficiency"&gt;🧠 The Technical Stack: Power Meets Efficiency
+&lt;/h2&gt;&lt;p&gt;The magic behind this sound generator comes from combining several powerful technologies:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔊 &lt;strong&gt;Stable Audio Open model&lt;/strong&gt; from Stability AI (via Hugging Face)&lt;/li&gt;
+&lt;li&gt;⚙️ &lt;strong&gt;PyTorch and TorchAudio&lt;/strong&gt; for the inference engine&lt;/li&gt;
+&lt;li&gt;💻 &lt;strong&gt;Arm-based CPUs&lt;/strong&gt; providing the computational muscle&lt;/li&gt;
+&lt;li&gt;🎛️ &lt;strong&gt;Ableton Live integration&lt;/strong&gt; for seamless creative handoff&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What makes this approach different is that it runs 𝘄𝗶𝘁𝗵𝗼𝘂𝘁 dedicated GPUs or cloud connections, proving that today&amp;rsquo;s efficient CPUs can handle complex generative tasks when the pipeline is properly optimized.&lt;/p&gt;
+&lt;h3 id="𝗢𝗽𝘁𝗶𝗺𝗶𝘇𝗶𝗻𝗴-𝗳𝗼𝗿-𝗖𝗣𝗨-𝗣𝗲𝗿𝗳𝗼𝗿𝗺𝗮𝗻𝗰𝗲"&gt;𝗢𝗽𝘁𝗶𝗺𝗶𝘇𝗶𝗻𝗴 𝗳𝗼𝗿 𝗖𝗣𝗨 𝗣𝗲𝗿𝗳𝗼𝗿𝗺𝗮𝗻𝗰𝗲
+&lt;/h3&gt;&lt;p&gt;The key to achieving responsive performance was maximizing thread utilization while managing memory carefully:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Use all available CPU threads&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_num_threads&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cpu_count&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Periodic garbage collection to maintain performance&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;gen_count&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;gc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;collect&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Memory cleared at generation &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;gen_count&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;For the diffusion process itself, I tuned the parameters for speed without sacrificing quality:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;generate_diffusion_cond&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;cfg_scale&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;conditioning&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;conditioning&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sample_size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;sample_size&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sigma_min&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sigma_max&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sampler_type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;dpmpp-3m-sde&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;device&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The system is also flexible enough to utilize hardware acceleration when available:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;device&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;mps&amp;#34;&lt;/span&gt; &lt;span class="c1"&gt;# For Apple Silicon&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# or &amp;#34;cuda&amp;#34; for NVIDIA GPUs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# or &amp;#34;cpu&amp;#34; for any system&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;float32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-seamless-creative-integration"&gt;🎹 Seamless Creative Integration
+&lt;/h2&gt;&lt;p&gt;What truly makes this tool valuable is how it integrates into existing workflows. Instead of switching between applications or browser tabs, the generated sounds appear directly in Ableton Live&amp;rsquo;s browser.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s what the interaction looks like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Enter a prompt for generating audio:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Ambient texture
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Enter a tempo for the audio:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;100
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Generated audio saved to: Ambient texture.wav
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Seconds later, that uniquely generated sound is ready to be dragged into a track, manipulated, and incorporated into a composition. No downloading files from cloud services, no copying between folders—just seamless creation.&lt;/p&gt;
+&lt;p&gt;The difference between this and other AI audio tools? 𝙏𝙝𝙚 𝙘𝙧𝙚𝙖𝙩𝙞𝙫𝙚 𝙛𝙡𝙤𝙬 𝙣𝙚𝙫𝙚𝙧 𝙨𝙩𝙤𝙥𝙨.&lt;/p&gt;
+&lt;h2 id="-why-on-device-ai-matters-for-creators"&gt;🔮 Why On-Device AI Matters for Creators
+&lt;/h2&gt;&lt;p&gt;This project demonstrates something powerful about the future of creative tools:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Flow preservation&lt;/strong&gt; 🌊 - When AI runs locally, there&amp;rsquo;s no waiting that disrupts creativity&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Data privacy&lt;/strong&gt; 🛡️ - Your creative prompts and outputs never leave your machine&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Ownership&lt;/strong&gt; 🔐 - Complete control over your generated content&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reliability&lt;/strong&gt; ⚡ - No dependency on internet connections or cloud service availability&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;As Arm-based processors continue to evolve, we&amp;rsquo;ll see more AI workloads shifting from cloud to local execution. This isn&amp;rsquo;t just about technical efficiency—it&amp;rsquo;s about removing barriers between imagination and creation.&lt;/p&gt;
+&lt;h3 id="𝗧𝗵𝗲-𝗣𝗼𝘄𝗲𝗿-𝗼𝗳-𝗣𝗲𝗿𝘀𝗼𝗻𝗮𝗹𝗶𝘇𝗮𝘁𝗶𝗼𝗻"&gt;𝗧𝗵𝗲 𝗣𝗼𝘄𝗲𝗿 𝗼𝗳 𝗣𝗲𝗿𝘀𝗼𝗻𝗮𝗹𝗶𝘇𝗮𝘁𝗶𝗼𝗻
+&lt;/h3&gt;&lt;p&gt;Perhaps the most exciting aspect of this tool is that every generated sound is unique. The exact same prompt will produce different results each time, giving creators a sense of ownership over what they generate. This contrasts sharply with the sample packs and presets that lead to homogenized sounds across different artists&amp;rsquo; work.&lt;/p&gt;
+&lt;p&gt;With on-device generation, you&amp;rsquo;re not just selecting from a menu—you&amp;rsquo;re describing what doesn&amp;rsquo;t yet exist and bringing it into being.&lt;/p&gt;
+&lt;h2 id="-looking-forward-local-ai-as-creative-companion"&gt;🌟 Looking Forward: Local AI as Creative Companion
+&lt;/h2&gt;&lt;p&gt;While this project is a personal prototype, it points toward a future where AI becomes less of a remote service and more of an integrated creative companion. Imagine musical instruments with built-in sound generation, video editors with on-device visual effect creation, or design tools that generate textures and patterns in real-time.&lt;/p&gt;
+&lt;p&gt;The combination of efficient computing architectures like Arm and optimized AI models is making this future possible sooner than many expected. For developers and creators alike, this opens new possibilities for tools that enhance rather than interrupt the creative process.&lt;/p&gt;
+&lt;p&gt;What would your creative workflow look like if you could generate exactly what you imagine, right when you need it, without leaving your primary creative environment?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/Arm/ai-sound-gen-on-arm" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/Arm/ai-sound-gen-on-arm&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#AIAudio #GenerativeAI #ArmCPU #MusicProduction #CreativeTech #OnDeviceAI #AblelonLive #AIForCreators #EdgeComputing #AudioGeneration&lt;/p&gt;</description></item><item><title>🚀 Unlocking AI Design Automation: How to Use Figma's MCP Server</title><link>https://shoubhikbanerjee.github.io/blog/p/unlocking-ai-design-automation-how-to-use-figmas-mcp-server/</link><pubDate>Fri, 06 Jun 2025 21:10:18 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/unlocking-ai-design-automation-how-to-use-figmas-mcp-server/</guid><description>&lt;img src="https://assets.apidog.com/blog-next/2025/03/Phi-4--2-.png" alt="Featured image of post 🚀 Unlocking AI Design Automation: How to Use Figma's MCP Server" /&gt;&lt;h1 id="-unlocking-ai-design-automation-how-to-use-figmas-mcp-server"&gt;🚀 Unlocking AI Design Automation: How to Use Figma&amp;rsquo;s MCP Server
+&lt;/h1&gt;&lt;h2 id="-summary"&gt;📊 Summary
+&lt;/h2&gt;&lt;p&gt;Discover how the Model Context Protocol (MCP) is revolutionizing design workflows by connecting Figma to AI tools. Learn to set up Figma-MCP in minutes and automate your design process with practical implementation steps and expert tips.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-ai-design-connection-understanding-mcp"&gt;🧠 The AI-Design Connection: Understanding MCP
+&lt;/h2&gt;&lt;p&gt;The line between design tools and artificial intelligence is blurring faster than most of us can keep up with. At the intersection of this exciting frontier sits the Model Context Protocol (MCP) – a technological bridge that&amp;rsquo;s fundamentally changing how designers interact with their tools.&lt;/p&gt;
+&lt;p&gt;𝗠𝗖𝗣 enables seamless communication between design platforms like Figma and large language models (LLMs), creating opportunities for automation that were science fiction just months ago. Rather than just creating static mockups, designers can now leverage AI to generate variations, implement components, and even create code – all from within their familiar design environment.&lt;/p&gt;
+&lt;p&gt;But what exactly makes this possible? 🤔&lt;/p&gt;
+&lt;h2 id="-what-is-figma-mcp-and-how-does-it-work"&gt;🔌 What is Figma-MCP and How Does It Work?
+&lt;/h2&gt;&lt;p&gt;Figma-MCP is an open-source server that implements the Model Context Protocol, essentially acting as a translator between your Figma designs and AI tools. Think of it as giving AI &amp;ldquo;eyes&amp;rdquo; to see and understand your design files.&lt;/p&gt;
+&lt;p&gt;The workflow functions through three key components:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;🔄 &lt;strong&gt;MCP Protocol&lt;/strong&gt; – The universal standard that structures how external applications connect to LLMs, allowing AI to read and manipulate design resources&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🎨 &lt;strong&gt;Figma API Integration&lt;/strong&gt; – The connection that provides AI tools access to your files, components, styles, and design elements&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🤖 &lt;strong&gt;AI-Driven Automation&lt;/strong&gt; – The resulting capability that enables everything from reading design data to generating components and code&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;𝑊ℎ𝑎𝑡 𝑚𝑎𝑘𝑒𝑠 𝑡ℎ𝑖𝑠 𝑠𝑜 𝑝𝑜𝑤𝑒𝑟𝑓𝑢𝑙 is that rather than AI merely suggesting changes, it can actually understand the context and structure of your designs. This means the AI can interpret complex relationships between components, recognize design patterns, and generate appropriate code that respects your design system.&lt;/p&gt;
+&lt;h2 id="-setting-up-figma-mcp-in-4-simple-steps"&gt;⚙️ Setting Up Figma-MCP in 4 Simple Steps
+&lt;/h2&gt;&lt;p&gt;Getting started with Figma-MCP is surprisingly straightforward. Let&amp;rsquo;s break it down into manageable steps:&lt;/p&gt;
+&lt;h3 id="1-gather-your-prerequisites"&gt;1️⃣ Gather Your Prerequisites
+&lt;/h3&gt;&lt;p&gt;Before diving in, make sure you have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Node.js (v16+)&lt;/li&gt;
+&lt;li&gt;npm (v7+) or pnpm (v8+)&lt;/li&gt;
+&lt;li&gt;A Figma account (Professional or Enterprise recommended)&lt;/li&gt;
+&lt;li&gt;A bit of patience 😉&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-obtain-your-figma-api-access-token"&gt;2️⃣ Obtain Your Figma API Access Token
+&lt;/h3&gt;&lt;p&gt;Your API token is your key to connecting Figma with the MCP server:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Sign up for Figma and log in&lt;/li&gt;
+&lt;li&gt;Install the Figma desktop app&lt;/li&gt;
+&lt;li&gt;Click your profile icon → Settings → Security → Personal Access Tokens&lt;/li&gt;
+&lt;li&gt;Generate a new token and give it a name (e.g., &lt;code&gt;Figma_MCP&lt;/code&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;🔒 &lt;strong&gt;Security Tip:&lt;/strong&gt; Never hardcode your token! Store it in an environment variable:
+&lt;code&gt;export FIGMA_API_TOKEN=&amp;quot;your_token_here&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="3-install-and-run-the-figma-mcp-server"&gt;3️⃣ Install and Run the Figma-MCP Server
+&lt;/h3&gt;&lt;p&gt;This is where the magic happens! The server acts as the middleware between Figma and your AI tools.&lt;/p&gt;
+&lt;h3 id="4-connect-to-ai-powered-tools"&gt;4️⃣ Connect to AI-Powered Tools
+&lt;/h3&gt;&lt;p&gt;Once your server is running (default port 3333), you can connect to AI tools like Cursor:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;In Cursor, navigate to Settings → MCP → Add New MCP Server&lt;/li&gt;
+&lt;li&gt;Choose SSE and enter your server URL (e.g., &lt;code&gt;http://localhost:3333&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;For other tools, add the config to your &lt;code&gt;mcpServers&lt;/code&gt; config file:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;mcpServers&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;figma-developer-mcp&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;command&amp;#34;: &amp;#34;npx&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;args&amp;#34;: [&amp;#34;-y&amp;#34;, &amp;#34;figma-developer-mcp&amp;#34;, &amp;#34;--stdio&amp;#34;],
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;env&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;FIGMA_API_KEY&amp;#34;: &amp;#34;&amp;lt;your-figma-api-key&amp;gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start="4"&gt;
+&lt;li&gt;Look for a green dot indicating successful connection&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;𝗡𝗼𝘄 𝗳𝗼𝗿 𝘁𝗵𝗲 𝗳𝘂𝗻 𝗽𝗮𝗿𝘁! With your connection established, you can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Select designs in Figma and copy links to them&lt;/li&gt;
+&lt;li&gt;In Cursor Composer, enable Agent Mode and paste your Figma link&lt;/li&gt;
+&lt;li&gt;Ask the AI to &amp;ldquo;Implement this Figma design in React&amp;rdquo; or &amp;ldquo;Convert this design into reusable UI components&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-pro-tips-for-maximizing-figma-mcp"&gt;💡 Pro Tips for Maximizing Figma-MCP
+&lt;/h2&gt;&lt;p&gt;To take your AI-design workflow to the next level:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔍 Use the MCP Inspector (&lt;code&gt;pnpm inspect&lt;/code&gt;) to debug server responses&lt;/li&gt;
+&lt;li&gt;📁 Leverage &lt;code&gt;get_file&lt;/code&gt; and &lt;code&gt;get_node&lt;/code&gt; commands to fetch specific Figma information&lt;/li&gt;
+&lt;li&gt;🔄 Take advantage of batch operations for more efficient workflows&lt;/li&gt;
+&lt;li&gt;🧩 Group components properly in Figma before sharing with AI for better results&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-beyond-design-apidog-mcp-server-for-api-workflows"&gt;🌐 Beyond Design: Apidog MCP Server for API Workflows
+&lt;/h2&gt;&lt;p&gt;The same MCP technology transforming design workflows is also revolutionizing API development through Apidog MCP Server. This parallel tool connects your API specifications to AI-powered IDEs, enabling you to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📝 Generate code, DTOs, and documentation directly from API specs&lt;/li&gt;
+&lt;li&gt;🔍 Use AI to search and analyze API structures&lt;/li&gt;
+&lt;li&gt;🔄 Maintain synchronization between your API and tests&lt;/li&gt;
+&lt;li&gt;🧩 Support multiple data sources simultaneously&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;𝙏𝙝𝙚 𝙗𝙚𝙖𝙪𝙩𝙮 𝙤𝙛 𝙩𝙝𝙚 𝙈𝘾𝙋 𝙚𝙘𝙤𝙨𝙮𝙨𝙩𝙚𝙢 is how it bridges the traditional gaps between design, development, and testing – creating a more unified workflow powered by AI.&lt;/p&gt;
+&lt;h2 id="-the-future-of-ai-powered-design"&gt;🔮 The Future of AI-Powered Design
+&lt;/h2&gt;&lt;p&gt;Figma-MCP and similar tools are just the beginning of what&amp;rsquo;s possible when we connect design tools to AI. The implications are profound:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Design systems that evolve and adapt based on usage patterns&lt;/li&gt;
+&lt;li&gt;Code that updates automatically when designs change&lt;/li&gt;
+&lt;li&gt;Accessibility improvements suggested and implemented through AI&lt;/li&gt;
+&lt;li&gt;Cross-platform compatibility handled through intelligent automation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The most exciting aspect isn&amp;rsquo;t just the time saved on repetitive tasks – it&amp;rsquo;s the creative possibilities that emerge when designers can focus on innovation while AI handles implementation details.&lt;/p&gt;
+&lt;p&gt;What creative challenges will you tackle when AI becomes your design partner? How might your workflow transform when the boundary between design and development blurs completely? 🤔&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/lynn-mikami/figma-mcp-server" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/lynn-mikami/figma-mcp-server&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#AIDesign #FigmaAutomation #ModelContextProtocol #DesignAutomation #APIWorkflows #AITools #TechInnovation #DesignWorkflow #DeveloperTools #DesignSystems&lt;/p&gt;</description></item><item><title>🚀 Inside Google's Open-Source Gemini Research Agent: Building AI That Actually Does The Deep Work</title><link>https://shoubhikbanerjee.github.io/blog/p/inside-googles-open-source-gemini-research-agent-building-ai-that-actually-does-the-deep-work/</link><pubDate>Fri, 06 Jun 2025 20:53:09 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/inside-googles-open-source-gemini-research-agent-building-ai-that-actually-does-the-deep-work/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/67c32d41e1a815f578300dc2/TTgwrvdpuuE6ArDctCqzJ.png" alt="Featured image of post 🚀 Inside Google's Open-Source Gemini Research Agent: Building AI That Actually Does The Deep Work" /&gt;&lt;h1 id="-inside-googles-open-source-gemini-research-agent-building-ai-that-actually-does-the-deep-work"&gt;🚀 Inside Google&amp;rsquo;s Open-Source Gemini Research Agent: Building AI That Actually Does The Deep Work
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Google has open-sourced a powerful AI research assistant built with Gemini 2.5 and LangGraph that goes beyond simple answers to perform iterative, citation-backed research. This blog explores how this full-stack solution dynamically generates queries, evaluates information gaps, and refines its approach—offering developers a blueprint for creating sophisticated AI research tools.&lt;/p&gt;
+&lt;h2 id="-the-evolution-of-ai-research-assistants"&gt;🧠 The Evolution of AI Research Assistants
+&lt;/h2&gt;&lt;p&gt;The promise of AI has always included automating tedious research tasks, but most solutions have fallen short—offering quick answers without the depth, transparency, or reliability needed for serious work. Google&amp;rsquo;s latest open-source project significantly changes this landscape.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;Gemini Fullstack LangGraph Quickstart&amp;rdquo; represents a substantial leap forward in AI research capabilities. Unlike simple chatbots, this system doesn&amp;rsquo;t just respond to queries—it actively investigates them through a sophisticated, multi-stage process that mirrors human research workflows.&lt;/p&gt;
+&lt;p&gt;What makes this project particularly valuable is its transparent architecture, combining Google&amp;rsquo;s powerful Gemini models with the flexibility of the open-source LangGraph framework. The result? A research agent that not only finds information but evaluates it, identifies knowledge gaps, and iteratively refines its approach until it can deliver a comprehensive, citation-backed response.&lt;/p&gt;
+&lt;h2 id="-breaking-down-the-architecture-how-it-actually-works"&gt;🔍 Breaking Down the Architecture: How It Actually Works
+&lt;/h2&gt;&lt;p&gt;The project is structured as a full-stack application with clear separation between frontend and backend:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;frontend/ - React application built with Vite
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;backend/ - LangGraph and FastAPI application
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;But the real magic happens in the LangGraph-powered research agent, which follows a remarkably human-like research process:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;🎯 &lt;strong&gt;Generate Initial Queries&lt;/strong&gt;: The agent first uses Gemini to understand the user&amp;rsquo;s request and generate relevant search queries.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🌐 &lt;strong&gt;Web Research&lt;/strong&gt;: For each query, it searches the web using the Google Search API to fetch relevant information.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🤔 &lt;strong&gt;Reflection &amp;amp; Knowledge Gap Analysis&lt;/strong&gt;: In perhaps its most impressive feature, the agent then analyzes the search results to identify what information is still missing.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Iterative Refinement&lt;/strong&gt;: If knowledge gaps exist, it generates follow-up queries specifically targeting those gaps and repeats the process until satisfied.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;📝 &lt;strong&gt;Finalize Answer&lt;/strong&gt;: The agent synthesizes its findings into a coherent response with citations to original sources.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This cyclical process of querying, researching, reflecting, and refining enables the agent to conduct surprisingly thorough investigations—a far cry from the superficial responses we&amp;rsquo;ve grown accustomed to from many AI systems.&lt;/p&gt;
+&lt;h2 id="-the-technical-stack-how-it-all-fits-together"&gt;🛠️ The Technical Stack: How It All Fits Together
+&lt;/h2&gt;&lt;p&gt;The project brings together several specialized technologies:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Frontend&lt;/strong&gt;: React via Vite, with Tailwind CSS and Shadcn UI for styling&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Backend&lt;/strong&gt;: LangGraph for agent orchestration, FastAPI for API endpoints&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Core AI&lt;/strong&gt;: Google Gemini models power the reasoning, search, and synthesis&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Production Infrastructure&lt;/strong&gt;: Redis for pub-sub messaging and PostgreSQL for persistence&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;𝗟𝗮𝗻𝗴𝗚𝗿𝗮𝗽𝗵 deserves special attention here. This open-source library from LangChain enables developers to define complex workflows as graphs, where nodes represent computations (often LLM calls) and edges represent the flow of state and decisions. It&amp;rsquo;s specially designed for building stateful, multi-actor applications with LLMs—perfect for the kind of iterative research process this agent performs.&lt;/p&gt;
+&lt;p&gt;Setting up the project locally requires:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Python 3.8+ for the backend&lt;/li&gt;
+&lt;li&gt;Node.js for the frontend&lt;/li&gt;
+&lt;li&gt;A Gemini API key&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The project&amp;rsquo;s GitHub repository (&lt;a class="link" href="https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart" target="_blank" rel="noopener"
+&gt;https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart&lt;/a&gt;) provides detailed setup instructions, including Docker configurations for production deployment.&lt;/p&gt;
+&lt;h2 id="-why-this-matters-beyond-simple-qa"&gt;🔮 Why This Matters: Beyond Simple Q&amp;amp;A
+&lt;/h2&gt;&lt;p&gt;What makes this project significant isn&amp;rsquo;t just its technical sophistication—it&amp;rsquo;s how it reimagines what AI research assistants can do. By implementing a reflective, iterative approach, it addresses several critical limitations of traditional Q&amp;amp;A systems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;🧩 &lt;strong&gt;Handling Complex Questions&lt;/strong&gt;: Rather than giving up when a single search doesn&amp;rsquo;t yield enough information, it identifies knowledge gaps and continues investigating.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;📊 &lt;strong&gt;Transparency&lt;/strong&gt;: By providing citations and tracking its research process, it allows users to verify information and understand how conclusions were reached.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Adaptability&lt;/strong&gt;: The dynamic query generation and refinement process means it can navigate unfamiliar topics without relying solely on training data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This represents a fundamentally different approach to AI assistants—one focused on augmenting human research capabilities rather than simply providing quick answers.&lt;/p&gt;
+&lt;h2 id="-building-your-own-deep-research-ai"&gt;🌟 Building Your Own Deep Research AI
+&lt;/h2&gt;&lt;p&gt;Perhaps the most exciting aspect of this project is that it&amp;rsquo;s open-sourced under the Apache License 2.0. This means developers can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Study the architecture to understand best practices for building sophisticated AI agents&lt;/li&gt;
+&lt;li&gt;Customize and extend the system for specialized research tasks&lt;/li&gt;
+&lt;li&gt;Integrate the approach into their own applications&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The combination of Google&amp;rsquo;s powerful Gemini models with the flexibility of open-source frameworks like LangGraph creates a powerful foundation for building trustworthy, capable AI research tools that go beyond the limitations of simpler systems.&lt;/p&gt;
+&lt;h2 id="-the-future-of-ai-powered-research"&gt;🔭 The Future of AI-Powered Research
+&lt;/h2&gt;&lt;p&gt;As we look ahead, this project offers a glimpse into a future where AI doesn&amp;rsquo;t just answer questions but becomes a true research partner—one that can discover, evaluate, synthesize, and present information with a level of depth and transparency that builds genuine trust.&lt;/p&gt;
+&lt;p&gt;The question now isn&amp;rsquo;t whether AI can help with research—it&amp;rsquo;s how to best architect these systems to complement human intelligence rather than attempting to replace it. Google&amp;rsquo;s open-source approach here points to a collaborative future where powerful proprietary models combined with transparent, adaptable frameworks create tools that genuinely augment our cognitive capabilities.&lt;/p&gt;
+&lt;p&gt;What research problems might you solve with an agent that can investigate topics with thoroughness, transparency, and adaptability? The tools to build such systems are now within reach.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/lynn-mikami/google-opensource-deepresearch" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/lynn-mikami/google-opensource-deepresearch&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#AIResearch #GeminiModel #LangGraph #OpenSourceAI #AIAgents #DeepSearch #TechnicalArchitecture #GoogleAI #AIprogramming #ResearchAutomation&lt;/p&gt;</description></item><item><title>🚀 VS Code Revolution: How GitHub Copilot Is Going Open Source</title><link>https://shoubhikbanerjee.github.io/blog/p/vs-code-revolution-how-github-copilot-is-going-open-source/</link><pubDate>Thu, 29 May 2025 19:00:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/vs-code-revolution-how-github-copilot-is-going-open-source/</guid><description>&lt;img src="https://aps.autodesk.com/sites/default/files/2024-10/Screenshot%202024-10-03%20at%2015.34.40.png" alt="Featured image of post 🚀 VS Code Revolution: How GitHub Copilot Is Going Open Source" /&gt;&lt;h1 id="-vs-code-revolution-how-github-copilot-is-going-open-source"&gt;🚀 VS Code Revolution: How GitHub Copilot Is Going Open Source
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; VS Code is making a groundbreaking move by open-sourcing GitHub Copilot Chat components and integrating core AI capabilities directly into VS Code. This article explores what this means for developers, why Microsoft is making this strategic shift, and how you can prepare to take advantage of these powerful AI features when they arrive in 2025.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-the-unexpected-ai-evolution-vs-codes-bold-new-direction"&gt;🌟 The Unexpected AI Evolution: VS Code&amp;rsquo;s Bold New Direction
+&lt;/h2&gt;&lt;p&gt;In a stunning announcement that has reverberated across the developer community, the VS Code team revealed plans to transform their beloved editor into an &amp;ldquo;Open Source AI Editor.&amp;rdquo; 🤯 This isn&amp;rsquo;t just another feature update—it&amp;rsquo;s a fundamental shift in philosophy concerning how AI-powered development tools should be built, maintained, and evolved.&lt;/p&gt;
+&lt;p&gt;On May 19, 2025, through their official blog post &amp;ldquo;VS Code: Open Source AI Editor,&amp;rdquo; the team outlined their vision: GitHub Copilot Chat extension code will be open-sourced under the MIT license, with key AI components being thoughtfully refactored into VS Code&amp;rsquo;s core functionality.&lt;/p&gt;
+&lt;p&gt;Why does this matter? Because for many developers, AI coding assistants have become essential productivity tools—but they&amp;rsquo;ve largely existed as closed-source, premium add-ons. This move signals a future where AI assistance becomes as fundamental to coding as syntax highlighting or code completion.&lt;/p&gt;
+&lt;p&gt;📸 &lt;em&gt;Imagine a screenshot showing the evolution of code editors from simple text editors to intelligent coding assistants&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-the-strategic-rationale-why-open-source-ai-now"&gt;🧠 The Strategic Rationale: Why Open Source AI Now?
+&lt;/h2&gt;&lt;p&gt;The VS Code team&amp;rsquo;s decision wasn&amp;rsquo;t made lightly. After all, GitHub Copilot has been tremendously successful as a premium offering. So what changed?&lt;/p&gt;
+&lt;h3 id="1-𝗧𝗵𝗲-𝗟𝗟𝗠-𝗟𝗮𝗻𝗱𝘀𝗰𝗮𝗽𝗲-𝗛𝗮𝘀-𝗘𝘃𝗼𝗹𝘃𝗲𝗱"&gt;1. 𝗧𝗵𝗲 𝗟𝗟𝗠 𝗟𝗮𝗻𝗱𝘀𝗰𝗮𝗽𝗲 𝗛𝗮𝘀 𝗘𝘃𝗼𝗹𝘃𝗲𝗱
+&lt;/h3&gt;&lt;p&gt;Large Language Models have matured significantly. The &amp;ldquo;secret sauce&amp;rdquo; of prompt engineering that once gave proprietary systems their edge has diminished in importance as models themselves have become more capable. The team recognized this shift makes now the perfect time to open the ecosystem.&lt;/p&gt;
+&lt;h3 id="2-𝙐𝙨𝙚𝙧-𝙀𝙭𝙥𝙚𝙧𝙞𝙚𝙣𝙘𝙚-𝙋𝙖𝙩𝙩𝙚𝙧𝙣𝙨-𝙃𝙖𝙫𝙚-𝙎𝙩𝙖𝙗𝙞𝙡𝙞𝙯𝙚𝙙"&gt;2. 𝙐𝙨𝙚𝙧 𝙀𝙭𝙥𝙚𝙧𝙞𝙚𝙣𝙘𝙚 𝙋𝙖𝙩𝙩𝙚𝙧𝙣𝙨 𝙃𝙖𝙫𝙚 𝙎𝙩𝙖𝙗𝙞𝙡𝙞𝙯𝙚𝙙
+&lt;/h3&gt;&lt;p&gt;Common patterns for effective AI-human interaction in coding environments have emerged. By open-sourcing these patterns, VS Code provides a stable foundation that the community can build upon, rather than having everyone reinvent the UI wheel.&lt;/p&gt;
+&lt;h3 id="3-𝑇𝑟𝑎𝑛𝑠𝑝𝑎𝑟𝑒𝑛𝑐𝑦--𝑆𝑒𝑐𝑢𝑟𝑖𝑡𝑦-𝐷𝑒𝑚𝑎𝑛𝑑𝑠"&gt;3. 𝑇𝑟𝑎𝑛𝑠𝑝𝑎𝑟𝑒𝑛𝑐𝑦 &amp;amp; 𝑆𝑒𝑐𝑢𝑟𝑖𝑡𝑦 𝐷𝑒𝑚𝑎𝑛𝑑𝑠
+&lt;/h3&gt;&lt;p&gt;As AI tools become more integrated into development workflows, questions about data collection and security vulnerabilities have intensified. Open-sourcing addresses these concerns head-on by allowing developers to see exactly what data is being collected and how it&amp;rsquo;s used. Security benefits too, as more eyes on the code means faster identification and remediation of potential vulnerabilities.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;𝘛𝘩𝘦 𝘑𝘰𝘶𝘳𝘯𝘦𝘺 𝘧𝘳𝘰𝘮 𝘊𝘭𝘰𝘴𝘦𝘥 𝘵𝘰 𝘖𝘱𝘦𝘯 𝘐𝘴 𝘈𝘣𝘰𝘶𝘵 𝘌𝘮𝘱𝘰𝘸𝘦𝘳𝘪𝘯𝘨 𝘵𝘩𝘦 𝘊𝘰𝘮𝘮𝘶𝘯𝘪𝘵𝘺&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-getting-ready-how-to-prepare-for-the-open-source-ai-revolution"&gt;🔧 Getting Ready: How to Prepare for the Open Source AI Revolution
+&lt;/h2&gt;&lt;p&gt;Since these AI features will be integrated into VS Code itself rather than offered as a separate &amp;ldquo;open-source Copilot,&amp;rdquo; you&amp;rsquo;ll want to ensure you&amp;rsquo;re using the latest version of VS Code when these features roll out. Here&amp;rsquo;s a quick setup guide for different platforms:&lt;/p&gt;
+&lt;h3 id="-windows-setup"&gt;🪟 Windows Setup:
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Download the installer from the official VS Code website (code.visualstudio.com)&lt;/li&gt;
+&lt;li&gt;Run the installer and activate the &amp;ldquo;Add to PATH&amp;rdquo; option&lt;/li&gt;
+&lt;li&gt;Consider enabling helpful context menu features like &amp;ldquo;Open with Code&amp;rdquo;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="-macos-setup"&gt;🍏 macOS Setup:
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Download the Universal .zip file from the official site&lt;/li&gt;
+&lt;li&gt;Extract and drag Visual Studio Code.app to your Applications folder&lt;/li&gt;
+&lt;li&gt;To enable terminal access, open VS Code, press Cmd+Shift+P, and type &amp;ldquo;Shell Command: Install &amp;lsquo;code&amp;rsquo; command in PATH&amp;rdquo;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="-linux-setup"&gt;🐧 Linux Setup:
+&lt;/h3&gt;&lt;p&gt;Options include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For Debian-based systems: Download and install the .deb package&lt;/li&gt;
+&lt;li&gt;For RHEL/Fedora: Use the .rpm package&lt;/li&gt;
+&lt;li&gt;For various distributions: &lt;code&gt;sudo snap install --classic code&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📸 &lt;em&gt;Visualize a simple setup diagram showing VS Code installation across different operating systems&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The most important preparation step is staying informed. Keep an eye on the VS Code blog and release notes for announcements about when these AI features will be integrated. Regular updates will ensure you&amp;rsquo;re ready when they arrive.&lt;/p&gt;
+&lt;h2 id="-the-implications-what-this-means-for-the-developer-ecosystem"&gt;🔮 The Implications: What This Means for the Developer Ecosystem
+&lt;/h2&gt;&lt;p&gt;This shift isn&amp;rsquo;t just about making one product&amp;rsquo;s features freely available. It represents a fundamental transformation in how we think about AI-assisted development tools. By creating an open foundation for AI coding assistance, VS Code is enabling:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;🧩 &lt;strong&gt;Specialized Domain Adaptations&lt;/strong&gt;: Community contributors can tailor AI capabilities for specific languages, frameworks, or domains&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;📚 &lt;strong&gt;Enhanced Educational Tools&lt;/strong&gt;: More accessible AI coding tools will revolutionize how programming is taught and learned&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🛠️ &lt;strong&gt;Innovative Coding Workflows&lt;/strong&gt;: New development paradigms will emerge as developers experiment with and extend these AI capabilities&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;🔍 &lt;strong&gt;Greater Transparency&lt;/strong&gt;: Developers can inspect exactly how these tools work, building trust in AI-assisted development&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The most exciting aspect is that this transformation puts the community at the center of AI-assisted development&amp;rsquo;s future. Rather than passive consumers of proprietary AI features, developers become active participants in shaping how these tools evolve.&lt;/p&gt;
+&lt;h2 id="-conclusion-a-new-chapter-in-development-history"&gt;🌐 Conclusion: A New Chapter in Development History
+&lt;/h2&gt;&lt;p&gt;VS Code&amp;rsquo;s decision to open-source GitHub Copilot Chat components and integrate AI capabilities into its core represents more than just a feature announcement—it&amp;rsquo;s a philosophical statement about the future of development.&lt;/p&gt;
+&lt;p&gt;By applying the time-tested principles of open source to cutting-edge AI, VS Code is betting that community collaboration will produce better, more trustworthy AI coding tools than closed systems can. Given open source&amp;rsquo;s track record of success, this seems like a wise bet.&lt;/p&gt;
+&lt;p&gt;As developers, we now have the opportunity to shape this exciting future. When these changes roll out, will you simply use these new AI features, or will you contribute to building them?&lt;/p&gt;
+&lt;p&gt;What kind of AI-powered development environment do you want to create?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Credits: Originally posted here: &lt;a class="link" href="https://huggingface.co/blog/lynn-mikami/github-copilot-open-source-jp" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/lynn-mikami/github-copilot-open-source-jp&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#VSCode #GitHubCopilot #OpenSourceAI #AICoders #DeveloperTools #CodingAssistant #AI #SoftwareDevelopment #OpenSource #DevTools&lt;/p&gt;</description></item></channel></rss>

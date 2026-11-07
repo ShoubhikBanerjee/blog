@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RTEB on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/rteb/</link><description>Recent content in RTEB on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 00:55:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/rteb/index.xml" rel="self" type="application/rss+xml"/><item><title>Introducing RTEB: A New Standard for Retrieval Evaluation</title><link>https://shoubhikbanerjee.github.io/blog/p/introducing-rteb-a-new-standard-for-retrieval-evaluation/</link><pubDate>Tue, 28 Oct 2025 00:55:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introducing-rteb-a-new-standard-for-retrieval-evaluation/</guid><description>&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/rteb/rteb-public-vs-closed.png" alt="Featured image of post Introducing RTEB: A New Standard for Retrieval Evaluation" /&gt;&lt;h1 id="-introducing-rteb-a-new-standard-for-retrieval-evaluation"&gt;🚀 Introducing RTEB: A New Standard for Retrieval Evaluation
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/rteb/rteb-public-vs-closed.png"
+loading="lazy"
+alt="Performance Discrepancy"
+&gt;
+&lt;em&gt;Performance discrepancy between public and closed datasets highlights the need for better
+evaluation standards&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; – We&amp;rsquo;re excited to introduce the beta version of the &lt;strong&gt;Retrieval Embedding Benchmark
+(RTEB)&lt;/strong&gt;, a new benchmark designed to reliably evaluate the retrieval accuracy of embedding
+models for real-world applications. Existing benchmarks struggle to measure true generalization,
+while RTEB addresses this with a hybrid strategy of open and private datasets. Its goal is
+simple: to create a fair, transparent, and application-focused standard for measuring how models
+perform on data they haven&amp;rsquo;t seen before.&lt;/p&gt;
+&lt;p&gt;The performance of many AI applications, from RAG and agents to recommendation systems, is
+fundamentally limited by the quality of search and retrieval. As such, accurately measuring the
+retrieval quality of embedding models is a common pain point for developers. How do you &lt;em&gt;really&lt;/em&gt;
+know how well a model will perform in the wild?&lt;/p&gt;
+&lt;p&gt;This is where things get tricky. The current standard for evaluation often relies on a model&amp;rsquo;s
+&amp;ldquo;zero-shot&amp;rdquo; performance on public benchmarks. However, this is, at best, an approximation of a
+model&amp;rsquo;s true generalization capabilities. When models are repeatedly evaluated against the same
+public datasets, a gap emerges between their reported scores and their actual performance on new, unseen data.&lt;/p&gt;
+&lt;p&gt;To address these challenges, we developed RTEB, a benchmark built to provide a reliable standard
+for evaluating retrieval models.&lt;/p&gt;
+&lt;h2 id="-why-existing-benchmarks-fall-short"&gt;⚠️ Why Existing Benchmarks Fall Short
+&lt;/h2&gt;&lt;p&gt;While the underlying evaluation methodology and metrics (such as NDCG@10) are well-known and
+robust, the integrity of existing benchmarks is often set back by the following issues:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Generalization Gap&lt;/strong&gt; 📊. The current benchmark ecosystem inadvertently encourages
+&amp;ldquo;teaching to the test.&amp;rdquo; When training data sources overlap with evaluation datasets, a model&amp;rsquo;s
+score can become inflated, undermining a benchmark&amp;rsquo;s integrity. This practice, whether
+intentional or not, is evident in the training datasets of several models. This creates a
+feedback loop where models are rewarded for memorizing test data rather than developing robust,
+generalizable capabilities.&lt;/p&gt;
+&lt;p&gt;Because of the above, models with a lower zero-shot score may perform very well on the
+benchmark, without generalizing to new problems. For this reason, models with slightly lower
+benchmark performance and a higher zero-shot score are often recommended instead.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/rteb/mteb-zero-shot-models.png"
+loading="lazy"
+alt="Zero-shot Models"
+&gt;
+&lt;em&gt;From Chung et al. (2025)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Misalignment with Today&amp;rsquo;s AI Applications&lt;/strong&gt; 🎯. Many benchmarks are poorly aligned with the
+enterprise use cases that developers are building today. They often rely on academic datasets or
+on retrieval tasks derived from QA datasets, which, while useful in their own right, were not
+designed to evaluate retrieval and can fail to capture the distributional biases and
+complexities encountered in real-world retrieval scenarios. Benchmarks which do not possess
+these issues are often too narrow, focusing on a single domain like code retrieval, making them
+unsuitable for evaluating general-purpose models.&lt;/p&gt;
+&lt;h2 id="-introducing-rteb"&gt;🧩 Introducing RTEB
+&lt;/h2&gt;&lt;p&gt;Today, we&amp;rsquo;re excited to introduce the &lt;strong&gt;Retrieval Embedding Benchmark (RTEB)&lt;/strong&gt;. Its goal is to
+create a new, reliable, high-quality benchmark that measures the true retrieval accuracy of embedding models.&lt;/p&gt;
+&lt;h3 id="-a-hybrid-strategy-for-true-generalization"&gt;⚙️ A Hybrid Strategy for True Generalization
+&lt;/h3&gt;&lt;p&gt;To combat benchmark overfitting, RTEB implements a hybrid strategy using both open and private datasets:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Open Datasets&lt;/strong&gt;: The corpus, queries, and relevance labels are fully public. This ensures
+transparency and allows any user to reproduce the results.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Private Datasets&lt;/strong&gt;: These datasets are kept private, and evaluation is handled by the MTEB
+maintainers to ensure impartiality. This setup provides a clear, unbiased measure of a model&amp;rsquo;s
+ability to generalize to unseen data. For transparency, we provide descriptive statistics, a
+dataset description, and sample &lt;code&gt;(query, document, relevance)&lt;/code&gt; triplets for each private dataset.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This hybrid approach encourages the development of models with broad, robust generalization. A
+model with a significant performance drop between the open and the private datasets would
+suggest overfitting, providing a clear signal to the community. This is already apparent with
+some models, which show a notable drop in performance on RTEB&amp;rsquo;s private datasets.&lt;/p&gt;
+&lt;h3 id="-built-for-real-world-domains"&gt;🌍 Built for Real-World Domains
+&lt;/h3&gt;&lt;p&gt;RTEB is designed with a particular emphasis on enterprise use cases. Instead of a complex
+hierarchy, it uses simple groups for clarity. A single dataset can belong to multiple groups
+(e.g., a German law dataset exists in both the &amp;ldquo;law&amp;rdquo; and &amp;ldquo;German&amp;rdquo; groups).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multilingual in Nature&lt;/strong&gt;: The benchmark datasets cover 20 languages, from common ones like
+English or Japanese to rarer languages such as Bengali or Finnish.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Domain-Specific Focus&lt;/strong&gt;: The benchmark includes datasets from critical enterprise domains
+like law, healthcare, code, and finance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Efficient Dataset Sizes&lt;/strong&gt;: Datasets are large enough to be meaningful (at least 1k documents
+and 50 queries) without being so large that they make evaluation time-consuming and expensive.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval-First Metric&lt;/strong&gt;: The default leaderboard metric is &lt;strong&gt;NDCG@10&lt;/strong&gt;, a gold-standard
+measure for the quality of ranked search results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A complete list of the datasets can be found in the comprehensive tables below, covering both
+open and private datasets across multiple domains and languages.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Dataset&lt;/th&gt;
+&lt;th&gt;Domain&lt;/th&gt;
+&lt;th&gt;Language&lt;/th&gt;
+&lt;th&gt;Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;AILACasedocs&lt;/td&gt;
+&lt;td&gt;Legal&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Supreme Court of India case documents for legal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;precedent retrieval&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AILAStatutes&lt;/td&gt;
+&lt;td&gt;Legal&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Supreme Court of India statutes for legal situation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;matching&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LegalSummarization&lt;/td&gt;
+&lt;td&gt;Legal&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Legal text excerpts with plain English summaries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LegalQuAD&lt;/td&gt;
+&lt;td&gt;Legal&lt;/td&gt;
+&lt;td&gt;German&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Real-world German legal documents with questions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FinanceBench&lt;/td&gt;
+&lt;td&gt;Finance&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Financial domain Q&amp;amp;A from PatronusAI dataset&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HC3Finance&lt;/td&gt;
+&lt;td&gt;Finance&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Financial expert responses vs ChatGPT comparisons&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HumanEval&lt;/td&gt;
+&lt;td&gt;Code&lt;/td&gt;
+&lt;td&gt;Multi&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;OpenAI programming problems with unit tests&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MBPP&lt;/td&gt;
+&lt;td&gt;Code&lt;/td&gt;
+&lt;td&gt;Multi&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Crowd-sourced Python programming fundamentals&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ChatDoctor_HealthCareMagic&lt;/td&gt;
+&lt;td&gt;Healthcare&lt;/td&gt;
+&lt;td&gt;English&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Real-world medical Q&amp;amp;A pairs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;JaQuAD&lt;/td&gt;
+&lt;td&gt;General&lt;/td&gt;
+&lt;td&gt;Japanese&lt;/td&gt;
+&lt;td&gt;Open&lt;/td&gt;
+&lt;td&gt;Japanese Wikipedia-based Q&amp;amp;A dataset&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;Note: This table shows a subset of the available datasets. The full benchmark includes
+additional open and private datasets across all supported domains and languages.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-launching-rteb-a-community-effort"&gt;🚀 Launching RTEB: A Community Effort
+&lt;/h2&gt;&lt;p&gt;RTEB is launching today in beta. We believe building a robust benchmark is a community effort,
+and we plan to evolve RTEB based on feedback from developers and researchers alike. We encourage
+you to share your thoughts, suggest new datasets, find issues in existing datasets and help us
+build a more reliable standard for everyone.&lt;/p&gt;
+&lt;h2 id="-limitations-and-future-work"&gt;🔬 Limitations and Future Work
+&lt;/h2&gt;&lt;p&gt;To highlight areas for improvement we want to be transparent about RTEB&amp;rsquo;s current limitations
+and our plans for the future.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Benchmark Scope&lt;/strong&gt;: RTEB is focused on realistic, retrieval-first use cases. Highly
+challenging synthetic datasets are not a current goal but could be added in the future.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Modality&lt;/strong&gt;: The benchmark currently evaluates text-only retrieval. We plan to incorporate
+text-image and other multimodal retrieval tasks in future releases.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Language Coverage&lt;/strong&gt;: We are actively working to expand our language coverage, particularly
+for major languages like Chinese and Arabic, as well as more low-resource languages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repurposing of QA dataset&lt;/strong&gt;: About 50% of the current retrieval datasets are repurposed from
+QA datasets, which might lead to issues such as a strong lexical overlap between the question
+and the context, favoring models that rely on keyword matching over true semantic understanding.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Private datasets&lt;/strong&gt;: To test for generalization, we utilize private datasets that are only
+accessible to MTEB maintainers. To maintain fairness, all maintainers commit to not publishing
+models trained on these datasets and only testing on these private datasets through public
+channels, ensuring no company or individual receives unfair advantages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Our goal is for RTEB to become a community-trusted standard for retrieval evaluation.&lt;/p&gt;
+&lt;p&gt;The RTEB leaderboard is available today on Hugging Face as a part of the new Retrieval section
+on the MTEB leaderboard. We invite you to check it out, evaluate your models, and join us in
+building a better, more reliable benchmark for the entire AI community.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/rteb" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/rteb&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;RTEB represents a significant step forward in creating more reliable and practical evaluation
+standards for retrieval models. By combining open and private datasets, focusing on real-world
+enterprise use cases, and maintaining transparency while preventing overfitting, RTEB addresses
+critical gaps in current benchmarking practices.&lt;/p&gt;
+&lt;p&gt;The hybrid approach of open and private datasets provides a unique solution to the
+generalization problem that has plagued existing benchmarks. With its emphasis on multilingual
+support, domain-specific focus, and retrieval-first methodology, RTEB is positioned to become
+the new gold standard for evaluating embedding models in production environments.&lt;/p&gt;
+&lt;p&gt;As the AI community continues to build more sophisticated retrieval systems, having a benchmark
+that truly measures real-world performance rather than memorization capabilities becomes
+increasingly crucial. RTEB&amp;rsquo;s community-driven approach ensures it will evolve with the needs of
+developers and researchers, making it a valuable long-term resource for the field.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#RTEB #EMBEDDING #RETRIEVAL #BENCHMARK #AI #NLP #MACHINELEARNING #HUGGINGFACE&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

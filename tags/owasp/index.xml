@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OWASP on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/owasp/</link><description>Recent content in OWASP on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 14 Sep 2026 22:04:39 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/owasp/index.xml" rel="self" type="application/rss+xml"/><item><title>Agent Audit Static Security Scanner Released for LLM Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/agent-audit-static-security-scanner-released-for-llm-agents/</link><pubDate>Mon, 14 Sep 2026 22:04:39 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/agent-audit-static-security-scanner-released-for-llm-agents/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/181223267?v=4" alt="Featured image of post Agent Audit Static Security Scanner Released for LLM Agents" /&gt;&lt;h1 id="agent-audit-static-security-scanner-released-for-llm-agents"&gt;Agent Audit Static Security Scanner Released for LLM Agents
+&lt;/h1&gt;&lt;p&gt;Agent Audit is a new static security scanner designed to find security vulnerabilities in AI agent code before they reach production.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;AI agents differ from chatbots because they execute code, call tools, and interact with real systems. This creates a high-probability risk surface where unsafe input paths can lead to production incidents, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prompt Injection:&lt;/strong&gt; Rewriting agent intent through user-controlled context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Unsafe Tool Inputs:&lt;/strong&gt; Reaching &lt;code&gt;subprocess&lt;/code&gt; or &lt;code&gt;eval&lt;/code&gt; to become command execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MCP Configuration Mistakes:&lt;/strong&gt; Unintentionally expanding access and leaking credentials.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Agent Audit analyzes agent workflows using a core designed for tool-boundary taint tracking, MCP configuration auditing, and semantic secret detection. It is intended for teams that ship agent features, own CI security gates, or operate tool integrations and MCP servers.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Framework Support:&lt;/strong&gt; Works with AutoGen, CrewAI, and LangChain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rule Set:&lt;/strong&gt; Includes 51 rules mapped to the OWASP Agentic Top 10 (2026), achieving 10/10 coverage of that list.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CI Integration:&lt;/strong&gt; Includes &lt;code&gt;--severity&lt;/code&gt; to control reporting and &lt;code&gt;--fail-on&lt;/code&gt; to control when the command exits with code &lt;code&gt;1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Future Development:&lt;/strong&gt; The system is designed to extend into learning-assisted detection over time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Performance is based on reproducible raw data from a clean clone using &lt;code&gt;pip install -e packages/audit/ &amp;amp;&amp;amp; python tests/benchmark/precision_recall.py --output-json results/layer1.json&lt;/code&gt;:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Precision&lt;/td&gt;
+&lt;td style="text-align: left"&gt;68.86%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Recall&lt;/td&gt;
+&lt;td style="text-align: left"&gt;84.32%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;F1 Score&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.7581&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;True Positives (TP)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;199&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;False Positives (FP)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;90&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;False Negatives (FN)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;37&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Regarding these metrics, at least 21 of the false positives are correct by their own rules&amp;rsquo; definitions. Additionally, recall rose and precision fell compared to v0.19.0 because two file-discovery fixes made previously unreachable findings possible, though the corpus does not yet label most of them. A ground-truth label refresh for 18 new rules (AGENT-053+) is scheduled for June 2026.&lt;/p&gt;
+&lt;p&gt;#AIagents #Cybersecurity #LLM #OWASP #StaticAnalysis&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/HeadyZhang/agent-audit" target="_blank" rel="noopener"
+&gt;HeadyZhang/agent-audit&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>OWASP Recognizes Agent Memory Guard as an Official Incubator Project</title><link>https://shoubhikbanerjee.github.io/blog/p/owasp-recognizes-agent-memory-guard-as-an-official-incubator-project/</link><pubDate>Sat, 12 Sep 2026 22:02:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/owasp-recognizes-agent-memory-guard-as-an-official-incubator-project/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/155815?v=4" alt="Featured image of post OWASP Recognizes Agent Memory Guard as an Official Incubator Project" /&gt;&lt;h1 id="owasp-recognizes-agent-memory-guard-as-an-official-incubator-project"&gt;OWASP Recognizes Agent Memory Guard as an Official Incubator Project
+&lt;/h1&gt;&lt;p&gt;The OWASP Foundation has officially recognized Agent Memory Guard as an Incubator Project, establishing it as an official project addressing memory and context poisoning (ASI06). Created and led by Vaishnavi Gudur with co-leader Anshul Rajkumar, the project provides a runtime defense designed to prevent AI agents from being weaponized through their own memory.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Modern AI agents persist memory across sessions, meaning anything written into that memory becomes a privileged input on the next turn. This introduces unique security vulnerabilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An attacker who plants text in the wrong field can override instructions, exfiltrate data, or hijack tool calls.&lt;/li&gt;
+&lt;li&gt;Because memory persists across sessions, the attack survives context resets.&lt;/li&gt;
+&lt;li&gt;While existing defenses run on user input at the front of the loop, memory poisoning runs directly on memory itself, presenting a completely different attack surface.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Agent Memory Guard addresses this vector by sitting directly between the agent and its memory store. It protects memory through the following mechanisms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Operation Screening:&lt;/strong&gt; It screens every operation through a pipeline of detectors and a declarative policy.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tampering Detection:&lt;/strong&gt; It uses SHA-256 baselines to flag out-of-band tampering with immutable keys.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Runtime Defense:&lt;/strong&gt; It catches memory poisoning even after a context reset has occurred.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The project offers a lightweight, local security implementation with the following specifications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Minimal Integration:&lt;/strong&gt; Requires only three lines of code to protect an agent&amp;rsquo;s memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;No External Dependencies:&lt;/strong&gt; Requires no API keys and makes no external calls.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; Runs locally at a median latency of 59 µs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Testing:&lt;/strong&gt; Tested against 55 real-world attack payloads across 4 threat categories.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Industry Integration:&lt;/strong&gt; Named in the Memory Hardening mitigation as an open-source implementation of memory-hardening controls. The architecture was discussed with practitioners in issue threads on microsoft/autogen, langchain-ai/langgraph, BerriAI/litellm, and 567-labs/instructor.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Developers can try the live Memory Poisoning Lab to run a representative attack-and-block scenario directly in a web browser.&lt;/p&gt;
+&lt;p&gt;#OWASP #AgentMemoryGuard #AISecurity #OpenSource #LLM&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/OWASP/www-project-agent-memory-guard" target="_blank" rel="noopener"
+&gt;OWASP/www-project-agent-memory-guard&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

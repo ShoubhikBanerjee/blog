@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Software Evaluation on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/software-evaluation/</link><description>Recent content in Software Evaluation on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 23 Oct 2026 22:04:00 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/software-evaluation/index.xml" rel="self" type="application/rss+xml"/><item><title>Microsoft and Hugging Face Introduce ThinkingBox for Agent Evaluation and Training</title><link>https://shoubhikbanerjee.github.io/blog/p/microsoft-and-hugging-face-introduce-thinkingbox-for-agent-evaluation-and-training/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/microsoft-and-hugging-face-introduce-thinkingbox-for-agent-evaluation-and-training/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64b8491203124195cd795cad/oS8I8qx7iBS8EcNIXR3q9.png" alt="Featured image of post Microsoft and Hugging Face Introduce ThinkingBox for Agent Evaluation and Training" /&gt;&lt;h1 id="microsoft-and-hugging-face-introduce-thinkingbox-for-agent-evaluation-and-training"&gt;Microsoft and Hugging Face Introduce ThinkingBox for Agent Evaluation and Training
+&lt;/h1&gt;&lt;p&gt;Microsoft and Hugging Face have jointly developed ThinkingBox, a system designed to evaluate AI agents by comparing final database states with expected outcomes, and ThinkingBox-Training to improve agent performance via reinforcement learning.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;ThinkingBox-Bench is a benchmark dataset consisting of 507 tasks. Each task provides an agent with a real backend, a set of MCP tools, and a simulated LLM user with private context. The system grades agents based on the database records left behind rather than the specific tool calls used.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Executable Checks:&lt;/strong&gt; For most tasks, an executable check returns a 1 or 0 directly from the terminal database state.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reward System:&lt;/strong&gt; ThinkingBox converts these executable checks into rewards for post-training agents on tasks outside the benchmark.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Offline Policy-Relative Difficulty:&lt;/strong&gt; This method estimates a task&amp;rsquo;s success probability using the base policy before training. A task is considered hard for the current model until the model learns it; this selected training pool remains fixed during the run.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Researchers used a training pool of ThinkingBox-format tasks outside the benchmark to fine-tune Qwen3.8-27B using GRPO for 50 steps. This model was then evaluated on the 507-task benchmark, which served as an out-of-distribution test set.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Qwen3.8-27B Performance Results:&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Before Training&lt;/th&gt;
+&lt;th style="text-align: left"&gt;After Training&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;pass@1 (Average Success)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;51.70% (5,242 attempts)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;60.78% (6,163 attempts)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Observed 20/20 (Repeatable Success)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;7.50% (38 tasks)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;21.10% (107 tasks)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;pass@20 (Solved at least once)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;89.35% (453 tasks)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;87.97% (446 tasks)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Other Model Observations:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Kimi-K3:&lt;/strong&gt; Solved 93.89% of tasks at least once, but completed only 13.41% (68 of 507) on all twenty attempts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Claude Opus 5.5:&lt;/strong&gt; Scored 0.66 percentage points higher than Claude Opus 5 on pass@1, but both passed exactly 241 tasks on all twenty attempts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;ThinkingBox identifies discrepancies where an agent may appear competent but fails the final state. For example, a model once closed a customer ticket as resolved while the underlying carrier exception remained open, resulting in nine competent-looking tool calls but one wrong database row. In another case involving a room downgrade request requiring manager approval, the agent failed in 15 of 20 attempts before training; after RL fine-tuning, it preserved the booking and payment state in all 20 attempts and matched all expected records in 19.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;ThinkingBox-Training is now available on GitHub.&lt;/p&gt;
+&lt;p&gt;#AIagents #RLHF #Qwen #Microsoft #HuggingFace&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/microsoft/thinkingbox-training" target="_blank" rel="noopener"
+&gt;Turning Database Grading into RL Rewards: Post-Training Agents with ThinkingBox&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Introduction of WebMRE Offline Benchmark for Web Agent Evaluation</title><link>https://shoubhikbanerjee.github.io/blog/p/introduction-of-webmre-offline-benchmark-for-web-agent-evaluation/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introduction-of-webmre-offline-benchmark-for-web-agent-evaluation/</guid><description>&lt;h1 id="introduction-of-webmre-offline-benchmark-for-web-agent-evaluation"&gt;Introduction of WebMRE Offline Benchmark for Web Agent Evaluation
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced WebMRE, an offline benchmark designed to address the instability of live environment evaluations for web agents, where drift in environment state and judge models often prevents identical scoring across runs.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;WebMRE consists of 541 tasks and 5,293 steps derived from successful WebArena trajectories. It features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fully audited test labels.&lt;/li&gt;
+&lt;li&gt;A deterministic protocol that scores checkpoints identically on every run without requiring an environment.&lt;/li&gt;
+&lt;li&gt;A pairing of human-oriented guide sentences with grounded actions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Mediation analysis indicates that the guide acts as a causal channel rather than commentary. Evidence shows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Forcing a gold guide as a decoding prefix increases action accuracy from .422 to .684.&lt;/li&gt;
+&lt;li&gt;Using a guide from another step collapses accuracy to .055.&lt;/li&gt;
+&lt;li&gt;Paraphrasing the target still recovers half of the gain, indicating the channel carries instruction meaning.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;WebMRE enables the first study of the mutual reinforcement effect between guide sentences and grounded actions. Findings include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Jointly decoding a guide improves element selection over an action-only reference by 0.9 and 0.2 points for Qwen3.5-4B, and by 1.7 and 2.2 points for Qwen3.5-9B.&lt;/li&gt;
+&lt;li&gt;Fine-tuned models using this approach outperform GPT-5.5, Claude Opus 4.8, and Gemini 3.5 Flash on every offline metric when those models are run zero shot.&lt;/li&gt;
+&lt;li&gt;The replayable protocol makes an offline reward computable, although optimizing it from a strong checkpoint has not yet yielded gains.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#WebMRE #WebAgents #AIBenchmarks #Qwen&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.27353v1" target="_blank" rel="noopener"
+&gt;Guides That Cause Actions: An Offline Study of Guide-Action Mutual Reinforcement in Multimodal Web Agents&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Introducing the Agent Evaluation Metric for Turn-Level Quality Measurement</title><link>https://shoubhikbanerjee.github.io/blog/p/introducing-the-agent-evaluation-metric-for-turn-level-quality-measurement/</link><pubDate>Thu, 10 Sep 2026 22:04:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introducing-the-agent-evaluation-metric-for-turn-level-quality-measurement/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-20819-featured-image.png" alt="Featured image of post Introducing the Agent Evaluation Metric for Turn-Level Quality Measurement" /&gt;&lt;h1 id="introducing-the-agent-evaluation-metric-for-turn-level-quality-measurement"&gt;Introducing the Agent Evaluation Metric for Turn-Level Quality Measurement
+&lt;/h1&gt;&lt;p&gt;The Agent Evaluation Metric (AEM) has been introduced as a decomposable, turn-level method to measure the quality of AI agents.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Existing agent evaluation tools often score quality holistically at the response or task level, which creates several gaps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Task-level metrics&lt;/strong&gt;: Goal success rates indicate if a task was completed but do not identify which quality dimension failed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single-turn metrics&lt;/strong&gt;: Evaluations of faithfulness or helpfulness occur in isolation and do not account for how errors propagate across turns.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Holistic scores&lt;/strong&gt;: These cannot distinguish between a missing required field and a factual error, and they require re-architecting to add new dimensions like safety or instruction retention.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error propagation&lt;/strong&gt;: A single incorrect tool call can cascade into downstream failures across multiple turns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;AEM defines agent quality as a composite indicator built from named, separately measurable sub-metrics. This decompose-evaluate-compose pattern allows the metric to be measured per turn and composed across a trajectory. While this pattern can extend to reasoning depth, safety, and instruction retention, it is first being applied to the dimension of correctness.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Correctness is computed per turn, and a turn&amp;rsquo;s correctness is treated as a binary pass or fail. If a turn fails, a specific failure reason names the field and the sub-metric involved.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Turn Type&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Structural Foundation&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Completeness Sub-Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Truthfulness Sub-Metric&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Response Turn&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;N/A&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Does the reply cover the full query?&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Is the free text factually consistent?&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Action Turn&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Right tool and action selection&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Are all required parameter keys present?&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Are the parameter values semantically correct?&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Correctness is the first dimension instantiated for AEM. It relies on two primary sub-metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Truthfulness&lt;/strong&gt;: Whether the values produced by the agent are factually consistent with expectations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Completeness&lt;/strong&gt;: Whether all required elements are present.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AEM #AIAgents #AIEvaluation #LLM&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/agent-evaluation-metric-for-multi-turn-conversations/" target="_blank" rel="noopener"
+&gt;Agent Evaluation Metric for multi-turn conversations | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

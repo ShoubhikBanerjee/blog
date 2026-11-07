@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Rubin on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/rubin/</link><description>Recent content in Rubin on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 Nov 2026 22:04:09 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/rubin/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Advances Agentic Inference with Rubin Architecture and NVFP4 Numerical Precision</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-advances-agentic-inference-with-rubin-architecture-and-nvfp4-numerical-precision/</link><pubDate>Thu, 05 Nov 2026 22:04:09 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-advances-agentic-inference-with-rubin-architecture-and-nvfp4-numerical-precision/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image5-1-660x370.png" alt="Featured image of post NVIDIA Advances Agentic Inference with Rubin Architecture and NVFP4 Numerical Precision" /&gt;&lt;h1 id="nvidia-advances-agentic-inference-with-rubin-architecture-and-nvfp4-numerical-precision"&gt;NVIDIA Advances Agentic Inference with Rubin Architecture and NVFP4 Numerical Precision
+&lt;/h1&gt;&lt;p&gt;NVIDIA is advancing its AI factory capabilities through the new Rubin architecture and NVFP4 precision. The company treats AI performance as a co-designed challenge involving GPU architecture, scale-up interconnects, serving software, CPUs, and storage to achieve significant throughput gains for agentic inference.&lt;/p&gt;
+&lt;h2 id="-rubin-architecture-and-performance"&gt;⚙️ Rubin Architecture and Performance
+&lt;/h2&gt;&lt;p&gt;NVIDIA Rubin increases memory bandwidth significantly while maintaining capacity to optimize the most contested memory tier in AI factories.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Rubin memory bandwidth has risen to 19.2 TB/s, while capacity holds at 288 GB of HBM4.&lt;/li&gt;
+&lt;li&gt;The NVIDIA Vera Rubin NVL72 delivers up to 30x the throughput per megawatt of the GB300 NVL72 at 160 tokens per second per user.&lt;/li&gt;
+&lt;li&gt;Each Rubin GPU provides 3.0 TB/s of NVLink 6 bandwidth, enabling approximately 20.7 TB of aggregate HBM4 across a rack.&lt;/li&gt;
+&lt;li&gt;Rubin adds inline memory tensor accelerator (TMA) descriptor updates, allowing one shared descriptor to serve experts with a common layout and reducing metadata overhead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-nvfp4-numerical-precision"&gt;🧩 NVFP4 Numerical Precision
+&lt;/h2&gt;&lt;p&gt;NVFP4 is a new numerical format that uses a 4-bit E2M1 element with two levels of scaling: an FP8 (E4M3) scale factor for every 16-value micro-block and a per-tensor FP32 scale. It has become the default precision for agentic benchmarks including AA-AgentPerf, SemiAnalysis AgentX, and MLPerf Endpoints.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Benefit of NVFP4&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Model Footprint&lt;/td&gt;
+&lt;td style="text-align: left"&gt;3.5x reduction relative to FP16; 1.8x reduction relative to FP8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;KV Cache Footprint&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Up to 50% reduction compared to FP8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Resident Context&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Approximately 2x more context stays on device&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Throughput&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Up to 4x the throughput of an FP8 baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-mixture-of-experts-scaling"&gt;🔍 Mixture-of-Experts Scaling
+&lt;/h2&gt;&lt;p&gt;To manage Mixture-of-Experts (MoE) models where all expert weights must reside in HBM, NVIDIA utilizes Wide expert parallelism (Wide-EP) through NVIDIA TensorRT-LLM.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Wide-EP:&lt;/strong&gt; Spreads experts across eight or more GPUs. For DeepSeek-R1 at EP64, each GPU holds four experts per layer (232 blocks) instead of the full model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Expert Parallel Load Balancer (EPLB):&lt;/strong&gt; Redistributes hot and cold experts between forward passes to prevent GPU memory overcommitment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NVLink Interconnect:&lt;/strong&gt; On GB200 NVL72, 130 TB/s of aggregate NVLink bandwidth absorbs all-to-all dispatch and combine traffic.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; Large EP (EP32) delivers up to 1.8x more output tokens per second per GPU than small EP (EP8) at 100 tokens per second per user.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-distributed-serving-with-dynamo"&gt;💡 Distributed Serving with Dynamo
+&lt;/h2&gt;&lt;p&gt;NVIDIA Dynamo acts as the distributed serving layer to manage the key-value (KV) cache, which stores intermediate attention calculations from previously processed tokens. The Dynamo router tracks where KV blocks reside and considers both worker load and cached-prefix overlap when placing requests. This architecture leads to higher cache-hit rates during prefill and less bandwidth consumption during decode.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/dynamo-memory.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image5-1-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image8-3.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Rubin #AIInference #HBM4 #DeepLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/five-ways-nvidia-co-design-maximizes-the-value-of-every-byte-in-the-ai-factory/" target="_blank" rel="noopener"
+&gt;Five Ways NVIDIA Co-Design Maximizes the Value of Every Byte in the AI Factory | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Releases CUDA Toolkit 13.4 with Windows on Arm and Rubin GPU Support</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cuda-toolkit-13-4-with-windows-on-arm-and-rubin-gpu-support/</link><pubDate>Thu, 10 Sep 2026 22:04:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cuda-toolkit-13-4-with-windows-on-arm-and-rubin-gpu-support/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/cuda-python-660x370.png" alt="Featured image of post NVIDIA Releases CUDA Toolkit 13.4 with Windows on Arm and Rubin GPU Support" /&gt;&lt;h1 id="nvidia-releases-cuda-toolkit-134-with-windows-on-arm-and-rubin-gpu-support"&gt;NVIDIA Releases CUDA Toolkit 13.4 with Windows on Arm and Rubin GPU Support
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released CUDA Toolkit 13.4, introducing support for Windows on Arm and early developer preview support for the next-generation Rubin GPU architecture. This update focuses on enhancing GPU management, improving data transport across NVLink fabric, and expanding memory management capabilities for high-performance computing.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;CUDA applications, which have long been supported on Arm platforms through Linux, can now be developed for the Windows on Arm platform. The release also adds functional support for the NVIDIA Rubin architecture (compute capability 107) as a preview, allowing developers to begin porting applications before general availability. Rubin is identified as the next-generation architecture powering agentic AI.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multi-process Server (MPS) V3:&lt;/strong&gt; Features a modernized control layer with a scriptable CLI, named server instances, and namespaces to organize concurrent workloads.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CUDA Compute Fabric Transport (CFT):&lt;/strong&gt; A transport-centric method for moving data across NVLink fabric at scale using logical endpoints instead of virtual address mapping.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Locality Domains:&lt;/strong&gt; Exposes programmatic access to specific portions of a GPU containing streaming multiprocessors (SMs) and device memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Management:&lt;/strong&gt; The driver now defaults to Coherent Driver-based Memory Management (CDMM) on coherent platforms such as NVIDIA Grace Hopper, Grace Blackwell, and Vera Rubin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Installer Changes:&lt;/strong&gt; CUDA SDK installers no longer bundle the NVIDIA driver; the &lt;code&gt;nvidia-open&lt;/code&gt; driver or &lt;code&gt;cuda-toolkit&lt;/code&gt; packages must be installed separately.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Functionality&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;MPS V3&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides TOML configuration support, SM partition controls, and cgroup-integrated GPU memory limits for precise partitioning.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CFT&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supports asynchronous put, get, and reduction operations directly from the GPU; reports completion and error status for fabric transfers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;SM_107&lt;/td&gt;
+&lt;td style="text-align: left"&gt;New architecture target enabling compilation for Rubin GPUs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CUDA Python 1.1.0&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Expands the stable API with texture and surface programming and improved CUDA graph integration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Locality Domains&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Allows applications to allocate device memory and create green contexts with SM resources in the same domain.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Functional support for the NVIDIA Rubin architecture is currently in preview. CUDA Compute Fabric Transport is available exclusively through the CUDA Driver API and is intended for developers of communication libraries. Host compiler compatibility for this release has been extended to include GCC 16 and Clang 22.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;MPS V3 ensures that GPU resources can be maximized in containerized environments while maintaining strict resource isolation for every process. Additionally, the new CFT approach reduces virtual-address pressure in large multi-GPU systems, supporting both unicast and multicast communication patterns for advanced applications.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/cuda-python-1024x576.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/Agentic-AI-Qwen-660x370.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2021/06/CUDA-toolkit-featured.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#CUDA #NVIDIA #WindowsOnArm #Rubin #GPU&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/cuda-toolkit-13-4-adds-windows-on-arm-support-and-greater-control-over-shared-gpus/" target="_blank" rel="noopener"
+&gt;CUDA Toolkit 13.4 Adds Windows on Arm Support and Greater Control over Shared GPUs | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
