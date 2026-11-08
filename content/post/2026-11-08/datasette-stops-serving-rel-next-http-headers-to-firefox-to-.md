@@ -2,7 +2,7 @@
 title: "Datasette Stops Serving Rel Next HTTP Headers to Firefox to Prevent Unnecessary Prefetching"
 slug: "datasette-stops-serving-rel-next-http-headers-to-firefox-to-prevent-unnecessary-prefetching"
 description: "Datasette issue #3046 proposes no longer serving `link: rel=next` HTTP headers to Firefox for HTML pages after discovery that Firefox automatically prefetches the next page of table rows."
-date: 2026-11-08T06:01:54+05:30
+date: 2026-11-08T12:01:55+05:30
 tags: [Datasette, Firefox, HTTPHeaders, WebDevelopment, OpenSource]
 categories: ["AI", "Web Development", "Software Engineering", "Open Source"]
 author: "Shoubhik Banerjee"
