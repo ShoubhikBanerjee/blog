@@ -2,7 +2,7 @@
 title: "Open-source Hive runtime enables parallel AI agent colonies for business tasks"
 slug: "open-source-hive-runtime-enables-parallel-ai-agent-colonies-for-business-tasks"
 description: "Hive has been updated as an open-source runtime for colonies of AI agents designed to perform real business work. The system coordinates 'queen' agents that manage parallel workers to complete..."
-date: 2026-11-08T12:01:55+05:30
+date: 2026-11-08T18:02:00+05:30
 tags: [AIagents, OpenSource, Automation, Python, SoftwareDevelopment]
 categories: ["AI", "AI Agents", "Software Development", "Automation"]
 image: "https://avatars.githubusercontent.com/u/262650699?v=4"
