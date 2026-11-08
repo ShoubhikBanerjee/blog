@@ -2,7 +2,7 @@
 title: "BankAI Releases Intelligent Document Automation for Bank Statement Analysis and Querying"
 slug: "bankai-releases-intelligent-document-automation-for-bank-statement-analysis-and-querying"
 description: "BankAI has introduced a full-stack system for automated bank statement processing, combining layout detection, optical character recognition, and local large language models. The platform enables..."
-date: 2026-11-08T18:02:00+05:30
+date: 2026-11-08T22:01:08+05:30
 tags: [BankAI, DocumentAutomation, LLM, FinTech, AIagents, OpenSource]
 categories: ["AI", "Artificial Intelligence", "Financial Technology", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/5248533?v=4"
