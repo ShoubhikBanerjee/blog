@@ -2,7 +2,7 @@
 title: "Launch of AI-ML Companion and Comprehensive Generative AI Learning Resources"
 slug: "launch-of-ai-ml-companion-and-comprehensive-generative-ai-learning-resources"
 description: "A new end-to-end learning hub for Generative AI has been released, featuring the AI-ML Companion platform and a detailed GenAI roadmap. The resources cover machine learning fundamentals, Large..."
-date: 2026-11-09T18:02:52+05:30
+date: 2026-11-09T22:03:01+05:30
 tags: [GenAI, MachineLearning, MLOps, AIagents, DataScience]
 categories: ["AI", "Machine Learning", "Generative AI", "Education", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/155415029?v=4"

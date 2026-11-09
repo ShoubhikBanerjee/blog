@@ -2,7 +2,7 @@
 title: "Managing AI-Generated Pull Request Descriptions with HTML Details and Summary Tags"
 slug: "managing-ai-generated-pull-request-descriptions-with-html-details-and-summary-tags"
 description: "Developers are increasingly utilizing coding agents like Claude Code and Codex to open pull requests (PRs) and manage project changes. While these agents generate accurate and comprehensive..."
-date: 2026-11-09T18:02:52+05:30
+date: 2026-11-09T22:03:01+05:30
 tags: [GitHub, AIagents, ClaudeCode, Markdown, PullRequests]
 categories: ["AI", "AI Agents", "Software Development", "Web Development"]
 image: "https://static.simonwillison.net/static/2026/details-summary-card.webp"

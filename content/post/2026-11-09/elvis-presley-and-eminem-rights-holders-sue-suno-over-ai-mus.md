@@ -2,7 +2,7 @@
 title: "Elvis Presley and Eminem Rights Holders Sue Suno Over AI Music Clones"
 slug: "elvis-presley-and-eminem-rights-holders-sue-suno-over-ai-music-clones"
 description: "AI music company Suno is facing two new lawsuits from rights holders of Elvis Presley's music and the publisher of some of Eminem's biggest records. The lawsuits claim that Suno illegally generates..."
-date: 2026-11-09T18:02:52+05:30
+date: 2026-11-09T22:03:01+05:30
 tags: [Suno, GenerativeAI, MusicIndustry, AILawsuits, Copyright]
 categories: ["AI", "Artificial Intelligence", "Music Technology", "Legal Tech"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/22202367/517216004.jpg?quality=90&strip=all&crop=0%2C3.4730210448443%2C100%2C41.13900448979&w=1200"

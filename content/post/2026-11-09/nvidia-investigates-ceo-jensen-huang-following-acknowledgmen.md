@@ -2,7 +2,7 @@
 title: "Nvidia Investigates CEO Jensen Huang Following Acknowledgment of Relationship with Suspected Chinese Agent"
 slug: "nvidia-investigates-ceo-jensen-huang-following-acknowledgment-of-relationship-with-suspected-chinese-agent"
 description: "On Sunday, Nvidia announced that its Board of Directors has initiated an independent investigation into CEO Jensen Huang. The investigation follows reports regarding Huang’s relationship with Alice..."
-date: 2026-11-09T18:02:52+05:30
+date: 2026-11-09T22:03:01+05:30
 tags: [Nvidia, JensenHuang, NationalSecurity, AI, TechNews]
 categories: ["AI", "Corporate Governance", "National Security", "AI Industry"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2285784039.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
