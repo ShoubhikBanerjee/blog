@@ -2,7 +2,7 @@
 title: "OpenHands Cloud Introduces Scheduled and Event-Driven Automation Execution Service"
 slug: "openhands-cloud-introduces-scheduled-and-event-driven-automation-execution-service"
 description: "A new automation execution service has been developed for OpenHands Cloud, providing support for both scheduled and event-driven automation workflows."
-date: 2026-11-09T06:07:25+05:30
+date: 2026-11-09T12:03:06+05:30
 tags: [OpenHands, Automation, Python, FastAPI, DevOps]
 categories: ["AI", "AI Agents", "Cloud Infrastructure", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/225919603?v=4"

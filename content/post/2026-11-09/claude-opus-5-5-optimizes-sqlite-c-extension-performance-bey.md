@@ -2,7 +2,7 @@
 title: "Claude Opus 5.5 Optimizes SQLite C Extension Performance Beyond Rust Implementation"
 slug: "claude-opus-5-5-optimizes-sqlite-c-extension-performance-beyond-rust-implementation"
 description: "On November 8th, 2026, an investigation using the Claude Opus 5.5 model demonstrated the creation and optimization of a custom SQLite extension. The project focused on developing a `parse_number()`..."
-date: 2026-11-09T06:07:25+05:30
+date: 2026-11-09T12:03:06+05:30
 tags: [SQLite, ClaudeAI, Programming, Rust, C]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Database Engineering"]
 author: "Shoubhik Banerjee"

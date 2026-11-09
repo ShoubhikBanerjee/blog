@@ -2,7 +2,7 @@
 title: "PanWatch Debuts Self-Hosted AI Stock Monitoring and Multi-Agent Research Platform"
 slug: "panwatch-debuts-self-hosted-ai-stock-monitoring-and-multi-agent-research-platform"
 description: "PanWatch is a self-hosted AI stock monitoring platform designed to help users research ideas and manage portfolios across A-shares, Hong Kong, and U.S. markets. The service enables users to host the..."
-date: 2026-11-09T06:07:25+05:30
+date: 2026-11-09T12:03:06+05:30
 tags: [PanWatch, TradingAgents, AI, Fintech, StockMonitoring]
 categories: ["AI", "Artificial Intelligence", "Finance", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/9278923?v=4"
