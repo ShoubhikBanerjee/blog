@@ -2,7 +2,7 @@
 title: "Apple pushes Siri toward agentic AI with new app integration and fine‑grained controls"
 slug: "apple-pushes-siri-toward-agentic-ai-with-new-app-integration-and-finegrained-controls"
 description: "Apple is updating Siri to become more agentic, adding fine‑grained control over its own apps and integration with third‑party services."
-date: 2026-11-09T12:03:06+05:30
+date: 2026-11-09T18:02:52+05:30
 tags: [Apple, Siri, AIagents, VoiceAssistants]
 categories: ["AI", "Artificial Intelligence", "Voice Assistants", "Consumer Technology", "Software Updates"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/07/Siri-AI-Being-invoked-3.jpg?quality=90&strip=all&crop=0%2C10.727837220746%2C100%2C78.544325558509&w=1200"

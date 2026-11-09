@@ -2,7 +2,7 @@
 title: "Claude Opus 5.5 Generates Vanilla JS WebGL 3D Code Without Three.js"
 slug: "claude-opus-5-5-generates-vanilla-js-webgl-3d-code-without-three-js"
 description: "On 9 November 2026 I asked Claude (Opus 5.5 Medium running in regular Claude Chat) to port a Three.js Nudibranch‑themed Fabergé egg example to pure Vanilla JS/WebGL. Claude produced a working..."
-date: 2026-11-09T12:03:06+05:30
+date: 2026-11-09T18:02:52+05:30
 tags: [Claude, WebGL, VanillaJS, AIcoding]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Web Technologies"]
 author: "Shoubhik Banerjee"

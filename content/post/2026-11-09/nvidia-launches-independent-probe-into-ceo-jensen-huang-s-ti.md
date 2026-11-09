@@ -2,7 +2,7 @@
 title: "Nvidia launches independent probe into CEO Jensen Huang’s ties to alleged Chinese spy"
 slug: "nvidia-launches-independent-probe-into-ceo-jensen-huangs-ties-to-alleged-chinese-spy"
 description: "Nvidia announced that its board has opened an independent investigation into CEO Jensen Huang’s relationship with Megaspeed executive Alice Huang, who U.S. officials say was recruited by China’s..."
-date: 2026-11-09T12:03:06+05:30
+date: 2026-11-09T18:02:52+05:30
 tags: [Nvidia, AIchips, Espionage, USChinaRelations]
 categories: ["AI", "Semiconductor Industry", "Corporate Governance", "National Security"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/07/STKP210_JENSEN_HUANG_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
