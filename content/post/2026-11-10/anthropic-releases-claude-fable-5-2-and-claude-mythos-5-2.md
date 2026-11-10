@@ -2,7 +2,7 @@
 title: "Anthropic Releases Claude Fable 5.2 and Claude Mythos 5.2"
 slug: "anthropic-releases-claude-fable-5-2-and-claude-mythos-5-2"
 description: "Anthropic has announced the availability of two new AI models, Claude Fable 5.2 and Claude Mythos 5.2, designed to address daunting technical challenges across software engineering, reasoning, and..."
-date: 2026-11-10T06:04:38+05:30
+date: 2026-11-10T12:01:43+05:30
 tags: [Anthropic, Claude, AmazonBedrock, ArtificialIntelligence, SoftwareEngineering]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Cloud Computing", "Software Development"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/01/STK269_ANTHROPIC_2_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

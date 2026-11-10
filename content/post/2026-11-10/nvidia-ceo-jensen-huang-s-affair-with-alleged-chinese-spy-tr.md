@@ -2,7 +2,7 @@
 title: "Nvidia CEO Jensen Huang’s affair with alleged Chinese spy triggers internal probe and export‑control debate"
 slug: "nvidia-ceo-jensen-huangs-affair-with-alleged-chinese-spy-triggers-internal-probe-and-exportcontrol-debate"
 description: "Jensen Huang, co‑founder and chief executive of Nvidia, has acknowledged an affair with Alice Huang, an executive at Singapore‑based cloud provider Megaspeed who U.S. officials allege is a Chinese..."
-date: 2026-11-10T06:04:38+05:30
+date: 2026-11-10T12:01:43+05:30
 tags: [Nvidia, AIExportControls, ChinaSpy]
 categories: ["AI", "Artificial Intelligence", "Semiconductors", "National Security", "Corporate Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/07/STKP210_JENSEN_HUANG_A.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "AI Companies Push Power‑Intensive Data Centers, Sparking Grid and Environmental Concerns in Virginia"
 slug: "ai-companies-push-powerintensive-data-centers-sparking-grid-and-environmental-concerns-in-virginia"
 description: "As AI firms chase ever‑larger training workloads, they are demanding power on a scale that is reshaping Virginia’s data‑center corridor and prompting new regulatory and community responses."
-date: 2026-11-10T06:04:38+05:30
+date: 2026-11-10T12:01:43+05:30
 tags: [AI, DataCenters, Power, Virginia, Grid]
 categories: ["AI", "Artificial Intelligence", "Energy Infrastructure", "Environmental Policy", "Data Centers"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/AP23200525499640.jpg?resize=1200,600"

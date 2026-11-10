@@ -2,7 +2,7 @@
 title: "Paramount Skydance CEO says AI could surpass CGI as biggest creative unlock"
 slug: "paramount-skydance-ceo-says-ai-could-surpass-cgi-as-biggest-creative-unlock"
 description: "Paramount Skydance’s chief executive David Ellison told investors that “it’s hard to imagine” AI won’t have a bigger impact on the film industry than CGI."
-date: 2026-11-10T06:04:38+05:30
+date: 2026-11-10T12:01:43+05:30
 tags: [ParamountSkydance, AIinFilm, CreativeAI]
 categories: ["AI", "Artificial Intelligence", "Film Industry", "Creative Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2274329497.jpg?quality=90&strip=all&crop=0%2C10.740836125969%2C100%2C78.518327748063&w=1200"

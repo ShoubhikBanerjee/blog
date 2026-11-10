@@ -2,7 +2,7 @@
 title: "AWS Announces Pluggable Agentic AI Framework for Production‑Scale Multi‑Agent Applications"
 slug: "aws-announces-pluggable-agentic-ai-framework-for-productionscale-multiagent-applications"
 description: "The Pluggable Agentic AI Framework is a new reference architecture that guides organizations in moving multi‑agent AI applications from prototype to production scale."
-date: 2026-11-10T06:04:38+05:30
+date: 2026-11-10T12:01:43+05:30
 tags: [AWS, AgenticAI, MultiAgent, Architecture]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Cloud Computing", "Software Architecture"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-22256-featured-image-1.png"
