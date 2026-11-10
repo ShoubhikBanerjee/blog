@@ -2,7 +2,7 @@
 title: "Amazon Bedrock Managed Knowledge Base adds single-shot RAG and retrieval‑only modes"
 slug: "amazon-bedrock-managed-knowledge-base-adds-single-shot-rag-and-retrievalonly-modes"
 description: "Amazon Bedrock Managed Knowledge Base now supports two new request modes—single‑shot Retrieval Augmented Generation (RAG) and retrieval‑only—available through the **AgenticRetrieveStream** API."
-date: 2026-11-10T18:03:23+05:30
+date: 2026-11-10T22:09:41+05:30
 tags: [AmazonBedrock, RAG, AIretrieval, FoundationModels]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Cloud Computing", "Natural Language Processing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-22223-featured-image.png"

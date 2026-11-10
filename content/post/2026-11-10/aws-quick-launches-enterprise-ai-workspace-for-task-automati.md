@@ -2,7 +2,7 @@
 title: "AWS Quick Launches Enterprise AI Workspace for Task Automation and Data Analysis"
 slug: "aws-quick-launches-enterprise-ai-workspace-for-task-automation-and-data-analysis"
 description: "AWS Quick is an AI-powered workspace designed for knowledge workers to automate tasks, analyze data, build web applications, and conduct research using natural language and AI agents."
-date: 2026-11-10T18:03:23+05:30
+date: 2026-11-10T22:09:41+05:30
 tags: [AWSQuick, AIAgents, EnterpriseAI, Automation, AWS]
 categories: ["AI", "AI Agents", "Enterprise Software", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22266-featured-image.png"

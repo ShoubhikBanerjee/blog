@@ -2,7 +2,7 @@
 title: "Claude Fable 5.2 Medium Generates 3D Diorama Animation Yonkers Rises"
 slug: "claude-fable-5-2-medium-generates-3d-diorama-animation-yonkers-rises"
 description: "A 3D diorama animation titled Yonkers Rises was created using Claude Fable 5.2 Medium to test the model's 3D modeling and animation capabilities while mapping the location and shape of Yonkers."
-date: 2026-11-10T18:03:23+05:30
+date: 2026-11-10T22:09:41+05:30
 tags: [Claude, Threejs, 3DAnimation, ArtificialIntelligence]
 categories: ["AI", "Artificial Intelligence", "3D Animation", "Generative AI"]
 image: "https://static.simonwillison.net/static/2026/yonkers.webp"

@@ -2,7 +2,7 @@
 title: "NVIDIA Holoscan 5 Adds Integrated Robotic Control and Streamlined Sensor Processing"
 slug: "nvidia-holoscan-5-adds-integrated-robotic-control-and-streamlined-sensor-processing"
 description: "NVIDIA announced Holoscan SDK version 5, introducing built‑in robotic control alongside its existing low‑latency sensor‑processing capabilities."
-date: 2026-11-10T18:03:23+05:30
+date: 2026-11-10T22:09:41+05:30
 tags: [NVIDIA, Holoscan, Robotics, EdgeAI]
 categories: ["AI", "Artificial Intelligence", "Robotics", "Edge Computing", "SDKs"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/featured-image-660x370.jpg"

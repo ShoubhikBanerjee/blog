@@ -2,7 +2,7 @@
 title: "California Senator Scott Wiener Wins Congress Seat, Eyes Federal AI Regulation"
 slug: "california-senator-scott-wiener-wins-congress-seat-eyes-federal-ai-regulation"
 description: "California state senator Scott Wiener has won the open U.S. House seat in San Francisco, positioning him to influence federal AI policy."
-date: 2026-11-10T18:03:23+05:30
+date: 2026-11-10T22:09:41+05:30
 tags: [AIRegulation, Congress, ScottWiener, AIrisk]
 categories: ["AI", "Public Policy", "Artificial Intelligence", "Government", "Regulation"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/GettyImages-2303769670.jpg?resize=1200,600"

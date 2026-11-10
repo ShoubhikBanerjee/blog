@@ -2,7 +2,7 @@
 title: "Google DeepMind Formally Verifies Signal Protocol Implementation Using AlphaProof Code AI Agents"
 slug: "google-deepmind-formally-verifies-signal-protocol-implementation-using-alphaproof-code-ai-agents"
 description: "Google DeepMind researchers have used AlphaProof Code, an agentic framework, to mathematically prove key security properties of the actual code underlying the Signal protocol. This technology..."
-date: 2026-11-10T18:03:23+05:30
+date: 2026-11-10T22:09:41+05:30
 tags: [DeepMind, AlphaProof, Cybersecurity, FormalVerification, AIagents]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Software Engineering"]
 image: "https://lh3.googleusercontent.com/hn6AiI6lYFo6chi1mL6uJ9nOW9UXfsAKnSyOApiie2urHNU2tmSPUmGn0hNfWyYLRcsWCGjCIrBZSCt1ihZmvW-LDJPfyolsr5w-yvzlknZVzmaH=w1200-h630-n-nu-rw"

@@ -2,7 +2,7 @@
 title: "NVIDIA Nemotron 3.5 Super VL Added to Amazon SageMaker JumpStart"
 slug: "nvidia-nemotron-3-5-super-vl-added-to-amazon-sagemaker-jumpstart"
 description: "Today NVIDIA announced that the Nemotron 3.5 Super VL vision‑language model is now available through Amazon SageMaker JumpStart. The model can be deployed in SageMaker Studio with a few steps or with..."
-date: 2026-11-10T18:03:23+05:30
+date: 2026-11-10T22:09:41+05:30
 tags: [NVIDIA, SageMaker, VisionLanguage, AIagents]
 categories: ["AI", "Machine Learning", "Computer Vision", "AI Agents", "Natural Language Processing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22096-featured-image.png"

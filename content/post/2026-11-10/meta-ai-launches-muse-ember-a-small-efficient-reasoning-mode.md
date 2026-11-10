@@ -2,7 +2,7 @@
 title: "Meta AI launches Muse Ember, a small, efficient reasoning model"
 slug: "meta-ai-launches-muse-ember-a-small-efficient-reasoning-model"
 description: "Meta AI just launched Muse Ember, its smallest and most efficient model designed for complex reasoning execution and the work agents repeat all day."
-date: 2026-11-10T18:03:23+05:30
+date: 2026-11-10T22:09:41+05:30
 tags: [MetaAI, MuseEmber, AIModels, Pricing, ArtificialAnalysis]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Models", "AI Efficiency"]
 image: "https://static.simonwillison.net/static/2026/muse-ember.webp"
