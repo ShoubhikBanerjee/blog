@@ -2,7 +2,7 @@
 title: "Instagram launches AI‑powered Effect Builder for custom Stories filters"
 slug: "instagram-launches-aipowered-effect-builder-for-custom-stories-filters"
 description: "Instagram has added a new web‑based Effect Builder that lets users generate custom Instagram Stories filters with AI."
-date: 2026-11-10T12:01:43+05:30
+date: 2026-11-10T18:03:23+05:30
 tags: [Instagram, AI, EffectBuilder, Filters]
 categories: ["AI", "Social Media", "Artificial Intelligence", "Computer Vision", "Photo Editing"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/instagram-effect-builder-launch-2.jpeg?quality=90&strip=all&crop=0%2C10.193943950862%2C100%2C79.612112098277&w=1200"

@@ -2,7 +2,7 @@
 title: "Beep Locator: Using Claude Code to Triangulate a Mysterious Room Beep"
 slug: "beep-locator-using-claude-code-to-triangulate-a-mysterious-room-beep"
 description: "A box‑filled room in a house started emitting an intermittent beep; using Claude Code I built **Beep Locator** to pinpoint the source."
-date: 2026-11-10T12:01:43+05:30
+date: 2026-11-10T18:03:23+05:30
 tags: [Claude, AcousticLocalization, Python, WebSockets]
 categories: ["AI", "Artificial Intelligence", "Software Engineering", "Signal Processing", "Acoustics"]
 image: "https://static.simonwillison.net/static/2026/beep-locator-card.jpg"

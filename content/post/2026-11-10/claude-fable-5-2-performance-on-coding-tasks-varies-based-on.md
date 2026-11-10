@@ -2,7 +2,7 @@
 title: "Claude Fable 5.2 Performance on Coding Tasks Varies Based on Code Ownership Prompts"
 slug: "claude-fable-5-2-performance-on-coding-tasks-varies-based-on-code-ownership-prompts"
 description: "Anthropic’s testing of Claude Fable 5.2 reveals that the model responds closely to instructions regarding who owns the code it is tasked with modifying."
-date: 2026-11-10T12:01:43+05:30
+date: 2026-11-10T18:03:23+05:30
 tags: [ClaudeFable, Anthropic, AICoding]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Machine Learning"]
 author: "Shoubhik Banerjee"

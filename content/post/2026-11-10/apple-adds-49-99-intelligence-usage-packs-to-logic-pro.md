@@ -2,7 +2,7 @@
 title: "Apple adds $49.99 Intelligence Usage Packs to Logic Pro"
 slug: "apple-adds-49-99-intelligence-usage-packs-to-logic-pro"
 description: "Apple has introduced a one‑time $49.99 “Intelligence Usage Pack” for Logic Pro, letting users extend access to cloud‑based AI features that have usage limits."
-date: 2026-11-10T12:01:43+05:30
+date: 2026-11-10T18:03:23+05:30
 tags: [AppleIntelligence, LogicPro, AIUsagePacks, MusicAI, CreatorStudio]
 categories: ["AI", "Artificial Intelligence", "Music Production", "Software Business", "Creative Tools"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/logicpro.jpg?quality=90&strip=all&crop=0%2C10.742998834307%2C100%2C78.514002331385&w=1200"
