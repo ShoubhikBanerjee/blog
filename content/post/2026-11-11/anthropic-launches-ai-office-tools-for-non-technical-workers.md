@@ -2,7 +2,7 @@
 title: "Anthropic launches AI office tools for non-technical workers ahead of IPO"
 slug: "anthropic-launches-ai-office-tools-for-non-technical-workers-ahead-of-ipo"
 description: "Anthropic unveiled new AI-powered productivity tools targeting knowledge workers at a San Francisco event, expanding beyond its enterprise coding focus. The launch aims to address adoption friction..."
-date: 2026-11-11T06:08:28+05:30
+date: 2026-11-11T12:17:01+05:30
 tags: [AIproductivity, Anthropic, EnterpriseAI, IPO, OfficeTools]
 categories: ["AI", "Artificial Intelligence", "Enterprise Software", "Productivity Tools", "Business Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/STKB364_CLAUDE_2_C_96d15c.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

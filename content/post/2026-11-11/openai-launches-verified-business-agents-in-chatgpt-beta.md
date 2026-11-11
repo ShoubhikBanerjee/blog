@@ -2,7 +2,7 @@
 title: "OpenAI Launches Verified Business Agents in ChatGPT Beta"
 slug: "openai-launches-verified-business-agents-in-chatgpt-beta"
 description: "OpenAI has announced verified AI 'Business Agents' for ChatGPT, enabling direct interactions between users and brands for tasks like comparison shopping. This marks an expansion of ChatGPT's..."
-date: 2026-11-11T06:08:28+05:30
+date: 2026-11-11T12:17:01+05:30
 tags: [OpenAI, AIagents, ChatGPT, BusinessHub]
 categories: ["AI", "AI Agents", "Customer Service", "E-commerce", "Natural Language Processing"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Business-Agent-Customer-Conversation.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

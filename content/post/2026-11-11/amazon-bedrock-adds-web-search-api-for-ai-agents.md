@@ -2,7 +2,7 @@
 title: "Amazon Bedrock Adds Web Search API for AI Agents"
 slug: "amazon-bedrock-adds-web-search-api-for-ai-agents"
 description: "AI agents increasingly handle work that depends on what changed today, such as security advisories, product releases, prices, and regulations. A model’s training data can’t answer those questions, so..."
-date: 2026-11-11T06:08:28+05:30
+date: 2026-11-11T12:17:01+05:30
 tags: [B, e, d, r, o, c, k, W, e, b, S, e, a, r, c, h, A, I, A, g, e, n, t, s, L, a, n, g, C, h, a, i, n, A, W, S, S, e, c, u, r, i, t, y]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "C", "l", "o", "u", "d", "C", "o", "m", "p", "u", "t", "i", "n", "g", ",", "S", "o", "f", "t", "w", "a", "r", "e", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-22037-featured-image.png"

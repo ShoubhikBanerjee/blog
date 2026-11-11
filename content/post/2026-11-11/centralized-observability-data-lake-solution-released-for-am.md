@@ -2,7 +2,7 @@
 title: "Centralized Observability Data Lake Solution Released for Amazon Bedrock Model Invocations"
 slug: "centralized-observability-data-lake-solution-released-for-amazon-bedrock-model-invocations"
 description: "A centralized observability data lake solution has been introduced for Amazon Bedrock model invocations. Built using AWS CloudFormation, AWS Lambda, Amazon Data Firehose, and Amazon Athena, the..."
-date: 2026-11-11T06:08:28+05:30
+date: 2026-11-11T12:17:01+05:30
 tags: [AmazonBedrock, AWS, CloudObservability, DataLake, CloudWatch]
 categories: ["AI", "Cloud Computing", "Data Observability", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-21645-featured-image.png"
