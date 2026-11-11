@@ -2,7 +2,7 @@
 title: "Trovata adds autonomous AI agents to its treasury operating system"
 slug: "trovata-adds-autonomous-ai-agents-to-its-treasury-operating-system"
 description: "Trovata has upgraded its AI‑native cash and liquidity management platform with autonomous agents that can act on behalf of treasury teams."
-date: 2026-11-11T12:17:01+05:30
+date: 2026-11-11T18:02:06+05:30
 tags: [Trovata, AIAgents, TreasuryManagement, EnterpriseAI]
 categories: ["AI", "Finance Technology", "Artificial Intelligence", "Enterprise Software", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-22181-featured-image.png"

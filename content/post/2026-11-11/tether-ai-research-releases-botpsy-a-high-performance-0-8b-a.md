@@ -2,7 +2,7 @@
 title: "Tether AI Research Releases BotPsy, a High-Performance 0.8B Agentic Model"
 slug: "tether-ai-research-releases-botpsy-a-high-performance-0-8b-agentic-model"
 description: "Tether AI Research introduces BotPsy, a 0.8B-parameter model designed for function calling and agentic workflows, built on top of Qwen3.5-0.8B. The model is designed for secure on-device workflows,..."
-date: 2026-11-11T12:17:01+05:30
+date: 2026-11-11T18:02:06+05:30
 tags: [AIAgents, OpenSource, MachineLearning, FunctionCalling, TetherAIResearch]
 categories: ["AI", "Machine Learning", "AI Agents", "Open Source Models", "Function Calling"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6468b319b2321e47d3267049/Emr86qw6NAueYLdIEiTTD.png"

@@ -2,7 +2,7 @@
 title: "AutoGen 0.2 Course Requires Model Updates After OpenAI Deprecations"
 slug: "autogen-0-2-course-requires-model-updates-after-openai-deprecations"
 description: "A tutorial series built on AutoGen 0.2 (pyautogen 0.2.26) is now encountering model‑not‑found errors because many OpenAI models used in the lessons have been retired."
-date: 2026-11-11T12:17:01+05:30
+date: 2026-11-11T18:02:06+05:30
 tags: [AutoGen, OpenAI, Python, AI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Development", "Python"]
 image: "https://avatars.githubusercontent.com/u/71527334?v=4"

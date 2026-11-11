@@ -2,7 +2,7 @@
 title: "Are Dense Rewards Worth Their Tokens in GRPO?"
 slug: "are-dense-rewards-worth-their-tokens-in-grpo"
 description: "Recent work on reinforcement learning from human feedback examines whether dense rewards are worth their tokens in group-relative policy optimization (GRPO)."
-date: 2026-11-11T12:17:01+05:30
+date: 2026-11-11T18:02:06+05:30
 tags: [GRPO, ReinforcementLearning, DenseRewards]
 categories: ["AI", "Machine Learning", "Reinforcement Learning", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

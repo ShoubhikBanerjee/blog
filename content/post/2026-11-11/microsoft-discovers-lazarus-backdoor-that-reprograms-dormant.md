@@ -2,7 +2,7 @@
 title: "Microsoft discovers “Lazarus” backdoor that reprograms dormant neurons in AI agents"
 slug: "microsoft-discovers-lazarus-backdoor-that-reprograms-dormant-neurons-in-ai-agents"
 description: "Microsoft researchers have identified a new backdoor technique, dubbed “Lazarus,” that can silently reprogram a handful of dormant neurons in a large language model, enabling an otherwise normal AI..."
-date: 2026-11-11T12:17:01+05:30
+date: 2026-11-11T18:02:06+05:30
 tags: [AIsecurity, ModelProvenance, Backdoor, MicrosoftFoundry]
 categories: ["AI", "Machine Learning", "AI Security", "AI Agents", "Software Engineering"]
 image: "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/11/MSR-BLG_LAZ_HERO.png"

@@ -2,7 +2,7 @@
 title: "TCS Launches Agentic Test Orchestrator on AWS for BFSI"
 slug: "tcs-launches-agentic-test-orchestrator-on-aws-for-bfsi"
 description: "Tata Consultancy Services (TCS) has introduced the Agentic Test Orchestrator, a multi-tenant SaaS solution designed to automate testing for Banking, Financial Services, and Insurance (BFSI) clients...."
-date: 2026-11-11T12:17:01+05:30
+date: 2026-11-11T18:02:06+05:30
 tags: [A, I, A, g, e, n, t, s, A, W, S, T, e, s, t, A, u, t, o, m, a, t, i, o, n, B, F, S, I, M, u, l, t, i, T, e, n, a, n, t]
 categories: ["AI", "A", "I", "A", "g", "e", "n", "t", "s", ",", "S", "o", "f", "t", "w", "a", "r", "e", "T", "e", "s", "t", "i", "n", "g", ",", "A", "W", "S", ",", "E", "n", "t", "e", "r", "p", "r", "i", "s", "e", "S", "o", "f", "t", "w", "a", "r", "e"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-20381-featured-image.png"

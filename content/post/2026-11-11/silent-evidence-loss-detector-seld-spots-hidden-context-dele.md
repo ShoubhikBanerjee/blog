@@ -2,7 +2,7 @@
 title: "Silent Evidence Loss Detector (SELD) spots hidden context deletions in LLMs"
 slug: "silent-evidence-loss-detector-seld-spots-hidden-context-deletions-in-llms"
 description: "Context compression is now routine for language models with long inputs, but a compressed context is useful only if it keeps the evidence for the answer."
-date: 2026-11-11T12:17:01+05:30
+date: 2026-11-11T18:02:06+05:30
 tags: [LLM, ContextCompression, Evaluation]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Evaluation"]
 author: "Shoubhik Banerjee"

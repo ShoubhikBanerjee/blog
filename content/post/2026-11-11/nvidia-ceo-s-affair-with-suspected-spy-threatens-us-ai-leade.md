@@ -2,7 +2,7 @@
 title: "Nvidia CEO's Affair with Suspected Spy Threatens US AI Leadership"
 slug: "nvidia-ceo-s-affair-with-suspected-spy-threatens-us-ai-leadership"
 description: "Nvidia CEO Jensen Huang admitted to an affair with a woman suspected of being a Chinese spy, raising alarms about potential risks to US national security and AI dominance. The incident occurs as..."
-date: 2026-11-11T12:17:01+05:30
+date: 2026-11-11T18:02:06+05:30
 tags: [Nvidia, AI, NationalSecurity, USChinaTechWar, AISupplyChain]
 categories: ["AI", "Artificial Intelligence", "Semiconductor Industry", "National Security", "International Relations"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/gettyimages-2285784039.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
