@@ -2,7 +2,7 @@
 title: "Mobile AI Factory Automates SLM Tuning for Android Devices"
 slug: "mobile-ai-factory-automates-slm-tuning-for-android-devices"
 description: "A new system titled 'Mobile AI Factory' was submitted on November 10, 2026. It automates the creation of specialized, quantized Small Language Models (SLMs) for Android devices."
-date: 2026-11-11T18:02:06+05:30
+date: 2026-11-11T22:05:42+05:30
 tags: [M, o, b, i, l, e, A, I, S, L, M, s, A, n, d, r, o, i, d, A, g, e, n, t, i, c, S, y, s, t, e, m, s, Q, u, a, n, t, i, z, a, t, i, o, n]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "M", "o", "b", "i", "l", "e", "C", "o", "m", "p", "u", "t", "i", "n", "g", ",", "S", "o", "f", "t", "w", "a", "r", "e", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t"]
 author: "Shoubhik Banerjee"

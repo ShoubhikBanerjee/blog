@@ -2,7 +2,7 @@
 title: "Local OCR system reduces Uzbek Cyrillic‑Latin homoglyph errors"
 slug: "local-ocr-system-reduces-uzbek-cyrilliclatin-homoglyph-errors"
 description: "A new OCR correction system targeting Uzbek documents reduces errors caused by visually identical Cyrillic and Latin characters."
-date: 2026-11-11T18:02:06+05:30
+date: 2026-11-11T22:05:42+05:30
 tags: [OCR, Uzbek, ByT5, Homoglyph]
 categories: ["AI", "Natural Language Processing", "Computer Vision", "Machine Learning"]
 author: "Shoubhik Banerjee"

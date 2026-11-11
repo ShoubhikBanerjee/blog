@@ -2,7 +2,7 @@
 title: "Thai Morpheme Segmenter khammoon Released with Near‑Perfect Accuracy"
 slug: "thai-morpheme-segmenter-khammoon-released-with-nearperfect-accuracy"
 description: "Thai text is written without spaces, making word segmentation a foundational step in most Thai NLP pipelines. Existing tools largely reproduce word‑level conventions of corpora such as BEST, but the..."
-date: 2026-11-11T18:02:06+05:30
+date: 2026-11-11T22:05:42+05:30
 tags: [ThaiNLP, MorphemeSegmentation, OpenSource]
 categories: ["AI", "Natural Language Processing", "Computational Linguistics", "Machine Learning"]
 author: "Shoubhik Banerjee"

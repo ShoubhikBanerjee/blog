@@ -2,7 +2,7 @@
 title: "Measuring the effectiveness of deterministic fact layers in rule-governed domains"
 slug: "measuring-the-effectiveness-of-deterministic-fact-layers-in-rule-governed-domains"
 description: "Researchers have evaluated the effectiveness of deterministic fact layers in language-model systems within rule-governed domains. The study focused on the Chinese sexagenary system used in BaZi chart..."
-date: 2026-11-11T18:02:06+05:30
+date: 2026-11-11T22:05:42+05:30
 tags: [LLM, BaZi, AIResearch, MachineLearning]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Research"]
 author: "Shoubhik Banerjee"

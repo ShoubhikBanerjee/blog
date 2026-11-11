@@ -2,7 +2,7 @@
 title: "IGF jurors reject AI‑used games as indie community debates Big Walk"
 slug: "igf-jurors-reject-aiused-games-as-indie-community-debates-big-walk"
 description: "The Independent Games Festival (IGF) jurors released a statement refusing to vote for any game that uses generative AI, sparking a heated debate after House House disclosed minimal AI use in its..."
-date: 2026-11-11T18:02:06+05:30
+date: 2026-11-11T22:05:42+05:30
 tags: [AI, IndieGames, IGF]
 categories: ["AI", "Artificial Intelligence", "Video Games", "Game Development", "Industry Ethics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/07/BigWalk_Screenshot_Jun26_01.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

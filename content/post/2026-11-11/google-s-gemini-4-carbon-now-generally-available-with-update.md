@@ -2,7 +2,7 @@
 title: "Google's Gemini 4 Carbon Now Generally Available with Updated Pricing"
 slug: "google-s-gemini-4-carbon-now-generally-available-with-updated-pricing"
 description: "Google has expanded access to Gemini 4 Carbon, its advanced AI model, making it available to all users after initially limiting access to cyber defenders two weeks ago."
-date: 2026-11-11T18:02:06+05:30
+date: 2026-11-11T22:05:42+05:30
 tags: [Gemini, GoogleAI, GenerativeAI, AIAgents, GameDevelopment]
 categories: ["AI", "Artificial Intelligence", "Generative AI", "Software Development", "Game Development"]
 image: "https://static.simonwillison.net/static/2026/carbon-pelican.webp"

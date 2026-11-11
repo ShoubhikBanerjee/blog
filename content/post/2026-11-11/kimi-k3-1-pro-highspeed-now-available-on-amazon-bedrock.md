@@ -2,7 +2,7 @@
 title: "Kimi K3.1 Pro Highspeed Now Available on Amazon Bedrock"
 slug: "kimi-k3-1-pro-highspeed-now-available-on-amazon-bedrock"
 description: "Kimi K3.1 Pro Highspeed from Moonshot AI is now available on Amazon Bedrock. Part of Moonshot AI’s new K3.1 series, it is a post-trained version of Kimi K3 with the same 3T-class open-weight..."
-date: 2026-11-11T18:02:06+05:30
+date: 2026-11-11T22:05:42+05:30
 tags: [A, m, a, z, o, n, B, e, d, r, o, c, k, K, i, m, i, K, 3, A, I, M, o, d, e, l, O, p, e, n, A, I, C, o, m, p, a, t, i, b, l, e]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "C", "l", "o", "u", "d", "C", "o", "m", "p", "u", "t", "i", "n", "g", ",", "S", "o", "f", "t", "w", "a", "r", "e", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-22229-featured-image.png"

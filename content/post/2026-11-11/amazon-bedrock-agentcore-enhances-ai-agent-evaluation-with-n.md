@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore enhances AI agent evaluation with new metrics and custom tools"
 slug: "amazon-bedrock-agentcore-enhances-ai-agent-evaluation-with-new-metrics-and-custom-tools"
 description: "Amazon Bedrock AgentCore has introduced expanded evaluation capabilities for AI agents, combining built-in, third-party, and customizable metrics to assess performance across multiple dimensions...."
-date: 2026-11-11T18:02:06+05:30
+date: 2026-11-11T22:05:42+05:30
 tags: [AIagents, AmazonBedrock, EvaluationTools, LLM, AutoEval, DeepEval]
 categories: ["AI", "AI Agents", "Machine Learning", "Evaluation Metrics", "Developer Tools"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21893-featured-image.png"

@@ -2,7 +2,7 @@
 title: "Concept-Based Framework for Clinical Prediction Without Supervision"
 slug: "concept-based-framework-for-clinical-prediction-without-supervision"
 description: "A new framework for concept-based interpretation in clinical text prediction was submitted on November 10, 2026. This approach allows for model transparency without the need for expensive annotated..."
-date: 2026-11-11T18:02:06+05:30
+date: 2026-11-11T22:05:42+05:30
 tags: [C, l, i, n, i, c, a, l, P, r, e, d, i, c, t, i, o, n, C, o, n, c, e, p, t, B, a, s, e, d, I, n, t, e, r, p, r, e, t, a, t, i, o, n, M, a, c, h, i, n, e, L, e, a, r, n, i, n, g, H, e, a, l, t, h, c, a, r, e, A, I, N, L, P]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "N", "a", "t", "u", "r", "a", "l", "L", "a", "n", "g", "u", "a", "g", "e", "P", "r", "o", "c", "e", "s", "s", "i", "n", "g", ",", "H", "e", "a", "l", "t", "h", "c", "a", "r", "e", ",", "C", "o", "m", "p", "u", "t", "a", "t", "i", "o", "n", "a", "l", "L", "i", "n", "g", "u", "i", "s", "t", "i", "c", "s"]
 author: "Shoubhik Banerjee"

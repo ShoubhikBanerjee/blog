@@ -2,7 +2,7 @@
 title: "Study Reveals Framing Bias in Chinese LLM News Headline Evaluations"
 slug: "study-reveals-framing-bias-in-chinese-llm-news-headline-evaluations"
 description: "A new study examines how Chinese large language models judge news headlines, showing that subtle changes in framing can shift perceived misleadingness and severity."
-date: 2026-11-11T18:02:06+05:30
+date: 2026-11-11T22:05:42+05:30
 tags: [LLM, NewsModeration, AIResearch, FramingBias]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Ethics", "Research Platforms"]
 author: "Shoubhik Banerjee"
