@@ -2,7 +2,7 @@
 title: "Event‑Driven Sync of MCP Server Tools to AWS Agent Registry"
 slug: "eventdriven-sync-of-mcp-server-tools-to-aws-agent-registry"
 description: "When a Model Context Protocol (MCP) server published in the AWS Agent Registry gains a new tool or updates its schema, the registry record is automatically refreshed via an event‑driven workflow."
-date: 2026-11-12T18:01:15+05:30
+date: 2026-11-12T22:08:51+05:30
 tags: [AWS, AgentRegistry, EventBridge, Lambda, MCP]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Serverless Architecture", "DevOps"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21088-featured-image.png"

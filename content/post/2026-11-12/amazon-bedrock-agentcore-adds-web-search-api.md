@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore adds Web Search API"
 slug: "amazon-bedrock-agentcore-adds-web-search-api"
 description: "Amazon announced a new Web Search API on Bedrock AgentCore that lets developers retrieve ranked web results with a single API call."
-date: 2026-11-12T18:01:15+05:30
+date: 2026-11-12T22:08:51+05:30
 tags: [AmazonWebServices, Bedrock, WebSearchAPI]
 categories: ["AI", "Cloud Computing", "AI Agents", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-22165-featured-image.png"

@@ -2,7 +2,7 @@
 title: "LLM 0.37 addresses security vulnerabilities in API key handling"
 slug: "llm-0-37-addresses-security-vulnerabilities-in-api-key-handling"
 description: "On 11th November 2026, a security update was released for LLM to address two vulnerabilities reported by Daniel de Araujo in GHSA-v9h7-jj4g-f862 and GHSA-r639-rr7r-x72w."
-date: 2026-11-12T18:01:15+05:30
+date: 2026-11-12T22:08:51+05:30
 tags: [LLM, Security, OpenAI, API]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Cybersecurity"]
 author: "Shoubhik Banerjee"

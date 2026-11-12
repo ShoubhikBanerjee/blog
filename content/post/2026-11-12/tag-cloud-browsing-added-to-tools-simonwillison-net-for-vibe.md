@@ -2,7 +2,7 @@
 title: "Tag‑cloud browsing added to tools.simonwillison.net for vibe‑coded tools"
 slug: "tagcloud-browsing-added-to-tools-simonwillison-net-for-vibecoded-tools"
 description: "The tools.simonwillison.net site now lets users browse its growing collection of vibe‑coded tools using tag clouds."
-date: 2026-11-12T18:01:15+05:30
+date: 2026-11-12T22:08:51+05:30
 tags: [SimonWillison, ToolBrowsing, TreeSitter]
 categories: ["AI", "Software Development", "Web Tools", "AI Tools"]
 image: "https://static.simonwillison.net/static/2026/tools-tag-cloud.webp"

@@ -2,7 +2,7 @@
 title: "DXC OASIS AI Platform Launches with Amazon Bedrock and Guardrails"
 slug: "dxc-oasis-ai-platform-launches-with-amazon-bedrock-and-guardrails"
 description: "DXC Technology launched DXC OASIS, a governed AI agent platform built on Amazon Bedrock, to support mission-critical systems for regulated organizations."
-date: 2026-11-12T18:01:15+05:30
+date: 2026-11-12T22:08:51+05:30
 tags: [A, W, S, A, m, a, z, o, n, B, e, d, r, o, c, k, A, I, A, g, e, n, t, s, E, n, t, e, r, p, r, i, s, e, A, I]
 categories: ["AI", "E", "n", "t", "e", "r", "p", "r", "i", "s", "e", "A", "I", ",", "A", "W", "S", "S", "e", "r", "v", "i", "c", "e", "s", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "M", "a", "n", "a", "g", "e", "d", "S", "e", "r", "v", "i", "c", "e", "s"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-21702-featured-image.png"
