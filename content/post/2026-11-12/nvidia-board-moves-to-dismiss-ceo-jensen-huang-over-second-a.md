@@ -2,7 +2,7 @@
 title: "Nvidia board moves to dismiss CEO Jensen Huang over second alleged affair"
 slug: "nvidia-board-moves-to-dismiss-ceo-jensen-huang-over-second-alleged-affair"
 description: "Nvidia's board is preparing to dismiss CEO Jensen Huang following reports of a second alleged extramarital affair. This development comes days after Huang admitted to a separate affair with a woman..."
-date: 2026-11-12T06:14:14+05:30
+date: 2026-11-12T12:01:25+05:30
 tags: [Nvidia, Leadership, Scandal]
 categories: ["AI", "Corporate Governance", "Technology", "Ethics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25824934/2192224191.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

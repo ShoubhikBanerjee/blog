@@ -2,7 +2,7 @@
 title: "Codex adds Amazon Bedrock inference support for OpenAI models"
 slug: "codex-adds-amazon-bedrock-inference-support-for-openai-models"
 description: "Codex can now invoke supported OpenAI models on Amazon Bedrock while the Codex engine continues to run on the developer’s workstation."
-date: 2026-11-12T06:14:14+05:30
+date: 2026-11-12T12:01:25+05:30
 tags: [Codex, AmazonBedrock, OpenAI, AIInference]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Developer Tools"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21633-featured-image.png"

@@ -2,7 +2,7 @@
 title: "AWS releases official local emulator for cloud services"
 slug: "aws-releases-official-local-emulator-for-cloud-services"
 description: "On 11 November 2026 AWS released an official emulator that lets developers run a local clone of many AWS services without needing a paid API key."
-date: 2026-11-12T06:14:14+05:30
+date: 2026-11-12T12:01:25+05:30
 tags: [AWS, Emulator, Rust]
 categories: ["AI", "Cloud Computing", "Software Development", "DevOps"]
 author: "Shoubhik Banerjee"
