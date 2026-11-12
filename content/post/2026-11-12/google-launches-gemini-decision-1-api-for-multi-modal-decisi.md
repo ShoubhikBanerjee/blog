@@ -2,7 +2,7 @@
 title: "Google Launches Gemini Decision 1 API for Multi-Modal Decision Models"
 slug: "google-launches-gemini-decision-1-api-for-multi-modal-decision-models"
 description: "Google released the 'Gemini Decision 1' API on November 11, 2026, entering the decision model category alongside Jev and OpenAI. The new model supports the same three types of questions as its..."
-date: 2026-11-12T12:01:25+05:30
+date: 2026-11-12T18:01:15+05:30
 tags: [G, o, o, g, l, e, G, e, m, i, n, i, D, e, c, i, s, i, o, n, M, o, d, e, l, s, A, P, I, P, r, i, c, i, n, g, M, u, l, t, i, m, o, d, a, l]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "C", "o", "m", "p", "u", "t", "e", "r", "V", "i", "s", "i", "o", "n", ",", "A", "P", "I", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Semantic Diff Tool for Formal Policies and AI Code"
 slug: "semantic-diff-tool-for-formal-policies-and-ai-code"
 description: "When reviewing code, you start with a diff. However, comparing two 3,000-line files by eye is difficult. Formal policies are even harder to compare because a textual diff often highlights syntactic..."
-date: 2026-11-12T12:01:25+05:30
+date: 2026-11-12T18:01:15+05:30
 tags: [S, e, m, a, n, t, i, c, D, i, f, f, F, o, r, m, a, l, M, e, t, h, o, d, s, A, u, t, o, f, o, r, m, a, l, i, z, a, t, i, o, n, S, M, T, P, o, l, i, c, y, A, n, a, l, y, s, i, s]
 categories: ["AI", "F", "o", "r", "m", "a", "l", "M", "e", "t", "h", "o", "d", "s", ",", "A", "I", "C", "o", "d", "e", "G", "e", "n", "e", "r", "a", "t", "i", "o", "n", ",", "P", "o", "l", "i", "c", "y", "A", "n", "a", "l", "y", "s", "i", "s", ",", "S", "e", "m", "a", "n", "t", "i", "c", "A", "n", "a", "l", "y", "s", "i", "s"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21875-featured-image.png"

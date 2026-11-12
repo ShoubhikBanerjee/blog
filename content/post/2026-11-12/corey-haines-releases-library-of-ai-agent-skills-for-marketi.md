@@ -2,7 +2,7 @@
 title: "Corey Haines Releases Library of AI Agent Skills for Marketing Tasks"
 slug: "corey-haines-releases-library-of-ai-agent-skills-for-marketing-tasks"
 description: "Corey Haines has released a collection of AI agent skills designed to support technical marketers and founders with conversion optimization, copywriting, SEO, analytics, and growth engineering."
-date: 2026-11-12T12:01:25+05:30
+date: 2026-11-12T18:01:15+05:30
 tags: [AIAgents, MarketingTech, ClaudeCode, GrowthEngineering]
 categories: ["AI", "Artificial Intelligence", "Marketing Technology", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/34802794?v=4"

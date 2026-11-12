@@ -2,7 +2,7 @@
 title: "AWS re:Invent 2024 features extensive AI and machine learning learning sessions"
 slug: "aws-re-invent-2024-features-extensive-ai-and-machine-learning-learning-sessions"
 description: "From November 30th to December 4th, Amazon Web Services (AWS) will host its annual learning event, re:Invent. The conference provides attendees with over 2,000 learning sessions, including an AI/ML..."
-date: 2026-11-12T12:01:25+05:30
+date: 2026-11-12T18:01:15+05:30
 tags: [AWS, reInvent, MachineLearning, AIAgents]
 categories: ["AI", "Cloud Computing", "Machine Learning", "AI Agents"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-22321-featured-image-4.png"

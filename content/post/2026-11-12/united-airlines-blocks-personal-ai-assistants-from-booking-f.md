@@ -2,7 +2,7 @@
 title: "United Airlines blocks personal AI assistants from booking flights"
 slug: "united-airlines-blocks-personal-ai-assistants-from-booking-flights"
 description: "United Airlines announced it will not allow personal AI assistants to book tickets, citing privacy and regulatory concerns."
-date: 2026-11-12T12:01:25+05:30
+date: 2026-11-12T18:01:15+05:30
 tags: [UnitedAirlines, AIAgents, Privacy, Regulation]
 categories: ["AI", "Airlines", "Artificial Intelligence", "Privacy", "Regulation"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/23176430/1237621702.jpg?quality=90&strip=all&crop=0%2C10.721800295556%2C100%2C78.556399408888&w=1200"

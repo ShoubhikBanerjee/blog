@@ -2,7 +2,7 @@
 title: "Building Autonomous AI Agents in Java with Spring AI and Amazon Bedrock"
 slug: "building-autonomous-ai-agents-in-java-with-spring-ai-and-amazon-bedrock"
 description: "Java developers can now bridge the gap between AI prototyping and production by using Spring AI and Amazon Bedrock. These tools allow teams to leverage existing JVM operational patterns and CI/CD..."
-date: 2026-11-12T12:01:25+05:30
+date: 2026-11-12T18:01:15+05:30
 tags: [Java, SpringAI, AmazonBedrock, AIAgents, EnterpriseSoftware]
 categories: ["AI", "Machine Learning", "Software Development", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-20629-featured-image.png"

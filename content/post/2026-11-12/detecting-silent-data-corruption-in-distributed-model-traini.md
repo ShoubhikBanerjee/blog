@@ -2,7 +2,7 @@
 title: "Detecting Silent Data Corruption in Distributed Model Training on SageMaker HyperPod"
 slug: "detecting-silent-data-corruption-in-distributed-model-training-on-sagemaker-hyperpod"
 description: "Silent data corruption (SDC) occurs when a GPU returns a wrong but plausible number without raising an error. In large‑scale distributed training the erroneous value can propagate through gradients..."
-date: 2026-11-12T12:01:25+05:30
+date: 2026-11-12T18:01:15+05:30
 tags: [SilentDataCorruption, DistributedTraining, SageMaker, GPU]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Hardware"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21841-featured-image.png"

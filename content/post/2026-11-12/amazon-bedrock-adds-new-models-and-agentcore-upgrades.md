@@ -2,7 +2,7 @@
 title: "Amazon Bedrock adds new models and AgentCore upgrades"
 slug: "amazon-bedrock-adds-new-models-and-agentcore-upgrades"
 description: "Amazon Bedrock announced a set of updates that add new large‑language models, expand AgentCore tooling, and improve pricing and performance across its AI services."
-date: 2026-11-12T12:01:25+05:30
+date: 2026-11-12T18:01:15+05:30
 tags: [AmazonBedrock, AIModels, AgentCore, Claude, OpenAI]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing", "Natural Language Processing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-22436-featured-image.png"
