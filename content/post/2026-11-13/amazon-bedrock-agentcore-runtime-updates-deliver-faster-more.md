@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore Runtime Updates Deliver Faster, More Efficient AI Agents"
 slug: "amazon-bedrock-agentcore-runtime-updates-deliver-faster-more-efficient-ai-agents"
 description: "Amazon has announced updates to Amazon Bedrock AgentCore runtime, a managed compute layer designed to help developers build, connect, and optimize AI agents securely at scale. The new version..."
-date: 2026-11-13T12:01:52+05:30
+date: 2026-11-13T18:03:26+05:30
 tags: [AIAgents, AmazonBedrock, CloudInfrastructure, EnterpriseAI, MachineLearning]
 categories: ["AI", "AI Agents", "Cloud Computing", "Machine Learning", "Enterprise Software"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-22215-featured-image.png"

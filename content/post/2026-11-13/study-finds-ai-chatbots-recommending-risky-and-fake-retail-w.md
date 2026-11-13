@@ -2,7 +2,7 @@
 title: "Study Finds AI Chatbots Recommending Risky and Fake Retail Websites"
 slug: "study-finds-ai-chatbots-recommending-risky-and-fake-retail-websites"
 description: "A new study conducted by IP protection firm Podqi found that AI chatbots used by shoppers to research products or locate stores can direct users to imposter and risky websites. Across thousands of..."
-date: 2026-11-13T12:01:52+05:30
+date: 2026-11-13T18:03:26+05:30
 tags: [AIChatbots, Cybersecurity, ECommerce, ChatGPT, Gemini, Perplexity]
 categories: ["AI", "Artificial Intelligence", "E-Commerce", "Cybersecurity", "Machine Learning"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STKS539_AI_AGENTS_SHOPPING_E.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

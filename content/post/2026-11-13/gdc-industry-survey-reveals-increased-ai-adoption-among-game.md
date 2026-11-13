@@ -2,7 +2,7 @@
 title: "GDC Industry Survey Reveals Increased AI Adoption Among Game Developers"
 slug: "gdc-industry-survey-reveals-increased-ai-adoption-among-game-developers"
 description: "The GDC Festival of Gaming’s latest annual industry survey indicates a rise in the use of artificial intelligence within the game development sector. Currently, 40 percent of developers report using..."
-date: 2026-11-13T12:01:52+05:30
+date: 2026-11-13T18:03:26+05:30
 tags: [GameDevelopment, GDC, ArtificialIntelligence, GamingIndustry, Xbox]
 categories: ["AI", "Gaming", "Artificial Intelligence", "Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/55145037587_ac59503045_k.jpg?quality=90&strip=all&crop=0%2C10.723395278369%2C100%2C78.553209443262&w=1200"

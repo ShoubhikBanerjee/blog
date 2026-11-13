@@ -2,7 +2,7 @@
 title: "Google Launches Gemini 4 Hydrogen as New Free Tier and Search Model"
 slug: "google-launches-gemini-4-hydrogen-as-new-free-tier-and-search-model"
 description: "On 12th November 2026, Google launched Gemini 4 Hydrogen, the lowest cost member of the Gemini 4 family. Designed as a high-efficiency execution engine, the model is intended for everyday work and to..."
-date: 2026-11-13T12:01:52+05:30
+date: 2026-11-13T18:03:26+05:30
 tags: [Google, Gemini4, ArtificialIntelligence, MachineLearning, SearchAI]
 categories: ["AI", "Large Language Models", "Software Development", "AI Industry"]
 image: "https://static.simonwillison.net/static/2026/gemini-4-card.jpg"

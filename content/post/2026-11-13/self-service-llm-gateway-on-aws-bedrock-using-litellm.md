@@ -2,7 +2,7 @@
 title: "Self‑Service LLM Gateway on AWS Bedrock Using LiteLLM"
 slug: "selfservice-llm-gateway-on-aws-bedrock-using-litellm"
 description: "A new self‑service LLM gateway abstracts Amazon Bedrock behind an OpenAI‑compatible API by running LiteLLM on AWS Fargate. The pattern provides a centrally managed access point for coding assistants..."
-date: 2026-11-13T12:01:52+05:30
+date: 2026-11-13T18:03:26+05:30
 tags: [LLM, AWS, LiteLLM, Bedrock, AIInfrastructure]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Machine Learning", "DevOps"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-20816-featured-image.png"

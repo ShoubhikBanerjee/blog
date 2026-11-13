@@ -2,7 +2,7 @@
 title: "Natera Improves Lab Operations with Agentic AI System SWARM"
 slug: "natera-improves-lab-operations-with-agentic-ai-system-swarm"
 description: "Natera has deployed SWARM (Systematic Workflow Analytics and Resolutions Manager), an agentic AI system built with Amazon Bedrock AgentCore, to optimize lab instrument maintenance and reduce..."
-date: 2026-11-13T12:01:52+05:30
+date: 2026-11-13T18:03:26+05:30
 tags: [AWS, AmazonBedrock, AgenticAI, Natera, LabOps]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21653-featured-image.png"
