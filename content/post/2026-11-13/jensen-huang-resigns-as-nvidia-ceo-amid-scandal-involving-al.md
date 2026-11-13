@@ -2,7 +2,7 @@
 title: "Jensen Huang resigns as Nvidia CEO amid scandal involving alleged Chinese intelligence assets"
 slug: "jensen-huang-resigns-as-nvidia-ceo-amid-scandal-involving-alleged-chinese-intelligence-assets"
 description: "Nvidia CEO Jensen Huang has resigned following reports of controversies surrounding his affairs and business dealings, including allegations involving a person identified as an alleged Chinese..."
-date: 2026-11-13T06:10:11+05:30
+date: 2026-11-13T12:01:52+05:30
 tags: [Nvidia, JensenHuang, Semiconductors, Geopolitics, AI]
 categories: ["AI", "Corporate News", "Technology Policy", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Nvidia_Jensen_huang_03.jpg?quality=90&strip=all&crop=0%2C12.339110464558%2C100%2C75.321779070884&w=1200"

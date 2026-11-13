@@ -2,7 +2,7 @@
 title: "Palantir CEO Alex Karp Positions Company as Anti-Woke Defense Leader Focused on Lethality"
 slug: "palantir-ceo-alex-karp-positions-company-as-anti-woke-defense-leader-focused-on-lethality"
 description: "Palantir CEO Alex Karp has outlined a distinct corporate and political identity for the data analytics firm, positioning it as a 'completely anti-woke' company focused on national defense. Karp, a..."
-date: 2026-11-13T06:10:11+05:30
+date: 2026-11-13T12:01:52+05:30
 tags: [Palantir, AlexKarp, NationalDefense, DataAnalytics, Geopolitics]
 categories: ["AI", "National Defense", "Corporate Strategy", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/8407711/479950372.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

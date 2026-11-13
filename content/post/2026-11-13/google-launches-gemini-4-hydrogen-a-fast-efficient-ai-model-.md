@@ -2,7 +2,7 @@
 title: "Google launches Gemini 4 Hydrogen, a fast, efficient AI model for developers"
 slug: "google-launches-gemini-4-hydrogen-a-fast-efficient-ai-model-for-developers"
 description: "Today Google announced Gemini 4 Hydrogen, a new model in the Gemini 4 family built for rapid, efficient execution of everyday coding and agentic workflows."
-date: 2026-11-13T06:10:11+05:30
+date: 2026-11-13T12:01:52+05:30
 tags: [GoogleAI, Gemini, AIModels]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Software Development", "Cloud Services"]
 image: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini-4-hydrogen__key-art__lockup__16-9.width-1300.jpg"

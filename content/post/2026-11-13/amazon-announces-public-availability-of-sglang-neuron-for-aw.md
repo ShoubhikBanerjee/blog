@@ -2,7 +2,7 @@
 title: "Amazon Announces Public Availability of SGLang-Neuron for AWS Trainium"
 slug: "amazon-announces-public-availability-of-sglang-neuron-for-aws-trainium"
 description: "Amazon has announced that SGLang-Neuron is publicly available through an AWS Deep Learning Container, released by RadixArk in collaboration with Annapurna Labs. SGLang-Neuron is an out-of-tree plugin..."
-date: 2026-11-13T06:10:11+05:30
+date: 2026-11-13T12:01:52+05:30
 tags: [Amazon, AWSTrainium, SGLang, PyTorch, AIInference]
 categories: ["AI", "Machine Learning", "Cloud Computing", "AI Infrastructure"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22453-featured-image.png"

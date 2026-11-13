@@ -2,7 +2,7 @@
 title: "Researchers Develop COMPACTIONBENCH and APEC to Reduce AI Coding Costs"
 slug: "researchers-develop-compactionbench-and-apec-to-reduce-ai-coding-costs"
 description: "A new study reveals that while fewer than 8% of coding sessions require context compaction, these sessions account for 44% of total AI processing costs. To address this, researchers have introduced..."
-date: 2026-11-13T06:10:11+05:30
+date: 2026-11-13T12:01:52+05:30
 tags: [AI, Coding, MachineLearning, Efficiency]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Machine Learning"]
 image: "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/10/ResearchFocus-BlogHeroFeature-1400x788-1-scaled-1.jpg"

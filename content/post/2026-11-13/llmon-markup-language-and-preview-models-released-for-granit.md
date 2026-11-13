@@ -2,7 +2,7 @@
 title: "LLMON markup language and preview models released for Granite 4.1"
 slug: "llmon-markup-language-and-preview-models-released-for-granite-4-1"
 description: "A new LLM‑native markup language called **LLMON** (pronounced “lemon”) has been released, together with two experimental preview models built on the Granite 4.1 base."
-date: 2026-11-13T06:10:11+05:30
+date: 2026-11-13T12:01:52+05:30
 tags: [LLMON, Granite, PromptSecurity, AIModels]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Safety", "AI Infrastructure"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6484ca4d5ff9a3d2ee52a83b/6KFZDHIJkxpICiErHLqAw.gif"

@@ -2,7 +2,7 @@
 title: "Google Researcher Uses AI Agents to Find Maya Site, Then Discovers It Was Already Known"
 slug: "google-researcher-uses-ai-agents-to-find-maya-site-then-discovers-it-was-already-known"
 description: "Google researcher Pietro Miotti recently claimed to have discovered a potentially unmapped Maya site in Mexico using AI agents and lidar technology. However, subsequent verification revealed the site..."
-date: 2026-11-13T06:10:11+05:30
+date: 2026-11-13T12:01:52+05:30
 tags: [A, I, L, i, d, a, r, A, r, c, h, a, e, o, l, o, g, y, R, e, s, e, a, r, c, h, M, a, y, a, V, e, r, i, f, i, c, a, t, i, o, n]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "C", "o", "m", "p", "u", "t", "e", "r", "V", "i", "s", "i", "o", "n", ",", "A", "r", "c", "h", "a", "e", "o", "l", "o", "g", "y"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/maya-sites.jpg?quality=90&strip=all&crop=2.4327168367347%2C0%2C95.134566326531%2C100&w=1200"
