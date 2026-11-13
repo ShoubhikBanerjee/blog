@@ -2,7 +2,7 @@
 title: "Google Launches Gemini 4 Hydrogen Model for Enhanced Search Performance"
 slug: "google-launches-gemini-4-hydrogen-model-for-enhanced-search-performance"
 description: "Google has released Gemini 4 Hydrogen, a new model designed to provide more helpful answers to complex queries, including multi-part questions, highly specific requests, and those containing..."
-date: 2026-11-13T18:03:26+05:30
+date: 2026-11-13T22:02:12+05:30
 tags: [Google, Gemini, ArtificialIntelligence, Search, Gemini4Hydrogen]
 categories: ["AI", "Artificial Intelligence", "Search Engines", "Software Updates"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25290329/STK255_Google_Gemini_A.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

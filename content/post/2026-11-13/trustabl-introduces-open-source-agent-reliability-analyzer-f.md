@@ -2,7 +2,7 @@
 title: "Trustabl Introduces Open-Source Agent Reliability Analyzer for AI Agent Code"
 slug: "trustabl-introduces-open-source-agent-reliability-analyzer-for-ai-agent-code"
 description: "Trustabl's Agent Reliability Analyzer is an open-source, deterministic scanner designed to find and fix reliability failures in AI agent code before it reaches production."
-date: 2026-11-13T18:03:26+05:30
+date: 2026-11-13T22:02:12+05:30
 tags: [Trustabl, AIAgents, StaticAnalysis, OpenSource, SoftwareTesting]
 categories: ["AI", "Artificial Intelligence", "Software Development", "AI Agents", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/286651546?v=4"

@@ -2,7 +2,7 @@
 title: "Nvidia confirms technical feasibility of Chip Security Act tracking measures"
 slug: "nvidia-confirms-technical-feasibility-of-chip-security-act-tracking-measures"
 description: "Nvidia representatives have privately informed Representative Bill Foster that the company could technically implement anti-smuggling geotracking measures for advanced AI chips, despite public..."
-date: 2026-11-13T18:03:26+05:30
+date: 2026-11-13T22:02:12+05:30
 tags: [Nvidia, AIChips, Geopolitics, Semiconductors, TechPolicy]
 categories: ["AI", "Technology Policy", "Semiconductor Industry", "Artificial Intelligence"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/foster-huang2a.jpg?resize=1200,600"
