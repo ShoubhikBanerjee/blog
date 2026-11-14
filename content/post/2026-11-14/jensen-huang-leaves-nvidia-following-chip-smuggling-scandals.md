@@ -2,7 +2,7 @@
 title: "Jensen Huang Leaves Nvidia Following Chip Smuggling Scandals and Personal Allegations"
 slug: "jensen-huang-leaves-nvidia-following-chip-smuggling-scandals-and-personal-allegations"
 description: "Nvidia CEO Jensen Huang has left the company he cofounded 33 years ago, ending his tenure as the visionary leader of the world’s first $5 trillion company. The departure comes amid reports of the..."
-date: 2026-11-14T18:03:06+05:30
+date: 2026-11-14T22:03:04+05:30
 tags: [Nvidia, JensenHuang, Semiconductors, AI, StockMarket]
 categories: ["AI", "Artificial Intelligence", "Corporate Governance", "Semiconductor Industry"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2194622930.jpg?quality=90&strip=all&crop=0%2C13.348952787954%2C100%2C73.302094424093&w=1200"
