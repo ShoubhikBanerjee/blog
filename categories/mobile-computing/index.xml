@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mobile Computing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/mobile-computing/</link><description>Recent content in Mobile Computing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 20 Oct 2026 22:03:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/mobile-computing/index.xml" rel="self" type="application/rss+xml"/><item><title>AnyLanguageModel 1.0 and Swift SDKs Enable Flexible Local and Hosted AI Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/anylanguagemodel-1-0-and-swift-sdks-enable-flexible-local-and-hosted-ai-inference/</link><pubDate>Tue, 20 Oct 2026 22:03:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/anylanguagemodel-1-0-and-swift-sdks-enable-flexible-local-and-hosted-ai-inference/</guid><description>&lt;img src="https://huggingface.co/blog/assets/anylanguagemodel-1-0/banner.png" alt="Featured image of post AnyLanguageModel 1.0 and Swift SDKs Enable Flexible Local and Hosted AI Inference" /&gt;&lt;h1 id="anylanguagemodel-10-and-swift-sdks-enable-flexible-local-and-hosted-ai-inference"&gt;AnyLanguageModel 1.0 and Swift SDKs Enable Flexible Local and Hosted AI Inference
+&lt;/h1&gt;&lt;p&gt;Language models have proven to be a powerful tool for building intelligence into products, and today the ecosystem gains a new set of tools.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Apple’s Swift ecosystem now includes &lt;strong&gt;AnyLanguageModel 1.0&lt;/strong&gt;, &lt;strong&gt;swift‑huggingface 1.0&lt;/strong&gt;, and &lt;strong&gt;swift‑xet 1.0&lt;/strong&gt;. After a year of development and dozens of releases, the new stack supports both local and hosted inference, a shared API, and the Foundation Models API so developers can pick the model that fits each task.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;shared API&lt;/strong&gt; lets you swap between system models, open‑weight models (llama.cpp, MLX, Core ML), and hosted providers without changing session code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tool calling&lt;/strong&gt; works with every provider, supporting nested &lt;code&gt;@Generable&lt;/code&gt; types and arrays.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Image support&lt;/strong&gt; uses Foundation Models 27 syntax, allowing images to be attached to prompts on iOS, macOS, and visionOS 27.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reasoning&lt;/strong&gt; is now part of the transcript; when you switch providers, reasoning blocks are automatically omitted if the new provider cannot replay them.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API keys&lt;/strong&gt; are supplied via a closure rather than a static string, enabling apps to fetch short‑lived tokens from their own server.&lt;/li&gt;
+&lt;li&gt;The same Swift code runs on &lt;strong&gt;Linux&lt;/strong&gt;, so you can use AnyLanguageModel on a server as well as on Apple devices.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Local vs. hosted inference&lt;/strong&gt;: Both are supported, and hosted providers receive the same capabilities as local models—guided generation, streaming tool calls, and token‑usage reporting.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Supported platforms&lt;/strong&gt;: iOS, macOS, visionOS 27, and Linux.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model compatibility&lt;/strong&gt;: On OS 27, AnyLanguageModel works with any model conforming to the Foundation Models &lt;code&gt;LanguageModel&lt;/code&gt; protocol, including Core AI models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Accelerated downloads&lt;/strong&gt;: swift‑huggingface and swift‑xet bring fast model downloads from the Hugging Face Hub directly into Swift apps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="model-sizes-and-requirements"&gt;Model sizes and requirements
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Format&lt;/th&gt;
+&lt;th&gt;Approx. Size&lt;/th&gt;
+&lt;th&gt;Runtime notes&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GGUF (Q4_0)&lt;/td&gt;
+&lt;td&gt;GGUF&lt;/td&gt;
+&lt;td&gt;~3.4 GB&lt;/td&gt;
+&lt;td&gt;Quantization‑aware training&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GGUF (Q4_K_M)&lt;/td&gt;
+&lt;td&gt;GGUF&lt;/td&gt;
+&lt;td&gt;~1.7 GB&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen3.8 27B (MLX)&lt;/td&gt;
+&lt;td&gt;MLX&lt;/td&gt;
+&lt;td&gt;~16 GB (4‑bit)&lt;/td&gt;
+&lt;td&gt;Fits on a Mac with ≥32 GB memory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GLM‑5.3 (Z.ai)&lt;/td&gt;
+&lt;td&gt;BF16&lt;/td&gt;
+&lt;td&gt;~1.5 TB&lt;/td&gt;
+&lt;td&gt;Requires four maxed‑out Mac Studios&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AnyLanguageModel 1.0&lt;/strong&gt;, &lt;strong&gt;swift‑huggingface 1.0&lt;/strong&gt;, and &lt;strong&gt;swift‑xet 1.0&lt;/strong&gt; are released and ready for integration.&lt;/li&gt;
+&lt;li&gt;Hosted model support has been expanded this year; the same features available to local models are now offered by inference providers.&lt;/li&gt;
+&lt;li&gt;Migration guidance is provided in the release notes for each package to help developers update existing apps.&lt;/li&gt;
+&lt;li&gt;Community feedback and contributions directly shaped several major features; contributors are thanked for making AnyLanguageModel more useful to app developers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Developers can now choose the most suitable model—small local models for quick on‑device starts or large hosted models for heavyweight tasks—without rewriting code.&lt;/li&gt;
+&lt;li&gt;The unified API lowers the barrier to experimenting with different providers and capabilities such as tool calling and image‑augmented prompts.&lt;/li&gt;
+&lt;li&gt;Upcoming additions include “models that decide” and “models that listen,” extending the range of capabilities reachable through the same Swift‑first workflow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/omlx/omlx-hf.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/transformers-to-mlx/thumbnail.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#FoundationModels #SwiftAI #LocalInference #HostedAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/anylanguagemodel-1-0" target="_blank" rel="noopener"
+&gt;AnyLanguageModel 1.0: One Year of Local Models on Apple Platforms&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Moku Brings Mobile Vibecoding Workspace for AI Agents to Multiple Platforms</title><link>https://shoubhikbanerjee.github.io/blog/p/moku-brings-mobile-vibecoding-workspace-for-ai-agents-to-multiple-platforms/</link><pubDate>Mon, 12 Oct 2026 22:04:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/moku-brings-mobile-vibecoding-workspace-for-ai-agents-to-multiple-platforms/</guid><description>&lt;img src="https://mokuapp.dev/og-card.png" alt="Featured image of post Moku Brings Mobile Vibecoding Workspace for AI Agents to Multiple Platforms" /&gt;&lt;h1 id="moku-brings-mobile-vibecoding-workspace-for-ai-agents-to-multiple-platforms"&gt;Moku Brings Mobile Vibecoding Workspace for AI Agents to Multiple Platforms
+&lt;/h1&gt;&lt;p&gt;Moku, a pocket‑sized coding workspace for AI agents, is now available across iOS, macOS, Android, Linux and Windows, letting developers code from a phone or tablet with a full‑featured terminal experience.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Moku is a thoughtfully designed pocket workspace: a fast mobile terminal plus a coding workspace for your AI agents.&lt;/li&gt;
+&lt;li&gt;The goal is to make mobile vibecoding a daily habit, replacing hours spent tethered to a desk with a keyboard and mouse.&lt;/li&gt;
+&lt;li&gt;It is not traditional remote software; it delivers a delightfully crafted interaction, refined developer experience, polished UI, and exceptional performance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Runs locally in your browser; there are no real connections and no real commands.&lt;/li&gt;
+&lt;li&gt;Moku embeds &lt;strong&gt;Tailcat&lt;/strong&gt;, the userspace networking tool from Tailscale’s open‑source stack.
+&lt;ul&gt;
+&lt;li&gt;Run &lt;code&gt;tailcat --serve=22&lt;/code&gt; on the host, paste the short token into Moku, and the two ends establish an encrypted peer‑to‑peer connection.&lt;/li&gt;
+&lt;li&gt;The link falls back to DERP relays only when necessary; there is &lt;strong&gt;no port forwarding, no relay VPS, no root&lt;/strong&gt; required.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Native &lt;strong&gt;Mosh&lt;/strong&gt; keeps the shell alive through Wi‑Fi ↔ 5G handoffs and elevator rides.&lt;/li&gt;
+&lt;li&gt;On iOS, the Dynamic Island and Lock Screen show your agent’s state through the mascot’s eyes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-features"&gt;⚙️ Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A simulated server is already connected.&lt;/li&gt;
+&lt;li&gt;Pick a coding app, expand a project, and drop into a conversation right on the same page.&lt;/li&gt;
+&lt;li&gt;Moku lists every open pane at the top of the drawer with its current task; you can peek in read‑only or take the keyboard with a single tap.&lt;/li&gt;
+&lt;li&gt;On connect, Moku scans the host for on‑disk projects and sessions from &lt;strong&gt;12+ coding CLIs&lt;/strong&gt;: Claude Code, Codex, OpenCode, Qoder, Trae, Kimi, Grok, MiniMax Code and more.&lt;/li&gt;
+&lt;li&gt;Selecting a project and tapping its session reopens it inside a real terminal with full context.&lt;/li&gt;
+&lt;li&gt;Moku’s Rust core parses ANSI at &lt;strong&gt;2.1× the throughput of common emulators&lt;/strong&gt; and paints a 10 MiB log burst in about 0.3 s.&lt;/li&gt;
+&lt;li&gt;Multiple agents can run side by side on one host (e.g., Herdr runs several agents such as pi exploring, grok implementing, codex chasing a root cause).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Free on every platform&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;iOS&lt;/strong&gt;: available on the App Store and via a public TestFlight beta.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;macOS&lt;/strong&gt;: ships through TestFlight.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Android&lt;/strong&gt;: Universal APK and per‑ABI builds downloadable from GitHub Releases.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Linux &amp;amp; Windows&lt;/strong&gt;: Native packages (.deb / tarball for Linux, Windows installer) on GitHub Releases.&lt;/li&gt;
+&lt;li&gt;Not listed in mainland China yet — the App Store link requires a non‑CN Apple ID.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Classic mobile SSH clients (e.g., Termius, Blink Shell, Prompt) were designed for emergency sysadmin commands; Moku was built from day one for mobile vibecoding and AI agents.&lt;/li&gt;
+&lt;li&gt;Zero‑config private networking works without public IPs or router configuration.&lt;/li&gt;
+&lt;li&gt;One‑tap resume for Claude Code, Codex and other agents enables developers to code anywhere, turning a phone into a usable development terminal.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Moku #AIAgents #MobileCoding #Vibecoding&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://mokuapp.dev/" target="_blank" rel="noopener"
+&gt;Moku — Pocket terminal &amp;amp; coding workspace for the AI-coding era&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Google launches Guided Vision in Gemini Live for real‑time audio descriptions on Android</title><link>https://shoubhikbanerjee.github.io/blog/p/google-launches-guided-vision-in-gemini-live-for-realtime-audio-descriptions-on-android/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/google-launches-guided-vision-in-gemini-live-for-realtime-audio-descriptions-on-android/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK255_Google_Gemini_B_474198.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200" alt="Featured image of post Google launches Guided Vision in Gemini Live for real‑time audio descriptions on Android" /&gt;&lt;h1 id="google-launches-guided-vision-in-gemini-live-for-realtime-audio-descriptions-on-android"&gt;Google launches Guided Vision in Gemini Live for real‑time audio descriptions on Android
+&lt;/h1&gt;&lt;p&gt;Google’s Guided Vision feature debuted today in the Gemini Live app on compatible Android devices, providing real‑time audio descriptions of anything pointed at with the phone’s camera.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Guided Vision works when you share your camera in Gemini Live.&lt;/li&gt;
+&lt;li&gt;It delivers spoken information about small text, surroundings, objects, and details on specific items.&lt;/li&gt;
+&lt;li&gt;Users can ask follow‑up questions, such as reading an expiration date.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The phone’s camera feed is processed by Google’s Gemini AI, which generates audio cues to help line up the shot if the target is off‑frame.&lt;/li&gt;
+&lt;li&gt;The system is designed for people who are blind, have low vision, or need situational assistance, similar to Apple’s VoiceOver Live Recognition.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Reading fine print&lt;/strong&gt; – the AI can read small text and fine print.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Object identification&lt;/strong&gt; – it can find or identify objects in the scene.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Follow‑up queries&lt;/strong&gt; – users can ask additional questions about what they see.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Audio alignment cues&lt;/strong&gt; – Gemini provides cues to adjust the camera view.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Safety disclaimer&lt;/strong&gt; – Google advises not to rely on Guided Vision for navigation, safe‑travel guidance, obstacle detection, or as a substitute for a cane or mobility aid.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Integrated in the Gemini Live app.&lt;/li&gt;
+&lt;li&gt;Also available through Google TalkBack.&lt;/li&gt;
+&lt;li&gt;Can be enabled via an accessibility shortcut in the Settings app on Android 9 and above, following recent Pixel updates.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Guided Vision extends AI‑powered visual assistance to Android users, offering a new way for low‑vision individuals to access information about their environment without additional hardware.&lt;/p&gt;
+&lt;p&gt;#Google #Accessibility #AI #GuidedVision&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/ai-artificial-intelligence/1003756/google-gemini-live-guided-vision" target="_blank" rel="noopener"
+&gt;Google’s new Guided Vision feature can help you read the fine print&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

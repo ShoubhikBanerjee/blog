@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWSCDK on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/awscdk/</link><description>Recent content in AWSCDK on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 27 Oct 2026 22:02:24 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/awscdk/index.xml" rel="self" type="application/rss+xml"/><item><title>Enterprise agentic retrieval launched for Managed Amazon Bedrock Knowledge Bases</title><link>https://shoubhikbanerjee.github.io/blog/p/enterprise-agentic-retrieval-launched-for-managed-amazon-bedrock-knowledge-bases/</link><pubDate>Tue, 27 Oct 2026 22:02:24 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/enterprise-agentic-retrieval-launched-for-managed-amazon-bedrock-knowledge-bases/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21614-featured-image.png" alt="Featured image of post Enterprise agentic retrieval launched for Managed Amazon Bedrock Knowledge Bases" /&gt;&lt;h1 id="enterprise-agentic-retrieval-launched-for-managed-amazon-bedrock-knowledge-bases"&gt;Enterprise agentic retrieval launched for Managed Amazon Bedrock Knowledge Bases
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock has introduced enterprise agentic retrieval for Managed Knowledge Bases, evolving standard Retrieval Augmented Generation (RAG) into a reasoning-driven system. This update moves beyond single-shot designs to a first-class service capability that uses a reasoning agent for multi-turn planning and tool-driven retrieval.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Classic RAG systems typically embed a question, fetch chunks from one index, and generate a response in a single turn. Enterprise agentic retrieval addresses several limitations of this design:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It handles questions spanning two corpora, which previously returned incomplete answers.&lt;/li&gt;
+&lt;li&gt;It enables semantic routing, allowing the system to choose the correct knowledge base based on the specific question.&lt;/li&gt;
+&lt;li&gt;It allows the system to take a second look at the corpus after reviewing initial results if needed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;By putting a reasoning agent in the loop, the system decides whether to retrieve, which knowledge base to consult, and whether to refine the search before composing an answer. This process is powered by the AgenticRetrieveStream API, which provides multi-turn planning as a service feature rather than an orchestration layer built by the user.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Managed Knowledge Base (Type: MANAGED)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles ingestion, storage, indexing, and retrieval; includes service-managed embedding and reranking.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides a Gateway to expose knowledge bases as MCP tools and a Runtime for the reasoning agent.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AgenticRetrieveStream API&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Performs multi-turn planning, executes retrieval, and returns synthesized, cited answers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon CloudWatch&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Monitors behavior across seven layers of telemetry with two provided dashboards.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;This solution is delivered as a single AWS CDK application in Python, where one command deploys the entire system. Key technical developments include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Managed Infrastructure:&lt;/strong&gt; Amazon Bedrock now offers a Managed Knowledge Base (Type: MANAGED) that owns storage and indexing. Users no longer need to create or pay for OpenSearch Serverless collections or OpenSearch Compute Units (OCUs).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integrated Agentic Loop:&lt;/strong&gt; The AgentCore Gateway exposes each knowledge base as a Model Context Protocol (MCP) tool.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Observability:&lt;/strong&gt; The system includes two Amazon CloudWatch dashboards and supports both on-demand and continuous evaluation from the same deployment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Availability:&lt;/strong&gt; Agentic retrieval capabilities are available exclusively on the Managed Knowledge Base.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This development simplifies complex RAG implementations. In August 2024, building a RAG solution required manually sequencing CDK stacks for S3, OpenSearch Serverless, and individual data sources. The new managed approach automates these components, replacing raw vector searches with a system that provides grounded, cited answers through internal reranking and automated multi-turn reasoning.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21614-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21614-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21614-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AWSCDK #AIagents #RAG #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-agentic-retrieval-on-a-managed-amazon-bedrock-knowledge-base-with-cdk/" target="_blank" rel="noopener"
+&gt;Build agentic retrieval on a Managed Amazon Bedrock Knowledge Base with CDK | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Deploying Kokoro-82M TTS on Amazon SageMaker AI with Data-Driven Auto Scaling</title><link>https://shoubhikbanerjee.github.io/blog/p/deploying-kokoro-82m-tts-on-amazon-sagemaker-ai-with-data-driven-auto-scaling/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/deploying-kokoro-82m-tts-on-amazon-sagemaker-ai-with-data-driven-auto-scaling/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-21705-featured-image.png" alt="Featured image of post Deploying Kokoro-82M TTS on Amazon SageMaker AI with Data-Driven Auto Scaling" /&gt;&lt;h1 id="deploying-kokoro-82m-tts-on-amazon-sagemaker-ai-with-data-driven-auto-scaling"&gt;Deploying Kokoro-82M TTS on Amazon SageMaker AI with Data-Driven Auto Scaling
+&lt;/h1&gt;&lt;p&gt;This project demonstrates the deployment of Kokoro-82M, an 82-million-parameter text-to-speech (TTS) model, as a custom container on an Amazon SageMaker AI real-time endpoint using AWS Cloud Development Kit (AWS CDK) stacks.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Kokoro-82M is a non-autoregressive StyleTTS2 derivative with an ISTFTNet decoder. Unlike models based on autoregressive next-token prediction or iterative denoising, it produces a full utterance from one duration-aligned pass, meaning there is no generation loop to instrument with a per-token metric.&lt;/p&gt;
+&lt;p&gt;To avoid the risks of guesswork in auto scaling—which can lead to idle GPU instances or latency breaching service level objectives (SLOs) during traffic spikes—this deployment replaces guesses with two specific measurements:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Q_max&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The highest concurrency one instance sustains before breaching the SLO&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;T_total&lt;/td&gt;
+&lt;td style="text-align: left"&gt;How long a scale-out takes end to end&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;From these two numbers, the scale-out threshold, scale-in threshold, and both cooldowns are derived by arithmetic.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Scaling Metric&lt;/strong&gt;: The policy uses &lt;code&gt;ConcurrentRequestsPerModel&lt;/code&gt;, a native Amazon SageMaker AI metric. This removes failures associated with custom metric configurations that may not actually publish data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Measurement Handling&lt;/strong&gt;: &lt;code&gt;ConcurrentRequestsPerModel&lt;/code&gt; publishes a Maximum statistic over a 10-second window, which differs from the mean in-flight count measured by benchmarking clients. The tooling records the ratio between these two quantities at every rung of the concurrency ladder to convert client-measured thresholds into Amazon CloudWatch units.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Observation&lt;/strong&gt;: In the Kokoro-82M run, the measured ratio was exactly 1.0 at every rung, resulting in a direct match between client-measured and Amazon CloudWatch-reported thresholds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Most public guidance for Amazon SageMaker AI auto scaling focuses on short synchronous request/response calls or large language model (LLM) serving. TTS synthesis does not fit these patterns because a single request holds a connection open for several seconds without a token-generation loop. In these scenarios, instance overload is determined by how many requests are queued and executing simultaneously.&lt;/p&gt;
+&lt;p&gt;#AmazonSageMaker #TTS #Kokoro82M #AWSCDK #AutoScaling&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/stop-guessing-auto-scaling-targets-for-tts-on-amazon-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Stop guessing auto scaling targets for TTS on Amazon SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

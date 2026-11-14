@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LLMEvaluations on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/llmevaluations/</link><description>Recent content in LLMEvaluations on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 Nov 2026 22:04:09 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/llmevaluations/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore Evaluations adds code‑based decision model support</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-evaluations-adds-codebased-decision-model-support/</link><pubDate>Thu, 05 Nov 2026 22:04:09 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-evaluations-adds-codebased-decision-model-support/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22136-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Evaluations adds code‑based decision model support" /&gt;&lt;h1 id="amazon-bedrock-agentcore-evaluations-adds-codebased-decision-model-support"&gt;Amazon Bedrock AgentCore Evaluations adds code‑based decision model support
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore Evaluations now lets you hook external decision‑model back‑ends through custom code‑based evaluators, enabling calibrated probability scores to be used alongside built‑in LLM judges.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AgentCore Evaluations scores an agent throughout its lifecycle – on demand, in batch jobs, and against production traffic.&lt;/li&gt;
+&lt;li&gt;The service ships with 15 built‑in evaluators that use a general‑purpose LLM to assess responses against a rubric.&lt;/li&gt;
+&lt;li&gt;Custom evaluators can be defined as either &lt;strong&gt;LLM‑as‑a‑judge&lt;/strong&gt; or &lt;strong&gt;code‑based&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LLM‑as‑a‑judge evaluators&lt;/strong&gt; apply your instructions and rating scale with a model in Amazon Bedrock, producing a score and a rationale.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Code‑based evaluators&lt;/strong&gt; run your own logic in an AWS Lambda function. The Lambda can call any external system, model, or API – including a decision model.&lt;/li&gt;
+&lt;li&gt;This post demonstrates connecting two decision‑model back‑ends to AgentCore Evaluations via code‑based evaluators.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Decision model definition&lt;/strong&gt; – a small, specialized model that selects from a fixed set of options and returns calibrated confidence scores rather than free‑form text.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advantages&lt;/strong&gt; – returns a calibrated probability distribution that can be thresholded, aggregated, and acted on programmatically.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Supported question types&lt;/strong&gt; (both Jev and Strands Decider):
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Noul&lt;/strong&gt; – Yes/No question, probability 0 → 1.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Choice&lt;/strong&gt; – Up to 255 options, returns most probable option, full distribution, and confidence.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Score&lt;/strong&gt; – 2 → 10 ordered levels, returns probability‑weighted score, distribution, and confidence.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="decision-model-backends"&gt;Decision model back‑ends
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Backend&lt;/th&gt;
+&lt;th&gt;Hosting type&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Jev (TypeSafe)&lt;/td&gt;
+&lt;td&gt;Hosted decision model&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Strands Decider 2B&lt;/td&gt;
+&lt;td&gt;Open‑source model you run yourself&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-example-hr-assistant-evaluation"&gt;🚀 Example: HR Assistant evaluation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;An HR Assistant agent is built with &lt;strong&gt;Strands Agents&lt;/strong&gt; and deployed to the &lt;strong&gt;AgentCore runtime&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The agent answers employee questions using five tools that return fixed mock data (PTO balances, PTO requests, HR policies, benefits, and pay stubs).&lt;/li&gt;
+&lt;li&gt;Evaluation combines:
+&lt;ol&gt;
+&lt;li&gt;Deterministic code‑based checks.&lt;/li&gt;
+&lt;li&gt;Built‑in LLM‑as‑a‑judge evaluators.&lt;/li&gt;
+&lt;li&gt;Decision‑model evaluators backed by Jev or Strands Decider 2B.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;General‑purpose LLM evaluators output a score with a rationale, while decision models output a probability distribution over predefined answers.&lt;/li&gt;
+&lt;li&gt;The direct confidence measure from decision models enables reliable thresholds and programmatic actions, avoiding the drift observed in free‑form LLM confidence.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22136-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22136-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22136-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #DecisionModels #LLMEvaluations&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/use-decision-models-with-amazon-bedrock-agentcore-evaluations/" target="_blank" rel="noopener"
+&gt;Use decision models with Amazon Bedrock AgentCore Evaluations | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

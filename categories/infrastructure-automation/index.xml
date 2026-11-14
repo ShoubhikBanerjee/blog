@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Infrastructure Automation on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/infrastructure-automation/</link><description>Recent content in Infrastructure Automation on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 14 Oct 2026 22:09:38 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/infrastructure-automation/index.xml" rel="self" type="application/rss+xml"/><item><title>New AWS automation simplifies activation of Bedrock private‑pricing entitlements across organizations</title><link>https://shoubhikbanerjee.github.io/blog/p/new-aws-automation-simplifies-activation-of-bedrock-privatepricing-entitlements-across-organizations/</link><pubDate>Wed, 14 Oct 2026 22:09:38 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-aws-automation-simplifies-activation-of-bedrock-privatepricing-entitlements-across-organizations/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-21638-featured-image.png" alt="Featured image of post New AWS automation simplifies activation of Bedrock private‑pricing entitlements across organizations" /&gt;&lt;h1 id="new-aws-automation-simplifies-activation-of-bedrock-privatepricing-entitlements-across-organizations"&gt;New AWS automation simplifies activation of Bedrock private‑pricing entitlements across organizations
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock with managed entitlements simplifies multi‑account access to third‑party AI models by allowing a single subscription from a central account and distribution across an organization. After a private pricing offer is accepted, AWS Marketplace creates a license in AWS License Manager, which must be activated. AWS now offers two ways to activate these entitlements.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Managed entitlements let you subscribe once from a central account and distribute access to third‑party models across your organization.&lt;/li&gt;
+&lt;li&gt;Private Pricing Offers let you negotiate custom rates for third‑party models on Amazon Bedrock.&lt;/li&gt;
+&lt;li&gt;Once an eligible private offer is accepted, AWS Marketplace creates a license in AWS License Manager that starts in a &lt;strong&gt;Disabled&lt;/strong&gt; state.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-activation-options"&gt;🛠️ Activation Options
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Path&lt;/th&gt;
+&lt;th&gt;When to use&lt;/th&gt;
+&lt;th&gt;Core behavior&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Lightweight script&lt;/td&gt;
+&lt;td&gt;One‑time, no‑infrastructure fix for trusted licenses&lt;/td&gt;
+&lt;td&gt;Lists received licenses and prints a dry‑run plan&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CDK automation&lt;/td&gt;
+&lt;td&gt;Ongoing, event‑driven processing&lt;/td&gt;
+&lt;td&gt;Verifies sellers, creates distributed grants, retries activation as needed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-the-cdk-automation-works"&gt;⚙️ How the CDK Automation Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Amazon EventBridge rule&lt;/strong&gt; listens for AWS Marketplace agreement events on the default event bus in &lt;strong&gt;us-east-1&lt;/strong&gt;. It matches source &lt;code&gt;aws.agreement-marketplace&lt;/code&gt; and detail type &lt;code&gt;Purchase Agreement Created - Acceptor&lt;/code&gt;, then invokes the Lambda function.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Lambda function&lt;/strong&gt; receives the agreement event, checks the seller against an allow‑list, discovers the associated license, creates the distributed grant, and requests activation with &lt;code&gt;CreateGrantVersion(Status=ACTIVE)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The CDK stack is deployed in the AWS Organizations management account using Python 3.12+, the AWS CLI, and AWS CDK v2.&lt;/li&gt;
+&lt;li&gt;The stack retries activation when License Manager reports that more time is required.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;📋 Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Grants can target the whole organization, selected organizational units (OUs), or specific accounts.&lt;/li&gt;
+&lt;li&gt;In AWS Organizations with all features enabled, organization‑level grants are auto‑accepted but remain &lt;strong&gt;Disabled&lt;/strong&gt; until you activate them.&lt;/li&gt;
+&lt;li&gt;Negotiated pricing applies only after the grant reaches &lt;strong&gt;ACTIVE&lt;/strong&gt; or &lt;strong&gt;WORKFLOW_COMPLETED&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;SaaS products are out of scope for this automation.&lt;/li&gt;
+&lt;li&gt;Confirm that the private offer is for a License Manager‑backed Bedrock model before running the automation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Requires an AWS Organizations management account in &lt;strong&gt;us-east-1&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;All Organization features must be enabled.&lt;/li&gt;
+&lt;li&gt;Requires Python 3.12+, AWS CLI, and AWS CDK v2 configured.&lt;/li&gt;
+&lt;li&gt;Works with third‑party AI models on Amazon Bedrock that are offered through AWS Marketplace Private Pricing Offers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/08/21638-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-21638-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/07/ML-21638-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #AmazonBedrock #LicenseManager #CDK&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/manage-private-pricing-offers-for-amazon-bedrock-with-managed-entitlements/" target="_blank" rel="noopener"
+&gt;Manage private pricing offers for Amazon Bedrock with managed entitlements | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

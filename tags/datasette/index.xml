@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Datasette on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/datasette/</link><description>Recent content in Datasette on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 14 Nov 2026 12:02:58 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/datasette/index.xml" rel="self" type="application/rss+xml"/><item><title>Datasette-cluster-map plugin updated to version 0.19</title><link>https://shoubhikbanerjee.github.io/blog/p/datasette-cluster-map-plugin-updated-to-version-0-19/</link><pubDate>Sat, 14 Nov 2026 12:02:58 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/datasette-cluster-map-plugin-updated-to-version-0-19/</guid><description>&lt;h1 id="datasette-cluster-map-plugin-updated-to-version-019"&gt;Datasette-cluster-map plugin updated to version 0.19
+&lt;/h1&gt;&lt;p&gt;On 13th November 2026, version 0.19 of the datasette-cluster-map plugin was released. This tool provides mapping capabilities for datasets containing latitude and longitude columns.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Compatibility: Updated to support Datasette 1.0a42.&lt;/li&gt;
+&lt;li&gt;Dependencies: Now relies on datasette-leaflet to manage OpenStreetMap tile requests, specifically ensuring they include a referrer header.&lt;/li&gt;
+&lt;li&gt;Functionality: Displays a map for any data with latitude and longitude columns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://static.simonwillison.net/static/2026/power-plants-pge.webp"
+loading="lazy"
+alt="Power plants owned by PG&amp;E"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.simonwillison.net/static/2026/power-plants-pge.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Datasette #OpenStreetMap #DataVisualization #GIS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/13/datasette-cluster-map/" target="_blank" rel="noopener"
+&gt;Release: datasette-cluster-map 0.19&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Datasette-Leaflet plugin updates tile request referrer policy</title><link>https://shoubhikbanerjee.github.io/blog/p/datasette-leaflet-plugin-updates-tile-request-referrer-policy/</link><pubDate>Sat, 14 Nov 2026 12:02:58 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/datasette-leaflet-plugin-updates-tile-request-referrer-policy/</guid><description>&lt;h1 id="datasette-leaflet-plugin-updates-tile-request-referrer-policy"&gt;Datasette-Leaflet plugin updates tile request referrer policy
+&lt;/h1&gt;&lt;p&gt;On 13th November 2026, an update was released for the datasette-leaflet plugin to ensure compliance with OpenStreetMap’s tile server policy regarding referrer headers.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;OpenStreetMap requires that requests to their hosted tile server include a referrer header.&lt;/li&gt;
+&lt;li&gt;Previously, Datasette table pages used the &lt;code&gt;Referrer-Policy: no-referrer&lt;/code&gt; HTTP header, which caused plugins loading tiles from OpenStreetMap to violate this policy.&lt;/li&gt;
+&lt;li&gt;Datasette-leaflet is a plugin that bundles Leaflet for use by other Datasette plugins.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The plugin now explicitly sets the referrer policy on tile requests to &lt;code&gt;strict-origin-when-cross-origin&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;This update allows the host information to be passed while withholding the full path to the page, satisfying OpenStreetMap requirements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Datasette #OpenStreetMap #Leaflet #WebDevelopment #HTTP&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/13/datasette-leaflet/" target="_blank" rel="noopener"
+&gt;Release: datasette-leaflet 0.3&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Datasette Stops Serving Rel Next HTTP Headers to Firefox to Prevent Unnecessary Prefetching</title><link>https://shoubhikbanerjee.github.io/blog/p/datasette-stops-serving-rel-next-http-headers-to-firefox-to-prevent-unnecessary-prefetching/</link><pubDate>Sun, 08 Nov 2026 22:01:08 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/datasette-stops-serving-rel-next-http-headers-to-firefox-to-prevent-unnecessary-prefetching/</guid><description>&lt;h1 id="datasette-stops-serving-rel-next-http-headers-to-firefox-to-prevent-unnecessary-prefetching"&gt;Datasette Stops Serving Rel Next HTTP Headers to Firefox to Prevent Unnecessary Prefetching
+&lt;/h1&gt;&lt;p&gt;Datasette issue #3046 proposes no longer serving &lt;code&gt;link: rel=next&lt;/code&gt; HTTP headers to Firefox for HTML pages after discovery that Firefox automatically prefetches the next page of table rows.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;When reviewing the Firefox network panel, requests to a Datasette table page were found to trigger an HTTP prefetch for the next page of rows in that table. This behavior was caused by Datasette pages serving an HTTP link header formatted as:
+&lt;code&gt;link: &amp;lt;https://latest.datasette.io/fixtures/compound_three_primary_keys?_next=a%2Cd%2Cv&amp;gt;; rel=&amp;quot;next&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Firefox has had an open issue regarding this HTTP prefetching behavior for 24 years.&lt;/li&gt;
+&lt;li&gt;An early comment on that 24-year-old issue links to a 2002 blog post written by the Datasette creator complaining about the feature.&lt;/li&gt;
+&lt;li&gt;The author had forgotten about both writing the blog post and the feature itself.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Automatic prefetching for next-page table rows creates unnecessary overhead:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Only a tiny fraction of visitors click the &amp;rsquo;next&amp;rsquo; link on a page.&lt;/li&gt;
+&lt;li&gt;The browser ends up fetching unnecessary data.&lt;/li&gt;
+&lt;li&gt;The Datasette server is forced to render an entire page that gets thrown away.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Datasette #Firefox #HTTPHeaders #WebDevelopment #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/7/link-rel-next/" target="_blank" rel="noopener"
+&gt;datasette #3046: Don’t serve link: rel=next HTTP headers to Firefox for HTML pages&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Datasette Agent Auto-Detects Default LLM Model</title><link>https://shoubhikbanerjee.github.io/blog/p/datasette-agent-auto-detects-default-llm-model/</link><pubDate>Sun, 01 Nov 2026 22:01:19 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/datasette-agent-auto-detects-default-llm-model/</guid><description>&lt;h1 id="datasette-agent-auto-detects-default-llm-model"&gt;Datasette Agent Auto-Detects Default LLM Model
+&lt;/h1&gt;&lt;p&gt;On 31st October 2026, the datasette‑llm plugin received a small user‑experience improvement that lets Datasette Agent automatically pick up the default model used by the underlying LLM.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The plugin now detects the default LLM model, removing the need for manual model configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;When launching Datasette Agent, the plugin reads the default model setting from the LLM environment.&lt;/li&gt;
+&lt;li&gt;If a default model is present, the agent starts without the &lt;code&gt;-s plugins.datasette-agent.default_model&lt;/code&gt; flag.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The change is available as of 31 Oct 2026.&lt;/li&gt;
+&lt;li&gt;Example command with the new behavior:
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uvx --with datasette-agent datasette content.db --internal internal.db
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-previous-requirement"&gt;📜 Previous requirement
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Before the update, users had to specify the model explicitly, e.g.:
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-s plugins.datasette-agent.default_model gpt-6-astra
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Reduces setup steps for users.&lt;/li&gt;
+&lt;li&gt;Streamlines the workflow for developers testing Datasette Agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Datasette #LLM #AI #OpenSource #UX&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Oct/31/datasette-llm/" target="_blank" rel="noopener"
+&gt;Release: datasette-llm 0.1a9&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Parseable Observability Platform Integrated with Datasette via Codex</title><link>https://shoubhikbanerjee.github.io/blog/p/parseable-observability-platform-integrated-with-datasette-via-codex/</link><pubDate>Wed, 07 Oct 2026 22:09:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/parseable-observability-platform-integrated-with-datasette-via-codex/</guid><description>&lt;img src="https://raw.githubusercontent.com/simonw/til/refs/heads/main/datasette/datasette-parsable.webp" alt="Featured image of post Parseable Observability Platform Integrated with Datasette via Codex" /&gt;&lt;h1 id="parseable-observability-platform-integrated-with-datasette-via-codex"&gt;Parseable Observability Platform Integrated with Datasette via Codex
+&lt;/h1&gt;&lt;p&gt;On 6 October 2026 a new observability platform called &lt;strong&gt;Parseable&lt;/strong&gt; was highlighted on Show HN.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Parseable is an observability platform with:
+&lt;ul&gt;
+&lt;li&gt;An open‑source implementation licensed under AGPL, written in Rust, packaged as a single ~180 MB binary.&lt;/li&gt;
+&lt;li&gt;An &lt;em&gt;Enterprise&lt;/em&gt; version that adds extra features.&lt;/li&gt;
+&lt;li&gt;A cloud‑hosted option.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Datasette 1.0a41 added OpenTelemetry support.&lt;/li&gt;
+&lt;li&gt;Using Codex, the author figured out how to run Parseable and feed it traces generated by Datasette.&lt;/li&gt;
+&lt;li&gt;The resulting trace was displayed in the Parseable localhost web application.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://s3.amazonaws.com/til.simonwillison.net/e9a57965786659e60073c5d26b83d268.jpg"
+loading="lazy"
+alt="Parseable trace screenshot"
+&gt;&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Open‑source binary&lt;/strong&gt;: AGPL, Rust, ~180 MB.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enterprise version&lt;/strong&gt;: includes additional features (unspecified).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cloud option&lt;/strong&gt;: available as a hosted service.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integration steps&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Enable OpenTelemetry in Datasette 1.0a41.&lt;/li&gt;
+&lt;li&gt;Use Codex to determine the commands needed to start Parseable and ingest the traces.&lt;/li&gt;
+&lt;li&gt;View the trace in Parseable&amp;rsquo;s web UI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The open‑source binary and its documentation are publicly available as of 6 October 2026.&lt;/li&gt;
+&lt;li&gt;Enterprise and cloud offerings are announced alongside the open‑source release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The combination shows a practical workflow for connecting a data‑exploration tool (Datasette) with an observability platform (Parseable) using AI assistance (Codex).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://s3.amazonaws.com/til.simonwillison.net/e9a57965786659e60073c5d26b83d268.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Parseable #Observability #OpenTelemetry #Datasette&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Oct/6/datasette-parseable-opentelemetry/" target="_blank" rel="noopener"
+&gt;TIL: Using Parseable with Datasette for OpenTelemetry traces&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>GitHub Login Plugin for agent.datasette.io Receives 1.0 Release</title><link>https://shoubhikbanerjee.github.io/blog/p/github-login-plugin-for-agent-datasette-io-receives-1-0-release/</link><pubDate>Sun, 20 Sep 2026 22:01:28 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/github-login-plugin-for-agent-datasette-io-receives-1-0-release/</guid><description>&lt;h1 id="github-login-plugin-for-agentdatasetteio-receives-10-release"&gt;GitHub Login Plugin for agent.datasette.io Receives 1.0 Release
+&lt;/h1&gt;&lt;p&gt;The GitHub login plugin used on the agent.datasette.io demo site has received a 1.0 release. The update resolves an issue where authenticated user sessions were expiring prematurely due to missing cookie parameters.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;While running the GitHub login plugin on the agent.datasette.io demo site, it was observed that authenticated sessions were not lasting very long. Investigation revealed that the plugin was setting cookies without a &lt;code&gt;Max-Age&lt;/code&gt; parameter. Consequently, these cookies were expiring at the end of a browser session. This behavior occurs frequently in Mobile Safari, regardless of how the application is being used.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The update includes the following changes and technical details:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Session Fix:&lt;/strong&gt; The cookie expiration issue was resolved in pull request #80 by addressing the missing &lt;code&gt;Max-Age&lt;/code&gt; parameter.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compatibility:&lt;/strong&gt; The plugin has been thoroughly tested against both Datasette 0.65.x and Datasette 1.0ax.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version Bump:&lt;/strong&gt; Because the plugin has been around for a significant period and is fully tested, it has been officially promoted to a 1.0 release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Datasette #GitHubLogin #WebDevelopment #SoftwareRelease&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/19/datasette-auth-github/" target="_blank" rel="noopener"
+&gt;Release: datasette-auth-github 1.0&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Datasette Updates Background Task Management and Client Integration</title><link>https://shoubhikbanerjee.github.io/blog/p/datasette-updates-background-task-management-and-client-integration/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/datasette-updates-background-task-management-and-client-integration/</guid><description>&lt;h1 id="datasette-updates-background-task-management-and-client-integration"&gt;Datasette Updates Background Task Management and Client Integration
+&lt;/h1&gt;&lt;p&gt;Datasette has introduced new capabilities for plugin management and internal client functionality.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Plugins can now launch and manage background tasks using the new &lt;code&gt;datasette.add_background_task()&lt;/code&gt; method.&lt;/li&gt;
+&lt;li&gt;Datasette has been migrated to &lt;code&gt;httpx2&lt;/code&gt; to enable features such as the internal &lt;code&gt;datasette.client.get()&lt;/code&gt; method.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Datasette #plugins #httpx2&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/16/datasette/" target="_blank" rel="noopener"
+&gt;Release: datasette 1.0a40&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Datasette Releases Security Patches Developed with Frontier AI Models</title><link>https://shoubhikbanerjee.github.io/blog/p/datasette-releases-security-patches-developed-with-frontier-ai-models/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/datasette-releases-security-patches-developed-with-frontier-ai-models/</guid><description>&lt;h1 id="datasette-releases-security-patches-developed-with-frontier-ai-models"&gt;Datasette Releases Security Patches Developed with Frontier AI Models
+&lt;/h1&gt;&lt;p&gt;Datasette has released two new security patch versions, 1.0a39 and 0.65.4, following a security audit conducted using frontier AI models.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Security fixes are available for the following versions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.0a39 (current alpha series)&lt;/li&gt;
+&lt;li&gt;0.65.4 (stable 0.65.x family)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These patches are recommended for users running Datasette instances on the public web, specifically those mixing public and private tables.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Following issues reported by Sevban Dönmez, Alex Garcia and a collaborator conducted an audit using the following models:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Claude Fable 5.1&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Security Audit&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GPT-5.6&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Security Audit&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GPT-6 Astra&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Security Audit&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Development of the fixes took place over nearly a week in a shared private repository. For most issues, one person created automated tests to highlight the problem, while the other implemented the fix.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Datasette will be incorporating security audits by frontier models into all of its development work going forward.&lt;/p&gt;
+&lt;p&gt;#Datasette #Cybersecurity #LLM #SoftwareDevelopment&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/11/datasette-security/" target="_blank" rel="noopener"
+&gt;Datasette 1.0a39 and 0.65.4 security releases&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

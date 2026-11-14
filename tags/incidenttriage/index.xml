@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>IncidentTriage on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/incidenttriage/</link><description>Recent content in IncidentTriage on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 03 Nov 2026 22:02:32 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/incidenttriage/index.xml" rel="self" type="application/rss+xml"/><item><title>Circle K Deploys Automated Incident Triage Using Amazon Bedrock</title><link>https://shoubhikbanerjee.github.io/blog/p/circle-k-deploys-automated-incident-triage-using-amazon-bedrock/</link><pubDate>Tue, 03 Nov 2026 22:02:32 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/circle-k-deploys-automated-incident-triage-using-amazon-bedrock/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21514-featured-image.png" alt="Featured image of post Circle K Deploys Automated Incident Triage Using Amazon Bedrock" /&gt;&lt;h1 id="circle-k-deploys-automated-incident-triage-using-amazon-bedrock"&gt;Circle K Deploys Automated Incident Triage Using Amazon Bedrock
+&lt;/h1&gt;&lt;p&gt;This post was co‑written with Marek Klatowicz, Cloud DevOps Engineer at Circle K.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Circle K runs a cloud‑native infrastructure on AWS that powers point‑of‑sale systems, loyalty applications, and electric‑vehicle charging across more than 17,200 convenience and fuel retail stores in 27 countries. The DevOps team monitors this environment with Grafana and receives alerts for container restarts, error‑rate spikes, latency issues, and failed deployments.&lt;/p&gt;
+&lt;h2 id="-manual-triage-pain"&gt;⚠️ Manual Triage Pain
+&lt;/h2&gt;&lt;p&gt;When an alert fires, engineers typically spend 45–60 minutes repeating the same steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Review recent logs in Amazon CloudWatch.&lt;/li&gt;
+&lt;li&gt;Examine application traces in Amazon OpenSearch Service.&lt;/li&gt;
+&lt;li&gt;Check Amazon ECS task status.&lt;/li&gt;
+&lt;li&gt;Cross‑reference symptoms with internal runbooks stored in GitHub.
+The depth and speed of triage vary with each on‑call engineer’s familiarity with the affected service.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-solution-agentic-ai-triage-with-amazon-bedrock"&gt;🤖 Solution: Agentic AI Triage with Amazon Bedrock
+&lt;/h2&gt;&lt;p&gt;Circle K built an automated triage system that uses Amazon Bedrock, a fully managed service that makes foundation models available through a single API. The system employs an agentic AI architecture that investigates each incident autonomously and delivers a structured summary to Slack within minutes of an alert firing.&lt;/p&gt;
+&lt;h3 id="key-bedrock-benefits"&gt;Key Bedrock Benefits
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Single API access to multiple foundation models; models can be swapped without code changes.&lt;/li&gt;
+&lt;li&gt;Native integration with existing AWS IAM, VPC, and logging configurations.&lt;/li&gt;
+&lt;li&gt;Built‑in orchestration that lets agents call AWS APIs, query databases, and retrieve documents.&lt;/li&gt;
+&lt;li&gt;Bedrock Knowledge Bases provide managed Retrieval‑Augmented Generation, handling ingestion and retrieval of internal product cards without a separate vector database.&lt;/li&gt;
+&lt;li&gt;Customer data is not shared with model providers nor used to train foundation models, satisfying Circle K’s security requirements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🏗️ Architecture
+&lt;/h2&gt;&lt;p&gt;The end‑to‑end flow starts with a Grafana alert and proceeds through AWS services as follows:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Grafana alert&lt;/td&gt;
+&lt;td&gt;Publishes a notification to Amazon SNS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon SNS&lt;/td&gt;
+&lt;td&gt;Forwards the notification to an Amazon SQS queue&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon SQS&lt;/td&gt;
+&lt;td&gt;Holds the alert payload for processing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS Lambda&lt;/td&gt;
+&lt;td&gt;Polls the queue, extracts the payload, and invokes an Amazon Bedrock Flow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Bedrock Flow&lt;/td&gt;
+&lt;td&gt;Orchestrates two parallel agents that perform log queries, health checks, and runbook lookups&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Slack&lt;/td&gt;
+&lt;td&gt;Receives the structured incident summary&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-impact"&gt;📊 Impact
+&lt;/h2&gt;&lt;p&gt;Since deployment, Circle K’s mean triage time has dropped to under 15 minutes—a 67–75 percent reduction according to internal incident‑response metrics. On‑call engineers now receive actionable context instead of raw alerts, allowing immediate remediation.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock model availability varies by AWS Region; refer to the &amp;ldquo;Supported models by AWS Region&amp;rdquo; documentation for details.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Consistent, fast triage reduces mean time to resolution.&lt;/li&gt;
+&lt;li&gt;Reduces manual effort and reliance on individual engineer expertise.&lt;/li&gt;
+&lt;li&gt;Meets strict security requirements by keeping sensitive operational data within the customer’s AWS account.&lt;/li&gt;
+&lt;li&gt;Eliminates the overhead of self‑hosting foundation models, prompting, versioning, and tool orchestration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21514-first-arch-final.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21514-second-arch-final.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21514-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AI #IncidentTriage #AmazonBedrock #DevOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-circle-k-accelerated-devops-incident-triage-to-under-15-minutes-with-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;How Circle K accelerated DevOps incident triage to under 15 minutes with Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

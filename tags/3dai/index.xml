@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>3Dai on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/3dai/</link><description>Recent content in 3Dai on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 12 Nov 2026 22:08:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/3dai/index.xml" rel="self" type="application/rss+xml"/><item><title>Fine‑tuning TRELLIS.2 3D Model with LoRA Adapters via Hugging Face Jobs</title><link>https://shoubhikbanerjee.github.io/blog/p/finetuning-trellis-2-3d-model-with-lora-adapters-via-hugging-face-jobs/</link><pubDate>Thu, 12 Nov 2026 22:08:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/finetuning-trellis-2-3d-model-with-lora-adapters-via-hugging-face-jobs/</guid><description>&lt;img src="https://huggingface.co/blog/assets/3d-lora-finetuning/thumbnail.gif" alt="Featured image of post Fine‑tuning TRELLIS.2 3D Model with LoRA Adapters via Hugging Face Jobs" /&gt;&lt;h1 id="finetuning-trellis2-3d-model-with-lora-adapters-via-hugging-face-jobs"&gt;Fine‑tuning TRELLIS.2 3D Model with LoRA Adapters via Hugging Face Jobs
+&lt;/h1&gt;&lt;p&gt;In this post we release scripts and containers that let you fine‑tune TRELLIS.2, a popular 3D model, on your own 3D assets. The workflow runs locally or on Hugging Face Jobs.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;TRELLIS.2 improves the representation of 3D structure over its predecessor.&lt;/li&gt;
+&lt;li&gt;Fine‑tuning uses LoRA (low‑rank adaptation) adapters added with Hugging Face’s PEFT library.&lt;/li&gt;
+&lt;li&gt;The provided scripts require only a few arguments once your dataset is uploaded to the Hugging Face Hub.&lt;/li&gt;
+&lt;li&gt;The pipeline can be executed locally or as a containerized job on Hugging Face Jobs.&lt;/li&gt;
+&lt;li&gt;3D generation supports formats such as GLB and PLY and representations like NeRFs and 3D Gaussian splatting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;TRELLIS.2 processes an input image through five stages:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Stage&lt;/th&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Background removal&lt;/td&gt;
+&lt;td&gt;BiRefNet&lt;/td&gt;
+&lt;td&gt;Removes the image background&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Encoding&lt;/td&gt;
+&lt;td&gt;DINOv3‑L&lt;/td&gt;
+&lt;td&gt;Converts the image into feature tokens&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Coarse shape prediction&lt;/td&gt;
+&lt;td&gt;Sparse‑structure flow DiT (diffusion transformer)&lt;/td&gt;
+&lt;td&gt;Generates a small latent (16³×8)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Occupancy grid generation&lt;/td&gt;
+&lt;td&gt;VAE decoder&lt;/td&gt;
+&lt;td&gt;Produces a 64×64×64 occupancy grid&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Detailed geometry&lt;/td&gt;
+&lt;td&gt;Shape flow DiT + VAE decoder&lt;/td&gt;
+&lt;td&gt;Generates O‑Voxel geometry at 512×512×512 resolution&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Material generation&lt;/td&gt;
+&lt;td&gt;Final decoder&lt;/td&gt;
+&lt;td&gt;Combines geometry and material into a textured mesh exported as GLB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;LoRA adapters are added to the model that guides the geometry stage and to the DiT that controls shape. No adapters are added to the final material stage.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;TRELLIS introduced a unified latent representation; decoders convert it to the required 3D format.&lt;/li&gt;
+&lt;li&gt;O‑Voxel is TRELLIS.2’s 3D format; it stores only surface voxels, using ~10% of the grid.&lt;/li&gt;
+&lt;li&gt;Converting a mesh to O‑Voxel on a CPU takes seconds; converting back on a GPU also takes seconds.&lt;/li&gt;
+&lt;li&gt;Experiments used a subset of GSO with 188 footwear objects; the pretrained model produced correct shoes but often incorrect soles.&lt;/li&gt;
+&lt;li&gt;LoRA fine‑tunes by training small adapter matrices while keeping original weights frozen.&lt;/li&gt;
+&lt;li&gt;Hugging Face Jobs runs containerized workloads on cloud hardware.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Fine‑tuning scripts and Docker containers are provided.&lt;/li&gt;
+&lt;li&gt;The workflow accepts a dataset hosted on the Hugging Face Hub.&lt;/li&gt;
+&lt;li&gt;Run locally or submit as a Hugging Face Job with minimal argument changes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;3D generation is used in robotics, simulation, media, and entertainment.&lt;/li&gt;
+&lt;li&gt;Fine‑tuning enables creators to adapt a strong base model to specific asset collections.&lt;/li&gt;
+&lt;li&gt;The efficient O‑Voxel representation reduces compute waste on empty space.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/3d-lora-finetuning/pipeline_lr.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/3d-lora-finetuning/lora_adapters.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/3d-lora-finetuning/stage2_shape.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#3Dai #LoRA #HuggingFace #FineTuning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/3d-lora-finetuning" target="_blank" rel="noopener"
+&gt;The Definitive Fine-Tuning Guide for 3D Generation Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

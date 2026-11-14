@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>A2A on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/a2a/</link><description>Recent content in A2A on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 12 Nov 2026 22:08:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/a2a/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Reference Architecture Connects Enterprise LangChain Orchestrator to SaaS Compliance Agent via A2A</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-reference-architecture-connects-enterprise-langchain-orchestrator-to-saas-compliance-agent-via-a2a/</link><pubDate>Thu, 12 Nov 2026 22:08:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-reference-architecture-connects-enterprise-langchain-orchestrator-to-saas-compliance-agent-via-a2a/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21127-featured-image.png" alt="Featured image of post AWS Reference Architecture Connects Enterprise LangChain Orchestrator to SaaS Compliance Agent via A2A" /&gt;&lt;h1 id="aws-reference-architecture-connects-enterprise-langchain-orchestrator-to-saas-compliance-agent-via-a2a"&gt;AWS Reference Architecture Connects Enterprise LangChain Orchestrator to SaaS Compliance Agent via A2A
+&lt;/h1&gt;&lt;p&gt;A reference implementation on AWS demonstrates how the Agent-to-Agent (A2A) protocol lets an enterprise LangChain orchestrator work with a Strands Agents‑based compliance SaaS agent across separate AWS accounts.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Agents in multi‑agent systems that span organizational boundaries often need to collaborate in a composable, interoperable way, with agents that other organizations build and run.&lt;/li&gt;
+&lt;li&gt;The Agent-to-Agent (A2A) protocol addresses this constraint.&lt;/li&gt;
+&lt;li&gt;The A2A protocol is now a Linux Foundation project, and AWS is among the organizations that support it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Three agents run in two AWS accounts, one for the enterprise and one for the SaaS provider.&lt;/li&gt;
+&lt;li&gt;Each account has its own Amazon Cognito user pool, so each side authenticates with its own identity provider.&lt;/li&gt;
+&lt;li&gt;During onboarding the enterprise and the SaaS provider exchange only public values, such as identity provider URLs, client IDs, scopes, and endpoint URLs.&lt;/li&gt;
+&lt;li&gt;The enterprise app gets an access token from the enterprise’s Amazon Cognito user pool.&lt;/li&gt;
+&lt;li&gt;The app sends a question over HTTPS to the user API in Amazon API Gateway, then polls for the answer.&lt;/li&gt;
+&lt;li&gt;Amazon API Gateway forwards the request privately, through a VPC link and an internal Network Load Balancer, to the Enterprise Orchestrator, a LangChain agent.&lt;/li&gt;
+&lt;li&gt;When its model decides that the question needs a compliance scan, the orchestrator gets its own token from the enterprise user pool, using a client secret stored in AWS Secrets Manager.&lt;/li&gt;
+&lt;li&gt;The orchestrator sends an A2A request to the compliance SaaS agent on Amazon Bedrock AgentCore runtime, using the skill it read from the agent’s Agent Card at startup.&lt;/li&gt;
+&lt;li&gt;The compliance agent checks the enterprise context agent’s Agent Card at the callback URL registered at onboarding, then gets a token from the SaaS provider’s own pool.&lt;/li&gt;
+&lt;li&gt;The compliance agent calls back to the enterprise context agent for account metadata, finishes its scan, and returns the answer to the orchestrator and then to the app.&lt;/li&gt;
+&lt;li&gt;Both enterprise agents run on Amazon ECS with AWS Fargate in private subnets of an Amazon VPC, with no public IP addresses.&lt;/li&gt;
+&lt;li&gt;The SaaS agent reaches the context agent through an API Gateway partner API that accepts only the SaaS provider’s callback token.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Deployed agent uses the official a2a-sdk (AgentCard, AgentExecutor, and spec-conformant JSON-RPC routes), pinned to a2a-sdk[http-server]==1.2.2.&lt;/li&gt;
+&lt;li&gt;At startup the orchestrator fetches the SaaS agent’s Agent Card from its well‑known URL and creates a LangChain tool for each skill described on the card.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Agent&lt;/th&gt;
+&lt;th&gt;Runtime / Framework&lt;/th&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Enterprise Orchestrator&lt;/td&gt;
+&lt;td&gt;LangChain on Amazon ECS (Fargate)&lt;/td&gt;
+&lt;td&gt;Anthropic Claude Sonnet 4.6 (Bedrock)&lt;/td&gt;
+&lt;td&gt;Receives user queries, decides when to invoke compliance scan&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Enterprise Context Agent&lt;/td&gt;
+&lt;td&gt;LangChain on Amazon ECS (Fargate)&lt;/td&gt;
+&lt;td&gt;Amazon Nova Lite (Bedrock)&lt;/td&gt;
+&lt;td&gt;Provides internal account metadata, policy rules, data classification&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Compliance SaaS Agent&lt;/td&gt;
+&lt;td&gt;Strands Agents on Amazon Bedrock AgentCore&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;td&gt;Performs compliance scan and returns results&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The protocol uses existing authentication standards such as OAuth 2.0 and OpenID Connect (OIDC) for cross‑boundary security, and is designed to work across A2A‑compatible frameworks.&lt;/li&gt;
+&lt;li&gt;Independent software vendors (ISVs) can build composable, interoperable agents that work with the A2A‑compatible frameworks their customers already use.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Neither side depends on the other’s framework or SDK, and the two sides share no secrets.&lt;/li&gt;
+&lt;li&gt;The architecture shows how organizations can keep agents isolated in private subnets while still enabling secure, standards‑based cross‑account collaboration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AWS #A2A #LangChain #Bedrock&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-composable-interoperable-multi-agent-systems-with-a2a-on-aws/" target="_blank" rel="noopener"
+&gt;Build composable, interoperable multi-agent systems with A2A on AWS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>a2a-adapter Enables Easy A2A Protocol Integration for Local AI Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/a2a-adapter-enables-easy-a2a-protocol-integration-for-local-ai-agents/</link><pubDate>Mon, 02 Nov 2026 22:02:19 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/a2a-adapter-enables-easy-a2a-protocol-integration-for-local-ai-agents/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/186759928?v=4" alt="Featured image of post a2a-adapter Enables Easy A2A Protocol Integration for Local AI Agents" /&gt;&lt;h1 id="a2a-adapter-enables-easy-a2a-protocol-integration-for-local-ai-agents"&gt;a2a-adapter Enables Easy A2A Protocol Integration for Local AI Agents
+&lt;/h1&gt;&lt;p&gt;The new &lt;strong&gt;a2a-adapter&lt;/strong&gt; tool wraps existing agent CLIs, local agents, workflow engines, and Python agent frameworks behind the A2A (Agent-to-Agent) Protocol.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides automatic AgentCard generation, JSON‑RPC handling, task lifecycle management, and streaming via the official A2A SDK.&lt;/li&gt;
+&lt;li&gt;Your adapter only needs to invoke the underlying agent; a2a‑adapter takes care of the A2A plumbing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Install &lt;code&gt;a2a-adapter&lt;/code&gt; into your project&amp;rsquo;s virtual environment (Python 3.11+ required).&lt;/li&gt;
+&lt;li&gt;Wrap your existing agent with the adapter and start the server.&lt;/li&gt;
+&lt;li&gt;The adapter exposes the agent as an A2A server, e.g., &lt;code&gt;http://localhost:9000&lt;/code&gt;, with an auto‑generated Agent Card at &lt;code&gt;http://localhost:9000/.well-known/agent-card.json&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The server can be mounted inside an existing ASGI app using &lt;code&gt;to_a2a(adapter)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-supported-agents"&gt;⚙️ Supported Agents
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Claude Code&lt;/li&gt;
+&lt;li&gt;Codex&lt;/li&gt;
+&lt;li&gt;Pi&lt;/li&gt;
+&lt;li&gt;OpenClaw&lt;/li&gt;
+&lt;li&gt;n8n&lt;/li&gt;
+&lt;li&gt;LangGraph&lt;/li&gt;
+&lt;li&gt;LangChain&lt;/li&gt;
+&lt;li&gt;CrewAI&lt;/li&gt;
+&lt;li&gt;Ollama&lt;/li&gt;
+&lt;li&gt;Hermes Agent&lt;/li&gt;
+&lt;li&gt;Custom Python functions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-installation--usage"&gt;🚀 Installation &amp;amp; Usage
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Install the CLI as an isolated tool so the &lt;code&gt;a2a-adapter&lt;/code&gt; command is on your &lt;code&gt;PATH&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Upgrade later with &lt;code&gt;uv tool upgrade a2a-adapter&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Avoid system‑wide &lt;code&gt;pip install&lt;/code&gt; because macOS&amp;rsquo;s built‑in pip runs Python 3.9 (too old) and many Linux distributions block it (PEP 668).&lt;/li&gt;
+&lt;li&gt;Ensure the underlying agent works on its own; &lt;code&gt;a2a-adapter&lt;/code&gt; does not install the agent.
+&lt;ul&gt;
+&lt;li&gt;Example: install Claude Code and run &lt;code&gt;claude&lt;/code&gt; once to sign in.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;If the agent executable is not on &lt;code&gt;PATH&lt;/code&gt;, specify it with &lt;code&gt;--executable /path/to/agent&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Start the server from the project directory where the agent should run.&lt;/li&gt;
+&lt;li&gt;Options placed &lt;strong&gt;before&lt;/strong&gt; &lt;code&gt;--&lt;/code&gt; configure the A2A server; options placed &lt;strong&gt;after&lt;/strong&gt; &lt;code&gt;--&lt;/code&gt; are passed to the underlying agent CLI.&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;a2a-adapter -help&lt;/code&gt; for a list of supported agents, or &lt;code&gt;a2a-adapter &amp;lt;agent&amp;gt; -help&lt;/code&gt; for agent‑specific usage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A single adaptor turns any compatible local agent into an A2A‑compliant service without modifying the agent code.&lt;/li&gt;
+&lt;li&gt;The same A2A server interface works for both classic local agents (Claude Code, Codex, Pi, OpenClaw) and modern Python‑based frameworks.&lt;/li&gt;
+&lt;li&gt;By providing a standard Agent Card at &lt;code&gt;/.well-known/agent-card.json&lt;/code&gt;, the adapter enables discovery and integration in broader A2A ecosystems.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#A2A #AIAgents #Python #Tooling&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/hybroai/a2a-adapter" target="_blank" rel="noopener"
+&gt;hybroai/a2a-adapter&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

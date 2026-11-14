@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>KernelOptimization on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/kerneloptimization/</link><description>Recent content in KernelOptimization on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Oct 2026 22:07:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/kerneloptimization/index.xml" rel="self" type="application/rss+xml"/><item><title>Fused MoE Kernel Optimizes Decode Performance on NVIDIA Hopper GPUs</title><link>https://shoubhikbanerjee.github.io/blog/p/fused-moe-kernel-optimizes-decode-performance-on-nvidia-hopper-gpus/</link><pubDate>Tue, 13 Oct 2026 22:07:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/fused-moe-kernel-optimizes-decode-performance-on-nvidia-hopper-gpus/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/08/ML-22058-featured-image.png" alt="Featured image of post Fused MoE Kernel Optimizes Decode Performance on NVIDIA Hopper GPUs" /&gt;&lt;h1 id="fused-moe-kernel-optimizes-decode-performance-on-nvidia-hopper-gpus"&gt;Fused MoE Kernel Optimizes Decode Performance on NVIDIA Hopper GPUs
+&lt;/h1&gt;&lt;p&gt;Mixture‑of‑Experts (MoE) models boost LLM capacity while keeping per‑token compute low, but the decode phase suffers from high latency because the underlying GPU kernels are inefficient.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;MoE is a sparsely‑activated architecture that scales large language model capacity while keeping per‑token compute low.&lt;/li&gt;
+&lt;li&gt;MoE operations make up a large share of total compute time, so inefficiencies directly raise request latency and cost.&lt;/li&gt;
+&lt;li&gt;Optimizing MoE operations through kernel engineering offers the largest opportunity for performance gains.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-moe-and-fused-kernels-work"&gt;🧩 How MoE and Fused Kernels Work
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Fused MoE&lt;/strong&gt; merges token routing, data shuffling, and specialized network calculations into a single batched GPU operation, replacing separate sequential loop operations.&lt;/li&gt;
+&lt;li&gt;This fusion provides latency advantages but adds complexity to kernel implementation and debugging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-hopper-wgmma-constraints"&gt;⚙️ Hopper WGMMA Constraints
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;NVIDIA Hopper uses the Warp Group Matrix Multiply‑Accumulate (WGMMA) instruction, executed across a cooperative warp‑group of 128 threads.&lt;/li&gt;
+&lt;li&gt;In the &lt;code&gt;wgmma.mma_async&lt;/code&gt; definition, the hardware fixes the matrix row dimension &lt;strong&gt;M&lt;/strong&gt; to 64, defining the thread‑mapping topology.&lt;/li&gt;
+&lt;li&gt;Operand &lt;strong&gt;A&lt;/strong&gt; must occupy this fixed &lt;strong&gt;M = 64&lt;/strong&gt; dimension (using registers or shared memory); Operand &lt;strong&gt;B&lt;/strong&gt; occupies the variable &lt;strong&gt;N&lt;/strong&gt; dimension via a shared‑memory descriptor.&lt;/li&gt;
+&lt;li&gt;The operand slots are structurally non‑interchangeable, and peak tile utilization requires &lt;strong&gt;M ≥ 64&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The hardware enforces a minimum layout shape for the leading dimension of the first operand, locking the block height to exactly 64 rows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="table-operand-mapping-on-hopper-wgmma"&gt;Table: Operand Mapping on Hopper WGMMA
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Operand&lt;/th&gt;
+&lt;th&gt;Fixed/Variable Dimension&lt;/th&gt;
+&lt;th&gt;Mapping Requirement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A&lt;/td&gt;
+&lt;td&gt;Fixed &lt;strong&gt;M = 64&lt;/strong&gt; rows&lt;/td&gt;
+&lt;td&gt;Must fill a 64‑row layout bucket&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;B&lt;/td&gt;
+&lt;td&gt;Variable &lt;strong&gt;N&lt;/strong&gt; dimension&lt;/td&gt;
+&lt;td&gt;Can be large (e.g., 8192)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-decoding-bottleneck-and-the-flip-technique"&gt;📈 Decoding Bottleneck and the Flip Technique
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Decode processes a single token per user sequence, yielding a thin batch dimension &lt;strong&gt;M&lt;/strong&gt; (often &lt;strong&gt;M &amp;lt; 64&lt;/strong&gt;, sometimes &lt;strong&gt;M = 1&lt;/strong&gt;).&lt;/li&gt;
+&lt;li&gt;Matrix &lt;strong&gt;A&lt;/strong&gt; becomes a thin vector (e.g., 1 × 4096), while matrix &lt;strong&gt;B&lt;/strong&gt; (expert weights) remains a large dense block (e.g., 4096 × 8192).&lt;/li&gt;
+&lt;li&gt;Because &lt;strong&gt;M&lt;/strong&gt; is tiny, &lt;strong&gt;A&lt;/strong&gt; cannot fill the hardware’s 64‑row layout, leaving many Tensor Core lanes idle and causing poor utilization.&lt;/li&gt;
+&lt;li&gt;MoE layers fracture the workload across many experts, making them especially sensitive to these constraints.&lt;/li&gt;
+&lt;li&gt;For a &lt;code&gt;topk=8&lt;/code&gt; routine, the effective &lt;strong&gt;N&lt;/strong&gt; dimension inside the fused kernel expands to tens or hundreds of thousands of parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flipping the multiplication&lt;/strong&gt; (transposing the matrices before PTX assembly) moves the large expert dimension &lt;strong&gt;N = 8192&lt;/strong&gt; into the first operand position, satisfying the mandatory 64‑row requirement and unlocking hardware prefetching.&lt;/li&gt;
+&lt;li&gt;This re‑alignment matches the exact topography of Hopper silicon, allowing the expansive &lt;strong&gt;N&lt;/strong&gt; dimension to flood the required rows and dramatically improve hardware utilization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By addressing the structural asymmetry of Hopper’s WGMMA instruction, the fused MoE kernel reduces decode latency.&lt;/li&gt;
+&lt;li&gt;Better utilization of Tensor Core capacity lowers the compute cost of serving MoE‑based LLMs.&lt;/li&gt;
+&lt;li&gt;The technique enables MoE models to retain their capacity‑scaling benefits without incurring prohibitive inference overhead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#MixtureOfExperts #HopperGPU #KernelOptimization #LLMInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/mixture-of-experts-kernel-engineering-on-amazon-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Mixture-of-Experts kernel engineering on Amazon SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Introduction of AgentKernelArena for GPU Kernel Optimization Benchmarking</title><link>https://shoubhikbanerjee.github.io/blog/p/introduction-of-agentkernelarena-for-gpu-kernel-optimization-benchmarking/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introduction-of-agentkernelarena-for-gpu-kernel-optimization-benchmarking/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/162090453?v=4" alt="Featured image of post Introduction of AgentKernelArena for GPU Kernel Optimization Benchmarking" /&gt;&lt;h1 id="introduction-of-agentkernelarena-for-gpu-kernel-optimization-benchmarking"&gt;Introduction of AgentKernelArena for GPU Kernel Optimization Benchmarking
+&lt;/h1&gt;&lt;p&gt;AgentKernelArena is a new controlled experimentation platform designed for developing and evaluating AI agents on real GPU kernel optimization tasks.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The platform provides an end-to-end siloed-benchmarking environment where LLM-powered agents can be evaluated side-by-side using objective and reproducible metrics. It enables A/B testing across various models, prompts, tools, and agent policies while providing signals for compilation, correctness, and performance.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;AgentKernelArena supports a wide range of technical capabilities and integrations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supported Agents:&lt;/strong&gt; Cursor Agent, Claude Code, Codex, GEAK v4, Forge, and custom agents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Task Types:&lt;/strong&gt; HIP, Triton, FlyDSL, PyTorch-to-kernel conversion, instruction-to-kernel generation, and repository-level optimization tasks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware &amp;amp; Execution:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Isolated Docker workers per GPU claiming tasks from a shared queue.&lt;/li&gt;
+&lt;li&gt;Allocation of one or eight MI355X GPUs.&lt;/li&gt;
+&lt;li&gt;Slurm/Spur login-node workflow.&lt;/li&gt;
+&lt;li&gt;Privileged containers with access to mounted repositories and authentication state.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;p&gt;The platform maintains a controlled environment to ensure reproducibility:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Experimental Control:&lt;/strong&gt; Users can run a baseline and treatment (such as a different model, MCP server, skill, tool, memory strategy, or policy) while holding hardware, environment, and evaluation rules constant.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Management:&lt;/strong&gt; Every task is given its own timestamped workspace to preserve logs, modified sources, and structured results.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation:&lt;/strong&gt; Compilation, correctness, and GPU performance are measured independently of the optimizing agent. The platform also tests optimized kernels on unseen shapes to measure the generalization gap.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workflow:&lt;/strong&gt; Experiments are resumable without repeating tasks that have already produced a completion report.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it Matters
+&lt;/h2&gt;&lt;p&gt;AgentKernelArena provides objective reward signals—including runtime, speedup, and score signals—that can be consumed by external reinforcement-learning systems. While it provides RL-ready feedback, it does not currently include an RL trainer, replay buffer, or policy-update loop.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Controlled A/B experiments&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Compare configurations by changing only the capability under test&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Multi-GPU scheduling&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Dynamic task claiming via Docker workers on compute nodes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Centralized evaluation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Task validation via a dedicated agent and dashboard visualization&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Held-out evaluation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Testing on unseen shapes to measure generalization gaps&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#GPU #AIagents #Benchmarking #LLM #KernelOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/AMD-AGI/AgentKernelArena" target="_blank" rel="noopener"
+&gt;AMD-AGI/AgentKernelArena&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AgentKernelArena Launched for GPU Kernel Optimization Agent Benchmarking</title><link>https://shoubhikbanerjee.github.io/blog/p/agentkernelarena-launched-for-gpu-kernel-optimization-agent-benchmarking/</link><pubDate>Wed, 09 Sep 2026 22:05:26 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/agentkernelarena-launched-for-gpu-kernel-optimization-agent-benchmarking/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/162090453?v=4" alt="Featured image of post AgentKernelArena Launched for GPU Kernel Optimization Agent Benchmarking" /&gt;&lt;h1 id="agentkernelarena-launched-for-gpu-kernel-optimization-agent-benchmarking"&gt;AgentKernelArena Launched for GPU Kernel Optimization Agent Benchmarking
+&lt;/h1&gt;&lt;p&gt;AgentKernelArena is a controlled experimentation platform and siloed-benchmarking environment designed for developing and evaluating AI agents on real GPU kernel optimization tasks.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AgentKernelArena allows different LLM-powered agents to be evaluated side-by-side using objective and reproducible metrics. It enables A/B testing across various components, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Models&lt;/li&gt;
+&lt;li&gt;Prompts&lt;/li&gt;
+&lt;li&gt;Tools&lt;/li&gt;
+&lt;li&gt;Agent policies&lt;/li&gt;
+&lt;li&gt;MCP servers&lt;/li&gt;
+&lt;li&gt;Skills&lt;/li&gt;
+&lt;li&gt;Memory strategies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The platform uses a shared interface to run agents such as Cursor Agent, Claude Code, Codex, GEAK-based agents, and mini-swe-agent-based flows. The execution process involves:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Loading the run configuration and selected agent.&lt;/li&gt;
+&lt;li&gt;Discovering &lt;code&gt;task config.yaml&lt;/code&gt; files matching configured selectors.&lt;/li&gt;
+&lt;li&gt;Creating an isolated task workspace, cloning upstream repositories if required.&lt;/li&gt;
+&lt;li&gt;Compiling and measuring the original implementation to establish a baseline.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;To manage compute, the system starts one isolated Docker worker per GPU and dynamically claims tasks from a shared queue, with the ability to allocate one or eight MI355X GPUs.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;AgentKernelArena supports various technical tasks and provides specific measurement capabilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supported Tasks:&lt;/strong&gt; Repository-level optimization, instruction-to-kernel generation, PyTorch-to-kernel conversion, and work with HIP, Triton, and FlyDSL.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metrics:&lt;/strong&gt; The platform independently measures compilation, correctness, and GPU performance. It produces per-task runtime, speedup, and score signals.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reproducibility:&lt;/strong&gt; Every task is given its own timestamped workspace to preserve logs, structured results, and modified sources. Users can run the same configuration twice with a distinct suffix to change only the capability under test.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validation:&lt;/strong&gt; Users can test optimized kernels on unseen shapes to measure the generalization gap and validate task quality using a dedicated agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;By providing objective compilation, correctness, and performance signals, AgentKernelArena makes changes to an agent measurable. These signals can be consumed as rewards by an external reinforcement-learning system. However, the platform currently supplies the environment and reward signals only; it does not include a policy-update loop, replay buffer, or RL trainer.&lt;/p&gt;
+&lt;p&gt;Note that the per-task workspaces are for reproducibility and concurrent-run separation rather than security; agent processes run permissively inside a privileged container with access to authentication state and mounted repositories.&lt;/p&gt;
+&lt;p&gt;#GPU #AIagents #LLM #Benchmarking #KernelOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/AMD-AGI/AgentKernelArena" target="_blank" rel="noopener"
+&gt;AMD-AGI/AgentKernelArena&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWSTrainium on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/awstrainium/</link><description>Recent content in AWSTrainium on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 13 Nov 2026 22:02:12 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/awstrainium/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Announces Public Availability of SGLang-Neuron for AWS Trainium</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-announces-public-availability-of-sglang-neuron-for-aws-trainium/</link><pubDate>Fri, 13 Nov 2026 22:02:12 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-announces-public-availability-of-sglang-neuron-for-aws-trainium/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22453-featured-image.png" alt="Featured image of post Amazon Announces Public Availability of SGLang-Neuron for AWS Trainium" /&gt;&lt;h1 id="amazon-announces-public-availability-of-sglang-neuron-for-aws-trainium"&gt;Amazon Announces Public Availability of SGLang-Neuron for AWS Trainium
+&lt;/h1&gt;&lt;p&gt;Amazon has announced that SGLang-Neuron is publicly available through an AWS Deep Learning Container, released by RadixArk in collaboration with Annapurna Labs. SGLang-Neuron is an out-of-tree plugin that connects SGLang with AWS Trainium, enabling users to serve models and generate reinforcement learning (RL) rollouts using native PyTorch.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AWS Trainium is a portfolio of AWS AI chips designed to deliver strong economics for AI training and inference at scale. Key aspects of the integration include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Serves models and generates RL rollouts on AWS Trainium using the standard SGLang interface.&lt;/li&gt;
+&lt;li&gt;Uses an out-of-tree plugin design, allowing Trainium support and SGLang core to develop independently and iterate faster.&lt;/li&gt;
+&lt;li&gt;Runs on native PyTorch beneath the SGLang interface.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Installing the plugin registers the neuron platform through SGLang’s plugin entry points, and setting &lt;code&gt;SGLANG_PLATFORM=neuron&lt;/code&gt; selects it when the server starts.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Responsibility&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;SGLang Core&lt;/td&gt;
+&lt;td&gt;Provides API server, request lifecycle, RadixAttention, and prefix-cache bookkeeping&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SGLang-Neuron Plugin&lt;/td&gt;
+&lt;td&gt;Implements Trainium-specific models, attention, mixture of experts (MoE), and graph runner&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TorchNeuron&lt;/td&gt;
+&lt;td&gt;Registers Trainium as a native PyTorch device&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Model execution path and execution details:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses standard PyTorch operations for the model execution path.&lt;/li&gt;
+&lt;li&gt;Incorporates kernels written with the Neuron Kernel Interface (NKI) for performance.&lt;/li&gt;
+&lt;li&gt;Compiles operations and kernels into executable programs using &lt;code&gt;torch.compile&lt;/code&gt;, which the graph runner prepares and executes during serving.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;SGLang-Neuron supports PD disaggregation configuration:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prefill Server:&lt;/strong&gt; Computes the prompt KV cache and transfers it to the decode server using NIXL over Elastic Fabric Adapter (EFA).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Decode Server:&lt;/strong&gt; Generates the remaining tokens following KV-cache transfer.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Management:&lt;/strong&gt; Each server uses SGLang&amp;rsquo;s scheduler and request lifecycle, while the plugin manages Trainium execution and the KV-cache transfer path.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Available via the &lt;code&gt;pytorch-inference-sglang-neuronx&lt;/code&gt; AWS Deep Learning Container.&lt;/li&gt;
+&lt;li&gt;Walkthroughs use a Trainium3 Amazon Elastic Compute Cloud (Amazon EC2) instance.&lt;/li&gt;
+&lt;li&gt;Users can get started by launching the SGLang-Neuron container and following the quickstart to serve a supported model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22453-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22453-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22453-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Amazon #AWSTrainium #SGLang #PyTorch #AIInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploy-frontier-ai-models-on-aws-trainium-with-sglang-neuron/" target="_blank" rel="noopener"
+&gt;Deploy frontier AI models on AWS Trainium with SGLang-Neuron | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Systematically Analyzing Inference Performance on AWS Trainium with TorchNeuron</title><link>https://shoubhikbanerjee.github.io/blog/p/systematically-analyzing-inference-performance-on-aws-trainium-with-torchneuron/</link><pubDate>Wed, 21 Oct 2026 22:03:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/systematically-analyzing-inference-performance-on-aws-trainium-with-torchneuron/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6ac67ea29579ea34f1f7e470/hEodPVvQZI24jETLbPooP.png" alt="Featured image of post Systematically Analyzing Inference Performance on AWS Trainium with TorchNeuron" /&gt;&lt;h1 id="systematically-analyzing-inference-performance-on-aws-trainium-with-torchneuron"&gt;Systematically Analyzing Inference Performance on AWS Trainium with TorchNeuron
+&lt;/h1&gt;&lt;p&gt;A new guide provides a walkthrough for ML practitioners to systematically analyze inference performance and identify where time is spent during model execution, starting from scratch with no prior profiling experience.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The profiling process utilizes AWS Trainium, a purpose-built AI chip for deep learning training and inference, and TorchNeuron, its open source native PyTorch backend. TorchNeuron integrates with PyTorch via the PrivateUse1 extension point, allowing the accelerator to integrate without adding a dedicated dispatch key like cuda. The &lt;code&gt;torch_neuronx&lt;/code&gt; package registers Neuron as a native backend for PyTorch code.&lt;/p&gt;
+&lt;p&gt;TorchNeuron supports standard PyTorch workflows with minimal code changes, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Eager execution&lt;/li&gt;
+&lt;li&gt;torch.compile&lt;/li&gt;
+&lt;li&gt;Standard PyTorch APIs&lt;/li&gt;
+&lt;li&gt;Integration with Neuron Kernel Interface (NKI) for custom operators and performance optimization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Profiling is managed through &lt;code&gt;torch.profiler.profile&lt;/code&gt; using a &lt;code&gt;NeuronConfig&lt;/code&gt; passed as &lt;code&gt;experimental_config&lt;/code&gt;.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Parameter&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;modes&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Selects data streams to capture, such as runtime traces and device instructions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;capture_enabled_for_nc&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Selects the NeuronCores to trace&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;correlate_device_time=True&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Propagates device time into the &lt;code&gt;key_averages()&lt;/code&gt; table to compare CPU and Neuron device time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;To ensure accuracy, &lt;code&gt;torch.neuron.synchronize()&lt;/code&gt; must be called inside the profiler loop; otherwise, the profiler may export before the device finishes, leaving the Neuron time column empty. The recommended schedule uses &lt;code&gt;wait=2&lt;/code&gt;, &lt;code&gt;warmup=1&lt;/code&gt;, and &lt;code&gt;active=1&lt;/code&gt; across four &lt;code&gt;prof.step()&lt;/code&gt; calls to record one warm iteration without initial setup overhead.&lt;/p&gt;
+&lt;h2 id="-analysis-and-output"&gt;🔍 Analysis and Output
+&lt;/h2&gt;&lt;p&gt;After profiling, the output directory contains system traces and, if device data was captured, paired files identified by a numeric hash:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NEFF (Neuron Executable File Format):&lt;/strong&gt; Contains the compiled Neuron executable.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NTFF:&lt;/strong&gt; Contains the hardware instruction trace.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Users can analyze these results using Neuron Explorer, a browser-based viewer for the device timeline, system trace, and per-engine breakdown, accessible via a Visual Studio Code extension or SSH tunnel.&lt;/p&gt;
+&lt;p&gt;As a practical example, the walkthrough compares a naive RMSNorm (using individual PyTorch operations like multiply, mean, add, reciprocal square root, and multiply) against &lt;code&gt;torch.rms_norm()&lt;/code&gt;, which is lowered to a single fused Neuron kernel.&lt;/p&gt;
+&lt;p&gt;#AWSTrainium #TorchNeuron #PyTorch #MLprofiling #InferencePerformance&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/amazon/profiling-torchneuron-part-1-system-level-profilin" target="_blank" rel="noopener"
+&gt;Profiling TorchNeuron (Part 1): System-level profiling on AWS Trainium.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

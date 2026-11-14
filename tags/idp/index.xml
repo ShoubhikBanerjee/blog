@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>IDP on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/idp/</link><description>Recent content in IDP on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 14 Oct 2026 22:09:38 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/idp/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore Enables Self‑Learning Intelligent Document Processing</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-enables-selflearning-intelligent-document-processing/</link><pubDate>Wed, 14 Oct 2026 22:09:38 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-enables-selflearning-intelligent-document-processing/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-20468-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Enables Self‑Learning Intelligent Document Processing" /&gt;&lt;h1 id="amazon-bedrock-agentcore-enables-selflearning-intelligent-document-processing"&gt;Amazon Bedrock AgentCore Enables Self‑Learning Intelligent Document Processing
+&lt;/h1&gt;&lt;p&gt;Document‑related tasks cost organizations $19,732 per information worker each year and cut productivity by 21.3 %. Staff can spend up to 30 % of their time on these tasks, while manual data‑entry error rates range from 1 % to 4 %.&lt;/p&gt;
+&lt;p&gt;Traditional intelligent document processing (IDP) pipelines rely on static templates, extraction rules, and validation logic that must be created for every document format up front. When a supplier changes an invoice layout, the pipeline breaks. Each new vendor multiplies the maintenance effort, creating a scaling burden for organizations that receive invoices from hundreds of suppliers.&lt;/p&gt;
+&lt;p&gt;In this update we show how Amazon Bedrock AgentCore can be used to build an &lt;strong&gt;agentic IDP system&lt;/strong&gt; that classifies, extracts, validates, and learns from business documents with minimal human intervention.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Problem&lt;/strong&gt; – High labor cost, low productivity, and error‑prone manual data entry for document processing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt; – Replace static templates with AI agents that automatically generate extraction instructions, validate results, and retain knowledge for future documents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Platform&lt;/strong&gt; – Amazon Bedrock AgentCore: a platform to build, connect, and optimise agents at scale, with any framework or model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Key benefit&lt;/strong&gt; – New document formats (e.g., supplier invoices, purchase orders, insurance claims, loan applications) are processed without manual template configuration, often in under 20 minutes of deployment time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;p&gt;The system coordinates eight specialised agents across two graph‑based workflows on Amazon Bedrock AgentCore.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Identification workflow&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Analyzer&lt;/strong&gt; extracts raw text using Amazon Textract and identifies the document type and sender.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Matcher&lt;/strong&gt; searches for similar documents via vector similarity in Amazon S3 Vectors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;If no match is found&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Instructions&lt;/strong&gt; generates extraction prompts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extractor&lt;/strong&gt; extracts structured data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validator&lt;/strong&gt; checks the data against schemas and business rules in Amazon Aurora DSQL.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Instructions Fixer&lt;/strong&gt; refines prompts and retries when validation fails.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Save Instructions&lt;/strong&gt; persists the successful instructions for reuse.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;If a match is found&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Extractor&lt;/strong&gt; re‑uses the saved instructions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Troubleshooter&lt;/strong&gt; fixes extracted data directly if validation fails, without altering the stored instructions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The workflow is triggered by Amazon EventBridge, which starts a Lambda function that records the job in Amazon DynamoDB and invokes the AgentCore runtime. The runtime orchestrates processing through Strands Agents. All agents access AWS resources securely via machine‑to‑machine credentials managed by &lt;strong&gt;AgentCore Identity&lt;/strong&gt; and Amazon Cognito. Lambda functions become agent‑compatible tools through the &lt;strong&gt;Model Context Protocol (MCP)&lt;/strong&gt; interface of the &lt;strong&gt;AgentCore Gateway&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Agent&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Analyzer&lt;/td&gt;
+&lt;td&gt;Extract text with Amazon Textract; identify document type and sender&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Matcher&lt;/td&gt;
+&lt;td&gt;Find similar documents using vector similarity in Amazon S3 Vectors&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Instructions&lt;/td&gt;
+&lt;td&gt;Generate extraction prompts when no prior instruction exists&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Extractor&lt;/td&gt;
+&lt;td&gt;Pull structured data from the document&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Validator&lt;/td&gt;
+&lt;td&gt;Verify data against schemas and business rules in Amazon Aurora DSQL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Instructions Fixer&lt;/td&gt;
+&lt;td&gt;Refine prompts and retry extraction on validation failure&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Save Instructions&lt;/td&gt;
+&lt;td&gt;Persist successful extraction instructions for future reuse&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Troubleshooter&lt;/td&gt;
+&lt;td&gt;Amend extracted data directly if validation fails (no instruction change)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Additional platform capabilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Agents automatically learn from corrections, building a knowledge base of document formats.&lt;/li&gt;
+&lt;li&gt;Over time, similar documents are processed with minimal additional configuration.&lt;/li&gt;
+&lt;li&gt;Deployment of the full multi‑agent IDP system often completes in under &lt;strong&gt;20 minutes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment"&gt;🚀 Deployment
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Runtime&lt;/strong&gt; – Amazon Bedrock AgentCore runtime orchestrates the agents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Orchestration&lt;/strong&gt; – EventBridge → Lambda → AgentCore runtime → Strands Agents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt; – Machine‑to‑machine credentials (AgentCore Identity) and Amazon Cognito; least‑privilege IAM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalability&lt;/strong&gt; – Each agent runs independently; the architecture supports event‑driven, serverless scaling.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Reduces the manual effort of document processing, freeing up to 30 % of employee time.&lt;/li&gt;
+&lt;li&gt;Cuts error rates by eliminating repetitive extraction failures.&lt;/li&gt;
+&lt;li&gt;Removes the need for constant template maintenance when vendor layouts change.&lt;/li&gt;
+&lt;li&gt;Lowers operational costs for organisations handling hundreds of document sources.&lt;/li&gt;
+&lt;li&gt;Provides a reusable, self‑learning pipeline that improves with every processed document.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/Architecture-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/Architecture-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#IDP #AmazonBedrock #AIagents #DocumentAutomation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-self-improving-document-processing-using-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Build self-improving document processing using Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/generate-presentations-with-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Generate presentations with Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-tamnoon-built-ai-powered-cloud-security-remediation-with-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;How Tamnoon built AI-powered cloud security remediation with Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

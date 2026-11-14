@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CuBLAS on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cublas/</link><description>Recent content in CuBLAS on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 14 Nov 2026 12:02:58 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cublas/index.xml" rel="self" type="application/rss+xml"/><item><title>cuBLAS Enhances FP64 Performance Using Integer Tensor Cores</title><link>https://shoubhikbanerjee.github.io/blog/p/cublas-enhances-fp64-performance-using-integer-tensor-cores/</link><pubDate>Sat, 14 Nov 2026 12:02:58 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/cublas-enhances-fp64-performance-using-integer-tensor-cores/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image5-7-660x370.png" alt="Featured image of post cuBLAS Enhances FP64 Performance Using Integer Tensor Cores" /&gt;&lt;h1 id="cublas-enhances-fp64-performance-using-integer-tensor-cores"&gt;cuBLAS Enhances FP64 Performance Using Integer Tensor Cores
+&lt;/h1&gt;&lt;p&gt;NVIDIA cuBLAS now provides automatic acceleration for DGEMM (real 64-bit floating-point) and ZGEMM (complex 64-bit floating-point) operations without requiring application code changes. This capability leverages the Automatic Dynamic Precision (ADP) framework to map FP64 arithmetic onto integer Tensor Cores while maintaining native FP64 accuracy.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;cuBLAS breaks double-precision numbers into integer pieces, performs multiplication on the GPU’s Tensor Cores, and reassembles the results. Both the Ozaki and 2M schemes align input matrix exponents and convert them to a shared-exponent, variable-length integer representation for accurate accumulation.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Algorithm&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Efficiency Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Ozaki-I&lt;/td&gt;
+&lt;td style="text-align: left"&gt;DGEMM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Grows with the square of the slice count&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Ozaki-II&lt;/td&gt;
+&lt;td style="text-align: left"&gt;DGEMM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses Chinese Remainder Theorem; linear scaling in number of moduli&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;2M&lt;/td&gt;
+&lt;td style="text-align: left"&gt;ZGEMM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Cuts complex matrix multiplication from four real multiplications to two&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Heuristics:&lt;/strong&gt; cuBLAS automatically selects between Ozaki-I and Ozaki-II for optimal performance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Management:&lt;/strong&gt; cuBLAS utilizes memory-parsimonious tiling, discarding residue pairs immediately after their corresponding GEMM operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fallback:&lt;/strong&gt; The system reverts to native FP64 MMA instructions if the required mantissa bits exceed library defaults or user-defined limits.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;New Format:&lt;/strong&gt; Rubin GPUs utilize the TI16 format (12-bit integer) to accelerate Ozaki computations via the tcgen05.mma instruction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-metrics"&gt;🚀 Performance Metrics
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;DGEMM (Ozaki-II):&lt;/strong&gt; Achieves 5.5x and 3.9x speedups on NVIDIA VR NVL72 and GB200 respectively. Throughput reaches up to 175, 147, and 37 TFLOPS on VR NVL72, GB200, and RTX PRO 6000.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ZGEMM (2M):&lt;/strong&gt; Achieves a 5x speedup over native Complex FP64 on the NVIDIA GB200.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;End-to-End (CCSD):&lt;/strong&gt; Achieves 2x and 1.4x speedups on VR NVL72 and GB200 using DGEMM with Ozaki-II.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;End-to-End (BerkeleyGW):&lt;/strong&gt; Achieves 6.6x and 3.9x speedups using ZGEMM with the 2M algorithm.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image5-7-1024x575-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image4-7.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image6-7.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #cuBLAS #GPU #HPC #TensorCores&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/faster-scientific-simulations-with-new-fp64-algorithms-in-nvidia-cublas/" target="_blank" rel="noopener"
+&gt;Faster Scientific Simulations with New FP64 Algorithms in NVIDIA cuBLAS | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

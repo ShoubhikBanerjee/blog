@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Inference Engineering on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/inference-engineering/</link><description>Recent content in Inference Engineering on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 19 Oct 2026 22:04:08 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/inference-engineering/index.xml" rel="self" type="application/rss+xml"/><item><title>Push‑based NIXL connector speeds up vLLM inference on AWS EFA</title><link>https://shoubhikbanerjee.github.io/blog/p/pushbased-nixl-connector-speeds-up-vllm-inference-on-aws-efa/</link><pubDate>Mon, 19 Oct 2026 22:04:08 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/pushbased-nixl-connector-speeds-up-vllm-inference-on-aws-efa/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21812-featured-image.png" alt="Featured image of post Push‑based NIXL connector speeds up vLLM inference on AWS EFA" /&gt;&lt;h1 id="pushbased-nixl-connector-speeds-up-vllm-inference-on-aws-efa"&gt;Push‑based NIXL connector speeds up vLLM inference on AWS EFA
+&lt;/h1&gt;&lt;p&gt;vLLM’s new push‑based NVIDIA Inference Xfer Library (NIXL) connector reduces transfer latency between prefill and decode stages, delivering up to 3× faster first‑token latency and 30 % lower time‑per‑output‑token on AWS instances.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;vLLM&lt;/strong&gt; is an open‑source inference and serving engine for large language models.&lt;/li&gt;
+&lt;li&gt;It separates &lt;em&gt;prefill&lt;/em&gt; and &lt;em&gt;decode&lt;/em&gt; into separate engine instances (prefill‑decode disaggregation) so each phase can scale and be optimized independently.&lt;/li&gt;
+&lt;li&gt;KV‑block data moves between instances via the &lt;strong&gt;NIXL connector&lt;/strong&gt;, which exploits RDMA‑capable interconnects such as &lt;strong&gt;AWS Elastic Fabric Adapter (EFA)&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The default NIXL mode is &lt;em&gt;pull‑based&lt;/em&gt;; the new &lt;em&gt;push‑based&lt;/em&gt; mode moves coordination off the critical path.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-the-pushbased-connector-works"&gt;🧩 How the push‑based connector works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Three actors are coordinated:
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Decode instance&lt;/strong&gt; registers its target blocks in advance while the prefill instance is still computing KV.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prefill instance&lt;/strong&gt; matches each request and issues the transfer.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;background thread&lt;/strong&gt; carries the KV write off the engine’s forward‑pass loop.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Registration (identity + block locations) is sent as an NIXL notification during the same engine step.&lt;/li&gt;
+&lt;li&gt;Transfer starts when the later of two events occurs (registration arrival or prefill completion).&lt;/li&gt;
+&lt;li&gt;Requests are paired by ID; the matching logic handles reissued, preempted, or retried requests.&lt;/li&gt;
+&lt;li&gt;Once matched, the producer opens a connection (if needed) and issues an NIXL &lt;strong&gt;WRITE&lt;/strong&gt; that copies KV blocks directly into the decoder’s registered memory, addressing each tensor‑parallel rank.&lt;/li&gt;
+&lt;li&gt;Producer and consumer may use different internal block layouts; each side maps block locations to its own physical layout at transfer time, allowing different block sizes.&lt;/li&gt;
+&lt;li&gt;Each WRITE includes a completion notification.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-technical-details"&gt;⚙️ Key technical details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;NIXL moves KV blocks over interconnects that support &lt;strong&gt;Remote Direct Memory Access (RDMA)&lt;/strong&gt;, avoiding host‑memory staging.&lt;/li&gt;
+&lt;li&gt;On supported instance types, &lt;strong&gt;AWS EFA&lt;/strong&gt; provides &lt;strong&gt;GPUDirect RDMA&lt;/strong&gt; and &lt;strong&gt;Neuron Direct RDMA&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The push mode removes the serialization inherent in the pull model by overlapping producer and consumer work.&lt;/li&gt;
+&lt;li&gt;Transfer‑setup time runs on the prefill side and on a background thread, not on the decode instance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance"&gt;🚀 Performance
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Mode&lt;/th&gt;
+&lt;th&gt;TTFT improvement&lt;/th&gt;
+&lt;th&gt;TPOT improvement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Pull (default)&lt;/td&gt;
+&lt;td&gt;baseline&lt;/td&gt;
+&lt;td&gt;baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Push (new)&lt;/td&gt;
+&lt;td&gt;up to &lt;strong&gt;3×&lt;/strong&gt; faster&lt;/td&gt;
+&lt;td&gt;up to &lt;strong&gt;30 %&lt;/strong&gt; faster&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Benchmarks were run on a &lt;strong&gt;1P1D&lt;/strong&gt; deployment using &lt;strong&gt;Amazon EC2 P5en&lt;/strong&gt; instances connected with EFA.&lt;/li&gt;
+&lt;li&gt;Model: &lt;strong&gt;Qwen3‑32B&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The same push‑mode gains were observed on &lt;strong&gt;AWS Trainium&lt;/strong&gt; clusters and on GPU clusters, confirming accelerator‑agnostic benefits.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Direct KV block transfer between device memories reduces latency and improves throughput for large language model serving.&lt;/li&gt;
+&lt;li&gt;Overlapping coordination with computation maximizes utilization of high‑performance interconnects such as EFA.&lt;/li&gt;
+&lt;li&gt;The feature is contributed back to the open‑source vLLM project, making it available to any deployment that can use RDMA‑capable networking.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21812-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21812-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21812-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#vLLM #NIXL #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/" target="_blank" rel="noopener"
+&gt;Push-based KV transfer to improve TTFT and TPOT for disaggregated inference in vLLM | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

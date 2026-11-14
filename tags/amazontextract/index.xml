@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AmazonTextract on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/amazontextract/</link><description>Recent content in AmazonTextract on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 28 Sep 2026 22:02:06 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/amazontextract/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Textract Enhances Document Extraction with Custom Queries Adapters</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-textract-enhances-document-extraction-with-custom-queries-adapters/</link><pubDate>Mon, 28 Sep 2026 22:02:06 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-textract-enhances-document-extraction-with-custom-queries-adapters/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/23/ML-21054-featured-image.png" alt="Featured image of post Amazon Textract Enhances Document Extraction with Custom Queries Adapters" /&gt;&lt;h1 id="amazon-textract-enhances-document-extraction-with-custom-queries-adapters"&gt;Amazon Textract Enhances Document Extraction with Custom Queries Adapters
+&lt;/h1&gt;&lt;p&gt;Amazon Textract has introduced Custom Queries adapters, which allow users to fine-tune the existing fully managed machine learning service to improve extraction accuracy for specific document types, domain-specific terminology, or unique layouts.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon Textract is a machine learning service that automatically extracts structured data, layout elements, handwriting, and text from scanned documents. Custom Queries adapters extend the pre-trained deep learning model as modular components to customize output without requiring the user to build custom ML models.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To create an adapter, users upload sample documents, annotate them with expected responses and queries, and train the adapter to recognize unique layout patterns. In a production workflow, the process follows these steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Routing:&lt;/strong&gt; A lightweight step uses &lt;code&gt;DetectDocumentText&lt;/code&gt; to extract raw text and identify the document version via field labels, version identifiers, or form titles.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval:&lt;/strong&gt; The system retrieves the correct adapter ID from AWS Systems Manager Parameter Store.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extraction:&lt;/strong&gt; The &lt;code&gt;AnalyzeDocument&lt;/code&gt; or &lt;code&gt;StartDocumentAnalysis&lt;/code&gt; API is called using the selected Custom Queries adapter.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Downstream Flow:&lt;/strong&gt; Extracted key-value pairs are sent to human review queues, workflow engines, or databases.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Specification&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Supported Formats&lt;/td&gt;
+&lt;td style="text-align: left"&gt;JPEG, PNG, PDF, and TIFF (XFA-based PDFs are not supported)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Sync API (&lt;code&gt;AnalyzeDocument&lt;/code&gt;)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Processes single-page documents or the first page of multi-page files&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Async API (&lt;code&gt;StartDocumentAnalysis&lt;/code&gt;)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Handles multi-page PDFs and TIFFs up to 3,000 pages&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Adapter Limit&lt;/td&gt;
+&lt;td style="text-align: left"&gt;One adapter per page per feature type per &lt;code&gt;AnalyzeDocument&lt;/code&gt; API call&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Operational and Security Configurations:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Deployment:&lt;/strong&gt; For production, API calls should be routed through AWS PrivateLink for network isolation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Encryption:&lt;/strong&gt; Documents in Amazon S3 use server-side encryption; AWS KMS customer managed keys are recommended for production to control access policies and key rotation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Governance:&lt;/strong&gt; IAM is used for least-privilege access, AWS CloudTrail provides API audit logging, and Amazon CloudWatch handles alerting and operational monitoring.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lifecycle Management:&lt;/strong&gt; Promotion strategies and solution architecture are adapter-type agnostic, applying to both Tables and Forms adapters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;By externalizing adapter IDs into the AWS Systems Manager Parameter Store, organizations can update production adapter references with zero downtime and no application redeployment. When promoting an adapter to a new environment or training a new version, only the SSM parameter needs to be updated.&lt;/p&gt;
+&lt;p&gt;While a four-environment span is recommended for production, smaller teams can start with two environments (production and training) in a single AWS account using separate S3 buckets, tags, and naming conventions to isolate workloads.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The process for creating adapters currently requires AWS Support tickets. Additionally, while trained model weights transfer, query definitions and training data do not.&lt;/p&gt;
+&lt;p&gt;#AmazonTextract #AWS #MachineLearning #DocumentAI #DataExtraction&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/automating-amazon-textract-adapter-lifecycle-management-across-accounts/" target="_blank" rel="noopener"
+&gt;Automating Amazon Textract adapter lifecycle management across accounts | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

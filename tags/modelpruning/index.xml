@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ModelPruning on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/modelpruning/</link><description>Recent content in ModelPruning on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 09 Nov 2026 22:03:01 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/modelpruning/index.xml" rel="self" type="application/rss+xml"/><item><title>Higher-Order Expert Pruning (HOPE) Improves Memory Efficiency in Large MoE Models</title><link>https://shoubhikbanerjee.github.io/blog/p/higher-order-expert-pruning-hope-improves-memory-efficiency-in-large-moe-models/</link><pubDate>Mon, 09 Nov 2026 22:03:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/higher-order-expert-pruning-hope-improves-memory-efficiency-in-large-moe-models/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6ab2f79bd8000a811c648a32/xZT8tg4be3bgZIx2EQS_m.png" alt="Featured image of post Higher-Order Expert Pruning (HOPE) Improves Memory Efficiency in Large MoE Models" /&gt;&lt;h1 id="higher-order-expert-pruning-hope-improves-memory-efficiency-in-large-moe-models"&gt;Higher-Order Expert Pruning (HOPE) Improves Memory Efficiency in Large MoE Models
+&lt;/h1&gt;&lt;p&gt;Mixture-of-Experts (MoE) models have enabled state-of-the‑art LLMs to be scaled to hundreds of billions of parameters, but they come with a fundamental and costly caveat: every expert MLP must occupy memory at inference time, even though the vast majority are idle for any given token.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Expert pruning is one of the most direct fixes to this memory bottleneck.&lt;/li&gt;
+&lt;li&gt;Pruning avoids the latency issues which make dynamic loading/off-loading of experts impractical; it does not require any training; and it composes with quantization.&lt;/li&gt;
+&lt;li&gt;Existing pruning methods score each expert independently, assigning every expert a scalar importance score (based on a calibration dataset), and cutting out the least important experts (in each layer independently). These are first‑order methods because they assume each expert&amp;rsquo;s contribution is independent of all others.&lt;/li&gt;
+&lt;li&gt;Our newest paper derives HOPE (Higher‑Order Pruning of Experts), a second‑order method that accounts for pairwise expert interactions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-moe-routing-works"&gt;🧩 How MoE Routing Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;In a standard MoE, each layer has experts, and each input token is routed independently to such experts.&lt;/li&gt;
+&lt;li&gt;Routing is performed by a single layer which produces softmax‑normalized gate weights for each expert, wherein the experts with the highest gate weights are selected to form the active set of experts.&lt;/li&gt;
+&lt;li&gt;Expert co‑selection patterns emerge early in training and stabilize throughout.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-memory-bottleneck-example"&gt;⚙️ Memory Bottleneck Example
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Experts per Layer&lt;/th&gt;
+&lt;th&gt;MoE Layers&lt;/th&gt;
+&lt;th&gt;Experts Used per Token&lt;/th&gt;
+&lt;th&gt;Parameter Memory (≈)&lt;/th&gt;
+&lt;th&gt;% Memory Used by Experts&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen3.5‑122B&lt;/td&gt;
+&lt;td&gt;256&lt;/td&gt;
+&lt;td&gt;48&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;250 GB&lt;/td&gt;
+&lt;td&gt;95 %&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-firstorder-pruning-limitations"&gt;✂️ First‑Order Pruning Limitations
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Ignoring expert interactions leads to suboptimal pruning, especially at aggressive rates.&lt;/li&gt;
+&lt;li&gt;Removing expert A might seem fine on its own, but if expert B— which frequently cooperates with and relies on A — is highly important, then removing A would dismantle a cooperative group just through a single deletion.&lt;/li&gt;
+&lt;li&gt;First‑order methods miss this entirely, because they score A and B separately.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-hope-method-details"&gt;📈 HOPE Method Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;When we delete a set of experts from some MoE layer, the selected set of experts for any token can change. The resulting change in layer output is the pruning error.&lt;/li&gt;
+&lt;li&gt;HOPE defines a tractable surrogate that strictly upper‑bounds the dominant component of the pruning error.&lt;/li&gt;
+&lt;li&gt;The surrogate leads to a quadratic program (QP): the F‑matrix is collected on the calibration dataset, where each entry captures the average gate‑weighted output product of experts &lt;em&gt;i&lt;/em&gt; and &lt;em&gt;j&lt;/em&gt; across tokens where both are co‑activated.&lt;/li&gt;
+&lt;li&gt;Diagonal entries measure individual expert importance; off‑diagonal entries measure pairwise cooperative contribution.&lt;/li&gt;
+&lt;li&gt;The QP is solved with a continuous relaxation and then rounded to binary solutions to obtain the optimal prune‑set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;🚀 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;At 50 % pruning, HOPE achieves the best average rank of any method, with gains of up to +6.1 % on agentic coding tasks over the next‑best pruning method.&lt;/li&gt;
+&lt;li&gt;Removing up to 50 % of experts risks breaking many cooperative links; this is where second‑order pruning is most advantageous.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-visual-insights"&gt;📊 Visual Insights
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Visualization of the interaction matrix &lt;strong&gt;F&lt;/strong&gt; for GLM‑4.5‑Air (128 experts per layer, 106 B parameters total) shows block structure after clustering experts, illustrating stable cooperative groups across early, middle, and late layers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;All statements are drawn from the cited evidence.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#MixtureOfExperts #ModelPruning #AIResearch&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/amazon/higher-order-pruning-experts" target="_blank" rel="noopener"
+&gt;Your Experts Have Partners. There&amp;rsquo;s HOPE for Keeping Them Together&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

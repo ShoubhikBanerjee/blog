@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Data Governance on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/data-governance/</link><description>Recent content in Data Governance on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 09 Sep 2026 00:51:34 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/data-governance/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker AI Managed MLflow Now Supports Cross-Account Governance Topologies</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-managed-mlflow-now-supports-cross-account-governance-topologies/</link><pubDate>Wed, 09 Sep 2026 00:51:34 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-managed-mlflow-now-supports-cross-account-governance-topologies/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-featured-image.png" alt="Featured image of post Amazon SageMaker AI Managed MLflow Now Supports Cross-Account Governance Topologies" /&gt;&lt;h1 id="amazon-sagemaker-ai-managed-mlflow-now-supports-cross-account-governance-topologies"&gt;Amazon SageMaker AI Managed MLflow Now Supports Cross-Account Governance Topologies
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker AI has expanded the capabilities of managed MLflow to support cross-account governance. This update allows larger organizations to separate development and production environments at the account level while maintaining a central governance function through two distinct topologies.&lt;/p&gt;
+&lt;h2 id="-architecture-topologies"&gt;🧩 Architecture Topologies
+&lt;/h2&gt;&lt;p&gt;Organizations can now implement cross-account governance using two primary patterns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hub-and-Spoke Pattern:&lt;/strong&gt; This model centralizes governance by sharing a single MLflow app from a hub account across multiple development (spoke) accounts using AWS Resource Access Manager (AWS RAM).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid Pattern:&lt;/strong&gt; Designed for regulated environments, this pattern keeps development accounts fully isolated from the governance hub, requiring model owners to approve models locally before they are promoted to the central hub.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;The system utilizes AWS RAM to share the MLflow app, enabling it to work even when accounts are not within the same organization by using external principals.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Role&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Environment/Tooling&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Responsibility&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Data Scientist&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Jupyter notebook&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Registers models against the shared MLflow app from a spoke account&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Governance Officer&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Amazon SageMaker Studio Models UI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Validates synced metrics and lineage; approves models centrally&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Administrator&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Console or CLI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Performs one-time setup of RAM shares, bucket policies, and destination groups&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;ML Engineer&lt;/td&gt;
+&lt;td style="text-align: left"&gt;CI/CD pipeline&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Deploys approved models to Amazon SageMaker endpoints in the spoke account&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-implementation-and-workflow"&gt;🔄 Implementation and Workflow
+&lt;/h2&gt;&lt;p&gt;The technical setup requires configuring named AWS CLI profiles for both the spoke and hub accounts. A CloudFormation template provisions the necessary SageMaker AI Studio domain, user profile, and Managed MLflow app with &lt;code&gt;AutoModelRegistrationEnabled&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;When a data scientist in a spoke account registers a model, a Model Package Group and version are created synchronously in the hub account. To facilitate deployment, the hub attaches a resource policy to the group and shares it back to the spoke with &lt;code&gt;AllowDeploy&lt;/code&gt; permissions. Model artifacts are stored in the hub account&amp;rsquo;s S3 bucket, with bucket policies granting the spoke account necessary permissions for artifact access during deployment.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Administrators can configure these topologies using the AWS Management Console or CLI. Working notebooks for these cross-account governance implementations are available in the accompanying GitHub repository.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #MLflow #AWS #MLOps #CloudGovernance&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/govern-models-with-mlflow-and-amazon-sagemaker-ai-model-registry-sync-part-2/" target="_blank" rel="noopener"
+&gt;Govern models with MLflow and Amazon SageMaker AI Model Registry sync: Part 2 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

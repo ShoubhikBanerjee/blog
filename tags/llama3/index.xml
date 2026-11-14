@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Llama3 on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/llama3/</link><description>Recent content in Llama3 on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 21 Sep 2026 22:03:11 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/llama3/index.xml" rel="self" type="application/rss+xml"/><item><title>New LLM Compression Method Uses Constrained Binary Optimization and Ising Glass Physics</title><link>https://shoubhikbanerjee.github.io/blog/p/new-llm-compression-method-uses-constrained-binary-optimization-and-ising-glass-physics/</link><pubDate>Mon, 21 Sep 2026 22:03:11 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-llm-compression-method-uses-constrained-binary-optimization-and-ising-glass-physics/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/693c2a4eb0871ba57155b4ed/q4gZV9ENtfFwge7H3Q7YJ.png" alt="Featured image of post New LLM Compression Method Uses Constrained Binary Optimization and Ising Glass Physics" /&gt;&lt;h1 id="new-llm-compression-method-uses-constrained-binary-optimization-and-ising-glass-physics"&gt;New LLM Compression Method Uses Constrained Binary Optimization and Ising Glass Physics
+&lt;/h1&gt;&lt;p&gt;A new paper titled &amp;ldquo;LLM Compression by Block Removal with Constrained Binary Optimization&amp;rdquo; introduces a method to reformulate transformer block selection as a constrained binary optimization (CBO) problem. This approach maps the selection process directly onto an Ising glass, which is a disordered spin system characterized by all-to-all interactions and a fixed number of &amp;ldquo;up&amp;rdquo; spins.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The research addresses the limitations of existing block-removal methods, which typically score blocks individually based on magnitude or sensitivity heuristics, or restrict removal to single consecutive runs. By treating the model as a physical system, this new method captures the complex interactions between different layers that traditional mean-field methods often overlook.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The process transforms the selection of which blocks to remove into a clean optimization problem:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Binary Mapping&lt;/strong&gt;: A binary variable is attached to each transformer block, where 0 indicates the block is kept and 1 indicates it is removed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hessian Calculation&lt;/strong&gt;: A second-order Taylor expansion of the model&amp;rsquo;s loss is performed with respect to these variables to produce an approximate Hessian matrix.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Physics Formulation&lt;/strong&gt;: The diagonal of the Hessian represents the individual importance of each block, while the off-diagonal entries represent pairwise couplings between blocks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Energy Minimization&lt;/strong&gt;: The task is to find a set of M blocks whose removal minimizes the energy equation xᵀH⁰x, subject to a fixed number of removals.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The method prioritizes efficiency by computing the necessary data once and then utilizing high-speed solvers to find optimal configurations.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Hessian Computation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Computed once using forward and backward passes on a small calibration dataset.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Energy Calculation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Evaluating a candidate configuration is a cheap calculation that does not require running the model.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Scalability&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The same Hessian is reusable for different compression targets (values of M).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Hardware Requirement&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Brute-force checking of billions of configurations can be performed on a single GPU.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Solver Compatibility&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Can be used with classical tabu search, quantum annealing, QAOA, and branch-and-bound solvers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This method shows significant performance gains in the deep-compression regime. At 50% compression of the Llama-3.3-70B-Instruct model, the approach gained almost 23 percentage points on the MMLU benchmark compared to the previous best block-removal method. Low-energy states within the spin system have been established as a strong proxy for downstream model quality, allowing researchers to generate high-performing pruned models without the need for constant benchmarking during the search process.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/668e37fd9c9aa124a3c867e8/zD5BW0R8lXV9fmVyap9Jb.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/668e37fd9c9aa124a3c867e8/n1GCTwe9Ulg53TAdgqjAf.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/668e37fd9c9aa124a3c867e8/HuauFbdznYW4fNQh8j4Tp.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#LLM #ModelCompression #MachineLearning #IsingGlass #Llama3&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/MultiverseComputingCAI/pruning-llms-like-a-physicist-block-removal-as-an" target="_blank" rel="noopener"
+&gt;Pruning LLMs Like a Physicist: Block Removal as an Ising Optimization Problem&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

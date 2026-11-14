@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>InclusionAI on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/inclusionai/</link><description>Recent content in InclusionAI on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 27 Oct 2026 22:02:24 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/inclusionai/index.xml" rel="self" type="application/rss+xml"/><item><title>Optimizing Ling-3.0-flash Inference Performance on NVIDIA DGX Spark</title><link>https://shoubhikbanerjee.github.io/blog/p/optimizing-ling-3-0-flash-inference-performance-on-nvidia-dgx-spark/</link><pubDate>Tue, 27 Oct 2026 22:02:24 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/optimizing-ling-3-0-flash-inference-performance-on-nvidia-dgx-spark/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/dgx-spark-inference-featured-660x370.png" alt="Featured image of post Optimizing Ling-3.0-flash Inference Performance on NVIDIA DGX Spark" /&gt;&lt;h1 id="optimizing-ling-30-flash-inference-performance-on-nvidia-dgx-spark"&gt;Optimizing Ling-3.0-flash Inference Performance on NVIDIA DGX Spark
+&lt;/h1&gt;&lt;p&gt;Performance evaluations of the Ling-3.0-flash model from Inclusion AI on NVIDIA DGX Spark have identified that decoding is memory-bound, with model weight reading driving execution time. These findings have led to several performance optimizations focused on reducing weight traffic and improving token verification efficiency.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Ling-3.0-flash-fp4 is a mixture-of-experts (MoE) model featuring 124 billion total parameters and 5.1 billion active parameters per token. Profiling at batch-size-1 identified two specific operations that limit inference performance: the MoE computation and the output-layer projection (LM head) that produces vocabulary scores. To address these bottlenecks, optimizations were applied to the kernel execution path and memory read volume.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Performance improvements were achieved through three primary technical interventions:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Optimization&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Mechanism&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Impact&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Humming Kernel Library&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Replaces flashinfer_mxfp4; uses NVIDIA CUDA Runtime Compilation (NVRTC) to specialize kernels for specific model shapes.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Compiles individual kernels in seconds and specializes for narrow intermediate sizes.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;FP8 LM Head Quantization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Moves LM-head weights from BF16 to FP8 via dynamic quantization.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Halves the memory read volume for the output-layer projection.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Speculative Decoding&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Utilizes the native NEXTN prediction layer as a draft model for verification rounds.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Reduces the number of decode steps with a measured ratio of approximately 2.26.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The model architecture and optimization environment include several specialized configurations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Layer Composition:&lt;/strong&gt; 42 layers total, consisting of 35 Kimi Delta Attention (KDA) linear-attention layers and seven multi-head latent attention (MLA) layers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MoE Architecture:&lt;/strong&gt; Each layer routes tokens to eight of 512 routed experts plus one shared expert.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Context Window:&lt;/strong&gt; Supports a native 256K-token window, expandable to 1M tokens for agentic workflows.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LM Head Projection:&lt;/strong&gt; Projects a hidden dimension of 2,560 to a vocabulary of 157,184 tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Drafting Configuration:&lt;/strong&gt; Uses three draft steps and a four-token verification window to process up to 32 experts during verification.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Software Integration:&lt;/strong&gt; Humming kernels are available through the humming-kernels pip package and cache compiled binaries in local storage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Identifying that decoding was memory-bound allowed for targeted reductions in weight traffic during each decode step. By using the internal NEXTN prediction layer (num_nextn_predict_layers: 1) as a native draft model, the system can perform speculative decoding without requiring additional downloads or external model training. This combination of kernel specialization and memory volume reduction directly addresses the performance limits of high-parameter MoE architectures on specialized hardware.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/dgx-spark-inference-featured-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/04/ai-model-representation-2-660x370.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#InclusionAI #NVIDIADGX #MixtureOfExperts #ModelInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/3-ways-to-boost-moe-inference-on-nvidia-dgx-spark/" target="_blank" rel="noopener"
+&gt;3 Ways to Boost MoE Inference on NVIDIA DGX Spark | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

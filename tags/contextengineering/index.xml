@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Contextengineering on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/contextengineering/</link><description>Recent content in Contextengineering on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 Nov 2026 22:04:09 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/contextengineering/index.xml" rel="self" type="application/rss+xml"/><item><title>Deep Insight Demonstrates Four‑Layer Context Engineering for Production AI Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/deep-insight-demonstrates-fourlayer-context-engineering-for-production-ai-agents/</link><pubDate>Thu, 05 Nov 2026 22:04:09 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/deep-insight-demonstrates-fourlayer-context-engineering-for-production-ai-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21082-featured-image.png" alt="Featured image of post Deep Insight Demonstrates Four‑Layer Context Engineering for Production AI Agents" /&gt;&lt;h1 id="deep-insight-demonstrates-fourlayer-context-engineering-for-production-ai-agents"&gt;Deep Insight Demonstrates Four‑Layer Context Engineering for Production AI Agents
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Production AI agents that handle tasks such as data analysis and report generation can hit a major bottleneck: managing the limited context window of the underlying LLM. Even with Anthropic Claude Sonnet 4.5’s generous 200 K‑token window on Amazon Bedrock, “a seemingly straightforward request like ‘Analyze sales data and create a DOCX report’” can consume over 150 K tokens across 15 minutes, causing the window to overflow, stale context to degrade performance, and costly re‑execution.&lt;/p&gt;
+&lt;h2 id="-four-layers-of-context-engineering"&gt;🧱 Four Layers of Context Engineering
+&lt;/h2&gt;&lt;p&gt;Anthropic’s engineering posts together with the Strands Agents SDK converge on a &lt;strong&gt;four‑layer&lt;/strong&gt; discipline for context engineering:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Layer&lt;/th&gt;
+&lt;th&gt;What it does (from evidence)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1️⃣ Isolate context at the architecture level&lt;/td&gt;
+&lt;td&gt; Isolate context at the architecture level&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2️⃣ Control it through prompts&lt;/td&gt;
+&lt;td&gt; Control it through prompts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3️⃣ Externalize it to the filesystem&lt;/td&gt;
+&lt;td&gt; Externalize it to the filesystem&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4️⃣ Verify it with independent agents and safeguards&lt;/td&gt;
+&lt;td&gt; Verify it with independent agents and safeguards&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;These layers span &lt;strong&gt;architecture design, prompt writing, tool implementation, and verification&lt;/strong&gt; and each compensates for what the previous layers miss.&lt;/p&gt;
+&lt;h2 id="-how-deep-insight-implements-each-layer"&gt;⚙️ How Deep Insight Implements Each Layer
+&lt;/h2&gt;&lt;p&gt;Deep Insight is an open‑source multi‑agent data analysis solution built on the &lt;strong&gt;Strands Agents SDK&lt;/strong&gt;, &lt;strong&gt;Amazon Bedrock AgentCore&lt;/strong&gt;, and &lt;strong&gt;AWS Fargate&lt;/strong&gt;. It applies the four layers as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Architecture isolation&lt;/strong&gt; – The system’s core runs in a containerized environment (AWS Fargate) that keeps agent state separate from the LLM’s context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prompt control&lt;/strong&gt; – Prompts are crafted to load only the minimal necessary information for each sub‑task.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Filesystem externalization&lt;/strong&gt; – Intermediate results (e.g., data tables, charts) are written to the filesystem and re‑loaded on demand instead of staying in the LLM’s context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Verification safeguards&lt;/strong&gt; – Independent verification agents check the correctness of each step before proceeding.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-measurable-impact"&gt;📊 Measurable Impact
+&lt;/h2&gt;&lt;p&gt;When the techniques are applied together in the reference implementation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;single write‑and‑execute tool&lt;/strong&gt; cuts the tokens each script adds to context by &lt;strong&gt;about 95 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Loading skills on demand&lt;/strong&gt; shrinks the system prompt by &lt;strong&gt;about 97 %&lt;/strong&gt;.
+These reductions prevent the “context rot” described by Anthropic:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“As the number of tokens in the context window increases, the model’s ability to accurately recall information from that context decreases (Context rot).” — Anthropic, &lt;em&gt;Effective Context Engineering for AI Agents&lt;/em&gt; (2025.09)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-next-steps"&gt;🚀 Next Steps
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Part 1&lt;/strong&gt; of the series detailed five production challenges and how Deep Insight solved them.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Part 2&lt;/strong&gt; (this post) walks through the four layers of context engineering with working code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Part 3&lt;/strong&gt; (coming soon) will guide deployment in a secure private network on Amazon VPC, covering everything needed for real‑world operations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;By organizing existing guidance into concrete practices, this series makes the discipline of &lt;strong&gt;context engineering&lt;/strong&gt; actionable for anyone building production‑grade AI agents.&lt;/p&gt;
+&lt;p&gt;#AIAgents #ContextEngineering #Anthropic #AmazonBedrock #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/four-layers-of-context-engineering-for-production-ai-agents-how-deep-insight-applies-them-in-working-code/" target="_blank" rel="noopener"
+&gt;Four layers of context engineering for production AI agents: How Deep Insight applies them in working code | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>The nine parts of every AI agent</title><link>https://shoubhikbanerjee.github.io/blog/p/the-nine-parts-of-every-ai-agent/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/the-nine-parts-of-every-ai-agent/</guid><description>&lt;img src="https://media.licdn.com/dms/image/v2/D4E12AQELmTkGoLlSRA/article-cover_image-shrink_720_1280/B4EaBji5L9G4AU-/0/1788376493682?e=2147483647&amp;v=beta&amp;t=bTsFofTp03pYDglgogaxRdQlubaqaNqTczQCKkLb_iY" alt="Featured image of post The nine parts of every AI agent" /&gt;&lt;h1 id="the-nine-parts-of-every-ai-agent"&gt;The nine parts of every AI agent
+&lt;/h1&gt;&lt;p&gt;Every AI agent, from vendor demos to internal prototypes, is built from the same nine components. These parts define how agents operate, interact, and deliver results in commercial environments.&lt;/p&gt;
+&lt;h2 id="-the-nine-parts"&gt;🧩 The nine parts
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Memory&lt;/strong&gt;: Everything the agent knows about you and your work that wasn&amp;rsquo;t in the message you just sent it. For commercial work, this includes project records like subcontract packages, marked-up drawings, diary entries, labour returns, early warnings, and correspondence.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Context engineering&lt;/strong&gt;: Choosing the relevant slice of memory for the task at hand. Giving the AI everything produces a worse answer, more slowly, at higher cost.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Skills&lt;/strong&gt;: A complete piece of work the agent knows how to do end to end, in the right order, with judgement calls marked. Writing one out properly takes about an hour and provides inputs, steps, judgement calls, and what a good output looks like.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tools&lt;/strong&gt;: How the agent reaches the outside world. MCP (Model Context Protocol) is the standard that lets a model connect to a live system and read from it directly.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Systems&lt;/strong&gt;: A commercial agent needs five systems, four vendors, and often a shared drive with folders named &amp;ldquo;FINAL v3 USE THIS ONE&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data extraction&lt;/strong&gt;: For each record, name the system it lives in, then ask whether data comes out of it any way other than someone exporting to Excel on a Friday. Where the answer is no, that is the bottleneck.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Runtime&lt;/strong&gt;: The loop where the agent plans, acts, looks at what came back, adjusts, retries when something fails, and keeps going until the job is done. Assessing an event isn&amp;rsquo;t one question, it&amp;rsquo;s fifteen in sequence, with answers changing subsequent questions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Triggers&lt;/strong&gt;: What start the work without anyone asking. The most obviously valuable part, because most commercial issues arise from someone not looking on the right day.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Memory already exists somewhere, either as a diary submitted through a system or a scanned signed sheet in a folder. Getting it across that line costs money.&lt;/li&gt;
+&lt;li&gt;A short list of relevant context is a rule you can hand over, and it&amp;rsquo;s the difference between an agent that answers in seconds for pennies and one that takes a minute and costs more to be less accurate.&lt;/li&gt;
+&lt;li&gt;Products with a real runtime have a clear answer. Products without one change the subject to the quality of their model.&lt;/li&gt;
+&lt;li&gt;In every case, somebody knew the rule for triggers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AIagents #memory #contextengineering #runtime #MCP #commercialAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.linkedin.com/pulse/how-build-any-ai-agent-william-doyle-mrics-tvrxe" target="_blank" rel="noopener"
+&gt;How to build any AI agent&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

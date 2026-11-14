@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CloudBilling on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cloudbilling/</link><description>Recent content in CloudBilling on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 11 Nov 2026 22:05:42 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cloudbilling/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker AI Adds Usage-Based Metering for Bidirectional Streaming Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-usage-based-metering-for-bidirectional-streaming-inference/</link><pubDate>Wed, 11 Nov 2026 22:05:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-usage-based-metering-for-bidirectional-streaming-inference/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21045-featured-image.png" alt="Featured image of post Amazon SageMaker AI Adds Usage-Based Metering for Bidirectional Streaming Inference" /&gt;&lt;h1 id="amazon-sagemaker-ai-adds-usage-based-metering-for-bidirectional-streaming-inference"&gt;Amazon SageMaker AI Adds Usage-Based Metering for Bidirectional Streaming Inference
+&lt;/h1&gt;&lt;p&gt;Amazon has announced usage-based metering for Amazon SageMaker bidirectional (bidi) streaming inference. This update allows model providers to report actual usage for AWS Marketplace software charges, addressing a specific billing challenge for real-time speech AI applications.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;This capability builds on the previously introduced bidirectional streaming for real-time inference on Amazon SageMaker AI. Deepgram, a real-time speech AI company, serves as the launch partner, bringing usage-based Speech-to-Text (STT) and Text-to-Speech (TTS) billing to the AWS Marketplace.&lt;/p&gt;
+&lt;p&gt;Deepgram has also enhanced its support with AWS Identity and Access Management (AWS IAM) temporary delegation to simplify secure authentication and expanded its observability with enhanced metrics.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The solution introduces a dual-connection architecture to separate inference data from billing metadata:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Connection&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Data connection&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Carries inference request and response data through the existing bidirectional stream.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Metadata connection&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A companion WebSocket dedicated specifically to metering data.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In this workflow, a client streams audio and receives transcriptions through the SageMaker AI API using an HTTP/2 event stream. SageMaker AI then connects to the model server over WebSockets. Both connections utilize the same &lt;code&gt;X-Amzn-SageMaker-Request-Id&lt;/code&gt; header, allowing the model server to correlate metering records with active inference sessions.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Providers can align AWS Marketplace software charges with reported usage through several technical specifications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Opt-in Mechanism:&lt;/strong&gt; Model servers opt in by returning the header &lt;code&gt;X-Amzn-SageMaker-Metadata-Stream-Supported: true&lt;/code&gt; during the WebSocket upgrade.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Message Format:&lt;/strong&gt; Metering data is sent as JSON text frames. Each frame must contain exactly one metering record rather than an array.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quotas:&lt;/strong&gt; The metadata stream has a rate quota of one message per second per connection, with a maximum message size of 512 bytes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Billing Dimensions:&lt;/strong&gt; Messages use the &lt;code&gt;inference.count&lt;/code&gt; dimension, while the &lt;code&gt;ConsumedUnits&lt;/code&gt; field supplies the quantity (e.g., reporting 720 seconds for 12 minutes of audio).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reliability:&lt;/strong&gt; The metadata connection runs over TCP for ordered, reliable delivery. The &lt;code&gt;ClientToken&lt;/code&gt; field supports idempotency, and duplicate tokens are dropped silently.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;For organizations deploying models for transcription, contact centers, voice agents, or captioning, this update enables transparent, per-unit billing. Usage-based charges flow directly into the AWS bill, though Amazon SageMaker AI endpoint infrastructure charges still apply independently. Providers can also set &lt;code&gt;X-Amzn-SageMaker-Metadata-Stream-Required&lt;/code&gt; to true to ensure inference stops if the metadata stream becomes unavailable.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/16/ML-21067-6.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2024/09/10/llinx.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/21/Screenshot-2026-07-21-at-11.30.35%E2%80%AFAM.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonSageMaker #AWSMarketplace #Deepgram #RealTimeAI #CloudBilling&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming/" target="_blank" rel="noopener"
+&gt;Introducing usage-based pricing for Amazon SageMaker AI bidirectional streaming | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

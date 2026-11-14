@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Serverless Architecture on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/serverless-architecture/</link><description>Recent content in Serverless Architecture on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 14 Nov 2026 12:02:58 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/serverless-architecture/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore Runtime V2 Improves Session Startup and Billing</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-runtime-v2-improves-session-startup-and-billing/</link><pubDate>Sat, 14 Nov 2026 12:02:58 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-runtime-v2-improves-session-startup-and-billing/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22099-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Runtime V2 Improves Session Startup and Billing" /&gt;&lt;h1 id="amazon-bedrock-agentcore-runtime-v2-improves-session-startup-and-billing"&gt;Amazon Bedrock AgentCore Runtime V2 Improves Session Startup and Billing
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore runtime provides a fully managed, serverless environment where each session runs in its own isolated microVM, scales to zero when idle, and you only pay for the resources your sessions consume.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AgentCore runtime runs each session in a new microVM.&lt;/li&gt;
+&lt;li&gt;The platform scales to zero when there’s no work and charges only for consumed resources.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-v2-starts-a-session"&gt;🧩 How V2 Starts a Session
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Setting &lt;code&gt;platformVersion&lt;/code&gt; to &lt;strong&gt;&amp;ldquo;V2&amp;rdquo;&lt;/strong&gt; changes how sessions start.&lt;/li&gt;
+&lt;li&gt;When you create or update a runtime, AgentCore starts your container in a fresh microVM and waits for the first healthy ping (&lt;code&gt;GET /ping&lt;/code&gt;) within 120 seconds.&lt;/li&gt;
+&lt;li&gt;It then clears the operating system’s file cache, freezes the microVM, and stores its memory and disk as a snapshot. Building this snapshot takes a few minutes during create or update.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-session-execution"&gt;⚙️ Session Execution
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;On a new session, AgentCore restores the snapshot into a new microVM.&lt;/li&gt;
+&lt;li&gt;Your process resumes exactly where it was frozen, with imports, objects, and clients in place.&lt;/li&gt;
+&lt;li&gt;Files from the image are loaded lazily; each block is fetched the first time a session reads it and then cached closer to the host.&lt;/li&gt;
+&lt;li&gt;Anything held at snapshot time, including RAM‑backed file systems such as &lt;code&gt;/dev/shm&lt;/code&gt;, is available at memory speed from the first access.&lt;/li&gt;
+&lt;li&gt;The file cache is cleared before the freeze, so reads during init do not speed up restored sessions.&lt;/li&gt;
+&lt;li&gt;A CLI that runs as a separate process and exits, or a browser binary, is read during init and then fetched again from the image for each restored session.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-benefits"&gt;🚀 Performance Benefits
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Session start times are faster and more consistent.&lt;/li&gt;
+&lt;li&gt;V2 reclaims memory that sessions don’t use, so billing tracks what the agent actually uses.&lt;/li&gt;
+&lt;li&gt;For most agents, switching to V2 is all it takes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-measuring-startup-time"&gt;📏 Measuring Startup Time
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AgentCore publishes CloudWatch metrics in the &lt;code&gt;AWS/Bedrock-AgentCore&lt;/code&gt; namespace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Latency&lt;/strong&gt;: time to first byte.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;OverheadLatency&lt;/strong&gt;: platform overhead such as microVM start and snapshot restore on a new session.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-tips-for-agents"&gt;🛠️ Tips for Agents
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;With the AgentCore Python SDK, &lt;em&gt;init&lt;/em&gt; means everything before &lt;code&gt;app.run()&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;If you run your own HTTP server (Node.js or another language), report healthy only after your initialization finishes.&lt;/li&gt;
+&lt;li&gt;Build hooks are now supported to keep work off the first request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #Serverless&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/architecture-patterns-for-fast-session-startup-on-amazon-bedrock-agentcore-runtime/" target="_blank" rel="noopener"
+&gt;Architecture patterns for fast session startup on Amazon Bedrock AgentCore runtime | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Event‑Driven Sync of MCP Server Tools to AWS Agent Registry</title><link>https://shoubhikbanerjee.github.io/blog/p/eventdriven-sync-of-mcp-server-tools-to-aws-agent-registry/</link><pubDate>Thu, 12 Nov 2026 22:08:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/eventdriven-sync-of-mcp-server-tools-to-aws-agent-registry/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21088-featured-image.png" alt="Featured image of post Event‑Driven Sync of MCP Server Tools to AWS Agent Registry" /&gt;&lt;h1 id="eventdriven-sync-of-mcp-server-tools-to-aws-agent-registry"&gt;Event‑Driven Sync of MCP Server Tools to AWS Agent Registry
+&lt;/h1&gt;&lt;p&gt;When a Model Context Protocol (MCP) server published in the AWS Agent Registry gains a new tool or updates its schema, the registry record is automatically refreshed via an event‑driven workflow.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;An MCP server published in the AWS Agent Registry must keep its tool or schema record up‑to‑date.&lt;/li&gt;
+&lt;li&gt;An event‑driven workflow uses AWS CloudTrail, Amazon EventBridge, and AWS Lambda to automate the update.&lt;/li&gt;
+&lt;li&gt;The solution works in both single‑account and multi‑account environments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🏗️ Architecture
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS CloudTrail&lt;/strong&gt; – captures &lt;code&gt;UpdateAgentRuntime&lt;/code&gt; API calls as management events.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon EventBridge&lt;/strong&gt; – routes matching events to a Lambda function; supports cross‑account forwarding.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Lambda (sync function)&lt;/strong&gt; – queries the MCP server, diffs the tool list against the registry, and updates the record when needed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Agent Registry&lt;/strong&gt; – stores MCP server records and their tool schemas as the source of truth.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AgentCore Identity&lt;/strong&gt; – brokers OAuth token exchanges so the Lambda can authenticate without storing secrets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Account roles&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Account A&lt;/em&gt; (registry account) owns the Agent Registry, EventBridge rule, sync Lambda, and CloudTrail logs.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Account B&lt;/em&gt; (MCP server account) hosts the MCP server runtime and the Amazon Cognito OAuth provider.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How It Works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;A developer updates an MCP server in Account B; the server calls the &lt;code&gt;UpdateAgentRuntime&lt;/code&gt; API (via AgentCore CLI or directly).&lt;/li&gt;
+&lt;li&gt;CloudTrail in Account B records the call as a management event (≈ 5–15 min delay).&lt;/li&gt;
+&lt;li&gt;EventBridge in Account B captures the CloudTrail event and forwards it to the default EventBridge bus in Account A (cross‑account rule when applicable).&lt;/li&gt;
+&lt;li&gt;The EventBridge rule in Account A triggers the sync Lambda, passing the full CloudTrail event JSON.&lt;/li&gt;
+&lt;li&gt;The Lambda extracts the runtime Amazon Resource Name (ARN) from the event and builds the MCP server’s invocation URL.&lt;/li&gt;
+&lt;li&gt;The Lambda obtains a secure OAuth bearer token through AgentCore Identity.&lt;/li&gt;
+&lt;li&gt;The Lambda calls the MCP server (&lt;code&gt;initialize&lt;/code&gt;, then &lt;code&gt;tools/list&lt;/code&gt;) to retrieve the latest tools information.&lt;/li&gt;
+&lt;li&gt;The Lambda locates the corresponding registry record by ARN, compares the retrieved schema with the stored one, and updates the record if a change is detected.&lt;/li&gt;
+&lt;li&gt;The process assumes the registry already contains a pre‑registered record for the MCP server; the Lambda updates existing records only and does not create new ones.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The same workflow runs unchanged in a single‑account deployment where the registry, Lambda, EventBridge rule, and MCP server all reside in Account A.&lt;/li&gt;
+&lt;li&gt;In a multi‑account deployment, runtime events flow securely from Account B to Account A before the Lambda performs the sync.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21088-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21088-2-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21088-3-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #AgentRegistry #EventBridge #Lambda #MCP&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/automating-aws-agent-registry-updates-with-push-based-architecture/" target="_blank" rel="noopener"
+&gt;Automating AWS Agent Registry updates with push-based architecture | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

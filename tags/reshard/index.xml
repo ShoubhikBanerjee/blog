@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reshard on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/reshard/</link><description>Recent content in Reshard on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 07 Nov 2026 22:01:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/reshard/index.xml" rel="self" type="application/rss+xml"/><item><title>Reshard Collective Enables Efficient Weight Refit for Large‑Scale RL Training</title><link>https://shoubhikbanerjee.github.io/blog/p/reshard-collective-enables-efficient-weight-refit-for-largescale-rl-training/</link><pubDate>Sat, 07 Nov 2026 22:01:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/reshard-collective-enables-efficient-weight-refit-for-largescale-rl-training/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/green-cube.webp" alt="Featured image of post Reshard Collective Enables Efficient Weight Refit for Large‑Scale RL Training" /&gt;&lt;h1 id="reshard-collective-enables-efficient-weight-refit-for-largescale-rl-training"&gt;Reshard Collective Enables Efficient Weight Refit for Large‑Scale RL Training
+&lt;/h1&gt;&lt;p&gt;During reinforcement learning (RL) post‑training, training trajectories are generated on the fly by running inference with the current policy model. In large‑scale setups inference and training run on separate GPU resources in a disaggregated configuration, and the system periodically refreshes inference‑GPU weights with the latest parameters from the training GPUs; this transfer is called &lt;strong&gt;refit&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;RL post‑training generates trajectories on the fly via inference with the current policy model.&lt;/li&gt;
+&lt;li&gt;Inference and training run in parallel on separate GPU resources in a disaggregated setup.&lt;/li&gt;
+&lt;li&gt;Periodic weight refresh on inference GPUs is termed &lt;strong&gt;refit&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-refit-is-challenging"&gt;⚙️ Why refit is challenging
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Inference and training use different parallelism mappings (data, context, tensor, expert, pipeline), so weight shards are laid out differently.&lt;/li&gt;
+&lt;li&gt;Refit must move all model weights, making the communication payload comparable to the total model size.&lt;/li&gt;
+&lt;li&gt;Frontier models already require ~10 TB of data per refit (e.g., Kimi K3 ≈5.6 TB, Qwen 3.8 2.4T A95B ≈4.8 TB), and the payload grows with model scale.&lt;/li&gt;
+&lt;li&gt;Existing implementations use a gather‑and‑broadcast pattern:
+&lt;ul&gt;
+&lt;li&gt;Training GPUs all‑gather local shards into a complete tensor.&lt;/li&gt;
+&lt;li&gt;The complete tensor is broadcast to inference GPUs, each keeping only its needed shard.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;This sends the full tensor to every inference GPU, creating redundant communication in both phases.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-the-reshard-collective-solution"&gt;🧩 The Reshard collective solution
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Reshard collective is a new type of collective communication designed to accelerate RL weight refit.&lt;/li&gt;
+&lt;li&gt;Implemented as &lt;strong&gt;NCCL M2N Reshard&lt;/strong&gt;, an open‑source reference in the NVIDIA/nccl‑extensions GitHub repository.&lt;/li&gt;
+&lt;li&gt;Builds on PyTorch’s Distributed Tensor (DTensor) abstraction, which describes a tensor’s global shape, device mesh, and placements (shard or replicate).&lt;/li&gt;
+&lt;li&gt;Refit is reformulated as a DTensor‑to‑DTensor &lt;strong&gt;resharding&lt;/strong&gt; operation: converting the training layout to the inference layout directly, without constructing a full intermediate tensor.&lt;/li&gt;
+&lt;li&gt;This transfers only the theoretical minimum amount of data, respecting arbitrary shard boundaries and replication patterns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-model-size-examples"&gt;📊 Model size examples
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Parameters (trillion)&lt;/th&gt;
+&lt;th&gt;Approx. BF16 weight size (TB)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Kimi K3&lt;/td&gt;
+&lt;td&gt;2.8&lt;/td&gt;
+&lt;td&gt;5.6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen 3.8 2.4T A95B&lt;/td&gt;
+&lt;td&gt;2.4&lt;/td&gt;
+&lt;td&gt;4.8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;NCCL M2N Reshard source code is publicly available via the NVIDIA/nccl‑extensions GitHub repo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/direct-shard-to-shard-transfer-dtensor.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/reshard-operation-example.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/tp4-to-tp2dp2-example.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#RL #WeightRefit #Reshard #NCCL&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/accelerating-reinforcement-learning-weight-refit-with-the-reshard-collective/" target="_blank" rel="noopener"
+&gt;Accelerating Reinforcement Learning Weight Refit with the Reshard Collective | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

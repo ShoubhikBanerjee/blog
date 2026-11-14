@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AssemblyAI on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/assemblyai/</link><description>Recent content in AssemblyAI on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 14 Nov 2026 12:02:58 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/assemblyai/index.xml" rel="self" type="application/rss+xml"/><item><title>AssemblyAI Implements Cost-Optimized GPU Inference Architecture for Speech-to-Text at Scale</title><link>https://shoubhikbanerjee.github.io/blog/p/assemblyai-implements-cost-optimized-gpu-inference-architecture-for-speech-to-text-at-scale/</link><pubDate>Sat, 14 Nov 2026 12:02:58 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/assemblyai-implements-cost-optimized-gpu-inference-architecture-for-speech-to-text-at-scale/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-20884-featured-image.png" alt="Featured image of post AssemblyAI Implements Cost-Optimized GPU Inference Architecture for Speech-to-Text at Scale" /&gt;&lt;h1 id="assemblyai-implements-cost-optimized-gpu-inference-architecture-for-speech-to-text-at-scale"&gt;AssemblyAI Implements Cost-Optimized GPU Inference Architecture for Speech-to-Text at Scale
+&lt;/h1&gt;&lt;p&gt;AssemblyAI has implemented a cost-optimized architecture to handle GPU-intensive speech-to-text inference at scale using Amazon EC2 Spot Instances and Amazon ECS. The system allows AssemblyAI to process thousands of GPU instances continuously for complex deep learning pipelines while maintaining service level agreement (SLA) commitments and meeting data residency requirements.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The architecture decouples job submission from execution to ensure resilience against instance interruptions. When a transcription request arrives, it is placed into an Amazon SQS queue. Amazon ECS tasks pick up jobs from the queue to run inference models on NVIDIA GPUs. If a Spot Instance receives a 2-minute reclamation warning, Amazon EventBridge triggers an AWS Lambda function that returns the in-flight job to the SQS queue, allowing another healthy ECS task to pick it up.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The platform is built on four primary pillars designed for cost-optimization and resiliency:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Pillar&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Compute Management&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Amazon ECS capacity providers mixing Spot and On-Demand instances&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Infrastructure&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Multi-family GPU Spot diversification across instance types&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Resilience&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Queue-based retry architecture using Amazon SQS for recovery&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Compliance&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Regional deployment for data residency (US West and Europe)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The fleet utilizes multiple NVIDIA GPU instance families to serve demand spikes, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;g4dn.xlarge and g4dn.2xlarge&lt;/li&gt;
+&lt;li&gt;g5.xlarge and g5.4xlarge&lt;/li&gt;
+&lt;li&gt;g6.2xlarge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Amazon CloudWatch Metrics provides observability across the system by monitoring fleet health and Spot interruption events.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;AssemblyAI provides its services via an API available on AWS Marketplace. The platform supports several features including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Transcription&lt;/li&gt;
+&lt;li&gt;Speaker detection&lt;/li&gt;
+&lt;li&gt;Sentiment analysis&lt;/li&gt;
+&lt;li&gt;Chapter detection&lt;/li&gt;
+&lt;li&gt;Personally identifiable information (PII) redaction&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To meet regulatory needs, the company implements strict data residency configurations in European AWS Regions and US West (Oregon).&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Running speech-to-text inference entirely on On-Demand instances is cost-prohibitive due to the computationally intensive nature of the models and the need for thousands of GPUs. By using a price-capacity optimized allocation strategy for Spot Instances, AssemblyAI achieves significant cost savings while maintaining availability. This setup is particularly critical for customers in regulated industries, such as healthcare, finance, and legal, who must maintain audio data within specific geographic boundaries.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-20884-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-20884-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-20884-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AssemblyAI #AWS #GPU #CloudComputing #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/cost-optimizing-assemblyai-speech-to-text-inference-on-aws-with-amazon-ec2-spot/" target="_blank" rel="noopener"
+&gt;Cost-optimizing AssemblyAI speech-to-text inference on AWS with Amazon EC2 Spot | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

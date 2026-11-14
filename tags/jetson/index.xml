@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jetson on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/jetson/</link><description>Recent content in Jetson on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 14 Nov 2026 12:02:58 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/jetson/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Introduces cuDLA Python Bindings for Deep Learning Accelerator Workflows</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-cudla-python-bindings-for-deep-learning-accelerator-workflows/</link><pubDate>Sat, 14 Nov 2026 12:02:58 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-cudla-python-bindings-for-deep-learning-accelerator-workflows/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/dla-inference-660x370.jpg" alt="Featured image of post NVIDIA Introduces cuDLA Python Bindings for Deep Learning Accelerator Workflows" /&gt;&lt;h1 id="nvidia-introduces-cudla-python-bindings-for-deep-learning-accelerator-workflows"&gt;NVIDIA Introduces cuDLA Python Bindings for Deep Learning Accelerator Workflows
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced the &lt;code&gt;cuda.bindings.cudla&lt;/code&gt; module in &lt;code&gt;cuda-bindings&lt;/code&gt; 13.3.0 as part of the CUDA Python project. This thin, Cython-generated Python layer exposes the cuDLA C++ API directly to Python, allowing developers to manage NVIDIA Deep Learning Accelerator (DLA) execution without writing C++ runtime code.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;NVIDIA DLA platforms provide dedicated fixed-function hardware for deep learning inference. On platforms like the NVIDIA Jetson AGX Orin, DLA executes supported neural network operations to offload inference work from the GPU, improving power efficiency and freeing GPU capacity for other application tasks. While DLA does not support as many layers as a GPU, it supports a wide variety of layers used in popular neural network architectures.&lt;/p&gt;
+&lt;h2 id="-architecture-and-api-capabilities"&gt;🧩 Architecture and API Capabilities
+&lt;/h2&gt;&lt;p&gt;The &lt;code&gt;cuda.bindings.cudla&lt;/code&gt; module exposes the runtime API needed for hybrid-mode workflows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;API Components&lt;/strong&gt;: Contains thirteen functions, nine data types, and eight enums for hybrid-mode management.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid Mode Execution&lt;/strong&gt;: Setting &lt;code&gt;cudla.Mode.CUDA_DLA&lt;/code&gt; enables hybrid mode, where DLA tasks are submitted through CUDA streams.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Unified Pipelines&lt;/strong&gt;: CUDA streams coordinate GPU and DLA work so that preprocessing kernels, DLA inference, and postprocessing kernels can be enqueued and executed in order on the same stream.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Platform Consistency&lt;/strong&gt;: The API is identical on Jetson Orin and NVIDIA RTX Spark Windows AI laptops, extending cuDLA execution to mainstream developer laptops.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-compilation-and-runtime-details"&gt;⚙️ Compilation and Runtime Details
+&lt;/h2&gt;&lt;p&gt;Running DLA workloads requires specific setup and compilation parameters depending on the workflow phase:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Process Step&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;th&gt;Requirements &amp;amp; Behavior&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Model Compilation&lt;/td&gt;
+&lt;td&gt;TensorRT &lt;code&gt;trtexec&lt;/code&gt; tool compiles a trained model into a DLA loadable&lt;/td&gt;
+&lt;td&gt;Requires TensorRT (example targets TensorRT 11.4.1 with CUDA 13.4 Update 1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Standalone Mode&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;buildDLAStandalone&lt;/code&gt; produces a raw DLA loadable&lt;/td&gt;
+&lt;td&gt;Does not require TensorRT at inference time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Core Selection&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;useDLACore=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Targets the first DLA engine on Orin&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Precision Setting&lt;/td&gt;
+&lt;td&gt;Precision is derived from model tensor types in TensorRT 11&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;--fp16&lt;/code&gt; and &lt;code&gt;--int8&lt;/code&gt; flags are no longer supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Model Preprocessing&lt;/td&gt;
+&lt;td&gt;Trimming ONNX graph head and tail layers&lt;/td&gt;
+&lt;td&gt;Necessary when network layers are DLA-incompatible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Layout Selection&lt;/td&gt;
+&lt;td&gt;I/O format options&lt;/td&gt;
+&lt;td&gt;Selects CHW16 layout&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-environment-requirements"&gt;🚀 Environment Requirements
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Runtime Dependencies&lt;/strong&gt;: To run an existing DLA loadable, only &lt;code&gt;libcudla.so&lt;/code&gt; is required. On Jetson Orin, NVIDIA JetPack supplies &lt;code&gt;libcudla.so&lt;/code&gt; automatically without requiring a separate cuDLA SDK or extra runtime libraries.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Python Version&lt;/strong&gt;: Python 3.10 is the minimum required version. JetPack&amp;rsquo;s default Python version may be older than 3.10.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/cudla-python-stack.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/hybrid-mode-cuda-dla.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/standalone-dla-inference-python-jetpack.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #CUDA #Python #Jetson #DeepLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/run-native-dla-inference-in-python-on-nvidia-jetson-agx-orin-using-cudla/" target="_blank" rel="noopener"
+&gt;Run Native DLA Inference in Python on NVIDIA Jetson AGX Orin Using cuDLA | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

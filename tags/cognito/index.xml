@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cognito on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cognito/</link><description>Recent content in Cognito on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 03 Sep 2026 22:06:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cognito/index.xml" rel="self" type="application/rss+xml"/><item><title>Embedding Amazon QuickSight Visuals in React with Cognito‑Based Per‑User Access</title><link>https://shoubhikbanerjee.github.io/blog/p/embedding-amazon-quicksight-visuals-in-react-with-cognitobased-peruser-access/</link><pubDate>Thu, 03 Sep 2026 22:06:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/embedding-amazon-quicksight-visuals-in-react-with-cognitobased-peruser-access/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/27/ML-20784-featured-image.png" alt="Featured image of post Embedding Amazon QuickSight Visuals in React with Cognito‑Based Per‑User Access" /&gt;&lt;h1 id="embedding-amazon-quicksight-visuals-in-react-with-cognitobased-peruser-access"&gt;Embedding Amazon QuickSight Visuals in React with Cognito‑Based Per‑User Access
+&lt;/h1&gt;&lt;p&gt;This post demonstrates how to embed individual Amazon QuickSight visuals into a React application while enforcing per‑user authentication through Amazon Cognito.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Quick&lt;/strong&gt; is the unified analytics service from AWS that combines business intelligence, advanced analytics, and enterprise search.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon QuickSight&lt;/strong&gt; is the business‑intelligence engine within Amazon Quick that powers the embedded analytics experience.&lt;/li&gt;
+&lt;li&gt;Embedding at the visual level, rather than full dashboards, gives granular control over layout and user experience.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Front‑end&lt;/strong&gt;: A React application served through Amazon CloudFront, which delivers static files stored in an Amazon S3 bucket.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security edge&lt;/strong&gt;: AWS WAF sits in front of CloudFront to filter malicious requests.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Authentication layer&lt;/strong&gt;: Amazon Cognito User Pools handle sign‑in and issue JSON Web Tokens (JWTs) that are validated by the API tier.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API layer&lt;/strong&gt;: An Amazon API Gateway endpoint protected by a Cognito Authorizer routes authenticated calls to an AWS Lambda function.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Backend processing&lt;/strong&gt;: The Lambda function assumes a dedicated IAM role and calls the Amazon QuickSight &lt;code&gt;GenerateEmbedUrlForRegisteredUser&lt;/code&gt; API to produce a time‑scoped embed URL for the requested visual.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Analytics layer&lt;/strong&gt;: Amazon QuickSight renders the individual visual inside the React app using the Embedding SDK running entirely in the browser.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Observability&lt;/strong&gt;: Amazon CloudWatch captures logs and metrics from the Lambda function throughout the process.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A dedicated identity layer bridges Amazon Cognito and Amazon QuickSight, enabling fine‑grained access governance for every embedded visual.&lt;/li&gt;
+&lt;li&gt;The Lambda function generates scoped embed URLs quickly and handles first‑time user provisioning.&lt;/li&gt;
+&lt;li&gt;Each embed URL remains valid for an extended period, reducing re‑authentication friction during sessions.&lt;/li&gt;
+&lt;li&gt;Deployment can be performed rapidly with a single AWS CloudFormation stack.&lt;/li&gt;
+&lt;li&gt;The QuickSight account must have the application’s CloudFront domain registered in the embedding allowlist; otherwise the browser blocks the embedded iframe.&lt;/li&gt;
+&lt;li&gt;Every Cognito user who needs to view an embedded visual must also exist as a registered user in Amazon QuickSight.&lt;/li&gt;
+&lt;li&gt;On each embed request, the Lambda function:
+&lt;ol&gt;
+&lt;li&gt;Extracts the user’s email from the validated JWT.&lt;/li&gt;
+&lt;li&gt;Calls &lt;code&gt;describe_user&lt;/code&gt; to check for an existing QuickSight user.&lt;/li&gt;
+&lt;li&gt;If a &lt;code&gt;ResourceNotFoundException&lt;/code&gt; is raised, calls &lt;code&gt;register_user&lt;/code&gt; to create the user as a &lt;strong&gt;READER&lt;/strong&gt;, the least‑privileged role that supports visual embedding.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;This approach provisions new Cognito users in QuickSight automatically on first access, with no manual intervention.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;🚀 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides per‑user access control for embedded analytics without building separate dashboards for each use case.&lt;/li&gt;
+&lt;li&gt;Keeps the solution lightweight by embedding individual visuals rather than full dashboards.&lt;/li&gt;
+&lt;li&gt;Enables rapid, repeatable deployments using standard AWS infrastructure as code.&lt;/li&gt;
+&lt;li&gt;Centralizes authentication and authorization, reducing complexity that many tutorials skip.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/arch_diag.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #QuickSight #React #Cognito #Embedding&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/embed-quick-sight-visuals-using-cognito-user-authentication/" target="_blank" rel="noopener"
+&gt;Embed Quick Sight visuals using Cognito user authentication | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

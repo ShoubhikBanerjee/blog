@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Enterprise Infrastructure on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/enterprise-infrastructure/</link><description>Recent content in Enterprise Infrastructure on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 Nov 2026 22:04:09 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/enterprise-infrastructure/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA CUDA 13.5 Features Vera Rubin Support and Enhanced Multi-Process Service</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuda-13-5-features-vera-rubin-support-and-enhanced-multi-process-service/</link><pubDate>Thu, 05 Nov 2026 22:04:09 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuda-13-5-features-vera-rubin-support-and-enhanced-multi-process-service/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image1-16-660x370.png" alt="Featured image of post NVIDIA CUDA 13.5 Features Vera Rubin Support and Enhanced Multi-Process Service" /&gt;&lt;h1 id="nvidia-cuda-135-features-vera-rubin-support-and-enhanced-multi-process-service"&gt;NVIDIA CUDA 13.5 Features Vera Rubin Support and Enhanced Multi-Process Service
+&lt;/h1&gt;&lt;p&gt;NVIDIA CUDA 13.5 has reached general availability, bringing the NVIDIA Vera Rubin architecture to enterprise production. This update provides new platform support, including Windows on Arm for DGX Station, and introduces advanced customization for GPU work scheduling through locality domains and Multi-Process Service (MPS) v3.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;NVIDIA CUDA 13.5 achieves general availability (GA) across major new platforms.&lt;/li&gt;
+&lt;li&gt;NVIDIA Vera Rubin support has moved to GA, making it ready for enterprise production.&lt;/li&gt;
+&lt;li&gt;Windows on Arm support, which has been GA since CUDA 13.4, now extends to the NVIDIA DGX Station for Windows.&lt;/li&gt;
+&lt;li&gt;Enhanced GPU scheduling is introduced via locality domains and updated MPS controls.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SM Resource Control:&lt;/strong&gt; Applications can choose between uniform streaming multiprocessor (SM) partitions or utilize the &lt;code&gt;cudaDevSmResourceGroupLocalityDomainSupplementalSms&lt;/code&gt; flag to include all available SMs in selected domains.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Driver Compatibility:&lt;/strong&gt; Starting with the Rubin architecture, CUDA supports Windows Driver Display Model (WDDM) and Microsoft Compute Driver Model (MCDM), while Tesla Compute Cluster (TCC) is no longer supported.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CUDA Graph Enhancements:&lt;/strong&gt; Support is added for batched 1D memory copies, enabling &lt;code&gt;cudaMemcpyBatchAsync&lt;/code&gt; calls to be captured and replayed within reusable graph workflows.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CUDA Tile Kernels:&lt;/strong&gt; Kernels can now perform direct multi-GPU communication and call SIMT library device functions from cuTile Python or CUDA Tile C++ on data already in registers or shared memory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Functionality&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Weighted timeslicing&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Scales the base compute timeslice per MPS server to give longer compute turns to specific workloads.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;SM partition load balancing&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enables workloads to borrow capacity via &lt;code&gt;--max-chunks&lt;/code&gt; and lend SMs when idle using &lt;code&gt;--shareable=true&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cgroup-based routing&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Maps cgroup v2 subtrees to MPS namespaces to route clients automatically through the daemon&amp;rsquo;s main socket.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Polling memory accounting&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides a fallback for usage and limit verification; forced via &lt;code&gt;nvidia-cuda-mps-control memacct set force_polling=true&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Multi-GPU access&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses unicast pointers for NVLink-connected GPUs and multicast pointers for NVSwitch fabrics with NVLink SHARP support.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In addition to these features, applications can use discovery mode within the &lt;code&gt;cudaDevSmResourceSplit()&lt;/code&gt; API to obtain partition SM counts. MPS v3 also ensures that borrowed resources are reclaimed before reassignment, while applications continue to see a stable base partition size.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Enterprise Production:&lt;/strong&gt; NVIDIA Vera Rubin support is now in general availability.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Platform Extensions:&lt;/strong&gt; Windows on Arm support is now available for NVIDIA DGX Station for Windows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2025/12/CUDA-MPS-e1765825617242-657x370.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image1-16-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#CUDA #NVIDIA #VeraRubin #MPS #GPU&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/nvidia-cuda-13-5-brings-nvidia-vera-rubin-ga-support/" target="_blank" rel="noopener"
+&gt;NVIDIA CUDA 13.5 Brings NVIDIA Vera Rubin GA Support | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

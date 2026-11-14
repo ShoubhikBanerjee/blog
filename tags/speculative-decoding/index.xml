@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Speculative Decoding on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/speculative-decoding/</link><description>Recent content in Speculative Decoding on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 01:08:28 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/speculative-decoding/index.xml" rel="self" type="application/rss+xml"/><item><title>Accelerating Qwen3-8B Agent on Intel Core Ultra with Depth-Pruned Draft Models</title><link>https://shoubhikbanerjee.github.io/blog/p/accelerating-qwen3-8b-agent-on-intel-core-ultra-with-depth-pruned-draft-models/</link><pubDate>Tue, 28 Oct 2025 01:08:28 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/accelerating-qwen3-8b-agent-on-intel-core-ultra-with-depth-pruned-draft-models/</guid><description>&lt;img src="https://huggingface.co/blog/assets/intel-qwen3-agent/smolagents-1300-650.png" alt="Featured image of post Accelerating Qwen3-8B Agent on Intel Core Ultra with Depth-Pruned Draft Models" /&gt;&lt;h1 id="-accelerating-qwen3-8b-agent-on-intel-core-ultra-with-depth-pruned-draft-models"&gt;🚀 Accelerating Qwen3-8B Agent on Intel® Core™ Ultra with Depth-Pruned Draft Models
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/intel-qwen3-agent/smolagents-1300-650.png"
+loading="lazy"
+alt="Banner Image"
+&gt;
+&lt;em&gt;Optimizing AI agents with speculative decoding and pruned models&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-tldr"&gt;📋 TL;DR
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Qwen/Qwen3-8B" target="_blank" rel="noopener"
+&gt;Qwen3-8B&lt;/a&gt;&lt;/strong&gt; is one of the most exciting recent
+releases—a model with native agentic capabilities, making it a natural fit for the AIPC.&lt;/li&gt;
+&lt;li&gt;With &lt;strong&gt;&lt;a class="link" href="https://github.com/openvinotoolkit/openvino.genai" target="_blank" rel="noopener"
+&gt;OpenVINO.GenAI&lt;/a&gt;&lt;/strong&gt;, we&amp;rsquo;ve been able
+to accelerate generation by ~1.3× using speculative decoding with a lightweight Qwen3-0.6B draft.&lt;/li&gt;
+&lt;li&gt;By using speculative decoding and applying a simple pruning process to the draft, we pushed
+the speedup even further to &lt;strong&gt;~1.4×&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;We wrapped this up by showing how these improvements can be used to run a fast, local AI Agent
+with 🤗 &lt;strong&gt;&lt;a class="link" href="https://github.com/huggingface/smolagents" target="_blank" rel="noopener"
+&gt;smolagents&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-qwen3"&gt;🧠 Qwen3
+&lt;/h2&gt;&lt;p&gt;Qwen3-8B is part of the latest Qwen family, trained with explicit agentic behaviors. It supports
+tool invocation, multi-step reasoning, and long-context handling capabilities, that make it
+well-suited for complex agent workflows. When integrated with frameworks like Hugging Face
+🤗smolagents, QwenAgent, or AutoGen, it enables a wide range of agentic applications built
+around tool use and reasoning.&lt;/p&gt;
+&lt;p&gt;Unlike single-turn chatbots, agentic applications rely on reasoning models that produce
+&amp;ldquo;thinking aloud&amp;rdquo; traces, intermediate steps that expand token usage, making inference speed
+critical to responsiveness. The combination of optimized inference and built-in agentic
+intelligence makes Qwen3-8B a compelling foundation for next-gen AI agents.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-accelerating-qwen3-8b-on-intel-core-ultra-with-speculative-decoding"&gt;⚡ Accelerating Qwen3-8B on Intel® Core™ Ultra with Speculative Decoding
+&lt;/h2&gt;&lt;p&gt;We started by benchmarking the 4-bit optimized OpenVINO version of Qwen3-8B on an Intel Lunar
+Lake integrated GPU, establishing this as our baseline for further acceleration.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a class="link" href="https://arxiv.org/abs/2211.17192" target="_blank" rel="noopener"
+&gt;Speculative decoding&lt;/a&gt;&lt;/strong&gt; is a method to speed up
+auto-regressive generation. It works by using a smaller, faster model as a draft to propose
+multiple tokens in a single forward pass, which are then validated by the larger target model in
+one forward pass. In our setup, &lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Qwen/Qwen3-8B" target="_blank" rel="noopener"
+&gt;Qwen3-8B&lt;/a&gt;&lt;/strong&gt; served as
+the target model while &lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Qwen/Qwen3-0.6B" target="_blank" rel="noopener"
+&gt;Qwen3-0.6B&lt;/a&gt;&lt;/strong&gt; was used as the
+draft. This approach delivered an average of &lt;strong&gt;1.3× speedup&lt;/strong&gt; over the baseline.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;openvino_genai&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;LLMPipeline&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;draft_model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;target_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;/path/to/target/Qwen3-8B-int4-ov&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;draft_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;/path/to/draft/Qwen3-0.6B-int8-ov&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;device&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;GPU&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LLMPipeline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;draft_model&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;draft_model&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;draft_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;streamer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;What is speculative decoding and how does it improve inference speed?&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_new_tokens&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;streamer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;streamer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;💡 &lt;strong&gt;Note:&lt;/strong&gt; Before initializing the &lt;code&gt;LLMPipeline&lt;/code&gt;, make sure both the target and draft models
+are converted to OpenVINO. You can either download pre-converted models from the provided links
+or follow these &lt;strong&gt;&lt;a class="link" href="https://docs.openvino.ai/2024/learn-openvino/llm_inference_guide/genai-guide.html" target="_blank" rel="noopener"
+&gt;instructions&lt;/a&gt;&lt;/strong&gt; to convert your own.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="-pushing-performance-further"&gt;🔧 Pushing Performance Further
+&lt;/h2&gt;&lt;p&gt;The speculative decoding speedup depends on the average number of generated tokens per forward
+step of the target, &lt;strong&gt;γ&lt;/strong&gt;, the speculation window size, and the ratio between the target and
+draft models&amp;rsquo; latency &lt;strong&gt;c&lt;/strong&gt;. A smaller, faster (though less accurate) draft can often deliver
+greater acceleration. This inspired us to shrink the draft model while still preserving its
+quality, i.e. &lt;strong&gt;E(# generated_tokens)&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Speedup = E(# generated_tokens) / (γc + 1)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Our &lt;strong&gt;&lt;a class="link" href="https://arxiv.org/abs/2403.17887" target="_blank" rel="noopener"
+&gt;recent work&lt;/a&gt;&lt;/strong&gt; shows that model depth (number of
+layers) is a major contributor to inference latency. We drew inspiration from recent work on
+layer-wise compression[1]. In our approach, we identify blocks of layers that contribute little,
+measured using angular distance, and remove them. After pruning, we apply fine-tuning to recover accuracy.&lt;/p&gt;
+&lt;p&gt;Using this method, we pruned &lt;strong&gt;6 out of 28 layers&lt;/strong&gt; from the Qwen3-0.6B draft model. To recover
+the quality of the pruned draft model, we further finetuned it using synthetic data generated by
+Qwen3-8B. The data was produced by generating responses to 500k prompts from
+&lt;strong&gt;&lt;a class="link" href="https://huggingface.co/datasets/BAAI/Infinity-Instruct" target="_blank" rel="noopener"
+&gt;BAAI/Infinity-Instruct dataset&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The resulting pruned draft model delivered &lt;strong&gt;~1.4x speedup&lt;/strong&gt; compared to the baseline, an
+improvement over the ~1.3× gain achieved with the original draft. This outcome aligns with
+theoretical expectations - reducing draft latency improves the over-all speedup, enabling faster
+and more efficient inference.&lt;/p&gt;
+&lt;p&gt;This demonstrates how pruning + speculative decoding can unlock faster and more efficient
+inference—making local AI agents even more practical.&lt;/p&gt;
+&lt;p&gt;Check out the &lt;strong&gt;&lt;a class="link" href="https://github.com/intel/intel-extension-for-transformers/tree/main/examples/huggingface/pytorch/text-generation/inference" target="_blank" rel="noopener"
+&gt;notebook&lt;/a&gt;&lt;/strong&gt; and the Qwen3-0.6B depth-pruned
+&lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Intel/Qwen3-0.6B-pruned-draft" target="_blank" rel="noopener"
+&gt;draft model&lt;/a&gt;&lt;/strong&gt; to reproduce our results
+step by step.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-integration-with-smolagents"&gt;🤗 Integration with 🤗smolagents
+&lt;/h2&gt;&lt;p&gt;To showcase the real-world potential, we deployed our optimized setup with the 🤗smolagents
+library. With this integration, developers can plug in Qwen3-8B (paired with our pruned draft)
+to build agents that call APIs and external tools, write and execute code, handle long-context
+reasoning and run efficiently on Intel® Core™ Ultra.&lt;/p&gt;
+&lt;p&gt;The benefits aren&amp;rsquo;t limited to Hugging Face, this model pairing can also be used seamlessly with
+frameworks like AutoGen or QwenAgent, further strengthening the agentic ecosystem.&lt;/p&gt;
+&lt;p&gt;In our demo, we assigned the accelerated Qwen3-based agent a task: 👉 &lt;strong&gt;Summarize the key
+features of the Qwen3 model series and present them in a slide deck.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s how it worked:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The agent used a web search tool to gather up-to-date information.&lt;/li&gt;
+&lt;li&gt;It then switched to the Python interpreter to generate slides with the &lt;code&gt;python-pptx&lt;/code&gt; library.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This simple workflow highlights just a fraction of the possibilities unlocked when accelerated
+Qwen3 models meet frameworks like 🤗smolagents, bringing practical, efficient AI agents to life
+on AI PC. Try it &lt;strong&gt;&lt;a class="link" href="https://huggingface.co/spaces/Intel/Qwen3-8B-Agent-Demo" target="_blank" rel="noopener"
+&gt;here&lt;/a&gt;&lt;/strong&gt; 🚀&lt;/p&gt;
+&lt;h3 id="-references"&gt;📚 References
+&lt;/h3&gt;&lt;p&gt;[1] Gromov, A., Tirumala, K., Shapourian, H., Glorioso, P., &amp;amp; Roberts, D. A. (2025, January 22).
+The unreasonable ineffectiveness of the deeper layers. Poster presented at ICLR 2025.
+&lt;strong&gt;&lt;a class="link" href="https://arxiv.org/abs/2403.17887" target="_blank" rel="noopener"
+&gt;https://arxiv.org/abs/2403.17887&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/intel-qwen3-agent" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/intel-qwen3-agent&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;The integration of depth-pruned draft models with speculative decoding represents a significant
+advancement in accelerating AI inference on consumer hardware. By achieving a &lt;strong&gt;1.4× speedup&lt;/strong&gt;
+with Qwen3-8B on Intel® Core™ Ultra processors, this approach makes sophisticated AI agents
+more accessible and practical for local deployment.&lt;/p&gt;
+&lt;p&gt;The combination of OpenVINO optimization, intelligent layer pruning, and speculative decoding
+demonstrates how multiple optimization techniques can be synergistically combined to unlock
+better performance. The seamless integration with 🤗smolagents further validates the real-world
+applicability of these optimizations, enabling developers to build responsive, capable AI agents
+that run efficiently on edge devices.&lt;/p&gt;
+&lt;p&gt;This work opens new possibilities for deploying advanced agentic AI systems locally, reducing
+latency, improving privacy, and making AI more accessible across various applications and use cases.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Performance and Legal Notices:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Performance results are based on internal benchmarking with OpenVINO™ 2025.2 as of September
+2025, using a configuration with an Intel® Core™ Ultra 7 268V 2.20 GHz processor with an
+integrated Intel® Arc™ 140V GPU, paired with 32 GB of DDR5 memory.&lt;/li&gt;
+&lt;li&gt;Performance varies by use, configuration and other factors. Learn more at
+&lt;strong&gt;&lt;a class="link" href="http://www.Intel.com/PerformanceIndex" target="_blank" rel="noopener"
+&gt;www.Intel.com/PerformanceIndex&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;No product or component can be absolutely secure.&lt;/li&gt;
+&lt;li&gt;Your costs and results may vary.&lt;/li&gt;
+&lt;li&gt;Intel technologies may require enabled hardware, software, or service activation.&lt;/li&gt;
+&lt;li&gt;© Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel
+Corporation or its subsidiaries.&lt;/li&gt;
+&lt;li&gt;Other names and brands may be claimed as the property of others.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#QWEN3 #INTEL #AI #SPECULATIVE_DECODING #OPENVINO #AGENTS #INFERENCE_OPTIMIZATION #AIPC&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

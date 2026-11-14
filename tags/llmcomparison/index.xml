@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LLMComparison on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/llmcomparison/</link><description>Recent content in LLMComparison on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 Nov 2026 22:04:09 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/llmcomparison/index.xml" rel="self" type="application/rss+xml"/><item><title>DharmaOCR Field Extractor: 2B‑Parameter Model Beats LLMs on Structured Document Extraction</title><link>https://shoubhikbanerjee.github.io/blog/p/dharmaocr-field-extractor-2bparameter-model-beats-llms-on-structured-document-extraction/</link><pubDate>Thu, 05 Nov 2026 22:04:09 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/dharmaocr-field-extractor-2bparameter-model-beats-llms-on-structured-document-extraction/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6a725daa5ca641a21ab61956/c1ik58RednXjcqrx5s2Fo.png" alt="Featured image of post DharmaOCR Field Extractor: 2B‑Parameter Model Beats LLMs on Structured Document Extraction" /&gt;&lt;h1 id="dharmaocr-field-extractor-2bparameter-model-beats-llms-on-structured-document-extraction"&gt;DharmaOCR Field Extractor: 2B‑Parameter Model Beats LLMs on Structured Document Extraction
+&lt;/h1&gt;&lt;p&gt;A new 2‑billion‑parameter model called the &lt;strong&gt;Field Extractor&lt;/strong&gt;, built on the DharmaOCR‑LITE v1.1 checkpoint, extracts exactly the fields you ask for from any document image and returns typed JSON. It outperforms every frontier large language model (LLM) we tested while costing a fraction of the price.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Takes a document image (invoice, ID, contract, court filing, etc.)&lt;/li&gt;
+&lt;li&gt;Returns structured JSON: each field typed (string, number, boolean) and nested where the document nests&lt;/li&gt;
+&lt;li&gt;Works on any language supported by the training data (English, Portuguese, and other European/Asian languages)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;OCR layer&lt;/strong&gt; – First runs OCR to obtain the full printed text, preserving original layout.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Two request modes&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; – No schema supplied. The model infers label‑value pairs and tables from layout and context, returning every detected field as key‑value pairs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Schema‑directed&lt;/strong&gt; – You provide an exact schema (field names and types). The model fills the schema, returns &lt;code&gt;null&lt;/code&gt; for missing fields, and produces no extra keys, so the output can be piped directly into downstream systems.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Output is always valid JSON with typed values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Base model&lt;/strong&gt;: DharmaOCR‑LITE v1.1, a 2‑billion‑parameter model optimized for OCR via supervised fine‑tuning and DPO.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Adapter&lt;/strong&gt;: LoRA adapter trained on 43,384 examples covering both request modes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Training data&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;English multi‑domain documents collected from the public web.&lt;/li&gt;
+&lt;li&gt;Brazilian documents in Portuguese sourced internally.&lt;/li&gt;
+&lt;li&gt;Smaller multilingual set covering other European and Asian languages.&lt;/li&gt;
+&lt;li&gt;All data annotated at the field level.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benchmark&lt;/strong&gt;: 546 documents across three scenarios (open extraction, partial schema, schema with nonexistent fields) – 1,638 total cases.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metric&lt;/strong&gt;: Field‑level F1 (matched by path, including table position) multiplied by Levenshtein similarity and JSON validity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-comparison"&gt;📊 Performance comparison
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Provider&lt;/th&gt;
+&lt;th&gt;Quality gap (F1 pts)&lt;/th&gt;
+&lt;th&gt;Cost factor vs Field Extractor&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Opus 5 (closest)&lt;/td&gt;
+&lt;td&gt;1.8&lt;/td&gt;
+&lt;td&gt;~6× higher&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPT‑5.6 Luna (widest)&lt;/td&gt;
+&lt;td&gt;9.3&lt;/td&gt;
+&lt;td&gt;~147× higher&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The Field Extractor achieves higher accuracy while running at dramatically lower cost because it processes only the necessary tokens for OCR and field extraction, unlike general‑purpose LLM APIs that require full‑sentence reasoning for every request.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;You can try the Field Extractor yourself &lt;strong&gt;[here]&lt;/strong&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#OCR #DocumentAI #LLMComparison&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/Dharma-AI/dharma-field-extractor" target="_blank" rel="noopener"
+&gt;Dharma Field Extractor: Any Document In, Structured Fields in JSON Out&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

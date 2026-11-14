@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CloudObservability on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cloudobservability/</link><description>Recent content in CloudObservability on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 11 Nov 2026 22:05:42 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cloudobservability/index.xml" rel="self" type="application/rss+xml"/><item><title>Centralized Observability Data Lake Solution Released for Amazon Bedrock Model Invocations</title><link>https://shoubhikbanerjee.github.io/blog/p/centralized-observability-data-lake-solution-released-for-amazon-bedrock-model-invocations/</link><pubDate>Wed, 11 Nov 2026 22:05:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/centralized-observability-data-lake-solution-released-for-amazon-bedrock-model-invocations/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-21645-featured-image.png" alt="Featured image of post Centralized Observability Data Lake Solution Released for Amazon Bedrock Model Invocations" /&gt;&lt;h1 id="centralized-observability-data-lake-solution-released-for-amazon-bedrock-model-invocations"&gt;Centralized Observability Data Lake Solution Released for Amazon Bedrock Model Invocations
+&lt;/h1&gt;&lt;p&gt;A centralized observability data lake solution has been introduced for Amazon Bedrock model invocations. Built using AWS CloudFormation, AWS Lambda, Amazon Data Firehose, and Amazon Athena, the solution consolidates raw invocation logs across multiple AWS accounts into a single querying location.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock offers model invocation logging to record requests and responses sent to Amazon Simple Storage Service (Amazon S3) or Amazon CloudWatch. The centralized data lake pulls raw invocation logs from linked source accounts into a central account, providing an organization-wide clean table that can be queried using ordinary SQL.&lt;/p&gt;
+&lt;h2 id="-captured-log-details"&gt;⚙️ Captured log details
+&lt;/h2&gt;&lt;p&gt;When an application calls an Amazon Bedrock model, invocation logging records specific request and metadata details:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prompt&lt;/strong&gt;: The prompt sent by the user or application.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model response&lt;/strong&gt;: The response returned by the model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Token counts&lt;/strong&gt;: Input and output token counts to measure invocation weight.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model&lt;/strong&gt;: The model used, allowing teams to track model utilization.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stop reason&lt;/strong&gt;: The reason a response concluded (such as &lt;code&gt;max_tokens&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Account and timestamp&lt;/strong&gt;: Attributes used for timing and attribution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IAM identity&lt;/strong&gt;: The AWS Identity and Access Management (IAM) role that initiated the prompt.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture-and-pipeline"&gt;🧩 Architecture and pipeline
+&lt;/h2&gt;&lt;p&gt;The centralized observability pipeline is deployed repeatably across accounts using two AWS CloudFormation templates as Infrastructure as Code. The pipeline operates as follows:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Logging activation&lt;/strong&gt;: Invocation logging is enabled per account with a single API call, pointing Amazon Bedrock to a local CloudWatch log group with write permissions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Subscription filters&lt;/strong&gt;: Each source account log group uses a subscription filter to forward records to a CloudWatch Logs destination in the central account. Source accounts do not receive permissions on the central pipeline.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lambda processing&lt;/strong&gt;: A small AWS Lambda function unwraps batch records into individual log entries and lifts fields to the top level for simple querying.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Buffering and conversion&lt;/strong&gt;: Amazon Data Firehose buffers the log records, converts them from JSON to Parquet format, files objects under date paths (such as &lt;code&gt;year=2026/month=08/day=27/&lt;/code&gt;), and writes them to an Amazon S3 bucket.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data querying&lt;/strong&gt;: An AWS Glue table defines the schema so Amazon Athena can expose the data as one clean SQL-queryable table.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Pipeline Component&lt;/th&gt;
+&lt;th&gt;Role in Data Lake Architecture&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon CloudWatch&lt;/td&gt;
+&lt;td&gt;Collects raw logs in source accounts and receives forwarded logs in the central account&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Subscription Log Filters&lt;/td&gt;
+&lt;td&gt;Routes log records from source accounts to the central CloudWatch destination&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS Lambda&lt;/td&gt;
+&lt;td&gt;Unwraps record batches and lifts nested fields to top-level attributes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Data Firehose&lt;/td&gt;
+&lt;td&gt;Buffers data, converts JSON to Parquet, applies date partitioning, and writes to S3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon S3&lt;/td&gt;
+&lt;td&gt;Stores converted Parquet log data&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS Glue&lt;/td&gt;
+&lt;td&gt;Defines table schemas for Athena&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Athena&lt;/td&gt;
+&lt;td&gt;Provides single-table SQL query access across the organization&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-capabilities"&gt;💡 Key capabilities
+&lt;/h2&gt;&lt;p&gt;Using the centralized data lake, organizations can analyze model usage pattern metrics across accounts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Identify which users consume the highest number of tokens.&lt;/li&gt;
+&lt;li&gt;Determine commonly selected models and review prompt text.&lt;/li&gt;
+&lt;li&gt;Connect logging data with the AWS Cost and Usage Report (CUR) to track daily user prompt spend.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Templates, Lambda code, and SQL queries are available in the AWS Sample Bedrock Invocation Data Lake GitHub repository.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-21645-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-21645-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-21645-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AWS #CloudObservability #DataLake #CloudWatch&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-tokenomics-data-lake/" target="_blank" rel="noopener"
+&gt;Amazon Bedrock tokenomics data lake | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

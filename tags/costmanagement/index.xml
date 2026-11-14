@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CostManagement on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/costmanagement/</link><description>Recent content in CostManagement on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 14 Nov 2026 12:02:58 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/costmanagement/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock adds zero‑instrumentation per‑user cost attribution via IAM identity</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-adds-zeroinstrumentation-peruser-cost-attribution-via-iam-identity/</link><pubDate>Sat, 14 Nov 2026 12:02:58 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-adds-zeroinstrumentation-peruser-cost-attribution-via-iam-identity/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-21035-featured-image-2.png" alt="Featured image of post Amazon Bedrock adds zero‑instrumentation per‑user cost attribution via IAM identity" /&gt;&lt;h1 id="amazon-bedrock-adds-zeroinstrumentation-peruser-cost-attribution-via-iam-identity"&gt;Amazon Bedrock adds zero‑instrumentation per‑user cost attribution via IAM identity
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock now provides built‑in, zero‑instrumentation cost attribution that traces every inference call back to the IAM principal that made it.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Bedrock records the IAM identity of every inference caller with no changes required to your API calls.&lt;/li&gt;
+&lt;li&gt;The captured IAM ARN (including session name for federated users) is published to AWS Cost and Usage Report (CUR 2.0) in the &lt;code&gt;line_item_iam_principal&lt;/code&gt; column.&lt;/li&gt;
+&lt;li&gt;Identity flows along with organizational tags into CUR 2.0 and AWS Cost Explorer while remaining inside the AWS security boundary.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Inference requests go through one of two Bedrock endpoints: &lt;code&gt;bedrock-runtime&lt;/code&gt; or &lt;code&gt;bedrock-mantle&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Attribution operates at the endpoint layer, beneath any tool‑specific logic.&lt;/li&gt;
+&lt;li&gt;When a user invokes a model, Bedrock captures the full IAM ARN and adds it to CUR 2.0.&lt;/li&gt;
+&lt;li&gt;In billing data, usage is aggregated per principal and per usage type for each export interval (hourly or daily).&lt;/li&gt;
+&lt;li&gt;Per‑request cost is not in CUR; for per‑prompt detail you can use model invocation logs or request metadata tagging.&lt;/li&gt;
+&lt;li&gt;Tags appear in CUR 2.0 with the &lt;code&gt;iamPrincipal/&lt;/code&gt; prefix and are filterable dimensions in Cost Explorer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-configuration"&gt;⚙️ Configuration
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enable AWS IAM Identity Center in the management (payer) account.&lt;/li&gt;
+&lt;li&gt;Connect an external identity provider (Okta, Microsoft Entra ID, or Ping Identity) with SCIM provisioning.&lt;/li&gt;
+&lt;li&gt;Configure AWS CLI v2 on developer machines.&lt;/li&gt;
+&lt;li&gt;Enable CUR 2.0 with IAM principal data and deliver it to an S3 bucket.&lt;/li&gt;
+&lt;li&gt;Activate cost allocation tags from the management account.&lt;/li&gt;
+&lt;li&gt;Create an Athena table to query CUR 2.0 data.&lt;/li&gt;
+&lt;li&gt;Configure the external identity provider as the identity source in AWS IAM Identity Center.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-querying-spend"&gt;📊 Querying spend
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;CUR aggregates usage per principal and per usage type per export interval.&lt;/li&gt;
+&lt;li&gt;For finer granularity, per‑request metadata tagging provides token‑level detail in model invocation logs.&lt;/li&gt;
+&lt;li&gt;With Application Inference Profiles you can tag spend by workload on the &lt;code&gt;bedrock-runtime&lt;/code&gt; endpoint.&lt;/li&gt;
+&lt;li&gt;With Projects and Workspaces you can isolate and tag spend on the &lt;code&gt;bedrock-mantle&lt;/code&gt; endpoint.&lt;/li&gt;
+&lt;li&gt;In Cost Explorer, filter by &lt;code&gt;iamPrincipal/&lt;/code&gt; tags to see per‑user spend alongside dollars.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-integration-with-claude-platforms"&gt;📚 Integration with Claude platforms
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tools such as Claude Code, Claude Desktop, OpenAI Codex, ChatGPT Work, and OpenCode invoke Bedrock via the two endpoints and inherit the same attribution.&lt;/li&gt;
+&lt;li&gt;Claude Platform on AWS routes inference through Anthropic‑managed infrastructure; usage is visible by workspace and API key in Anthropic’s admin console, and workspace tags flow to AWS billing.&lt;/li&gt;
+&lt;li&gt;Claude for Enterprise also shows per‑user usage in Anthropic’s admin console and its Usage and Cost API, with spend limits enforced natively by Anthropic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides per‑user cost visibility without any code changes.&lt;/li&gt;
+&lt;li&gt;Supports four access patterns: IAM users, per‑application roles, federated identities, and LLM gateways proxying to Bedrock.&lt;/li&gt;
+&lt;li&gt;Enables organizations to allocate AI spend accurately across teams, projects, and workloads while staying within the AWS security boundary.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AWS #AmazonBedrock #CostManagement #IAM&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Cost attribution and controls for AI developer and productivity tools on Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

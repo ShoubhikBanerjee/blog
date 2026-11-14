@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TabularData on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/tabulardata/</link><description>Recent content in TabularData on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 29 Sep 2026 22:02:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/tabulardata/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Releases Kumo Tabular Open Foundation Model for Tabular Data</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-kumo-tabular-open-foundation-model-for-tabular-data/</link><pubDate>Tue, 29 Sep 2026 22:02:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-kumo-tabular-open-foundation-model-for-tabular-data/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/684040a5de1ad7f4fcec9508/HyVlq-3d7EVj_M-m_TfHJ.png" alt="Featured image of post NVIDIA Releases Kumo Tabular Open Foundation Model for Tabular Data" /&gt;&lt;h1 id="nvidia-releases-kumo-tabular-open-foundation-model-for-tabular-data"&gt;NVIDIA Releases Kumo Tabular Open Foundation Model for Tabular Data
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released Kumo Tabular, an open foundation model for tabular classification and regression. Part of the NVIDIA Kumo Structured model collection, the model is available on Hugging Face and GitHub.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Kumo Tabular is designed to predict labels for new rows in a single forward pass given a table of labeled rows. It operates with the following characteristics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;No prerequisites:&lt;/strong&gt; Requires no training, no tuning, and no feature engineering.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Versatility:&lt;/strong&gt; Supports both classification and regression tasks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; Ranks first on the TabArena, BeyondArena, TALENT, and ScoringBench benchmarks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Handling:&lt;/strong&gt; Missing values are treated specially and require no imputation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Kumo Tabular is a Transformer utilizing column, row, and in-context attention based on TabICL and TabPFN. The architecture processes data through several stages:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Fourier features&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Process numerical and categorical values using sines and cosines of learned frequencies with separate weights.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Column attention&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses induced self-attention to learn the meaning of a value within its column distribution.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Row attention&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses rotary positions to distinguish columns and learn how features interact.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;[CLS] tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Four learnable tokens per row that act as the final readout for row compression.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Final Transformer&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Operates on row embeddings where context rows attend to each other and query rows attend only to context rows.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Prediction Head&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Converts query rows into class probabilities for classification or 999 quantiles for regression to provide point predictions and uncertainty estimates.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;To optimize performance, the model employs Test-GQA to shrink the cache for predictions and scales every query by a temperature that grows with the logarithm of the number of keys.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Kumo Tabular was pretrained entirely on artificial tables sampled from a Structural Causal Model (SCM). The training process involves:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Drawing a configuration for table size, task, mechanisms, and missingness.&lt;/li&gt;
+&lt;li&gt;Linking hidden variables via a random causal graph using functions such as linear maps, small neural networks, trees, or Gaussian processes.&lt;/li&gt;
+&lt;li&gt;Designating some nodes as numerical or categorical columns and one as the target.&lt;/li&gt;
+&lt;li&gt;Post-processing to correlate columns, clip outliers, and inject missing values, followed by a tree-ensemble check to ensure a learnable signal exists.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model Sizes:&lt;/strong&gt; Available in three sizes ranging from 28M to 215M parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;License:&lt;/strong&gt; Released under the OpenMDW-1.1 license for commercial use.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Implementation:&lt;/strong&gt; Runs through an open-source library.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#NVIDIA #KumoTabular #TabularData #OpenSource #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/nvidia/kumo-tabular" target="_blank" rel="noopener"
+&gt;NVIDIA Kumo Tabular Sets a New Accuracy-Efficiency Frontier for Tabular Prediction&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

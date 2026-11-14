@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>FaultDiagnosis on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/faultdiagnosis/</link><description>Recent content in FaultDiagnosis on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 03 Nov 2026 22:02:32 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/faultdiagnosis/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Attribution Service Delivers Structured Failure Diagnosis for Distributed AI Workloads</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-attribution-service-delivers-structured-failure-diagnosis-for-distributed-ai-workloads/</link><pubDate>Tue, 03 Nov 2026 22:02:32 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-attribution-service-delivers-structured-failure-diagnosis-for-distributed-ai-workloads/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-1-660x370.jpg" alt="Featured image of post NVIDIA Attribution Service Delivers Structured Failure Diagnosis for Distributed AI Workloads" /&gt;&lt;h1 id="nvidia-attribution-service-delivers-structured-failure-diagnosis-for-distributed-ai-workloads"&gt;NVIDIA Attribution Service Delivers Structured Failure Diagnosis for Distributed AI Workloads
+&lt;/h1&gt;&lt;p&gt;NVIDIA has updated its Attribution and Recovery software stack to give production‑grade, workload‑centric diagnosis and automated repair for distributed AI training jobs.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;In distributed AI workloads, a single error can produce a cascade of symptoms such as NCCL errors on other ranks, scheduler state changes, and thousands of downstream messages.&lt;/li&gt;
+&lt;li&gt;The reported exception shows where the workload stopped, not where the failure began.&lt;/li&gt;
+&lt;li&gt;NVIDIA Attribution correlates workload‑scoped logs, metrics, telemetry, and scheduler state and returns a structured diagnosis: outcome, root cause, affected nodes, supporting symptoms, and evidence trail.&lt;/li&gt;
+&lt;li&gt;NVIDIA Recovery uses that attribution to automate cross‑job recovery, reducing manual intervention and sustaining training goodput.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Scope the workload&lt;/strong&gt; – The Blueprint identifies the workload attempt from scheduler identifiers or an explicit execution window and node allocation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Collect observations&lt;/strong&gt; – Log and metric connectors produce workload‑scoped Observation records from application logs, syslogs, GPU driver and Fabric Manager messages, scheduler history, and node/network metrics.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extract events&lt;/strong&gt; – The Extraction phase runs on raw input logs and emits structured events (e.g., XID burst evidence decoded by the &lt;code&gt;HandleXidBurstEvents&lt;/code&gt; rule).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Attribution engine&lt;/strong&gt; – The Service invokes deterministic rules that evaluate timing and interaction of events, separate downstream symptoms from the root cause, and generate a verdict.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Combine verdict&lt;/strong&gt; – The Blueprint adds the workload outcome (&lt;code&gt;terminal_state&lt;/code&gt;), attributed domain (&lt;code&gt;sub_domain&lt;/code&gt;), symptoms, affected nodes, and a record of collector coverage and errors to form the final structured result.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Components&lt;/strong&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NVIDIA Attribution Service&lt;/td&gt;
+&lt;td&gt;Analyzes one workload attempt at a time via a REST API and runs the attribution engine&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NVIDIA Attribution Blueprint&lt;/td&gt;
+&lt;td&gt;Connects cluster schedulers and telemetry sources to the Service, gathers context, and returns the structured result&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Root‑cause example&lt;/strong&gt; – In a multi‑rank training workload where one GPU sees a hard fault (XID 149) and NCCL errors follow on other ranks, Attribution correlates events across nodes, identifies the XID as the root cause, retains NCCL failures as symptoms, and reports the hardware failure on the responsible node.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Production scale&lt;/strong&gt; – Used in production across NVIDIA AI infrastructure for years, analyzing millions of workloads each week across hundreds of thousands of GPUs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recovery loop&lt;/strong&gt; – NVIDIA Recovery detects interruptions using logs, GPU metrics, and scheduler signals, uses the attribution verdict to identify implicated resources, and coordinates isolation and checkpoint restarts from healthy capacity.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Operational impact&lt;/strong&gt; – On one training cluster, Monitoring recorded ~8,550 anomaly detections over three months, with mean detection and recovery‑action latencies of 69 s and 94 s respectively.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Service is exposed through a REST API.&lt;/li&gt;
+&lt;li&gt;The Blueprint attaches to schedulers and telemetry sources; both components share a core attribution engine.&lt;/li&gt;
+&lt;li&gt;The stack integrates with existing health workflows such as NVSentinel, NVIDIA Health Validation, and cluster managers like Slurm and Kubernetes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By correlating low‑level GPU events (e.g., XID, NCCL) with scheduler and fabric symptoms, teams see the true cause of a failure rather than a list of isolated errors.&lt;/li&gt;
+&lt;li&gt;Structured diagnosis enables automated, cluster‑wide recovery, reducing manual break‑fix effort and keeping large jobs productive.&lt;/li&gt;
+&lt;li&gt;In a study of 24,000 A100 GPUs at Meta, hardware failures interrupted fewer than 1 % of jobs but accounted for 19 % of GPU runtime, highlighting the need for precise root‑cause attribution in long‑running workloads.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image6-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image8-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AIInfrastructure #FaultDiagnosis #DistributedTraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/diagnose-distributed-ai-workload-failures-with-nvidia-attribution/" target="_blank" rel="noopener"
+&gt;Diagnose Distributed AI Workload Failures with NVIDIA Attribution | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/keep-distributed-training-running-with-automated-workload-recovery/" target="_blank" rel="noopener"
+&gt;Keep Distributed Training Running with Automated Workload Recovery | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/making-kubernetes-ai-ready-for-nvidia-vera-rubin-on-day-one/" target="_blank" rel="noopener"
+&gt;Making Kubernetes AI-Ready for NVIDIA Vera Rubin on Day One | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

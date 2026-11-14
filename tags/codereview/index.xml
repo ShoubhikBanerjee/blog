@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CodeReview on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/codereview/</link><description>Recent content in CodeReview on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 01 Nov 2026 22:01:19 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/codereview/index.xml" rel="self" type="application/rss+xml"/><item><title>Hodor: An Agentic LLM‑Powered Code Reviewer for Git Repositories</title><link>https://shoubhikbanerjee.github.io/blog/p/hodor-an-agentic-llmpowered-code-reviewer-for-git-repositories/</link><pubDate>Sun, 01 Nov 2026 22:01:19 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/hodor-an-agentic-llmpowered-code-reviewer-for-git-repositories/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/5689132?v=4" alt="Featured image of post Hodor: An Agentic LLM‑Powered Code Reviewer for Git Repositories" /&gt;&lt;h1 id="hodor-an-agentic-llmpowered-code-reviewer-for-git-repositories"&gt;Hodor: An Agentic LLM‑Powered Code Reviewer for Git Repositories
+&lt;/h1&gt;&lt;p&gt;A new AI tool called Hodor provides an agentic code reviewer that can be run on GitHub pull requests, GitLab merge requests, Gitea/Forgejo pull requests, and local diffs.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Reviews code changes by invoking an LLM agent with confined inspection tools (&lt;code&gt;git_diff&lt;/code&gt;, &lt;code&gt;read&lt;/code&gt;, &lt;code&gt;grep&lt;/code&gt;, &lt;code&gt;find&lt;/code&gt;, &lt;code&gt;ls&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Returns structured findings as inline comments and a summary note, or prints them locally.&lt;/li&gt;
+&lt;li&gt;Supports a default review protocol that remains unchanged unless explicitly overridden.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Hodor checks out the change and automatically resolves to the git repository root, even when invoked from a subdirectory.&lt;/li&gt;
+&lt;li&gt;It supplies the LLM with the limited toolset listed above and asks for a structured review.&lt;/li&gt;
+&lt;li&gt;Findings are posted as inline comments and a summary, or output to the console.&lt;/li&gt;
+&lt;li&gt;Optional instruction files can be added; they are additive, repeatable, and later files win conflicts, while &lt;code&gt;--focus&lt;/code&gt; instructions win over file‑based instructions.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;--profile security&lt;/code&gt; flag prefixes the bundled security‑review instructions before any explicit instruction files, narrowing reporting to security vulnerabilities without replacing the baseline protocol.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Included changes&lt;/strong&gt;: uncommitted (staged + unstaged) changes, not only committed code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repository handling&lt;/strong&gt;: skips PR metadata fetching and workspace cloning.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Default model&lt;/strong&gt;: &lt;code&gt;anthropic/claude-opus-5-5&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reasoning effort&lt;/strong&gt;: Adaptive.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Optional flags&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--ultrathink&lt;/code&gt; – Off&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--full&lt;/code&gt; – Off&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--post&lt;/code&gt; – disabled (no remote posting)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--target-branch&lt;/code&gt; – None&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Supported LLM providers&lt;/strong&gt;: Anthropic, OpenAI, Bedrock, OpenRouter; other providers are best‑effort.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Flag / Option&lt;/th&gt;
+&lt;th&gt;Default / State&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--model&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;anthropic/claude-opus-5-5&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Base LLM used for the review&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--reasoning-effort&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Adaptive&lt;/td&gt;
+&lt;td&gt;Level of reasoning effort applied&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--ultrathink&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Off&lt;/td&gt;
+&lt;td&gt;Extended reasoning mode (disabled)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--full&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Off&lt;/td&gt;
+&lt;td&gt;Full‑snapshot review mode (disabled)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--post&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Disabled&lt;/td&gt;
+&lt;td&gt;Remote posting of comments (disabled)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--target-branch&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;None&lt;/td&gt;
+&lt;td&gt;Branch to compare against (none by default)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Docker images are published at &lt;code&gt;ghcr.io/mr-karan/hodor:&amp;lt;version&amp;gt;&lt;/code&gt; for use in CI pipelines.&lt;/li&gt;
+&lt;li&gt;Pinning a version in CI keeps reviews comparable across runs.&lt;/li&gt;
+&lt;li&gt;When installed globally via &lt;code&gt;npm install -g&lt;/code&gt;, the command &lt;code&gt;npx @mrkaran/hodor&lt;/code&gt; can be replaced with &lt;code&gt;hodor&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enables consistent, automated code reviews across multiple Git platforms without requiring repository cloning.&lt;/li&gt;
+&lt;li&gt;Allows security‑focused reviews via &lt;code&gt;--profile security&lt;/code&gt; or &lt;code&gt;--focus &amp;quot;Report only security findings.&amp;quot;&lt;/code&gt; while preserving baseline defect checks.&lt;/li&gt;
+&lt;li&gt;Supports a range of LLM back‑ends, making it adaptable to existing infrastructure.&lt;/li&gt;
+&lt;li&gt;Works on local, uncommitted changes, helping developers catch issues before committing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AI #CodeReview #DevOps #LLM&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/mr-karan/hodor" target="_blank" rel="noopener"
+&gt;mr-karan/hodor&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Claude introduces continuous AI‑assisted code review</title><link>https://shoubhikbanerjee.github.io/blog/p/claude-introduces-continuous-aiassisted-code-review/</link><pubDate>Sat, 17 Oct 2026 22:02:31 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/claude-introduces-continuous-aiassisted-code-review/</guid><description>&lt;h1 id="claude-introduces-continuous-aiassisted-code-review"&gt;Claude introduces continuous AI‑assisted code review
+&lt;/h1&gt;&lt;p&gt;Claude Haiku 5.5 brings continuous AI‑assisted code review to the Claude Code team.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;We think &amp;ldquo;did a human read the code?&amp;rdquo; is an imprecise proxy for &amp;ldquo;what could go wrong with this change, and which check—automated or human—is the right one to catch it?&amp;rdquo; — Addy Osmani, Morgan Westlee Lunt, and Qing Wang, How the Claude Code team does code review&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Before, review was a gate at the end of the road: write the code, open a PR, wait for your colleague.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Now, review runs continuously, more like spellcheck while you write.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Asking that question also changed when review happens.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Most changes have been reviewed and fixed by Claude at least once before a human is asked to look.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;The system decides which check—automated or human—is the right one to catch potential problems.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;This catches most routine mistakes, and saves team attention for higher‑level questions and scrutiny.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Claude Haiku 5.5 – 7th October 2026&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Claude #CodeReview #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Oct/16/code-review/" target="_blank" rel="noopener"
+&gt;A quote from Addy Osmani, Morgan Westlee Lunt, and Qing Wang&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Visionlanguage on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/visionlanguage/</link><description>Recent content in Visionlanguage on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 10 Nov 2026 22:09:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/visionlanguage/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Nemotron 3.5 Super VL Added to Amazon SageMaker JumpStart</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-nemotron-3-5-super-vl-added-to-amazon-sagemaker-jumpstart/</link><pubDate>Tue, 10 Nov 2026 22:09:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-nemotron-3-5-super-vl-added-to-amazon-sagemaker-jumpstart/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22096-featured-image.png" alt="Featured image of post NVIDIA Nemotron 3.5 Super VL Added to Amazon SageMaker JumpStart" /&gt;&lt;h1 id="nvidia-nemotron-35-super-vl-added-to-amazon-sagemaker-jumpstart"&gt;NVIDIA Nemotron 3.5 Super VL Added to Amazon SageMaker JumpStart
+&lt;/h1&gt;&lt;p&gt;Today NVIDIA announced that the Nemotron 3.5 Super VL vision‑language model is now available through Amazon SageMaker JumpStart. The model can be deployed in SageMaker Studio with a few steps or with a few lines of the SageMaker Python SDK.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Super VL is the vision‑language model (VLM) in the NVIDIA Nemotron 3.5 family.&lt;/li&gt;
+&lt;li&gt;Inputs: images, video, and text.&lt;/li&gt;
+&lt;li&gt;Output: generated text.&lt;/li&gt;
+&lt;li&gt;Designed for document intelligence, GUI understanding for computer‑use agents, video question answering, and multimodal agentic applications.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🧩 Architecture
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Language backbone&lt;/strong&gt;: 120 B‑parameter hybrid Mixture‑of‑Experts (MoE) model with 12 B active parameters per token.
+&lt;ul&gt;
+&lt;li&gt;88 layers interleaving Mamba‑2 and MoE layers (512 routed experts, 22 active per token) plus 8 attention layers.&lt;/li&gt;
+&lt;li&gt;Initialized from Nemotron 3 Super Base and distilled from Nemotron 3 Ultra Base.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vision encoder&lt;/strong&gt;: C‑RADIO encoder that processes images and sampled video frames.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vision‑language connector&lt;/strong&gt;: Maps encoder outputs into the language backbone’s embedding space.&lt;/li&gt;
+&lt;li&gt;Both encoder and connector remain in BF16 for all variants.&lt;/li&gt;
+&lt;li&gt;Supports context lengths up to 1 million tokens and includes a built‑in Multi‑Token Prediction (MTP) head for speculative decoding (not enabled in the default JumpStart serving configuration for NVFP4).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Reasoning&lt;/strong&gt;: Enabled by default; can be toggled per request with &lt;code&gt;enable_thinking&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Languages supported&lt;/strong&gt;: English, French, German, Italian, Japanese, Spanish, Chinese.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Outputs&lt;/strong&gt;: Tool calling, JSON schema output, configurable reasoning.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;License&lt;/strong&gt;: OpenMDW License Agreement, version 1.1.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Training pipeline&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Continued pre‑training → long‑context &amp;amp; software‑engineering mid‑training → vision‑language training.&lt;/li&gt;
+&lt;li&gt;Two‑stage multimodal supervised fine‑tuning on vision, reasoning, code, tool, chat, safety, and long‑context data.&lt;/li&gt;
+&lt;li&gt;Reinforcement learning with verifiable rewards and human feedback (NeMo RL, NeMo Gym), multi‑teacher on‑policy distillation, and final MTP‑head training.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-variants"&gt;📦 Variants
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Variant&lt;/th&gt;
+&lt;th&gt;Precision&lt;/th&gt;
+&lt;th&gt;Checkpoint Size&lt;/th&gt;
+&lt;th&gt;Quantization&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NVFP4&lt;/td&gt;
+&lt;td&gt;4‑bit weights &amp;amp; activations (W4A4) on Blackwell GPUs; vision encoder, connector, Mamba convolutions, embeddings in BF16; MoE router in FP32&lt;/td&gt;
+&lt;td&gt;~75 GB&lt;/td&gt;
+&lt;td&gt;Quantized from BF16 with quantization‑aware distillation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;BF16&lt;/td&gt;
+&lt;td&gt;Full‑precision BF16 weights&lt;/td&gt;
+&lt;td&gt;~249 GB&lt;/td&gt;
+&lt;td&gt;Reference weights&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Deployment&lt;/strong&gt;: One‑click launch from SageMaker JumpStart; deployable via SageMaker Studio UI or SageMaker Python SDK.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Instance types&lt;/strong&gt;:
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Instance&lt;/th&gt;
+&lt;th&gt;Recommended for&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ml.g7.24xlarge&lt;/td&gt;
+&lt;td&gt;Default&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ml.g7.48xlarge&lt;/td&gt;
+&lt;td&gt;NVFP4 variant&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ml.p5en.48xlarge&lt;/td&gt;
+&lt;td&gt;BF16 variant&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Targets agentic workloads that must both see and read.&lt;/li&gt;
+&lt;li&gt;Enables vision‑language agents that combine reasoning, coding, tool use, document understanding, and video understanding.&lt;/li&gt;
+&lt;li&gt;Provides large‑context (up to 1 M tokens) and built‑in speculative decoding to accelerate generation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22096-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22096-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22096-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #SageMaker #VisionLanguage #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/nvidia-nemotron-3-5-super-vl-is-now-available-in-amazon-sagemaker-jumpstart/" target="_blank" rel="noopener"
+&gt;NVIDIA Nemotron 3.5 Super VL is now available in Amazon SageMaker JumpStart | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Adaptive Teacher Supervision (GAD-RL) Boosts Vision-Language OCR Performance</title><link>https://shoubhikbanerjee.github.io/blog/p/adaptive-teacher-supervision-gad-rl-boosts-vision-language-ocr-performance/</link><pubDate>Thu, 01 Oct 2026 22:03:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/adaptive-teacher-supervision-gad-rl-boosts-vision-language-ocr-performance/</guid><description>&lt;h1 id="adaptive-teacher-supervision-gad-rl-boosts-vision-language-ocr-performance"&gt;Adaptive Teacher Supervision (GAD-RL) Boosts Vision-Language OCR Performance
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Vision‑language models can rewrite anomalous text in images into linguistically plausible expressions, which harms the faithfulness of OCR transcription.&lt;/li&gt;
+&lt;li&gt;Sequence‑level task rewards and local teacher guidance complement each other, but a fixed teacher’s guidance loses effectiveness as the student model improves, both across training checkpoints and across response groups with different task rewards.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GAD‑RL&lt;/strong&gt; (Adaptive Guidance Regulation for Reinforcement Learning) adjusts teacher supervision during joint post‑training based on the student’s current task performance and local output distributions.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;frozen teacher&lt;/strong&gt; conditions on reference transcriptions and on prefixes generated by the student.&lt;/li&gt;
+&lt;li&gt;The method &lt;strong&gt;disables distillation&lt;/strong&gt; for response groups that contain an output with a task reward of at least &lt;strong&gt;0.95&lt;/strong&gt; and &lt;strong&gt;continuously attenuates&lt;/strong&gt; the distillation strength as the group‑mean reward rises.&lt;/li&gt;
+&lt;li&gt;It also &lt;strong&gt;weights the forward KL&lt;/strong&gt; term by the student’s probability of the teacher’s top‑1 token, reducing the impact of local auxiliary updates when the student gives low support to that candidate.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;On the &lt;strong&gt;Qwen3.5‑2B&lt;/strong&gt; model, GAD‑RL attains &lt;strong&gt;59.92% Micro Recall&lt;/strong&gt; on &lt;strong&gt;CHAOS‑Bench&lt;/strong&gt;, outperforming:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GRPO&lt;/strong&gt; by &lt;strong&gt;8.45&lt;/strong&gt; percentage points,&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GRPO+OPD (fixed‑weight)&lt;/strong&gt; by &lt;strong&gt;4.43&lt;/strong&gt; percentage points.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The same model reaches an &lt;strong&gt;Overall score of 91.18&lt;/strong&gt; on &lt;strong&gt;OmniDocBench v1.6&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By dynamically scaling teacher supervision, GAD‑RL maintains effective guidance throughout training, preventing the degradation observed with static teachers.&lt;/li&gt;
+&lt;li&gt;The approach yields measurable gains on both micro‑level recall for OCR‑specific benchmarks and macro‑level performance across diverse document tasks, demonstrating that adaptive supervision can improve both fidelity and generalization in vision‑language systems.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#VisionLanguage #OCR #AdaptiveLearning #AITraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.38282v1" target="_blank" rel="noopener"
+&gt;Improving OCR Faithfulness via Gated and Attenuated On-Policy Distillation&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.38792v1" target="_blank" rel="noopener"
+&gt;Training LLM Judges from Language Feedback via Position-Selective Self-Distillation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Necessary Tool‑Evidence Path Rewards improve agentic vision‑language models</title><link>https://shoubhikbanerjee.github.io/blog/p/necessary-toolevidence-path-rewards-improve-agentic-visionlanguage-models/</link><pubDate>Fri, 04 Sep 2026 22:05:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/necessary-toolevidence-path-rewards-improve-agentic-visionlanguage-models/</guid><description>&lt;h1 id="necessary-toolevidence-path-rewards-improve-agentic-visionlanguage-models"&gt;Necessary Tool‑Evidence Path Rewards improve agentic vision‑language models
+&lt;/h1&gt;&lt;p&gt;A new paper presents the NTEP annotation scheme and NTEP‑R reward to make tool use in agentic vision‑language models more purposeful and efficient.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Modern vision‑language models (VLMs) answer many image‑grounded questions but struggle with complex queries that need fine‑grained visual detail or external knowledge.&lt;/li&gt;
+&lt;li&gt;Agentic VLMs can call tools such as &lt;strong&gt;image cropping&lt;/strong&gt;, &lt;strong&gt;image search&lt;/strong&gt;, and &lt;strong&gt;text search&lt;/strong&gt; to gather missing evidence.&lt;/li&gt;
+&lt;li&gt;Existing training evaluates only the final answer, leading to:
+&lt;ol&gt;
+&lt;li&gt;Redundant or off‑target tool calls that fail to collect needed evidence.&lt;/li&gt;
+&lt;li&gt;Inadequate extraction of information from the observations returned by those tools.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;The paper introduces &lt;strong&gt;Necessary Tool‑Evidence Path (NTEP)&lt;/strong&gt;, an annotation scheme that explicitly specifies the essential external evidence and the corresponding tool calls for each query.&lt;/li&gt;
+&lt;li&gt;Building on NTEP, the authors propose &lt;strong&gt;NTEP‑R&lt;/strong&gt;, a supervision mechanism that rewards tool invocations only when they advance the reasoning toward the final solution.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pre‑call intent reward&lt;/strong&gt; – the model receives a reward when its intended tool call matches a necessary evidence‑seeking goal defined by NTEP.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Post‑call alignment reward&lt;/strong&gt; – the model is further rewarded when the information it summarizes from the tool’s observation aligns with the required evidence.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Non‑repeated‑goal regularizer&lt;/strong&gt; – penalizes redundant calls that revisit goals already satisfied, encouraging concise tool usage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tools supported in the unified framework: image cropping, image search, text search.&lt;/li&gt;
+&lt;li&gt;Model variant released: &lt;strong&gt;NTEP‑8B&lt;/strong&gt;, an 8‑billion‑parameter agentic VLM trained with the NTEP‑R supervision.&lt;/li&gt;
+&lt;li&gt;Evaluation: extensive tests on &lt;strong&gt;seven image‑grounded benchmarks&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Outcomes: NTEP‑8B shows a significant improvement in both search‑oriented accuracy and tool‑use efficiency compared to prior approaches.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Demonstrated that fine‑grained tool‑evidence path supervision yields more robust agentic VLM performance across diverse tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#visionlanguage #agenticVLM #NTEP&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.03493v1" target="_blank" rel="noopener"
+&gt;Making Every Tool Call Count: Necessary Tool-Evidence Path Rewards for Agentic Vision-Language Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

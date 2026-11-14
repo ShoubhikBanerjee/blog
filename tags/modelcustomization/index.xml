@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ModelCustomization on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/modelcustomization/</link><description>Recent content in ModelCustomization on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 23 Oct 2026 22:04:00 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/modelcustomization/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker AI adds serverless training session APIs for custom model fine‑tuning</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-serverless-training-session-apis-for-custom-model-finetuning/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-serverless-training-session-apis-for-custom-model-finetuning/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21950-featured-image.png" alt="Featured image of post Amazon SageMaker AI adds serverless training session APIs for custom model fine‑tuning" /&gt;&lt;h1 id="amazon-sagemaker-ai-adds-serverless-training-session-apis-for-custom-model-finetuning"&gt;Amazon SageMaker AI adds serverless training session APIs for custom model fine‑tuning
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon SageMaker AI has expanded its serverless model‑customization offering with the general‑availability launch of &lt;strong&gt;training sessions&lt;/strong&gt;. The new APIs let customers write and coordinate their own post‑training logic—such as custom loss functions or reward signals—while SageMaker AI handles all GPU infrastructure, fault recovery, and checkpoint storage.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Training sessions expose low‑level operations (e.g., &lt;code&gt;forward_backward()&lt;/code&gt;, &lt;code&gt;optim_step()&lt;/code&gt;, &lt;code&gt;sample()&lt;/code&gt;) as SageMaker API calls. Users write the training loop in their own Python process; each call is executed on a live, stateful GPU‑backed session. The service takes care of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GPU allocation and distributed execution&lt;/li&gt;
+&lt;li&gt;Gradient synchronization and checkpoint storage&lt;/li&gt;
+&lt;li&gt;Fault recovery, tenant isolation, and scaling&lt;/li&gt;
+&lt;li&gt;Security configuration via IAM roles, optional KMS keys, and VPC settings&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Your data, checkpoints, and any custom weights stay in your Amazon S3 bucket in the region you choose, and SageMaker does not reuse them to train other models.&lt;/p&gt;
+&lt;h2 id="-key-features"&gt;⚙️ Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;No instance‑type or cluster management&lt;/strong&gt; – the service automatically provisions serverless GPUs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fine‑grained algorithmic control&lt;/strong&gt; – write custom loss, reward, or preference functions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi‑turn reinforcement learning&lt;/strong&gt; – managed, serverless support for agents that require several interaction rounds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flexible adaptation&lt;/strong&gt; – choose Low‑Rank Adaptation (LoRA) or full fine‑tuning, and chain techniques through continuous customization.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pay‑per‑token&lt;/strong&gt; pricing model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Secure execution&lt;/strong&gt; – IAM execution role, optional KMS key, VPC configuration, data stays in your S3 bucket.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation before deployment&lt;/strong&gt; – built‑in steps for accuracy, bias, and safety checks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-programming-model"&gt;📚 Programming Model
+&lt;/h2&gt;&lt;p&gt;Training sessions are accessed through three SageMaker Python SDK clients:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;ServiceClient&lt;/strong&gt; – sets platform‑level settings (execution role, model package, S3 output location, optional KMS/VPC) and starts a session.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TrainingClient&lt;/strong&gt; – provides operations such as &lt;code&gt;forward()&lt;/code&gt;, &lt;code&gt;forward_backward()&lt;/code&gt;, &lt;code&gt;optim_step()&lt;/code&gt;, and checkpoint handling.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SamplingClient&lt;/strong&gt; – handles &lt;code&gt;sample()&lt;/code&gt; and &lt;code&gt;compute_logprobs()&lt;/code&gt; for generation and scoring during roll‑outs.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Each API call maps to a single step in your loop. An active session also exposes an OpenAI‑compatible chat completions endpoint, enabling existing client code to sample from the customized model.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The training‑session APIs are now generally available as part of SageMaker AI serverless model customization. A companion &lt;em&gt;training sessions cookbook&lt;/em&gt; provides ready‑to‑run SFT and RL recipes.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Customizing an open‑weight model with post‑training techniques such as reinforcement learning or preference optimization yields more accurate results for a specific business context (e.g., product catalogs, clinical vocabularies) and reduces inference cost. The new serverless APIs remove the operational burden of managing GPU clusters, allowing teams to focus on algorithmic innovation while still retaining full control over the training procedure.&lt;/p&gt;
+&lt;h3 id="techniques-supported"&gt;Techniques supported
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Technique&lt;/th&gt;
+&lt;th&gt;What it enables&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;SFT (Supervised Fine‑Tuning)&lt;/td&gt;
+&lt;td&gt;Custom loss or data curriculum&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DPO (Direct Preference Optimization)&lt;/td&gt;
+&lt;td&gt;Preference‑based alignment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RLVR&lt;/td&gt;
+&lt;td&gt;Reinforcement‑learning variant&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RLAIF (RL from AI Feedback)&lt;/td&gt;
+&lt;td&gt;Feedback‑driven RL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Multi‑turn RL&lt;/td&gt;
+&lt;td&gt;Agent training requiring several interaction rounds&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LoRA (Low‑Rank Adaptation)&lt;/td&gt;
+&lt;td&gt;Update a subset of model weights&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Full fine‑tuning&lt;/td&gt;
+&lt;td&gt;Update the entire model&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="realworld-usage-examples"&gt;Real‑world usage examples
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;A healthcare claim‑denial triage model built with training sessions validated the platform from day one.&lt;/li&gt;
+&lt;li&gt;Fine‑tuning &lt;code&gt;gpt‑oss‑20b&lt;/code&gt; for agentic multi‑turn tool calling against an Amazon Neptune knowledge graph succeeded with no manual GPU tuning, out‑of‑memory issues, or checkpoint‑resume problems.&lt;/li&gt;
+&lt;li&gt;The cookbook demonstrates reinforcement learning on competitive‑programming problems where generated code is scored against unit tests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/training-sessions-image.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21950-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21950-4.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #ModelCustomization #ServerlessAI #ReinforcementLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/announcing-new-ways-to-customize-models-with-sagemaker-ai-without-managing-gpus/" target="_blank" rel="noopener"
+&gt;Announcing new ways to customize models with SageMaker AI, without managing GPUs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/write-your-own-training-loop-without-managing-gpus-with-amazon-sagemaker-training-sessions/" target="_blank" rel="noopener"
+&gt;Write your own training loop — without managing GPUs — with Amazon SageMaker training session APIs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

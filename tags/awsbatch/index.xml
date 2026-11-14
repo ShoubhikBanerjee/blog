@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWSBatch on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/awsbatch/</link><description>Recent content in AWSBatch on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 30 Oct 2026 22:02:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/awsbatch/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Batch Introduces Quota Management for Amazon SageMaker Training Jobs</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-batch-introduces-quota-management-for-amazon-sagemaker-training-jobs/</link><pubDate>Fri, 30 Oct 2026 22:02:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-batch-introduces-quota-management-for-amazon-sagemaker-training-jobs/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-featured-image.png" alt="Featured image of post AWS Batch Introduces Quota Management for Amazon SageMaker Training Jobs" /&gt;&lt;h1 id="aws-batch-introduces-quota-management-for-amazon-sagemaker-training-jobs"&gt;AWS Batch Introduces Quota Management for Amazon SageMaker Training Jobs
+&lt;/h1&gt;&lt;p&gt;AWS has introduced quota management for AWS Batch, providing a new capability for administrators to manage compute capacity for Amazon SageMaker Training workloads. This feature allows users to queue, schedule, and retry machine learning training jobs without building their own infrastructure, utilizing the managed scheduling features of AWS Batch.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Quota management enables administrators to divide compute capacity into quota shares, which are organized by specific teams, projects, or workloads. These quota shares act as virtual queues nested hierarchically within an associated job queue. This system is designed to maximize GPU utilization while honoring each team&amp;rsquo;s specific allocation during peak demand.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;AWS Batch prioritizes quota shares that are under their capacity limits when scheduling jobs. Each quota share includes defined compute quotas and specific strategies for handling idle compute resources.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Strategy&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;RESERVE&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Idle compute is reserved until jobs arrive for that specific quota share.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LEND&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Idle compute is lent to other quota shares that have work available.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LEND_AND_BORROW&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Idle compute is lent when idle and borrowed when the share has work that could benefit from extra capacity.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;If a quota share has lent out its capacity and new jobs arrive, AWS Batch performs cross-share preemption. This automatically reclaims resources for the lending share, eliminating the need for administrators to manually track and terminate borrowing jobs. Conversely, if a share is at its limit and other capacity is idle, workloads can borrow that capacity to run.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The system also supports priority-based in-share preemption. When enabled, higher priority jobs within a single quota share can preempt lower priority jobs that are in the SCHEDULED, STARTING, or RUNNING states.&lt;/p&gt;
+&lt;p&gt;To implement these new capabilities, administrators must configure three main components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A Scheduling Policy containing a &lt;code&gt;quotaSharePolicy&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;A Service Environment that defines capacity limits for specific instances (such as &lt;code&gt;ml.g5.xlarge&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;A SageMaker Training job queue connected to both the policy and the environment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;These features are integrated with the SageMaker Python SDK v3. Configuration can be managed through the AWS Command Line Interface (AWS CLI), the AWS console, or via sample notebooks using the &lt;code&gt;aws_batch&lt;/code&gt; module.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21246-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWSBatch #SageMaker #MachineLearning #CloudInfrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/lend-and-borrow-resources-across-teams-with-aws-batchs-quota-management-for-sagemaker-training-jobs/" target="_blank" rel="noopener"
+&gt;Lend and borrow resources across teams with AWS Batch’s quota management for SageMaker Training jobs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

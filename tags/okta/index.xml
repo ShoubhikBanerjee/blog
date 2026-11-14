@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Okta on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/okta/</link><description>Recent content in Okta on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 07 Nov 2026 22:01:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/okta/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore adds EKS‑run agent with Okta‑driven governance</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-eksrun-agent-with-oktadriven-governance/</link><pubDate>Sat, 07 Nov 2026 22:01:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-eksrun-agent-with-oktadriven-governance/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-p2-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore adds EKS‑run agent with Okta‑driven governance" /&gt;&lt;h1 id="amazon-bedrock-agentcore-adds-eksrun-agent-with-oktadriven-governance"&gt;Amazon Bedrock AgentCore adds EKS‑run agent with Okta‑driven governance
+&lt;/h1&gt;&lt;p&gt;A second coding agent was added on Amazon Elastic Kubernetes Service (Amazon EKS) and wired through the same Amazon Bedrock AgentCore Gateway. The update shows that the gateway‑based front door works regardless of where an agent runs, while keeping the Okta‑driven delegation and Cedar policy enforcement intact.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The original agent runs on &lt;strong&gt;Amazon Bedrock AgentCore runtime&lt;/strong&gt; and is invoked for signed‑in users through &lt;strong&gt;Okta Cross App Access (XAA)&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Okta&lt;/strong&gt; decides which agent may act for a user and &lt;strong&gt;Amazon Bedrock AgentCore Identity&lt;/strong&gt; redeems Okta’s grant inside the agent.&lt;/li&gt;
+&lt;li&gt;The new addition is a &lt;strong&gt;second agent (agent B)&lt;/strong&gt; deployed on &lt;strong&gt;Amazon EKS&lt;/strong&gt;, using its own Okta identity but following the identical request flow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🏗️ Architecture
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;All agents reach a single &lt;strong&gt;Gateway endpoint&lt;/strong&gt;; the Gateway holds the target registry and redeems the Okta grant.&lt;/li&gt;
+&lt;li&gt;The topology consists of:
+&lt;ul&gt;
+&lt;li&gt;1 agent (original) + 1 agent (EKS)&lt;/li&gt;
+&lt;li&gt;2 &lt;strong&gt;Model Context Protocol (MCP) servers&lt;/strong&gt; acting as Gateway targets&lt;/li&gt;
+&lt;li&gt;Authorization checks embedded in each MCP server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Request flow (illustrated for agent A):
+&lt;ol&gt;
+&lt;li&gt;User signs in; the backend‑for‑frontend (BFF) exchanges the ID token for an &lt;strong&gt;Identity Assertion JWT Authorization Grant (ID‑JAG)&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;BFF invokes the agent on &lt;strong&gt;AgentCore runtime&lt;/strong&gt; with the ID‑JAG.&lt;/li&gt;
+&lt;li&gt;Agent forwards the ID‑JAG to the Gateway as the bearer token of its MCP session.&lt;/li&gt;
+&lt;li&gt;Gateway inbound authorizer (issuer: Okta org auth server, audience: custom auth server, allowedClients pinned to the agent) accepts only that ID‑JAG.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cedar policies&lt;/strong&gt; are evaluated for each tool listing and call before the Gateway invokes a target.&lt;/li&gt;
+&lt;li&gt;For permitted calls, the Gateway uses &lt;strong&gt;AgentCore Identity&lt;/strong&gt; to redeem the ID‑JAG for the target at Okta’s custom authorization server via the credential provider.&lt;/li&gt;
+&lt;li&gt;Each hop emits OpenTelemetry spans collected by &lt;strong&gt;AgentCore Observability&lt;/strong&gt; and visible in &lt;strong&gt;Amazon CloudWatch Transaction Search&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Okta streams its System Log to CloudWatch through &lt;strong&gt;Amazon EventBridge&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Agent B on EKS follows the identical path through its own Gateway instance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Bedrock AgentCore runtime&lt;/td&gt;
+&lt;td&gt;Executes each task in an isolated session inside the AWS account&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Okta Cross App Access (XAA)&lt;/td&gt;
+&lt;td&gt;Determines which agent may act for a signed‑in user&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AgentCore Identity&lt;/td&gt;
+&lt;td&gt;Redeems Okta’s grant inside the agent and at the Gateway&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Gateway&lt;/td&gt;
+&lt;td&gt;Single front door; holds target registry, redeems grants, enforces Cedar policies&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MCP servers&lt;/td&gt;
+&lt;td&gt;Act as Gateway targets; perform outbound token‑exchange via credential provider&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Cedar policy set&lt;/td&gt;
+&lt;td&gt;Default‑deny policies evaluated at the Gateway before tools run&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AgentCore Observability (CloudWatch)&lt;/td&gt;
+&lt;td&gt;Central view of all decisions and OpenTelemetry spans&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;BFF&lt;/td&gt;
+&lt;td&gt;Exchanges user ID token for ID‑JAG and starts the agent session&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-security--governance"&gt;🔐 Security &amp;amp; Governance
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Governance is proven by a deliberately small topology and a default‑deny &lt;strong&gt;Cedar&lt;/strong&gt; policy set evaluated at the Gateway.&lt;/li&gt;
+&lt;li&gt;The agent’s role holds &lt;strong&gt;no token‑exchange or secret permissions&lt;/strong&gt;; all authorizations are performed by the Gateway.&lt;/li&gt;
+&lt;li&gt;Policies bind each tool to the specific agent and the scope delegated by Okta.&lt;/li&gt;
+&lt;li&gt;The inbound authorizer mirrors the runtime authorizer from the original deployment.&lt;/li&gt;
+&lt;li&gt;Each MCP server has a static tool schema (listingMode = DEFAULT) so Cedar policies reference fixed tool names.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-observability--auditing"&gt;📈 Observability &amp;amp; Auditing
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AgentCore Observability&lt;/strong&gt; (a capability of Amazon Bedrock AgentCore) streams every decision to &lt;strong&gt;Amazon CloudWatch&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;OpenTelemetry spans from each hop are indexed by &lt;strong&gt;CloudWatch Transaction Search&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Okta’s System Log is forwarded to CloudWatch via &lt;strong&gt;Amazon EventBridge&lt;/strong&gt;, providing a complete audit trail.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-cost--deployment"&gt;💰 Cost &amp;amp; Deployment
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Adding the second agent and the associated Gateway logic took &lt;strong&gt;about 90 minutes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon EKS control plane&lt;/strong&gt; costs &lt;strong&gt;$0.10 per hour&lt;/strong&gt;, plus node and Auto‑Mode management fees; AgentCore features are billed based on usage.&lt;/li&gt;
+&lt;li&gt;The solution builds on the AWS sample &lt;strong&gt;08‑okta‑xaa‑delegation‑chain&lt;/strong&gt; on GitHub, with Part 2 additions layered on top.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-when-to-use"&gt;✅ When to use
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Good fit&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Scoped feature work, bug fixes, and tests on a trusted repository that declares its own setup and test commands.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Not a fit&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Untrusted code, because the agent runs the repository’s own commands without additional safety checks.&lt;/li&gt;
+&lt;li&gt;Open‑ended work, because each task stops after three attempts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The update demonstrates that Amazon Bedrock AgentCore can securely orchestrate remote coding agents from multiple runtimes, while preserving strict Okta‑driven access control, Cedar‑based tool gating, and end‑to‑end observability.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-p2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-p2-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-p2-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #Bedrock #AIagents #Okta #Security&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock-agentcore-part-2/" target="_blank" rel="noopener"
+&gt;Govern AI agent access with Okta Cross App Access and Amazon Bedrock AgentCore – Part 2 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/extend-claude-code-to-remote-sessions-on-amazon-bedrock-agentcore-with-security-controls/" target="_blank" rel="noopener"
+&gt;Extend Claude Code to remote sessions on Amazon Bedrock AgentCore with security controls | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Bedrock AgentCore Integrates with Okta Cross App Access for Secure Agent Governance</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-integrates-with-okta-cross-app-access-for-secure-agent-governance/</link><pubDate>Sat, 07 Nov 2026 22:01:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-integrates-with-okta-cross-app-access-for-secure-agent-governance/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Integrates with Okta Cross App Access for Secure Agent Governance" /&gt;&lt;h1 id="amazon-bedrock-agentcore-integrates-with-okta-cross-app-access-for-secure-agent-governance"&gt;Amazon Bedrock AgentCore Integrates with Okta Cross App Access for Secure Agent Governance
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore is a platform to build, connect, and optimize agents at scale using any framework or model. A new integration with Okta Cross App Access (XAA) allows organizations to manage agent identity and governance directly within their identity provider (IdP).&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;This solution establishes a clear separation between governance and execution. Okta serves as the governance plane, deciding which agent may act for which user against specific resources. Amazon Bedrock AgentCore serves as the execution plane, managing credentials and turning governance decisions into valid access tokens.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Okta&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Governance plane: decides which agent acts for which user against which resource.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore Identity&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Execution plane: holds credentials and redeems grants for tokens in a vault.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore runtime&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Validates Okta’s grant.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The identity flow ensures that agent actions are always tied to a verified user session:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;User Sign-in:&lt;/strong&gt; Users access a backend for frontend (BFF) using OpenID Connect via the agent’s linked Okta app.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Token Exchange:&lt;/strong&gt; For each request, the BFF performs an RFC 8693 token exchange, trading the user&amp;rsquo;s ID token for an Identity Assertion JWT Authorization Grant (ID-JAG) at Okta’s authorization server.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Okta Verification:&lt;/strong&gt; Okta checks that the agent is active, the user is assigned to it, and an administrator has approved the applications and scopes the agent might reach.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution:&lt;/strong&gt; The BFF invokes the agent on the AgentCore runtime using the ID-JAG. AgentCore Identity then redeems the ID-JAG for a short-lived access token accepted by the resource.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The system utilizes three distinct tokens to record different decisions throughout the request lifecycle:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ID Token:&lt;/strong&gt; Identifies the user.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Identity Assertion JWT Authorization Grant (ID-JAG):&lt;/strong&gt; Represents Okta’s decision; single-use and expires in 5 minutes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access Token:&lt;/strong&gt; Issued by Okta’s custom authorization server, naming both the user and the agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In testing, the governance process proved highly responsive. When an administrator removed a user’s assignment, Okta refused new agent requests for that user within approximately 1 second. Existing tokens expired within 5 minutes. Performance testing showed that AgentCore Identity added roughly 0.6 seconds of latency to a request taking 30 seconds end to end.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock AgentCore charges based on usage. A technical walkthrough for building a task agent with this governance model takes about 1 hour. The associated sample code is provided for non-production use, and organizations should consult with security and legal teams before deployment.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #AmazonBedrock #Okta #AIagents #Cybersecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock-agentcore-part-1/" target="_blank" rel="noopener"
+&gt;Govern AI agent access with Okta Cross App Access and Amazon Bedrock AgentCore – Part 1 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

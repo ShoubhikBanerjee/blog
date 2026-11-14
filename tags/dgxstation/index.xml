@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DGXStation on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/dgxstation/</link><description>Recent content in DGXStation on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 14 Nov 2026 12:02:58 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/dgxstation/index.xml" rel="self" type="application/rss+xml"/><item><title>Serving GLM-5.3 NVFP4 Across Two NVIDIA DGX Stations with vLLM</title><link>https://shoubhikbanerjee.github.io/blog/p/serving-glm-5-3-nvfp4-across-two-nvidia-dgx-stations-with-vllm/</link><pubDate>Sat, 14 Nov 2026 12:02:58 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/serving-glm-5-3-nvfp4-across-two-nvidia-dgx-stations-with-vllm/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-3-660x370.png" alt="Featured image of post Serving GLM-5.3 NVFP4 Across Two NVIDIA DGX Stations with vLLM" /&gt;&lt;h1 id="serving-glm-53-nvfp4-across-two-nvidia-dgx-stations-with-vllm"&gt;Serving GLM-5.3 NVFP4 Across Two NVIDIA DGX Stations with vLLM
+&lt;/h1&gt;&lt;p&gt;A tutorial demonstrates how to locally serve the NVIDIA GLM-5.3 NVFP4 model across two NVIDIA DGX Stations using vLLM and tensor parallelism. The setup connects both Stations over ConnectX-8 RDMA to serve requests through a single OpenAI-compatible API endpoint.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model Scale:&lt;/strong&gt; NVIDIA GLM-5.3 NVFP4 is a quantized version of Z.ai&amp;rsquo;s mixture-of-experts (MoE) model, containing 753 billion parameters with 40 billion parameters activated per token.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Challenge:&lt;/strong&gt; The model checkpoint requires approximately 464 GB of storage, exceeding the 252 GB of HBM3e memory available on a single GB300 GPU.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU-Only Execution:&lt;/strong&gt; Sparse activation reduces token computation, but all weights must remain accessible because tokens route to different experts. Using two DGX Stations keeps all model weights in GPU memory with CPU weight offloading disabled.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Tensor Parallelism (TP=2):&lt;/strong&gt; Splits the model&amp;rsquo;s weights and computation evenly across the two GB300 GPUs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Node Roles:&lt;/strong&gt; Station A (rank 0) hosts the OpenAI-compatible API server. Station B (rank 1) acts strictly as a worker node without an API server.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Request Execution:&lt;/strong&gt; Both Stations compute every incoming request simultaneously. Station A returns the final answer through the API endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interconnect Validation:&lt;/strong&gt; The Stations communicate via ConnectX-8 RDMA over two direct rails (&lt;code&gt;cx8r0&lt;/code&gt; and &lt;code&gt;cx8r1&lt;/code&gt;). Pre-deployment checks confirm device mapping (such as &lt;code&gt;mlx5_1&lt;/code&gt;) and IPv4 addressing to prevent NCCL timeouts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-system-requirements"&gt;⚙️ Key System Requirements
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component / Requirement&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Hardware&lt;/td&gt;
+&lt;td&gt;Two GB300 DGX Stations running Linux, validated via the Connect Two DGX Stations playbook and GPU-memory RDMA test&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td&gt;At least 464 GB of free disk space per Station for the model checkpoint, container image, and temporary files&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Container Image&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;vllm/vllm-openai:v0.30.0-aarch64@sha256:4864d46625cbc3307623e29ac742030655e27249feba7b97ec925ce4cc4dfb56&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Model Source&lt;/td&gt;
+&lt;td&gt;Repository &lt;code&gt;nvidia/GLM-5.3-NVFP4&lt;/code&gt; (revision &lt;code&gt;e3b8f9f2fad29727dfa95e766c5cac18ea1414bf&lt;/code&gt;) stored at &lt;code&gt;$HOME/models/GLM-5.3-NVFP4&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;User Access&lt;/td&gt;
+&lt;td&gt;SSH and sudo access on both Stations using the same Linux username; &lt;code&gt;docker&lt;/code&gt; group membership&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License &amp;amp; Datasets&lt;/td&gt;
+&lt;td&gt;Acceptance of NVIDIA Open Model Agreement, original GLM-5.3 license, SPEED-Bench (under NVIDIA Evaluation Dataset License Agreement), and access to Hugging Face gated dataset &lt;code&gt;cais/hle&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/04/gtc25-tech-blog-dgx-gb300-1920x1080-1-660x370.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/02/genai-visual-mixture-of-experts-3105423-e1772062206929-658x370.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#vLLM #NVIDIA #DGXStation #TensorParallelism #MixtureOfExperts #LLMInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/when-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm/" target="_blank" rel="noopener"
+&gt;When One GPU Isn’t Enough: Serving GLM-5.3 Across Two NVIDIA DGX Stations with vLLM | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

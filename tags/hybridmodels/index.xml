@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HybridModels on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/hybridmodels/</link><description>Recent content in HybridModels on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 12 Oct 2026 22:04:14 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/hybridmodels/index.xml" rel="self" type="application/rss+xml"/><item><title>ReplaySSM Restores Fast Decoding for State‑Space Layers in Hybrid LLMs</title><link>https://shoubhikbanerjee.github.io/blog/p/replayssm-restores-fast-decoding-for-statespace-layers-in-hybrid-llms/</link><pubDate>Mon, 12 Oct 2026 22:04:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/replayssm-restores-fast-decoding-for-statespace-layers-in-hybrid-llms/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/06/cube-black-background-660x370.png" alt="Featured image of post ReplaySSM Restores Fast Decoding for State‑Space Layers in Hybrid LLMs" /&gt;&lt;h1 id="replayssm-restores-fast-decoding-for-statespace-layers-in-hybrid-llms"&gt;ReplaySSM Restores Fast Decoding for State‑Space Layers in Hybrid LLMs
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Hybrid large‑language models interleave state‑space model (SSM) layers with a few attention layers. Recent work – &lt;em&gt;ReplaySSM: Cache SSM Inputs, Not State&lt;/em&gt; – shows how to make those SSM layers fast again, removing a major latency bottleneck that appears at serving batch sizes.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;ReplaySSM changes the way an SSM’s internal state is stored during generation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The state is split into a &lt;strong&gt;checkpoint&lt;/strong&gt; (a full copy of the SSM state) and a &lt;strong&gt;buffer of recent inputs&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Output computation reads only the buffer, while the checkpoint is updated lazily.&lt;/li&gt;
+&lt;li&gt;This separation eliminates three known problems:
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;State traffic&lt;/strong&gt; – the full state no longer moves every token.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rollback for speculative decoding&lt;/strong&gt; – the buffer can be discarded without reverting a large state.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error accumulation in a quantized state&lt;/strong&gt; – rounding errors no longer re‑enter the recurrence each step.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid model examples&lt;/strong&gt; – NVIDIA Nemotron 3, Qwen 3.5 through 3.8, Kimi‑K3, and GLM‑5.3‑Flash all use this pattern, with Mamba‑2, Gated DeltaNet (GDN), or Kimi Delta Attention (KDA) as the SSM layer.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Decoding bottleneck&lt;/strong&gt; – at batch size 256 on a Blackwell Ultra B300 GPU, SSM layers dominate latency up to 100 K tokens of context (Figure 2, left). The model has five times as many SSM layers as attention layers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;State size comparison&lt;/strong&gt; – one SSM layer’s FP32 state is 4 MiB per sequence, while an FP8 KV entry is 0.5 KiB per token. Thus an SSM state equals an attention KV cache for roughly 8 K tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Speculative decoding&lt;/strong&gt; – a drafter proposes &lt;em&gt;T&lt;/em&gt; tokens, the target model verifies them, then rolls back to the last accepted token. Attention rolls back by moving a KV pointer; an SSM’s state has no cheap inverse, so engines store a full snapshot after each draft token. This costs one read and &lt;em&gt;T&lt;/em&gt; writes per step and limits how many requests fit in GPU memory, making speculative decoding barely helpful for SSMs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quantization issue&lt;/strong&gt; – the quantized state is both the output and the next update’s input, so rounding error recurs at every step.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The paper is on &lt;strong&gt;arXiv&lt;/strong&gt; and the implementation is on &lt;strong&gt;GitHub&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;ReplaySSM is integrated into &lt;strong&gt;NVIDIA TensorRT‑LLM&lt;/strong&gt;, &lt;strong&gt;vLLM&lt;/strong&gt;, and &lt;strong&gt;FlashInfer&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Production deployments include &lt;strong&gt;GLM‑5.3‑Flash&lt;/strong&gt; and &lt;strong&gt;Kimi‑K3&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;By turning the SSM state into a cache of recent inputs rather than a constantly moved full tensor, ReplaySSM restores the speed advantages of attention‑only models for hybrid architectures. This enables existing speed‑up techniques—speculative decoding and low‑precision quantization—to be applied to models that heavily rely on SSM layers, broadening the practical utility of state‑space approaches in large‑scale inference.&lt;/p&gt;
+&lt;h2 id="-modelssm-mapping"&gt;📊 Model‑SSM mapping
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;SSM layer&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NVIDIA Nemotron 3&lt;/td&gt;
+&lt;td&gt;Mamba‑2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen 3.5 – 3.8&lt;/td&gt;
+&lt;td&gt;Mamba‑2, GDN, or KDA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kimi‑K3&lt;/td&gt;
+&lt;td&gt;KDA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GLM‑5.3‑Flash&lt;/td&gt;
+&lt;td&gt;Mamba‑2 / GDN / KDA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-1-4.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-2-4.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#ReplaySSM #SSM #HybridModels #InferenceOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/replayssm-rethinking-state-storage-for-faster-hybrid-model-decoding/" target="_blank" rel="noopener"
+&gt;ReplaySSM: Rethinking State Storage for Faster Hybrid-Model Decoding | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
