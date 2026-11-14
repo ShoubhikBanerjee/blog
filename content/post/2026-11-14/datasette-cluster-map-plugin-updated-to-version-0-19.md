@@ -2,7 +2,7 @@
 title: "Datasette-cluster-map plugin updated to version 0.19"
 slug: "datasette-cluster-map-plugin-updated-to-version-0-19"
 description: "On 13th November 2026, version 0.19 of the datasette-cluster-map plugin was released. This tool provides mapping capabilities for datasets containing latitude and longitude columns."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [Datasette, OpenStreetMap, DataVisualization, GIS]
 categories: ["AI", "Data Analysis", "Software Development", "Geospatial Technology"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "cuBLAS Enhances FP64 Performance Using Integer Tensor Cores"
 slug: "cublas-enhances-fp64-performance-using-integer-tensor-cores"
 description: "NVIDIA cuBLAS now provides automatic acceleration for DGEMM (real 64-bit floating-point) and ZGEMM (complex 64-bit floating-point) operations without requiring application code changes. This..."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [NVIDIA, cuBLAS, GPU, HPC, TensorCores]
 categories: ["AI", "High Performance Computing", "Software Engineering", "Artificial Intelligence"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image5-7-660x370.png"

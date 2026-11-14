@@ -2,7 +2,7 @@
 title: "XYBench benchmark reveals LLM gap in handling XY problem"
 slug: "xybench-benchmark-reveals-llm-gap-in-handling-xy-problem"
 description: "A new benchmark called XYBench, consisting of over 8,000 real‑world questions, has been released to measure how AI assistants handle requests that stem from misconceptions, known as the XY problem."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [XYBench, LLM, AIbenchmark, NLP]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Benchmarking", "Artificial Intelligence"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/aOWdQgZ8ioJcx9Eii4iob.png"

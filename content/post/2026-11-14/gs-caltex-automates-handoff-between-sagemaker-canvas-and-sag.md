@@ -2,7 +2,7 @@
 title: "GS Caltex Automates Handoff Between SageMaker Canvas and SageMaker Pipelines"
 slug: "gs-caltex-automates-handoff-between-sagemaker-canvas-and-sagemaker-pipelines"
 description: "GS Caltex has implemented an automated workflow that connects machine learning models built in Amazon SageMaker Canvas to production environments via Amazon SageMaker Pipelines. This update..."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [AWS, SageMaker, MLOps, GS_Caltex, Automation]
 categories: ["AI", "Machine Learning", "MLOps", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21878-featured-image.png"

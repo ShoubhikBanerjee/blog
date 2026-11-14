@@ -2,7 +2,7 @@
 title: "Datasette-Leaflet plugin updates tile request referrer policy"
 slug: "datasette-leaflet-plugin-updates-tile-request-referrer-policy"
 description: "On 13th November 2026, an update was released for the datasette-leaflet plugin to ensure compliance with OpenStreetMap’s tile server policy regarding referrer headers."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [Datasette, OpenStreetMap, Leaflet, WebDevelopment, HTTP]
 categories: ["AI", "Software Development", "Data Tools", "Web Infrastructure"]
 author: "Shoubhik Banerjee"

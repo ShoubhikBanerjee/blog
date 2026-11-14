@@ -2,7 +2,7 @@
 title: "Amazon Bedrock adds zero‑instrumentation per‑user cost attribution via IAM identity"
 slug: "amazon-bedrock-adds-zeroinstrumentation-peruser-cost-attribution-via-iam-identity"
 description: "Amazon Bedrock now provides built‑in, zero‑instrumentation cost attribution that traces every inference call back to the IAM principal that made it."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [AWS, AmazonBedrock, CostManagement, IAM]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Cost Management"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-21035-featured-image-2.png"

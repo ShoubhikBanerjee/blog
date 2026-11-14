@@ -2,7 +2,7 @@
 title: "OpenFold3 biomolecular structure prediction model available on Amazon SageMaker JumpStart"
 slug: "openfold3-biomolecular-structure-prediction-model-available-on-amazon-sagemaker-jumpstart"
 description: "The OpenFold Consortium and the AlQuraishi Lab at Columbia University have released OpenFold3-preview, an open-source, all-atom biomolecular structure prediction model. This research preview is now..."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [OpenFold3, SageMaker, Bioinformatics, DrugDiscovery, AWS]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Life Sciences"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/12/ML-22226-featured-image.png"

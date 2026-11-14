@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore Runtime V2 Improves Session Startup and Billing"
 slug: "amazon-bedrock-agentcore-runtime-v2-improves-session-startup-and-billing"
 description: "Amazon Bedrock AgentCore runtime provides a fully managed, serverless environment where each session runs in its own isolated microVM, scales to zero when idle, and you only pay for the resources..."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [AmazonBedrock, AgentCore, Serverless]
 categories: ["AI", "Cloud Computing", "AI Agents", "Serverless Architecture"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22099-featured-image.png"

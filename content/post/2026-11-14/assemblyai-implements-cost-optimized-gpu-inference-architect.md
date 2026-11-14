@@ -2,7 +2,7 @@
 title: "AssemblyAI Implements Cost-Optimized GPU Inference Architecture for Speech-to-Text at Scale"
 slug: "assemblyai-implements-cost-optimized-gpu-inference-architecture-for-speech-to-text-at-scale"
 description: "AssemblyAI has implemented a cost-optimized architecture to handle GPU-intensive speech-to-text inference at scale using Amazon EC2 Spot Instances and Amazon ECS. The system allows AssemblyAI to..."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [AssemblyAI, AWS, GPU, CloudComputing, MachineLearning]
 categories: ["AI", "Machine Learning", "Cloud Architecture", "Speech Technology"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-20884-featured-image.png"

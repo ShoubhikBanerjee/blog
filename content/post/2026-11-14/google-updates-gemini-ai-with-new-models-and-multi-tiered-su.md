@@ -2,7 +2,7 @@
 title: "Google Updates Gemini AI with New Models and Multi-Tiered Subscription Plans"
 slug: "google-updates-gemini-ai-with-new-models-and-multi-tiered-subscription-plans"
 description: "Google has updated its AI ecosystem with the introduction of the Gemini 4 model family and a restructured subscription framework. These developments include the launch of the Gemini 4 Argon,..."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [Gemini, GoogleAI, AIagents, Gemini4, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Software Updates", "Machine Learning"]
 image: "https://lh3.googleusercontent.com/1E500rkSh8Gqkz2l12tkrKkMgsDmbQot0h3afeiRukXNficphb2zEE8o6J3dSKkiDGOOCcQ8WtRYzEYudgiYK9FkoQeYg_SP92-C=e365-pa-nu-w1200-rj"

@@ -2,7 +2,7 @@
 title: "Telecommunications and Microsoft 365 Outages Cause Flight Delays and Business Disruptions"
 slug: "telecommunications-and-microsoft-365-outages-cause-flight-delays-and-business-disruptions"
 description: "A telecommunications failure and a major Microsoft 365 outage caused widespread operational disruptions, impacting air travel, corporate communications, and banking services across the United States."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [Telecommunications, Microsoft365, Aviation, TechOutage]
 categories: ["AI", "Information Technology", "Aviation", "Communications"]
 image: "https://static.toiimg.com/photo/24487812.cms"

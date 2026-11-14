@@ -2,7 +2,7 @@
 title: "Executing Isaac Sim Pick-and-Place Tasks Using SimReady Assets and Agent Controls"
 slug: "executing-isaac-sim-pick-and-place-tasks-using-simready-assets-and-agent-controls"
 description: "A walkthrough demonstrates a beverage can pick-and-place task in Isaac Sim using the UR17G arm, Robotiq 2F-140 gripper, and AI agent-generated controls. The workflow shows how to compose the scene,..."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [Robotics, IsaacSim, OpenUSD, SimReady, AIAgents]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Simulation", "Machine Learning"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6abfe9e7d7cf09a9b38ef308/HFZWtQ2i9VN_agjeUw2HB.gif"

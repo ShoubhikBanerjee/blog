@@ -2,7 +2,7 @@
 title: "NVIDIA Introduces Open Source SOMA Retargeter for Humanoid Motion Adaptation"
 slug: "nvidia-introduces-open-source-soma-retargeter-for-humanoid-motion-adaptation"
 description: "The open source NVIDIA SOMA Retargeter adapts human motion data to fit a humanoid robot's specific proportions, joint structures, and ranges of motion. Built around the shared human-motion..."
-date: 2026-11-14T06:11:11+05:30
+date: 2026-11-14T12:02:58+05:30
 tags: [NVIDIA, Robotics, SOMARetargeter, HumanoidRobots, OpenSource]
 categories: ["AI", "Robotics", "AI Tools", "Open Source", "Machine Learning"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/SOMA_Retargeter_Featured_600x338.gif"
