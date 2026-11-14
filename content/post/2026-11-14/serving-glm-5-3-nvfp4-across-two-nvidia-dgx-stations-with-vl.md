@@ -2,7 +2,7 @@
 title: "Serving GLM-5.3 NVFP4 Across Two NVIDIA DGX Stations with vLLM"
 slug: "serving-glm-5-3-nvfp4-across-two-nvidia-dgx-stations-with-vllm"
 description: "A tutorial demonstrates how to locally serve the NVIDIA GLM-5.3 NVFP4 model across two NVIDIA DGX Stations using vLLM and tensor parallelism. The setup connects both Stations over ConnectX-8 RDMA to..."
-date: 2026-11-14T12:02:58+05:30
+date: 2026-11-14T18:03:06+05:30
 tags: [vLLM, NVIDIA, DGXStation, TensorParallelism, MixtureOfExperts, LLMInference]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "GPU Computing", "Model Deployment"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-3-660x370.png"

@@ -2,7 +2,7 @@
 title: "NVIDIA cuPhoton.xBeam Accelerates Black Hole Interferometry Processing"
 slug: "nvidia-cuphoton-xbeam-accelerates-black-hole-interferometry-processing"
 description: "NVIDIA has introduced cuPhoton.xBeam, a GPU-based FX correlator within the cuPhoton toolkit designed to accelerate the processing of radio astronomical data used to image black holes. Developed in..."
-date: 2026-11-14T12:02:58+05:30
+date: 2026-11-14T18:03:06+05:30
 tags: [Astronomy, GPUComputing, Interferometry, NVIDIA, DataProcessing]
 categories: ["AI", "Scientific Computing", "High Performance Computing", "Astrophysics"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/black-hole-interferometry-featured-660x370.png"

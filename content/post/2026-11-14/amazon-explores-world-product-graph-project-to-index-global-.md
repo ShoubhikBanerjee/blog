@@ -2,7 +2,7 @@
 title: "Amazon explores World Product Graph project to index global shopping data"
 slug: "amazon-explores-world-product-graph-project-to-index-global-shopping-data"
 description: "Amazon is reportedly developing a project called the 'World Product Graph,' which aims to create a comprehensive index of products sold across the internet. This initiative seeks to aggregate data on..."
-date: 2026-11-14T12:02:58+05:30
+date: 2026-11-14T18:03:06+05:30
 tags: [Amazon, Ecommerce, AI, DataIndexing, Rufus]
 categories: ["AI", "Artificial Intelligence", "E-commerce", "Technology News"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/09/acastro_STK103__03.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Microsoft issues apology following worldwide Outlook service outage"
 slug: "microsoft-issues-apology-following-worldwide-outlook-service-outage"
 description: "Microsoft has issued an apology following a worldwide outage affecting Outlook services. The company has officially identified the cause of the disruption as a technical issue."
-date: 2026-11-14T12:02:58+05:30
+date: 2026-11-14T18:03:06+05:30
 tags: [Microsoft, Outlook, ServiceOutage, TechNews]
 categories: ["AI", "Technology", "Software", "Cloud Services"]
 image: "https://static.foxnews.com/static/orion/styles/img/fox-news/og/og-fox-news.png"

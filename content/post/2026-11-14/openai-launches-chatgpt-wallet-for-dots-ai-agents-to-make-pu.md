@@ -2,7 +2,7 @@
 title: "OpenAI Launches ChatGPT Wallet for Dots AI Agents to Make Purchases"
 slug: "openai-launches-chatgpt-wallet-for-dots-ai-agents-to-make-purchases"
 description: "OpenAI is launching ChatGPT Wallet, allowing its Dots AI agents platform to make purchases on behalf of users in response to prompts."
-date: 2026-11-14T12:02:58+05:30
+date: 2026-11-14T18:03:06+05:30
 tags: [OpenAI, ChatGPTWallet, AIAgents, DotsAI, Fintech]
 categories: ["AI", "AI Agents", "E-Commerce", "Financial Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/10/STKS539_AI_AGENTS_SHOPPING_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

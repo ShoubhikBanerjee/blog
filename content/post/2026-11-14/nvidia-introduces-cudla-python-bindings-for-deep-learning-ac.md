@@ -2,7 +2,7 @@
 title: "NVIDIA Introduces cuDLA Python Bindings for Deep Learning Accelerator Workflows"
 slug: "nvidia-introduces-cudla-python-bindings-for-deep-learning-accelerator-workflows"
 description: "NVIDIA has introduced the `cuda.bindings.cudla` module in `cuda-bindings` 13.3.0 as part of the CUDA Python project. This thin, Cython-generated Python layer exposes the cuDLA C++ API directly to..."
-date: 2026-11-14T12:02:58+05:30
+date: 2026-11-14T18:03:06+05:30
 tags: [NVIDIA, CUDA, Python, Jetson, DeepLearning]
 categories: ["AI", "Machine Learning", "Hardware Acceleration", "Python Development", "Edge Computing"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/08/dla-inference-660x370.jpg"

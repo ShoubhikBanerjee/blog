@@ -2,7 +2,7 @@
 title: "Deploying NVIDIA NeMo Switchyard with LiteLLM on AWS"
 slug: "deploying-nvidia-nemo-switchyard-with-litellm-on-aws"
 description: "LiteLLM now includes a native built-in Switchyard stage router, allowing developers to route AI model requests through an open source gateway. By using the AWS Cloud Development Kit (AWS CDK), you..."
-date: 2026-11-14T12:02:58+05:30
+date: 2026-11-14T18:03:06+05:30
 tags: [AWS, LiteLLM, NVIDIA, AI, LLM]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-22318-featured-image.png"
