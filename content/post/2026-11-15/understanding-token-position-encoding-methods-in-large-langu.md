@@ -2,7 +2,7 @@
 title: "Understanding Token Position Encoding Methods in Large Language Models"
 slug: "understanding-token-position-encoding-methods-in-large-language-models"
 description: "Large Language Models (LLMs) utilize specific mechanisms to process the order of words in a sequence, transitioning from classic absolute embeddings to contemporary methods such as Rotary Positional..."
-date: 2026-11-15T18:03:34+05:30
+date: 2026-11-15T22:02:44+05:30
 tags: [LLM, Transformer, RoPE, MachineLearning, ArtificialIntelligence]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence"]
 image: "https://substackcdn.com/image/fetch/$s_!8RKL!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb461a2cb-11ab-474a-affe-0ee99e5a8782_2850x2777.png"
