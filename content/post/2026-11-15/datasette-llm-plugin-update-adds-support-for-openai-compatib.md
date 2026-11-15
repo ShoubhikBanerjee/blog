@@ -2,7 +2,7 @@
 title: "Datasette-llm Plugin Update Adds Support for OpenAI-Compatible Endpoints and Local Models"
 slug: "datasette-llm-plugin-update-adds-support-for-openai-compatible-endpoints-and-local-models"
 description: "On 14th November 2026, the `datasette-llm` plugin was updated to include support for OpenAI-compatible endpoints. This release allows Datasette to be configured with Large Language Models (LLMs)..."
-date: 2026-11-15T12:03:11+05:30
+date: 2026-11-15T18:03:34+05:30
 tags: [Datasette, LLM, OpenAI, LocalAI, OpenSource]
 categories: ["AI", "Data Science", "Software Development", "Large Language Models"]
 image: "https://static.simonwillison.net/static/2026/lmstudio-datasette-agent.webp"
