@@ -2,7 +2,7 @@
 title: "Security Update Resolves Unauthorized Access in Database Registration Routing"
 slug: "security-update-resolves-unauthorized-access-in-database-registration-routing"
 description: "A minor security fix has been backported from version 1.0a43 to address a vulnerability that allowed unauthorized database downloads. This update resolves a security issue occurring when database..."
-date: 2026-11-16T06:10:56+05:30
+date: 2026-11-16T12:08:13+05:30
 tags: [Cybersecurity, Database, SoftwarePatch]
 categories: ["AI", "Information Security", "Software Development", "Data Management"]
 author: "Shoubhik Banerjee"

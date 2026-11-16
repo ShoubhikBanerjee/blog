@@ -2,7 +2,7 @@
 title: "Congress Seeks Tighter AI Chip Export Limits After Nvidia Spy Scandal"
 slug: "congress-seeks-tighter-ai-chip-export-limits-after-nvidia-spy-scandal"
 description: "Following a scandal involving now-former Nvidia CEO Jensen Huang and a suspected Chinese spy, Congress is seeking to further restrict the export of AI chips. Members of both political parties have..."
-date: 2026-11-16T06:10:56+05:30
+date: 2026-11-16T12:08:13+05:30
 tags: [Nvidia, AIChips, Congress, JensenHuang, ExportControls]
 categories: ["AI", "Artificial Intelligence", "Government Policy", "Hardware"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25545717/STK481_STK432_CONGRESS_GOVERNMENT_CIVRGINIA_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
