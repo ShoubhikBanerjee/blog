@@ -2,7 +2,7 @@
 title: "Apple Launches Health AI Usage Study to Evaluate Conversational Medical Tools"
 slug: "apple-launches-health-ai-usage-study-to-evaluate-conversational-medical-tools"
 description: "Apple has announced a new study in collaboration with OpenEvidence to investigate how users interact with conversational AI health tools. The Apple Health AI Usage Study aims to evaluate the accuracy..."
-date: 2026-11-16T18:20:32+05:30
+date: 2026-11-16T22:14:27+05:30
 tags: [Apple, HealthAI, OpenEvidence, ClinicalAI, HealthKit]
 categories: ["AI", "Digital Health", "Artificial Intelligence", "Mobile Computing"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/applestudy1b.jpg?quality=90&strip=all&crop=0%2C10.740836125969%2C100%2C78.518327748063&w=1200"

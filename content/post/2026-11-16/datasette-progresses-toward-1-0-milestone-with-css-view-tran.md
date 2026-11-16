@@ -2,7 +2,7 @@
 title: "Datasette Progresses Toward 1.0 Milestone with CSS View Transitions and Streaming Support"
 slug: "datasette-progresses-toward-1-0-milestone-with-css-view-transitions-and-streaming-support"
 description: "On November 15, 2026, developers shared updates on the progress of the Datasette 1.0 milestone, which is now 53% complete. The latest release includes significant architectural changes, security..."
-date: 2026-11-16T18:20:32+05:30
+date: 2026-11-16T22:14:27+05:30
 tags: [Datasette, OpenSource, WebDevelopment]
 categories: ["AI", "Software Development", "Data Management", "Web Standards"]
 author: "Shoubhik Banerjee"

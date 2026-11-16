@@ -2,7 +2,7 @@
 title: "Jensen Huang Rumored to Seek CEO Return Amid Ongoing Nvidia Leadership Drama"
 slug: "jensen-huang-rumored-to-seek-ceo-return-amid-ongoing-nvidia-leadership-drama"
 description: "The leadership drama surrounding Nvidia co-founder and former CEO Jensen Huang is evolving quickly as rumors suggest he is seeking a path back to his former position. While some high-profile tech..."
-date: 2026-11-16T18:20:32+05:30
+date: 2026-11-16T22:14:27+05:30
 tags: [Nvidia, JensenHuang, SiliconValley, CorporateGovernance]
 categories: ["AI", "Tech Industry", "Corporate Leadership", "Business News"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Nvidia_Jensen_huang_03.jpg?quality=90&strip=all&crop=0%2C12.339110464558%2C100%2C75.321779070884&w=1200"

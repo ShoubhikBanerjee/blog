@@ -2,7 +2,7 @@
 title: "New Datasette Geospatial Plugin Built with Claude Fable 5.2 and OpenFreeMap"
 slug: "new-datasette-geospatial-plugin-built-with-claude-fable-5-2-and-openfreemap"
 description: "On 15th November 2026, a new geospatial plugin for Datasette was released, marking the first such addition in a significant period. The tool integrates the MapLibre GL library with OpenFreeMap, a..."
-date: 2026-11-16T18:20:32+05:30
+date: 2026-11-16T22:14:27+05:30
 tags: [Datasette, Geospatial, ClaudeAI, OpenFreeMap, MapLibreGL]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Geospatial Technology"]
 image: "https://static.simonwillison.net/static/cors-allow/2026/datasette-maplibre.webp"
