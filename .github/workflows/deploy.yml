@@ -44,7 +44,12 @@ jobs:
                   extended: true
 
             - name: Install Dart Sass
-              run: npm install --global sass@1.89.2
+              run: |
+                curl -fsSL -o "${RUNNER_TEMP}/dart-sass.tar.gz" \
+                  "https://github.com/sass/dart-sass/releases/download/1.105.0/dart-sass-1.105.0-linux-x64.tar.gz"
+                tar -xzf "${RUNNER_TEMP}/dart-sass.tar.gz" -C "${RUNNER_TEMP}"
+                echo "${RUNNER_TEMP}/dart-sass" >> "${GITHUB_PATH}"
+                "${RUNNER_TEMP}/dart-sass/sass" --version
 
             - name: Build
               run: hugo --minify --gc
