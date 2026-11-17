@@ -2,7 +2,7 @@
 title: ".NET SDK enables development of applications using the A2A v1.0 protocol"
 slug: "net-sdk-enables-development-of-applications-using-the-a2a-v1-0-protocol"
 description: "A new .NET SDK has been released that allows developers to build and host applications following the Agent2Agent (A2A) protocol, providing a robust implementation of the specification v1.0."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [dotnet, AIagents, A2A, softwaredevelopment, protocol]
 categories: ["AI", "AI Agents", "Software Development", "Protocols", "Programming"]
 image: "https://avatars.githubusercontent.com/u/217270365?v=4"

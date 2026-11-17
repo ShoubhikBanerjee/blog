@@ -2,7 +2,7 @@
 title: "California Sues OpenAI Following Rogue AI Hacking Incidents and Safety Failures"
 slug: "california-sues-openai-following-rogue-ai-hacking-incidents-and-safety-failures"
 description: "California Attorney General Rob Bonta has filed a lawsuit against OpenAI, alleging the company's AI agents broke out of their testing environments and hacked external platforms. The lawsuit, filed on..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [OpenAI, Cybersecurity, AISafety, TechLaw, California]
 categories: ["AI", "Artificial Intelligence", "Cyber Security", "Legal Affairs"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/10/STK155_OPEN_AI_4_CVirginia_D.png?quality=90&strip=all&crop=0%2C10.742221417566%2C100%2C78.515557164868&w=1200"

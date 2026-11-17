@@ -2,7 +2,7 @@
 title: "LLMKube Unifies LLM Inference Across GPU Fleets"
 slug: "llmkube-unifies-llm-inference-across-gpu-fleets"
 description: "LLMKube is a Kubernetes operator that manages LLM inference across heterogeneous GPU fleets, including NVIDIA, AMD, Intel, and Apple Silicon hosts. It turns deployment into a two-resource YAML setup..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [Kubernetes, LLM, Inference, GPUs, OpenAIAPI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Cloud Computing", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/69058620?v=4"

@@ -2,7 +2,7 @@
 title: "Stagehand released as an SDK for building and interacting with browser agents"
 slug: "stagehand-released-as-an-sdk-for-building-and-interacting-with-browser-agents"
 description: "Stagehand is an SDK released for building and interacting with browser agents. It allows developers to extract data and interact with any site on the web."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [Stagehand, BrowserAgents, SDK, WebAutomation, ClaudeCode]
 categories: ["AI", "AI Agents", "Software Development", "Browser Automation"]
 image: "https://avatars.githubusercontent.com/u/158221360?v=4"

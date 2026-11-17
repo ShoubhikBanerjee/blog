@@ -2,7 +2,7 @@
 title: "AgnostUI Local v2 copies UI components into your project for AI readability"
 slug: "agnostui-local-v2-copies-ui-components-into-your-project-for-ai-readability"
 description: "AgnostUI Local (v2) is a new CLI-based UI component library that copies components directly into your project at install time. Instead of keeping components hidden inside `node_modules`, the source..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [AIagents, UILibraries, WebDevelopment, LitWebComponents, CodeGen, DesignSystems]
 categories: ["AI", "Software Development", "AI Agents", "User Interface", "Development Tools"]
 image: "https://avatars.githubusercontent.com/u/70919102?v=4"

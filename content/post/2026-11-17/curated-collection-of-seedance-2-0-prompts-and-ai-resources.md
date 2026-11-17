@@ -2,7 +2,7 @@
 title: "Curated Collection of Seedance 2.0 Prompts and AI Resources"
 slug: "curated-collection-of-seedance-2-0-prompts-and-ai-resources"
 description: "A curated collection of high-fidelity Seedance 2.0 prompts and resources has been released. This repository focuses on high-fidelity prompts sourced from X (Twitter), WeChat, and top prompt..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [S, e, e, d, a, n, c, e, A, P, I, M, a, r, t, V, i, d, e, o, G, e, n, e, r, a, t, i, o, n, A, I, R, e, s, o, u, r, c, e, s, C, y, b, e, r, b, a, r, a]
 categories: ["AI", "A", "r", "t", "i", "f", "i", "c", "i", "a", "l", "I", "n", "t", "e", "l", "l", "i", "g", "e", "n", "c", "e", ",", "V", "i", "d", "e", "o", "G", "e", "n", "e", "r", "a", "t", "i", "o", "n", ",", "A", "P", "I", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t", ",", "P", "r", "o", "m", "p", "t", "E", "n", "g", "i", "n", "e", "e", "r", "i", "n", "g"]
 image: "https://avatars.githubusercontent.com/u/7347148?v=4"

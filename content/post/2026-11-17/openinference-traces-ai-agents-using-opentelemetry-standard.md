@@ -2,7 +2,7 @@
 title: "OpenInference Traces AI Agents Using OpenTelemetry Standard"
 slug: "openinference-traces-ai-agents-using-opentelemetry-standard"
 description: "OpenInference is a specification that builds on OpenTelemetry to trace AI agents, including their LLM calls, tool use, retrieval, and reasoning steps. It defines how AI applications are recorded as..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [OpenInference, OpenTelemetry, AIObservability, LLM, AgentFrameworks]
 categories: ["AI", "AI Agents", "Observability", "Developer Tools", "Large Language Models"]
 image: "https://avatars.githubusercontent.com/u/59858760?v=4"

@@ -2,7 +2,7 @@
 title: "Sam Altman clarifies remarks on memory and local AI"
 slug: "sam-altman-clarifies-remarks-on-memory-and-local-ai"
 description: "Sam Altman has addressed the context of his previous comments regarding personal computer memory and data centers, clarifying that his remarks about centralizing memory usage were misinterpreted."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [OpenAI, AI, SAMAltman, MemoryShortage, DataCenters, Tech]
 categories: ["AI", "Artificial Intelligence", "Hardware", "Supply Chain", "Tech Industry"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/gettyimages-1778705436.jpg?quality=90&strip=all&crop=0%2C12.629941573716%2C100%2C74.740116852568&w=1200"

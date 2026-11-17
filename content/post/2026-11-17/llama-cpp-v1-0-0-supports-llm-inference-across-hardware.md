@@ -2,7 +2,7 @@
 title: "llama.cpp v1.0.0 supports LLM inference across hardware"
 slug: "llama-cpp-v1-0-0-supports-llm-inference-across-hardware"
 description: "llama.cpp is a C/C++ project for LLM and MLLM inference, with v1.0.0 listed. Its stated goal is to enable inference with minimal setup and state-of-the-art performance across a wide range of..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [llamacpp, LLMInference, C, GGUF]
 categories: ["AI", "Machine Learning", "AI Development", "Developer Tools", "Software"]
 image: "https://avatars.githubusercontent.com/u/134263123?v=4"

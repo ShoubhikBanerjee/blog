@@ -2,7 +2,7 @@
 title: "IFS Copperleaf Builds IONA with Databricks to Democratize Business Data Access"
 slug: "ifs-copperleaf-builds-iona-with-databricks-to-democratize-business-data-access"
 description: "IFS Copperleaf, a provider of Asset Investment Planning software, partnered with Databricks to build IONA, a platform designed to democratize access to business data and advanced analytics."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [D, a, t, a, b, r, i, c, k, s, I, F, S, D, a, t, a, D, e, m, o, c, r, a, t, i, z, a, t, i, o, n, E, n, t, e, r, p, r, i, s, e, A, I, G, e, n, i, e, D, a, t, a, G, o, v, e, r, n, a, n, c, e]
 categories: ["AI", "E", "n", "t", "e", "r", "p", "r", "i", "s", "e", "A", "I", ",", "D", "a", "t", "a", "A", "n", "a", "l", "y", "t", "i", "c", "s", ",", "B", "u", "s", "i", "n", "e", "s", "s", "I", "n", "t", "e", "l", "l", "i", "g", "e", "n", "c", "e", ",", "P", "a", "r", "t", "n", "e", "r", "s", "h", "i", "p", "s"]
 image: "https://www.databricks.com/sites/default/files/blog_images/clean-data-was-never-enough-how-ifs-blog-img-og.png"

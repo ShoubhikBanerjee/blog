@@ -2,7 +2,7 @@
 title: "150+ CLI Coding Agents Curated"
 slug: "150-cli-coding-agents-curated"
 description: "A curated list of 150+ CLI coding agents has been published, detailing AI-powered tools that operate within the terminal, as well as the harnesses used to orchestrate, sandbox, or extend them. These..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [CLI, AIagents, coding, terminal, openSource]
 categories: ["AI", "AI Agents", "Developer Tools", "Open Source", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/46579244?v=4"

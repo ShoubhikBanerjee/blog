@@ -2,7 +2,7 @@
 title: "Chroma v3 Released with Go iter.Seq Support"
 slug: "chroma-v3-released-with-go-iter-seq-support"
 description: "Chroma v3 has been released as a new alpha version, bringing significant changes to its Go implementation and module path."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [Chroma, Go, Pygments, SyntaxHighlighting]
 categories: ["AI", "Programming Languages", "Software Development", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/41767?v=4"

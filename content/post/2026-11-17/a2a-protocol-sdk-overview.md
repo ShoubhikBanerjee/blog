@@ -2,7 +2,7 @@
 title: "A2A Protocol SDK Overview"
 slug: "a2a-protocol-sdk-overview"
 description: "The A2A Protocol SDK is a TypeScript/JavaScript SDK for the A2A Protocol Specification v1.0.0. It provides a single `DefaultRequestHandler` for three transports — JSON-RPC, HTTP+JSON/REST, and gRPC..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [A2AProtocol, AIDevelopment, OpenSource]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/217270365?v=4"

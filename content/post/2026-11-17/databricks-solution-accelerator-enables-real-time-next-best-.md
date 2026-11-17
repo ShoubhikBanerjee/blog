@@ -2,7 +2,7 @@
 title: "Databricks Solution Accelerator Enables Real-Time Next-Best-Offer Recommenders"
 slug: "databricks-solution-accelerator-enables-real-time-next-best-offer-recommenders"
 description: "Databricks has released an open-source Solution Accelerator that uses Feature Views to build a real-time next-best-offer (NBO) recommender for financial services. The solution addresses the challenge..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [Databricks, MachineLearning, RecommendationSystems, FinTech, MLOps]
 categories: ["AI", "Machine Learning", "Data Engineering", "Financial Services"]
 image: "https://www.databricks.com/sites/default/files/2026-11/real-time-nbo-og.png"

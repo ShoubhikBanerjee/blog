@@ -2,7 +2,7 @@
 title: "Tabular Foundation Models Advance with Pretrained Transformers and Synthetic Data"
 slug: "tabular-foundation-models-advance-with-pretrained-transformers-and-synthetic-data"
 description: "Open with one short intro paragraph stating what happened."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [TabularData, AIModels, Transformers, SyntheticData]
 categories: ["AI", "Machine Learning", "AI Models", "Data Science", "Synthetic Data"]
 image: "https://www.databricks.com/sites/default/files/2026-11/tfm-on-air-og.png"

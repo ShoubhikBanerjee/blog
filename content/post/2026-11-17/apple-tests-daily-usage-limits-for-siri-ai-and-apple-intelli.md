@@ -2,7 +2,7 @@
 title: "Apple Tests Daily Usage Limits for Siri AI and Apple Intelligence Features"
 slug: "apple-tests-daily-usage-limits-for-siri-ai-and-apple-intelligence-features"
 description: "Apple released betas of iOS 27.3, iPadOS 27.3, and macOS 27.3, using the updates to test new per-device daily usage limits for select Siri AI and Apple Intelligence features."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [Apple, Siri, AppleIntelligence, iCloud, UsageLimits]
 categories: ["AI", "AI Assistants", "Consumer Technology", "Subscriptions", "Operating Systems"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/siri-ai.jpg?quality=90&strip=all&crop=0.17391304347827%2C0%2C99.652173913043%2C100&w=1200"

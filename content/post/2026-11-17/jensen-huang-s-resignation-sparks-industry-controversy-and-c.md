@@ -2,7 +2,7 @@
 title: "Jensen Huang's Resignation Sparks Industry Controversy and Calls for Reinstatement"
 slug: "jensen-huang-s-resignation-sparks-industry-controversy-and-calls-for-reinstatement"
 description: "Jensen Huang's stunning resignation from Nvidia after more than 33 years has sent shockwaves throughout the tech industry. Now prominent figures are calling for his reinstatement, and many are also..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: []
 categories: ["AI"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2299645290.jpg?quality=90&strip=all&crop=0%2C10.748709970289%2C100%2C78.502580059422&w=1200"

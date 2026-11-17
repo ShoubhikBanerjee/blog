@@ -2,7 +2,7 @@
 title: "Novo Nordisk deploys agentic AI to manage pharmaceutical documentation"
 slug: "novo-nordisk-deploys-agentic-ai-to-manage-pharmaceutical-documentation"
 description: "Novo Nordisk has developed an intelligent support system powered by agentic AI and deployed on AWS to manage quality-relevant documentation within its manufacturing technology operations. The system..."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [NovoNordisk, AgenticAI, GraphRAG, AWS, Pharma, KnowledgeManagement]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Pharmaceuticals", "Knowledge Management"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21325-featured-image.png"

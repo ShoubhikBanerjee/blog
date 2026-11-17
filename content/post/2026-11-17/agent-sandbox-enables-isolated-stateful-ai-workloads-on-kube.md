@@ -2,7 +2,7 @@
 title: "Agent-Sandbox Enables Isolated, Stateful AI Workloads on Kubernetes"
 slug: "agent-sandbox-enables-isolated-stateful-ai-workloads-on-kubernetes"
 description: "The agent-sandbox project introduces a new approach to managing isolated, stateful, singleton workloads on Kubernetes, specifically targeting AI agent runtimes and reinforcement learning use cases."
-date: 2026-11-17T06:20:51+05:30
+date: 2026-11-17T12:12:52+05:30
 tags: [Kubernetes, AIagents, Sandbox, Operator]
 categories: ["AI", "Kubernetes", "AI Agents", "Cloud Native Computing"]
 image: "https://avatars.githubusercontent.com/u/36015203?v=4"
