@@ -2,7 +2,7 @@
 title: "AWS HealthLake Integrates with Databricks via OpenSharing for Live Clinical Data Analytics"
 slug: "aws-healthlake-integrates-with-databricks-via-opensharing-for-live-clinical-data-analytics"
 description: "AWS and Databricks have announced a new integration that connects AWS HealthLake with Databricks through the OpenSharing project, enabling direct querying of clinical data without export pipelines or..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: []
 categories: ["AI"]
 image: "https://www.databricks.com/sites/default/files/blog_images/talk-to-your-clinical-data-unlocking-aws-blog-img-og.png"

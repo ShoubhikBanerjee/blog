@@ -2,7 +2,7 @@
 title: "Stability Matrix: Multi-Platform Package Manager and Inference UI for Stable Diffusion"
 slug: "stability-matrix-multi-platform-package-manager-and-inference-ui-for-stable-diffusion"
 description: "Stability Matrix is a multi-platform package manager and inference interface designed for Stable Diffusion. It provides one-click installation and updates for various Stable Diffusion Web UI packages..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [StableDiffusion, StabilityMatrix, PackageManagement, ComfyUI, Automatic1111]
 categories: ["AI", "Machine Learning", "Generative AI", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/136279213?v=4"

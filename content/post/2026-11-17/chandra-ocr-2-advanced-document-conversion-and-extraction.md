@@ -2,7 +2,7 @@
 title: "Chandra OCR 2: Advanced Document Conversion and Extraction"
 slug: "chandra-ocr-2-advanced-document-conversion-and-extraction"
 description: "Chandra OCR 2, a state-of-the-art OCR model, has been released with significant improvements in math, tables, layout, and multilingual OCR. It converts images and PDFs into structured..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [OCR, DocumentConversion, AI, MachineLearning, DataExtraction]
 categories: ["AI", "Computer Vision", "Natural Language Processing", "Document Processing", "AI Tools"]
 image: "https://avatars.githubusercontent.com/u/176631703?v=4"

@@ -2,7 +2,7 @@
 title: "Nvidia Board Is Not Considering Jensen Huang’s Return as CEO"
 slug: "nvidia-board-is-not-considering-jensen-huangs-return-as-ceo"
 description: "CNBC reports that Nvidia’s board is not considering bringing Jensen Huang back as CEO and remains focused on an investigation into his conduct."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [Nvidia, JensenHuang, CEO, CorporateGovernance]
 categories: ["AI", "Technology", "Corporate Leadership", "Corporate Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25835739/STKP210_JENSEN_HUANG_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

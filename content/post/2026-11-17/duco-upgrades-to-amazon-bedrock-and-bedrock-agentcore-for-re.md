@@ -2,7 +2,7 @@
 title: "Duco Upgrades to Amazon Bedrock and Bedrock AgentCore for Regulated Financial Services"
 slug: "duco-upgrades-to-amazon-bedrock-and-bedrock-agentcore-for-regulated-financial-services"
 description: "Duco, an agentic Operations platform for financial services, has upgraded to Amazon Bedrock and Bedrock AgentCore to improve its speed, accuracy, and compliance in processing massive volumes of data...."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [OpenAI, AIagents, FinancialServices]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-20525-featured-image.png"

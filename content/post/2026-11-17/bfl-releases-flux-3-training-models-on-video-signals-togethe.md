@@ -2,7 +2,7 @@
 title: "BFL Releases FLUX 3, Training Models on Video Signals Together"
 slug: "bfl-releases-flux-3-training-models-on-video-signals-together"
 description: "BFL released FLUX 3, training a new image generation model on video signals together to improve temporal consistency and understanding of motion."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [StableDiffusion, AI, FLUX3, VideoGeneration, ImageGeneration]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Computer Vision", "Digital Media"]
 image: "https://i.ytimg.com/vi/8cGfJOU3AlQ/maxresdefault.jpg"

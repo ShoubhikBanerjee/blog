@@ -2,7 +2,7 @@
 title: "LLM Bug Fix Release Addresses SQLite Homebrew Package Issue"
 slug: "llm-bug-fix-release-addresses-sqlite-homebrew-package-issue"
 description: "A bug fix release for LLM addresses an issue with the Homebrew package, specifically related to SQLite version 3.54.1."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [S, Q, L, i, t, e, H, o, m, e, b, r, e, w, L, L, M, B, u, g, F, i, x, D, a, t, a, b, a, s, e]
 categories: ["AI", "D", "a", "t", "a", "b", "a", "s", "e", "M", "a", "n", "a", "g", "e", "m", "e", "n", "t", ",", "S", "o", "f", "t", "w", "a", "r", "e", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t", ",", "B", "u", "g", "F", "i", "x", "e", "s", ",", "O", "p", "e", "n", "S", "o", "u", "r", "c", "e"]
 author: "Shoubhik Banerjee"

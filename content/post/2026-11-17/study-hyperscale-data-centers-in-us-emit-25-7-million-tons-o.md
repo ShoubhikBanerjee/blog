@@ -2,7 +2,7 @@
 title: "Study: Hyperscale Data Centers in US Emit 25.7 Million Tons of CO2"
 slug: "study-hyperscale-data-centers-in-us-emit-25-7-million-tons-of-co2"
 description: "A new paper published in the journal Nature Sustainability reveals that fossil fuels remain the biggest source of electricity for hyperscale data centers in the US, resulting in significant..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [DataCenters, Sustainability, AI, Climate]
 categories: ["AI", "Sustainability", "Data Infrastructure", "Artificial Intelligence", "Energy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/STKS528_DATA_CENTERS_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

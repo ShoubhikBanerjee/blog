@@ -2,7 +2,7 @@
 title: "Understanding AI Coordination Patterns"
 slug: "understanding-ai-coordination-patterns"
 description: "AI coordination patterns are crucial for effective multi-agent systems. When early implementations fall short, the cause is rarely the model."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [AICoordination, MultiAgentSystems, AIAgents, DistributedSystems]
 categories: ["AI", "Machine Learning", "AI Agents", "Distributed Systems", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21577-featured-image.png"

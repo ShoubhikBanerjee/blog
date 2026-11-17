@@ -2,7 +2,7 @@
 title: "TeleMem Launches as High-Performance Drop-In Replacement for Mem0 with Video Reasoning Support"
 slug: "telemem-launches-as-high-performance-drop-in-replacement-for-mem0-with-video-reasoning-support"
 description: "TeleMem is a new open-source memory management layer that serves as a drop-in replacement for Mem0, offering semantic deduplication, long-term dialogue memory, and multimodal video reasoning..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: []
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/176368835?v=4"

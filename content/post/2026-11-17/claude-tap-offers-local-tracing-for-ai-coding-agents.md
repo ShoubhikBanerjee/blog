@@ -2,7 +2,7 @@
 title: "claude-tap Offers Local Tracing for AI Coding Agents"
 slug: "claude-tap-offers-local-tracing-for-ai-coding-agents"
 description: "claude-tap is a local proxy and trace viewer for AI coding agents, letting users inspect API traffic and agent context. Its workflow supports reviewing individual requests, comparing changes between..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [AIAgents, CodingAgents, DeveloperTools, APIDebugging]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Developer Tools", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/34056481?v=4"

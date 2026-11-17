@@ -2,7 +2,7 @@
 title: "A 21-Lesson Generative AI Course Offers a Faster Clone Option"
 slug: "a-21-lesson-generative-ai-course-offers-a-faster-clone-option"
 description: "Microsoft Cloud Advocates’ 21-lesson course covers the fundamentals of building Generative AI applications. Its repository includes more than 50 language translations, which significantly increases..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [GenerativeAI, AIDevelopment, Python, TypeScript, DeveloperEducation]
 categories: ["AI", "Generative AI", "Software Development", "Programming", "Technology Education"]
 image: "https://avatars.githubusercontent.com/u/6154722?v=4"

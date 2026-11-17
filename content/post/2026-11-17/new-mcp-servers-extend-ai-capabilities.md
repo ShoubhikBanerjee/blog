@@ -2,7 +2,7 @@
 title: "New MCP Servers Extend AI Capabilities"
 slug: "new-mcp-servers-extend-ai-capabilities"
 description: "A collection of MCP servers has been introduced, extending AI capabilities through various integrations."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [MCP, AI, Servers, Integrations, Research]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Research", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/108313943?v=4"

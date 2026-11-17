@@ -2,7 +2,7 @@
 title: "New Release 1.0.31: Enhancements and Fixes in AI Model Development"
 slug: "new-release-1-0-31-enhancements-and-fixes-in-ai-model-development"
 description: "The latest release, version 1.0.31, introduces several enhancements and fixes across various AI models, including ViT, EVA, BEiT, NaFlexViT, RepViT, and iFormer. These updates ensure normalization..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [AI, MachineLearning, ModelDevelopment, DeepLearning, ComputerVision]
 categories: ["AI", "Machine Learning", "AI Models", "Deep Learning", "Computer Vision"]
 image: "https://avatars.githubusercontent.com/u/25720743?v=4"

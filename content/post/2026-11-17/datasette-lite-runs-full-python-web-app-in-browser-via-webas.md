@@ -2,7 +2,7 @@
 title: "Datasette Lite runs full Python web app in browser via WebAssembly"
 slug: "datasette-lite-runs-full-python-web-app-in-browser-via-webassembly"
 description: "Datasette Lite allows the full server-side Datasette Python web application to run directly inside a user's browser using WebAssembly and Pyodide."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [Datasette, WebAssembly, Pyodide, SQLite, Python]
 categories: ["AI", "Web Development", "Databases", "Open Source", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/9599?v=4"

@@ -2,7 +2,7 @@
 title: "TraceML Diagnoses Slow PyTorch Training and Catches Performance Regressions"
 slug: "traceml-diagnoses-slow-pytorch-training-and-catches-performance-regressions"
 description: "A new tool called TraceML has emerged to help developers diagnose why PyTorch training is slow, compare training runs, and catch performance regressions in continuous integration."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [PyTorch, MLEngineering, PerformanceOptimization, MLOps, TrainingDiagnosis]
 categories: ["AI", "Machine Learning", "Software Engineering", "MLOps", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/226997947?v=4"

@@ -2,7 +2,7 @@
 title: "Ax Ships a TypeScript-First, Multi-Language LLM Toolkit"
 slug: "ax-ships-a-typescript-first-multi-language-llm-toolkit"
 description: "Ax is a TypeScript-first development toolkit that ships as `@ax-llm/ax`. Its shared semantic core is also compiled into generated Python, Java, C++, Go, and Rust libraries."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [AI, LLMDevelopment, TypeScript, AIAgents, OpenSource]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Machine Learning", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/172865539?v=4"

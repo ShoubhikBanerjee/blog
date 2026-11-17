@@ -2,7 +2,7 @@
 title: "Open Model Engine Automates Kubernetes-Based LLM Serving"
 slug: "open-model-engine-automates-kubernetes-based-llm-serving"
 description: "Open Model Engine (OME) is a Kubernetes operator for enterprise-grade management and serving of large language models (LLMs), including model lifecycle management, GPU scheduling, and runtime..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [Kubernetes, LLMServing, OpenModelEngine, GPU, MLOps]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Cloud Computing", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/276942073?v=4"

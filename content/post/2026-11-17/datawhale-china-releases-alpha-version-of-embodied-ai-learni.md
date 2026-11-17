@@ -2,7 +2,7 @@
 title: "Datawhale China Releases Alpha Version of Embodied AI Learning Platform with Online Simulation"
 slug: "datawhale-china-releases-alpha-version-of-embodied-ai-learning-platform-with-online-simulation"
 description: "Datawhale China has launched an alpha internal test version of 'Dive into Embodied AI' (具身智能), a comprehensive learning platform for embodied intelligent robot development. The platform covers the..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [EmbodiedAI, Robotics, ReinforcementLearning, VLA, MuJoCo, Datawhale]
 categories: ["AI", "Machine Learning", "Robotics", "AI Education", "Simulation"]
 image: "https://avatars.githubusercontent.com/u/46047812?v=4"

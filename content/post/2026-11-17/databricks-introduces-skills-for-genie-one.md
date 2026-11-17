@@ -2,7 +2,7 @@
 title: "Databricks introduces Skills for Genie One"
 slug: "databricks-introduces-skills-for-genie-one"
 description: "Databricks has introduced a new feature for Genie One called Skills, which adds a layer of control by defining specific workflow recipes that the agent can follow on demand to ensure consistent..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [Databricks, GenieOne, AISkills, MCP, WorkflowAutomation]
 categories: ["AI", "AI Agents", "Generative AI", "Data Analytics", "Workflow Automation"]
 image: "https://www.databricks.com/sites/default/files/2026-11/2026-10-Blog-Teach-Genie-One-your-workflows-The-ultimate-guide-for-skills-in-Genie-One-OG-1200x628-2x.png"

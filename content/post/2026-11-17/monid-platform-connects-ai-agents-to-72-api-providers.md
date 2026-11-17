@@ -2,7 +2,7 @@
 title: "Monid Platform Connects AI Agents to 72+ API Providers"
 slug: "monid-platform-connects-ai-agents-to-72-api-providers"
 description: "Monid has introduced a connector layer that enables AI agents to access over 2,000 tools across 72 different providers using a single base URL and one key."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [A, I, A, g, e, n, t, s, A, P, I, I, n, t, e, g, r, a, t, i, o, n, O, p, e, n, S, o, u, r, c, e, D, e, n, o, C, o, n, n, e, c, t, o, r, L, a, y, e, r]
 categories: ["AI", "A", "I", "A", "g", "e", "n", "t", "s", ",", "A", "P", "I", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t", ",", "S", "o", "f", "t", "w", "a", "r", "e", "A", "r", "c", "h", "i", "t", "e", "c", "t", "u", "r", "e", ",", "O", "p", "e", "n", "S", "o", "u", "r", "c", "e"]
 image: "https://avatars.githubusercontent.com/u/273455304?v=4"

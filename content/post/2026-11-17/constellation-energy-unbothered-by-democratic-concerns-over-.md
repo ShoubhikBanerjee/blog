@@ -2,7 +2,7 @@
 title: "Constellation Energy Unbothered by Democratic Concerns Over Data Center Development"
 slug: "constellation-energy-unbothered-by-democratic-concerns-over-data-center-development"
 description: "Constellation Energy, America’s largest operator of nuclear power plants, has dismissed market fears that the recent Democratic midterm victories will slow down data center development. CEO Joe..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [NuclearEnergy, DataCenters, AI, Infrastructure, Politics]
 categories: ["AI", "Energy", "Artificial Intelligence", "Politics", "Technology Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2227026671.jpg?quality=90&strip=all&crop=0%2C10.729149249175%2C100%2C78.54170150165&w=1200"

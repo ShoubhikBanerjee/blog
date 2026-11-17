@@ -2,7 +2,7 @@
 title: "NVIDIA cuPotential Accelerates Molecular Dynamics Simulations"
 slug: "nvidia-cupotential-accelerates-molecular-dynamics-simulations"
 description: "Molecular dynamics (MD) is an indispensable tool across physics, chemistry, biology, and materials science."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [AI, MachineLearning, GPUAcceleration]
 categories: ["AI", "Artificial Intelligence", "Computer Science", "Materials Science"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/healthcare-cupotential-660x370.jpg"

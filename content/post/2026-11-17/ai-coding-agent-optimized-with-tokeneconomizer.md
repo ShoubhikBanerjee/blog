@@ -2,7 +2,7 @@
 title: "AI Coding Agent Optimized with TokenEconomizer"
 slug: "ai-coding-agent-optimized-with-tokeneconomizer"
 description: "TokenEconomizer is an open-source plugin that reduces waste in AI coding agent sessions by learning from past sessions and adapting to future ones."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [AIagents, Opensource, Plugin, Optimization]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Software Development"]
 image: "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/11/TokenEconomizer-TWLIFB-1200x627-1.jpg"

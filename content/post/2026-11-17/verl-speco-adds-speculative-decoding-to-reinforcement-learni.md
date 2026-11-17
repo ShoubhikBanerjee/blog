@@ -2,7 +2,7 @@
 title: "verl-SpeCo adds speculative decoding to reinforcement learning loops"
 slug: "verl-speco-adds-speculative-decoding-to-reinforcement-learning-loops"
 description: "`verl-SpeCo` is a lightweight overlay for the `verl` reinforcement learning framework that enables the training and integration of speculative decoding drafters. It operates as an import-only..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [ReinforcementLearning, SpeculativeDecoding, vLLM, SGLang, MachineLearning]
 categories: ["AI", "Machine Learning", "Reinforcement Learning", "Infrastructure", "LLM"]
 image: "https://avatars.githubusercontent.com/u/212961691?v=4"

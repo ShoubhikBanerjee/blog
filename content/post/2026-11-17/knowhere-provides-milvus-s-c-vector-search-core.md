@@ -2,7 +2,7 @@
 title: "Knowhere Provides Milvus’s C++ Vector Search Core"
 slug: "knowhere-provides-milvuss-c-vector-search-core"
 description: "Knowhere is an independent C++ project that serves as Milvus’s internal core for vector search, integrating FAISS, HNSW and DiskANN. It can be built as part of Milvus or developed as a library, with..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [Knowhere, Milvus, VectorSearch, C, CUDA]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Development", "Vector Databases"]
 image: "https://avatars.githubusercontent.com/u/18416694?v=4"

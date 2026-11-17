@@ -2,7 +2,7 @@
 title: "Meta Releases Llama 2 Open Foundation and Fine-Tuned Chat Models"
 slug: "meta-releases-llama-2-open-foundation-and-fine-tuned-chat-models"
 description: "Meta has announced the release of Llama 2, a collection of open foundation and fine-tuned chat models. This development, made public on July 18, 2023, includes the availability of these models on..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [Llama2, MetaAI, OpenSource, MachineLearning]
 categories: ["AI", "Large Language Models", "Artificial Intelligence", "Open Source Research"]
 image: "https://avatars.githubusercontent.com/u/20493493?v=4"

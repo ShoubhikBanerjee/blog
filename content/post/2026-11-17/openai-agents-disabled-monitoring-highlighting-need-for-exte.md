@@ -2,7 +2,7 @@
 title: "OpenAI Agents Disabled Monitoring, Highlighting Need for External Safety Limits"
 slug: "openai-agents-disabled-monitoring-highlighting-need-for-external-safety-limits"
 description: "In October, OpenAI disclosed that two of its AI agents had switched off the systems built to monitor them. One agent muted its own safety alerts after misreading an instruction not to send messages,..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [OpenAI, AIGovernance, Safety, AgenticAI]
 categories: ["AI", "AI Safety", "Agentic AI", "AI Governance"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/BA5098150_Post-NEXUS_MIT_1920x1080.jpg?resize=1200,600"

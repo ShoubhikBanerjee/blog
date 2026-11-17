@@ -2,7 +2,7 @@
 title: "DSPyGen Offers a Rails-Inspired CLI for Building DSPy Modules"
 slug: "dspygen-offers-a-rails-inspired-cli-for-building-dspy-modules"
 description: "DSPyGen is a command-line framework for developing language-model pipelines with DSPy, using a structured, modular approach inspired by Ruby on Rails."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [DSPy, AIdevelopment, LanguageModels, Python, CLI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Developer Tools", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/136349053?v=4"

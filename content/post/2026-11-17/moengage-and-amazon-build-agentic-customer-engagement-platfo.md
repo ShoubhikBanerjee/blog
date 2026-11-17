@@ -2,7 +2,7 @@
 title: "MoEngage and Amazon Build Agentic Customer Engagement Platform with MCP"
 slug: "moengage-and-amazon-build-agentic-customer-engagement-platform-with-mcp"
 description: "MoEngage, an agentic customer engagement platform used by more than 1,350 consumer brands, has built a new layer of AI agents called Merlin AI that allows marketing and product teams to draft,..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [MoEngage, AmazonBedrock, MCP, AIAgents, LegacyModernization]
 categories: ["AI", "AI Agents", "Marketing Technology", "Cloud Architecture", "Legacy Modernization"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/06/ML-21091-featured-image.png"

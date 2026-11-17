@@ -2,7 +2,7 @@
 title: "Sovereign Core Unveils Open-Source AI-Driven Simulation Engine"
 slug: "sovereign-core-unveils-open-source-ai-driven-simulation-engine"
 description: "This week, Sovereign Core announced a new open‑source simulation platform that integrates a robust AI orchestration layer, a fault‑tolerant state grid, and a responsive command interface."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [opensource, simulation, ai, distributedsystems, cognitivecomputing]
 categories: ["AI", "Simulation", "AI Agents", "Software Architecture"]
 image: "https://avatars.githubusercontent.com/u/254805668?v=4"

@@ -2,7 +2,7 @@
 title: "Chroma.js Library Provides Comprehensive Color Conversion and Scaling Capabilities"
 slug: "chroma-js-library-provides-comprehensive-color-conversion-and-scaling-capabilities"
 description: "Chroma.js is a small-ish zero-dependency JavaScript library for all kinds of color conversions and color scales. It can be installed via npm with `npm install chroma-js` and imported using `import..."
-date: 2026-11-17T12:12:52+05:30
+date: 2026-11-17T18:10:30+05:30
 tags: [JavaScript, Color, Visualization, Library, RGB, Lab]
 categories: ["AI", "Web Development", "Data Visualization", "Graphics Programming", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/617518?v=4"
