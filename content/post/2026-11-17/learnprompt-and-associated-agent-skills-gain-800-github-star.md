@@ -2,7 +2,7 @@
 title: "LearnPrompt and associated agent skills gain 800+ GitHub stars"
 slug: "learnprompt-and-associated-agent-skills-gain-800-github-stars"
 description: "LearnPrompt, described as the account's earliest public project, has been updated with a suite of agent skills and automated tools. The project recently reached a milestone of 800+ stars within one..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [LearnPrompt, AgentSkills, GitHub, AIProductivity, Automation]
 categories: ["AI", "AI Agents", "Developer Tools", "Productivity", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/131418633?v=4"

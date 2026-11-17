@@ -2,7 +2,7 @@
 title: "Hugging Face Releases Free AI Agents Course with 4 Units"
 slug: "hugging-face-releases-free-ai-agents-course-with-4-units"
 description: "This repository contains the Hugging Face Agents Course, a free educational resource divided into 4 units that take learners from the basics of agents to a final assignment with a benchmark."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [AIagents, HuggingFace, MachineLearning, Education, LLM, Python]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Education", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/25720743?v=4"

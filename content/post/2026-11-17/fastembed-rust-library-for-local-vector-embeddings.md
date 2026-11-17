@@ -2,7 +2,7 @@
 title: "FastEmbed: Rust Library for Local Vector Embeddings"
 slug: "fastembed-rust-library-for-local-vector-embeddings"
 description: "FastEmbed is a Rust library for generating vector embeddings and reranking locally. It supports synchronous usage without requiring a Tokio runtime and uses ONNX inference and fast encodings for..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [FastEmbed, VectorEmbeddings, Rust, ONNX, LocalProcessing]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/46051506?v=4"

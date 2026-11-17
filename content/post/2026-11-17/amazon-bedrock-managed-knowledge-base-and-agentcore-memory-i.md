@@ -2,7 +2,7 @@
 title: "Amazon Bedrock Managed Knowledge Base and AgentCore Memory Integration"
 slug: "amazon-bedrock-managed-knowledge-base-and-agentcore-memory-integration"
 description: "Amazon Bedrock Managed Knowledge Base and Amazon Bedrock AgentCore memory have been updated to include integrated conversation storage, fact extraction, and intelligent retrieval. This capability..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [AmazonBedrock, GenerativeAI, AIAgents, CloudComputing]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Services"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-21969-featured-image.png"

@@ -2,7 +2,7 @@
 title: "Codex Router Connects Coding Clients to External Models"
 slug: "codex-router-connects-coding-clients-to-external-models"
 description: "Codex Router lets users connect external models to Codex and other coding clients through one local router. It stores provider credentials locally and can share one installation across clients, while..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [AI, CodingAgents, LLM, DeveloperTools]
 categories: ["AI", "Artificial Intelligence", "Developer Tools", "AI Agents", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/108492647?v=4"

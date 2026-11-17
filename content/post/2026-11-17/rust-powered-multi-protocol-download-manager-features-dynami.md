@@ -2,7 +2,7 @@
 title: "Rust-Powered Multi-Protocol Download Manager Features Dynamic Acceleration and AI Agent Integration"
 slug: "rust-powered-multi-protocol-download-manager-features-dynamic-acceleration-and-ai-agent-integration"
 description: "A new open-source download manager powered by Rust and the Tokio engine has been released as a free alternative to IDM. The tool features dynamic download acceleration with adaptive segmentation and..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [Rust, OpenSource, AIagents, MCP, DownloadManager]
 categories: ["AI", "Software Development", "AI Agents", "System Utilities"]
 image: "https://avatars.githubusercontent.com/u/161401688?v=4"

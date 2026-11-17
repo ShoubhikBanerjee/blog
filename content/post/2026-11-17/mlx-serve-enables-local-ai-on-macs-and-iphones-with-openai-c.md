@@ -2,7 +2,7 @@
 title: "MLX-Serve enables local AI on Macs and iPhones with OpenAI compatibility"
 slug: "mlx-serve-enables-local-ai-on-macs-and-iphones-with-openai-compatibility"
 description: "MLX-Serve is a native application and local server for macOS that allows users to run open models locally for chat, coding agents, image generation, video, music, speech, and 3D tasks. It speaks the..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [MLXServe, LocalLLM, AppleSilicon, OpenAI, Mac]
 categories: ["AI", "Local LLM", "Developer Tools", "Apple Silicon", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/3418467?v=4"

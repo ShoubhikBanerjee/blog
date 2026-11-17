@@ -2,7 +2,7 @@
 title: "TabPFN-TS Brings Zero-Shot Forecasting to Tabular Foundation Models"
 slug: "tabpfn-ts-brings-zero-shot-forecasting-to-tabular-foundation-models"
 description: "TabPFN-TS frames univariate time-series forecasting as tabular regression, using TabPFN and lightweight feature engineering to produce point and probabilistic forecasts. Its paper was accepted to the..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [TimeSeries, TabPFN, Forecasting, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Time Series Analysis", "Software"]
 image: "https://avatars.githubusercontent.com/u/144344393?v=4"

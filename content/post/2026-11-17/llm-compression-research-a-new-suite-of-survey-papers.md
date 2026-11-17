@@ -2,7 +2,7 @@
 title: "LLM Compression Research: A New Suite of Survey Papers"
 slug: "llm-compression-research-a-new-suite-of-survey-papers"
 description: "A newly curated set of AI research papers focuses on techniques to compress large language models and accelerate their training and inference."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [LLM, Compression, Efficiency, DeepLearning]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/24937399?v=4"

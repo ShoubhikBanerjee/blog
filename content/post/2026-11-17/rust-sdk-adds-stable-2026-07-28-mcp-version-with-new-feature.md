@@ -2,7 +2,7 @@
 title: "Rust SDK Adds Stable 2026-07-28 MCP Version with New Features"
 slug: "rust-sdk-adds-stable-2026-07-28-mcp-version-with-new-features"
 description: "This release brings the stable MCP 2026‑07‑28 specification to the Rust SDK, while remaining fully compatible with the 2025‑11‑25 release and earlier versions."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [Rust, MCP, SDK, Async, JSON]
 categories: ["AI", "Programming Languages", "Software Development", "Networking"]
 image: "https://avatars.githubusercontent.com/u/182288589?v=4"

@@ -2,7 +2,7 @@
 title: "mlx-audio library brings TTS and STS models to Apple Silicon"
 slug: "mlx-audio-library-brings-tts-and-sts-models-to-apple-silicon"
 description: "Neywa Labs, the company behind Nativ, has released mlx-audio, an open-source library built on Apple's MLX framework. The tool allows developers to run audio models directly on Apple Silicon (M series..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [AppleSilicon, MLX, TextToSpeech, OpenSource, NeywaLabs, AudioAI]
 categories: ["AI", "Machine Learning", "Audio Processing", "Apple Ecosystem", "Open Source Tools"]
 image: "https://avatars.githubusercontent.com/u/228382334?v=4"

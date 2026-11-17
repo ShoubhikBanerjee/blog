@@ -2,7 +2,7 @@
 title: "NVIDIA launches Dynamo as open-source datacenter-scale inference orchestration layer"
 slug: "nvidia-launches-dynamo-as-open-source-datacenter-scale-inference-orchestration-layer"
 description: "NVIDIA has announced Dynamo, an open-source, datacenter-scale inference stack built in Rust and Python that serves as an orchestration layer above existing inference engines. Dynamo does not replace..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [NVIDIA, AI, inference, Dynamo, LLM, opensource]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Infrastructure", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/201626793?v=4"

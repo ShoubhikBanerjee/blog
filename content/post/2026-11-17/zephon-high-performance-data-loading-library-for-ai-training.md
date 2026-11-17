@@ -2,7 +2,7 @@
 title: "Zephon: High-Performance Data Loading Library for AI Training"
 slug: "zephon-high-performance-data-loading-library-for-ai-training"
 description: "Zephon is a high-performance data loading library that separates what you train on from how data is loaded and transformed."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [M, a, c, h, i, n, e, L, e, a, r, n, i, n, g, D, a, t, a, L, o, a, d, i, n, g, P, y, t, h, o, n, P, y, T, o, r, c, h, Z, e, p, h, o, n]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "D", "a", "t", "a", "E", "n", "g", "i", "n", "e", "e", "r", "i", "n", "g", ",", "P", "y", "t", "h", "o", "n", "L", "i", "b", "r", "a", "r", "i", "e", "s", ",", "A", "I", "I", "n", "f", "r", "a", "s", "t", "r", "u", "c", "t", "u", "r", "e"]
 image: "https://avatars.githubusercontent.com/u/146795414?v=4"

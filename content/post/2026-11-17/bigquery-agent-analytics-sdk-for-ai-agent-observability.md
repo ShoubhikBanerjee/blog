@@ -2,7 +2,7 @@
 title: "BigQuery Agent Analytics SDK for AI Agent Observability"
 slug: "bigquery-agent-analytics-sdk-for-ai-agent-observability"
 description: "An open-source Python SDK for analyzing, evaluating, and curating agent traces stored in BigQuery has been released. Built on top of the BigQuery Agent Analytics, it provides a consumption-layer..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [BigQuery, AIAgents, AgentAnalytics, MLOps, DataScience]
 categories: ["AI", "Machine Learning", "AI Agents", "Data Analytics", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/2810941?v=4"

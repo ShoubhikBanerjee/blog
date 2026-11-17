@@ -2,7 +2,7 @@
 title: "Community members step in to maintain Distilabel synthetic data framework"
 slug: "community-members-step-in-to-maintain-distilabel-synthetic-data-framework"
 description: "The original authors of Distilabel, a framework for synthetic data and AI feedback, have moved on to other projects. In response, a group of community members has recently joined the GitHub project..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [Distilabel, SyntheticData, LLM, OpenSource, AIEngineering]
 categories: ["AI", "Machine Learning", "Data Engineering", "Large Language Models", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/18415507?v=4"

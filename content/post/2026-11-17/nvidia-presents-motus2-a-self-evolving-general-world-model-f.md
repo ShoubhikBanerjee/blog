@@ -2,7 +2,7 @@
 title: "NVIDIA Presents Motus2: A Self-Evolving General World Model for Dexterous Manipulation"
 slug: "nvidia-presents-motus2-a-self-evolving-general-world-model-for-dexterous-manipulation"
 description: "NVIDIA has introduced Motus2, a self-evolving general world model designed for dexterous manipulation. This new AI development advances world modeling through both model scaling and data scaling,..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [AIagents, MachineLearning, Robotics, ComputerVision, DexterousManipulation]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Robotics", "Computer Vision"]
 image: "https://avatars.githubusercontent.com/u/133188292?v=4"

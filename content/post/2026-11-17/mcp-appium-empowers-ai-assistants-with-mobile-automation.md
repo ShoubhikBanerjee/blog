@@ -2,7 +2,7 @@
 title: "MCP Appium Empowers AI Assistants with Mobile Automation"
 slug: "mcp-appium-empowers-ai-assistants-with-mobile-automation"
 description: "MCP Appium is an intelligent MCP (Model Context Protocol) server designed to empower AI assistants with a robust suite of tools for mobile automation."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [MCPAppium, MobileAutomation, AIAssistants, AppTesting, MobileDevelopment]
 categories: ["AI", "Mobile Development", "AI Tools", "Software Testing", "Automation"]
 image: "https://avatars.githubusercontent.com/u/3221291?v=4"

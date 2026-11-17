@@ -2,7 +2,7 @@
 title: "Milvus Backup: Command-Line Tool for Milvus Data Management"
 slug: "milvus-backup-command-line-tool-for-milvus-data-management"
 description: "Milvus Backup is a command-line tool and API service for backing up and restoring Milvus data. It allows backup and restore operations to run while the Milvus cluster remains available."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [Milvus, Backup, DataManagement, AI, Database]
 categories: ["AI", "Database Management", "AI Tools", "Data Backup", "Command-Line Tools"]
 image: "https://avatars.githubusercontent.com/u/18416694?v=4"

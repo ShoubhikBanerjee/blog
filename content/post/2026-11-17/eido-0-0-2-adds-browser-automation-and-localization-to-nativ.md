@@ -2,7 +2,7 @@
 title: "Eido 0.0.2 Adds Browser Automation and Localization to Native AI Workspace"
 slug: "eido-0-0-2-adds-browser-automation-and-localization-to-native-ai-workspace"
 description: "Eido 0.0.2 is now available for Apple Silicon Macs running macOS 13 or later. This update introduces browser and desktop automation capabilities, expanded localization options, and interface..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [Eido, Zed, AIWorkspace, BrowserAutomation, macOS, PiAgent]
 categories: ["AI", "AI Agents", "Developer Tools", "Automation", "Software Updates"]
 image: "https://avatars.githubusercontent.com/u/118103359?v=4"

@@ -2,7 +2,7 @@
 title: "Microsoft Agent Framework 1.0 Released as Production-Ready Successor to Semantic Kernel"
 slug: "microsoft-agent-framework-1-0-released-as-production-ready-successor-to-semantic-kernel"
 description: "Semantic Kernel is now Microsoft Agent Framework (MAF), the enterprise-ready successor designed for building AI agents and multi-agent systems. MAF is now available at version 1.0 as a..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [MicrosoftAgentFramework, SemanticKernel, AIagents, MultiAgentSystems, LLM]
 categories: ["AI", "AI Agents", "Development Tools", "Large Language Models"]
 image: "https://avatars.githubusercontent.com/u/6154722?v=4"

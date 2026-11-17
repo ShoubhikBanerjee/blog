@@ -2,7 +2,7 @@
 title: "Pagekin: Open-source AI novel writing app"
 slug: "pagekin-open-source-ai-novel-writing-app"
 description: "Pagekin, formerly AI Novel Writer, is a free, open-source AI novel writing app designed for long novels and web fiction. It is local-first, with no model bundled, and available for Windows and macOS...."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [AIWriting, OpenSource, NovelWriting, AITools, WebFiction]
 categories: ["AI", "Artificial Intelligence", "Writing Tools", "Open Source Software", "Creative Tools"]
 image: "https://avatars.githubusercontent.com/u/257484394?v=4"

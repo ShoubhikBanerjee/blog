@@ -2,7 +2,7 @@
 title: "Argus AI Security Platform Launches with Self-Hosted Multi-Tenant Capabilities"
 slug: "argus-ai-security-platform-launches-with-self-hosted-multi-tenant-capabilities"
 description: "A new self-hosted, multi-tenant, and MIT-licensed security platform named Argus has been released to watch cloud, identity, code, endpoints, network, and Kubernetes environments."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [AISecurity, AIAgents, Cybersecurity, DevSecOps, CloudSecurity]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Cybersecurity", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/53983704?v=4"

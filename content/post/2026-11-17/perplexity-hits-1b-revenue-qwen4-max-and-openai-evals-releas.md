@@ -2,7 +2,7 @@
 title: "Perplexity hits $1B revenue; Qwen4-Max and OpenAI evals released"
 slug: "perplexity-hits-1b-revenue-qwen4-max-and-openai-evals-released"
 description: "Perplexity has crossed a $1B annual revenue run rate, according to CEO Aravind Srinivas, while Alibaba's Qwen4-Max preview moved to a shipping model and OpenAI granted external partners access to its..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [Perplexity, Qwen4Max, OpenAI, AIEvaluations, Revenue]
 categories: ["AI", "AI Agents", "Large Language Models", "AI Safety", "Venture Capital"]
 image: "https://latent.space/og/card/post/ainews-perplexity-hits-a-1b-revenue-run-rate-up-4x-in-2026/2627049380666217b18fbe35046e68da8e58cd8f8b30f47fa7c60b73ece9e2fd.png"

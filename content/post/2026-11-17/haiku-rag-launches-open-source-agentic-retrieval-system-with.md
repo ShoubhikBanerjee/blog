@@ -2,7 +2,7 @@
 title: "Haiku RAG Launches Open-Source Agentic Retrieval System with Docling and Ollama"
 slug: "haiku-rag-launches-open-source-agentic-retrieval-system-with-docling-and-ollama"
 description: "A new open-source project called Haiku RAG has been released, offering an agentic retrieval-augmented generation system that answers questions about user documents with citations to page numbers and..."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [AI, RAG, OpenSource, LLM, Docling, LanceDB]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Open Source Software", "Natural Language Processing"]
 image: "https://avatars.githubusercontent.com/u/183103?v=4"

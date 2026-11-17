@@ -2,7 +2,7 @@
 title: "Speaches provides an OpenAI-compatible API for speech-to-text and text-to-speech"
 slug: "speaches-provides-an-openai-compatible-api-for-speech-to-text-and-text-to-speech"
 description: "Speaches is an OpenAI API-compatible server that supports streaming transcription, translation, and speech generation."
-date: 2026-11-17T18:10:30+05:30
+date: 2026-11-17T22:09:21+05:30
 tags: [OpenAI, SpeechRecognition, TextToSpeech, Docker, API]
 categories: ["AI", "Natural Language Processing", "APIs & Integrations", "Developer Tools", "Speech Technology"]
 image: "https://avatars.githubusercontent.com/u/192631691?v=4"
