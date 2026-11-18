@@ -2,7 +2,7 @@
 title: "Qwen3-8B Testing Reveals Multi-Candidate Verbalization Effects Across Language Models"
 slug: "qwen3-8b-testing-reveals-multi-candidate-verbalization-effects-across-language-models"
 description: "Researchers have tested the single-chain premature lock-in hypothesis across four preregistered experiments using Qwen3-8B-Q80_0, finding that 15 of 16 hypothesis slots retain confirmatory status...."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AIresearch, languagemodels, reasoning, Qwen]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Artificial Intelligence", "Research"]
 author: "Shoubhik Banerjee"

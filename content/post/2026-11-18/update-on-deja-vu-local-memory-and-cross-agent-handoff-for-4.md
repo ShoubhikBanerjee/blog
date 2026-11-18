@@ -2,7 +2,7 @@
 title: "Update on Deja-Vu: Local Memory and Cross-Agent Handoff for 48 Coding Agents"
 slug: "update-on-deja-vu-local-memory-and-cross-agent-handoff-for-48-coding-agents"
 description: "Deja-vu (deja) has received new updates providing local memory, session search, and cross-agent handoff across 48 coding agents including Claude Code, Codex, Cursor, OpenCode, Gemini CLI, OpenClaw,..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AIagents, ClaudeCode, Go, DeveloperTools, Memory]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/99616188?v=4"

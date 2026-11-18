@@ -2,7 +2,7 @@
 title: "SageMaker HyperPod Inference Adds NVIDIA Dynamo Support for Distributed AI"
 slug: "sagemaker-hyperpod-inference-adds-nvidia-dynamo-support-for-distributed-ai"
 description: "Amazon SageMaker HyperPod Inference now supports NVIDIA Dynamo, combining Dynamo’s distributed inference capabilities with the infrastructure management of HyperPod to address challenges such as..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [SageMaker, NVIDIA, Dynamo, Inference, DataPreparation]
 categories: ["AI", "Machine Learning", "Infrastructure", "Data Engineering"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/14/ML-22230-featured-image.png"

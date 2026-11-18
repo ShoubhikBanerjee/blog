@@ -2,7 +2,7 @@
 title: "Model Context Protocol Registry API Enters v0.1 API Freeze"
 slug: "model-context-protocol-registry-api-enters-v0-1-api-freeze"
 description: "The community-driven Model Context Protocol (MCP) registry service has launched in preview and its Registry API (v0.1) has entered an API freeze."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [MCP, ModelContextProtocol, API, Registry, OpenSource]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/182288589?v=4"

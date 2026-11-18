@@ -2,7 +2,7 @@
 title: "XMimic Trains Humanoid Motion Tracking 3.7x Faster Than BlinkMimic"
 slug: "xmimic-trains-humanoid-motion-tracking-3-7x-faster-than-blinkmimic"
 description: "XMimic is a new AI development that trains whole-body motion tracking for the Unitree G1 robot 3.7 times faster than the previous BlinkMimic method when using four H100 GPUs. The improvement comes..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AI, Robotics, JAX, MotionTracking, Humanoid]
 categories: ["AI", "Machine Learning", "Robotics", "Computer Vision", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/34777138?v=4"

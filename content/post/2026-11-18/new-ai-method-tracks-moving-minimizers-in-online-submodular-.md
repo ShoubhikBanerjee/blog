@@ -2,7 +2,7 @@
 title: "New AI Method Tracks Moving Minimizers in Online Submodular Optimization"
 slug: "new-ai-method-tracks-moving-minimizers-in-online-submodular-optimization"
 description: "A new method for online submodular minimisation under bandit feedback has been introduced, addressing the challenge of tracking a moving minimizer as cost functions change over time. Unlike existing..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [submodularoptimization, banditalgorithms, onlinelearning, dynamicregret, zerothordermethods]
 categories: ["AI", "Machine Learning", "Optimization", "Online Learning", "Bandit Algorithms"]
 author: "Shoubhik Banerjee"

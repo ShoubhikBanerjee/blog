@@ -2,7 +2,7 @@
 title: "Xing 4 LLM Series Advances Architecture and Training on Ascend Hardware"
 slug: "xing-4-llm-series-advances-architecture-and-training-on-ascend-hardware"
 description: "A new report details Xing 4, a series of large language models extending the TeleChat lineage through coordinated advances in model architecture and training infrastructure on Ascend hardware. The..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [LLM, Ascend, TeleChat, MindSpore, AIAgents, DistributedTraining]
 categories: ["AI", "Machine Learning", "AI Infrastructure", "Large Language Models", "AI Agents"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Five new developments in long-term AI memory and agent evolution"
 slug: "five-new-developments-in-long-term-ai-memory-and-agent-evolution"
 description: "Recent technical updates in artificial intelligence focus on improving how agents manage long-term memory, evolve their internal states, and handle stale data or corrupted inputs. These developments..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AIMemory, LLMAgents, KVCache, AIResearch, LongTermMemory]
 categories: ["AI", "AI Agents", "Large Language Models", "Memory Systems", "Research"]
 author: "Shoubhik Banerjee"

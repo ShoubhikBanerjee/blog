@@ -2,7 +2,7 @@
 title: "COSI Framework for Statistical Functionals"
 slug: "cosi-framework-for-statistical-functionals"
 description: "A new framework named COSI has been introduced for constructing confidence sets for statistical functionals."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [S, t, a, t, i, s, t, i, c, a, l, I, n, f, e, r, e, n, c, e, M, a, c, h, i, n, e, L, e, a, r, n, i, n, g, R, o, b, u, s, t, n, e, s, s, C, o, n, f, i, d, e, n, c, e, I, n, t, e, r, v, a, l, s]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "S", "t", "a", "t", "i", "s", "t", "i", "c", "a", "l", "I", "n", "f", "e", "r", "e", "n", "c", "e", ",", "D", "a", "t", "a", "S", "c", "i", "e", "n", "c", "e", ",", "R", "o", "b", "u", "s", "t", "S", "t", "a", "t", "i", "s", "t", "i", "c", "s"]
 author: "Shoubhik Banerjee"

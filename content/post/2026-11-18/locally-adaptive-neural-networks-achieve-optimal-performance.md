@@ -2,7 +2,7 @@
 title: "Locally Adaptive Neural Networks Achieve Optimal Performance"
 slug: "locally-adaptive-neural-networks-achieve-optimal-performance"
 description: "A new approach to training neural networks, called locally adaptive neural networks, has been developed. This method addresses the limitations of globally fitted neural networks, which struggle with..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [NeuralNetworks, MachineLearning, Statistics, DataScience]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Data Science", "Statistics"]
 author: "Shoubhik Banerjee"

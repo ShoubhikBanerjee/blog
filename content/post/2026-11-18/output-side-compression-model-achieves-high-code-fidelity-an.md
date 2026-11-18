@@ -2,7 +2,7 @@
 title: "Output-Side Compression Model Achieves High Code Fidelity and Low Token Usage"
 slug: "output-side-compression-model-achieves-high-code-fidelity-and-low-token-usage"
 description: "A new development in output-side compression has been released. It achieves high code fidelity while reducing token usage significantly."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AI, MachineLearning, CodeGeneration, Optimization]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Engineering", "Optimization"]
 image: "https://avatars.githubusercontent.com/u/104168679?v=4"

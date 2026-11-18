@@ -2,7 +2,7 @@
 title: "Mini-AGI: Continual Learning Model Trained on 8GB VRAM Laptop"
 slug: "mini-agi-continual-learning-model-trained-on-8gb-vram-laptop"
 description: "A new continual learning byte-level language model, mini-AGI, has been trained from scratch on a single 8GB VRAM GPU. This model, which stores its weights as ordinary files on disk, can grow new..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AI, MachineLearning, ContinualLearning, miniAGI, LanguageModel]
 categories: ["AI", "Machine Learning", "AI Agents", "Computer Vision", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/14307880?v=4"

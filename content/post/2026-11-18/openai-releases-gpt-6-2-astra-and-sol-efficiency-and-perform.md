@@ -2,7 +2,7 @@
 title: "OpenAI Releases GPT-6.2 Astra and Sol: Efficiency and Performance Updates"
 slug: "openai-releases-gpt-6-2-astra-and-sol-efficiency-and-performance-updates"
 description: "OpenAI today shipped GPT-6.2 Astra and Sol, two new models, ahead of Anthropic’s expected first trading day. These models are designed to balance intelligence and cost efficiency, with Astra and Sol..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [OpenAI, AIModels, AIPerformance, CostEfficiency, AIAgents]
 categories: ["AI", "AI Development", "Machine Learning Models", "Product Updates", "AI Efficiency"]
 image: "https://latent.space/og/card/post/ainews-gpt-6-2-astra-the-2-frontier-model-is-better-and-20-600-cheaper-but-has-mixed-reviews-6-2-sol/d54e18a56681771d00f9af81d7e4a5b70fa4952861990442511933f8ff963105.png"

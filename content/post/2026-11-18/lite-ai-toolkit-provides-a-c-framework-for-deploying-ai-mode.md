@@ -2,7 +2,7 @@
 title: "Lite.Ai.ToolKit provides a C++ framework for deploying AI models"
 slug: "lite-ai-toolkit-provides-a-c-framework-for-deploying-ai-models"
 description: "Lite.Ai.ToolKit is a lightweight C++ AI toolkit designed for user-friendly deployment of numerous AI models. The project supports over 300 C++ model implementations and provides access to more than..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Cpp, AI, MachineLearning, OpenCV]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Computer Vision"]
 image: "https://avatars.githubusercontent.com/u/204302598?v=4"

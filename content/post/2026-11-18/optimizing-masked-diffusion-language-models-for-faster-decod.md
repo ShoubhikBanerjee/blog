@@ -2,7 +2,7 @@
 title: "Optimizing Masked Diffusion Language Models for Faster Decoding"
 slug: "optimizing-masked-diffusion-language-models-for-faster-decoding"
 description: "A new approach to optimizing masked diffusion language models (dLLMs) has been developed, focusing on reducing the time-consuming logits pipeline. This innovation is particularly beneficial for..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [MaskedDiffusion, LanguageModels, AI, Quantization, MoE]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "AI Optimization"]
 author: "Shoubhik Banerjee"

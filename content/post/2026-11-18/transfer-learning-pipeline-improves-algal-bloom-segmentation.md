@@ -2,7 +2,7 @@
 title: "Transfer-Learning Pipeline Improves Algal Bloom Segmentation with Expanded Corpus"
 slug: "transfer-learning-pipeline-improves-algal-bloom-segmentation-with-expanded-corpus"
 description: "Researchers present a transfer-learning pipeline that adapts a Swin Transformer U-Net with SCSE decoder attention for harmful algal bloom segmentation, expanding the labeled dataset from 145 to 655..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [ComputerVision, TransferLearning, EnvironmentalMonitoring, SemanticSegmentation, RemoteSensing]
 categories: ["AI", "Machine Learning", "Computer Vision", "Environmental Science", "Remote Sensing"]
 author: "Shoubhik Banerjee"

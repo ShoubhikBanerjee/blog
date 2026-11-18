@@ -2,7 +2,7 @@
 title: "Axolotl Adds Support for Mistral Large 4, Reflection Beam, and Multiple New Models with Advanced Training Enhancements"
 slug: "axolotl-adds-support-for-mistral-large-4-reflection-beam-and-multiple-new-models-with-advanced-training-enhancements"
 description: "Axolotl has expanded its support for large language models and introduced several new training optimizations, including native integration for Mistral Large 4, Reflection Beam, and five additional..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: []
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Model Training", "Large Language Models"]
 image: "https://avatars.githubusercontent.com/u/167502477?v=4"

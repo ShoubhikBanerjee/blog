@@ -2,7 +2,7 @@
 title: "vLLM Open Data Hub Adapter Released on PyPi"
 slug: "vllm-open-data-hub-adapter-released-on-pypi"
 description: "A new adapter, vllm-tgis-adapter, has been made available on PyPi, facilitating the integration of vLLM with specific server infrastructure."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [vLLM, Python, gRPC, DevTools, OpenDataHub]
 categories: ["AI", "AI Infrastructure", "Developer Tools", "Model Serving", "Hardware Compatibility"]
 image: "https://avatars.githubusercontent.com/u/57720972?v=4"

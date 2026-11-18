@@ -2,7 +2,7 @@
 title: "DiDi Open-Sources HUATUO for Kernel-Level OS Observability"
 slug: "didi-open-sources-huatuo-for-kernel-level-os-observability"
 description: "DiDi has open-sourced HUATUO, a cloud-native OS observability project incubated under the CCF. HUATUO provides kernel-level insights for cloud-native, AI, and bare-metal environments, enhancing..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [OpenSource, CloudNative, Observability, DiDi]
 categories: ["AI", "Open Source Software", "Cloud Computing", "AI Infrastructure", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/96813578?v=4"

@@ -2,7 +2,7 @@
 title: "Suno Launches Visuals Feature for AI Music Video Generation"
 slug: "suno-launches-visuals-feature-for-ai-music-video-generation"
 description: "Suno has introduced image and video generation capabilities in its latest effort to expand beyond its role as an AI music platform. The new feature, named “Visuals,” allows users to transform Suno..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Suno, AImusic, AImusicvideos, Imagegeneration]
 categories: ["AI", "Generative AI", "Music Technology", "Creative Tools"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/suno-ai-visuals.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

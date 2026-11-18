@@ -2,7 +2,7 @@
 title: "Archify: free open‑source tool turning AI agent output into interactive HTML"
 slug: "archify-free-opensource-tool-turning-ai-agent-output-into-interactive-html"
 description: "Archify, a free and open‑source tool, lets developers describe a concept to an AI agent and receive an interactive HTML page that can be explored, customized, and shared."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Archify, AIagents, OpenSource, InteractiveHTML]
 categories: ["AI", "Artificial Intelligence", "Developer Tools", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/53142663?v=4"

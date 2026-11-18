@@ -2,7 +2,7 @@
 title: "Haystack Launches Central Index for Community Integrations"
 slug: "haystack-launches-central-index-for-community-integrations"
 description: "A new repository provides an index of Haystack integrations that can be used with a Haystack Pipeline or Agent."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Haystack, Integrations, OpenSource, MachineLearning]
 categories: ["AI", "Machine Learning", "Open Source", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/51827949?v=4"

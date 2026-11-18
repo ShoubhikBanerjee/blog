@@ -2,7 +2,7 @@
 title: "Parseltongue v1.7.2 Adds TreeSitter Code Analysis API and Rust Graph Algorithms"
 slug: "parseltongue-v1-7-2-adds-treesitter-code-analysis-api-and-rust-graph-algorithms"
 description: "Parseltongue released v1.7.2 on 2026-02-12, a stable version designed to parse codebases using TreeSitter for 12 languages and expose dependency analysis via an HTTP API. The tool builds dependency..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Parseltongue, CodeAnalysis, DependencyGraph, TreeSitter, HTTPAPI]
 categories: ["AI", "Static Analysis", "Developer Tools", "Graph Computing"]
 image: "https://avatars.githubusercontent.com/u/183183660?v=4"

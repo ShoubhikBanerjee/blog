@@ -2,7 +2,7 @@
 title: "Databricks adopts adaptive concurrency limits for cluster creation"
 slug: "databricks-adopts-adaptive-concurrency-limits-for-cluster-creation"
 description: "Databricks' Compute Platform team applied adaptive concurrency limits to cluster creation to address the shortcomings of fixed request‑rate limits for long‑running operations."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Databricks, ConcurrencyLimits, ClusterCreation, CloudInfrastructure]
 categories: ["AI", "Cloud Computing", "Infrastructure Engineering", "Distributed Systems"]
 image: "https://www.databricks.com/sites/default/files/2026-11/blog-og-how-we-raised-databricks-cluster-rate-limits-by-7.5x.png"

@@ -2,7 +2,7 @@
 title: "ChromaLeon: Dynamic GNOME Theme Accent Colors"
 slug: "chromaleon-dynamic-gnome-theme-accent-colors"
 description: "ChromaLeon is a GNOME extension that dynamically changes accent colors based on your wallpaper. It's a project maintained in spare time, with support for native GNOME accent colors and seamless..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [GNOME, ChromaLeon, DynamicTheme, GTK, Adwaita]
 categories: ["AI", "Operating Systems", "User Interface", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/138934847?v=4"

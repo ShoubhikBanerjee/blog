@@ -2,7 +2,7 @@
 title: "Unified Principle for Balanced Visual Representation Learning"
 slug: "unified-principle-for-balanced-visual-representation-learning"
 description: "Multimodal large language models (MLLMs) require visual encoders that extract fine-grained visual features while constructing semantically disentangled and discriminative representations. A new..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [M, u, l, t, i, m, o, d, a, l, C, o, m, p, u, t, e, r, V, i, s, i, o, n, R, e, p, r, e, s, e, n, t, a, t, i, o, n, L, e, a, r, n, i, n, g, M, a, c, h, i, n, e, L, e, a, r, n, i, n, g]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "C", "o", "m", "p", "u", "t", "e", "r", "V", "i", "s", "i", "o", "n", ",", "M", "u", "l", "t", "i", "m", "o", "d", "a", "l", "L", "e", "a", "r", "n", "i", "n", "g", ",", "R", "e", "p", "r", "e", "s", "e", "n", "t", "a", "t", "i", "o", "n", "L", "e", "a", "r", "n", "i", "n", "g"]
 author: "Shoubhik Banerjee"

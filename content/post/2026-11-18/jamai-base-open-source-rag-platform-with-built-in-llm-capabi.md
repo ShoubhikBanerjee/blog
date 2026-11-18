@@ -2,7 +2,7 @@
 title: "JamAI Base: Open-source RAG platform with built-in LLM capabilities"
 slug: "jamai-base-open-source-rag-platform-with-built-in-llm-capabilities"
 description: "JamAI Base is an open-source RAG backend platform that integrates an embedded database and vector database with managed memory and RAG capabilities."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [RAG, LLM, AI, OpenSource, Chatbot]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Development", "Data Management"]
 image: "https://avatars.githubusercontent.com/u/148834374?v=4"

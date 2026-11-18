@@ -2,7 +2,7 @@
 title: "DVLAA launches local security range for LLM and agent training"
 slug: "dvlaa-launches-local-security-range-for-llm-and-agent-training"
 description: "DVLAA (Damn Vulnerable LLM and Agent Application) is a localized security range platform for testing, educational drills, and defense verification of large language model (LLM) and agent..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [LLMSecurity, AIAgents, CTF, OWASP, Flask, Docker]
 categories: ["AI", "AI Security", "Large Language Models", "AI Agents", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/88639567?v=4"

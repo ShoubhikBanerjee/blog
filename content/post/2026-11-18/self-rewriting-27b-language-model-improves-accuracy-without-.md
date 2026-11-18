@@ -2,7 +2,7 @@
 title: "Self‑rewriting 27B language model improves accuracy without training"
 slug: "selfrewriting-27b-language-model-improves-accuracy-without-training"
 description: "The 27B language model was shown to rewrite its own weights, improving performance without a new training run."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [SelfImprovingAI, LanguageModels, AIResearch]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

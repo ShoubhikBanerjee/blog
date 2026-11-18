@@ -2,7 +2,7 @@
 title: "New Counterexamples Challenge E-Means Clustering Algorithm"
 slug: "new-counterexamples-challenge-e-means-clustering-algorithm"
 description: "A new technical paper titled 'Two Counterexamples for e-means' has been submitted, presenting cases where the e-means algorithm performs worse than standard k-means. The study focuses on the..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [MachineLearning, Clustering, kMeans, AlgorithmAnalysis]
 categories: ["AI", "Machine Learning", "Computer Science", "Algorithms"]
 author: "Shoubhik Banerjee"

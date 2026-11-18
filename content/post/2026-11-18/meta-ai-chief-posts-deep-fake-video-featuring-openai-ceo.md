@@ -2,7 +2,7 @@
 title: "Meta AI Chief Posts Deep‑Fake Video Featuring OpenAI CEO"
 slug: "meta-ai-chief-posts-deepfake-video-featuring-openai-ceo"
 description: "Meta’s chief AI officer, Alexandr Wang, posted an AI‑generated clip on Instagram showing himself, Meta CEO Mark Zuckerberg, OpenAI CEO Sam Altman, and Muse’s mascot Jolly in a four‑way video call."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Meta, AIvideo, Deepfake]
 categories: ["AI", "Social Media", "Artificial Intelligence", "Digital Ethics"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2297785644.jpg?quality=90&strip=all&crop=0%2C10.755339554057%2C100%2C78.489320891885&w=1200"

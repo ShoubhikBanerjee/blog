@@ -2,7 +2,7 @@
 title: "Optimize Generative AI Costs by Bypassing Model Calls Where Possible"
 slug: "optimize-generative-ai-costs-by-bypassing-model-calls-where-possible"
 description: "Teams often route every task through a large language model, including input validation, formatting, and routing. While each call is cheap in isolation, these small costs become one of the largest..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [GenerativeAI, CostOptimization, AWSCloud, MLOps, AmazonBedrock]
 categories: ["AI", "Machine Learning", "Cloud Computing", "AI Infrastructure", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22259-featured-image.png"

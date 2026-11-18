@@ -2,7 +2,7 @@
 title: "Study: LLM Thinking Effort Boosts Confidence, Not Accuracy in Shopping Agents"
 slug: "study-llm-thinking-effort-boosts-confidence-not-accuracy-in-shopping-agents"
 description: "Researchers benchmarked ten frontier large language models (LLMs) acting as autonomous shopping agents to test whether increased computational effort improves purchase decisions. The study found that..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [LLM, AIagents, Calibration, Benchmarking, Shopping]
 categories: ["AI", "Large Language Models", "AI Agents", "Model Evaluation", "Consumer AI"]
 author: "Shoubhik Banerjee"

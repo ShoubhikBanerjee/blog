@@ -2,7 +2,7 @@
 title: "Convex Integrates Mastra for AI Workflow Development"
 slug: "convex-integrates-mastra-for-ai-workflow-development"
 description: "Convex has introduced a new integration with Mastra, enabling developers to build and run AI workflows directly on its hosted backend platform. This integration allows users to create agents, define..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Convex, Mastra, AIWorkflows, Serverless, Agents]
 categories: ["AI", "AI Development", "Backend Platforms", "Serverless Computing", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/81530787?v=4"

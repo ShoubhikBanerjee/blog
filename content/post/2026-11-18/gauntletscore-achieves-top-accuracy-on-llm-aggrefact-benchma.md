@@ -2,7 +2,7 @@
 title: "GauntletScore achieves top accuracy on LLM-AggreFact benchmark"
 slug: "gauntletscore-achieves-top-accuracy-on-llm-aggrefact-benchmark"
 description: "GauntletScore is an evidence engine that puts typed questions to independent readers from different providers. It records each answer as a measurement in an evidence ledger. The system combines these..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [LLMAggreFact, FactChecking, AI, Bayesian]
 categories: ["AI", "AI Evaluation", "NLP", "Machine Learning", "Research"]
 author: "Shoubhik Banerjee"

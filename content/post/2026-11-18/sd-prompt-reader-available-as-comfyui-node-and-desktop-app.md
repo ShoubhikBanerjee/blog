@@ -2,7 +2,7 @@
 title: "SD Prompt Reader Available as ComfyUI Node and Desktop App"
 slug: "sd-prompt-reader-available-as-comfyui-node-and-desktop-app"
 description: "A simple standalone viewer for reading prompt from Stable Diffusion generated image outside the webui. The SD Prompt Reader is now available as a ComfyUI node."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [stablediffusion, aitools, promptreader, opensource, generation]
 categories: ["AI", "Stable Diffusion", "Image Processing", "AI Tools", "Generative AI"]
 image: "https://avatars.githubusercontent.com/u/28808141?v=4"

@@ -2,7 +2,7 @@
 title: "ComfyUI-KJNodes Introduces Enhanced Set/Get Node Functionality"
 slug: "comfyui-kjnodes-introduces-enhanced-set-get-node-functionality"
 description: "The ComfyUI-KJNodes project has recently undergone a significant update, introducing enhanced functionalities for Set/Get nodes within the ComfyUI framework. This update focuses on extending support..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [ComfyUI, AIToolkit, KJNodes, SetGetNodes, Subgraphs, NodeOptimization]
 categories: ["AI", "AI Development Tools", "Node-based Interfaces", "Software Updates", "Python Development"]
 image: "https://avatars.githubusercontent.com/u/40791699?v=4"

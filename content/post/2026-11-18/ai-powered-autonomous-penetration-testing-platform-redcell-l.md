@@ -2,7 +2,7 @@
 title: "AI‑Powered Autonomous Penetration Testing Platform REDCELL Launches"
 slug: "aipowered-autonomous-penetration-testing-platform-redcell-launches"
 description: "A new AI red‑team platform called **REDCELL** lets autonomous LLM agents run a full penetration test inside a Kali container and generate a polished report."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AI, PenTest, LLM, Automation, Cybersecurity]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Automation"]
 image: "https://avatars.githubusercontent.com/u/150589141?v=4"

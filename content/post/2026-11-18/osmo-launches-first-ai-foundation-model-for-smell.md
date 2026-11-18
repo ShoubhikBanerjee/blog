@@ -2,7 +2,7 @@
 title: "Osmo launches first AI foundation model for smell"
 slug: "osmo-launches-first-ai-foundation-model-for-smell"
 description: "Osmo, an AI startup, announced that its new foundation model for smell has reached human‑level olfactory intelligence."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Osmo, AI, Olfaction, PerfumeTech, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Chemical Sensing", "Consumer Goods"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/osmo-nose2.jpg?resize=1200,600"

@@ -2,7 +2,7 @@
 title: "AWS Agent Registry Introduces Custom Metadata Schemas for Structured Governance"
 slug: "aws-agent-registry-introduces-custom-metadata-schemas-for-structured-governance"
 description: "Custom metadata schemas are now available in AWS Agent Registry. This update allows administrators to define a set of organization-specific key-value pairs that registry records must carry, enabling..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AWSAgentRegistry, CloudGovernance, MetadataSchemas, CloudSecurity]
 categories: ["AI", "Cloud Computing", "Data Governance", "AI Agents"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22167-featured-image.png"

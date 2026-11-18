@@ -2,7 +2,7 @@
 title: "Google rebrands Spark AI as Tasks, making it free and expanding availability"
 slug: "google-rebrands-spark-ai-as-tasks-making-it-free-and-expanding-availability"
 description: "Google is rebranding its Spark AI agent as “Tasks” and making it free to use. The update, powered by Google’s new Gemini 4 Hydrogen AI model, brings the agentic capabilities originally introduced in..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Google, Gemini, AIAgents, Productivity, SparkAI]
 categories: ["AI", "Artificial Intelligence", "Productivity Tools", "Cloud Computing", "Software Updates"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Tasks-in-Gemini.png?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

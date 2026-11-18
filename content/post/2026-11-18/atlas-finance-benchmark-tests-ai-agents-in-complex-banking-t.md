@@ -2,7 +2,7 @@
 title: "ATLAS-Finance Benchmark Tests AI Agents in Complex Banking Tasks"
 slug: "atlas-finance-benchmark-tests-ai-agents-in-complex-banking-tasks"
 description: "Researchers introduced **ATLAS-Finance**, a benchmark designed to evaluate how well frontier AI agents can perform realistic banking tasks. These tasks mirror the challenges of professional..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [aiagents, financialai, benchmarking, realworldai, bankingautomation]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Computer Science", "Financial Services"]
 author: "Shoubhik Banerjee"

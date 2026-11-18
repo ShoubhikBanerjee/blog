@@ -2,7 +2,7 @@
 title: "NornicDB combines graph and vector search with sub-millisecond latency"
 slug: "nornicdb-combines-graph-and-vector-search-with-sub-millisecond-latency"
 description: "NornicDB is a distributed, low-latency database that integrates Graph and Vector capabilities with Temporal MVCC. It is designed to provide sub-millisecond performance for HNSW search, graph..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [GraphDatabase, VectorSearch, Cypher, NornicDB, GoLang]
 categories: ["AI", "Databases", "Data Infrastructure", "Search Technology", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/1736223?v=4"

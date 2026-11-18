@@ -2,7 +2,7 @@
 title: "Direct Head Architecture Improves Rooftop Solar Capacity Estimation from Imagery"
 slug: "direct-head-architecture-improves-rooftop-solar-capacity-estimation-from-imagery"
 description: "Researchers have proposed Direct Head, a segmentation-guided neural architecture that directly estimates rooftop photovoltaic capacity from aerial imagery without relying on the conventional..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [solarPV, capacityestimation, deeplearning, segmentation, energyplanning, computervision]
 categories: ["AI", "Machine Learning", "Computer Vision", "Energy Systems", "Renewable Energy"]
 author: "Shoubhik Banerjee"

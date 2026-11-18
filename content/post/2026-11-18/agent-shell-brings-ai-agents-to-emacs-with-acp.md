@@ -2,7 +2,7 @@
 title: "agent-shell brings AI agents to Emacs with ACP"
 slug: "agent-shell-brings-ai-agents-to-emacs-with-acp"
 description: "agent-shell brings your favorite AI agents to Emacs, keeping you at home: familiar buffers and bindings, no terminal emulation. All powered by ACP, the Agent Client Protocol. Works with 24 agents..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AIagents, Emacs, ACP, Sandstorm, agentshell]
 categories: ["AI", "AI Agents", "Software Development", "Cloud Computing", "Emacs"]
 image: "https://avatars.githubusercontent.com/u/8107219?v=4"

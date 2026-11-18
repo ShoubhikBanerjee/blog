@@ -2,7 +2,7 @@
 title: "Researchers Explore Steering Mixture-of-Experts Models with Targeted Expert Paths"
 slug: "researchers-explore-steering-mixture-of-experts-models-with-targeted-expert-paths"
 description: "Researchers have investigated how forcing tokens onto chosen expert paths influences the behavior of mixture-of-experts (MoE) language models. The approach involves building a target path from the..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AI, LanguageModels, MixtureofExperts, Research, Steering]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Natural Language Processing", "Research"]
 author: "Shoubhik Banerjee"

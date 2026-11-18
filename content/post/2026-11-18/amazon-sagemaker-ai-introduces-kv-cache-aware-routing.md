@@ -2,7 +2,7 @@
 title: "Amazon SageMaker AI introduces KV cache-aware routing"
 slug: "amazon-sagemaker-ai-introduces-kv-cache-aware-routing"
 description: "Today, Amazon SageMaker AI introduces KV cache-aware routing (KV-aware routing), a new routing strategy for real-time endpoints. It uses the cache state that the model container reports to send each..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AmazonSageMaker, LLM, KVCache, Routing, Inference]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Large Language Models", "Inference Optimization"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22381-featured-image.png"

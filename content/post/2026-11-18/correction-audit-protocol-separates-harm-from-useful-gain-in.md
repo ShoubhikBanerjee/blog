@@ -2,7 +2,7 @@
 title: "Correction Audit Protocol Separates Harm from Useful Gain in AI Concept Corrections"
 slug: "correction-audit-protocol-separates-harm-from-useful-gain-in-ai-concept-corrections"
 description: "Researchers have proposed a correction audit, a reproducible evaluation protocol that disentangles the effects of concept corrections on AI model predictions. The method was tested on breast..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AIevaluation, conceptcorrection, medicalAI, machinelearning, breastultrasound, CUBdataset]
 categories: ["AI", "Machine Learning", "AI Evaluation", "Computer Vision", "Medical AI"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "OfficePrism Benchmarks 420 Enterprise Tasks Across Business Functions"
 slug: "officeprism-benchmarks-420-enterprise-tasks-across-business-functions"
 description: "OfficePrism has been introduced as an evaluation framework designed to assess AI performance in enterprise environments. The system addresses the difficulty of localizing failures when broad..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [OfficePrism, AIBenchmarking, EnterpriseAI, LLMEvaluation, SyntheticData]
 categories: ["AI", "AI Evaluation", "Machine Learning", "Enterprise Software", "Benchmarking"]
 author: "Shoubhik Banerjee"

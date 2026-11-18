@@ -2,7 +2,7 @@
 title: "RLDE: AI Framework for Document Revision"
 slug: "rlde-ai-framework-for-document-revision"
 description: "Researchers have developed RLDE, an automated end-to-end metric-driven reinforcement learning framework for document revision. Improving the quality, clarity, and flow of long documents remains a..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [AI, NLP, DocumentRevision, RLDE, BEA2019]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "AI Research"]
 author: "Shoubhik Banerjee"

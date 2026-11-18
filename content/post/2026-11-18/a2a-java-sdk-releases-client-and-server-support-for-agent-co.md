@@ -2,7 +2,7 @@
 title: "A2A Java SDK releases client and server support for agent communication"
 slug: "a2a-java-sdk-releases-client-and-server-support-for-agent-communication"
 description: "A new Java library has been released to support the execution of agentic applications as Agent2Agent (A2A) servers. This multi-module Maven library provides both client and server capabilities,..."
-date: 2026-11-18T18:09:03+05:30
+date: 2026-11-18T22:09:17+05:30
 tags: [Java, AIagents, A2A, Maven, gRPC]
 categories: ["AI", "AI Agents", "Developer Tools", "Programming Languages"]
 image: "https://avatars.githubusercontent.com/u/217270365?v=4"
