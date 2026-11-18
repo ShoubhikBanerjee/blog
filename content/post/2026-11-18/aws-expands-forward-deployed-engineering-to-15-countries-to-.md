@@ -2,7 +2,7 @@
 title: "AWS Expands Forward Deployed Engineering to 15 Countries to Scale Enterprise Agents"
 slug: "aws-expands-forward-deployed-engineering-to-15-countries-to-scale-enterprise-agents"
 description: "AWS has expanded its AWS Forward Deployed Engineering (FDE) service to 15 countries, providing commercial and public sector customers with built-in, production-ready accelerators to deploy secure,..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [AWS, AIagents, EnterpriseAI, CloudComputing]
 categories: ["AI", "Cloud Computing", "AI Agents", "Enterprise Software"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22331-featured-image.png"

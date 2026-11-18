@@ -2,7 +2,7 @@
 title: "Quad9 Withdraws Public DNS Resolver from France Following Court Ruling"
 slug: "quad9-withdraws-public-dns-resolver-from-france-following-court-ruling"
 description: "Last month, the Swiss non-profit foundation Quad9 announced that it will withdraw its free public DNS resolver from France. This decision followed months of litigation and a French court ruling that..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [DNS, InternetInfrastructure, Quad9, Cloudflare, InternetPrivacy]
 categories: ["AI", "Networking", "Internet Policy", "Cybersecurity"]
 image: "https://blog.cloudflare.com/_emdash/api/media/file/01M7NJA0M7FAQEQZBW0K0W5KKS.png"

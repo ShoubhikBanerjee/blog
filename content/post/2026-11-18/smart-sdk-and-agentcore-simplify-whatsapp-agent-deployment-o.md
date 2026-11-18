@@ -2,7 +2,7 @@
 title: "SMART SDK and AgentCore Simplify WhatsApp Agent Deployment on AWS"
 slug: "smart-sdk-and-agentcore-simplify-whatsapp-agent-deployment-on-aws"
 description: "Across Latin America, India, and Southeast Asia, WhatsApp is one of the most widely used messaging applications, but building a robust agent on top of it requires handling complex, type-dependent..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [WhatsApp, AmazonBedrock, AIAgents, AWS, OpenSource]
 categories: ["AI", "AI Agents", "Cloud Infrastructure", "Customer Engagement", "Developer Tools"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-21698-featured-image.png"

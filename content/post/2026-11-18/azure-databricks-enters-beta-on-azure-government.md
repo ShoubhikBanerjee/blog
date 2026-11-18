@@ -2,7 +2,7 @@
 title: "Azure Databricks Enters Beta on Azure Government"
 slug: "azure-databricks-enters-beta-on-azure-government"
 description: "At Microsoft Ignite 2026, Databricks announced that Azure Databricks on Azure Government has entered Beta. This release marks a step in providing public sector organizations access to the Databricks..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [AzureDatabricks, AzureGovernment, CloudComputing, DataGovernance, PublicSector]
 categories: ["AI", "Cloud Computing", "Data Engineering", "Government Technology"]
 image: "https://www.databricks.com/sites/default/files/2026-11/2025-11-blog-Azure-Databricks-at-Microsoft-Ignite-2025-og-1200x628.png"

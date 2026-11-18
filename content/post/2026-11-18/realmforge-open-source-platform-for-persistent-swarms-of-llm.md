@@ -2,7 +2,7 @@
 title: "RealmForge: Open-Source Platform for Persistent Swarms of LLM Agents"
 slug: "realmforge-open-source-platform-for-persistent-swarms-of-llm-agents"
 description: "RealmForge is an open‑source platform that orchestrates large swarms of LLM‑powered agents within a persistent, graph‑based world."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [AI, OpenSource, AgentSimulation, KnowledgeGraph]
 categories: ["AI", "Artificial Intelligence", "Agent-Based Systems", "Open Source Software", "Simulation"]
 image: "https://avatars.githubusercontent.com/u/173999899?v=4"

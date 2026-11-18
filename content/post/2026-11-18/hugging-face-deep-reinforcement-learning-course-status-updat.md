@@ -2,7 +2,7 @@
 title: "Hugging Face Deep Reinforcement Learning Course Status Update"
 slug: "hugging-face-deep-reinforcement-learning-course-status-update"
 description: "The Hugging Face Deep Reinforcement Learning Course, authored by Thomas Simonini and Omar Sanseviero, remains an accessible resource for learning the theory and practical aspects of the field,..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [HuggingFace, ReinforcementLearning, MachineLearning, Education]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Education"]
 image: "https://avatars.githubusercontent.com/u/25720743?v=4"

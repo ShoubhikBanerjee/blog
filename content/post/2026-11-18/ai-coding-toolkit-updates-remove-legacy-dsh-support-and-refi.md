@@ -2,7 +2,7 @@
 title: "AI coding toolkit updates remove legacy DSH support and refine agent rules"
 slug: "ai-coding-toolkit-updates-remove-legacy-dsh-support-and-refine-agent-rules"
 description: "The professional-grade AI coding toolkit has released an update that removes support for the legacy DeepSeek Harness (DSH) code and refines how agent instructions are managed across multiple..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [AIcoding, Claude, DevTools, MLAgents, ReinforcementLearning]
 categories: ["AI", "AI Development", "Machine Learning", "Developer Tools", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/24587195?v=4"

@@ -2,7 +2,7 @@
 title: "OpenAI introduces GPT-6.2 Astra and Sol models with updated pricing"
 slug: "openai-introduces-gpt-6-2-astra-and-sol-models-with-updated-pricing"
 description: "OpenAI has introduced two new frontier models: GPT-6.2 Astra, designed for the hardest projects, and GPT-6.2 Sol, an efficient and versatile model for everyday work. These models are now available..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [OpenAI, GPT62, API, Pricing, Benchmarks]
 categories: ["AI", "Artificial Intelligence", "Model Pricing", "Developer Tools"]
 image: "https://static.simonwillison.net/static/2026/astra-6-2-max.webp"

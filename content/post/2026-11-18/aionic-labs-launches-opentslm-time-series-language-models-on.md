@@ -2,7 +2,7 @@
 title: "Aionic Labs Launches OpenTSLM Time-Series Language Models on Amazon SageMaker JumpStart"
 slug: "aionic-labs-launches-opentslm-time-series-language-models-on-amazon-sagemaker-jumpstart"
 description: "Aionic Labs has made OpenTSLM, an open source family of time-series language models (TSLMs), available in Amazon SageMaker JumpStart, enabling organizations to deploy these models in their own AWS..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [OpenTSLM, AionicLabs, SageMaker, TimeSeries, AIagents]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Infrastructure"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21774-featured-image.png"

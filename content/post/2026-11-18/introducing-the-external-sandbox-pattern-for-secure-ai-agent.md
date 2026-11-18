@@ -2,7 +2,7 @@
 title: "Introducing the External Sandbox Pattern for Secure AI Agent Code Execution"
 slug: "introducing-the-external-sandbox-pattern-for-secure-ai-agent-code-execution"
 description: "On November 17, 2026, a new project developed in collaboration with Prime Radiant introduced the external sandbox pattern. Under this pattern, code executed by an AI agent runs inside a dedicated..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [AIAgents, Sandboxing, PrimeRadiant, SecureCode]
 categories: ["AI", "AI Agents", "Cybersecurity", "Software Development"]
 image: "https://static.simonwillison.net/static/2026/sandbox-proxy.png"

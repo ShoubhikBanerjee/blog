@@ -2,7 +2,7 @@
 title: "Microsoft CEO Satya Nadella says AI could disrupt the entire economy and firm structure"
 slug: "microsoft-ceo-satya-nadella-says-ai-could-disrupt-the-entire-economy-and-firm-structure"
 description: "Microsoft CEO Satya Nadella expressed concern that artificial intelligence, particularly advanced models, could fundamentally reshape the economy and political structure, warning that unchecked..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [AI, ArtificialIntelligence, Economy, AGI, Microsoft, TechPolicy]
 categories: ["AI", "Artificial Intelligence", "Economics", "Corporate Strategy", "Public Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Screenshot-2026-11-17-at-3.00.15-PM.png?quality=90&strip=all&crop=0%2C5.5575251492495%2C100%2C88.884949701501&w=1200"

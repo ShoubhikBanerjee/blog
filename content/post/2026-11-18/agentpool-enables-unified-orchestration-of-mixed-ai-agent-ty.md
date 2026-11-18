@@ -2,7 +2,7 @@
 title: "AgentPool enables unified orchestration of mixed AI agent types"
 slug: "agentpool-enables-unified-orchestration-of-mixed-ai-agent-types"
 description: "AgentPool is a unified agent orchestration hub that allows developers to configure and manage multiple AI agents, including native, ACP, AGUI, and Claude Code types, via YAML configuration. It..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [AIagents, AgentOrchestration, DeveloperTools, ACP]
 categories: ["AI", "AI Agents", "Developer Tools", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/110931?v=4"

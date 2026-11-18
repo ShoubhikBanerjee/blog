@@ -2,7 +2,7 @@
 title: "Databricks Introduces LiveRamp Embedded Identity via Packaged Clean Rooms"
 slug: "databricks-introduces-liveramp-embedded-identity-via-packaged-clean-rooms"
 description: "Traditionally, Databricks customers resolving customer records to a person-based ID like RampID had to manually export PII, wait for a match file, and reload it—adding pipeline complexity, data..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [databricks, identityresolution, cleanrooms, aidataprivacy, unitycatalog]
 categories: ["AI", "Data Governance", "AI and Machine Learning", "Privacy and Security", "Cloud Computing"]
 image: "https://www.databricks.com/sites/default/files/2026-11/Databricks-LiveRamp.png"

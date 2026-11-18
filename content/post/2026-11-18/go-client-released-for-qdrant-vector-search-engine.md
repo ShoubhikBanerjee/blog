@@ -2,7 +2,7 @@
 title: "Go client released for Qdrant vector search engine"
 slug: "go-client-released-for-qdrant-vector-search-engine"
 description: "The Go client for the Qdrant vector search engine has been released, making it easier for developers to integrate vector search capabilities into their Go applications. Internally, the high-level..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [Go, Qdrant, VectorSearch, gRPC, TLS, AI]
 categories: ["AI", "Developer Tools", "AI Infrastructure", "Search Technology"]
 image: "https://avatars.githubusercontent.com/u/73504361?v=4"

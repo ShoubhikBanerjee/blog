@@ -2,7 +2,7 @@
 title: "Datasette Lite: Browser-Based SQLite Database Explorer"
 slug: "datasette-lite-browser-based-sqlite-database-explorer"
 description: "Datasette Lite is a port of the Datasette Python application to run directly in the browser using WebAssembly and Pyodide. It allows users to browse SQLite databases, JSON files, CSV files, or SQL..."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [Datasette, SQLite, WebAssembly, Pyodide, BrowserBased]
 categories: ["AI", "Web Development", "Database Tools", "Software Development"]
 image: "https://static.simonwillison.net/static/2026/datasette-lite-diag.webp"

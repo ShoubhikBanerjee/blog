@@ -2,7 +2,7 @@
 title: "Nvidia reports record Q3 earnings and confirms no Jensen Huang return"
 slug: "nvidia-reports-record-q3-earnings-and-confirms-no-jensen-huang-return"
 description: "Nvidia has announced its Q3 earnings, revealing a significant increase in revenue and profit, while confirming that former CEO Jensen Huang will not be reinstated."
-date: 2026-11-18T06:16:59+05:30
+date: 2026-11-18T12:19:35+05:30
 tags: [Nvidia, Q3Earnings, JensenHuang, DataCenter, EdgeComputing]
 categories: ["AI", "Technology", "Business", "Finance", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25835739/STKP210_JENSEN_HUANG_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
