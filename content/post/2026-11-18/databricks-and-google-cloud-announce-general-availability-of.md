@@ -2,7 +2,7 @@
 title: "Databricks and Google Cloud Announce General Availability of Bi-directional Catalog Federation"
 slug: "databricks-and-google-cloud-announce-general-availability-of-bi-directional-catalog-federation"
 description: "Today, Databricks and Google Cloud announced a significant milestone in catalog interoperability. Customers can now access a single copy of data from both Unity Catalog and Google Cloud's borderless..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [Databricks, GoogleCloud, DataInterop, UnityCatalog, Iceberg, DataGovernance]
 categories: ["AI", "Data Engineering", "Cloud Computing", "Data Governance", "Interoperability"]
 image: "https://www.databricks.com/sites/default/files/2026-11/unnamed_2.png"

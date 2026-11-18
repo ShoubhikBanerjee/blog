@@ -2,7 +2,7 @@
 title: "New Reversibility Classes Framework for Tool-Using AI Agents"
 slug: "new-reversibility-classes-framework-for-tool-using-ai-agents"
 description: "Tool-using AI agents can change files, databases, access rights, and public information, yet current permission to call a tool does not establish whether a mistake can be undone."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [AIAgents, ReversibilityClasses, MCPServers, AISafety]
 categories: ["AI", "Artificial Intelligence", "Software Engineering", "System Reliability", "Data Management"]
 author: "Shoubhik Banerjee"

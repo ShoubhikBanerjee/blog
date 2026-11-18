@@ -2,7 +2,7 @@
 title: "Local Video Editor for Coding Agents via MCP Server"
 slug: "local-video-editor-for-coding-agents-via-mcp-server"
 description: "ffmpeg-skill is an Agent Skill for Claude Code, Cursor, Codex, and any MCP client. It provides a local video editor using FFmpeg."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [f, f, m, p, e, g, v, i, d, e, o, e, d, i, t, i, n, g, c, o, d, i, n, g, a, g, e, n, t, s, m, c, p, l, o, c, a, l, a, i]
 categories: ["AI", "A", "I", "A", "g", "e", "n", "t", "s", ",", "V", "i", "d", "e", "o", "P", "r", "o", "c", "e", "s", "s", "i", "n", "g", ",", "O", "p", "e", "n", "S", "o", "u", "r", "c", "e", ",", "D", "e", "v", "e", "l", "o", "p", "e", "r", "T", "o", "o", "l", "s"]
 image: "https://avatars.githubusercontent.com/u/20648875?v=4"

@@ -2,7 +2,7 @@
 title: "Configuring OAuth for Amazon Bedrock AgentCore Identity and Snowflake MCP Servers"
 slug: "configuring-oauth-for-amazon-bedrock-agentcore-identity-and-snowflake-mcp-servers"
 description: "Enterprises extending authentication and authorization controls into the agentic layer often require broad service account permissions or custom-built auth integrations that add operational overhead...."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [AmazonBedrock, Snowflake, OAuth, ArtificialIntelligence, Security]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Security"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21095-featured-image.png"

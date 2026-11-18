@@ -2,7 +2,7 @@
 title: "FastAgency Accelerates Multi‑Agent AI Workflow Deployment"
 slug: "fastagency-accelerates-multiagent-ai-workflow-deployment"
 description: "- FastAgency is an open‑source framework that provides a unified programming interface for deploying agentic workflows written in AG2 (formerly AutoGen)."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [OpenSource, AI, Agents, Deployment]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Development", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/188122941?v=4"

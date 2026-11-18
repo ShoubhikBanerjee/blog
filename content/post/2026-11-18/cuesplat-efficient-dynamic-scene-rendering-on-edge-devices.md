@@ -2,7 +2,7 @@
 title: "CueSplat: Efficient Dynamic Scene Rendering on Edge Devices"
 slug: "cuesplat-efficient-dynamic-scene-rendering-on-edge-devices"
 description: "CueSplat, a post-training framework, enhances dynamic scene rendering by leveraging local temporal regularity in Gaussian trajectories. It predicts Gaussian attributes from recent history and uses a..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [DynamicSceneRendering, EdgeDevices, 4DGS, CueSplat, AI]
 categories: ["AI", "Computer Vision", "Machine Learning", "AI Applications", "Edge Computing"]
 author: "Shoubhik Banerjee"

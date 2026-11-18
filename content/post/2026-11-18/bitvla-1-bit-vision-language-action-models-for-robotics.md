@@ -2,7 +2,7 @@
 title: "BitVLA: 1-bit Vision-Language-Action Models for Robotics"
 slug: "bitvla-1-bit-vision-language-action-models-for-robotics"
 description: "BitVLA, a 1-bit Vision-Language-Action model for robotics manipulation, has been released. The official inference framework, robot.cpp, is now available, allowing for inference with I2S-quantized..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [BitVLA, Robotics, AI, VisionLanguageAction, InferenceFramework]
 categories: ["AI", "Robotics", "Machine Learning", "AI Models", "Computer Vision"]
 image: "https://avatars.githubusercontent.com/u/47163302?v=4"

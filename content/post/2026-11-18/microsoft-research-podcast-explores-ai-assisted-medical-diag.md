@@ -2,7 +2,7 @@
 title: "Microsoft Research Podcast Explores AI-Assisted Medical Diagnosis"
 slug: "microsoft-research-podcast-explores-ai-assisted-medical-diagnosis"
 description: "In a recent Microsoft Research podcast, experts discussed how AI can transform medicine, focusing on AI‑assisted medical diagnosis."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [AI, Medicine, MicrosoftResearch, Podcast, HealthTech]
 categories: ["AI", "Artificial Intelligence", "Healthcare", "Machine Learning"]
 image: "https://www.microsoft.com/en-us/research/wp-content/uploads/2026/11/Episode3-Amini-Horvitz-Topol_TheShapeofThings_TW_LI_FB_1920x1080-1.png"

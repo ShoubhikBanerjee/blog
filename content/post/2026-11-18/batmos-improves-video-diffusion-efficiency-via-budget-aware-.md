@@ -2,7 +2,7 @@
 title: "BATMoS Improves Video Diffusion Efficiency via Budget-Aware Guidance Allocation"
 slug: "batmos-improves-video-diffusion-efficiency-via-budget-aware-guidance-allocation"
 description: "Researchers have introduced BATMoS (Budget Aware Temporal Mixture of Strategies), a method that allocates classifier-free guidance computations more efficiently across the denoising trajectory in..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [VideoDiffusion, Efficiency, GuidanceAllocation, CogVideoX, VBench]
 categories: ["AI", "Computer Vision", "Machine Learning", "Generative AI"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Python Solver Wins SOICT 2026 Integrated Transportation Contest"
 slug: "python-solver-wins-soict-2026-integrated-transportation-contest"
 description: "A single‑file Python solver was submitted to the second round of the SOICT 2026 contest for the Integrated Passenger and Parcel Transportation problem, a selective pickup‑and‑delivery routing problem..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [SOICT, Python, Routing, ALNS, Optimization]
 categories: ["AI", "Optimization", "Routing", "Python", "Algorithm Design"]
 author: "Shoubhik Banerjee"

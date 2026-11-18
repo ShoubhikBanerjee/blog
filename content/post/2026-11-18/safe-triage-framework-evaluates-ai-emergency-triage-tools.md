@@ -2,7 +2,7 @@
 title: "SAFE-Triage Framework Evaluates AI Emergency Triage Tools"
 slug: "safe-triage-framework-evaluates-ai-emergency-triage-tools"
 description: "Researchers developed SAFE-Triage, a comprehensive evaluation framework for patient-facing AI triage tools, and applied it to compare two LLM-based triage approaches using emergency department..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [AItriage, emergencymedicine, LLMevaluation, healthcareAI, patientsafety, clinicalNLP]
 categories: ["AI", "Machine Learning", "Healthcare Technology", "Natural Language Processing", "Clinical Decision Support"]
 author: "Shoubhik Banerjee"

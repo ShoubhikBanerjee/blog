@@ -2,7 +2,7 @@
 title: "New Medical AI Safety Frameworks Address Personalized Guarding and Evidence Governance"
 slug: "new-medical-ai-safety-frameworks-address-personalized-guarding-and-evidence-governance"
 description: "Recent research introduces three frameworks advancing medical AI safety: personalized medication guarding with a new benchmark, evidence governance for tool-augmented agents, and a hindsight audit..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [medicalai, aisafety, benchmarks, aiagents, evidencegovernance, personalizedmedicine]
 categories: ["AI", "Medical AI", "AI Safety", "Benchmarks", "AI Agents"]
 author: "Shoubhik Banerjee"

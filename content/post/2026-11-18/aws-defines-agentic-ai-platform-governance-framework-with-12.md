@@ -2,7 +2,7 @@
 title: "AWS Defines Agentic AI Platform Governance Framework with 12-Week Maturity Model"
 slug: "aws-defines-agentic-ai-platform-governance-framework-with-12-week-maturity-model"
 description: "Organizations are shifting their approach to Responsible AI (RAI) from a model-centric scope—limited to training, testing, and inference—to a broader framework that governs agentic applications...."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [AWS, AIAgents, ResponsibleAI, Governance, AmazonBedrock]
 categories: ["AI", "AI Agents", "Responsible AI", "Cloud Infrastructure", "Security and Privacy"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21131-featured-image.png"

@@ -2,7 +2,7 @@
 title: "GitHub and Microsoft Pilot Codename MDASH to Fix Open Source Bugs"
 slug: "github-and-microsoft-pilot-codename-mdash-to-fix-open-source-bugs"
 description: "In the Codename MDASH pilot, GitHub and Microsoft converted thousands of raw AI findings into 99 checked, private reports with suggested fixes for six widely used open source projects. Maintainers..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [CodenameMDASH, OpenSourceSecurity, AI, GitHub, MicrosoftSecurity]
 categories: ["AI", "Cybersecurity", "Open Source", "Artificial Intelligence", "Developer Tools"]
 image: "https://github.blog/wp-content/uploads/2026/11/image-17.png"

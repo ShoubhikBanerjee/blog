@@ -2,7 +2,7 @@
 title: "Topological Summaries of BERT Attention Offer No Advantage in Linguistic Classification"
 slug: "topological-summaries-of-bert-attention-offer-no-advantage-in-linguistic-classification"
 description: "Researchers evaluated whether topological summaries of Transformer attention could serve as sentence representations for linguistic acceptability classification."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [Transformer, Attention, Topological, NLP, BERT]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Topological Data Analysis"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Slurm 26.11 Introduces HRES to Enable Native Quantum Processor Scheduling"
 slug: "slurm-26-11-introduces-hres-to-enable-native-quantum-processor-scheduling"
 description: "Slurm 26.11 adds Hierarchical Resources (HRES) plugins that enable quantum processing units (QPUs) to be scheduled as native cluster resources, allowing HPC centers to integrate quantum accelerators..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [Slurm, QuantumComputing, HPC, Supercomputing, QPU, Scheduling]
 categories: ["AI", "High Performance Computing", "Quantum Computing", "System Administration"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/hybrid-quantum-classical-computing-architecture-660x370.png"

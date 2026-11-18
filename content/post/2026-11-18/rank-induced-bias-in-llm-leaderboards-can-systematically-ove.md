@@ -2,7 +2,7 @@
 title: "Rank-Induced Bias in LLM Leaderboards Can Systematically Overstate Top Model Performance"
 slug: "rank-induced-bias-in-llm-leaderboards-can-systematically-overstate-top-model-performance"
 description: "Public LLM leaderboards guide model evaluation and adoption, yet the reported performance of top-ranked models can be systematically overstated. A new analysis reveals this 'leaderboard winner's..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [LLM, Leaderboards, Benchmarking, MachineLearning, Statistics, AISafety]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Statistics", "Computer Science"]
 author: "Shoubhik Banerjee"

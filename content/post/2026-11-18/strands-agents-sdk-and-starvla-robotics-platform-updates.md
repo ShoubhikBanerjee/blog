@@ -2,7 +2,7 @@
 title: "Strands Agents SDK and StarVLA Robotics Platform Updates"
 slug: "strands-agents-sdk-and-starvla-robotics-platform-updates"
 description: "This update covers two distinct open-source developments: a Python-based SDK for building AI agents with minimal code, and StarVLA, a research platform for vision-language-action models in robotics."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [AIAgents, Robotics, StarVLA, OpenSource, VisionLanguageAction]
 categories: ["AI", "Robotics", "AI Agents", "Open Source Software", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/209155962?v=4"

@@ -2,7 +2,7 @@
 title: "TypeSafe Jev Browser: Fast, Cheap, Headless Automation"
 slug: "typesafe-jev-browser-fast-cheap-headless-automation"
 description: "TypeSafe released a new tool that lets developers drive a real headless browser with minimal cost and effort."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [JevBrowser, HeadlessAutomation, TypeSafe, NodeJS, WebAutomation]
 categories: ["AI", "Web Automation", "Cloud Services", "Browser Automation", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/260253?v=4"

@@ -2,7 +2,7 @@
 title: "Pupavision: AI-powered instrument for fruit fly pupariation monitoring"
 slug: "pupavision-ai-powered-instrument-for-fruit-fly-pupariation-monitoring"
 description: "Pupavision is a low-cost, AI-powered instrument designed to monitor and record pupariation in fruit flies, addressing limitations in biology experiments."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [Pupavision, AIinstrument, fruitfly, biology, AIagents]
 categories: ["AI", "Machine Learning", "AI Agents", "Computer Vision", "Biology"]
 author: "Shoubhik Banerjee"

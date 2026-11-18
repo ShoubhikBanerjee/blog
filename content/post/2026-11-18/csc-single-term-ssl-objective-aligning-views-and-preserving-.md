@@ -2,7 +2,7 @@
 title: "CSC: Single-Term SSL Objective Aligning Views and Preserving Diversity"
 slug: "csc-single-term-ssl-objective-aligning-views-and-preserving-diversity"
 description: "Centroid Spectral Coupling (CSC) is a new single-term self-supervised learning (SSL) objective designed to implicitly couple view alignment, representation diversity, and collapse resistance."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [SelfSupervisedLearning, MachineLearning, ComputerVision, RepresentationLearning]
 categories: ["AI", "Machine Learning", "Computer Vision", "Research", "Representation Learning"]
 author: "Shoubhik Banerjee"

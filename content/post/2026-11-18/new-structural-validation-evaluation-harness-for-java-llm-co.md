@@ -2,7 +2,7 @@
 title: "New Structural-Validation Evaluation Harness for Java LLM Codegen Service"
 slug: "new-structural-validation-evaluation-harness-for-java-llm-codegen-service"
 description: "A new structural-validation evaluation harness has been introduced for a Java LLM codegen service, designed to make A/B changes measurable and provide deterministic metrics instead of relying on demo..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [LLM, Evaluation, CodeGeneration, Java, DevOps, Kubernetes]
 categories: ["AI", "Machine Learning", "Software Engineering", "Cloud Computing", "AI Evaluation"]
 image: "https://avatars.githubusercontent.com/u/181122961?v=4"

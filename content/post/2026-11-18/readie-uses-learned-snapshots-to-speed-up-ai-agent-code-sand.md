@@ -2,7 +2,7 @@
 title: "Readie Uses Learned Snapshots to Speed Up AI Agent Code Sandboxes"
 slug: "readie-uses-learned-snapshots-to-speed-up-ai-agent-code-sandboxes"
 description: "Researchers have introduced Readie, a system that applies learned startup snapshots to reduce latency in code sandboxes used by AI agents for iterative code generation and execution."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [AIagents, codeexecution, sandboxes, latencyoptimization, machinelearningsystems]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Engineering", "Systems"]
 author: "Shoubhik Banerjee"

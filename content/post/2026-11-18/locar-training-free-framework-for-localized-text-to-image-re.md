@@ -2,7 +2,7 @@
 title: "LoCaR: Training-Free Framework for Localized Text-to-Image Retrieval"
 slug: "locar-training-free-framework-for-localized-text-to-image-retrieval"
 description: "LoCaR, a training-free framework for localized text-to-image retrieval, has been introduced. It utilizes frozen vision-language models to construct and utilize independent proposals focusing on..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [LoCaR, TextToImageRetrieval, VisionLanguageModels, ComputerVision]
 categories: ["AI", "Computer Vision", "Machine Learning", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

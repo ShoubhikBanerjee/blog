@@ -2,7 +2,7 @@
 title: "MathEye Transforms LLM Lean Proofs with Angelic Execution"
 slug: "matheye-transforms-llm-lean-proofs-with-angelic-execution"
 description: "Large language models (LLMs) can now generate Lean proof scripts that capture the high-level structure of many mathematical arguments. However, these scripts frequently fail on complex theorems due..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [MathEye, Lean, ProofAssistant, MaxSAT, FormalVerification]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "Software Engineering", "Computer Science"]
 author: "Shoubhik Banerjee"

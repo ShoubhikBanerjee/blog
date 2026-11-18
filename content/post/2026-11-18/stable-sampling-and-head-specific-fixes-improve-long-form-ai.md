@@ -2,7 +2,7 @@
 title: "Stable Sampling and Head-Specific Fixes Improve Long-Form AI Performance"
 slug: "stable-sampling-and-head-specific-fixes-improve-long-form-ai-performance"
 description: "Recent findings indicate that the performance of open-weight language models during long generation depends heavily on the sampling method used, while specific attention heads in sparse models often..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [LargeLanguageModels, Inference, AttentionMechanism, OpenWeights, LongContext]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Inference Optimization", "Model Evaluation"]
 author: "Shoubhik Banerjee"

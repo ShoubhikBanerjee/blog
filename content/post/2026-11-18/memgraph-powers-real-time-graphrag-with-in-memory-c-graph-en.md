@@ -2,7 +2,7 @@
 title: "Memgraph powers real-time GraphRAG with in-memory C++ graph engine and hybrid vector search"
 slug: "memgraph-powers-real-time-graphrag-with-in-memory-c-graph-engine-and-hybrid-vector-search"
 description: "Memgraph is a high-performance, in-memory graph database that powers real-time AI context and graph analytics. Built in C/C++, it serves as the graph engine for GraphRAG pipelines, AI memory systems,..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [GraphRAG, GraphDatabase, AIMemory, Cypher, VectorSearch, GraphAnalytics]
 categories: ["AI", "Graph Databases", "AI Infrastructure", "Real-Time Analytics", "Large Language Models"]
 image: "https://avatars.githubusercontent.com/u/17707542?v=4"

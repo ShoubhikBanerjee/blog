@@ -2,7 +2,7 @@
 title: "Curated List of AI/LLM Code Execution Sandboxes"
 slug: "curated-list-of-ai-llm-code-execution-sandboxes"
 description: "A curated list of code-execution sandboxing solutions for AI/LLM agents has been released. The collection features various runtime environments designed to secure code execution for autonomous agents."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [A, I, A, g, e, n, t, s, L, L, M, s, C, o, d, e, E, x, e, c, u, t, i, o, n, S, a, n, d, b, o, x, i, n, g, S, e, c, u, r, i, t, y]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "A", "I", "A", "g", "e", "n", "t", "s", ",", "C", "y", "b", "e", "r", "s", "e", "c", "u", "r", "i", "t", "y", ",", "S", "o", "f", "t", "w", "a", "r", "e", "E", "n", "g", "i", "n", "e", "e", "r", "i", "n", "g"]
 image: "https://avatars.githubusercontent.com/u/24722?v=4"

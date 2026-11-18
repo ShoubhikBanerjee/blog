@@ -2,7 +2,7 @@
 title: "Lakebase: Managed Postgres for AI and Development"
 slug: "lakebase-managed-postgres-for-ai-and-development"
 description: "Lakebase, a fully managed Postgres solution, enables developers to build applications with ease, as it allows any developer familiar with SQL or ORMs to start immediately. Storage is separated from..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [Lakebase, Postgres, AI, Development, Branching]
 categories: ["AI", "Database Management", "AI Development", "Software Engineering"]
 image: "https://www.databricks.com/sites/default/files/blog_images/branch-sync-serve-what-our-lakebase-hackathon-blog-img-og.png"

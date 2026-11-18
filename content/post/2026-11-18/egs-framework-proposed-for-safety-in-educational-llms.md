@@ -2,7 +2,7 @@
 title: "EGS framework proposed for safety in educational LLMs"
 slug: "egs-framework-proposed-for-safety-in-educational-llms"
 description: "Researchers have introduced the Educational Guardrail System (EGS), a lightweight, model-agnostic runtime framework designed to complement intrinsic alignment in Large Language Models (LLMs) used for..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [LLM, AIEthics, Education, Safety]
 categories: ["AI", "Natural Language Processing", "AI Safety", "Education Technology"]
 author: "Shoubhik Banerjee"

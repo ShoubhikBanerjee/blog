@@ -2,7 +2,7 @@
 title: "GitHub develops Agent Host Protocol to enable continuous multi-device AI sessions"
 slug: "github-develops-agent-host-protocol-to-enable-continuous-multi-device-ai-sessions"
 description: "The newly developed Agent Host Protocol (AHP) is an open standard designed to keep AI agent sessions accessible and continuous across editors, applications, mobile phones, and the cloud. As models..."
-date: 2026-11-18T12:19:35+05:30
+date: 2026-11-18T18:09:03+05:30
 tags: [AHP, GitHubCopilot, AIAgents, VSCode, DeveloperTools]
 categories: ["AI", "AI Agents", "Software Development", "Cloud Computing"]
 image: "https://github.blog/wp-content/uploads/2026/11/agents-everywhere.png"
