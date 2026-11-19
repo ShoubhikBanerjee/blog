@@ -2,7 +2,7 @@
 title: "Radar Doppler Measurement Improves Safety Control for Dynamic Obstacles"
 slug: "radar-doppler-measurement-improves-safety-control-for-dynamic-obstacles"
 description: "Researchers present a radar-native control barrier function that uses FMCW radar Doppler measurements directly as the derivative of a range-based barrier function, reducing estimation delay in safe..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [Radar, ControlBarrierFunctions, Robotics, Safety, FMCW, Doppler]
 categories: ["AI", "Robotics", "Control Systems", "Sensor Fusion", "Safety Engineering"]
 author: "Shoubhik Banerjee"

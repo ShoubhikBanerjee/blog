@@ -2,7 +2,7 @@
 title: "CoScan: Content-Adaptive Scans for Image Restoration"
 slug: "coscan-content-adaptive-scans-for-image-restoration"
 description: "A new method titled CoScan has been submitted to arXiv on November 18, 2026. The research focuses on improving image restoration by addressing the linearization of 2D feature maps for causal..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [C, o, m, p, u, t, e, r, V, i, s, i, o, n, I, m, a, g, e, R, e, s, t, o, r, a, t, i, o, n, S, t, a, t, e, S, p, a, c, e, M, o, d, e, l, s, M, a, m, b, a, C, o, m, p, u, t, e, r, S, c, i, e, n, c, e]
 categories: ["AI", "C", "o", "m", "p", "u", "t", "e", "r", "V", "i", "s", "i", "o", "n", ",", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "P", "a", "t", "t", "e", "r", "n", "R", "e", "c", "o", "g", "n", "i", "t", "i", "o", "n", ",", "A", "r", "t", "i", "f", "i", "c", "i", "a", "l", "I", "n", "t", "e", "l", "l", "i", "g", "e", "n", "c", "e"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Context Engine launches AI skills for semantic code search and memory"
 slug: "context-engine-launches-ai-skills-for-semantic-code-search-and-memory"
 description: "Context Engine has launched a suite of AI agent skills designed to teach coding assistants how to utilize 30+ MCP tools for semantic search, symbol graph navigation, and memory. The tool provides..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [AI, CodingAssistants, MCP, SemanticSearch, DeveloperTools]
 categories: ["AI", "AI Agents", "Developer Tools", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/256224968?v=4"

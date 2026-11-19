@@ -2,7 +2,7 @@
 title: "Google Launches Gemini 4 Neon to Assist with Complex Technical Workflows"
 slug: "google-launches-gemini-4-neon-to-assist-with-complex-technical-workflows"
 description: "Today, Google introduced Gemini 4 Neon, bringing frontier-level intelligence with fast end-to-end task completion across complex software engineering, knowledge work, and science workflows. The model..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [Gemini, GoogleAI, ArtificialIntelligence, LLM, SoftwareEngineering]
 categories: ["AI", "Artificial Intelligence", "Generative AI", "Software Development"]
 image: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini-4-neon__blog-header__sm.width-1300.png"

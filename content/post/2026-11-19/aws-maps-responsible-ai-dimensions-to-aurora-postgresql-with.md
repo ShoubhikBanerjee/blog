@@ -2,7 +2,7 @@
 title: "AWS Maps Responsible AI Dimensions to Aurora PostgreSQL with RAG Chatbot Example"
 slug: "aws-maps-responsible-ai-dimensions-to-aurora-postgresql-with-rag-chatbot-example"
 description: "AWS has published a post mapping its eight Responsible AI dimensions to Amazon Aurora PostgreSQL-Compatible Edition capabilities, implementing the Explainability dimension through a Retrieval..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [AWS, AuroraPostgreSQL, ResponsibleAI, RAG, Bedrock, AuroraML]
 categories: ["AI", "Machine Learning", "Cloud Computing", "AI Ethics", "Database Technology"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-20463-featured-image.png"

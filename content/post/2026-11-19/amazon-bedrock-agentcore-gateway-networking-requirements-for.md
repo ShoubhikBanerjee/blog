@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore Gateway Networking Requirements for Private MCP and REST APIs"
 slug: "amazon-bedrock-agentcore-gateway-networking-requirements-for-private-mcp-and-rest-apis"
 description: "Amazon Bedrock AgentCore Gateway now supports agents that call internal REST APIs and Model Context Protocol (MCP) servers, provided they meet specific network ownership and traffic inspection..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [AmazonBedrock, AgentCore, AI, Networking, MCP]
 categories: ["AI", "AI Agents", "Cloud Networking", "Amazon Web Services", "Model Context Protocol"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22132-featured-image.png"

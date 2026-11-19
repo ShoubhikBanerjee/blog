@@ -2,7 +2,7 @@
 title: "ReLoco Unifies Humanoid Locomotion and Fall Recovery in Single Policy"
 slug: "reloco-unifies-humanoid-locomotion-and-fall-recovery-in-single-policy"
 description: "A new framework called ReLoco enables humanoid robots to walk, run, recover from falls, and resume commanded motion using a single proprioceptive policy without controller switching or on-robot..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [Robotics, Humanoid, Locomotion, FallRecovery, ReinforcementLearning, Sim2Real]
 categories: ["AI", "Robotics", "Machine Learning", "Artificial Intelligence", "Control Systems"]
 author: "Shoubhik Banerjee"

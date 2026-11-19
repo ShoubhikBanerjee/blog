@@ -2,7 +2,7 @@
 title: "OpenClaw Updates Memory Plugin with LanceDB for Persistent AI Context"
 slug: "openclaw-updates-memory-plugin-with-lancedb-for-persistent-ai-context"
 description: "OpenClaw has released an update to its memory plugin, now enhanced with LanceDB for persistent, cross-session memory capabilities."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [O, p, e, n, C, l, a, w, A, I, A, g, e, n, t, s, M, e, m, o, r, y, M, a, n, a, g, e, m, e, n, t, L, a, n, c, e, D, B]
 categories: ["AI", "A", "I", "A", "g", "e", "n", "t", "s", ",", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "V", "e", "c", "t", "o", "r", "D", "a", "t", "a", "b", "a", "s", "e", "s", ",", "S", "o", "f", "t", "w", "a", "r", "e", "D", "e", "v", "e", "l", "o", "p", "m", "e", "n", "t"]
 image: "https://avatars.githubusercontent.com/u/266910790?v=4"

@@ -2,7 +2,7 @@
 title: "Open Interface Lets LLMs Control Computers via Keyboard and Mouse Simulation"
 slug: "open-interface-lets-llms-control-computers-via-keyboard-and-mouse-simulation"
 description: "Open Interface is a tool that enables large language models to operate a computer by simulating keyboard and mouse input while using screenshots to assess progress and course-correct."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [OpenInterface, AIAgents, LLM, Automation, ComputerControl, OpenSource]
 categories: ["AI", "AI Agents", "Automation", "Machine Learning", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/23853621?v=4"

@@ -2,7 +2,7 @@
 title: "Amazon SageMaker AI Adds Full Fine-Tuning Support for Better LLM Performance"
 slug: "amazon-sagemaker-ai-adds-full-fine-tuning-support-for-better-llm-performance"
 description: "Amazon SageMaker AI Serverless Model Customization now supports Full Fine-Tuning (FFT), enabling developers to achieve superior model quality without managing infrastructure for large language model..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [AI, MachineLearning, LLM, FineTuning, SageMaker, AWS]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Cloud Computing", "Natural Language Processing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21644-featured-image.png"

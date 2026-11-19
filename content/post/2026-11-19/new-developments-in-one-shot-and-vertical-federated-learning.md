@@ -2,7 +2,7 @@
 title: "New Developments in One-Shot and Vertical Federated Learning Frameworks"
 slug: "new-developments-in-one-shot-and-vertical-federated-learning-frameworks"
 description: "Federated learning enables collaborative model training without sharing datasets. Recent updates introduce two new frameworks to address existing limitations in multi-round communication and..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [FederatedLearning, AutonomousDriving, MachineLearning, PrivacyPreserving]
 categories: ["AI", "Machine Learning", "Autonomous Vehicles", "AI Infrastructure"]
 author: "Shoubhik Banerjee"

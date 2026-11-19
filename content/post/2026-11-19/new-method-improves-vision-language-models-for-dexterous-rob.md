@@ -2,7 +2,7 @@
 title: "New Method Improves Vision-Language Models for Dexterous Robot Hands"
 slug: "new-method-improves-vision-language-models-for-dexterous-robot-hands"
 description: "Researchers have developed a method to enhance Vision-Language-Action (VLA) models for dexterous robotic manipulation, addressing a key limitation: most datasets use parallel-jaw grippers, making..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [robotics, AIforrobotics, visionlanguageaction, dexterousmanipulation, reinforcementlearning, tactilesensing]
 categories: ["AI", "Computer Science", "Robotics", "Artificial Intelligence", "Machine Learning"]
 author: "Shoubhik Banerjee"

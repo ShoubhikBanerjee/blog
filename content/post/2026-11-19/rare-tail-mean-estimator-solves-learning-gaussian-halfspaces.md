@@ -2,7 +2,7 @@
 title: "Rare-tail mean estimator solves learning Gaussian halfspaces with label noise"
 slug: "rare-tail-mean-estimator-solves-learning-gaussian-halfspaces-with-label-noise"
 description: "Researchers have revisited the classical problem of learning general Gaussian halfspaces in the presence of label noise, specifically focusing on the large-bias regime where information-computation..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [GaussianHalfspaces, LabelNoise, StatisticalLearning, MachineLearning]
 categories: ["AI", "Machine Learning", "Statistical Learning", "Algorithm Analysis"]
 author: "Shoubhik Banerjee"

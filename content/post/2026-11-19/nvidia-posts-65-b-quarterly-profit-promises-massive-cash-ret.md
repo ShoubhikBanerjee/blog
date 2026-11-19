@@ -2,7 +2,7 @@
 title: "Nvidia Posts $65 B Quarterly Profit, Promises Massive Cash Returns After CEO Exit"
 slug: "nvidia-posts-65-b-quarterly-profit-promises-massive-cash-returns-after-ceo-exit"
 description: "Nvidia reported a record‑breaking quarter of profit and cash flow, and interim CEO Colette Kress announced plans to return all excess free cash flow to shareholders following co‑founder Jensen..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [Nvidia, AI, Finance, Semiconductors]
 categories: ["AI", "Semiconductors", "Artificial Intelligence", "Financial Markets", "Corporate Governance"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/nvidia-leaves-rival-chipmakers-in-the-dust.png?quality=90&strip=all&crop=0%2C5.9688214860629%2C100%2C70.971495055265&w=1200"

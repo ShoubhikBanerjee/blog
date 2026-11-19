@@ -2,7 +2,7 @@
 title: "New Paper Proves Polynomial-Time Sparse Recovery with Diffusion Priors"
 slug: "new-paper-proves-polynomial-time-sparse-recovery-with-diffusion-priors"
 description: "A new paper addresses the limited theoretical understanding of using pretrained diffusion models as priors for ill-posed inverse problems. The authors provide a theoretical foundation for..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [DiffusionModels, CompressedSensing, InverseProblems, TheoreticalCS, MachineLearning]
 categories: ["AI", "Machine Learning", "Computer Vision", "Statistical Computing", "Signal Processing"]
 author: "Shoubhik Banerjee"

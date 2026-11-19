@@ -2,7 +2,7 @@
 title: "Algebraic Characterization of Two-Block Shallow ReLU Pattern Varieties"
 slug: "algebraic-characterization-of-two-block-shallow-relu-pattern-varieties"
 description: "A complete algebraic characterization of two-block shallow ReLU pattern varieties has been submitted on 18 Nov 2026."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [ReLU, NeuralNetworks, Mathematics, MachineLearning, Research]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Research"]
 author: "Shoubhik Banerjee"

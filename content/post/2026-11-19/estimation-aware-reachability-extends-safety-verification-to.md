@@ -2,7 +2,7 @@
 title: "Estimation-Aware Reachability Extends Safety Verification to Noisy Robot Estimates"
 slug: "estimation-aware-reachability-extends-safety-verification-to-noisy-robot-estimates"
 description: "A new paper titled 'Estimation-Aware Reachability' extends Hamilton-Jacobi Reachability to account for the noisy estimates used by real robots."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [H, a, m, i, l, t, o, n, J, a, c, o, b, i, R, o, b, o, t, i, c, s, S, a, f, e, t, y, V, e, r, i, f, i, c, a, t, i, o, n, U, n, c, e, r, t, a, i, n, t, y, E, s, t, i, m, a, t, i, o, n]
 categories: ["AI", "R", "o", "b", "o", "t", "i", "c", "s", ",", "C", "o", "n", "t", "r", "o", "l", "S", "y", "s", "t", "e", "m", "s", ",", "A", "r", "t", "i", "f", "i", "c", "i", "a", "l", "I", "n", "t", "e", "l", "l", "i", "g", "e", "n", "c", "e", ",", "C", "o", "m", "p", "u", "t", "a", "t", "i", "o", "n", "a", "l", "M", "a", "t", "h", "e", "m", "a", "t", "i", "c", "s"]
 author: "Shoubhik Banerjee"

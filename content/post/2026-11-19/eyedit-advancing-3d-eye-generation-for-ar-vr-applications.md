@@ -2,7 +2,7 @@
 title: "EyeDiT: Advancing 3D Eye Generation for AR/VR Applications"
 slug: "eyedit-advancing-3d-eye-generation-for-ar-vr-applications"
 description: "Synthetic eye data are critical for rapid development of eye tracking (ET) in AR/VR applications. However, existing synthetic eye generators are largely image-centric and lack a high-quality..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [EyeTracking, ARVR, SyntheticData, 3DEyeGeneration]
 categories: ["AI", "Computer Vision", "Artificial Intelligence", "Augmented Reality", "Virtual Reality"]
 author: "Shoubhik Banerjee"

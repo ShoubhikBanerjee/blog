@@ -2,7 +2,7 @@
 title: "AI pipeline digitizes PXRD figures for COF research"
 slug: "ai-pipeline-digitizes-pxrd-figures-for-cof-research"
 description: "A new pipeline combines vision LLMs and classical CV to digitize powder X-ray diffraction figures from COF articles, enabling reusable experimental data."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [AI, ComputerVision, MaterialsScience, COFs, PXRD]
 categories: ["AI", "Artificial Intelligence", "Computer Vision", "Materials Science"]
 author: "Shoubhik Banerjee"

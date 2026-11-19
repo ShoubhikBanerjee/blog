@@ -2,7 +2,7 @@
 title: "RadixArk Releases DaisyRose-27B Model With RL Training on Long-Horizon Agent Tasks"
 slug: "radixark-releases-daisyrose-27b-model-with-rl-training-on-long-horizon-agent-tasks"
 description: "RadixArk has released DaisyRose-27B, its first model, built on Qwen3.8-27B and trained with reinforcement learning using the Miles framework. The model was trained on 1,200 curated long-horizon agent..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [RadixArk, DaisyRose, ReinforcementLearning, AIAgents, OpenSource, LLM]
 categories: ["AI", "Machine Learning", "AI Agents", "Large Language Models", "Reinforcement Learning"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6aeabf9f2efd990530425e58/faP4Su889q_DIgN3wmU9M.png"

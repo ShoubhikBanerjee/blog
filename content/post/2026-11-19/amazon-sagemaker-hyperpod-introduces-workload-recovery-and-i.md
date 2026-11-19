@@ -2,7 +2,7 @@
 title: "Amazon SageMaker HyperPod Introduces Workload Recovery and Infrastructure Checks"
 slug: "amazon-sagemaker-hyperpod-introduces-workload-recovery-and-infrastructure-checks"
 description: "Today, Amazon SageMaker HyperPod introduces workload recovery and infrastructure checks. These features catch failures sooner and raise the goodput of training workloads."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [SageMakerHyperPod, MachineLearning, GPUComputing, Kubernetes, AWSInfrastructure]
 categories: ["AI", "Machine Learning", "Cloud Infrastructure", "GPU Computing", "Kubernetes"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22383-featured-image.png"

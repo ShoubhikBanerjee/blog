@@ -2,7 +2,7 @@
 title: "Study Reveals Reward Gain Imbalance Affects Ranking Accuracy in Rubric‑Based RL"
 slug: "study-reveals-reward-gain-imbalance-affects-ranking-accuracy-in-rubricbased-rl"
 description: "Rubric‑based reinforcement learning builds rewards for aligning large language models with human preferences by equally aggregating continuous scores that judges assign to individual criteria. New..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [RLHF, RewardEngineering, RankingAccuracy]
 categories: ["AI", "Machine Learning", "Reinforcement Learning", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

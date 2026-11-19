@@ -2,7 +2,7 @@
 title: "Bayesian Structured-Sparsity Method Recovers Compact CNN Architectures"
 slug: "bayesian-structured-sparsity-method-recovers-compact-cnn-architectures"
 description: "Researchers have introduced SoU-RHS, a Bayesian structured-sparsity procedure designed to recover compact convolutional neural network architectures from overparameterized reference models. The..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [Bayesian, StructuredSparsity, CNN, ArchitectureRecovery, ImageClassification, MachineLearning]
 categories: ["AI", "Machine Learning", "Computer Vision", "Neural Network Compression", "Bayesian Methods"]
 author: "Shoubhik Banerjee"

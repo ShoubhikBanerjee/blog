@@ -2,7 +2,7 @@
 title: "MimirQ Releases Version 1.0.1 to Improve Enterprise Knowledge Base Error Localization and Quality"
 slug: "mimirq-releases-version-1-0-1-to-improve-enterprise-knowledge-base-error-localization-and-quality"
 description: "MimirQ, an enterprise knowledge base solution originating from real-world government knowledge base deliveries, has released its latest stable version, v1.0.1. The project focuses on addressing the..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [MimirQ, RAG, EnterpriseKnowledge, AIv101]
 categories: ["AI", "Machine Learning", "Software Development", "Information Retrieval"]
 image: "https://avatars.githubusercontent.com/u/103022245?v=4"

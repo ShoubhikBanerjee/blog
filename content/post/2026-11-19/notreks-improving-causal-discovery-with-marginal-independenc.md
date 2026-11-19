@@ -2,7 +2,7 @@
 title: "NOTREKS: Improving Causal Discovery with Marginal Independence"
 slug: "notreks-improving-causal-discovery-with-marginal-independence"
 description: "A new method for causal discovery, NOTREKS, has been introduced. It incorporates prior knowledge of marginally independent pairs of variables into score-based structure learning."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [CausalDiscovery, MachineLearning, Statistics, NOTREKS]
 categories: ["AI", "Machine Learning", "Statistics", "Causal Discovery"]
 author: "Shoubhik Banerjee"

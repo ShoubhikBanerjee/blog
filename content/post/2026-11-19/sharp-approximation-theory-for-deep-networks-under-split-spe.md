@@ -2,7 +2,7 @@
 title: "Sharp approximation theory for deep networks under split spectral norm constraints"
 slug: "sharp-approximation-theory-for-deep-networks-under-split-spectral-norm-constraints"
 description: "Researchers have established a sharp approximation theory for deep ReLU networks operating under a split spectral norm product constraint, addressing limitations in existing statistical estimation..."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [DeepLearning, StatisticalLearning, RobustAI, NeuralNetworks, ApproximationTheory]
 categories: ["AI", "Machine Learning", "Statistical Theory", "Deep Learning", "Robustness"]
 author: "Shoubhik Banerjee"

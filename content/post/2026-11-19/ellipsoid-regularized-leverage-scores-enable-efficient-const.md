@@ -2,7 +2,7 @@
 title: "Ellipsoid-Regularized Leverage Scores Enable Efficient Constrained Linear Regression"
 slug: "ellipsoid-regularized-leverage-scores-enable-efficient-constrained-linear-regression"
 description: "A new paper introduces ellipsoid‑regularized leverage scores for active learning in constrained linear regression, achieving lower query complexity while respecting constraint geometry."
-date: 2026-11-19T12:23:35+05:30
+date: 2026-11-19T18:06:46+05:30
 tags: [activelearning, linearregression, leverageScores, optimization]
 categories: ["AI", "Machine Learning", "Algorithms", "Optimization", "Scientific Computing"]
 author: "Shoubhik Banerjee"
