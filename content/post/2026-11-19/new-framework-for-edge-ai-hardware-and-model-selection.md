@@ -2,7 +2,7 @@
 title: "New Framework for Edge AI Hardware and Model Selection"
 slug: "new-framework-for-edge-ai-hardware-and-model-selection"
 description: "The rapid growth of deep learning has driven the deployment of computer vision directly on resource-constrained edge devices. However, the extreme heterogeneity of edge hardware architectures poses..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [E, d, g, e, A, I, C, o, m, p, u, t, e, r, V, i, s, i, o, n, D, e, e, p, L, e, a, r, n, i, n, g, H, a, r, d, w, a, r, e, M, o, d, e, l, O, p, t, i, m, i, z, a, t, i, o, n]
 categories: ["AI", "C", "o", "m", "p", "u", "t", "e", "r", "V", "i", "s", "i", "o", "n", ",", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "H", "a", "r", "d", "w", "a", "r", "e", "A", "r", "c", "h", "i", "t", "e", "c", "t", "u", "r", "e", ",", "E", "d", "g", "e", "C", "o", "m", "p", "u", "t", "i", "n", "g"]
 author: "Shoubhik Banerjee"

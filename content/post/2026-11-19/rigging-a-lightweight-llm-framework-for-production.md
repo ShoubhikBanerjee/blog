@@ -2,7 +2,7 @@
 title: "Rigging: A Lightweight LLM Framework for Production"
 slug: "rigging-a-lightweight-llm-framework-for-production"
 description: "Rigging is a lightweight LLM framework designed to simplify the use of language models in production code. It integrates with various models and offers features like structured Pydantic models,..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [LLMFramework, ProductionAI, LanguageModels, Rigging, AITools]
 categories: ["AI", "Machine Learning", "AI Tools", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/350839?v=4"

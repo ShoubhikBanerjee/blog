@@ -2,7 +2,7 @@
 title: "NVIDIA Releases Cosmos3-Edge and Cosmos Data Factory for Physical AI Development"
 slug: "nvidia-releases-cosmos3-edge-and-cosmos-data-factory-for-physical-ai-development"
 description: "NVIDIA has released Cosmos3-Edge, a 4B parameter model tier optimized for on-device, real-time deployment on Jetson AGX Orin, Thor, and RTX Pro 6000. This follows the release of Cosmos 3, an open..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [NVIDIA, Cosmos, PhysicalAI, SyntheticData, Robotics]
 categories: ["AI", "Artificial Intelligence", "Computer Vision", "Machine Learning"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/cosmos-gif.gif"

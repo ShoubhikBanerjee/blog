@@ -2,7 +2,7 @@
 title: "Global Bank Evaluates Ten Agentic AI Platforms for Financial Services Workloads"
 slug: "global-bank-evaluates-ten-agentic-ai-platforms-for-financial-services-workloads"
 description: "An industrial evaluation programme run by the innovation laboratory of a global bank has assessed ten agentic AI platforms across three financial-services workloads. This 'bakeoff' evaluated systems..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [AIAgents, EnterpriseAI, FinTech, LLMOps]
 categories: ["AI", "AI Agents", "Enterprise AI", "Machine Learning"]
 author: "Shoubhik Banerjee"

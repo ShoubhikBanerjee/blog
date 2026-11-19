@@ -2,7 +2,7 @@
 title: "Cloudflare Updates Clairic Extraction Model and Introduces Lighter Clairic-flash Variant"
 slug: "cloudflare-updates-clairic-extraction-model-and-introduces-lighter-clairic-flash-variant"
 description: "Cloudflare's Workers AI superintelligence team has announced a major update to Clairic, its frontier AI extraction model, alongside the release of a lighter, faster 9-billion-parameter model called..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [Cloudflare, WorkersAI, Clairic, LLM, DataExtraction]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Natural Language Processing", "Computer Vision"]
 image: "https://blog.cloudflare.com/_emdash/api/media/file/01M7R8FT40SDKKF94QYB97GJJT.01M7R8FTRTG1FSS3A675QSEWY2.png"

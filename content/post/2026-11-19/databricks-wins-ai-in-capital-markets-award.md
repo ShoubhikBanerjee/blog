@@ -2,7 +2,7 @@
 title: "Databricks Wins AI in Capital Markets Award"
 slug: "databricks-wins-ai-in-capital-markets-award"
 description: "Databricks has won the Best AI Solution for Data Intelligence & Governance award at the 2nd annual AI in Capital Markets Awards 2026. Selected by the industry community, this is Databricks' first..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [Databricks, CapitalMarkets, AIGovernance, DataPlatform, FinTech]
 categories: ["AI", "Data Engineering", "AI Governance", "Financial Services", "Enterprise Infrastructure"]
 image: "https://www.databricks.com/sites/default/files/2026-10/Databricks_AICM26_social.png"

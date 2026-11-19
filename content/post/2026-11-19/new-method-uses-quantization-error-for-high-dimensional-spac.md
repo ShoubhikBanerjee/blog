@@ -2,7 +2,7 @@
 title: "New Method Uses Quantization Error for High-Dimensional Space-Filling Designs"
 slug: "new-method-uses-quantization-error-for-high-dimensional-space-filling-designs"
 description: "Researchers propose a new approach to space-filling design in computer experiments that replaces traditional maximin and minimax criteria with quantization error of the uniform measure on a..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [SpaceFillingDesign, QuantizationError, HighDimensions, ComputerExperiments, OptimalQuantizers]
 categories: ["AI", "Machine Learning", "Statistics", "Experimental Design", "High-Dimensional Data"]
 author: "Shoubhik Banerjee"

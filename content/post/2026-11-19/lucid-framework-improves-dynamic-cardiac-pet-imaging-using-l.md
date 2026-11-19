@@ -2,7 +2,7 @@
 title: "LUCID Framework Improves Dynamic Cardiac PET Imaging Using Large-Scale CT Data"
 slug: "lucid-framework-improves-dynamic-cardiac-pet-imaging-using-large-scale-ct-data"
 description: "Researchers have introduced LUCID, a framework designed to synthesize $μ$-maps for dynamic cardiac $^{82}$Rb PET imaging by leveraging anatomical priors from a large-scale CT dataset."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [D, i, f, f, u, s, i, o, n, M, o, d, e, l, s, M, e, d, i, c, a, l, I, m, a, g, i, n, g, P, E, T, C, T, C, o, m, p, u, t, e, r, V, i, s, i, o, n, D, e, e, p, L, e, a, r, n, i, n, g]
 categories: ["AI", "C", "o", "m", "p", "u", "t", "e", "r", "V", "i", "s", "i", "o", "n", ",", "D", "e", "e", "p", "L", "e", "a", "r", "n", "i", "n", "g", ",", "M", "e", "d", "i", "c", "a", "l", "I", "m", "a", "g", "i", "n", "g", ",", "D", "i", "f", "f", "u", "s", "i", "o", "n", "M", "o", "d", "e", "l", "s"]
 author: "Shoubhik Banerjee"

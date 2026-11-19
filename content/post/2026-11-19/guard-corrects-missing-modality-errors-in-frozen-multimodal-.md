@@ -2,7 +2,7 @@
 title: "GUARD Corrects Missing-Modality Errors in Frozen Multimodal Predictors"
 slug: "guard-corrects-missing-modality-errors-in-frozen-multimodal-predictors"
 description: "A new method called GUARD addresses the problem of deployed multimodal predictors encountering missing modalities after their weights are frozen, providing a way to correct errors without changing..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [MultimodalLearning, ConformalPrediction, ModelDeployment, BayesRisk, MachineLearning]
 categories: ["AI", "Machine Learning", "Multimodal Learning", "Statistical Learning Theory", "Model Deployment"]
 author: "Shoubhik Banerjee"

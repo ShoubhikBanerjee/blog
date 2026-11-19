@@ -2,7 +2,7 @@
 title: "GeoLibre Releases Pure-Rust Geospatial Toolkit Compiled to WebAssembly"
 slug: "geolibre-releases-pure-rust-geospatial-toolkit-compiled-to-webassembly"
 description: "GeoLibre has released a new pure-Rust geospatial toolkit compiled to WebAssembly, enabling client-side geospatial processing without requiring servers, native installations, or GDAL dependencies. The..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [GeoLibre, WebAssembly, Geospatial, Rust, GIS, SpatialAnalysis]
 categories: ["AI", "Geospatial", "Open Source", "Web Development", "Data Processing"]
 image: "https://avatars.githubusercontent.com/u/129896036?v=4"

@@ -2,7 +2,7 @@
 title: "TRESS forecasting model retains timestamped recent events for efficient predictions"
 slug: "tress-forecasting-model-retains-timestamped-recent-events-for-efficient-predictions"
 description: "A new forecasting model called TRESS (Timestamped Recent Events and Statistical Summaries) addresses the challenge that a fixed number of recent observations may span minutes for one variable and..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [Forecasting, MachineLearning, TimeSeries, DeepLearning, Efficiency]
 categories: ["AI", "Time Series Analysis", "Forecasting", "Machine Learning", "Model Architecture"]
 author: "Shoubhik Banerjee"

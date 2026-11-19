@@ -2,7 +2,7 @@
 title: "RoboDx Benchmark Evaluates AI Repair of Robot Navigation Software"
 slug: "robodx-benchmark-evaluates-ai-repair-of-robot-navigation-software"
 description: "Researchers have introduced RoboDx, a benchmark for evaluating how well AI models can diagnose and repair faults in simulated robot navigation software. The benchmark reveals that passing unit tests..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [RoboDx, RobotNavigation, AIBenchmark, SoftwareRepair, ClaudeOpus, DiagnosticAI]
 categories: ["AI", "Machine Learning", "Robotics", "Software Engineering", "AI Evaluation"]
 author: "Shoubhik Banerjee"

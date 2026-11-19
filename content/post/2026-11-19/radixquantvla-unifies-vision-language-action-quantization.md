@@ -2,7 +2,7 @@
 title: "RadixQuantVLA Unifies Vision‑Language‑Action Quantization"
 slug: "radixquantvla-unifies-visionlanguageaction-quantization"
 description: "RadixQuantVLA, an active‑development framework, unifies post‑training quantization, benchmarking, and deployment preparation for Vision‑Language‑Action (VLA) models."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [VLA, Quantization, RobotControl, OpenSource, VisionLanguage]
 categories: ["AI", "Machine Learning", "Robotics", "Computer Vision"]
 image: "https://avatars.githubusercontent.com/u/318179622?v=4"

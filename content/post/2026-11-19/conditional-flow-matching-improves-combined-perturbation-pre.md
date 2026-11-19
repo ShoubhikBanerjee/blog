@@ -2,7 +2,7 @@
 title: "Conditional Flow-Matching Improves Combined Perturbation Predictions"
 slug: "conditional-flow-matching-improves-combined-perturbation-predictions"
 description: "Researchers introduced a conditional flow‑matching model that improves prediction of transcriptional responses to combined genetic and chemical perturbations by weighting uncertain single‑gene effect..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [FlowMatching, Genomics, Perturbation, MachineLearning, DataScience]
 categories: ["AI", "Machine Learning", "Genomics", "Computational Biology"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Using Amazon Bedrock CloudWatch metrics and evals for LLM observability"
 slug: "using-amazon-bedrock-cloudwatch-metrics-and-evals-for-llm-observability"
 description: "Airbnb uses Amazon Bedrock to run its internal coding agent tool, AirChat, and has developed a specific observability workflow that combines AWS CloudWatch metrics with custom evaluations. This..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [AmazonBedrock, CloudWatch, LLMObservability, Airbnb, AIEngineering]
 categories: ["AI", "Machine Learning", "Cloud Infrastructure", "AI Agents", "DevOps"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22452-featured-image.png"

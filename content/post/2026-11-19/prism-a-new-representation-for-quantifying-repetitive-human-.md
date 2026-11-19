@@ -2,7 +2,7 @@
 title: "PRISM: A New Representation for Quantifying Repetitive Human Movement"
 slug: "prism-a-new-representation-for-quantifying-repetitive-human-movement"
 description: "Researchers have introduced PRISM, a novel AI-derived representation designed to characterize repetitive human movement through tracked masks and dense optical flow, addressing limitations of..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: []
 categories: ["AI", "Machine Learning", "Computer Vision", "AI Research"]
 author: "Shoubhik Banerjee"

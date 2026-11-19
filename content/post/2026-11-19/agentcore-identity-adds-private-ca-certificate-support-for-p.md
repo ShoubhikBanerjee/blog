@@ -2,7 +2,7 @@
 title: "AgentCore Identity Adds Private CA Certificate Support for Private Identity Providers"
 slug: "agentcore-identity-adds-private-ca-certificate-support-for-private-identity-providers"
 description: "AWS has added private certificate authority (CA) certificate support to AgentCore Identity, enabling agents to authenticate with private identity providers (IdPs) using custom CA certificates stored..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: []
 categories: ["AI"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22407-featured-image.png"

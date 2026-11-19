@@ -2,7 +2,7 @@
 title: "Social Department Introduces QuickSearch for Entertainment Marketing"
 slug: "social-department-introduces-quicksearch-for-entertainment-marketing"
 description: "Social Department, the AI operating system for entertainment marketing, set out to encode editorial questions as executable retrieval pipelines, resulting in QuickSearch, a set of single-action..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [ArtificialIntelligence, AmazonBedrock, Entertainment, MachineLearning, AWS]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21816-featured-image.png"

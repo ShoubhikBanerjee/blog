@@ -2,7 +2,7 @@
 title: "QDA Automates Quantization Recipe Design for Large Language Models"
 slug: "qda-automates-quantization-recipe-design-for-large-language-models"
 description: "Researchers have introduced QDA, a system that uses an LLM agent to automatically design post-training quantization recipes for large language models, reducing the need for manual expert tuning."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [Quantization, LLM, AIAgents, ModelCompression, PostTrainingQuantization]
 categories: ["AI", "Machine Learning", "AI Agents", "Model Optimization", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

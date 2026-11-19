@@ -2,7 +2,7 @@
 title: "Two frameworks advance zero-shot robot navigation capabilities"
 slug: "two-frameworks-advance-zero-shot-robot-navigation-capabilities"
 description: "Recent research introduces two distinct frameworks addressing key challenges in zero-shot robot navigation: RPSI-Nav for recursive policy self-improvement in multi-object search, and ROMUX for..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [robotics, navigation, zeroshot, embodiedai, computervision, selfimprovement]
 categories: ["AI", "Robotics", "Machine Learning", "Computer Vision", "AI Agents"]
 author: "Shoubhik Banerjee"

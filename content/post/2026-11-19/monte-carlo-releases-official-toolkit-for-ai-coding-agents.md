@@ -2,7 +2,7 @@
 title: "Monte Carlo releases official toolkit for AI coding agents"
 slug: "monte-carlo-releases-official-toolkit-for-ai-coding-agents"
 description: "Monte Carlo has released an official toolkit designed for AI coding agents. The toolkit bundles skills and plugins that bring data observability directly into development workflows, supporting..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [MonteCarlo, AIagents, DataObservability, ClaudeCode, DataEngineering]
 categories: ["AI", "Data Engineering", "AI Agents", "Developer Tools", "Observability"]
 image: "https://avatars.githubusercontent.com/u/51944801?v=4"

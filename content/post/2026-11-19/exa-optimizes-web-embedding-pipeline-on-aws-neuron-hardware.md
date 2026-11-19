@@ -2,7 +2,7 @@
 title: "Exa Optimizes Web Embedding Pipeline on AWS Neuron Hardware"
 slug: "exa-optimizes-web-embedding-pipeline-on-aws-neuron-hardware"
 description: "Exa is updating its web‑index embedding infrastructure to run more cheaply and flexibly on AWS Inferentia2 and Trainium2 hardware."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [Exa, AWSNeuron, EmbeddingOptimization, VectorDB]
 categories: ["AI", "Machine Learning", "Infrastructure", "Cloud Computing", "Search Engines"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-featured-image-1.png"

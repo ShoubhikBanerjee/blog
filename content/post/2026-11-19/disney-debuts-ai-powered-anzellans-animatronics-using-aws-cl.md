@@ -2,7 +2,7 @@
 title: "Disney Debuts AI-Powered Anzellans Animatronics Using AWS Cloud"
 slug: "disney-debuts-ai-powered-anzellans-animatronics-using-aws-cloud"
 description: "Walt Disney Imagineering R&D has unveiled three new Audio-Animatronic prototypes that use Amazon’s AWS cloud and AI to enable real-time responses to guest interactions, marking a significant..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [AI, Disney, AWS, Robotics, Animatronics, StarWars]
 categories: ["AI", "Artificial Intelligence", "Robotics", "Entertainment Technology", "Cloud Computing"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/disney1.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

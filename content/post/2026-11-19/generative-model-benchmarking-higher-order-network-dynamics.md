@@ -2,7 +2,7 @@
 title: "Generative Model Benchmarking Higher-Order Network Dynamics"
 slug: "generative-model-benchmarking-higher-order-network-dynamics"
 description: "A new generative model for stochastic network dynamics introduces user‑specified pairwise and higher‑order interactions, enabling controlled benchmarks for information‑theoretic measures."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [GenerativeModel, NetworkDynamics, InformationTheory, HigherOrderInteractions, Benchmarking]
 categories: ["AI", "Machine Learning", "Data Science", "Network Analysis", "Statistical Modeling"]
 author: "Shoubhik Banerjee"

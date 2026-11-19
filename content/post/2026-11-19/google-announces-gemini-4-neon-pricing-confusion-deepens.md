@@ -2,7 +2,7 @@
 title: "Google Announces Gemini 4 Neon – Pricing Confusion Deepens"
 slug: "google-announces-gemini-4-neon-pricing-confusion-deepens"
 description: "Today Google introduced Gemini 4 Neon."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [Google, Gemini, AI, Pricing, Neon]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Technology"]
 image: "https://static.simonwillison.net/static/2026/gemini-grid-updated.webp"

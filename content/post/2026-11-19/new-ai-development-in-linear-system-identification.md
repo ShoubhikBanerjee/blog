@@ -2,7 +2,7 @@
 title: "New AI development in linear system identification"
 slug: "new-ai-development-in-linear-system-identification"
 description: "A new approach to kernel-based regularization for linear system identification has been introduced, focusing on stability-compatible kernels and non-Gaussian priors."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [AI, MachineLearning, SystemIdentification, KernelMethods, Stability]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Data Science", "Signal Processing"]
 author: "Shoubhik Banerjee"

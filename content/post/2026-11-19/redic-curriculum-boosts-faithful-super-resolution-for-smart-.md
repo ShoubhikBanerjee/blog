@@ -2,7 +2,7 @@
 title: "ReDiC Curriculum Boosts Faithful Super-Resolution for Smart‑Glasses Images"
 slug: "redic-curriculum-boosts-faithful-super-resolution-for-smartglasses-images"
 description: "Smart‑glasses captures often suffer degradations that hide small text and fine details needed by vision‑language models. A new training curriculum, ReDiC, improves super‑resolution (SR) fidelity..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [SuperResolution, SmartGlasses, ComputerVision, CurriculumLearning]
 categories: ["AI", "Computer Vision", "Machine Learning", "Imaging Technology"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "LightSEAD: Lightweight SE(3)-Aware Keypoint Detector Introduced"
 slug: "lightsead-lightweight-se-3-aware-keypoint-detector-introduced"
 description: "The pursuit of improved performance in deep learning has often been accompanied by increasing architectural complexity and computational demands."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [LightSEAD, KeypointDetection, ComputerVision]
 categories: ["AI", "Computer Vision", "Machine Learning", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "PIBT*_T Enables Fast Turn‑Aware Path Planning for Hundreds of Mobile Robots"
 slug: "pibt-t-enables-fast-turnaware-path-planning-for-hundreds-of-mobile-robots"
 description: "A new algorithm, PIBT*_T, accelerates multi‑agent path planning by handling turn actions explicitly."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [MultiAgentPathFinding, Robotics, PriorityInheritance, TurtleBot, ADG]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Multi-Agent Systems", "Path Planning"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Kernel-Enforced Sandbox Released for AI Coding Agents"
 slug: "kernel-enforced-sandbox-released-for-ai-coding-agents"
 description: "An update has been released regarding cplt, a kernel-enforced sandbox designed for AI coding agents to prevent credential theft, unauthorized pushes to main, PR merges, and secret exfiltration."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [AI, Security, DeveloperTools, AIAgents, Linux]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Security"]
 image: "https://avatars.githubusercontent.com/u/11848947?v=4"

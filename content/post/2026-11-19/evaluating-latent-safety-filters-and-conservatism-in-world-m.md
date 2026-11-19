@@ -2,7 +2,7 @@
 title: "Evaluating Latent Safety Filters and Conservatism in World Models"
 slug: "evaluating-latent-safety-filters-and-conservatism-in-world-models"
 description: "A new approach uses a latent safety filter based on a world model's latent to decide whether a planned action is safe, utilizing conformal calibration to set thresholds."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [ArtificialIntelligence, MachineLearning, WorldModels, SafetyFilters]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Safety"]
 author: "Shoubhik Banerjee"

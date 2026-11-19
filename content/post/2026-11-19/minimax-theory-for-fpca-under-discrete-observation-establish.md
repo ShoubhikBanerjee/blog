@@ -2,7 +2,7 @@
 title: "Minimax Theory for FPCA Under Discrete Observation Established"
 slug: "minimax-theory-for-fpca-under-discrete-observation-established"
 description: "Researchers have established new minimax optimal rates for Functional Principal Component Analysis (FPCA) under discrete observation, resolving a theoretical gap that had remained open for over two..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [FPCA, StatisticalTheory, FunctionalDataAnalysis, MinimaxRates, SpectralEstimation]
 categories: ["AI", "Statistics", "Mathematics", "Data Science", "Machine Learning"]
 author: "Shoubhik Banerjee"

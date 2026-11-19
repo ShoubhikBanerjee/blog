@@ -2,7 +2,7 @@
 title: "Gradient Averaging Restores Statistical Efficiency in Newton Sketch Methods"
 slug: "gradient-averaging-restores-statistical-efficiency-in-newton-sketch-methods"
 description: "Gradient averaging restores statistical efficiency in online sketched Newton methods without extra computational cost."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [GradientAveraging, NewtonSketch, StatisticalEfficiency]
 categories: ["AI", "Machine Learning", "Optimization", "Statistical Inference"]
 author: "Shoubhik Banerjee"

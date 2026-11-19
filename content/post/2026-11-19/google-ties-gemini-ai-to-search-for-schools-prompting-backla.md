@@ -2,7 +2,7 @@
 title: "Google ties Gemini AI to Search for schools, prompting backlash from officials"
 slug: "google-ties-gemini-ai-to-search-for-schools-prompting-backlash-from-officials"
 description: "Google announced that starting next year, schools will not be able to disable Gemini-powered AI features without also losing access to Google Search, a change that has drawn sharp criticism from..."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [Google, AI, Education, Search, Gemini, Policy]
 categories: ["AI", "Artificial Intelligence", "Education Technology", "Search Technology", "Tech Policy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/01/STK255_Google_Gemini_D.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

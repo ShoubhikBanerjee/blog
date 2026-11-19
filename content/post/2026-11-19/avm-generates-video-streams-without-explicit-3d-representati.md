@@ -2,7 +2,7 @@
 title: "AVM Generates Video Streams Without Explicit 3D Representations"
 slug: "avm-generates-video-streams-without-explicit-3d-representations"
 description: "Researchers have presented the Autoregressive View Model (AVM), a framework that generates scenes as a stream of views without constructing an explicit 3D representation."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [ComputerVision, VideoGeneration, DiffusionModels, AIResearch, GenerativeAI]
 categories: ["AI", "Computer Vision", "Generative AI", "Machine Learning", "Video Processing"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "New Robotic Manipulation Methods: RePlan-VLA, LAGR, and GTI"
 slug: "new-robotic-manipulation-methods-replan-vla-lagr-and-gti"
 description: "Three new approaches address distinct challenges in robotic manipulation: managing long-horizon task execution, selecting task-oriented grasps, and maintaining semantic intent over multiple stages...."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [Robotics, VLA, Manipulation, Grasping, AI]
 categories: ["AI", "Robotics", "Machine Learning", "Computer Vision", "Embodied AI"]
 author: "Shoubhik Banerjee"

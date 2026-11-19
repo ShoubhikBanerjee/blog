@@ -2,7 +2,7 @@
 title: "Hermes Memory UI Released for Agent Inspection"
 slug: "hermes-memory-ui-released-for-agent-inspection"
 description: "The Read-only Hermes Agent plugin has been introduced for inspecting memory in the Hermes Dashboard and Hermes Desktop, providing a unified Python backend API alongside separate delivery artifacts."
-date: 2026-11-19T18:06:46+05:30
+date: 2026-11-19T22:12:49+05:30
 tags: [HermesAgent, AIPlugins, MemoryManagement, DeveloperTools]
 categories: ["AI", "AI Agents", "Developer Tools", "Software Updates"]
 image: "https://avatars.githubusercontent.com/u/20925002?v=4"
