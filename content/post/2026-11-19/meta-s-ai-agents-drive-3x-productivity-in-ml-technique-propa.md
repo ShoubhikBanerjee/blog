@@ -2,7 +2,7 @@
 title: "Meta's AI Agents Drive 3x Productivity in ML Technique Propagation"
 slug: "meta-s-ai-agents-drive-3x-productivity-in-ml-technique-propagation"
 description: "Meta's Ranking Engineer Agent (REA) is an autonomous system that generates hypotheses, designs experiments, and proves new machine learning techniques on ads ranking models. Since March 2026, AI..."
-date: 2026-11-19T06:12:23+05:30
+date: 2026-11-19T12:23:35+05:30
 tags: [Meta, AIAgents, MLTechniques, AdsRanking, Productivity]
 categories: ["AI", "Machine Learning", "AI Agents", "Advertising Technology", "Software Engineering"]
 image: "https://engineering.fb.com/wp-content/uploads/2026/11/Meta-Scaling-Techniques-image-2-2.png"

@@ -2,7 +2,7 @@
 title: "Google rolls out updated Project Genie with Genie 4 agent and community gallery"
 slug: "google-rolls-out-updated-project-genie-with-genie-4-agent-and-community-gallery"
 description: "Google has rolled out a new Project Genie experience to eligible Google AI Ultra subscribers, introducing Genie 4, upgrades to Genie 3, a Project Genie agent, and a community gallery for discovering..."
-date: 2026-11-19T06:12:23+05:30
+date: 2026-11-19T12:23:35+05:30
 tags: [Google, AI, WorldModels, GenerativeAI, InteractiveWorlds, Genie]
 categories: ["AI", "Machine Learning", "Generative AI", "World Models", "Multimodal AI"]
 image: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/resized_ProjectGenie_Thumbnail_v02.width-1300.png"

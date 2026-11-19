@@ -2,7 +2,7 @@
 title: "Nvidia's Business and Financial Update"
 slug: "nvidia-s-business-and-financial-update"
 description: "Nvidia's CFO, Collette Kress, has provided insights into the company's financial strategies and future outlook, amid ongoing discussions about Jensen Huang's leadership and supplier agreements."
-date: 2026-11-19T06:12:23+05:30
+date: 2026-11-19T12:23:35+05:30
 tags: [Nvidia, JensenHuang, AI, Finance, ExportRestrictions]
 categories: ["AI", "Technology", "Finance", "Business"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Nvidia_Jensen_huang_01.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

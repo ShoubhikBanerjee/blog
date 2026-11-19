@@ -2,7 +2,7 @@
 title: "CatBoost Regressor Predicts Fine-Tuning Time with High Accuracy"
 slug: "catboost-regressor-predicts-fine-tuning-time-with-high-accuracy"
 description: "A preview of an upcoming paper titled 'Predicting End-to-End Fine-Tuning Time for Generative Language Models' is available. It proposes a method to improve GPU scheduling by predicting job duration..."
-date: 2026-11-19T06:12:23+05:30
+date: 2026-11-19T12:23:35+05:30
 tags: [M, a, c, h, i, n, e, L, e, a, r, n, i, n, g, F, i, n, e, T, u, n, i, n, g, G, P, U, S, c, h, e, d, u, l, i, n, g, C, a, t, B, o, o, s, t, T, r, a, n, s, f, o, r, m, e, r, s]
 categories: ["AI", "M", "a", "c", "h", "i", "n", "e", "L", "e", "a", "r", "n", "i", "n", "g", ",", "G", "P", "U", "C", "o", "m", "p", "u", "t", "i", "n", "g", ",", "D", "e", "e", "p", "L", "e", "a", "r", "n", "i", "n", "g", ",", "S", "o", "f", "t", "w", "a", "r", "e", "E", "n", "g", "i", "n", "e", "e", "r", "i", "n", "g"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6a725daa5ca641a21ab61956/J6DIf4Len_31Tj-CQlQXY.png"

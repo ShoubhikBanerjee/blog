@@ -2,7 +2,7 @@
 title: "AWS Launches Amazon SageMaker JumpStart Model Leaderboard to Simplify Foundation Model Comparisons"
 slug: "aws-launches-amazon-sagemaker-jumpstart-model-leaderboard-to-simplify-foundation-model-comparisons"
 description: "Amazon has launched the Amazon SageMaker JumpStart Model Leaderboard, a new capability in Amazon SageMaker Studio designed to help developers compare foundation models side by side on quality, speed,..."
-date: 2026-11-19T06:12:23+05:30
+date: 2026-11-19T12:23:35+05:30
 tags: [AmazonSageMaker, MachineLearning, AWS, GenerativeAI]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22496-featured-image.png"

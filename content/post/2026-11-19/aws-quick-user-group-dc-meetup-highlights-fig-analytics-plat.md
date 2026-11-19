@@ -2,7 +2,7 @@
 title: "AWS Quick User Group DC Meetup Highlights FIG Analytics Platform"
 slug: "aws-quick-user-group-dc-meetup-highlights-fig-analytics-platform"
 description: "On Wednesday, October 7, 2026, data leaders, developers, and practitioners gathered at the AWS Skills Center in Arlington, Virginia, for the AWS Quick User Group DC meetup. The session brought..."
-date: 2026-11-19T06:12:23+05:30
+date: 2026-11-19T12:23:35+05:30
 tags: [AWS, AIAnalytics, EnterpriseData, DataGovernance, WorkflowAutomation, BusinessIntelligence]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Data Analytics", "Enterprise Software"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22393-featured-image.png"

@@ -2,7 +2,7 @@
 title: "Ruler provides a unified configuration for multiple AI coding agents"
 slug: "ruler-provides-a-unified-configuration-for-multiple-ai-coding-agents"
 description: "Managing instructions across multiple AI coding tools becomes complex as your team grows."
-date: 2026-11-19T06:12:23+05:30
+date: 2026-11-19T12:23:35+05:30
 tags: [AItools, Ruler, DeveloperTools, Automation]
 categories: ["AI", "Software Development", "AI Agents", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/46264?v=4"

@@ -2,7 +2,7 @@
 title: "Congress Targets Deepfakes and Arbitration in New Child‑Safety Bills"
 slug: "congress-targets-deepfakes-and-arbitration-in-new-childsafety-bills"
 description: "Lawmakers are moving to give victims of online harm new legal tools before the end of 2026, focusing on deepfake creators, forced arbitration, and platforms like Roblox."
-date: 2026-11-19T06:12:23+05:30
+date: 2026-11-19T12:23:35+05:30
 tags: [deepfakes, legislation, childsafety, arbitration]
 categories: ["AI", "Law and Policy", "Artificial Intelligence", "Child Protection", "Digital Rights"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK470_AI_LAW_CVIRGINIA_C.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

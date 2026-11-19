@@ -2,7 +2,7 @@
 title: "Trump visits Philippines to promote AI chip hub"
 slug: "trump-visits-philippines-to-promote-ai-chip-hub"
 description: "President Donald Trump was greeted by beauty queens and protesters as he landed in the Philippines, where he aims to promote a proposed AI chip hub."
-date: 2026-11-19T06:12:23+05:30
+date: 2026-11-19T12:23:35+05:30
 tags: [AIChipHub, Philippines, PaxSilica, HumanRights, Semiconductors]
 categories: ["AI", "Artificial Intelligence", "Semiconductors", "Economic Development", "Human Rights"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2305507602.jpg?quality=90&strip=all&crop=0%2C10.737892056687%2C100%2C78.524215886627&w=1200"
