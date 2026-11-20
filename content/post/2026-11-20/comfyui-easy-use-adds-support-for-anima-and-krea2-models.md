@@ -2,7 +2,7 @@
 title: "ComfyUI-Easy-Use Adds Support for Anima and Krea2 Models"
 slug: "comfyui-easy-use-adds-support-for-anima-and-krea2-models"
 description: "ComfyUI-Easy-Use, a custom node integration package for ComfyUI built upon TinyTerraNodes, has added support for Anima and Krea2 diffusion models. The update introduces new nodes and security fixes..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [ComfyUI, StableDiffusion, Anima, Krea2, CustomNodes, AIImageGeneration]
 categories: ["AI", "Generative AI", "Machine Learning", "Developer Tools", "Computer Vision"]
 image: "https://avatars.githubusercontent.com/u/73304135?v=4"

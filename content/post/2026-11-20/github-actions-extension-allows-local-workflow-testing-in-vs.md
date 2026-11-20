@@ -2,7 +2,7 @@
 title: "GitHub Actions extension allows local workflow testing in VS Code"
 slug: "github-actions-extension-allows-local-workflow-testing-in-vs-code"
 description: "The GitHub Local Actions Visual Studio Code extension is now available, enabling developers to run and test GitHub Actions workflows locally without leaving their editor. This tool leverages the..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [GitHubActions, VSCode, DevOps, Docker, act]
 categories: ["AI", "Developer Tools", "Automation", "Continuous Integration", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/3813618?v=4"

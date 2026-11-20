@@ -2,7 +2,7 @@
 title: "Community fork enables local execution of Japanese Government AI GenAI"
 slug: "community-fork-enables-local-execution-of-japanese-government-ai-genai"
 description: "A community-driven project has forked the Japanese Digital Agency's open-source Government AI 'GenAI' (Genai) to enable full local operation using local Large Language Models (LLMs) with an..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [OpenSource, LocalAI, JapanGov, LLM, Docker, RAG]
 categories: ["AI", "Machine Learning", "Open Source Software", "DevOps", "Government Technology"]
 image: "https://avatars.githubusercontent.com/u/5422947?v=4"

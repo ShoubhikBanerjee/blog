@@ -2,7 +2,7 @@
 title: "How AWS Security Incident Response triages threat findings from GuardDuty"
 slug: "how-aws-security-incident-response-triages-threat-findings-from-guardduty"
 description: "AWS Security Incident Response continuously triages threat findings from Amazon GuardDuty and AWS Security Hub CSPM, a process where most work never surfaces as a customer-facing case. The service..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [AWS, Security, GuardDuty, IncidentResponse, ThreatDetection]
 categories: ["AI", "Cloud Security", "Incident Response", "Threat Intelligence", "AWS Services"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/automated-triage-hero-1260x630.jpg"

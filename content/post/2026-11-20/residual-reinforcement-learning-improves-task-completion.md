@@ -2,7 +2,7 @@
 title: "Residual reinforcement learning improves task completion"
 slug: "residual-reinforcement-learning-improves-task-completion"
 description: "Residual reinforcement learning corrects an imitation-trained base policy using a limited budget of environment interaction. This approach is particularly effective in tasks with multiple phases,..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [ResidualRL, ReinforcementLearning, Robotics, AI]
 categories: ["AI", "Machine Learning", "Robotics", "AI Agents", "Automation"]
 author: "Shoubhik Banerjee"

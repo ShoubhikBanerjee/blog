@@ -2,7 +2,7 @@
 title: "Amazon Bedrock AgentCore Extends Autonomy to AWS Marketplace"
 slug: "amazon-bedrock-agentcore-extends-autonomy-to-aws-marketplace"
 description: "Amazon Bedrock AgentCore payments has been updated to extend agent autonomy to AWS Marketplace, allowing agents to discover and buy x402-enabled software, APIs, data, and content while paying in USD..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [AWS, AmazonBedrock, AgenticCommerce, CloudComputing]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Enterprise Software"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22459-featured-image-2.png"

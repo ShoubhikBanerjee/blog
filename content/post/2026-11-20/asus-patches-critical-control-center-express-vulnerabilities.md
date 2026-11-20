@@ -2,7 +2,7 @@
 title: "ASUS patches critical Control Center Express vulnerabilities in v1.7.29"
 slug: "asus-patches-critical-control-center-express-vulnerabilities-in-v1-7-29"
 description: "ASUS released Control Center Express v1.7.29 to address three critical vulnerabilities that could allow remote attackers to gain administrative control of the management console and the devices it..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [ASUS, Security, Vulnerabilities, ITManagement]
 categories: ["AI", "Cybersecurity", "IT Management", "Software Updates"]
 image: "https://www.bleepstatic.com/content/hl-images/2025/11/26/Asus.jpg"

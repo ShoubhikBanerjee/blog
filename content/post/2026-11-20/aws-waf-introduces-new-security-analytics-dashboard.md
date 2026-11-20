@@ -2,7 +2,7 @@
 title: "AWS WAF Introduces New Security Analytics Dashboard"
 slug: "aws-waf-introduces-new-security-analytics-dashboard"
 description: "AWS has introduced a new security analytics dashboard for AWS WAF, providing a single global page to investigate traffic across all protection packs (web ACLs), Regional resources, and Amazon..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [AWS, WAF, WebSecurity, CloudSecurity, DataAnalytics]
 categories: ["AI", "Cloud Security", "Web Application Security", "AWS", "Data Analytics"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/05/05/aws_logo.jpg"

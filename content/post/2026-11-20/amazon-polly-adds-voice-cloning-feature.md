@@ -2,7 +2,7 @@
 title: "Amazon Polly Adds Voice Cloning Feature"
 slug: "amazon-polly-adds-voice-cloning-feature"
 description: "Amazon Polly now offers a gated release of voice cloning, letting users generate a synthetic voice from a few minutes of recordings."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [AmazonPolly, VoiceCloning, AI, AudioAI]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Cloud Computing", "Text-to-Speech"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22432-featured-image.png"

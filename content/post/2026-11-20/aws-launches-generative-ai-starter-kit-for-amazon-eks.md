@@ -2,7 +2,7 @@
 title: "AWS Launches Generative AI Starter Kit for Amazon EKS"
 slug: "aws-launches-generative-ai-starter-kit-for-amazon-eks"
 description: "AWS has introduced a comprehensive toolkit for deploying production-ready Generative AI infrastructure on Amazon EKS. This starter kit is designed for teams running self-hosted LLMs and AI workloads..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [AWS, GenerativeAI, AmazonEKS, LLMs, AIWorkloads]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Machine Learning", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/8931462?v=4"

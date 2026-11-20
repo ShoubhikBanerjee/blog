@@ -2,7 +2,7 @@
 title: "Repository Collects and Benchmarks World Models for Autonomous Driving and Robotics"
 slug: "repository-collects-and-benchmarks-world-models-for-autonomous-driving-and-robotics"
 description: "A repository collects and benchmarks recent world model papers for autonomous driving and robotics, serving as a supplement to a survey."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [WorldModels, AutonomousDriving, PhysicalAI]
 categories: ["AI", "Machine Learning", "Robotics", "Autonomous Systems"]
 image: "https://avatars.githubusercontent.com/u/104890257?v=4"

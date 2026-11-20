@@ -2,7 +2,7 @@
 title: "EleutherAI releases GPT-NeoX 2.0 for large-scale language model training"
 slug: "eleutherai-releases-gpt-neox-2-0-for-large-scale-language-model-training"
 description: "EleutherAI has announced version 2.0 of the GPT‑NeoX library, a framework for training massive autoregressive language models on GPU clusters. The update moves the codebase onto the latest DeepSpeed..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [GPTNeoX, EleutherAI, DeepSpeed, LargeScaleTraining]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Open Source Software", "High-Performance Computing"]
 image: "https://avatars.githubusercontent.com/u/68924597?v=4"

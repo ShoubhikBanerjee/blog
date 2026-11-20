@@ -2,7 +2,7 @@
 title: "Anthropic IPO Closes at $97, Largest Raise in History"
 slug: "anthropic-ipo-closes-at-97-largest-raise-in-history"
 description: "Anthropic listed on Nasdaq under the ticker $ANT, pricing its Initial Public Offering at $83 per share. The stock closed at $97.17, marking a 17% increase from the offering price before drifting to..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [Anthropic, IPO, AI, Nasdaq, AMZ, TechFinance]
 categories: ["AI", "Venture Capital", "Corporate Finance", "Technology"]
 image: "https://latent.space/og/card/post/ainews-anthropic-successfully-completes-largest-ipo-in-history-valued-at-1-5t/f8e51dd638504d7f5c621226c8a155ca94849fa49ed6a1d5ff9e8b82b0176ea9.png"

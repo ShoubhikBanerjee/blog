@@ -2,7 +2,7 @@
 title: "NVIDIA Frontend‑Crates Enable Robust Tool‑Call Parsing for LLM Agents"
 slug: "nvidia-frontendcrates-enable-robust-toolcall-parsing-for-llm-agents"
 description: "A new parser built with NVIDIA’s frontend‑crates demonstrates how to reliably extract tool calls, reasoning, and visible text from streamed LLM output."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [ToolCalling, LLMParsing, Rust]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Engineering", "Natural Language Processing"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/agentic-ai-rl-gym-1024x576-1-660x370.png"

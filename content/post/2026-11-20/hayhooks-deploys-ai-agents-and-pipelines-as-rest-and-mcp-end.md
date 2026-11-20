@@ -2,7 +2,7 @@
 title: "Hayhooks deploys AI agents and pipelines as REST and MCP endpoints"
 slug: "hayhooks-deploys-ai-agents-and-pipelines-as-rest-and-mcp-endpoints"
 description: "Hayhooks allows developers to deploy Python wrappers or YAML pipelines as typed, validated endpoints, supporting REST APIs, OpenAI-compatible chat, MCP tools, and A2A agents with durable execution..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [Hayhooks, MCP, RESTAPI, AIAgents, Observability]
 categories: ["AI", "AI Agents", "Developer Tools", "APIs", "MLOps"]
 image: "https://avatars.githubusercontent.com/u/51827949?v=4"

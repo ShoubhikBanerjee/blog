@@ -2,7 +2,7 @@
 title: "PostgreSQL 19 Released with New Read-Your-Writes Consistency Feature"
 slug: "postgresql-19-released-with-new-read-your-writes-consistency-feature"
 description: "PostgreSQL 19 has been released, arriving two months later than the typical September schedule due to a flurry of issues related to AI-reported vulnerabilities."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [PostgreSQL, Database, SQL, DataConsistency, WaitForLSN]
 categories: ["AI", "Databases", "Data Management", "Software Development", "Backend Systems"]
 author: "Shoubhik Banerjee"

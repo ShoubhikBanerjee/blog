@@ -2,7 +2,7 @@
 title: "SageMaker Inference Recommendations Support LoRA Adapters and Multi-Region Routing"
 slug: "sagemaker-inference-recommendations-support-lora-adapters-and-multi-region-routing"
 description: "Amazon SageMaker AI has expanded its Inference Recommendations service to support Low-Rank Adaptation (LoRA) adapters, broader model serving frameworks, and cross-Region networking capabilities...."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [AWS, SageMaker, LLMInference, MLOps, LoRA]
 categories: ["AI", "Machine Learning", "Cloud Computing", "Large Language Models", "Software Engineering"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22497-featured-image.png"

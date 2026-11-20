@@ -2,7 +2,7 @@
 title: "NetCoreKevin Updates Enterprise AI Assistant and SaaS Agent Platform"
 slug: "netcorekevin-updates-enterprise-ai-assistant-and-saas-agent-platform"
 description: "NetCoreKevin has introduced an update for building AI assistants and SaaS agent platforms within enterprise intranets, providing foundational features such as multi-tenancy, login authentication,..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [NetCoreKevin, DotNet, AIAgents, RAG, EnterpriseAI]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Enterprise Software"]
 image: "https://avatars.githubusercontent.com/u/57887866?v=4"

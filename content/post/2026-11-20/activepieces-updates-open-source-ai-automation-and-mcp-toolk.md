@@ -2,7 +2,7 @@
 title: "Activepieces Updates Open Source AI Automation and MCP Toolkit"
 slug: "activepieces-updates-open-source-ai-automation-and-mcp-toolkit"
 description: "Activepieces has introduced an all-in-one AI automation platform featuring an extensible, type-safe pieces framework written in TypeScript. The platform offers over 280 open-source pieces available..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [Activepieces, TypeScript, MCP, AIAutomation, OpenSource]
 categories: ["AI", "AI Agents", "Workflow Automation", "Open Source", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/99494700?v=4"

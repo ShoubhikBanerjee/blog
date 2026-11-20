@@ -2,7 +2,7 @@
 title: "Windows hotpatch update causes ERROR_ALLOTTED_SPACE_EXCEEDED error"
 slug: "windows-hotpatch-update-causes-error-allotted-space-exceeded-error"
 description: "Devices that installed the November 2026 hotpatch update may experience errors when installing, launching, or running some applications. The error displayed is similar to..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [Windows, Hotpatch, WindowsAutopatch, SecurityUpdates, Registry]
 categories: ["AI", "Operating Systems", "Security", "IT Management", "Windows"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/17/Windows-11_headpic.jpg"

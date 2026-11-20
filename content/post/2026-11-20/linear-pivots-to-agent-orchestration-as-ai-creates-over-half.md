@@ -2,7 +2,7 @@
 title: "Linear pivots to agent orchestration as AI creates over half of its issues"
 slug: "linear-pivots-to-agent-orchestration-as-ai-creates-over-half-of-its-issues"
 description: "Linear, an issue tracker founded to replace legacy tools, has pivoted toward becoming a product development system built around agent orchestration. This shift coincided with CEO Karri Saarinen..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [Linear, AIAgents, DevTools, MCP, SaaS]
 categories: ["AI", "Software Engineering", "AI Agents", "Product Management", "Developer Tools"]
 image: "https://i.ytimg.com/vi/x0VSm6IjcDQ/maxresdefault.jpg"

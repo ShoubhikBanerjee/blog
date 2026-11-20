@@ -2,7 +2,7 @@
 title: "NVIDIA Dynamo Optimizes RL Training via Routing and Weight Updates"
 slug: "nvidia-dynamo-optimizes-rl-training-via-routing-and-weight-updates"
 description: "NVIDIA has introduced Dynamo as a serving layer designed to address constraints in reinforcement learning (RL) training, helping teams generate more accepted training samples and complete training..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [NVIDIA, ReinforcementLearning, Dynamo, GPUTechnology, LLMTraining]
 categories: ["AI", "Machine Learning", "Deep Learning Infrastructure", "AI Systems", "Reinforcement Learning"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-17-660x370.png"

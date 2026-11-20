@@ -2,7 +2,7 @@
 title: "Kubernetes Mutating Webhook Released for Automated Sidecar Injection"
 slug: "kubernetes-mutating-webhook-released-for-automated-sidecar-injection"
 description: "A new Kubernetes mutating webhook has been developed to automate the injection of sidecar containers into pod specifications. This tool simplifies the management of sidecars within a Kubernetes..."
-date: 2026-11-20T14:26:01+05:30
+date: 2026-11-20T18:09:02+05:30
 tags: [Kubernetes, Sidecar, DevOps, Containers, Automation]
 categories: ["AI", "Cloud Infrastructure", "Software Development", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/38541875?v=4"
