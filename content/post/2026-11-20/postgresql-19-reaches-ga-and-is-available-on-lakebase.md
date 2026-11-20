@@ -2,7 +2,7 @@
 title: "PostgreSQL 19 reaches GA and is available on Lakebase"
 slug: "postgresql-19-reaches-ga-and-is-available-on-lakebase"
 description: "PostgreSQL 19 reached general availability today and is already available on Lakebase. Several engineers on the Lakebase team are PostgreSQL committers and contributors who worked on this release..."
-date: 2026-11-20T06:16:59+05:30
+date: 2026-11-20T12:08:10+05:30
 tags: [PostgreSQL, Lakebase, Database, GARelease, REPACK, QueryPlanning]
 categories: ["AI", "Database Management", "Cloud Services", "Software Release", "Data Infrastructure"]
 image: "https://www.databricks.com/sites/default/files/2026-11/PG-19-cover.png"

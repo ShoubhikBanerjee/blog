@@ -2,7 +2,7 @@
 title: "Morphik Core and Metasyn Introduce New Tools for Multimodal Data and Synthetic Privacy"
 slug: "morphik-core-and-metasyn-introduce-new-tools-for-multimodal-data-and-synthetic-privacy"
 description: "Morphik and Metasyn introduce new tools for developers. Morphik Core offers an open-source multimodal retrieval engine for complex documents, while Metasyn provides a tool for generating synthetic..."
-date: 2026-11-20T06:16:59+05:30
+date: 2026-11-20T12:08:10+05:30
 tags: [AI, DataPrivacy, SyntheticData, DocumentProcessing]
 categories: ["AI", "Machine Learning", "Data Privacy", "Computer Vision", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/189408230?v=4"

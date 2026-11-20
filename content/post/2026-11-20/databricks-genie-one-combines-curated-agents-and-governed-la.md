@@ -2,7 +2,7 @@
 title: "Databricks Genie One Combines Curated Agents and Governed Layer for 93-95% Accuracy"
 slug: "databricks-genie-one-combines-curated-agents-and-governed-layer-for-93-95-accuracy"
 description: "Databricks has released Genie One, powered by the generally available Genie Ontology, which integrates business context into analytics by combining curated agents with a governed semantic layer to..."
-date: 2026-11-20T06:16:59+05:30
+date: 2026-11-20T12:08:10+05:30
 tags: [GenieOne, GenieOntology, AIagents, Businessanalytics, Databricks, UnityCatalog]
 categories: ["AI", "AI Agents", "Business Intelligence", "Data Governance", "Machine Learning"]
 image: "https://www.databricks.com/sites/default/files/blog_images/genie-one-accuracy-why-curated-agents-need-blog-img-og.png"

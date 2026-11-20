@@ -2,7 +2,7 @@
 title: "Anthropic goes public with AI safety focus"
 slug: "anthropic-goes-public-with-ai-safety-focus"
 description: "Anthropic has officially gone public, trading on the Nasdaq under the ticker symbol “ANT” at $111.50 per share."
-date: 2026-11-20T06:16:59+05:30
+date: 2026-11-20T12:08:10+05:30
 tags: [Anthropic, AI, PublicListing, AISafety, AIGovernance]
 categories: ["AI", "Artificial Intelligence", "AI Safety", "AI Governance", "Public Companies"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2305334560.jpg?quality=90&strip=all&crop=0%2C10.752607989199%2C100%2C78.494784021602&w=1200"

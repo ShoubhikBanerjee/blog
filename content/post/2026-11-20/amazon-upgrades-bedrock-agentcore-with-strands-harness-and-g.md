@@ -2,7 +2,7 @@
 title: "Amazon Upgrades Bedrock AgentCore with Strands Harness and Gateway Interceptors"
 slug: "amazon-upgrades-bedrock-agentcore-with-strands-harness-and-gateway-interceptors"
 description: "Amazon is upgrading the Amazon Bedrock AgentCore harness to use Strands harness, an open-source agent harness released under an Apache 2.0 license. This update introduces lifecycle hooks, automatic..."
-date: 2026-11-20T06:16:59+05:30
+date: 2026-11-20T12:08:10+05:30
 tags: [AmazonBedrock, AIagents, AWS, OpenSource, DataSecurity]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing", "Cybersecurity"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22098-featured-image.png"
