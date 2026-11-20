@@ -2,7 +2,7 @@
 title: "Cisco engineers scale generative and agentic AI with AWS AI League"
 slug: "cisco-engineers-scale-generative-and-agentic-ai-with-aws-ai-league"
 description: "Cisco engineers are scaling their use of generative and agentic AI through the AWS AI League competition."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [Cisco, AWS, AILeague, GenerativeAI]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Developer Tools", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-22161-featured-image.png"

@@ -2,7 +2,7 @@
 title: "NVIDIA DAQIRI Enhances High-Speed Data Acquisition and Processing"
 slug: "nvidia-daqiri-enhances-high-speed-data-acquisition-and-processing"
 description: "NVIDIA DAQIRI, a software-defined data acquisition library, enables real-time processing of high-bandwidth instrument and sensor data directly into GPU memory, eliminating the need to first write..."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [NVIDIA, DAQIRI, DataAcquisition, GPUProcessing, HighSpeedData]
 categories: ["AI", "Data Acquisition", "GPU Computing", "Scientific Computing", "AI Inference"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/electron-energy-loss-spectroscopy-660x370.jpg"

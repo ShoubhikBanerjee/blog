@@ -2,7 +2,7 @@
 title: "Databricks introduces Genie ZeroOps for autonomous data pipeline issue resolution"
 slug: "databricks-introduces-genie-zeroops-for-autonomous-data-pipeline-issue-resolution"
 description: "Databricks has introduced Genie ZeroOps, an autonomous agent that detects, investigates, and resolves data pipeline issues. Now available in Public Beta, ZeroOps automates the manual workflow of..."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [Databricks, GenieZeroOps, DataPipeline, AutonomousAgent, DataQuality]
 categories: ["AI", "Data Engineering", "Autonomous Systems", "AI Agents", "Data Quality"]
 image: "https://www.databricks.com/sites/default/files/2026-11/2026-11-Blog-Genie-ZeroOps-now-in-public-beta-What-we-re-building-after-feedback-from-80-000-customer-incidents-OG-1200x628-2x.png"

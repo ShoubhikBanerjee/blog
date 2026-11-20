@@ -2,7 +2,7 @@
 title: "Nvidia Q3 Revenue Doubles to $115.8B as CEO Huang Resigns Amid Scandal"
 slug: "nvidia-q3-revenue-doubles-to-115-8b-as-ceo-huang-resigns-amid-scandal"
 description: "Nvidia reported third-quarter revenue of $115.8 billion, more than double the prior year, while its stock plunged nearly 40 percent from an October high following the resignation of cofounder and CEO..."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [Nvidia, JensenHuang, VeraRubin, AIChips, StockMarket, CongressionalHearings]
 categories: ["AI", "Semiconductors", "Artificial Intelligence", "Corporate Governance", "Financial Markets"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2305716823.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

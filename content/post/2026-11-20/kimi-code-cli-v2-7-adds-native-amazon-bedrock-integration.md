@@ -2,7 +2,7 @@
 title: "Kimi Code CLI v2.7 Adds Native Amazon Bedrock Integration"
 slug: "kimi-code-cli-v2-7-adds-native-amazon-bedrock-integration"
 description: "- Kimi Code CLI is an open source coding agent from Moonshot AI."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [AWS, AmazonBedrock, KimiCodeCLI, OpenSourceAI, AIagents]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing", "Open Source"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22481-featured-image.png"

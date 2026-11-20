@@ -2,7 +2,7 @@
 title: "Google Gemini for macOS adds computer use for multi-step tasks"
 slug: "google-gemini-for-macos-adds-computer-use-for-multi-step-tasks"
 description: "Google's Gemini app for macOS now includes a computer use feature that enables the AI assistant to perform multi-step tasks across local files, desktop applications, and the web."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [Google, Gemini, macOS, AIagents, computeruse]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Desktop Applications", "macOS"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/M6_MBP_hero2.jpg?quality=90&strip=all&crop=0%2C10.738463156834%2C100%2C78.523073686333&w=1200"

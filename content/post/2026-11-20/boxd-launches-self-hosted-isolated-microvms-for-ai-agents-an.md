@@ -2,7 +2,7 @@
 title: "boxd Launches Self-Hosted Isolated MicroVMs for AI Agents and Developers"
 slug: "boxd-launches-self-hosted-isolated-microvms-for-ai-agents-and-developers"
 description: "A new self-hosted solution called boxd provides fast, isolated machines for AI agents and development teams to use as sandboxes, dev environments, or servers. The platform runs in your own Google..."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [AIagents, CloudComputing, DevOps, MicroVMs]
 categories: ["AI", "AI Infrastructure", "AI Agents", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/349490272?v=4"

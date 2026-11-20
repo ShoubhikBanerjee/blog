@@ -2,7 +2,7 @@
 title: "Amazon launches Selling Partner plugin for AWS Quick"
 slug: "amazon-launches-selling-partner-plugin-for-aws-quick"
 description: "At Amazon Accelerate on September 23, 2026, Amazon announced the Selling Partner plugin and launched it in beta in AWS Quick. The tool brings Amazon sellers' sales data, inventory signals, and..."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [Amazon, AWS, Ecommerce, SellingPartner, BusinessIntelligence]
 categories: ["AI", "Cloud Computing", "E-commerce Tools", "Artificial Intelligence", "Business Analytics"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22255-featured-image.png"

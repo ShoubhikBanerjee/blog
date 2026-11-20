@@ -2,7 +2,7 @@
 title: "Amazon Introduces Connect Talent for Evidence-Based AI Hiring"
 slug: "amazon-introduces-connect-talent-for-evidence-based-ai-hiring"
 description: "Amazon has introduced Connect Talent, a service that applies established hiring science to AI-led interviews at scale. The tool is designed to help organizations gather consistent, job-related..."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [Amazon, HiringTech, AI, Recruitment, AmazonConnect]
 categories: ["AI", "Human Resources", "Artificial Intelligence", "Amazon Services", "Recruitment"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/Inside-Amazon-Connect-Talent-The-science-of-structured-AI-interviews-.png"

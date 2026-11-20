@@ -2,7 +2,7 @@
 title: "EvalView 0.9.0 introduces offline regression testing for AI agents"
 slug: "evalview-0-9-0-introduces-offline-regression-testing-for-ai-agents"
 description: "EvalView 0.9.0 has been released, introducing a tool for regression testing AI agents that operates offline without requiring paid API credentials or making paid inference calls. The release focuses..."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [EvalView, AIagents, RegressionTesting, LangGraph, CI, LLMops]
 categories: ["AI", "AI Agents", "Software Testing", "DevOps", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/31502796?v=4"

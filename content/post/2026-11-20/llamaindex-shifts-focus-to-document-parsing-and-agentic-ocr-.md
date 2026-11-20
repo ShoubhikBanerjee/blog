@@ -2,7 +2,7 @@
 title: "LlamaIndex shifts focus to document parsing and agentic OCR platform"
 slug: "llamaindex-shifts-focus-to-document-parsing-and-agentic-ocr-platform"
 description: "LlamaIndex has shifted its primary focus toward building an AI-powered engine for document parsing and extraction, moving away from its original emphasis on a broad set of orchestration tools for RAG..."
-date: 2026-11-20T12:08:10+05:30
+date: 2026-11-20T14:26:01+05:30
 tags: [LlamaIndex, DocumentParsing, AgenticOCR, RAG, AIAgents]
 categories: ["AI", "AI Agents", "Natural Language Processing", "Open Source", "Enterprise Software"]
 image: "https://avatars.githubusercontent.com/u/130722866?v=4"
