@@ -2,7 +2,7 @@
 title: "Scaling Agentic AI and Governance in Enterprise Systems"
 slug: "scaling-agentic-ai-and-governance-in-enterprise-systems"
 description: "Forward Deployed Engineers are tackling the challenge of industrializing and operating high-quality agents in an efficient, scalable manner across large organizations. Building agents that can..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [AI, AgenticAI, EnterpriseAI, Governance, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-20698-featured-image-1.png"

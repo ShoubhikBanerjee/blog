@@ -2,7 +2,7 @@
 title: "Solar framework launches open tools for real-time video world models"
 slug: "solar-framework-launches-open-tools-for-real-time-video-world-models"
 description: "Solar is an open framework for interactive world models that spans open data, scalable training, long-horizon video generation, and real-time deployment. The repository contains code for two primary..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [SolarFramework, VideoGeneration, WorldModels, OpenSource, MiniMaxH3]
 categories: ["AI", "Generative AI", "Computer Vision", "Open Source Software", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/140875206?v=4"

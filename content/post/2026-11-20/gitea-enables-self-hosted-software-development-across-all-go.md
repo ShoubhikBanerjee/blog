@@ -2,7 +2,7 @@
 title: "Gitea Enables Self-Hosted Software Development Across All Go Platforms"
 slug: "gitea-enables-self-hosted-software-development-across-all-go-platforms"
 description: "Gitea is a self-hosted all-in-one software development service designed to be the easiest, fastest, and most painless way to set up development infrastructure. It integrates Git hosting, code..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Gitea, SelfHosted, DevOps, Git, CICD, OpenSource]
 categories: ["AI", "Software Development", "DevOps", "Self-Hosting", "Version Control"]
 image: "https://avatars.githubusercontent.com/u/12724356?v=4"

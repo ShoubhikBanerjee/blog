@@ -2,7 +2,7 @@
 title: "Researchers Open a 400-Year-Old Cryptex Using CT Scanning"
 slug: "researchers-open-a-400-year-old-cryptex-using-ct-scanning"
 description: "Researchers used CT scanning technology to recover the code and open a 400-year-old cryptex padlock."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [cryptography, history, technology, ctscan]
 categories: ["AI", "History Of Cryptography", "Technology", "Research"]
 author: "Shoubhik Banerjee"

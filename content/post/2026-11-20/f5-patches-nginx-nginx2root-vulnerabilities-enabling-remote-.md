@@ -2,7 +2,7 @@
 title: "F5 Patches NGINX nginx2root Vulnerabilities Enabling Remote Code Execution"
 slug: "f5-patches-nginx-nginx2root-vulnerabilities-enabling-remote-code-execution"
 description: "F5 has released security updates for multiple NGINX vulnerabilities, including two critical flaws dubbed 'nginx2root.' These vulnerabilities allow unauthenticated attackers to execute code remotely..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Cybersecurity, NGINX, InfoSec, Linux, CloudSecurity]
 categories: ["AI", "Cybersecurity", "Web Infrastructure", "Software Updates"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/19/nginx.jpg"

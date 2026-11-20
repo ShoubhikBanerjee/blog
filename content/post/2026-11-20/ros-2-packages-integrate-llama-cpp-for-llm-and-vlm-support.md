@@ -2,7 +2,7 @@
 title: "ROS 2 Packages Integrate llama.cpp for LLM and VLM Support"
 slug: "ros-2-packages-integrate-llama-cpp-for-llm-and-vlm-support"
 description: "A new set of ROS 2 packages has been released to integrate the llama.cpp library into ROS 2 environments. This repository allows developers to incorporate llama.cpp's optimization capabilities into..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [ROS2, llamacpp, LLM, ROS, GenerativeAI]
 categories: ["AI", "Robotics", "Machine Learning", "Open Source", "Development Tools"]
 image: "https://avatars.githubusercontent.com/u/25979134?v=4"

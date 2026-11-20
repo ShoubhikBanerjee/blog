@@ -2,7 +2,7 @@
 title: "Weaviate Helm Chart v17.1.0: Raft Bootstrap and Resource Limit Changes"
 slug: "weaviate-helm-chart-v17-1-0-raft-bootstrap-and-resource-limit-changes"
 description: "The Weaviate Helm chart has released version 17.1.0, introducing significant updates to cluster bootstrapping in Weaviate v1.25 and removing default resource constraints to improve module performance."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Weaviate, Kubernetes, Helm, VectorDB, DevOps]
 categories: ["AI", "Vector Databases", "Cloud Infrastructure", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/37794290?v=4"

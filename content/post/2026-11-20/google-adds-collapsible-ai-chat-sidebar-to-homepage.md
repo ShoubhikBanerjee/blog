@@ -2,7 +2,7 @@
 title: "Google adds collapsible AI chat sidebar to homepage"
 slug: "google-adds-collapsible-ai-chat-sidebar-to-homepage"
 description: "Google is updating its homepage to include AI searches by adding a collapsible sidebar that allows users to view and continue their AI chats. This change introduces a new way to access recent AI Mode..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Google, AI, Search, ProductUpdates]
 categories: ["AI", "Search Engines", "Generative AI", "User Interface", "Product Development"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/01/STK093_GOOGLE_D.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

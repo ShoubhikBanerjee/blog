@@ -2,7 +2,7 @@
 title: "ROLL: AI Library Enhances LLM Performance"
 slug: "roll-ai-library-enhances-llm-performance"
 description: "ROLL, an efficient and user-friendly RL library, is designed for Large Language Models (LLMs) utilizing Large Scale GPU resources. It significantly enhances LLM performance in key areas such as human..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [AI, LLM, RL, MachineLearning, DeepLearning]
 categories: ["AI", "Machine Learning", "AI Agents", "Natural Language Processing", "Reinforcement Learning"]
 image: "https://avatars.githubusercontent.com/u/1961952?v=4"

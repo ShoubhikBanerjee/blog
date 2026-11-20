@@ -2,7 +2,7 @@
 title: "Databricks Mitigates and Patches Java4Shell OpenJDK Vulnerability"
 slug: "databricks-mitigates-and-patches-java4shell-openjdk-vulnerability"
 description: "Databricks has addressed the industry-wide OpenJDK vulnerability tracked as CVE-2026-114938 (Java4Shell) before its public disclosure. The company is protecting its platform and customers through a..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Databricks, Java4Shell, OpenJDK, Security, Vulnerability, CloudSecurity]
 categories: ["AI", "Cloud Security", "Vulnerability Management", "Platform Security"]
 image: "https://www.databricks.com/sites/default/files/2026-11/2026-11-Blog-SIRT-2058-Placeholder-Blog-OG-1200x628-2x.png"

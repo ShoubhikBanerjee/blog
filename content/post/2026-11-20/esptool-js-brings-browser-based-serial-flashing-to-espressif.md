@@ -2,7 +2,7 @@
 title: "esptool-js brings browser-based serial flashing to Espressif chips"
 slug: "esptool-js-brings-browser-based-serial-flashing-to-espressif-chips"
 description: "esptool-js is a new Javascript implementation of esptool, a serial flasher utility for Espressif chips, that runs directly in supported web browsers using the Web Serial API."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Espressif, WebAssembly, JavaScript, IoT, EmbeddedSystems]
 categories: ["AI", "Embedded Systems", "Web Development", "Hardware", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/9460735?v=4"

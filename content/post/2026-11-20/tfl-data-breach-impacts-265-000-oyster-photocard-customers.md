@@ -2,7 +2,7 @@
 title: "TfL data breach impacts 265,000 Oyster photocard customers"
 slug: "tfl-data-breach-impacts-265-000-oyster-photocard-customers"
 description: "Transport for London (TfL) announced that approximately 265,000 Oyster photocard customers may have had their account details exposed in a security incident discovered on November 16, 2026. The..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [DataBreach, TransportForLondon, OysterPhotocard, CyberSecurity, UK]
 categories: ["AI", "Cybersecurity", "Public Sector", "Data Privacy", "Transportation"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/19/transportforlondon.jpg"

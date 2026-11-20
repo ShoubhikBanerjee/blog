@@ -2,7 +2,7 @@
 title: "Microsoft Begins Automatic Windows 11 26H2 Upgrade Rollout"
 slug: "microsoft-begins-automatic-windows-11-26h2-upgrade-rollout"
 description: "Starting this week, Microsoft has begun automatically upgrading eligible devices that aren't managed by an IT department to Windows 11 26H2."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [W, i, n, d, o, w, s, 1, 1, 2, 6, H, 2, M, i, c, r, o, s, o, f, t, U, p, d, a, t, e, O, S, U, p, g, r, a, d, e]
 categories: ["AI", "O", "p", "e", "r", "a", "t", "i", "n", "g", "S", "y", "s", "t", "e", "m", "s"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/12/Windows-11-blue.jpg"

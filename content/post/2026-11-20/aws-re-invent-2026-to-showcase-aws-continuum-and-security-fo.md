@@ -2,7 +2,7 @@
 title: "AWS re:Invent 2026 to Showcase AWS Continuum and Security for AI Agents"
 slug: "aws-re-invent-2026-to-showcase-aws-continuum-and-security-for-ai-agents"
 description: "The AWS Security, Identity, and Governance team has announced the security session lineup for AWS re:Invent in Las Vegas, running from November 30 to December 4, 2026. The event will showcase new..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [AWS, reInvent, CloudSecurity, AWSContinuum, AIAgents]
 categories: ["AI", "Cloud Security", "AI Agents", "DevSecOps"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/19/Security-Identity-Governance-guide-Figure-1.jpg"

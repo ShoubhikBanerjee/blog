@@ -2,7 +2,7 @@
 title: "SME Memory Engine Adds Spatial Regions and Explainable Retrieval"
 slug: "sme-memory-engine-adds-spatial-regions-and-explainable-retrieval"
 description: "A new long-term memory engine for AI applications called SME has been released, featuring self-organizing spatial memory regions, Ebbinghaus-inspired memory dynamics, and an explainable eight-signal..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [AIMemory, RAG, LLM, Embeddings, OpenSource]
 categories: ["AI", "Machine Learning", "AI Agents", "Natural Language Processing", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/200968408?v=4"

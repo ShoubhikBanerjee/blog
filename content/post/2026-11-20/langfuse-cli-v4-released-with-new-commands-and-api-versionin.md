@@ -2,7 +2,7 @@
 title: "Langfuse CLI v4 released with new commands and API versioning"
 slug: "langfuse-cli-v4-released-with-new-commands-and-api-versioning"
 description: "Langfuse has released a new CLI tool, `@langfuse/cli`, which allows users to interact with the Langfuse API directly from the command line. This new release includes updates to command aliases, input..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Langfuse, CLI, API, DeveloperTools]
 categories: ["AI", "Developer Tools", "APIs", "DevOps"]
 image: "https://avatars.githubusercontent.com/u/134601687?v=4"

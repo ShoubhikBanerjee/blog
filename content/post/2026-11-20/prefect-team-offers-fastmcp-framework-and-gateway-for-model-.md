@@ -2,7 +2,7 @@
 title: "Prefect Team Offers FastMCP Framework and Gateway for Model Context Protocol"
 slug: "prefect-team-offers-fastmcp-framework-and-gateway-for-model-context-protocol"
 description: "The Prefect team has developed FastMCP, a full Model Context Protocol (MCP) application framework that connects Large Language Models (LLMs) to tools and data. To support team-wide scaling, the team..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [ModelContextProtocol, FastMCP, Python, TypeScript, Prefect]
 categories: ["AI", "AI Tools", "Software Development", "Enterprise AI"]
 image: "https://avatars.githubusercontent.com/u/39270919?v=4"

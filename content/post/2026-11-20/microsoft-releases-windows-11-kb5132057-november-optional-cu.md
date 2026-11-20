@@ -2,7 +2,7 @@
 title: "Microsoft releases Windows 11 KB5132057 November optional cumulative update"
 slug: "microsoft-releases-windows-11-kb5132057-november-optional-cumulative-update"
 description: "Microsoft released the KB5132057 November optional cumulative update for Windows 11 versions 25H2 and 26H2, bringing 28 changes including improvements to Windows Search, Windows Hello, and the Run..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Windows11, Microsoft, WindowsUpdate, TechNews]
 categories: ["AI", "Operating Systems", "Software Updates", "Microsoft"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/17/windows_11_haedpic.jpg"

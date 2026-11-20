@@ -2,7 +2,7 @@
 title: "Microsoft Launches Edge Lockdown Mode to Disable WebGL and WebGPU"
 slug: "microsoft-launches-edge-lockdown-mode-to-disable-webgl-and-webgpu"
 description: "Microsoft has introduced a new Edge Lockdown Mode that disables WebGL, WebGL2, and WebGPU APIs to reduce the browser’s attack surface."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Edge, LockdownMode, Cybersecurity, BrowserSecurity, WebGL]
 categories: ["AI", "Computer Security", "Web Browsers", "Cyber Defense", "Microsoft"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/19/Microsoft_Edge.jpg"

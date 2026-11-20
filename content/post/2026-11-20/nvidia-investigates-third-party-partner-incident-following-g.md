@@ -2,7 +2,7 @@
 title: "NVIDIA Investigates Third-Party Partner Incident Following Gentlemen Ransomware Claims"
 slug: "nvidia-investigates-third-party-partner-incident-following-gentlemen-ransomware-claims"
 description: "NVIDIA is investigating claims of a security breach after the Gentlemen ransomware group added the company to its dark web data leak site, though no proof of the breach has been shared yet."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [NVIDIA, Ransomware, Cybersecurity, DataBreach]
 categories: ["AI", "Cybersecurity", "Technology", "Security Incidents"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/19/NVIDIA_logo.jpg"

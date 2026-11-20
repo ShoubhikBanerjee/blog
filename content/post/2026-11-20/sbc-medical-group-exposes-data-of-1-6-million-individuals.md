@@ -2,7 +2,7 @@
 title: "SBC Medical Group Exposes Data of 1.6 Million Individuals"
 slug: "sbc-medical-group-exposes-data-of-1-6-million-individuals"
 description: "SBC Medical Group disclosed in a U.S. Securities and Exchange Commission (SEC) filing that two separate cybersecurity incidents resulted in the unauthorized exposure of sensitive customer and..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [SBCMedical, DataBreach, Cybersecurity, SECFiling, HealthcareSecurity]
 categories: ["AI", "Cybersecurity", "Healthcare", "Data Privacy", "Corporate Disclosure"]
 image: "https://www.bleepstatic.com/content/hl-images/2022/08/22/healthcare-cyber.jpg"

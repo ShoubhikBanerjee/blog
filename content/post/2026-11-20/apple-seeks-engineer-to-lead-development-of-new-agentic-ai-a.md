@@ -2,7 +2,7 @@
 title: "Apple seeks engineer to lead development of new agentic AI assistant"
 slug: "apple-seeks-engineer-to-lead-development-of-new-agentic-ai-assistant"
 description: "Apple is working on an AI agent capable of performing a range of tasks, including browsing the web, working across apps, writing code, and calling services. This development is being pursued by..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Apple, AIagents, Siri, Bloomberg]
 categories: ["AI", "AI Agents", "Artificial Intelligence", "Mobile Technology", "Product Development"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/DSC04239.jpg?quality=90&strip=all&crop=0%2C10.628272251309%2C100%2C78.743455497382&w=1200"

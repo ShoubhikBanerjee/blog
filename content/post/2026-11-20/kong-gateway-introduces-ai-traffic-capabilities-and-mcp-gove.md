@@ -2,7 +2,7 @@
 title: "Kong Gateway introduces AI traffic capabilities and MCP governance"
 slug: "kong-gateway-introduces-ai-traffic-capabilities-and-mcp-governance"
 description: "Kong or Kong Gateway is a cloud-native, platform-agnostic, scalable API, LLM, and MCP Gateway distinguished for its high performance and extensibility via plugins. It provides advanced AI traffic..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Kong, APIGateway, MCP, LLM, Kubernetes, DevOps]
 categories: ["AI", "API Management", "AI Infrastructure", "DevOps", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/962416?v=4"

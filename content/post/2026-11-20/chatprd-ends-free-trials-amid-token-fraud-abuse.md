@@ -2,7 +2,7 @@
 title: "ChatPRD Ends Free Trials Amid Token Fraud Abuse"
 slug: "chatprd-ends-free-trials-amid-token-fraud-abuse"
 description: "ChatPRD, an AI platform that helps product managers turn ideas into specifications, is winding down its free trial program after experiencing extensive token fraud from users abusing the system for..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: []
 categories: ["AI"]
 author: "Shoubhik Banerjee"

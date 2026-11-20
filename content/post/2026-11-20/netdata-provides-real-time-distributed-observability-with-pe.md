@@ -2,7 +2,7 @@
 title: "Netdata provides real-time distributed observability with per-second AI anomaly detection"
 slug: "netdata-provides-real-time-distributed-observability-with-per-second-ai-anomaly-detection"
 description: "Netdata is a full-stack observability platform that covers infrastructure, application performance, digital experience, network performance, databases, logs, and cloud environments. The system is..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Netdata, Observability, Monitoring, AI, DistributedSystems]
 categories: ["AI", "Observability", "Software Development", "Networking", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/43390781?v=4"

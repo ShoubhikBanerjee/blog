@@ -2,7 +2,7 @@
 title: "EasyVecDB Launches Comprehensive Vector Database Learning Project"
 slug: "easyvecdb-launches-comprehensive-vector-database-learning-project"
 description: "EasyVecDB is a learning project aimed at developers and researchers, providing a systematic study of vector database systems."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [VectorDatabases, FAISS, Milvus, Annoy, RAG]
 categories: ["AI", "Machine Learning", "Data Engineering", "Information Retrieval", "AI Research"]
 image: "https://avatars.githubusercontent.com/u/46047812?v=4"

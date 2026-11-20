@@ -2,7 +2,7 @@
 title: "F5 Warns Customers to Patch Critical BIG-IP Vulnerabilities"
 slug: "f5-warns-customers-to-patch-critical-big-ip-vulnerabilities"
 description: "US cybersecurity company F5 warned customers to patch five critical BIG-IP vulnerabilities that attackers can exploit to trigger denial-of-service (DoS) or gain remote code execution."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Cybersecurity, F5, Vulnerabilities, Patch]
 categories: ["AI", "Cybersecurity", "Network Security", "Vulnerabilities"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/10/19/F5-headpic.jpg"

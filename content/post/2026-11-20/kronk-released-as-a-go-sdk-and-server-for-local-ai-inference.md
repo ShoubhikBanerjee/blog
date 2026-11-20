@@ -2,7 +2,7 @@
 title: "Kronk Released as a Go SDK and Server for Local AI Inference"
 slug: "kronk-released-as-a-go-sdk-and-server-for-local-ai-inference"
 description: "Kronk has been released as a Go SDK and production-ready model server designed for hardware-accelerated local inference. It allows developers to use Go to directly integrate llama.cpp, whisper.cpp,..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Golang, Inference, LLM, DeveloperTools]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Go Programming"]
 image: "https://avatars.githubusercontent.com/u/14281853?v=4"

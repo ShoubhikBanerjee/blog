@@ -2,7 +2,7 @@
 title: "Critical PHP and Drupal Security Updates Released"
 slug: "critical-php-and-drupal-security-updates-released"
 description: "On November 19, security updates were released for 18 vulnerabilities in the PHP development ecosystem, alongside the patching of a critical remote code execution flaw in the Drupal content..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [PHP, Drupal, SecurityUpdates, Vulnerabilities, CVE]
 categories: ["AI", "Software Security", "Web Development", "Cybersecurity", "Open Source"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/19/php-logo-cyber.jpg"

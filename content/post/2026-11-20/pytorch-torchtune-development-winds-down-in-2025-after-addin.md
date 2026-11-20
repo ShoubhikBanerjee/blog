@@ -2,7 +2,7 @@
 title: "PyTorch torchtune Development Winds Down in 2025 After Adding Llama 4 Support"
 slug: "pytorch-torchtune-development-winds-down-in-2025-after-adding-llama-4-support"
 description: "Development of the PyTorch library torchtune wound down in 2025. As a library designed for easily authoring, post-training, and experimenting with Large Language Models (LLMs), torchtune supported..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [torchtune, PyTorch, LLMs, Finetuning, Llama4]
 categories: ["AI", "Machine Learning", "Deep Learning Libraries", "AI Post Training"]
 image: "https://avatars.githubusercontent.com/u/107212512?v=4"

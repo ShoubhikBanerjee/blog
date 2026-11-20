@@ -2,7 +2,7 @@
 title: "PenShot multi-agent system converts scripts to video generation prompts"
 slug: "penshot-multi-agent-system-converts-scripts-to-video-generation-prompts"
 description: "A new open-source system called PenShot uses a multi-agent LangGraph pipeline to parse scripts of any format and generate coherent, model-ready prompts for text-to-video models including Sora, Veo,..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [AIagents, LangGraph, TextToVideo, ScriptToVideo, MultiAgent, OpenSource]
 categories: ["AI", "AI Agents", "Generative AI", "Computer Vision", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/32693265?v=4"

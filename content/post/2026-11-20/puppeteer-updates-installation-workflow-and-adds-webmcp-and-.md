@@ -2,7 +2,7 @@
 title: "Puppeteer updates installation workflow and adds WebMCP and MCP support"
 slug: "puppeteer-updates-installation-workflow-and-adds-webmcp-and-mcp-support"
 description: "Puppeteer, a JavaScript library for controlling Chrome or Firefox, has updated its installation behavior to accommodate modern package manager security defaults, while expanding its capabilities with..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [Puppeteer, JavaScript, BrowserAutomation, DevTools, MCP, WebDevelopment]
 categories: ["AI", "Web Development", "Automation", "Developer Tools", "Browser Technology"]
 image: "https://avatars.githubusercontent.com/u/6906516?v=4"

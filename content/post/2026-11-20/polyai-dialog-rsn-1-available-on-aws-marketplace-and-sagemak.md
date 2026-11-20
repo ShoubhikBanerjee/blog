@@ -2,7 +2,7 @@
 title: "PolyAI Dialog-RSN-1 available on AWS Marketplace and SageMaker JumpStart"
 slug: "polyai-dialog-rsn-1-available-on-aws-marketplace-and-sagemaker-jumpstart"
 description: "PolyAI has made Dialog-RSN-1, a reasoning model built for real-time complex dialog, available on AWS Marketplace and Amazon SageMaker JumpStart. This update allows developers to deploy the model as a..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [PolyAI, AWS, AmazonSageMaker, DialogRSN1, RealTimeAI]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing", "Natural Language Processing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22412-featured-image.png"

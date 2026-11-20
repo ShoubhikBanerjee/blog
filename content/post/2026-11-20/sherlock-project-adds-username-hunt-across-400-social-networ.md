@@ -2,7 +2,7 @@
 title: "Sherlock Project Adds Username Hunt Across 400+ Social Networks"
 slug: "sherlock-project-adds-username-hunt-across-400-social-networks"
 description: "The Sherlock Project has expanded its capabilities to hunt down social media accounts by username across 400+ networks. However, community packages for ParrotOS and Ubuntu 24.04 are broken, so users..."
-date: 2026-11-20T18:09:02+05:30
+date: 2026-11-20T22:08:48+05:30
 tags: [SherlockProject, SocialMedia, OpenSource, CommandLine]
 categories: ["AI", "Open Source", "Command Line Tools", "Social Media Monitoring", "Software Packaging"]
 image: "https://avatars.githubusercontent.com/u/48293496?v=4"
