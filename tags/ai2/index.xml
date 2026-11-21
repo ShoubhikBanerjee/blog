@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai2 on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/ai2/</link><description>Recent content in Ai2 on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 09 Oct 2026 22:05:01 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/ai2/index.xml" rel="self" type="application/rss+xml"/><item><title>Ai2 Replaces Priority-Based GPU Scheduling with Hierarchical Fair-Share Budgeting System</title><link>https://shoubhikbanerjee.github.io/blog/p/ai2-replaces-priority-based-gpu-scheduling-with-hierarchical-fair-share-budgeting-system/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai2-replaces-priority-based-gpu-scheduling-with-hierarchical-fair-share-budgeting-system/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/Kj0n5ea3ItoNIc2ha2SVL.png" alt="Featured image of post Ai2 Replaces Priority-Based GPU Scheduling with Hierarchical Fair-Share Budgeting System" /&gt;&lt;h1 id="ai2-replaces-priority-based-gpu-scheduling-with-hierarchical-fair-share-budgeting-system"&gt;Ai2 Replaces Priority-Based GPU Scheduling with Hierarchical Fair-Share Budgeting System
+&lt;/h1&gt;&lt;p&gt;The AI Infrastructure team at Ai2 has updated its compute management strategy by replacing a legacy priority-based scheduler with a system featuring GPU time budgets, hierarchical fair-share allocation, and a time-slicing contract. This new approach shifts resource management from case-by-case operational tasks to a transparent administrative process designed to handle demand that consistently exceeds available capacity by 2-3x.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Ai2 manages thousands of NVIDIA H100, B200, and B300 GPUs organized in clusters ranging from 88 to 1024 units. These resources support approximately 150 internal researchers working on diverse AI domains, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Full model flow for LLM and VLM training.&lt;/li&gt;
+&lt;li&gt;Robotics reinforcement learning (RL) simulation.
+0* Post-training for scientific agentic use cases.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The new system is built on a hierarchy of needs designed to optimize distributed training workloads. Instead of solving a manual &amp;ldquo;knapsack problem&amp;rdquo; to fit research needs into a static schedule, leadership now allocates portions of GPU time in advance, allowing them to fund research efforts based on projected impact.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Level&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Capstone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Utilization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The fraction of GPU capacity used over the lifetime of a workload.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Level 3&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Impact&lt;/td&gt;
+&lt;td style="text-align: left"&gt;How often the most valuable workloads are chosen to receive resources.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Level 2&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Occupancy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The fraction of available time assigned to a specific workload.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Foundation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Availability&lt;/td&gt;
+&lt;td style="text-align: left"&gt;How often the hardware is healthy and ready for work.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The transition addresses several critical inefficiencies identified in the previous priority-based model:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Priority Inflation:&lt;/strong&gt; Historically, 100% of scheduled workloads eventually used &amp;ldquo;HIGH&amp;rdquo; priority, starving lower-priority levels of GPU time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU Squatting:&lt;/strong&gt; Users previously parked &amp;ldquo;no-op&amp;rdquo; workloads to maintain access to resources, preventing others from launching real-time debugging tasks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Maintenance Overhead:&lt;/strong&gt; Because preemptability was optional, engineers spent significant time negotiating shutdowns for hardware maintenance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Seasonality Issues:&lt;/strong&gt; Previous attempts to assign GPU monopolies to specific teams caused resources to sit idle during natural lulls in research cycles.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;By moving to a time-budgeting model, Ai2 enables leadership to think like investors. Since research demand cannot be forecast with total precision due to the nature of novel science, the institute now decides how to fund research efforts before the workloads even exist. This ensures that every available GPU hour is allocated based on strategy rather than individual competition for scarce resources.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.datocms-assets.com/64837/1791481494-impactful-scheduling-for-gpu-clusters-google-docs-image-1.png?fit=max&amp;amp;h=810&amp;amp;w=1550"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.datocms-assets.com/64837/1791481674-impactful-scheduling-for-gpu-clusters-google-docs-image-2.png?fit=max&amp;amp;h=810&amp;amp;w=1550"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.datocms-assets.com/64837/1791481919-impactful-scheduling-for-gpu-clusters-google-docs-image-4.png?fit=max&amp;amp;h=810&amp;amp;w=1550"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIinfrastructure #GPUclusters #Ai2 #MachineLearning #DistributedTraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/allenai/impactful-scheduling" target="_blank" rel="noopener"
+&gt;Impactful scheduling for GPU clusters&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Ai2 Open-Sources AstaBrief 8B for Fast Scientific Reports</title><link>https://shoubhikbanerjee.github.io/blog/p/ai2-open-sources-astabrief-8b-for-fast-scientific-reports/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai2-open-sources-astabrief-8b-for-fast-scientific-reports/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/AdqLEBgtQnaDXKLdylC3l.png" alt="Featured image of post Ai2 Open-Sources AstaBrief 8B for Fast Scientific Reports" /&gt;&lt;h1 id="ai2-open-sources-astabrief-8b-for-fast-scientific-reports"&gt;Ai2 Open-Sources AstaBrief 8B for Fast Scientific Reports
+&lt;/h1&gt;&lt;p&gt;The Allen Institute for AI (Ai2) has introduced AstaBrief 8B, an open-weights language model designed to generate cited scientific reports from research questions and retrieved literature. The model is available as a fast generation option within Ai2&amp;rsquo;s Asta platform and has been open-sourced alongside its training data.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AstaBrief 8B is a small, open model trained specifically for scientific report generation. It was developed to match the report quality of proprietary models while significantly reducing generation time and serving costs. The model turns a research question and retrieved literature excerpts into a cited report in a single pass, bypassing the more expensive multi-stage processes used by other systems.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Development began with tens of thousands of real research queries, citation-focused filtering, preference data, and a redesigned report-generation pipeline.&lt;/li&gt;
+&lt;li&gt;The model is built on Qwen3-8B, with most effort focused on post-training data, evaluation, and report-generation scaffolding.&lt;/li&gt;
+&lt;li&gt;It directly generates the final report in one pass given a user query and relevant retrieved snippets, bypassing snippet summarization and clustering stages.&lt;/li&gt;
+&lt;li&gt;The training pipeline used real user queries from the system described in the paper “Synthesizing scientific literature with retrieval-augmented LMs” and ScholarQA.&lt;/li&gt;
+&lt;li&gt;Training used supervised fine-tuning (SFT) and direct preference optimization (DPO), rather than reinforcement learning, to keep the process cheaper and easier to debug.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;The following table summarizes the speed comparison between AstaBrief&amp;rsquo;s Fast mode and the Thinking mode:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;th&gt;Fast Mode (AstaBrief)&lt;/th&gt;
+&lt;th&gt;Thinking Mode&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Average report generation time (full pipeline)&lt;/td&gt;
+&lt;td&gt;51.1 seconds&lt;/td&gt;
+&lt;td&gt;178.5 seconds&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;The result is an approximate 3.5× reduction in report generation time compared to the proprietary models used in Thinking mode.&lt;/li&gt;
+&lt;li&gt;The model produces reports in one pass rather than section by section.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AstaBrief is available in Asta&amp;rsquo;s &amp;ldquo;Generate a report&amp;rdquo; feature as Fast mode, alongside the Claude-powered Thinking mode.&lt;/li&gt;
+&lt;li&gt;Alongside the model weights, Ai2 is releasing an example workflow that researchers can adapt to create reports from their own PDFs.&lt;/li&gt;
+&lt;li&gt;Open weights allow institutions to run AstaBrief on their own infrastructure, which is necessary when research questions reveal sensitive or unpublished work.&lt;/li&gt;
+&lt;li&gt;The model and training data are open-sourced so others can study, reproduce, and build on the approach.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The model addresses specific demands of scientific work: answers must stay grounded in evidence, preserve what evidence supports, and allow verification.&lt;/li&gt;
+&lt;li&gt;Users often bring substantial context and constraints to queries, such as comparing approaches across literature while accounting for method, population, or setting.&lt;/li&gt;
+&lt;li&gt;Many users return to generated reports later, treating them as working research artifacts rather than one-off answers.&lt;/li&gt;
+&lt;li&gt;The project serves as a test case for building open language models that can be adapted to the specific demands of scientific work.&lt;/li&gt;
+&lt;li&gt;Through NSF OMAI, a U.S. national initiative led by Ai2 to build fully open AI infrastructure for scientific discovery, researchers are working with scientific communities to understand future needs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/nBB2ourke1eQYpjq2mGD5.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/3dI-e2nnf6FDQw6ay-x9N.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/Ek19fGImhqROo_qSUt5LV.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Ai2 #AstaBrief #opensource #scientificAI #LLM #languageModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/allenai/astabrief" target="_blank" rel="noopener"
+&gt;Open-sourcing AstaBrief, the fast report-generation model in Asta&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

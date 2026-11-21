@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>IdentityPropagation on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/identitypropagation/</link><description>Recent content in IdentityPropagation on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 04 Nov 2026 22:02:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/identitypropagation/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore adds on‑behalf‑of token exchange for identity‑preserving API calls</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-onbehalfof-token-exchange-for-identitypreserving-api-calls/</link><pubDate>Wed, 04 Nov 2026 22:02:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-onbehalfof-token-exchange-for-identitypreserving-api-calls/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-21070-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore adds on‑behalf‑of token exchange for identity‑preserving API calls" /&gt;&lt;h1 id="amazon-bedrock-agentcore-adds-onbehalfof-token-exchange-for-identitypreserving-api-calls"&gt;Amazon Bedrock AgentCore adds on‑behalf‑of token exchange for identity‑preserving API calls
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AI agents that interact with enterprise APIs must keep the calling user’s identity throughout the request chain. Without identity propagation, downstream services see the request as coming from the application instead of the user, breaking audit trails, bypassing user‑level access controls, and violating the principle of least privilege.&lt;/p&gt;
+&lt;p&gt;Amazon Bedrock AgentCore is a platform to build, connect, and optimise agents at scale. This update shows how to configure the AgentCore Gateway for an on‑behalf‑of (OBO) token exchange with Microsoft Entra ID so that an AI agent can call the ServiceNow REST API while preserving the user’s identity.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;The user acquires a JSON Web Token (JWT) to invoke the agent. &lt;em&gt;(Figure 1)&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The agent authenticates to the gateway with a JWT scoped to the agent’s own application registration.&lt;/li&gt;
+&lt;li&gt;The gateway exchanges that token, using the OBO flow, for a new token scoped to the ServiceNow API connector. The new token retains the original user’s claims.&lt;/li&gt;
+&lt;li&gt;ServiceNow receives a token whose &lt;code&gt;preferred_username&lt;/code&gt; claim maps to an existing ServiceNow user and applies that user’s permissions to the API call.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Key token details:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The agent presents a JWT with an audience claim matching the agent’s client ID (e.g., &lt;code&gt;3ff88e17-XXXX-…&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;ServiceNow expects a token with an audience claim matching its own API connector client ID (e.g., &lt;code&gt;5d4a7a11-XXXX-…&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;The OBO flow bridges this gap.&lt;/li&gt;
+&lt;li&gt;AgentCore Gateway sends the inbound token to the Entra token endpoint together with the agent client credentials, the target scope, and &lt;code&gt;requested_token_use=on_behalf_of&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Entra validates the user’s consent to delegation and issues a new token for the ServiceNow API with the original user’s claims intact.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-configuration-steps"&gt;⚙️ Configuration steps
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prerequisites&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;A Microsoft Entra ID tenant with permissions to create application registrations (at least the &lt;em&gt;Application Developer&lt;/em&gt; role).&lt;/li&gt;
+&lt;li&gt;A ServiceNow instance with admin access to configure inbound OAuth integrations (a personal developer instance can be created at the ServiceNow developer site).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Create two Entra application registrations&lt;/strong&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;em&gt;ServiceNow API connector&lt;/em&gt; – represents the ServiceNow API connector.
+&lt;ul&gt;
+&lt;li&gt;After creation, note the Application (client) ID.&lt;/li&gt;
+&lt;li&gt;In &lt;strong&gt;Expose an API&lt;/strong&gt;, add a scope named &lt;code&gt;user_impersonation&lt;/code&gt; using the default Application ID URI. This scope is requested by the OBO flow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;AI agent&lt;/em&gt; – represents the AI agent.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configure AgentCore Gateway&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Define a gateway target for the ServiceNow API.&lt;/li&gt;
+&lt;li&gt;Enable OBO token exchange on the target; AgentCore Gateway will perform the exchange for each request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ServiceNow side&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Configure inbound OAuth to accept tokens issued by Entra ID.&lt;/li&gt;
+&lt;li&gt;Ensure the &lt;code&gt;preferred_username&lt;/code&gt; claim maps to a ServiceNow user.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Maintaining user identity prevents audit‑trail gaps and ensures that downstream services enforce user‑level access controls.&lt;/li&gt;
+&lt;li&gt;The pattern can be applied to any REST API protected by OAuth, not just ServiceNow.&lt;/li&gt;
+&lt;li&gt;In production you can pair identity propagation with Amazon Bedrock Guardrails to filter harmful content and validate the agent’s inputs and outputs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-next-steps"&gt;🚀 Next steps
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Deploy the described configuration in a test environment.&lt;/li&gt;
+&lt;li&gt;Extend the OBO pattern to other enterprise APIs.&lt;/li&gt;
+&lt;li&gt;Combine with Bedrock Guardrails for comprehensive security and compliance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-21070-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-21070-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-21070-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AIAgents #OAuth #IdentityPropagation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/servicenow-on-behalf-of-token-exchange-with-bedrock-agentcore-gateway/" target="_blank" rel="noopener"
+&gt;ServiceNow on-behalf-of token exchange with Bedrock AgentCore Gateway | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

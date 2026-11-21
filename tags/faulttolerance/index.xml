@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>FaultTolerance on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/faulttolerance/</link><description>Recent content in FaultTolerance on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 17 Sep 2026 00:50:10 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/faulttolerance/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Resiliency Extension Adds Fault-Tolerance Primitives to PyTorch</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-resiliency-extension-adds-fault-tolerance-primitives-to-pytorch/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-resiliency-extension-adds-fault-tolerance-primitives-to-pytorch/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-20900-featured-image.png" alt="Featured image of post NVIDIA Resiliency Extension Adds Fault-Tolerance Primitives to PyTorch" /&gt;&lt;h1 id="nvidia-resiliency-extension-adds-fault-tolerance-primitives-to-pytorch"&gt;NVIDIA Resiliency Extension Adds Fault-Tolerance Primitives to PyTorch
+&lt;/h1&gt;&lt;p&gt;The NVIDIA Resiliency Extension (NVRx) has been introduced as a pip-installable Python layer (&lt;code&gt;pip install nvidia-resiliency-ext&lt;/code&gt;) that provides fault-tolerance primitives for PyTorch without requiring custom kernels, a PyTorch fork, or recompilation.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NVRx provides three primary features to handle different types of failures during training:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Async Checkpointing&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Replaces &lt;code&gt;torch.save&lt;/code&gt; with &lt;code&gt;async_save()&lt;/code&gt; via &lt;code&gt;TorchAsyncCheckpoint&lt;/code&gt;, handing the state dict to a background process to return immediately.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;In-process Restart&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses &lt;code&gt;inprocess.Wrapper&lt;/code&gt; to wrap the train function, preventing transient faults like unhandled exceptions or NCCL hangs from killing the Python process.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;ft_launcher&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;An in-job restart launcher that handles OS-level hangs, SIGKILL, and out-of-memory (OOM) kills.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;When using &lt;code&gt;ft_launcher&lt;/code&gt;, each rank runs a &lt;code&gt;RankMonitorClient&lt;/code&gt;. The launcher monitors heartbeats against CLI-set timeouts; if a stall or death is detected, it kills survivors, reclaims GPU memory, and respawns workers in the same job, which then reload from the latest checkpoint.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Checkpointing Efficiency:&lt;/strong&gt; When paired with FSDP &lt;code&gt;LOCAL_STATE_DICT&lt;/code&gt;, each rank writes its own shard directly, eliminating the rank-0 bottleneck and the need for all-gather.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure Requirements:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Compute:&lt;/strong&gt; Amazon EC2 p5.48xlarge instances featuring 8x NVIDIA H100 80 GB GPUs and 32x Elastic Fabric Adapter (EFA) network interfaces.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Orchestration:&lt;/strong&gt; Amazon EKS (v1.28+) managing the control plane, pod scheduling, and Job lifecycle. Training pods run as Kubernetes Jobs with headless Services for DNS-based peer discovery.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Storage:&lt;/strong&gt; Amazon FSx for Lustre (SCRATCH_2) mounted via the FSx CSI driver for distributed checkpoint I/O.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Networking:&lt;/strong&gt; EFA provides 3,200 Gbps network bandwidth for NCCL all-reduce operations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Software:&lt;/strong&gt; Container images containing PyTorch 2.9+ and NVRx 0.4.1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;To reproduce benchmark results, the following environment is required:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS account with service quota for p5.48xlarge (or p4de.24xlarge) instances.&lt;/li&gt;
+&lt;li&gt;Amazon EKS cluster with EFA-enabled self-managed GPU node groups and the NVIDIA device plugin.&lt;/li&gt;
+&lt;li&gt;Amazon FSx for Lustre filesystem in the same Availability Zone as the GPU nodes.&lt;/li&gt;
+&lt;li&gt;Container image stored in Amazon ECR.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#NVIDIA #PyTorch #AWS #FaultTolerance #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/fault-tolerant-distributed-training-on-amazon-eks-using-nvrx/" target="_blank" rel="noopener"
+&gt;Fault tolerant distributed training on Amazon EKS using NVRx | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

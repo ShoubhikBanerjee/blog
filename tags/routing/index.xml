@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Routing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/routing/</link><description>Recent content in Routing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 18 Nov 2026 22:09:17 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/routing/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker AI introduces KV cache-aware routing</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-introduces-kv-cache-aware-routing/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-introduces-kv-cache-aware-routing/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22381-featured-image.png" alt="Featured image of post Amazon SageMaker AI introduces KV cache-aware routing" /&gt;&lt;h1 id="amazon-sagemaker-ai-introduces-kv-cache-aware-routing"&gt;Amazon SageMaker AI introduces KV cache-aware routing
+&lt;/h1&gt;&lt;p&gt;Today, Amazon SageMaker AI introduces KV cache-aware routing (KV-aware routing), a new routing strategy for real-time endpoints. It uses the cache state that the model container reports to send each request to an instance that already holds a long cached match for its prompt and isn’t too busy.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;KV-aware routing is designed for teams that serve large language models (LLMs) with multi-turn conversations, long shared prompts, or heavy load. It addresses limitations in the previously introduced prefix-aware routing, which infers where a prefix is cached from the request alone. Because prefix-aware routing hashes the start of the request, it cannot tell when an instance has evicted that cache. Consequently, if an instance evicts older KV cache entries when its GPU memory fills up, the router keeps sending matching requests there as if the cache were still warm. Additionally, in multi-turn chats, each turn adds to the history; while a request is shorter than the configured &lt;code&gt;PrefixLength&lt;/code&gt;, every new turn changes the text the router hashes, so the next turn can land on a different instance than the one that cached the earlier turns.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;A model keeps the work it did on a prompt in GPU memory, the KV cache, and skips that work when the same start reaches the same instance again. KV-aware routing operates through three main components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model Container Reporting&lt;/strong&gt;: The model container reports what it has cached.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Managed Cache Index&lt;/strong&gt;: SageMaker AI keeps a managed cache index of that state for the endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Endpoint Routing&lt;/strong&gt;: The endpoint uses the index to choose an instance for each request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When a request arrives, the endpoint tokenizes the prompt and looks up the tokens in the index. The index holds only pointers: one-way, truncated hashes of cached content, each mapped to the instance or inference component copy that holds it. It never stores prompts, token IDs, request payloads, or KV tensors. Because the index matches on tokens rather than a fixed number of bytes, a multi-turn history can match in full as it grows. If instance A holds the cached start of a conversation, the next turn of that conversation goes to A.&lt;/p&gt;
+&lt;p&gt;The endpoint picks among candidates by weighing how much of the prompt each one has cached against how busy it is. A candidate that is too busy is skipped, so if the instance with the longest match is busy, the request goes to the next-best one that is available. If no candidate has a useful match or all of them are busy, the request falls back to load-aware routing.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;You turn on KV-aware routing in two places:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add one environment variable to your model so the container reports its cache contents.&lt;/li&gt;
+&lt;li&gt;Set &lt;code&gt;RoutingStrategy&lt;/code&gt; to &lt;code&gt;KV_AWARE&lt;/code&gt; in the endpoint configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Specifically, when you turn events on with &lt;code&gt;SM_VLLM_KV_EVENTS_CONFIG&lt;/code&gt;, the container publishes a KV cache event each time it stores or evicts cache entries, and SageMaker AI uses these events to keep the index current. Clients call the endpoint with the same APIs as before. You do not configure a concurrency threshold for this, as you do with prefix-aware routing.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This strategy ensures that requests sharing a prompt are routed to instances where that prompt is already in the GPU memory cache, maximizing computational efficiency. By tracking actual cache eviction and storage events rather than relying on static prefix hashes, the system prevents routing requests to instances where the cache has been cleared due to memory pressure.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22381-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22381-2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22381-3-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonSageMaker #LLM #KVCache #Routing #Inference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-real-time-endpoints-now-support-kv-cache-aware-routing/" target="_blank" rel="noopener"
+&gt;Amazon SageMaker AI real-time endpoints now support KV cache aware routing | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Python Solver Wins SOICT 2026 Integrated Transportation Contest</title><link>https://shoubhikbanerjee.github.io/blog/p/python-solver-wins-soict-2026-integrated-transportation-contest/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/python-solver-wins-soict-2026-integrated-transportation-contest/</guid><description>&lt;h1 id="python-solver-wins-soict-2026-integrated-transportation-contest"&gt;Python Solver Wins SOICT 2026 Integrated Transportation Contest
+&lt;/h1&gt;&lt;p&gt;A single‑file Python solver was submitted to the second round of the SOICT 2026 contest for the Integrated Passenger and Parcel Transportation problem, a selective pickup‑and‑delivery routing problem with time windows, open routes and heterogeneous taxis.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The contest task involved integrating passenger and parcel transportation under constraints of time windows, open routes, and heterogeneous taxi fleets.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;p&gt;The solver combines:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A constant‑time insertion test based on latest‑arrival slack.&lt;/li&gt;
+&lt;li&gt;Greedy insertion.&lt;/li&gt;
+&lt;li&gt;Local search.&lt;/li&gt;
+&lt;li&gt;Adaptive Large Neighborhood Search (ALNS) with simulated‑annealing acceptance.&lt;/li&gt;
+&lt;li&gt;An exact route‑selection engine.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Constant‑time insertion test&lt;/td&gt;
+&lt;td&gt;Based on latest‑arrival slack&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Greedy insertion&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Local search&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ALNS with simulated‑annealing acceptance&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Exact route‑selection engine&lt;/td&gt;
+&lt;td&gt;Enumerates, for every taxi, the best feasible route for each request set and then solves the resulting set‑packing problem by branch‑and‑bound strengthened with route‑based large neighborhood search, Lagrangian bounds and reduced‑cost fixing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The exact engine is chosen automatically from the instance size.&lt;/li&gt;
+&lt;li&gt;An independent verifier and a watchdog guarantee that a valid answer is always printed.&lt;/li&gt;
+&lt;li&gt;Official evaluation: 38 scored instances, 5‑minute limit, total benefit 487,237.&lt;/li&gt;
+&lt;li&gt;Every run finished within 277 seconds, using at most 279 MB.&lt;/li&gt;
+&lt;li&gt;28 of the 38 instances terminated well before the limit.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#SOICT #Python #Routing #ALNS #Optimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.22043v1" target="_blank" rel="noopener"
+&gt;A Hybrid Exact-Heuristic Solver for the Integrated Passenger and Parcel Transportation Problem&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SilentDataCorruption on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/silentdatacorruption/</link><description>Recent content in SilentDataCorruption on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 12 Nov 2026 22:08:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/silentdatacorruption/index.xml" rel="self" type="application/rss+xml"/><item><title>Detecting Silent Data Corruption in Distributed Model Training on SageMaker HyperPod</title><link>https://shoubhikbanerjee.github.io/blog/p/detecting-silent-data-corruption-in-distributed-model-training-on-sagemaker-hyperpod/</link><pubDate>Thu, 12 Nov 2026 22:08:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/detecting-silent-data-corruption-in-distributed-model-training-on-sagemaker-hyperpod/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21841-featured-image.png" alt="Featured image of post Detecting Silent Data Corruption in Distributed Model Training on SageMaker HyperPod" /&gt;&lt;h1 id="detecting-silent-data-corruption-in-distributed-model-training-on-sagemaker-hyperpod"&gt;Detecting Silent Data Corruption in Distributed Model Training on SageMaker HyperPod
+&lt;/h1&gt;&lt;p&gt;Silent data corruption (SDC) occurs when a GPU returns a wrong but plausible number without raising an error. In large‑scale distributed training the erroneous value can propagate through gradients and weights of every replica, keeping loss seemingly normal for hours before a divergence is noticed.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;SDC is caused by manufacturing defects or silicon aging, often in a multiply‑accumulate lane of a tensor core.&lt;/li&gt;
+&lt;li&gt;The compute path has no ECC or parity; a result like 4.0001 instead of 4.0000 passes unnoticed.&lt;/li&gt;
+&lt;li&gt;Existing safeguards (ECC memory, Xid errors, DCGM health checks, transport checksums, checkpoint checksums) do not catch SDC because they monitor different boundaries.&lt;/li&gt;
+&lt;li&gt;Meta observed 6 of 419 unexpected job interruptions during a 54‑day Llama 3 405B pre‑training run on up to 16 K H100 GPUs and traced them to SDC.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-detection-method"&gt;🛠️ Detection Method
+&lt;/h2&gt;&lt;p&gt;Three lightweight checks are added to a PyTorch &lt;code&gt;DistributedDataParallel&lt;/code&gt; (DDP) training loop. When a check fires, the suspect rank is mapped to its Kubernetes node, the job is paused, and SageMaker HyperPod replaces the faulty node.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Check&lt;/th&gt;
+&lt;th&gt;What it Detects&lt;/th&gt;
+&lt;th&gt;When it Runs&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Non‑finite gradient check&lt;/td&gt;
+&lt;td&gt;NaN, Inf, or overflow in a GPU’s forward/backward pass and NaN/Inf introduced by all‑reduce&lt;/td&gt;
+&lt;td&gt;Every training step before the all‑reduce&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ring replay audit&lt;/td&gt;
+&lt;td&gt;Finite but wrong values by recomputing another node’s micro‑batch and comparing loss bits and gradient fingerprints&lt;/td&gt;
+&lt;td&gt;Periodic audit steps&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Weight fingerprint comparison&lt;/td&gt;
+&lt;td&gt;Corruption in the optimizer step or stored weights by comparing each replica’s weights after the update&lt;/td&gt;
+&lt;td&gt;After each optimizer update&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-validation"&gt;📊 Validation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tests were run on a SageMaker HyperPod cluster with 4 &lt;code&gt;ml.p5.48xlarge&lt;/code&gt; instances (32 NVIDIA H100 GPUs).&lt;/li&gt;
+&lt;li&gt;Software‑injected faults were introduced and each test was repeated on three instances, the minimum required for the checks.&lt;/li&gt;
+&lt;li&gt;The full implementation is available in the accompanying GitHub repository.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-integration-with-sagemaker-hyperpod"&gt;⚙️ Integration with SageMaker HyperPod
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;HyperPod’s health‑monitoring agent replaces nodes that report a fault (GPU errors, deep health‑check failures).&lt;/li&gt;
+&lt;li&gt;SDC slips past these mechanisms because the hardware never reports an error.&lt;/li&gt;
+&lt;li&gt;The detection workflow leverages the Kubernetes node name (which contains the instance ID) to map a suspect rank to a physical node, cordon the node, examine GPU metrics on the HyperPod observability dashboards, and then replace the node before resuming from a checkpoint saved prior to the suspect window.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Early detection prevents wasted compute on hours of silently corrupted training.&lt;/li&gt;
+&lt;li&gt;Containing the fault at the node level avoids larger job interruptions.&lt;/li&gt;
+&lt;li&gt;The approach adds minimal overhead and works with existing SageMaker HyperPod infrastructure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#SilentDataCorruption #DistributedTraining #SageMaker #GPU&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/detecting-and-recovering-from-silent-data-corruption-on-amazon-sagemaker-hyperpod/" target="_blank" rel="noopener"
+&gt;Detecting and recovering from silent data corruption on Amazon SageMaker HyperPod | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

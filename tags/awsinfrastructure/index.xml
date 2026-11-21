@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWSInfrastructure on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/awsinfrastructure/</link><description>Recent content in AWSInfrastructure on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/awsinfrastructure/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker HyperPod Introduces Workload Recovery and Infrastructure Checks</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-hyperpod-introduces-workload-recovery-and-infrastructure-checks/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-hyperpod-introduces-workload-recovery-and-infrastructure-checks/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22383-featured-image.png" alt="Featured image of post Amazon SageMaker HyperPod Introduces Workload Recovery and Infrastructure Checks" /&gt;&lt;h1 id="amazon-sagemaker-hyperpod-introduces-workload-recovery-and-infrastructure-checks"&gt;Amazon SageMaker HyperPod Introduces Workload Recovery and Infrastructure Checks
+&lt;/h1&gt;&lt;p&gt;Today, Amazon SageMaker HyperPod introduces workload recovery and infrastructure checks. These features catch failures sooner and raise the goodput of training workloads.&lt;/p&gt;
+&lt;h2 id="-the-challenge"&gt;🧩 The Challenge
+&lt;/h2&gt;&lt;p&gt;Large training jobs can fail even when every node looks healthy. A GPU with a subtle fault can pass its stress tests and still return wrong values. When a job stalls on an NCCL timeout, it keeps its GPUs, and Slurm still shows it as running. If a device plugin crashes on one node, the job fails with an error that never mentions the plugin.&lt;/p&gt;
+&lt;p&gt;Teams usually find these problems only after the loss diverges or the job fails, and by then, the compute is spent. Each of these failures lowers goodput, the share of your cluster&amp;rsquo;s time that goes to useful training.&lt;/p&gt;
+&lt;h3 id="types-of-failures"&gt;Types of Failures
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Numerical faults:&lt;/strong&gt; A GPU can pass every hardware test and still compute wrong results. The first sign is often NaN or infinite loss in a production run.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hung jobs:&lt;/strong&gt; An NCCL timeout, a stalled data pipeline, or a deadlock can stop a job without ending it. The job keeps its GPUs and their memory, and Slurm reports it as running until someone checks the loss curve or the log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cluster-level failures:&lt;/strong&gt; Some failures happen in Kubernetes, not in a node&amp;rsquo;s hardware. A device plugin crash-loops, a required DaemonSet never starts on a new node, or ranks on different nodes fall out of step in an NCCL collective. When the job fails, the error often doesn&amp;rsquo;t say which pod or node caused it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-new-infrastructure-checks"&gt;🛡️ New Infrastructure Checks
+&lt;/h2&gt;&lt;p&gt;The health monitoring agent (HMA) watches each node for GPU errors, deep health checks test nodes during provisioning, and automatic node recovery reboots or replaces faulty hardware.&lt;/p&gt;
+&lt;h3 id="monitoring-agents-and-checks"&gt;Monitoring Agents and Checks
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Health Monitoring Agent (HMA)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Watches each node for GPU errors such as Xid and NVLink faults, Elastic Fabric Adapter (EFA) errors, and kernel errors.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;MultiNodeTrainingValidation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A new deep health check for HyperPod clusters orchestrated by Amazon Elastic Kubernetes Service (Amazon EKS). When HyperPod provisions an instance, or when you run the check on demand, it trains a small model on the instance and then across instances of the same type. The instance fails if the loss becomes NaN or infinite, or training doesn&amp;rsquo;t finish in time.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Kubernetes Resource Monitoring Agent&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Watches the Kubernetes layer of an EKS cluster for problems such as crash-looping device plugins, missing DaemonSets, and tainted nodes. When a job fails, it reports the pods and nodes involved as Kubernetes events and Amazon CloudWatch logs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Hung Job Detection&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Finds Slurm jobs that have stopped making progress. An agent on each node watches the job&amp;rsquo;s output and GPU activity, or log patterns that you define. It writes an event to CloudWatch and can cancel the job so that Slurm requeues it.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-existing-resiliency-features"&gt;⚙️ Existing Resiliency Features
+&lt;/h2&gt;&lt;p&gt;The existing HyperPod resiliency features check a single node at a time.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;InstanceStress:&lt;/strong&gt; Runs DCGM level 4 diagnostics and tests each instance&amp;rsquo;s GPUs, GPU memory, NVLink, and EFA devices.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;InstanceConnectivity:&lt;/strong&gt; Runs NCCL tests across GPU instances, or NCCOM tests on AWS Trainium.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;These checks run when instances are provisioned, or on demand, and confirm that their GPUs train correctly. Hung job detection runs alongside each Slurm job and catches a job that has stopped making progress.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22383-1-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22383-2-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMakerHyperPod #MachineLearning #GPUComputing #Kubernetes #AWSInfrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-workload-recovery-and-expanded-infrastructure-checks-on-amazon-sagemaker-hyperpod/" target="_blank" rel="noopener"
+&gt;Introducing workload recovery and expanded infrastructure checks on Amazon SageMaker HyperPod | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

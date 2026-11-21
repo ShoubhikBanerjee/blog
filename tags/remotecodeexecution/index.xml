@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Remotecodeexecution on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/remotecodeexecution/</link><description>Recent content in Remotecodeexecution on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2026 22:09:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/remotecodeexecution/index.xml" rel="self" type="application/rss+xml"/><item><title>Critical Ruby Heap Overflow Exploit (ruby2shell) Disclosed in String Case Conversion</title><link>https://shoubhikbanerjee.github.io/blog/p/critical-ruby-heap-overflow-exploit-ruby2shell-disclosed-in-string-case-conversion/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/critical-ruby-heap-overflow-exploit-ruby2shell-disclosed-in-string-case-conversion/</guid><description>&lt;img src="https://blog.cloudflare.com/_emdash/api/media/file/01M7X91E3PVQ8147SJ7B05N2WK.png" alt="Featured image of post Critical Ruby Heap Overflow Exploit (ruby2shell) Disclosed in String Case Conversion" /&gt;&lt;h1 id="critical-ruby-heap-overflow-exploit-ruby2shell-disclosed-in-string-case-conversion"&gt;Critical Ruby Heap Overflow Exploit (ruby2shell) Disclosed in String Case Conversion
+&lt;/h1&gt;&lt;h1 id="-overview"&gt;🔍 Overview
+&lt;/h1&gt;&lt;p&gt;On November 19, 2026, the Ruby programming language team disclosed &lt;strong&gt;ruby2shell (CVE-2026-132825)&lt;/strong&gt;, a critical heap buffer overflow vulnerability in how Ruby handles string case conversion. The flaw allows remote code execution in certain scenarios, particularly when processing strings in legacy single-byte encodings like ISO-8859-1 and Windows-1252.&lt;/p&gt;
+&lt;h1 id="-how-it-works"&gt;🧩 How it works
+&lt;/h1&gt;&lt;p&gt;The vulnerability arises due to how Ruby processes strings containing special characters, such as the German sharp s (ß). In single-byte encodings, the uppercase form of this character is represented as two bytes (&lt;strong&gt;&amp;lsquo;SS&amp;rsquo;&lt;/strong&gt; in ASCII), but Ruby’s case conversion logic incorrectly assumes the output will match the input length. When converting case for strings with 21 or more sharp s characters, Ruby writes two bytes but checks for only one, causing a buffer overflow.&lt;/p&gt;
+&lt;p&gt;In UTF-8, this issue does not occur because the encoding handles multi-byte characters differently, but legacy systems still rely on single-byte encodings.&lt;/p&gt;
+&lt;h1 id="-key-details"&gt;⚙️ Key details
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Severity&lt;/strong&gt;: Critical (Ruby rates it as such).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Affected versions&lt;/strong&gt;: Ruby 3.3.x up to 3.3.13, 3.4.x up to 3.4.12, and 4.0.x up to 4.0.9.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fixed versions&lt;/strong&gt;: Ruby 3.3.14, 3.4.13, and 4.0.10 (also patching six additional memory safety flaws, some of which can lead to code execution).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Exploit paths&lt;/strong&gt;: Affected by default in &lt;strong&gt;Ruby on Rails&lt;/strong&gt; and classic-style &lt;strong&gt;Sinatra&lt;/strong&gt; applications via HTML forms (GET/POST requests). Other frameworks (Rack, non-classic Sinatra) are not exposed by default.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Self-hosted products&lt;/strong&gt;: Bundled Ruby versions in GitLab, GitHub Enterprise Server, Mastodon, OpenProject, Discourse, and Chatwoot shipped vulnerable versions in their latest releases at disclosure.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cloudflare WAF&lt;/strong&gt;: Blocks ruby2shell and a related integer overflow (GHSA-87fm-7w84-j2px) in both Free and Managed Rulesets, with &lt;strong&gt;Block as default action&lt;/strong&gt;. This is a compensating control, not a replacement for patching.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="-availability"&gt;🚀 Availability
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Veria Labs&lt;/strong&gt; reported affected default configurations in Ruby on Rails and classic Sinatra before authentication.&lt;/li&gt;
+&lt;li&gt;Cloudflare WAF updates added rules to block both ruby2shell and GHSA-87fm-7w84-j2px.&lt;/li&gt;
+&lt;li&gt;Cloudflare patched its own Ruby-based systems and found no signs of compromise.&lt;/li&gt;
+&lt;li&gt;Scanning for exploits is expected to begin shortly after disclosure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Exploitation risk&lt;/strong&gt;: The vulnerability can lead to remote code execution, posing a severe threat to systems relying on vulnerable Ruby versions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Patch delays&lt;/strong&gt;: Upgrading bundled Ruby in self-hosted products or container images can be time-consuming, leaving systems exposed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Legacy encodings&lt;/strong&gt;: The issue highlights risks in supporting outdated single-byte encodings alongside UTF-8.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;WAF limitations&lt;/strong&gt;: While Cloudflare’s WAF reduces exposure, exploits may still bypass it through unmonitored paths.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="-recommendations"&gt;⚠️ Recommendations
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Immediate action&lt;/strong&gt;: Upgrade Ruby to the patched versions (3.3.14, 3.4.13, or 4.0.10) or apply backported fixes in distribution packages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Monitor for scans&lt;/strong&gt;: Expect increased scanning activity post-disclosure.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Verify package versions&lt;/strong&gt;: Check full package versions against distribution advisories to confirm fixes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cloudflare WAF&lt;/strong&gt;: Use as a temporary mitigant while patching, but do not rely solely on it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="-additional-vulnerabilities-fixed-in-the-same-releases"&gt;📊 Additional vulnerabilities fixed in the same releases:
+&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Vulnerability ID&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;th&gt;Engine Affected&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GHSA-87fm-7w84-j2px&lt;/td&gt;
+&lt;td&gt;Integer overflow in string case conversion&lt;/td&gt;
+&lt;td&gt;String case conversion&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;(Five others)&lt;/td&gt;
+&lt;td&gt;Memory safety flaws in Ruby’s regex engine&lt;/td&gt;
+&lt;td&gt;Regular expressions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#security #ruby #heap-overflow #remote-code-execution #vulnerability-patch&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://blog.cloudflare.com/ruby2shell-waf-protection/" target="_blank" rel="noopener"
+&gt;How Cloudflare WAF protects against ruby2shell (CVE-2026-132825)&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

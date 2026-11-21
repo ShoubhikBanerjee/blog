@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SpringBoot on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/springboot/</link><description>Recent content in SpringBoot on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2026 22:09:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/springboot/index.xml" rel="self" type="application/rss+xml"/><item><title>Java 17 Spring Boot project implements RAG agent with hybrid search and observability</title><link>https://shoubhikbanerjee.github.io/blog/p/java-17-spring-boot-project-implements-rag-agent-with-hybrid-search-and-observability/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/java-17-spring-boot-project-implements-rag-agent-with-hybrid-search-and-observability/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/275442820?v=4" alt="Featured image of post Java 17 Spring Boot project implements RAG agent with hybrid search and observability" /&gt;&lt;h1 id="java-17-spring-boot-project-implements-rag-agent-with-hybrid-search-and-observability"&gt;Java 17 Spring Boot project implements RAG agent with hybrid search and observability
+&lt;/h1&gt;&lt;p&gt;This update describes a Java 17 AI agent service built on Spring Boot 3.5 and LangChain4j 0.34. Designed for enterprise knowledge Q&amp;amp;A and intelligent customer service, the project implements a complete engineering pipeline that covers document ingestion, hybrid retrieval, and offline evaluation.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The system focuses on production-grade reliability, addressing common challenges like imprecise recall, uncontrolled costs, and lack of observability. It is not just a prompt demo; it features a full stack including semantic caching, multi-model routing, and end-to-end monitoring.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The request flow handles multiple scenarios to balance accuracy and cost:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Caching&lt;/strong&gt;: A request first checks the semantic cache; if a match is found, it returns immediately to reduce API costs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Processing&lt;/strong&gt;: Unmatched queries trigger a ReAct loop or Adaptive RAG (query routing, rewriting, multi-turn retrieval) combined with tool calling.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Long Context&lt;/strong&gt;: A LongContextManager handles extended sessions via sliding windows and summary compression.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Delivery&lt;/strong&gt;: Results are written back to the cache and delivered using Server-Sent Events (SSE).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid Search&lt;/strong&gt;: Combines Milvus vector search and BM25 keyword search, fused using Reciprocal Rank Fusion (RRF) with a k=60 constant.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Semantic Cache&lt;/strong&gt;: Uses embedding cosine similarity with a 0.92 threshold and a 24-hour time-to-live (TTL).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evidence Gating&lt;/strong&gt;: Validates evidence levels before answering; if evidence is insufficient, the system routes the query to a human operator.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi-model Routing&lt;/strong&gt;: Routes requests across various providers including DeepSeek, Qwen, Doubao, Qwen3-Flash, and local Ollama instances.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Safety Measures&lt;/strong&gt;: The ReAct loop includes safeguards against infinite loops, timeouts, and step count limits.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Observability&lt;/strong&gt;: Integrates Micrometer, Prometheus, and Grafana to track latency across chat, retrieval, and ingestion stages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="performance-and-testing"&gt;Performance and Testing
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;th&gt;Context&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;FAQ Retrieval (R@1)&lt;/td&gt;
+&lt;td&gt;98.3%&lt;/td&gt;
+&lt;td&gt;Multi-gold evaluation across 120 cases and 6 categories&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Single Gold Baseline&lt;/td&gt;
+&lt;td&gt;R@1 47.5% / R@5 62.5%&lt;/td&gt;
+&lt;td&gt;Used for regression comparison between versions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FAQ Latency (P95)&lt;/td&gt;
+&lt;td&gt;181ms&lt;/td&gt;
+&lt;td&gt;Multi-gold evaluation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Code Coverage&lt;/td&gt;
+&lt;td&gt;64%&lt;/td&gt;
+&lt;td&gt;JaCoCo line coverage (exceeds the 45% gate)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Test Suite&lt;/td&gt;
+&lt;td&gt;372&lt;/td&gt;
+&lt;td&gt;Unit and integration tests&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#Java #SpringBoot #RAG #AIAgents #LangChain4j&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/888newstep/ai-agent-platform" target="_blank" rel="noopener"
+&gt;888newstep/ai-agent-platform&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

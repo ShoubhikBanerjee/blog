@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Voice Agents on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/voice-agents/</link><description>Recent content in Voice Agents on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/voice-agents/index.xml" rel="self" type="application/rss+xml"/><item><title>Stretto launches Tara: voice agent for bankruptcy intake with Amazon Nova 2 Sonic</title><link>https://shoubhikbanerjee.github.io/blog/p/stretto-launches-tara-voice-agent-for-bankruptcy-intake-with-amazon-nova-2-sonic/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/stretto-launches-tara-voice-agent-for-bankruptcy-intake-with-amazon-nova-2-sonic/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21890-featured-image.png" alt="Featured image of post Stretto launches Tara: voice agent for bankruptcy intake with Amazon Nova 2 Sonic" /&gt;&lt;h1 id="stretto-launches-tara-voice-agent-for-bankruptcy-intake-with-amazon-nova-2-sonic"&gt;Stretto launches Tara: voice agent for bankruptcy intake with Amazon Nova 2 Sonic
+&lt;/h1&gt;&lt;p&gt;Stretto, together with CI&amp;amp;T and the AWS Generative AI Innovation Center, has launched Tara, an AI voice agent that conducts bankruptcy intake interviews over the phone.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tara is an AI voice agent that conducts bankruptcy intake interviews over the phone.&lt;/li&gt;
+&lt;li&gt;It guides callers through a structured conversation, collects personal and financial details, and adapts tone to the caller’s emotional state.&lt;/li&gt;
+&lt;li&gt;After the call, Stretto’s system applies attorney‑defined rules to label the lead as qualified, disqualified, or needs‑more‑information.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Caller dials the Bankruptcy.com number; Tara picks up, introduces herself, and begins the interview.&lt;/li&gt;
+&lt;li&gt;The call is received through Twilio, which opens a WebSocket connection into AWS.&lt;/li&gt;
+&lt;li&gt;Audio streams through AWS WAF and an Application Load Balancer to a voice bridge running on Amazon ECS on AWS Fargate.&lt;/li&gt;
+&lt;li&gt;The voice bridge streams audio to Amazon Nova 2 Sonic via Amazon Bedrock; the model processes speech input and generates speech output in a single step.&lt;/li&gt;
+&lt;li&gt;At the end of the conversation, Stretto’s backend sorts the lead against attorney‑defined rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-technical-details"&gt;⚙️ Technical details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model&lt;/strong&gt;: Amazon Nova 2 Sonic, a speech‑to‑speech foundation model available through Amazon Bedrock.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Architecture&lt;/strong&gt;: Single model reduces latency compared with chaining speech‑to‑text, language model, and text‑to‑speech components.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Latency&lt;/strong&gt;: Tested previous solution had time‑to‑first‑audio latency &amp;gt; 500 ms; Nova 2 Sonic is designed for low latency and handles interruptions without breaking the session.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt;: Access governed by AWS IAM; traffic stays on the AWS network via VPC endpoints (AWS PrivateLink); AWS WAF protects the endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Region availability&lt;/strong&gt;: Amazon Nova 2 Sonic and Amazon Bedrock are not available in all AWS Regions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Nova 2 Sonic&lt;/td&gt;
+&lt;td&gt;Speech‑to‑speech model that processes input and generates output in one step&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon Bedrock&lt;/td&gt;
+&lt;td&gt;Managed service that provides access to Nova 2 Sonic and Claude; handles security, IAM, VPC endpoints&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Twilio&lt;/td&gt;
+&lt;td&gt;Receives inbound calls and opens WebSocket connection to AWS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AWS WAF &amp;amp; Application Load Balancer&lt;/td&gt;
+&lt;td&gt;Protects and routes traffic to the voice bridge&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Amazon ECS on AWS Fargate&lt;/td&gt;
+&lt;td&gt;Hosts the voice bridge that streams audio to Nova 2 Sonic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;IAM &amp;amp; VPC Endpoints (PrivateLink)&lt;/td&gt;
+&lt;td&gt;Enforce access control and keep traffic on the AWS network&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-results"&gt;📉 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Stretto reports a 95 % reduction in per‑minute voice cost compared with its previous solution, based on Amazon Bedrock on‑demand pricing in us‑east‑1 as of April 2026.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;🚀 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The solution replaces a costly human intake team with an automated voice agent that can collect detailed financial data, which attorneys value more highly than minimal web‑form leads.&lt;/li&gt;
+&lt;li&gt;Low latency, natural conversation flow, and emotional awareness improve caller experience for sensitive bankruptcy discussions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21890-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21890-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21890-4.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #VoiceAI #BankruptcyTech #GenerativeAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-stretto-built-an-ai-voice-agent-with-amazon-nova-2-sonic/" target="_blank" rel="noopener"
+&gt;How Stretto built an AI voice agent with Amazon Nova 2 Sonic | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

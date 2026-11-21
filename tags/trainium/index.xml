@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Trainium on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/trainium/</link><description>Recent content in Trainium on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 23 Oct 2026 22:04:00 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/trainium/index.xml" rel="self" type="application/rss+xml"/><item><title>TorchNeuron Model Support Space Shows Which Transformers Run on AWS Trainium</title><link>https://shoubhikbanerjee.github.io/blog/p/torchneuron-model-support-space-shows-which-transformers-run-on-aws-trainium/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/torchneuron-model-support-space-shows-which-transformers-run-on-aws-trainium/</guid><description>&lt;img src="https://huggingface.co/blog/assets/torch-neuronx-model-support/thumbnail.jpg" alt="Featured image of post TorchNeuron Model Support Space Shows Which Transformers Run on AWS Trainium" /&gt;&lt;h1 id="torchneuron-model-support-space-shows-which-transformers-run-on-aws-trainium"&gt;TorchNeuron Model Support Space Shows Which Transformers Run on AWS Trainium
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;A new Hugging Face Space, &lt;strong&gt;torch‑neuronx‑model‑support&lt;/strong&gt;, lets you see whether a given Transformers model runs unmodified on AWS Trainium and provides the exact script to run it yourself.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Uses the &lt;code&gt;torch‑neuronx&lt;/code&gt; package, the native PyTorch backend for AWS Trainium.&lt;/li&gt;
+&lt;li&gt;Runs Transformers models on Trainium the same way they run on any other device.&lt;/li&gt;
+&lt;li&gt;The provided &lt;code&gt;run.py&lt;/code&gt; script loads the model with &lt;code&gt;from_pretrained&lt;/code&gt;, shards it when needed, then generates with a static cache and &lt;code&gt;torch.compile(backend=&amp;quot;neuron&amp;quot;)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-what-the-space-displays"&gt;📊 What the Space displays
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;PASS/FAIL result for each model.&lt;/li&gt;
+&lt;li&gt;Number of Trainium cores the model is sharded over.&lt;/li&gt;
+&lt;li&gt;Wall‑time of the run (compilation included).&lt;/li&gt;
+&lt;li&gt;Peak device memory usage.&lt;/li&gt;
+&lt;li&gt;The Neuron stack version, required packages, and the &lt;code&gt;run.py&lt;/code&gt; script used.&lt;/li&gt;
+&lt;li&gt;If a model is omitted, the Space explains why (e.g., not prioritized or truly incompatible).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-testing-methodology"&gt;📈 Testing methodology
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tests run on a Trainium2 (&lt;code&gt;trn2&lt;/code&gt;) instance, typically in the AWS Neuron Deep Learning Container.&lt;/li&gt;
+&lt;li&gt;Each model is sharded over the smallest number of Trainium cores that can hold its weights (maximum 16 cores, i.e., four Trainium2 devices).&lt;/li&gt;
+&lt;li&gt;Most models use tensor parallelism; Mixture‑of‑Experts models without a tensor‑parallel plan use expert parallelism only.&lt;/li&gt;
+&lt;li&gt;The test generates 32 tokens and checks them.
+&lt;ul&gt;
+&lt;li&gt;On a single core, the tokens are compared with a CPU run of the same checkpoint.&lt;/li&gt;
+&lt;li&gt;When sharded, a small judge model verifies that the text is fluent English.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;A PASS only confirms correctness of the 32‑token output; it says nothing about throughput or longer generations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-configurability"&gt;⚙️ Configurability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Space opens on the &lt;strong&gt;Selected&lt;/strong&gt; view (our own selection of top‑downloaded and trending models).&lt;/li&gt;
+&lt;li&gt;You can switch to &lt;strong&gt;Trending&lt;/strong&gt; or &lt;strong&gt;Downloads&lt;/strong&gt; views and type part of a model name to look it up.&lt;/li&gt;
+&lt;li&gt;Versions of the Neuron compiler (&lt;code&gt;neuronx‑cc&lt;/code&gt;) and Transformers library can be chosen.&lt;/li&gt;
+&lt;li&gt;When a model is left out on purpose, the Space tells you the reason.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-current-scope"&gt;📌 Current scope
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Only Transformers models are tested.&lt;/li&gt;
+&lt;li&gt;The selection is limited to text‑generation and image‑text‑to‑text models.&lt;/li&gt;
+&lt;li&gt;Only models that fit on four Trainium2 devices (up to 16 cores) are included.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-getting-started"&gt;🚀 Getting started
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Open the Space (it starts on the Selected view).&lt;/li&gt;
+&lt;li&gt;Choose the desired &lt;code&gt;neuronx‑cc&lt;/code&gt; and Transformers versions.&lt;/li&gt;
+&lt;li&gt;Follow the displayed &lt;code&gt;run.py&lt;/code&gt; script: install the listed packages, then run on a &lt;code&gt;trn2&lt;/code&gt; instance.&lt;/li&gt;
+&lt;li&gt;The first run compiles the model’s graphs; subsequent runs can reuse compiled graphs by copying them from the public NEFF cache bucket.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-where-the-data-comes-from"&gt;🔎 Where the data comes from
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;All rows are sourced from the public &lt;code&gt;aws‑neuron/torch‑neuronx‑model‑support&lt;/code&gt; dataset.&lt;/li&gt;
+&lt;li&gt;The dataset contains one Parquet file per pair of &lt;code&gt;neuronx‑cc&lt;/code&gt; and library versions.&lt;/li&gt;
+&lt;li&gt;Each row stores the model’s result, any error, the stack versions, and the &lt;code&gt;run.py&lt;/code&gt; script that was executed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Next time you wonder whether a model runs on Trainium, look it up.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/spaces/aws-neuron/torch-neuronx-model-support/resolve/main/thumbnail.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/hf-torchneuron/thumbnail.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#TorchNeuron #AWS #Trainium #Transformers #ModelSupport&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/torch-neuronx-model-support" target="_blank" rel="noopener"
+&gt;Does Your Model Run on AWS Trainium? Look It Up&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Training Qwen3 on a Single AWS Trainium2 Instance with TorchNeuron and NKI MoE</title><link>https://shoubhikbanerjee.github.io/blog/p/training-qwen3-on-a-single-aws-trainium2-instance-with-torchneuron-and-nki-moe/</link><pubDate>Thu, 22 Oct 2026 22:11:45 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/training-qwen3-on-a-single-aws-trainium2-instance-with-torchneuron-and-nki-moe/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-22120-featured-image.png" alt="Featured image of post Training Qwen3 on a Single AWS Trainium2 Instance with TorchNeuron and NKI MoE" /&gt;&lt;h1 id="training-qwen3-on-a-single-aws-trainium2-instance-with-torchneuron-and-nki-moe"&gt;Training Qwen3 on a Single AWS Trainium2 Instance with TorchNeuron and NKI MoE
+&lt;/h1&gt;&lt;p&gt;This post demonstrates three ways to train the Qwen‑3 model on a single AWS trn2.48xlarge instance equipped with Trainium2 accelerators, using TorchNeuron, torchtitan‑neuron and optional NKI mixture‑of‑experts kernels.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;TorchNeuron registers Trainium as a native PyTorch device, enabling torchtitan to use it through standard PyTorch interfaces.&lt;/li&gt;
+&lt;li&gt;When &lt;code&gt;torch_neuronx&lt;/code&gt; is installed, TorchNeuron registers the Trainium device and torchtitan detects it at startup.&lt;/li&gt;
+&lt;li&gt;The walkthrough runs on a single &lt;strong&gt;trn2.48xlarge&lt;/strong&gt; instance (16 Trainium2 accelerators, 128 physical NeuronCores, 64 logical NeuronCores at LNC=2).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-environment"&gt;⚙️ Environment
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Version&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;torch&lt;/td&gt;
+&lt;td&gt;2.14.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;torch_neuronx&lt;/td&gt;
+&lt;td&gt;2.14.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;transformers&lt;/td&gt;
+&lt;td&gt;5.16.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;torchtitan‑neuron&lt;/td&gt;
+&lt;td&gt;release‑2.33 (0.2.2+neuron.1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Instance&lt;/td&gt;
+&lt;td&gt;trn2.48xlarge (16 Trainium2, 128 physical NeuronCores, 64 logical NeuronCores)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-training-configurations"&gt;🚀 Training Configurations
+&lt;/h2&gt;&lt;h3 id="1-transformers-v5-backend"&gt;1️⃣ Transformers v5 backend
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Uses &lt;code&gt;AutoModelForCausalLM&lt;/code&gt; to load Hub models and reads/writes published &lt;strong&gt;safetensors&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Launches &lt;strong&gt;64 training processes&lt;/strong&gt;, one per logical NeuronCore.&lt;/li&gt;
+&lt;li&gt;Data‑parallel sharding across all 64 ranks.&lt;/li&gt;
+&lt;li&gt;Saves final checkpoint as Hugging Face safetensors.&lt;/li&gt;
+&lt;li&gt;Example result for &lt;code&gt;Qwen/Qwen3-4B-Instruct-2507&lt;/code&gt;:
+&lt;ul&gt;
+&lt;li&gt;Step‑1 loss &lt;strong&gt;6.54&lt;/strong&gt; from published weights.&lt;/li&gt;
+&lt;li&gt;Step‑1 loss &lt;strong&gt;12.43&lt;/strong&gt; from random initialization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-torchtitan-native-qwen3model"&gt;2️⃣ torchtitan native Qwen3Model
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Switches to torchtitan’s native implementation by changing &lt;code&gt;config.model_spec&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;model_registry(&amp;quot;4B&amp;quot;, attn_backend=&amp;quot;sdpa&amp;quot;)&lt;/code&gt; selects the native Qwen3 model with &lt;strong&gt;scaled dot‑product attention (SDPA)&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-nki-mixtureofexperts-moe-kernels"&gt;3️⃣ NKI Mixture‑of‑Experts (MoE) kernels
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Adds Neuron Kernel Interface (NKI) MoE kernels from the &lt;code&gt;torchtitan‑neuron&lt;/code&gt; recipes.&lt;/li&gt;
+&lt;li&gt;Uses torchtitan’s override registry to attach the custom kernel.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;qwen3_nki_moe_config()&lt;/code&gt; replaces the MoE block with the NKI grouped‑experts implementation, selects SDPA and a gather‑free rotary embedding.&lt;/li&gt;
+&lt;li&gt;Configuration details:
+&lt;ul&gt;
+&lt;li&gt;Data‑parallel sharding across 64 ranks, tensor‑parallel degree &lt;strong&gt;1&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;num_experts=64&lt;/code&gt; sets the number of experts (not the expert‑parallel degree).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CompileConfig(enable=False)&lt;/code&gt; runs the example in &lt;strong&gt;eager mode&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;TorchNeuron supports the registered NKI operators in both &lt;strong&gt;eager execution&lt;/strong&gt; and &lt;strong&gt;&lt;code&gt;torch.compile&lt;/code&gt;&lt;/strong&gt; modes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-execution-modes"&gt;🧩 Execution Modes
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Eager mode&lt;/strong&gt;: Neuron compiles operations as they execute.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;torch.compile&lt;/code&gt;&lt;/strong&gt;: Neuron compiles the captured graph.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-getting-started"&gt;📚 Getting Started
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Use a single &lt;code&gt;trn2.48xlarge&lt;/code&gt; with either the &lt;strong&gt;AWS Deep Learning AMI for Neuron&lt;/strong&gt; or a &lt;strong&gt;Neuron PyTorch training container&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Install &lt;code&gt;torch_neuronx&lt;/code&gt; to enable device registration and torchtitan detection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Demonstrates that a single Trainium2‑powered instance can train a 4‑billion‑parameter LLM using standard PyTorch interfaces.&lt;/li&gt;
+&lt;li&gt;Shows flexibility: the same hardware can run a Hugging Face Transformers backend, a native torchtitan implementation, or custom NKI MoE kernels without changing the underlying instance.&lt;/li&gt;
+&lt;li&gt;Provides a reproducible recipe for researchers and engineers to explore performance trade‑offs between eager execution, graph compilation, and custom kernel extensions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-22120-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-22120-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/20/ML-22120-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Trainium #TorchNeuron #Qwen3 #MoE #Neuron&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/train-qwen3-on-aws-trainium-with-torchtitan/" target="_blank" rel="noopener"
+&gt;Train Qwen3 on AWS Trainium with torchtitan | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

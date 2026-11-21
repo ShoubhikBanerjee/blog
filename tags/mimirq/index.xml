@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MimirQ on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/mimirq/</link><description>Recent content in MimirQ on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/mimirq/index.xml" rel="self" type="application/rss+xml"/><item><title>MimirQ Releases Version 1.0.1 to Improve Enterprise Knowledge Base Error Localization and Quality</title><link>https://shoubhikbanerjee.github.io/blog/p/mimirq-releases-version-1-0-1-to-improve-enterprise-knowledge-base-error-localization-and-quality/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/mimirq-releases-version-1-0-1-to-improve-enterprise-knowledge-base-error-localization-and-quality/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/103022245?v=4" alt="Featured image of post MimirQ Releases Version 1.0.1 to Improve Enterprise Knowledge Base Error Localization and Quality" /&gt;&lt;h1 id="mimirq-releases-version-101-to-improve-enterprise-knowledge-base-error-localization-and-quality"&gt;MimirQ Releases Version 1.0.1 to Improve Enterprise Knowledge Base Error Localization and Quality
+&lt;/h1&gt;&lt;p&gt;MimirQ, an enterprise knowledge base solution originating from real-world government knowledge base deliveries, has released its latest stable version, v1.0.1. The project focuses on addressing the core challenges of long-term delivery, estimation, acceptance, and governance by ensuring that errors are locatable, strategies are replaceable, and quality is regressible throughout the pipeline.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Hiding an entire RAG pipeline behind a simple upload button may work for quick prototypes, but it makes long-term delivery difficult to estimate, accept, and govern. When answers are incorrect, teams must be able to quickly determine whether the issue originates from parsing, data governance, chunking, recall, reranking, or generation deviation from the references. MimirQ is designed to make each step of the input, output, reference tracing, and versioning auditable, using a Golden dataset of 800 fixed test questions to maintain release quality.&lt;/p&gt;
+&lt;h2 id="-data-processing-pipeline"&gt;🛠️ Data Processing Pipeline
+&lt;/h2&gt;&lt;p&gt;To handle diverse datasets, MimirQ recommends first evaluating sample data and then choosing specific parsers based on the material type:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Material Type&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Recommended Parsers to Evaluate&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Complex layouts or scanned documents&lt;/td&gt;
+&lt;td style="text-align: left"&gt;MinerU / DeepDoc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Formulas, tables, and layout-dense materials&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Docling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Digital native Office or plain text&lt;/td&gt;
+&lt;td style="text-align: left"&gt;MarkItDown&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;High-risk materials still require manual verification. After parsing, results are governed using scripts, rules DSL, or plugins. They are then chunked according to titles, chapters, business records, or parent-child relationships instead of relying on uniform, fixed-length windows with overlapping sections. The default parser is the built-in DeepDoc, with other parsers started only as required by business needs.&lt;/p&gt;
+&lt;h2 id="-capabilities-and-architecture"&gt;🧩 Capabilities and Architecture
+&lt;/h2&gt;&lt;p&gt;The repository features broad strategy coverage and standardizes on flexible infrastructure layers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Repository Coverage&lt;/strong&gt;: The system covers 30 parsing backends, 86 chunking strategies, and 13 classes of rerankers, with 800 questions of test evidence.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Index Layer&lt;/strong&gt;: Uses vector databases like Milvus, combining BM25, vector search, and reranking.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Upper Application Layer&lt;/strong&gt;: Can integrate with Dify, LangGraph, PydanticAI, or a simple API service.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment-and-operation"&gt;⚙️ Deployment and Operation
+&lt;/h2&gt;&lt;p&gt;MimirQ runs locally and manages dependencies through Docker Compose using a dedicated Compose project name &lt;code&gt;mimirq&lt;/code&gt; to prevent conflicts with other services like Dify:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Initialization&lt;/strong&gt;: Run &lt;code&gt;make init&lt;/code&gt; to create the missing &lt;code&gt;.env&lt;/code&gt; and &lt;code&gt;web/.env.local&lt;/code&gt; files without overwriting existing configurations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution&lt;/strong&gt;: Access the platform locally at &lt;code&gt;http://localhost:3000&lt;/code&gt; after startup. If no administrator account is preconfigured, the first registered account on the page becomes the administrator.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Teardown&lt;/strong&gt;: Run &lt;code&gt;make down&lt;/code&gt; to stop the services. To clear persistent data, run &lt;code&gt;make docker-reset&lt;/code&gt;, or use &lt;code&gt;make docker-purge&lt;/code&gt; to delete the project service images as well (these latter two operations are non-recoverable).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;MimirQ v1.0.1 is available now as the latest stable release. Complete guides covering model services, admin setup, data ingestion, and testing workflow are provided within the project documentation.&lt;/p&gt;
+&lt;p&gt;#MimirQ #RAG #EnterpriseKnowledge #AIv101&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/skygazer42/MimirQ" target="_blank" rel="noopener"
+&gt;skygazer42/MimirQ&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HIGGS on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/higgs/</link><description>Recent content in HIGGS on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 16 Nov 2026 22:14:27 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/higgs/index.xml" rel="self" type="application/rss+xml"/><item><title>LLM Compressor v0.14.0 adds HIGGS quantization and MXFP4xFP8 checkpoint support</title><link>https://shoubhikbanerjee.github.io/blog/p/llm-compressor-v0-14-0-adds-higgs-quantization-and-mxfp4xfp8-checkpoint-support/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/llm-compressor-v0-14-0-adds-higgs-quantization-and-mxfp4xfp8-checkpoint-support/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/136984999?v=4" alt="Featured image of post LLM Compressor v0.14.0 adds HIGGS quantization and MXFP4xFP8 checkpoint support" /&gt;&lt;h1 id="llm-compressor-v0140-adds-higgs-quantization-and-mxfp4xfp8-checkpoint-support"&gt;LLM Compressor v0.14.0 adds HIGGS quantization and MXFP4xFP8 checkpoint support
+&lt;/h1&gt;&lt;p&gt;LLM Compressor has released version 0.14.0, introducing significant improvements to model optimization for vLLM deployment, including new quantization algorithms, pruning techniques, and support for mixed-precision formats.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The library provides comprehensive quantization and compression tools that integrate seamlessly with Hugging Face models. Key technical enhancements in v0.14.0 include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;HIGGS mixed-precision quantization&lt;/strong&gt;: Collects layer-wise MSE sensitivity data and formulates an integer linear program to select an optimal mixed-precision configuration for a target average bitwidth. The resulting config can be passed to &lt;code&gt;oneshot&lt;/code&gt; or &lt;code&gt;model_free_ptq&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Block-wise QAD&lt;/strong&gt;: A new &lt;code&gt;QADModifier&lt;/code&gt; runs quantization-aware distillation after a weight-quantization modifier in the same recipe. It caches calibration inputs and the unquantized subgraph output as the teacher, then trains the quantized weights through compressed-tensors fake quantization without loading a separate teacher model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Layerwise compression and sequential offloading&lt;/strong&gt;: The sequential pipeline can decompress and compress one layer at a time, avoiding upfront whole-model conversion for large checkpoints. Onload/offload is managed manually with optional CPU staging and pinned memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Faster observers for E8M0 formats&lt;/strong&gt;: The MSE and iMatrix observers gained exponential grid search and magnitude normalization for E8M0 scales, and the iMatrix observer now shares the MSE Triton kernel, delivering roughly 1.2-3.4x end-to-end speedups on tested models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MFPTQ SpinQuant rotations&lt;/strong&gt;: &lt;code&gt;SpinQuantConverter&lt;/code&gt; applies offline R1/R2 Hadamard rotations directly to safetensors before model-free quantization, and &lt;code&gt;model_free_ptq&lt;/code&gt; now accepts converter chains.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MoNe expert pruning&lt;/strong&gt;: MoNe collapses low-saliency experts into constant &amp;ldquo;novice&amp;rdquo; vectors instead of removing them, keeping the router at full width while reducing expert compute.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Several reporting and pruning features have been updated to support larger and more diverse model architectures:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;REAP reports and non-uniform pruning&lt;/strong&gt;: REAP now writes per-expert saliency reports, supports calibration-only report generation with &lt;code&gt;sparsity=0.0&lt;/code&gt;, and accepts per-layer non-uniform expert sparsity. &lt;code&gt;n_routed_experts&lt;/code&gt; is now recorded in config names, and GPT-OSS is skipped.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MXFP6 and MXFP4xFP8 support&lt;/strong&gt;: Added MXFP6A8/MXFP6A16 schemes and examples, plus an MXFP4xFP8 example and refreshed quantization documentation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Broader hardware and model support&lt;/strong&gt;: The fused GPTQ Triton kernel now runs on Intel XPU, and MTP layers load through Transformers &lt;code&gt;MtpModel&lt;/code&gt;. New checkpoints and examples include Nemotron 3.5 Super VL FP8, Zyphra Zaya1, Muse Spark, and Qwen3.6 MXFP4xFP8.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Docs and community&lt;/strong&gt;: Added the Open Research Hub for community experiment results and a full Simplified Chinese README translation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The Red Hat AI team has used LLM Compressor to produce a batch of production-ready quantized checkpoints optimized for Hopper GPUs:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Checkpoint&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Quantization Strategy&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Resulting Size&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Muse-Spark-Open-816B-A42B&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Routed experts in MXFP4; attention and dense projections in FP8; ~4.2 bits per parameter&lt;/td&gt;
+&lt;td style="text-align: left"&gt;~428 GB (down from ~1644 GB)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GLM-5.3&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Routed experts and dense MLPs in MXFP4; attention, shared experts, and MTP layer in FP8; ~4.5 bits per parameter&lt;/td&gt;
+&lt;td style="text-align: left"&gt;~415 GB (down from ~1507 GB)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Additional MXFP4xFP8 checkpoints are available for Qwen3.8-27B. Support for these formats in vLLM is available via PR vllm-project/vllm#64389 until it is merged.&lt;/p&gt;
+&lt;p&gt;#LLMCompressor #Quantization #vLLM #ModelOptimization #HIGGS #MXFP4&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/vllm-project/llm-compressor" target="_blank" rel="noopener"
+&gt;vllm-project/llm-compressor&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

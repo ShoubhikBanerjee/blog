@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CloudSecurity on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cloudsecurity/</link><description>Recent content in CloudSecurity on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2026 22:09:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cloudsecurity/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Introduces GetScopedCredentials API to Safely Scope Down Temporary Security Credentials</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-introduces-getscopedcredentials-api-to-safely-scope-down-temporary-security-credentials/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-introduces-getscopedcredentials-api-to-safely-scope-down-temporary-security-credentials/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/10/21/Lock-data.jpeg" alt="Featured image of post AWS Introduces GetScopedCredentials API to Safely Scope Down Temporary Security Credentials" /&gt;&lt;h1 id="aws-introduces-getscopedcredentials-api-to-safely-scope-down-temporary-security-credentials"&gt;AWS Introduces GetScopedCredentials API to Safely Scope Down Temporary Security Credentials
+&lt;/h1&gt;&lt;p&gt;AWS has launched GetScopedCredentials, a new AWS Security Token Service (AWS STS) API that enables you to scope down the permissions of existing temporary security credentials. This feature is designed to help secure workloads, such as AI agents, by ensuring they only have the minimum permissions needed to perform their tasks rather than the full permissions of the calling session.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;GetScopedCredentials provides a programmatic way to generate narrower security credentials from those you already possess. You can assign each agent, sub-agent, or process its own credentials that carry reduced permissions, a shorter session duration, or both, while keeping the original caller’s AWS Identity and Access Management (IAM) identity.&lt;/p&gt;
+&lt;p&gt;Because GetScopedCredentials works by narrowing the credentials you already have, it acts as a building block that you can integrate directly into:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Agent frameworks&lt;/li&gt;
+&lt;li&gt;Continuous integration and deployment (CI/CD) pipelines&lt;/li&gt;
+&lt;li&gt;Services that issue credentials to other components&lt;/li&gt;
+&lt;li&gt;Custom applications&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To call the API, you must have valid temporary security credentials and the necessary permissions to call GetScopedCredentials. You can make the call using the latest version of the AWS Command Line Interface (AWS CLI) or the AWS SDK for your programming language.&lt;/p&gt;
+&lt;p&gt;The technical specifications of the API include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Input Credentials:&lt;/strong&gt; You can call the API with the temporary credentials you already use, including those from aws login, an Amazon Elastic Compute Cloud (Amazon EC2) instance profile, or an AWS Lambda function.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scope Down Policy:&lt;/strong&gt; In each call, you pass a scope down policy (an inline policy representing the maximum permissions) of up to 2,048 characters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Intersection of Permissions:&lt;/strong&gt; The resulting permissions are the intersection of the session&amp;rsquo;s effective permissions and the scope down policy. This ensures that permissions can only be reduced, never expanded.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Session Duration:&lt;/strong&gt; You can request a shorter session duration, which cannot exceed the remaining duration of the calling session.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Chaining Calls:&lt;/strong&gt; You can call GetScopedCredentials again using the resulting scoped-down credentials to restrict permissions or reduce duration even further. This allows an orchestrating agent to give sub-agents narrower access than its own.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-common-use-cases"&gt;💡 Common Use Cases
+&lt;/h2&gt;&lt;p&gt;GetScopedCredentials can be applied whenever a workload requires narrower access than the session that initiates it. Notable use cases include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Limiting AI Agent Actions:&lt;/strong&gt; AI agents decide on actions at runtime based on prompts or tool output. By using GetScopedCredentials, you can restrict their actions to only what is required—such as read access to a single Amazon Simple Storage Service (Amazon S3) bucket—or explicitly strip away risky actions like deleting resources. Run your agents in sandbox environments, such as AWS Strands Box, to ensure they only access these restricted credentials.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scoping Down Based on Runtime Context:&lt;/strong&gt; Some workloads run under a single IAM role but require different permissions based on authenticated requests. For example, a multi-tenant application with a single IAM role that serves files from different prefixes in one S3 bucket can use a trusted credential broker to call GetScopedCredentials. The broker obtains credentials restricted to only the specific tenant&amp;rsquo;s prefix and passes them to the worker.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Just-in-Time Access:&lt;/strong&gt; Securing tasks based on runtime data learned only after the workload begins.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AWS #Security #IAM #AIAgents #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/scope-down-permissions-of-existing-sessions-using-aws-sts-getscopedcredentials/" target="_blank" rel="noopener"
+&gt;Scope down permissions of existing sessions using AWS STS GetScopedCredentials | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS re:Invent 2026 to Showcase AWS Continuum and Security for AI Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-re-invent-2026-to-showcase-aws-continuum-and-security-for-ai-agents/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-re-invent-2026-to-showcase-aws-continuum-and-security-for-ai-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/19/Security-Identity-Governance-guide-Figure-1.jpg" alt="Featured image of post AWS re:Invent 2026 to Showcase AWS Continuum and Security for AI Agents" /&gt;&lt;h1 id="aws-reinvent-2026-to-showcase-aws-continuum-and-security-for-ai-agents"&gt;AWS re:Invent 2026 to Showcase AWS Continuum and Security for AI Agents
+&lt;/h1&gt;&lt;p&gt;The AWS Security, Identity, and Governance team has announced the security session lineup for AWS re:Invent in Las Vegas, running from November 30 to December 4, 2026. The event will showcase new developments in AWS Continuum, a service designed to automate security workflows, alongside sessions on governance and authentication for autonomous AI agents.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AWS re:Invent 2026 features nearly 120 security sessions across breakouts, chalk talks, workshops, code talks, builders&amp;rsquo; sessions, and lightning talks. Security sessions begin Monday morning and run through Friday, with Tuesday and Wednesday sessions distributed across the Wynn, MGM Grand, and Caesars Palace. On Thursday, December 3, the Wynn venue hosts a full day of advanced security sessions with 78 sessions from 8:00 AM to 5:30 PM, the majority of which are at the 300 level or above. This includes 12 workshops, 11 builders&amp;rsquo; sessions, and 22 chalk talks.&lt;/p&gt;
+&lt;h2 id="-key-sessions-for-aws-continuum-and-security"&gt;⚙️ Key Sessions for AWS Continuum and Security
+&lt;/h2&gt;&lt;p&gt;The event includes dedicated sessions detailing the capabilities of AWS Continuum and secure architectures for AI workloads:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Session&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Day &amp;amp; Time&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Format&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC388&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Monday 10:00 AM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Breakout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;National Institutes of Health shares how it manages identity lifecycle across clouds.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC302&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Monday 10:00 AM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Breakout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Building a governance foundation for AI workloads that grows with autonomous agents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC427&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Monday 12:00 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Code Talk&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Threat models an agentic development workflow from user story to deployment with AWS Continuum.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC424&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tuesday 2:30 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Chalk Talk&lt;/td&gt;
+&lt;td style="text-align: left"&gt;How IAM evaluates policies on every request.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC312&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tuesday 3:30 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Workshop&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Run an on-demand penetration test against a live application with AWS Continuum.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC323&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tuesday 3:30 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Workshop&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Recover from a simulated ransomware event and prove the restore is clean.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC362&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 8:00 AM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Workshop&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Build authentication, authorization, and audit for AI agents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC349&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 8:30 AM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Workshop&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Build a layered controls stack for a fleet of agents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC419&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 11:30 AM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Chalk Talk&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OAuth delegation patterns for agents with Amazon Bedrock AgentCore Identity.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC405&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 12:00 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Builders&amp;rsquo; Session&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Take a vulnerable application from discovery to fix with Amazon Inspector, AWS Continuum, and Amazon GuardDuty.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC501&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 1:00 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Breakout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Goes inside the research behind the GuardDuty detection engine.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC311&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 1:00 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Builders&amp;rsquo; Session&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Wires AWS frontier agents into an automated find-and-fix security loop.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC384&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 2:30 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Breakout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;How AWS Continuum discovers, validates, and fixes code vulnerabilities in one workflow.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC390&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 4:00 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Breakout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Woodside handed SOC monitoring to AWS Security Incident Response to focus on threat hunting.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-keynotes-and-featured-speakers"&gt;🎤 Keynotes and Featured Speakers
+&lt;/h2&gt;&lt;p&gt;Several key leadership presentations are scheduled for the event:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Chet Kapoor&lt;/strong&gt; (AWS VP of Security, Search, and Observability) presents &amp;ldquo;The Future of Security&amp;rdquo; at 11:00 AM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amy Herzog&lt;/strong&gt; (AWS Chief Information Security Officer) presents &amp;ldquo;The Old Security Playbook Is Dead&amp;rdquo; at 1:00 PM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Eric Brandwine&lt;/strong&gt; (VP/Distinguished Engineer, AWS Security) presents &amp;ldquo;Operationalizing security for the future with best practices today&amp;rdquo; at 3:00 PM.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The Thursday keynote runs from 8:30 to 10:00 AM at The Venetian and is also streamed online.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/19/Security-Identity-Governance-guide-Figure-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #reInvent #CloudSecurity #AWSContinuum #AIAgents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/your-aws-security-identity-and-governance-guide-to-reinvent-2026/" target="_blank" rel="noopener"
+&gt;Your AWS Security, Identity, and Governance guide to re:Invent 2026 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS WAF Introduces New Security Analytics Dashboard</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-waf-introduces-new-security-analytics-dashboard/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-waf-introduces-new-security-analytics-dashboard/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/05/05/aws_logo.jpg" alt="Featured image of post AWS WAF Introduces New Security Analytics Dashboard" /&gt;&lt;h1 id="aws-waf-introduces-new-security-analytics-dashboard"&gt;AWS WAF Introduces New Security Analytics Dashboard
+&lt;/h1&gt;&lt;p&gt;AWS has introduced a new security analytics dashboard for AWS WAF, providing a single global page to investigate traffic across all protection packs (web ACLs), Regional resources, and Amazon CloudFront distributions. This update builds on the 2024 traffic overview dashboard by offering a consolidated view that helps users act on findings faster.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The new dashboard is designed to help users investigate and contain threats faster while reducing false positives that block real customers. Key aspects of the update include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A single global page for investigating traffic across all protection packs (web ACLs).&lt;/li&gt;
+&lt;li&gt;Coverage of Regional resources and Amazon CloudFront distributions.&lt;/li&gt;
+&lt;li&gt;No need to build or maintain a custom log analytics pipeline.&lt;/li&gt;
+&lt;li&gt;Built on full-fidelity request data rather than samples.&lt;/li&gt;
+&lt;li&gt;Two primary use cases demonstrated: investigating a traffic spike and tuning rules to reduce false positives.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;p&gt;To access the dashboard, users navigate to the AWS WAF console and select &amp;ldquo;Security analytics&amp;rdquo; in the navigation pane. The interface allows users to narrow the view to specific protection packs and set time ranges.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Global View&lt;/strong&gt;: The dashboard displays request data across all protection packs in the account. Selecting &amp;ldquo;All protection packs&amp;rdquo; shows a comprehensive view.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Traffic Breakdown&lt;/strong&gt;: The top of the page shows total requests split by action: Allow, Block, CAPTCHA, and Challenge.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Charts and Widgets&lt;/strong&gt;: The &amp;ldquo;Requests chart&amp;rdquo; visualizes traffic changes over time, while widgets below display top values for specific dimensions. Users can split the Requests chart by dimensions such as Host, Rule triggered, Country, or JA4.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Host Grouping&lt;/strong&gt;: Grouping or filtering by Host identifies which domains are under attack or experiencing spikes, even when a single protection pack protects multiple domains or a domain spans several protection packs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Labels and Detections&lt;/strong&gt;: AWS Managed Rules add labels (e.g., Bot Control categories, verification status, and signals like &lt;code&gt;non_browser_user_agent&lt;/code&gt;). Users can also create custom labels. Because labels are recorded even when a rule is set to count-only, filtering by a label shows what a rule detected across all protection packs without changing how traffic is handled.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Filters and Actions&lt;/strong&gt;: Filters apply to the entire dashboard, updating the action split, Requests chart, widgets, and request list. Users can select any value in a widget to focus on it, remove it, or block it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Request Details&lt;/strong&gt;: For individual requests, the dashboard displays HTTP fields such as host, path, headers, user agent, and JA4 fingerprint. It also shows which detections and labels matched and whether each action was enforced or only counted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;Previously, accessing this level of detail required working from a limited sample of requests or setting up and querying custom AWS WAF logs. The new dashboard makes this data available directly. Additionally, the current dashboard view is saved in the user&amp;rsquo;s browser.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;This tool allows security teams to move from reactive log analysis to proactive investigation and containment. By providing full-fidelity data without the overhead of maintaining custom pipelines, organizations can more effectively tune their rules to minimize false positives and protect their infrastructure.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/Figure2-RequestsGroupedbyRuleTriggered.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/Figure5-Reqestdetails.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #WAF #WebSecurity #CloudSecurity #DataAnalytics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/introducing-the-new-aws-waf-security-analytics-dashboard/" target="_blank" rel="noopener"
+&gt;Introducing the new AWS WAF security analytics dashboard | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Databricks Mitigates and Patches Java4Shell OpenJDK Vulnerability</title><link>https://shoubhikbanerjee.github.io/blog/p/databricks-mitigates-and-patches-java4shell-openjdk-vulnerability/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/databricks-mitigates-and-patches-java4shell-openjdk-vulnerability/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/2026-11-Blog-SIRT-2058-Placeholder-Blog-OG-1200x628-2x.png" alt="Featured image of post Databricks Mitigates and Patches Java4Shell OpenJDK Vulnerability" /&gt;&lt;h1 id="databricks-mitigates-and-patches-java4shell-openjdk-vulnerability"&gt;Databricks Mitigates and Patches Java4Shell OpenJDK Vulnerability
+&lt;/h1&gt;&lt;p&gt;Databricks has addressed the industry-wide OpenJDK vulnerability tracked as CVE-2026-114938 (Java4Shell) before its public disclosure. The company is protecting its platform and customers through a two-phase response: immediate mitigation and subsequent patching.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Prior to Java4Shell’s public disclosure, Databricks was already addressing the vulnerability. The company is protecting customers in two phases: quick mitigation to disable use of the vulnerable code, and then patching to replace the vulnerable code.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Databricks has applied the mitigation to its platform, disabling use of vulnerable code for all supported versions of Databricks Runtime.&lt;/li&gt;
+&lt;li&gt;The mitigation is not expected to have a meaningful performance impact on customers.&lt;/li&gt;
+&lt;li&gt;To apply the mitigation as quickly as possible, Databricks took the rare step of proactively restarting affected clusters.&lt;/li&gt;
+&lt;li&gt;While the mitigation blocks the attack, in an abundance of caution, Databricks will provide patched versions of supported Databricks Runtimes.&lt;/li&gt;
+&lt;li&gt;Databricks has no evidence to indicate any unauthorized access to its products, services, or customers&amp;rsquo; data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Customer Type&lt;/th&gt;
+&lt;th&gt;Patch Delivery Method&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Serverless platform customers&lt;/td&gt;
+&lt;td&gt;Patches will be applied automatically&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Classic cluster customers&lt;/td&gt;
+&lt;td&gt;Customers need to restart their clusters&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Customers running custom images&lt;/td&gt;
+&lt;td&gt;Databricks is reaching out to them&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Databricks has stated it has no evidence to indicate any unauthorized access to Databricks products, services, or customers&amp;rsquo; data. The proactive mitigation and planned patching demonstrate the company&amp;rsquo;s response to the vulnerability.&lt;/p&gt;
+&lt;p&gt;#Databricks #Java4Shell #OpenJDK #Security #Vulnerability #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/java4shell-vulnerability-cve-2026-114938-assessment" target="_blank" rel="noopener"
+&gt;Java4Shell vulnerability (CVE-2026-114938) assessment&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>F5 Patches NGINX nginx2root Vulnerabilities Enabling Remote Code Execution</title><link>https://shoubhikbanerjee.github.io/blog/p/f5-patches-nginx-nginx2root-vulnerabilities-enabling-remote-code-execution/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/f5-patches-nginx-nginx2root-vulnerabilities-enabling-remote-code-execution/</guid><description>&lt;img src="https://www.bleepstatic.com/content/hl-images/2026/11/19/nginx.jpg" alt="Featured image of post F5 Patches NGINX nginx2root Vulnerabilities Enabling Remote Code Execution" /&gt;&lt;h1 id="f5-patches-nginx-nginx2root-vulnerabilities-enabling-remote-code-execution"&gt;F5 Patches NGINX nginx2root Vulnerabilities Enabling Remote Code Execution
+&lt;/h1&gt;&lt;p&gt;F5 has released security updates for multiple NGINX vulnerabilities, including two critical flaws dubbed &amp;ldquo;nginx2root.&amp;rdquo; These vulnerabilities allow unauthenticated attackers to execute code remotely on vulnerable web servers and can be chained with a Linux kernel bug to gain root access to the underlying host.&lt;/p&gt;
+&lt;p&gt;Researchers at Xint, Wiz, Ikotas Labs, Metnir, and Rapid7 discovered the two primary HTTP/2 vulnerabilities independently. Xint researchers demonstrated that by chaining one of these flaws with a separate vulnerability in the Linux kernel&amp;rsquo;s SCTP subsystem, an attacker can escape an NGINX Docker container and gain root privileges.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The &amp;ldquo;nginx2root&amp;rdquo; vulnerabilities involve memory corruption and session management errors within the NGINX worker process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CVE-2026-123007:&lt;/strong&gt; A flow-control bug that causes memory corruption in an NGINX worker. It impacts versions 1.31.8 down to 1.9.5.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CVE-2026-123633:&lt;/strong&gt; A use-after-free issue that occurs when NGINX accepts HTTP/2 connections and proxies them to a backend. When the worker runs low on connection slots, it may close an active connection and free memory that a request is still using.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Vulnerability&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-123007&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Memory corruption flaw in NGINX worker via HTTP/2 flow-control.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-123633&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use-after-free vulnerability affecting HTTP/2 requests proxied to backends.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-118899&lt;/td&gt;
+&lt;td style="text-align: left"&gt;High-severity DoS flaw causing an infinite loop over TLS 1.3.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-121810&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use-after-free vulnerability affecting HTTP/3 reverse proxying.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-123634&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use-after-free vulnerability affecting DNS resolution with subrequests.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-113425&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use-after-free vulnerability affecting mail proxy authentication.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;F5 has fixed these issues in the latest versions of NGINX Open Source and NGINX Plus. System administrators are recommended to upgrade immediately:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NGINX Open Source:&lt;/strong&gt; Update to 1.30.7 (stable) or 1.31.9 (mainline).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NGINX Plus:&lt;/strong&gt; Update to 37.0.8.1 or 37.3.0.1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As a temporary mitigation for the two &amp;ldquo;nginx2root&amp;rdquo; flaws, administrators can disable HTTP/2, although this does not address the other vulnerabilities included in the security update.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Exploitability depends heavily on specific server configurations. Security researcher Florian Roth notes that these flaws are exploitable in non-default configurations and may not be an imminent threat for most deployments. The vulnerabilities require HTTP/2 to be enabled on a reachable listener, and CVE-2026-123633 specifically requires NGINX to be proxying requests to a backend.&lt;/p&gt;
+&lt;p&gt;According to Censys, approximately 8.8 million NGINX services were potentially exposed to CVE-2026-123007 as of November 19, based on version numbers and HTTP/2 support. More than 511,000 previously exposed services have already been patched or mitigated.&lt;/p&gt;
+&lt;p&gt;#Cybersecurity #NGINX #InfoSec #Linux #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.bleepingcomputer.com/news/security/critical-nginx-nginx2root-bugs-let-attackers-hijack-servers/" target="_blank" rel="noopener"
+&gt;Critical NGINX ‘NGINX2Root’ bugs let attackers hijack servers&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS Agent Registry Introduces Custom Metadata Schemas for Structured Governance</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-agent-registry-introduces-custom-metadata-schemas-for-structured-governance/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-agent-registry-introduces-custom-metadata-schemas-for-structured-governance/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22167-featured-image.png" alt="Featured image of post AWS Agent Registry Introduces Custom Metadata Schemas for Structured Governance" /&gt;&lt;h1 id="aws-agent-registry-introduces-custom-metadata-schemas-for-structured-governance"&gt;AWS Agent Registry Introduces Custom Metadata Schemas for Structured Governance
+&lt;/h1&gt;&lt;p&gt;Custom metadata schemas are now available in AWS Agent Registry. This update allows administrators to define a set of organization-specific key-value pairs that registry records must carry, enabling structured validation, discovery, and governance.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AWS Agent Registry provides a catalog to register, approve, and discover resources and custom records. Each record within the registry carries a name, a description, a protocol descriptor, and an approval status. With the introduction of custom metadata schemas, administrators can enforce structured metadata on every record to maintain consistency across teams.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How it works
+&lt;/h2&gt;&lt;p&gt;A custom metadata schema is a set of organization-defined key-value pairs. The registry administrator defines the schema—including field names, types, allowed values, and whether each field is required or optional—and applies it to the registry.&lt;/p&gt;
+&lt;p&gt;Key behaviors of the schema validation include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supported Field Types&lt;/strong&gt;: Each field can be configured as Text, Enum, URL, or Boolean.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scope of Fields&lt;/strong&gt;: The schema has common attributes that apply to every record type, and administrators can add dedicated fields that only apply to specific record types.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enforcement and Validation&lt;/strong&gt;: When a record is created or updated, AWS Agent Registry validates the custom metadata against the schema. If a record includes an unknown field, a missing required field, or an invalid value, it is rejected with a &lt;code&gt;ValidationException&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compliance Status&lt;/strong&gt;: If a record is created without any custom metadata, AWS Agent Registry saves it as &lt;code&gt;NON_COMPLIANT&lt;/code&gt;. Calling &lt;code&gt;GetRegistryRecord&lt;/code&gt; returns the record&amp;rsquo;s custom metadata values and its compliance status.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-supported-fields-and-enrichment"&gt;🧩 Supported Fields and Enrichment
+&lt;/h2&gt;&lt;p&gt;Organizations can use custom metadata fields to track ownership, environments, and compliance. Examples of these fields include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Environment &amp;amp; Ownership&lt;/strong&gt;: Fields such as &lt;code&gt;environment&lt;/code&gt; (prod, staging, or dev), &lt;code&gt;businessUnit&lt;/code&gt;, &lt;code&gt;ownerTeam&lt;/code&gt;, &lt;code&gt;supportContact&lt;/code&gt;, and &lt;code&gt;costCenter&lt;/code&gt; record where a resource runs, who is responsible for it, and who pays for it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inventory Integration&lt;/strong&gt;: A configuration management database (CMDB) ID links the record to an existing inventory, and a &lt;code&gt;support-tier&lt;/code&gt; field sets expectations for dependents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security &amp;amp; Compliance&lt;/strong&gt;: Fields such as data classification, compliance scope (like PCI or HIPAA), risk tier, scan status, and a scan report URL turn approvals into reviews of structured evidence. Existing scanners, CMDB sync jobs, and classification tools can write these values through the API before a record is submitted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-discovery-and-filtering"&gt;🔍 Discovery and Filtering
+&lt;/h2&gt;&lt;p&gt;Custom metadata values are indexed for search. Approvers can use the validated values when reviewing records, and consumers and agents can use Discovery APIs to filter records based on custom attributes.&lt;/p&gt;
+&lt;p&gt;For example, a consumer or agent can combine a natural-language query with specific metadata filters, such as:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;environment=prod AND businessUnit=payments AND securityScanStatus=PASSED
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;To ensure security, only approved records are returned; a record that matches the filters but has not been approved is omitted from the results.&lt;/p&gt;
+&lt;p&gt;As a use case, AnyCompany operates &lt;code&gt;anycompany-governed-registry&lt;/code&gt; without auto-approval. Its payments team publishes an MCP record, &lt;code&gt;payments-ledger-mcp&lt;/code&gt; (a read-only server for ledger lookups). Existing security and inventory systems enrich this MCP record before an approval function determines whether consumers can discover it.&lt;/p&gt;
+&lt;h2 id="-prerequisites"&gt;🚀 Prerequisites
+&lt;/h2&gt;&lt;p&gt;To get started with custom metadata schemas, you need:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An AWS account in a supported AWS Region.&lt;/li&gt;
+&lt;li&gt;Python 3.11 or later.&lt;/li&gt;
+&lt;li&gt;boto3 1.43.113 or later.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22167-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22167-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22167-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWSAgentRegistry #CloudGovernance #MetadataSchemas #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/govern-and-discover-records-with-common-metadata-in-aws-agent-registry/" target="_blank" rel="noopener"
+&gt;Govern and discover records with common metadata in AWS Agent Registry | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Argus AI Security Platform Launches with Self-Hosted Multi-Tenant Capabilities</title><link>https://shoubhikbanerjee.github.io/blog/p/argus-ai-security-platform-launches-with-self-hosted-multi-tenant-capabilities/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/argus-ai-security-platform-launches-with-self-hosted-multi-tenant-capabilities/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/53983704?v=4" alt="Featured image of post Argus AI Security Platform Launches with Self-Hosted Multi-Tenant Capabilities" /&gt;&lt;h1 id="argus-ai-security-platform-launches-with-self-hosted-multi-tenant-capabilities"&gt;Argus AI Security Platform Launches with Self-Hosted Multi-Tenant Capabilities
+&lt;/h1&gt;&lt;p&gt;A new self-hosted, multi-tenant, and MIT-licensed security platform named Argus has been released to watch cloud, identity, code, endpoints, network, and Kubernetes environments.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Argus catches attacks at machine speed, investigates them with AI agents, and contains them in seconds. The platform operates offline for air-gapped installs and ensures security data never leaves the user&amp;rsquo;s hands.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Nine specialist agents triage, investigate, and hunt using read-only tools.&lt;/li&gt;
+&lt;li&gt;Agents can propose a fix but never execute one; their one write-capable tool creates a pending request.&lt;/li&gt;
+&lt;li&gt;Everything agents read is treated as untrusted data so prompt injections become signals instead of hijacks.&lt;/li&gt;
+&lt;li&gt;Autonomous response playbooks act the moment a detection fires using a catalog of 27 typed actions.&lt;/li&gt;
+&lt;li&gt;Every autonomous feature ships off by default so users can enable autonomy gradually.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AI Gateway&lt;/strong&gt;: Puts OpenAI and Anthropic traffic behind org-held keys, model allowlists, data-loss prevention, prompt-injection flags, and budgets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Shadow-AI Discovery&lt;/strong&gt;: Finds services used without approval via network, cloud, and SSO telemetry.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Canaries&lt;/strong&gt;: Built for agents with hidden prompt injections, agent rules files, a fake MCP server, and fake LLM API keys.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Attack Simulator&lt;/strong&gt;: Replays eight AI-driven attack scenarios in an isolated sandbox tenant.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pentesting&lt;/strong&gt;: Autopilot and native autonomous pentesting plan tests and run them through a scope-checked harness.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vulnerability Enrichment&lt;/strong&gt;: CVE findings are enriched with CISA&amp;rsquo;s Known Exploited Vulnerabilities list and EPSS scores, automatically raising severity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Deployment options include Docker Compose for pilots, Helm for Kubernetes, and Terraform for AWS and Azure.&lt;/li&gt;
+&lt;li&gt;Encrypted backups run on a schedule and land on disk, S3, or Azure with single-command restore and verification checks.&lt;/li&gt;
+&lt;li&gt;Control mappings for SOC 2, NIST 800-171, and ISO 27001 are included.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AISecurity #AIAgents #Cybersecurity #DevSecOps #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/thomasunise/argus" target="_blank" rel="noopener"
+&gt;thomasunise/argus&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Orca Security Deploys Discovery AI on AWS Bedrock to Simplify Cloud Queries</title><link>https://shoubhikbanerjee.github.io/blog/p/orca-security-deploys-discovery-ai-on-aws-bedrock-to-simplify-cloud-queries/</link><pubDate>Tue, 13 Oct 2026 22:07:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/orca-security-deploys-discovery-ai-on-aws-bedrock-to-simplify-cloud-queries/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-21130-featured-image.png" alt="Featured image of post Orca Security Deploys Discovery AI on AWS Bedrock to Simplify Cloud Queries" /&gt;&lt;h1 id="orca-security-deploys-discovery-ai-on-aws-bedrock-to-simplify-cloud-queries"&gt;Orca Security Deploys Discovery AI on AWS Bedrock to Simplify Cloud Queries
+&lt;/h1&gt;&lt;p&gt;Orca Security has released an update to its Discovery AI service, a natural‑language query agent built on Amazon Bedrock that translates plain‑English questions into Sonar queries for its cloud‑security data graph.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Security analysts need fast answers about their cloud infrastructure without deep familiarity with domain‑specific query languages.&lt;/li&gt;
+&lt;li&gt;Orca Security’s Sonar system tracks more than 900 cloud resource models (e.g., Amazon EC2 instances, Amazon S3 buckets) and requires JSON queries that specify exact model names, select from 18 operators, and navigate parent‑child hierarchies.&lt;/li&gt;
+&lt;li&gt;The original proof‑of‑concept loaded the full Sonar schema (over 900 model definitions) into a single prompt, yielding strong output but high token consumption (~2 million input tokens per workload), high latency (~60 seconds), and limited accuracy on complex multi‑model queries.&lt;/li&gt;
+&lt;li&gt;To address these issues, Orca partnered with AWS to build Discovery AI, a hybrid Retrieval‑Augmented Generation (RAG) solution on Amazon Bedrock that converts natural language into validated Discovery filters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;p&gt;Discovery AI follows a nine‑step pipeline, matching each stage to the most suitable Bedrock model:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Request Entry and Context Setup&lt;/strong&gt; – Combines the user’s question with organization, connected cloud providers, and request metadata.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quick Deterministic Matcher&lt;/strong&gt; – Uses regex and rule‑based matching to detect high‑confidence patterns such as IP addresses, CVEs, ARNs, file hashes, AMI IDs, Oracle Cloud identifiers, EC2 IDs, URLs, and alert IDs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fast‑Path Return&lt;/strong&gt; – When a deterministic match is found, a predefined Discovery filter is returned without invoking an LLM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;(Subsequent stages)&lt;/strong&gt; – For unmatched requests, the pipeline proceeds through retrieval, schema‑aware construction, and LLM inference stages to produce a Sonar‑compatible JSON query.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Key design choices:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Amazon Bedrock provides access to multiple foundation models through a single API, allowing the team to allocate different models to each pipeline stage without separate integrations.&lt;/li&gt;
+&lt;li&gt;Bedrock inherits AWS governance controls (IAM, VPC endpoints, CloudTrail), satisfying Orca’s security requirements.&lt;/li&gt;
+&lt;li&gt;The model‑agnostic architecture enables swapping newer model versions without re‑architecting the pipeline.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-results"&gt;⚙️ Key Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Query costs reduced by &lt;strong&gt;90 %&lt;/strong&gt; compared with the baseline.&lt;/li&gt;
+&lt;li&gt;Input token usage reduced by &lt;strong&gt;93 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;End‑to‑end latency reduced by &lt;strong&gt;75 %&lt;/strong&gt;, achieving ~15‑second response times (down from ~60 seconds).&lt;/li&gt;
+&lt;li&gt;The system now handles thousands of queries per day.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Analysts can obtain answers without knowing Sonar’s exact schema or the 18‑operator query language.&lt;/li&gt;
+&lt;li&gt;Lower costs and faster responses make continuous cloud‑security monitoring more practical.&lt;/li&gt;
+&lt;li&gt;The hybrid RAG approach demonstrates how Retrieval‑Augmented Generation can be combined with domain‑specific schemas to improve accuracy on complex multi‑model queries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-21130-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-21130-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-21130-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#OrcaSecurity #AmazonBedrock #DiscoveryAI #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/natural-language-security-queries-at-orca-security-using-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Natural language security queries at Orca Security using Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Bridgecrew launches Checkov for IaC and Open‑Source Package Security Scanning</title><link>https://shoubhikbanerjee.github.io/blog/p/bridgecrew-launches-checkov-for-iac-and-opensource-package-security-scanning/</link><pubDate>Sun, 11 Oct 2026 22:04:07 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/bridgecrew-launches-checkov-for-iac-and-opensource-package-security-scanning/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/48174253?v=4" alt="Featured image of post Bridgecrew launches Checkov for IaC and Open‑Source Package Security Scanning" /&gt;&lt;h1 id="bridgecrew-launches-checkov-for-iac-and-opensource-package-security-scanning"&gt;Bridgecrew launches Checkov for IaC and Open‑Source Package Security Scanning
+&lt;/h1&gt;&lt;p&gt;Bridgecrew introduced Checkov, a static code analysis tool for infrastructure‑as‑code (IaC) that also performs software composition analysis (SCA) on container images and open‑source packages, helping developers prevent cloud misconfigurations and discover vulnerabilities early in the build process.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Checkov scans cloud infrastructure provisioned with Terraform, Terraform plan, CloudFormation, AWS SAM, Kubernetes, Helm charts, Kustomize, Dockerfile, Serverless, Bicep, OpenAPI, ARM Templates, or OpenTofu.&lt;/li&gt;
+&lt;li&gt;It also scans open‑source packages and images for Common Vulnerabilities and Exposures (CVEs).&lt;/li&gt;
+&lt;li&gt;The tool powers Prisma Cloud Application Security, the developer‑first platform that codifies and streamlines cloud security throughout the development lifecycle.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Uses graph‑based scanning to provide context‑awareness policies.&lt;/li&gt;
+&lt;li&gt;Supports Python format for attribute policies and YAML format for both attribute and composite policies.&lt;/li&gt;
+&lt;li&gt;Detects AWS credentials in EC2 Userdata, Lambda environment variables, and Terraform providers.&lt;/li&gt;
+&lt;li&gt;Identifies secrets using regular expressions, keywords, and entropy‑based detection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-supported-platforms"&gt;⚙️ Supported platforms
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Category&lt;/th&gt;
+&lt;th&gt;Supported Types&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;IaC templates&lt;/td&gt;
+&lt;td&gt;Terraform, Terraform plan, Terraform JSON, CloudFormation, AWS SAM, Kubernetes, Helm, Kustomize, Dockerfile, Serverless framework, Ansible, Bicep, ARM, OpenTofu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CI pipelines&lt;/td&gt;
+&lt;td&gt;Argo Workflows, Azure Pipelines, BitBucket Pipelines, Circle CI Pipelines, GitHub Actions, GitLab CI workflow files&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-features"&gt;📋 Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Over 1 000 built‑in policies covering security and compliance best practices for AWS, Azure, and Google Cloud.&lt;/li&gt;
+&lt;li&gt;Scans both IaC files and CI workflow definitions.&lt;/li&gt;
+&lt;li&gt;Performs Software Composition Analysis (SCA) for images and open‑source packages.&lt;/li&gt;
+&lt;li&gt;Provides context‑aware, graph‑based detection.&lt;/li&gt;
+&lt;li&gt;Enables policy authoring in Python and YAML.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-detection-capabilities"&gt;🔐 Detection capabilities
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Finds misconfigurations in IaC and cloud resources.&lt;/li&gt;
+&lt;li&gt;Detects AWS credentials in various locations.&lt;/li&gt;
+&lt;li&gt;Identifies secrets using regex, keywords, and entropy detection.&lt;/li&gt;
+&lt;li&gt;Scans container images and open‑source packages for CVEs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Checkov is integrated into Prisma Cloud Application Security, delivering continuous security for cloud resources and IaC throughout the development lifecycle.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Checkov #IaC #SCA #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/bridgecrewio/checkov" target="_blank" rel="noopener"
+&gt;bridgecrewio/checkov&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Prowler Brings AI to Open Source Cloud Security Platform</title><link>https://shoubhikbanerjee.github.io/blog/p/prowler-brings-ai-to-open-source-cloud-security-platform/</link><pubDate>Sun, 04 Oct 2026 22:04:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/prowler-brings-ai-to-open-source-cloud-security-platform/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/97106991?v=4" alt="Featured image of post Prowler Brings AI to Open Source Cloud Security Platform" /&gt;&lt;h1 id="prowler-brings-ai-to-open-source-cloud-security-platform"&gt;Prowler Brings AI to Open Source Cloud Security Platform
+&lt;/h1&gt;&lt;p&gt;Prowler, the world’s most widely used open-source cloud security platform, now includes AI-driven capabilities to automate security and compliance across any cloud environment. This update positions Prowler as a platform that can &amp;ldquo;Secure ANY Cloud at AI Speed,&amp;rdquo; offering thousands of ready-to-use security checks and compliance frameworks.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Prowler is the Open Cloud Security Platform trusted by thousands to automate security and compliance in any cloud environment. With thousands of ready-to-use checks and compliance frameworks, Prowler delivers real-time, customizable monitoring and seamless integrations, making cloud security simple, scalable, and cost-effective for organizations of any size.&lt;/p&gt;
+&lt;h2 id="-key-capabilities"&gt;⚙️ Key Capabilities
+&lt;/h2&gt;&lt;p&gt;Prowler now delivers &lt;strong&gt;AI-driven&lt;/strong&gt;, &lt;strong&gt;customizable&lt;/strong&gt;, and &lt;strong&gt;easy-to-use&lt;/strong&gt; assessments, dashboards, reports, and integrations, making cloud security &lt;strong&gt;simple&lt;/strong&gt;, &lt;strong&gt;scalable&lt;/strong&gt;, and &lt;strong&gt;cost-effective&lt;/strong&gt; for organizations of any size. Key features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Thousands of ready-to-use security checks, remediation guidance, and compliance frameworks&lt;/li&gt;
+&lt;li&gt;Prowler ThreatScore: Weighted risk prioritization scoring that helps you focus on the most critical security findings first&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-supported-compliance-frameworks"&gt;🏆 Supported Compliance Frameworks
+&lt;/h2&gt;&lt;p&gt;Prowler includes hundreds of built-in controls to ensure compliance with a wide range of standards and frameworks:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Category&lt;/th&gt;
+&lt;th&gt;Frameworks&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Industry Standards&lt;/td&gt;
+&lt;td&gt;CIS, NIST 800, NIST CSF, CISA, and MITRE ATT&amp;amp;CK&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Regulatory Compliance and Governance&lt;/td&gt;
+&lt;td&gt;RBI, FedRAMP, PCI-DSS, and NIS2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Frameworks for Sensitive Data and Privacy&lt;/td&gt;
+&lt;td&gt;GDPR, HIPAA, and FFIEC&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Organizational Governance and Quality Control&lt;/td&gt;
+&lt;td&gt;SOC2, GXP, and ISO 27001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Cloud-Specific Frameworks&lt;/td&gt;
+&lt;td&gt;AWS Foundational Technical Review (FTR), AWS Well-Architected Framework, and BSI C5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;National Security Standards&lt;/td&gt;
+&lt;td&gt;ENS (Spanish National Security Scheme) and KISA ISMS-P (Korean)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Custom Security Frameworks&lt;/td&gt;
+&lt;td&gt;Tailored to your needs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Prowler is available in two web application formats that simplify running Prowler across your cloud provider accounts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prowler Cloud&lt;/strong&gt;: A hosted web application&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prowler Local Server&lt;/strong&gt;: A self-hosted open-source version&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Both provide a user-friendly interface to visualize the results and streamline your security assessments. For more details, refer to the Prowler Local Server documentation and try Prowler Cloud.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;By integrating AI-driven assessments and threat prioritization into an open-source platform with thousands of built-in checks and extensive compliance framework support, Prowler makes cloud security more accessible and efficient for organizations of any size. The community is invited to join the Prowler community.&lt;/p&gt;
+&lt;p&gt;#OpenSource #CloudSecurity #AI #Compliance #DevSecOps #Prowler&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/prowler-cloud/prowler" target="_blank" rel="noopener"
+&gt;prowler-cloud/prowler&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Wiz Hires Support Engineer with AI-Driven Automation Focus</title><link>https://shoubhikbanerjee.github.io/blog/p/wiz-hires-support-engineer-with-ai-driven-automation-focus/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/wiz-hires-support-engineer-with-ai-driven-automation-focus/</guid><description>&lt;img src="https://www.google.com/s2/favicons?domain=wiz.com&amp;sz=64" alt="Featured image of post Wiz Hires Support Engineer with AI-Driven Automation Focus" /&gt;&lt;h1 id="wiz-hires-support-engineer-with-ai-driven-automation-focus"&gt;Wiz Hires Support Engineer with AI-Driven Automation Focus
+&lt;/h1&gt;&lt;p&gt;Wiz, a cloud security company, published a job advertisement for a Remote Solutions Support Engineer based in Ireland, indicating a new role that combines deep technical troubleshooting with a growing emphasis on AI-driven automation to scale support operations.&lt;/p&gt;
+&lt;h2 id="-role-overview"&gt;🔍 Role Overview
+&lt;/h2&gt;&lt;p&gt;The Remote Solutions Support Engineer will be part of a global team delivering expert-level technical support across the Wiz cloud-native security platform. The role involves investigating complex, multi-domain issues spanning cloud infrastructure, workload protection, vulnerability management, and runtime defense across AWS, Azure, and GCP environments.&lt;/p&gt;
+&lt;h2 id="-key-requirements"&gt;⚙️ Key Requirements
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;5+ years of relevant customer-facing technical experience.&lt;/li&gt;
+&lt;li&gt;2+ years working with cloud platforms (AWS, Azure, GCP) including IAM, networking, and core compute/storage services.&lt;/li&gt;
+&lt;li&gt;1+ years of hands-on experience deploying, managing, and troubleshooting production Kubernetes clusters and containerized applications.&lt;/li&gt;
+&lt;li&gt;Experience reading and debugging code in Python, Shell, JavaScript/JSON, Java, Go, or Terraform/HCL.&lt;/li&gt;
+&lt;li&gt;Proficiency with command-line tools and Linux operating system environments.&lt;/li&gt;
+&lt;li&gt;Familiarity with the current AI landscape, including LLM architectures and the integration of AI-driven tooling into technical workflows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Wiz states it is redefining security for the AI era and is &amp;ldquo;powered by Google,&amp;rdquo; offering an AI-powered platform that harnesses Google’s Threat Intelligence and Security Operations. The job description emphasizes a growing emphasis on AI-driven automation to scale support operations and improve resolution quality, with preferred qualifications including experience building or supporting agentic workflows, RAG architectures, or AI-powered automation.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Visa sponsorship is not offered for this role. The position includes an after-hours, holiday, and weekend on-call rotation.&lt;/p&gt;
+&lt;p&gt;#Wiz #CloudSecurity #AIAutomation #Kubernetes #SupportEngineer&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://wfh.team/job/27073-solutions-support-engineer-wiz-inc" target="_blank" rel="noopener"
+&gt;Remote Solutions Support Engineer at Wiz, Inc.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Google introduces private server-side memory to Private AI Compute platform</title><link>https://shoubhikbanerjee.github.io/blog/p/google-introduces-private-server-side-memory-to-private-ai-compute-platform/</link><pubDate>Wed, 23 Sep 2026 22:05:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/google-introduces-private-server-side-memory-to-private-ai-compute-platform/</guid><description>&lt;img src="https://lh3.googleusercontent.com/tO6G0aZx6bchXvr9KOHXJkJPgIEFzTzSZpVgSAaDMjjoqp3yBrcq4MZ2HLuqX0FI4kjloz39X_mlP805RWWAWiTeovFAU72kbSwAWrjMvKfX7wnt8dE=w1200-h630-n-nu-rw" alt="Featured image of post Google introduces private server-side memory to Private AI Compute platform" /&gt;&lt;h1 id="google-introduces-private-server-side-memory-to-private-ai-compute-platform"&gt;Google introduces private server-side memory to Private AI Compute platform
+&lt;/h1&gt;&lt;p&gt;Google is bringing private, server-side memory to its Private AI Compute platform, enabling the system to securely retain context over time and across devices.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Previously, the Private AI Compute platform and similar industry solutions were &amp;ldquo;stateless,&amp;rdquo; meaning all context was wiped once a task ended. The new technical capability introduces a persistent memory layer that functions as a secure digital vault in the cloud.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Storage&lt;/strong&gt;: Information is sealed within dedicated, encrypted storage.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access Control&lt;/strong&gt;: Cryptographic keys required to unlock the data are held exclusively on personal devices, making data inaccessible to others, including Google.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Connectivity&lt;/strong&gt;: An authenticated, end-to-end encrypted channel connects the device to a protected, isolated cloud environment known as a &amp;ldquo;secure enclave.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Processing&lt;/strong&gt;: The secure enclave temporarily decrypts data in isolated memory to handle requests, saves new context, and immediately encrypts it again.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;To support this development, Google has provided the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An updated technical whitepaper.&lt;/li&gt;
+&lt;li&gt;A tamper-proof public record of server software, allowing devices to verify the software is authentic and unaltered before sending personal data.&lt;/li&gt;
+&lt;li&gt;An update on technical methods, including results from an independent audit by a leading cybersecurity firm.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This research was co-developed by Google DeepMind, Platforms &amp;amp; Devices, Core and Cloud teams, with executive sponsorship from Four Flynn, Jay Yagnik, and David Kleidermacher.&lt;/p&gt;
+&lt;p&gt;#PrivateAICompute #CloudSecurity #GoogleDeepMind #Encryption #Privacy&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://deepmind.google/blog/advancing-private-ai-compute-with-secure-server-side-memory/" target="_blank" rel="noopener"
+&gt;Advancing confidential AI with secure memory&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Organizations define new specialized roles to secure AI platforms and manage cyber risks</title><link>https://shoubhikbanerjee.github.io/blog/p/organizations-define-new-specialized-roles-to-secure-ai-platforms-and-manage-cyber-risks/</link><pubDate>Tue, 15 Sep 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/organizations-define-new-specialized-roles-to-secure-ai-platforms-and-manage-cyber-risks/</guid><description>&lt;img src="https://img.helpnetsecurity.com/wp-content/uploads/2024/03/11140413/cybersecurity_jobs-2-1500.webp" alt="Featured image of post Organizations define new specialized roles to secure AI platforms and manage cyber risks" /&gt;&lt;h1 id="organizations-define-new-specialized-roles-to-secure-ai-platforms-and-manage-cyber-risks"&gt;Organizations define new specialized roles to secure AI platforms and manage cyber risks
+&lt;/h1&gt;&lt;p&gt;Organizations are establishing new technical roles to manage the intersection of artificial intelligence and cybersecurity, focusing on secure platform design and threat mitigation. These positions address emerging risks in generative AI, cloud infrastructure, and critical industrial systems.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The scope of these responsibilities spans from executive leadership to specialized engineering, covering cloud-based Data and AI/ML services, on-premises environments, and operational technology (OT).&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Role&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Primary Functions&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AI &amp;amp; Security Architect&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Design secure AI agent platforms, including tools, memory, and models; define controls for sandboxing and human approvals.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GenAI CBRNE Cyber Security Expert&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Red-team AI models for industrial systems and test safeguards against jailbreaks and adversarial prompts.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Senior Lead Security Engineer – Google Cloud&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Secure cloud-based Data and AI/ML services and guide engineering teams on security requirements.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Manager Cyber Cloud Security and AI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Lead client projects on AI security strategy, governance, and regulatory requirements.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cyber Engineering Manager&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Oversee AI/ML-based threat detection and lead security research for Navy cyber-physical systems.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Professional responsibilities within these new frameworks include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Defining security controls for sensitive data, credentials, and agent actions.&lt;/li&gt;
+&lt;li&gt;Managing emerging threats, including post-quantum risks.&lt;/li&gt;
+&lt;li&gt;Assessing vulnerabilities in Kubernetes, CI/CD, and serverless workloads.&lt;/li&gt;
+&lt;li&gt;Monitoring endpoint threats across Windows, macOS, Linux, and VDI environments.&lt;/li&gt;
+&lt;li&gt;Investigating incidents and strengthening detection across Microsoft 365, Azure, and AWS.&lt;/li&gt;
+&lt;li&gt;Designing cyber assessments for DoW programs to identify mission impacts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;These specialized roles are designed to prevent information disclosure and misuse of AI models while ensuring that critical infrastructure and data protection standards are maintained as AI technologies are integrated into enterprise backend services.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img2.helpnetsecurity.com/posts2024/cybersecurity_jobs-2-650.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#CyberSecurity #AISecurity #GenAI #CloudSecurity #RiskManagement&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.helpnetsecurity.com/2026/09/15/cybersecurity-jobs-available-right-now-september-15-2026/" target="_blank" rel="noopener"
+&gt;Cybersecurity jobs available right now: September 15, 2026 - Help Net Security&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

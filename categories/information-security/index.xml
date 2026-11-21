@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Information Security on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/information-security/</link><description>Recent content in Information Security on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2026 22:09:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/information-security/index.xml" rel="self" type="application/rss+xml"/><item><title>Critical phpAfterShell Vulnerability Disclosed in PHP Session Handler</title><link>https://shoubhikbanerjee.github.io/blog/p/critical-phpaftershell-vulnerability-disclosed-in-php-session-handler/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/critical-phpaftershell-vulnerability-disclosed-in-php-session-handler/</guid><description>&lt;img src="https://blog.cloudflare.com/_emdash/api/media/file/01M7X76FEMSF7NE7RCCQQBHCVN.png" alt="Featured image of post Critical phpAfterShell Vulnerability Disclosed in PHP Session Handler" /&gt;&lt;h1 id="critical-phpaftershell-vulnerability-disclosed-in-php-session-handler"&gt;Critical phpAfterShell Vulnerability Disclosed in PHP Session Handler
+&lt;/h1&gt;&lt;p&gt;On November 19, 2026, the security research company depthfirst disclosed phpAfterShell (CVE-2026-126714), a critical vulnerability in PHP&amp;rsquo;s default file-based session handler that can lead to remote code execution. PHP released official patches to resolve this and 16 other security vulnerabilities on the same day. There is currently no indication that these vulnerabilities have been exploited in the wild.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Under the Common Vulnerability Scoring System (CVSS) 4.0, phpAfterShell scores a 9.2 out of 10 (Critical). The PHP project addressed the flaw in versions 8.2.36, 8.3.37, 8.4.28, 8.5.13, and 8.6.0. These releases also resolve 16 other security vulnerabilities, six of which are similarly rated as critical.&lt;/p&gt;
+&lt;p&gt;As of November 19, 2026, none of the 17 vulnerabilities are listed in CISA&amp;rsquo;s Known Exploited Vulnerabilities catalog, and no reviewed sources report active exploitation.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;PHP stores session data in files by default. The phpAfterShell vulnerability involves the session write and deserialization processes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Session read&lt;/strong&gt;: When an application calls &lt;code&gt;session_start()&lt;/code&gt;, PHP reads the session file and deserializes its content into the &lt;code&gt;$_SESSION&lt;/code&gt; array.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Session write&lt;/strong&gt;: When the request ends, PHP writes the updated session back to the same file.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interruption&lt;/strong&gt;: phpAfterShell is triggered when this write operation is interrupted. Following an interruption, the session file can hold the beginning of the new session data followed by the leftover end of the old session data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deserialization&lt;/strong&gt;: On the next request, &lt;code&gt;session_start()&lt;/code&gt; deserializes this mixed content. If an attacker managed to shape the old session data, PHP can deserialize objects of the attacker&amp;rsquo;s choosing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;An attacker can shape the stored session data by using PHP&amp;rsquo;s session upload progress feature (which writes file upload progress into the session) or by targeting applications that store large user-controlled strings in the session. Although PHP notes that code execution requires a write interruption at a useful point and a suitable deserialization gadget chain in the application, depthfirst reports reaching code execution without any application gadget. They achieved this by chaining phpAfterShell with a second, undisclosed memory-corruption bug in a PHP-native class. It is unestablished whether this second bug is fixed in the November 19 releases.&lt;/p&gt;
+&lt;h2 id="-mitigation-and-protection"&gt;⚙️ Mitigation and Protection
+&lt;/h2&gt;&lt;p&gt;To mitigate the vulnerability, Cloudflare has updated its Web Application Firewall (WAF) to block known phpAfterShell attack patterns. These updates build on a PHP remote code execution rule first deployed in October 2026 for the php2shell vulnerabilities, which has now been updated to cover phpAfterShell.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Rule Name / Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Target Vulnerability&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Managed Ruleset&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Default Action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;phpAfterShell Rule&lt;/td&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-126714&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Free and Paid (Enabled by default)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Block&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;PHP-FPM Request Smuggling Rule&lt;/td&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-129289&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Paid Plans (Enabled by default)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Log&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;PHP SOAP Extension Rules&lt;/td&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-15353, CVE-2026-129506&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Paid Plans (Enabled by default)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Log&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The request smuggling and SOAP rules use the &amp;ldquo;Log&amp;rdquo; action by default because the traffic patterns they target can occasionally occur in legitimate traffic. Paid plan customers can review matching requests in Security Events and change the action to &amp;ldquo;Block&amp;rdquo; once they verify that legitimate traffic is unaffected.&lt;/p&gt;
+&lt;p&gt;Cloudflare emphasizes that the WAF serves as an additional layer of defense rather than a complete replacement for patching. Because several of the critical flaws depend on server configuration or bypass pathways visible to the WAF, the only complete fix is to upgrade PHP and restart all worker processes.&lt;/p&gt;
+&lt;p&gt;#PHP #phpAfterShell #Cybersecurity #Cloudflare #Vulnerability&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://blog.cloudflare.com/phpaftershell-waf-protection/" target="_blank" rel="noopener"
+&gt;How Cloudflare WAF helps protect against phpAfterShell and other critical PHP flaws&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Why Password Spreadsheets Fail to Capture Employee Credential Behavior</title><link>https://shoubhikbanerjee.github.io/blog/p/why-password-spreadsheets-fail-to-capture-employee-credential-behavior/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/why-password-spreadsheets-fail-to-capture-employee-credential-behavior/</guid><description>&lt;img src="https://www.bleepstatic.com/content/posts/2026/11/19/nordpass-header.jpg" alt="Featured image of post Why Password Spreadsheets Fail to Capture Employee Credential Behavior" /&gt;&lt;h1 id="why-password-spreadsheets-fail-to-capture-employee-credential-behavior"&gt;Why Password Spreadsheets Fail to Capture Employee Credential Behavior
+&lt;/h1&gt;&lt;p&gt;Password spreadsheets used by administrators often present a false sense of completeness, as they only reflect credentials that employees have explicitly reported, missing passwords that have been changed, created, or shared since the last update.&lt;/p&gt;
+&lt;h2 id="-the-visibility-gap"&gt;🔍 The Visibility Gap
+&lt;/h2&gt;&lt;p&gt;Administrators may believe they have a handle on company credentials, but this view is incomplete unless someone actively updates the document. Work passwords frequently end up in untracked locations, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Browser built-in storage&lt;/li&gt;
+&lt;li&gt;Shared Google documents or chat messages (e.g., Slack)&lt;/li&gt;
+&lt;li&gt;Personal vaults used because official access is too slow&lt;/li&gt;
+&lt;li&gt;Sticky notes on desks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-drivers-of-unreported-use"&gt;⚙️ Drivers of Unreported Use
+&lt;/h2&gt;&lt;p&gt;The predominant factor in this behavior is convenience. When approved processes are slow or unclear, employees prioritize getting work done by using tools immediately at hand, even if they know it violates rules. Because employees rarely manually report every new password, update, or shared credential, these spreadsheets fail to capture the actual state of credential usage.&lt;/p&gt;
+&lt;h2 id="-credential-weakness-and-reuse"&gt;📊 Credential Weakness and Reuse
+&lt;/h2&gt;&lt;p&gt;Lack of visibility prevents companies from knowing if critical assets are protected by weak passwords. Evidence highlights significant risks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Reuse:&lt;/strong&gt; Verizon’s 2025 Data Breach Investigations Report found that in the median case, only 49% of users’ passwords were unique, meaning more than half were reused across services.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Weakness:&lt;/strong&gt; The &amp;lsquo;TOP 20 Not-So-Secret Business Passwords&amp;rsquo; report by NordPass identified &amp;lsquo;123456&amp;rsquo; as the most common corporate password.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complexity:&lt;/strong&gt; Verizon’s report found that only 3% of compromised passwords in its dataset met basic complexity standards.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Without visibility into storage locations, admins cannot determine who uses a password, who it has been shared with, or if it has been changed. Consequently, they cannot assess the strength or reuse of daily credentials.&lt;/p&gt;
+&lt;h2 id="-security-implications"&gt;⚠️ Security Implications
+&lt;/h2&gt;&lt;p&gt;If attackers gain access to a password spreadsheet, they may encrypt it for ransom or use the credentials inside to access other systems, spreading the attack further. The 2026 edition of the Verizon Data Breach Investigations Report identified credential abuse as the initial access vector in 13% of breaches, while vulnerability exploitation accounted for 31%, underscoring the need for integrated credential protection.&lt;/p&gt;
+&lt;p&gt;To keep accounts protected, admins need to answer specific questions about each password: Is it strong? Who owns it? Where is it stored? Who has access? Is it reused, old, or exposed in a breach? Strong passwords are still at risk if reused across accounts, as exposure in one breach can lead to access to others.&lt;/p&gt;
+&lt;h2 id="-mitigation-features"&gt;💡 Mitigation Features
+&lt;/h2&gt;&lt;p&gt;Tools like NordPass allow administrators to set password requirements to ensure strength and enable users to share credentials over protected channels. Key features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sharing Hub:&lt;/strong&gt; Displays who has access to passwords shared with multiple people or teams.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Activity Log:&lt;/strong&gt; Records actions related to company passwords.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.bleepstatic.com/images/news/security/n/nord-security/nordpass/product-image.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PasswordManagement #Cybersecurity #CredentialSecurity #DataBreach&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.bleepingcomputer.com/news/security/still-tracking-company-passwords-in-spreadsheets-youre-flying-blind/" target="_blank" rel="noopener"
+&gt;Still tracking company passwords in spreadsheets? You’re flying blind.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Security Update Resolves Unauthorized Access in Database Registration Routing</title><link>https://shoubhikbanerjee.github.io/blog/p/security-update-resolves-unauthorized-access-in-database-registration-routing/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/security-update-resolves-unauthorized-access-in-database-registration-routing/</guid><description>&lt;h1 id="security-update-resolves-unauthorized-access-in-database-registration-routing"&gt;Security Update Resolves Unauthorized Access in Database Registration Routing
+&lt;/h1&gt;&lt;p&gt;A minor security fix has been backported from version 1.0a43 to address a vulnerability that allowed unauthorized database downloads. This update resolves a security issue occurring when database routes and names do not match.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Affected Registration&lt;/strong&gt;: The issue involves databases registered using &lt;code&gt;add_database(db, name=..., route=...)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vulnerability Condition&lt;/strong&gt;: The security flaw occurred when a database was registered with a &lt;code&gt;route&lt;/code&gt; that differed from its &lt;code&gt;name&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access Restriction Bypass&lt;/strong&gt;: In these instances, actors who were denied access to the database could still download it from the &lt;code&gt;/&amp;lt;route&amp;gt;.db&lt;/code&gt; endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The security fix was backported from version 1.0a43.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Cybersecurity #Database #SoftwarePatch&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/15/datasette-2/" target="_blank" rel="noopener"
+&gt;Release: datasette 0.65.6&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Evaluation Framework for Unsupervised Narrative Label Generation</title><link>https://shoubhikbanerjee.github.io/blog/p/new-evaluation-framework-for-unsupervised-narrative-label-generation/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-evaluation-framework-for-unsupervised-narrative-label-generation/</guid><description>&lt;h1 id="new-evaluation-framework-for-unsupervised-narrative-label-generation"&gt;New Evaluation Framework for Unsupervised Narrative Label Generation
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced a three-tier evaluation framework designed for unsupervised narrative label generation and tested it across seven disinformation datasets.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The evaluation framework consists of three tiers:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Tier&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Recovery&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Evaluation against a corpus&amp;rsquo;s own taxonomy&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Mining&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Evaluation against external label sets&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Discovery&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Evaluation without predefined labels&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The study compared clustering-based and graph-community-based pipelines, finding the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Balance:&lt;/strong&gt; In a corpus with two prominent topics, clustering can reduce one topic to 2% of generated labels, whereas graph-based pipelines remain balanced.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Singletons:&lt;/strong&gt; Graph outputs produced singletons (narrative labels derived from single claims) in 30-62% of cases; clustering cannot produce these.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validation:&lt;/strong&gt; Human validation of discovery labels confirmed many singletons as recognizable disinformation narratives.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Human-validated narrative candidate labels have been released for the following datasets to support dataset extension and taxonomy development:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Climate Obstruction&lt;/li&gt;
+&lt;li&gt;PolyNarrative&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Disinformation #NarrativeLabeling #UnsupervisedLearning #DataEvaluation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.11128v1" target="_blank" rel="noopener"
+&gt;From Repetition to Recognition: Inductive Discovery of Disinformation Narratives&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

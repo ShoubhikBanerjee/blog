@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GuardDuty on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/guardduty/</link><description>Recent content in GuardDuty on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 20 Nov 2026 22:08:48 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/guardduty/index.xml" rel="self" type="application/rss+xml"/><item><title>How AWS Security Incident Response triages threat findings from GuardDuty</title><link>https://shoubhikbanerjee.github.io/blog/p/how-aws-security-incident-response-triages-threat-findings-from-guardduty/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/how-aws-security-incident-response-triages-threat-findings-from-guardduty/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/automated-triage-hero-1260x630.jpg" alt="Featured image of post How AWS Security Incident Response triages threat findings from GuardDuty" /&gt;&lt;h1 id="how-aws-security-incident-response-triages-threat-findings-from-guardduty"&gt;How AWS Security Incident Response triages threat findings from GuardDuty
+&lt;/h1&gt;&lt;p&gt;AWS Security Incident Response continuously triages threat findings from Amazon GuardDuty and AWS Security Hub CSPM, a process where most work never surfaces as a customer-facing case. The service ingests these findings through Amazon EventBridge rules automatically deployed during onboarding, ensuring that active threats are evaluated while posture and compliance issues remain in existing remediation processes.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The automated triage process evaluates each finding payload against several data sources to determine if an activity is benign or requires action.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data sources:&lt;/strong&gt; The service assesses the finding payload, related AWS activity from AWS CloudTrail and Amazon VPC Flow Logs, AWS threat intelligence, and user-provided environment context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benchmarking:&lt;/strong&gt; Findings are mapped against a profile of known-good activity specific to the customer&amp;rsquo;s environment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Third-party integration:&lt;/strong&gt; Findings from tools like CrowdStrike, Trend Micro, or Lacework sent to Security Hub CSPM are also ingested, provided they carry complete payload information including resource ID, account ID, timestamp, and threat details. GuardDuty findings are ingested directly to prevent duplication.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Outcomes of the triage process vary depending on the nature of the finding. Posture and compliance findings, such as misconfigurations or failed benchmark checks, are not triaged as they reflect environment state rather than active threats. They remain current without archiving and do not generate cases.&lt;/p&gt;
+&lt;p&gt;For active threat findings, such as compromised credentials, cryptomining, or data exfiltration, the service determines one of three dispositions:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Disposition&lt;/th&gt;
+&lt;th&gt;Trigger Condition&lt;/th&gt;
+&lt;th&gt;Action Taken&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Archived, no action needed&lt;/td&gt;
+&lt;td&gt;Automated triage or engineer confirms activity is benign or expected&lt;/td&gt;
+&lt;td&gt;Finding is archived in GuardDuty; no case is created and no customer contact is made&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Proactive case opened&lt;/td&gt;
+&lt;td&gt;Triage cannot confirm activity is benign&lt;/td&gt;
+&lt;td&gt;Case is opened as &amp;ldquo;Unconfirmed Activity&amp;rdquo; or &amp;ldquo;Inappropriate/Unintended Activity&amp;rdquo;; incident response team is engaged; finding stays Current until resolved&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retained for review&lt;/td&gt;
+&lt;td&gt;Posture-related findings (e.g., overly permissive policies)&lt;/td&gt;
+&lt;td&gt;No case is created; finding remains Current without archiving&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;When a proactive case is opened, customers respond via the AWS Management Console under the Cases section, allowing direct communication, context sharing, and case resolution. For third-party findings ingested through Security Hub CSPM, the disposition logic mirrors GuardDuty, but the status changes from NEW to NOTIFIED when triage begins, moving to SUPPRESSED if cleared as benign.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The service builds a profile of what is normal in your environment to distinguish between expected behavior and genuine threats. For example, if GuardDuty flags an &amp;ldquo;UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS&amp;rdquo; finding, the service checks if the external IP belongs to a known corporate VPN range. If the pattern is recognized, the finding is archived. If the IP is from a hosting provider with no prior association and the IAM role has never called from outside AWS, a proactive case is created for investigation. Across customers, less than 1 percent of ingested findings result in a customer-facing escalation.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/aws-security-incident-response-triage-b-hybrid-Figure-1.png"
+loading="lazy"
+alt="AWS Security Incident Response Triage"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/aws-security-incident-response-triage-b-hybrid-Figure-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #Security #GuardDuty #IncidentResponse #ThreatDetection&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/how-aws-security-incident-response-triages-your-security-findings/" target="_blank" rel="noopener"
+&gt;How AWS Security Incident Response triages your security findings | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python315 on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/python315/</link><description>Recent content in Python315 on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Oct 2026 22:07:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/python315/index.xml" rel="self" type="application/rss+xml"/><item><title>Python 3.15 Released with Lazy Imports and New Sampling Profiler</title><link>https://shoubhikbanerjee.github.io/blog/p/python-3-15-released-with-lazy-imports-and-new-sampling-profiler/</link><pubDate>Tue, 13 Oct 2026 22:07:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/python-3-15-released-with-lazy-imports-and-new-sampling-profiler/</guid><description>&lt;img src="https://static.simonwillison.net/static/2026/profiler-output.webp" alt="Featured image of post Python 3.15 Released with Lazy Imports and New Sampling Profiler" /&gt;&lt;h1 id="python-315-released-with-lazy-imports-and-new-sampling-profiler"&gt;Python 3.15 Released with Lazy Imports and New Sampling Profiler
+&lt;/h1&gt;&lt;p&gt;Python 3.15 has been released, introducing significant updates to import behavior, profiling tools, and language syntax. This release, curated by 3.14 and 3.15 release manager Hugo van Kemenade, focuses on reducing startup costs and improving system insights.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Python 3.15 introduces several functional improvements to the standard library and language core:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Explicit Lazy Imports (PEP 810):&lt;/strong&gt; Modules can now be imported using &lt;code&gt;lazy import json&lt;/code&gt; or &lt;code&gt;lazy from pathlib import Path&lt;/code&gt;. The module is only imported the first time a symbol is used in the code. This feature directly addresses the startup cost of heavy dependencies; for instance, installing plugins using &lt;code&gt;sentence_transformers&lt;/code&gt; can add seconds to command invocations without lazy loading.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Unpacking in Comprehensions (PEP 798):&lt;/strong&gt; A new syntax &lt;code&gt;[*sublist for sublist in lists]&lt;/code&gt; allows for unpacking within comprehensions. Proposed by Adam Hartz and Erik Demaine, this is an extension of the unpacking syntax introduced in PEP 448.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tachyon Sampling Profiler:&lt;/strong&gt; A new sampling profiler called Tachyon (available as &lt;code&gt;profiling.sampling&lt;/code&gt;) joins the standard library. Unlike tracing profilers, it periodically captures stack traces from running processes, allowing for low-overhead insights into running systems. Users can attach it to an existing process via its PID, such as using &lt;code&gt;sudo uv run --python 3.15 python -m profiling.sampling attach 1234&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The release includes several updates to the SQLite module and existing utilities:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;profiling.tracing&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The new name for the existing &lt;code&gt;cProfile&lt;/code&gt; tracing profiler.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;blobopen()&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Efficient mechanism for partial reads and writes of large SQLite BLOB binary values.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;create_window_function()&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Allows creating custom SQLite window functions using a class with step, value, inverse, and finalize methods.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;setlimit()&lt;/code&gt; / &lt;code&gt;getlimit()&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Exposes a mechanism for setting SQLite runtime limits from Python.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;set_authorizer(None)&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides a method to remove an existing SQLite authorizer.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;datetime.UTC&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;An alias for &lt;code&gt;datetime.timezone.utc&lt;/code&gt; (originally introduced in 3.11).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Performance testing of the 3.15.0rc3 release by Miguel Grinberg shows that speed remains mostly consistent with Python 3.14. However, the experimental JIT demonstrated a 1.2x boost over the standard interpreter in a Fibonacci test, marking a meaningful performance increase for the JIT.&lt;/p&gt;
+&lt;p&gt;With the arrival of Python 3.15, Python 3.10 (released in 2021) is officially no longer supported. The Tachyon profiler also introduces advanced visualization capabilities, including the ability to produce flame graphs, heat maps, and formats compatible with the Firefox profiler UI.&lt;/p&gt;
+&lt;p&gt;#Python #Programming #SoftwareDevelopment #Python315&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Oct/12/python-3-15/" target="_blank" rel="noopener"
+&gt;Hello Python 3.15, goodbye 3.10, and now I can use 3.11&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Python 3.15 Added to GitHub Actions Testing Matrix</title><link>https://shoubhikbanerjee.github.io/blog/p/python-3-15-added-to-github-actions-testing-matrix/</link><pubDate>Sun, 11 Oct 2026 22:04:07 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/python-3-15-added-to-github-actions-testing-matrix/</guid><description>&lt;h1 id="python315-added-to-github-actions-testing-matrix"&gt;Python 3.15 Added to GitHub Actions Testing Matrix
+&lt;/h1&gt;&lt;p&gt;On 10 October 2026 a blog post announced that Python 3.15.0 has been added to the &lt;strong&gt;actions/python-versions&lt;/strong&gt; repository, making the new interpreter available for GitHub Actions workflows.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Python 3.15.0 added to &lt;code&gt;actions/python-versions&lt;/code&gt; (10 Oct 2026).&lt;/li&gt;
+&lt;li&gt;The release enables you to add &lt;code&gt;&amp;quot;3.15&amp;quot;&lt;/code&gt; to a GitHub Actions testing matrix to run tests against the new Python release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-to-use"&gt;🛠️ How to use
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;In your workflow YAML, include &lt;code&gt;&amp;quot;3.15&amp;quot;&lt;/code&gt; as a value in the &lt;code&gt;python-version&lt;/code&gt; matrix entry.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-community-reaction"&gt;💬 Community reaction
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A user wrote: &amp;ldquo;Bit of a niche link, but I&amp;rsquo;ve been waiting for this for a couple of days – I even told ChatGPT to check for it: Clone &lt;a class="link" href="https://github.com/actions/python-versions" target="_blank" rel="noopener"
+&gt;https://github.com/actions/python-versions&lt;/a&gt; and git pull once an hour until they add the stable 3.15 – then tell me about it.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;The same user later noted: &amp;ldquo;Now that this has landed, you can add &lt;code&gt;&amp;quot;3.15&amp;quot;&lt;/code&gt; to a GitHub Actions testing matrix to run tests against the new Python release.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#GitHubActions #Python315 #CI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Oct/10/python-actions/" target="_blank" rel="noopener"
+&gt;Python 3.15.0 added to actions/python-versions&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Python 3.15 Introduces Soft Deprecation for re.match()</title><link>https://shoubhikbanerjee.github.io/blog/p/python-3-15-introduces-soft-deprecation-for-re-match/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/python-3-15-introduces-soft-deprecation-for-re-match/</guid><description>&lt;h1 id="python-315-introduces-soft-deprecation-for-rematch"&gt;Python 3.15 Introduces Soft Deprecation for re.match()
+&lt;/h1&gt;&lt;p&gt;Python 3.15 is introducing the soft deprecation of the re.match() function, marking it as an API that should no longer be used to write new code without a promise or threat of future removal.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Python 3.15 release manager Hugo van Kemenade describes the move to soft deprecate the &amp;ldquo;venerable but deeply confusing&amp;rdquo; re.match() function. A clearer alternative has been introduced to reflect how the function anchors at the beginning of a string, but not the end.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Depending on the desired outcome, developers can use the following functions:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;re.prefixmatch()&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The clearer alternative to &lt;code&gt;re.match()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;re.search()&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Match a pattern anywhere in the string&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;re.fullmatch()&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Match the entire string&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#Python #Programming #SoftwareDevelopment #Python315&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/11/soft-deprecating-re-match/" target="_blank" rel="noopener"
+&gt;Soft-deprecating re.match()&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

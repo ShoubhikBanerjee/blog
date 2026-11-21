@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>QueryPlanning on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/queryplanning/</link><description>Recent content in QueryPlanning on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 20 Nov 2026 22:08:48 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/queryplanning/index.xml" rel="self" type="application/rss+xml"/><item><title>PostgreSQL 19 reaches GA and is available on Lakebase</title><link>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-reaches-ga-and-is-available-on-lakebase/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-reaches-ga-and-is-available-on-lakebase/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/PG-19-cover.png" alt="Featured image of post PostgreSQL 19 reaches GA and is available on Lakebase" /&gt;&lt;h1 id="postgresql-19-reaches-ga-and-is-available-on-lakebase"&gt;PostgreSQL 19 reaches GA and is available on Lakebase
+&lt;/h1&gt;&lt;p&gt;PostgreSQL 19 reached general availability today and is already available on Lakebase. Several engineers on the Lakebase team are PostgreSQL committers and contributors who worked on this release directly, from query plan advice to shared memory, locale handling, and release management. New major versions often take weeks to reach other managed PostgreSQL services.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;PostgreSQL 19 is a practical release with no single headline feature that changes what PostgreSQL is. Instead, version 19 goes after operational problems that database teams know well:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bloated tables&lt;/li&gt;
+&lt;li&gt;Unstable query plans&lt;/li&gt;
+&lt;li&gt;Replica lag&lt;/li&gt;
+&lt;li&gt;Incomplete statistics&lt;/li&gt;
+&lt;li&gt;Maintenance work that is hard to run safely in production&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-features"&gt;🧩 Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;REPACK&lt;/strong&gt; — reclaims space while normal reads and writes continue during most of the operation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pg_plan_advice&lt;/strong&gt; — describes planner decisions as advice, applies supplied advice, and reports whether it was followed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pg_stash_advice&lt;/strong&gt; — stores advice by query ID and applies it automatically when a matching query is planned&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-repack-works"&gt;⚙️ How REPACK Works
+&lt;/h2&gt;&lt;p&gt;PostgreSQL uses multiversion concurrency control, so an UPDATE creates a new row version and a DELETE leaves a dead tuple behind. Routine vacuuming makes that space reusable, but it doesn&amp;rsquo;t necessarily return space to the operating system or restore a useful physical row order. The usual fixes — VACUUM FULL, CLUSTER, or external tools such as pg_repack — take an ACCESS EXCLUSIVE lock for the whole operation, blocking normal access to the table.&lt;/p&gt;
+&lt;p&gt;REPACK reclaims space like VACUUM FULL; with &lt;code&gt;USING INDEX&lt;/code&gt;, it also physically orders rows like CLUSTER. With &lt;code&gt;CONCURRENTLY&lt;/code&gt;, PostgreSQL rebuilds the table while normal reads and writes continue, capturing ongoing changes through logical decoding. It then takes an ACCESS EXCLUSIVE lock to apply any remaining captured changes and swap the new table and index files into place.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;pg_plan_advice&lt;/td&gt;
+&lt;td&gt;Describes planner decisions as advice, applies supplied advice, reports whether it was followed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;pg_stash_advice&lt;/td&gt;
+&lt;td&gt;Stores advice by query ID and applies it automatically when a matching query is planned&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;These components do not add cross-table statistics or replace the planner. Instead, they let you intervene when an inaccurate estimate produces a poor plan. Unlike inline optimizer hints, plan advice lives outside the application&amp;rsquo;s query text. You can inspect the current plan, test focused advice, and then stash it by query ID.&lt;/p&gt;
+&lt;h2 id="-repack-limitations"&gt;⚠️ REPACK Limitations
+&lt;/h2&gt;&lt;p&gt;Concurrent repacking creates an additional replication slot for the duration of the operation, so it needs free capacity under &lt;code&gt;max_repack_replication_slots&lt;/code&gt; and a table with either a non-deferrable primary key or a suitable index-based replica identity. It also needs temporary disk space for a copy of the table and all its indexes, potentially plus a sort file up to the size of the table.&lt;/p&gt;
+&lt;p&gt;Tables with heavy update and delete traffic face an additional limit: the current upstream PostgreSQL 19 implementation fails if more than about 104 million tuples in the target table are updated or deleted while REPACK (CONCURRENTLY) is running. This counts changes made during the repack, not rows already in the table.&lt;/p&gt;
+&lt;p&gt;Concurrent repacking is also not MVCC-safe: after it commits, transactions using snapshots taken before the repack began can see the table as empty. Physical clustering also degrades as later writes arrive. REPACK CONCURRENTLY still needs planning, but it brings into core a job that previously required more downtime or an extension.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;To try it, create a new Lakebase project and select PostgreSQL 19 as the version.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Untitled-design-7_0.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/2023-08/databricks-default.png?v=1712162038"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PostgreSQL #Lakebase #Database #GARelease #REPACK #QueryPlanning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/postgresql-19-available-lakebase" target="_blank" rel="noopener"
+&gt;PostgreSQL 19 is available on Lakebase&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

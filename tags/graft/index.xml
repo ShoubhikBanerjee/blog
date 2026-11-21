@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GRAFT on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/graft/</link><description>Recent content in GRAFT on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 22 Oct 2026 22:11:45 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/graft/index.xml" rel="self" type="application/rss+xml"/><item><title>Continuous Diffusion Language Models Struggle with Rare Words, GRAFT Restores Balance</title><link>https://shoubhikbanerjee.github.io/blog/p/continuous-diffusion-language-models-struggle-with-rare-words-graft-restores-balance/</link><pubDate>Thu, 22 Oct 2026 22:11:45 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/continuous-diffusion-language-models-struggle-with-rare-words-graft-restores-balance/</guid><description>&lt;h1 id="continuous-diffusion-language-models-struggle-with-rare-words-graft-restores-balance"&gt;Continuous Diffusion Language Models Struggle with Rare Words, GRAFT Restores Balance
+&lt;/h1&gt;&lt;p&gt;Continuous diffusion language models (dLLMs) generate an entire sequence in parallel, converting embeddings to text only at the final step. Recent work shows that while models like ELF achieve autoregressive‑level quality with far fewer sampling steps, they suffer a pronounced drop in rare‑word usage.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Continuous diffusion models never draw a single word at intermediate steps; they output the whole sequence at once.&lt;/li&gt;
+&lt;li&gt;ELF matches human frequency on common words but produces rare words at only &lt;strong&gt;0.30×&lt;/strong&gt; the human rate.&lt;/li&gt;
+&lt;li&gt;Scaling ELF from 105 M to 652 M parameters does &lt;strong&gt;not&lt;/strong&gt; close the rare‑word gap.&lt;/li&gt;
+&lt;li&gt;By contrast, a same‑size GPT‑2 can span from zero to above the human rate depending on its decoding rule.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-continuous-diffusion-works"&gt;🧩 How Continuous Diffusion Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Each generation step averages over all candidate tokens that are still possible.&lt;/li&gt;
+&lt;li&gt;Because rare candidates are averaged together with far more common ones, the average tends toward the common word, effectively discarding the rare word.&lt;/li&gt;
+&lt;li&gt;Autoregressive models avoid this by sampling a single candidate at each step rather than averaging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-problem-collapse-of-the-lexical-long-tail"&gt;⚙️ Problem: Collapse of the Lexical Long Tail
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Measured against held‑out human text, ELF’s rare‑word frequency is &lt;strong&gt;0.30×&lt;/strong&gt; that of humans.&lt;/li&gt;
+&lt;li&gt;No sampler setting for ELF can raise this rate, and the shortfall persists across model sizes.&lt;/li&gt;
+&lt;li&gt;The underlying cause is the lack of a discrete‑word decision step in continuous diffusion.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-solution-graft-trainingfree-rareword-grafting"&gt;💡 Solution: GRAFT (Training‑Free Rare‑Word Grafting)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;GRAFT intervenes while the model is still undecided, committing rare‑word choices that the averaging step would discard.&lt;/li&gt;
+&lt;li&gt;After committing these choices, the model regenerates the sequence from scratch, preserving the rare‑word commitments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📈 Results
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Pre‑GRAFT Rare‑Word Share (× human)&lt;/th&gt;
+&lt;th&gt;Post‑GRAFT Rare‑Word Share (× human)&lt;/th&gt;
+&lt;th&gt;Relative Gain&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ELF (various scales)&lt;/td&gt;
+&lt;td&gt;0.42–0.77&lt;/td&gt;
+&lt;td&gt;0.82–1.10&lt;/td&gt;
+&lt;td&gt;34%–109%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LangFlow (independent continuous dLLM)&lt;/td&gt;
+&lt;td&gt;0.42–0.77*&lt;/td&gt;
+&lt;td&gt;0.82–1.10*&lt;/td&gt;
+&lt;td&gt;34%–109%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;*Exact pre‑GRAFT numbers for LangFlow are not specified; the same improvement range is reported.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The word‑frequency profile moves &lt;strong&gt;2.7×&lt;/strong&gt; closer to human on ELF‑B and &lt;strong&gt;12×&lt;/strong&gt; closer on LangFlow.&lt;/li&gt;
+&lt;li&gt;GRAFT restores rare‑word usage without additional training, applying to frozen models of any size.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;The story focuses on the technical findings; unrelated statements about arXivLabs values are omitted.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#continuousdiffusion #languagemodels #GRAFT #rarewords&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.29136v1" target="_blank" rel="noopener"
+&gt;GRAFT: Restoring the Missing Sampling Interface in Continuous Diffusion Language Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dashboard on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/dashboard/</link><description>Recent content in Dashboard on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 02:05:12 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/dashboard/index.xml" rel="self" type="application/rss+xml"/><item><title>Building Enterprise Patching and Inventory Dashboards Using Amazon QuickSight</title><link>https://shoubhikbanerjee.github.io/blog/p/building-enterprise-patching-and-inventory-dashboards-using-amazon-quicksight/</link><pubDate>Tue, 28 Oct 2025 02:05:12 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/building-enterprise-patching-and-inventory-dashboards-using-amazon-quicksight/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/10/22/qs_Architecture.jpg" alt="Featured image of post Building Enterprise Patching and Inventory Dashboards Using Amazon QuickSight" /&gt;&lt;h1 id="-building-enterprise-patching-and-inventory-dashboards-using-amazon-quicksight"&gt;🚀 Building Enterprise Patching and Inventory Dashboards Using Amazon QuickSight
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/10/22/qs_Architecture.jpg"
+loading="lazy"
+alt="Architecture diagram"
+&gt;
+&lt;em&gt;Architecture diagram for the enterprise patching and inventory dashboard solution&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;In today&amp;rsquo;s fast-paced IT environment, monitoring and visualizing patching compliance across your
+infrastructure is crucial. This comprehensive guide explores how &lt;strong&gt;Amazon QuickSight&lt;/strong&gt;
+transforms the traditional manual dashboard creation process through AI-powered natural language
+interactions, enabling you to quickly generate insightful patching compliance and inventory visualizations.&lt;/p&gt;
+&lt;h2 id="-solution-overview"&gt;💡 Solution Overview
+&lt;/h2&gt;&lt;p&gt;The solution leverages several AWS services to automate the creation of Amazon QuickSight
+datasets and utilize natural language queries to visualize data. This innovative approach
+reduces what was once a multi-step manual process into a few simple prompts, saving valuable
+time while maintaining accuracy and providing real-time insights into your organization&amp;rsquo;s patching status.&lt;/p&gt;
+&lt;h3 id="-architecture-component"&gt;🏗️ Architecture Component
+&lt;/h3&gt;&lt;p&gt;The solution operates through the following key components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS Systems Manager (SSM)&lt;/strong&gt; - Executes custom scripts to gather inventory information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon S3&lt;/strong&gt; - Central storage for inventory and patching data&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Glue&lt;/strong&gt; - Data cataloging and crawling services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Athena&lt;/strong&gt; - Query engine for data analysis&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon QuickSight&lt;/strong&gt; - AI-powered visualization and dashboard creation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS CloudFormation&lt;/strong&gt; - Infrastructure-as-code deployment&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-key-features"&gt;⚙️ Key Features
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Infrastructure Insights Collected:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cloud provider information (AWS, on-premises VMware, etc.)&lt;/li&gt;
+&lt;li&gt;Total and free disk space with status monitoring&lt;/li&gt;
+&lt;li&gt;Disk space percentage and critical alerts&lt;/li&gt;
+&lt;li&gt;EC2-specific metadata including hypervisor types, instance types, and driver versions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Automated Scheduling:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Systems Manager Association: Custom inventory collection every 7 days&lt;/li&gt;
+&lt;li&gt;AWS Glue Crawler: Data synchronization every 12 hours&lt;/li&gt;
+&lt;li&gt;Both intervals are customizable based on organizational requirements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-prerequisites"&gt;📋 Prerequisites
+&lt;/h2&gt;&lt;p&gt;Before implementing this solution, ensure you have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅ Systems Manager Managed nodes (EC2 instances or hybrid nodes)&lt;/li&gt;
+&lt;li&gt;✅ Systems Manager Inventory enabled on target accounts&lt;/li&gt;
+&lt;li&gt;✅ Systems Manager patch scan/install operations configured&lt;/li&gt;
+&lt;li&gt;✅ Amazon QuickSight user account with &lt;strong&gt;Admin Pro&lt;/strong&gt; or &lt;strong&gt;Author Pro&lt;/strong&gt; privileges&lt;/li&gt;
+&lt;li&gt;✅ CloudFormation StackSets permissions&lt;/li&gt;
+&lt;li&gt;✅ AWS Organization ID (if using Organizations)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-implementation-walkthrough"&gt;🔧 Implementation Walkthrough
+&lt;/h2&gt;&lt;h3 id="step-1-deploy-the-cloudformation-stack"&gt;Step 1: Deploy the CloudFormation Stack
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Download the CloudFormation template&lt;/strong&gt; from the GitHub repository 2. &lt;strong&gt;Configure deployment parameters:&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Parameter Category&lt;/th&gt;
+&lt;th&gt;Key Parameters&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;SSM Configuration&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;S3 Bucket Name&lt;/td&gt;
+&lt;td&gt;Central bucket for resource data sync&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Target Type&lt;/td&gt;
+&lt;td&gt;ALL instances, TAG-based, or specific targeting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Tag Key/Value&lt;/td&gt;
+&lt;td&gt;For tag-based instance targeting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;AWS Accounts&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Organization ID&lt;/td&gt;
+&lt;td&gt;Root ID (r-xxx) or OU ID (ou-xxx)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Account IDs&lt;/td&gt;
+&lt;td&gt;Specific accounts (leave empty for all)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Regions&lt;/td&gt;
+&lt;td&gt;Target AWS regions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Amazon Services&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Athena Database&lt;/td&gt;
+&lt;td&gt;Database name for resource data sync&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;QuickSight User&lt;/td&gt;
+&lt;td&gt;QuickSight username for permissions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="step-2-configure-quicksight-permissions"&gt;Step 2: Configure QuickSight Permissions
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Navigate to Amazon QuickSight console&lt;/strong&gt; 2. &lt;strong&gt;Set user role to Admin Pro:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Choose user icon → Manage QuickSight - Select Manage users → Assign Admin Pro role&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Configure AWS resource access:&lt;/strong&gt; - Under Permissions → AWS resources&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Enable Amazon Athena and Amazon S3 access - Select the S3 bucket created by CloudFormation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="step-3-initialize-data-collection"&gt;Step 3: Initialize Data Collection
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Wait for SSM Inventory Association&lt;/strong&gt; to complete (runs every 30 minutes) 2. &lt;strong&gt;Manually trigger AWS Glue Crawler:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Navigate to AWS Glue Crawlers console - Select crawler starting with &amp;ldquo;SSM-GlueCrawler-*&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Choose &lt;strong&gt;Run&lt;/strong&gt; to execute&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-creating-visuals-with-amazon-quicksight-ai"&gt;📊 Creating Visuals with Amazon QuickSight AI
+&lt;/h2&gt;&lt;h3 id="operations-dashboard-visuals"&gt;Operations Dashboard Visuals
+&lt;/h3&gt;&lt;p&gt;The following prompts demonstrate how to create comprehensive operational visualizations:&lt;/p&gt;
+&lt;h4 id="-managed-nodes-by-provider"&gt;🌐 Managed Nodes by Provider
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a pie chart for count of resourceid by provider&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="-system-status-overview"&gt;📊 System Status Overview
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a donut chart for count of resourceid by instancestatus&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="-operating-system-distribution"&gt;💻 Operating System Distribution
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a donut chart for count of resourceid by platformname&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="-disk-space-monitoring"&gt;💾 Disk Space Monitoring
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a visual for count of resourceid by diskspacestatus&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/10/22/qs_operations-1.png"
+loading="lazy"
+alt="Operations Dashboard"
+&gt;
+&lt;em&gt;Comprehensive operations dashboard showing system health metrics&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="aws-ec2-specific-analytics"&gt;AWS EC2-Specific Analytics
+&lt;/h3&gt;&lt;p&gt;For detailed EC2 insights, use these specialized prompts:&lt;/p&gt;
+&lt;h4 id="-aws-driver-versions"&gt;⚡ AWS Driver Versions
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a visual for count of resourceid by application version and application name equals AWS PV Drivers&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="-network-driver-analysis"&gt;🔌 Network Driver Analysis
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a visual for count of resourceid by enaversion&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="-license-type-distribution"&gt;💳 License Type Distribution
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;Create a pie chart for count of resourceid by licensetype&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/10/21/qs_aws_dashboard.png"
+loading="lazy"
+alt="AWS Dashboard"
+&gt;
+&lt;em&gt;AWS EC2 metrics dashboard with detailed component analysis&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-compliance-monitorin"&gt;🛡️ Compliance Monitorin
+&lt;/h3&gt;&lt;p&gt;The compliance sheet focuses on patch and association compliance:&lt;/p&gt;
+&lt;h4 id="patch-compliance-overview"&gt;Patch Compliance Overview
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;create a pie chart for count of resourceid by compliance status for compliancetype equals Patch&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="critical-missing-patches"&gt;Critical Missing Patches
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;create a pivot table with provider, accountid, region, platformname, resourceid, patch title
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;for compliancetype equals Patch and compliance status equal NON_COMPLIANT and patch status equal Missing&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/972a67c48192728a34979d9a35164c1295401b71/2025/10/06/Inventory_compliance_patches.png"
+loading="lazy"
+alt="Compliance Dashboard"
+&gt;
+&lt;em&gt;Detailed compliance dashboard showing patch status across infrastructure&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-interactive-querying"&gt;🎯 Interactive Querying
+&lt;/h2&gt;&lt;p&gt;Amazon QuickSight enables real-time questioning of your data through natural language:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example queries:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;List of resourceid by diskspacestatus equal Critical&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;Show me all non-compliant Windows servers&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&amp;ldquo;Display patch compliance by AWS region&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-cleanup-process"&gt;🧹 Cleanup Process
+&lt;/h2&gt;&lt;p&gt;To remove all resources:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;CloudFormation Stack:&lt;/strong&gt; - Navigate to AWS CloudFormation console&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Select stack named &lt;em&gt;ssm-inventory-patching-dashboard&lt;/em&gt; - Choose &lt;strong&gt;Delete&lt;/strong&gt; → &lt;strong&gt;Delete stack&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;QuickSight Resources:&lt;/strong&gt; - Delete Dashboard, Analyses, and Datasets manually&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://aws.amazon.com/blogs/mt/building-enterprise-patching-and-inventory-dashboards-using-amazon-q-in-amazon-quicksuite/" target="_blank" rel="noopener"
+&gt;https://aws.amazon.com/blogs/mt/building-enterprise-patching-and-inventory-dashboards-using-amazon-q-in-amazon-quicksuite/&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;This solution demonstrates how Amazon QuickSight&amp;rsquo;s AI capabilities transform infrastructure
+monitoring from a complex, time-intensive process into an intuitive, natural language-driven
+experience. By combining AWS Systems Manager&amp;rsquo;s comprehensive data collection with QuickSight&amp;rsquo;s
+intelligent visualization engine, organizations can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Accelerate dashboard creation&lt;/strong&gt; from hours to minutes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Improve compliance visibility&lt;/strong&gt; across hybrid environments&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enable self-service analytics&lt;/strong&gt; for non-technical stakeholders&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Maintain real-time insights&lt;/strong&gt; into infrastructure health&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The integration of multiple AWS services creates a robust, scalable solution that grows with
+your organization&amp;rsquo;s needs while simplifying the complexity of enterprise infrastructure monitoring.&lt;/p&gt;
+&lt;p&gt;Transform your infrastructure monitoring today by implementing this AI-powered visualization
+solution and experience the future of intelligent operational dashboards.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AWS #CLOUD #SYSTEMSMANAGER #QUICKSIGHT #PATCHING #COMPLIANCE #DASHBOARD #AI #AUTOMATION
+#INFRASTRUCTURE&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

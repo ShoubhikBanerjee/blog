@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Model Efficiency on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/model-efficiency/</link><description>Recent content in Model Efficiency on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 00:47:54 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/model-efficiency/index.xml" rel="self" type="application/rss+xml"/><item><title>LightOnOCR-1B: The Case for End-to-End and Efficient Domain-Specific Vision-Language Models for OCR</title><link>https://shoubhikbanerjee.github.io/blog/p/lightonocr-1b-the-case-for-end-to-end-and-efficient-domain-specific-vision-language-models-for-ocr/</link><pubDate>Tue, 28 Oct 2025 00:47:54 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lightonocr-1b-the-case-for-end-to-end-and-efficient-domain-specific-vision-language-models-for-ocr/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/YzKh2w2KMCLukcuiyNqPj.png" alt="Featured image of post LightOnOCR-1B: The Case for End-to-End and Efficient Domain-Specific Vision-Language Models for OCR" /&gt;&lt;h1 id="-lightonocr-1b-the-case-for-end-to-end-and-efficient-domain-specific-vision-language-models"&gt;🔍 LightOnOCR-1B: The Case for End-to-End and Efficient Domain-Specific Vision-Language Models
+&lt;/h1&gt;&lt;p&gt;for OCR&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/YzKh2w2KMCLukcuiyNqPj.png"
+loading="lazy"
+alt="LightOnOCR Performance Overview"
+&gt;
+&lt;em&gt;Performance comparison showing LightOnOCR-1B&amp;rsquo;s superior efficiency and competitive accuracy&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-tldr"&gt;📄 TL;DR
+&lt;/h2&gt;&lt;p&gt;This blogpost introduces &lt;strong&gt;LightOnOCR-1B&lt;/strong&gt;, a vision-language model for OCR that achieves
+state-of-the-art performance in its weight class while outperforming much larger general-purpose
+models. It achieves these results while running &lt;strong&gt;6.49× faster than dots.ocr&lt;/strong&gt;, &lt;strong&gt;2.67× faster
+than PaddleOCR-VL-0.9B&lt;/strong&gt; and &lt;strong&gt;1.73× faster than DeepSeekOCR&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Unlike most recent approaches that rely on complex, non-trainable pipelines, LightOnOCR-1B is
+&lt;strong&gt;fully end-to-end trainable&lt;/strong&gt; and easily fine-tunable for specific languages or domains. One of
+the key ingredients of LightOnOCR is its diverse large-scale PDF training corpus which will
+also be released with an open license soon.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Available Models:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://huggingface.co/lightonai/LightOnOCR-1B-1025" target="_blank" rel="noopener"
+&gt;LightOnOCR-1B-1025&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://huggingface.co/lightonai/LightOnOCR-0.9B-32k-1025" target="_blank" rel="noopener"
+&gt;LightOnOCR-0.9B-32k-1025&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://huggingface.co/lightonai/LightOnOCR-0.9B-16k-1025" target="_blank" rel="noopener"
+&gt;LightOnOCR-0.9B-16k-1025&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-introduction"&gt;🚀 Introduction
+&lt;/h2&gt;&lt;p&gt;OCR has become essential for modern multimodal understanding of documents and is critical for
+many applications ranging from information extraction to RAG solutions. Parsing documents is
+inherently challenging because it involves understanding high-resolution, text-dense and
+structurally complex images.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;LightOnOCR&lt;/strong&gt; is a compact, end-to-end model that delivers state-of-the-art document
+understanding with lightning speed and low cost. Competing systems often rely on multiple moving
+parts to boost performance, but this added complexity makes them brittle, difficult to train,
+and prone to break when adapting to new data or domains.&lt;/p&gt;
+&lt;h3 id="-key-performance-metrics"&gt;⚡ Key Performance Metrics
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Processing Speed&lt;/strong&gt;: 5.71 pages per second on a single H100 GPU&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Daily Capacity&lt;/strong&gt;: ~493,000 pages per day&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost Efficiency&lt;/strong&gt;: Less than $0.01 per 1,000 pages at current cloud pricing&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deployment&lt;/strong&gt;: Easy integration with vLLM&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Get the latest vLLM nightly until v0.11.1 is released&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install -U vllm &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --torch-backend&lt;span class="o"&gt;=&lt;/span&gt;auto &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --extra-index-url https://wheels.vllm.ai/nightly &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --prerelease&lt;span class="o"&gt;=&lt;/span&gt;allow
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Deploy the server and enjoy!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vllm serve lightonai/LightOnOCR-1B-1025 &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --limit-mm-per-prompt &lt;span class="s1"&gt;&amp;#39;{&amp;#34;image&amp;#34;: 1}&amp;#39;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; --async-scheduling
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;h3 id="-quality-performance"&gt;🎯 Quality Performance
+&lt;/h3&gt;&lt;p&gt;LightOnOCR delivers performance on par with the latest state-of-the-art OCR systems on
+&lt;strong&gt;Olmo-Bench&lt;/strong&gt;, achieving these results &lt;strong&gt;without any training on OlmoOCR-mix&lt;/strong&gt;. Unlike several
+reported baselines, LightOnOCR achieves these results without any benchmark-specific fine-tuning.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/B4XT0L7RWqKeqUJnH2qVs.png"
+loading="lazy"
+alt="Quality Results"
+&gt;&lt;/p&gt;
+&lt;p&gt;Key achievements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Beats DeepSeek OCR&lt;/strong&gt; and performs on par with dots.ocr (despite being 3× smaller)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Surpasses Qwen3-VL-2B&lt;/strong&gt; by 16 overall points&lt;/li&gt;
+&lt;li&gt;Remains within error margin of pipeline-based PaddleOCR-VL&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-speed-performa"&gt;🏃‍♂️ Speed Performa
+&lt;/h3&gt;&lt;p&gt;Pipeline-based approaches require multiple model calls per page and introduce additional
+cropping and preprocessing overheads. LightOnOCR performs a &lt;strong&gt;single call per page&lt;/strong&gt; with no
+retry or correction logic, resulting in simpler, faster, and more efficient inference.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/kgTXN8SbYxY1-TzzohzfZ.png"
+loading="lazy"
+alt="Speed Comparison"
+&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-technical-details"&gt;🔧 Technical Details
+&lt;/h2&gt;&lt;h3 id="-model-architectur"&gt;🏗️ Model Architectur
+&lt;/h3&gt;&lt;p&gt;The model is a &lt;strong&gt;1B VLM&lt;/strong&gt; combining:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Vision Transformer (ViT)&lt;/strong&gt;: Initialized from Pixtral (Mistral 3.1 ViT)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Language Model&lt;/strong&gt;: Qwen3 architecture&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multimodality Projection&lt;/strong&gt;: Random initialization with 4× downsampling&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/Ty_VdijChqzjXI-i9oh8A.png"
+loading="lazy"
+alt="Architecture Diagram"
+&gt;&lt;/p&gt;
+&lt;h3 id="-training-dataset-curation"&gt;📚 Training Dataset Curation
+&lt;/h3&gt;&lt;p&gt;Following a &lt;strong&gt;knowledge distillation paradigm&lt;/strong&gt; using Qwen2-VL-72B-Instruct to transcribe
+content into Markdown with LaTeX notation.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Dataset Statistics:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;17.6 million pages&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;45.5 billion tokens&lt;/strong&gt; (vision + text)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Maximum image size&lt;/strong&gt;: 1540 pixels at native resolution&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Normalization Pipeline:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Loop detection&lt;/strong&gt;: N-gram frequency analysis with Jaccard similarity&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deduplication&lt;/strong&gt;: Cryptographic hashing across dataset&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Image placeholder standardization&lt;/strong&gt;: &lt;code&gt;![image](image_1.png)&lt;/code&gt; format&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hallucination filtering&lt;/strong&gt;: Similarity scoring against ground truth&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="-experimental-analysis"&gt;🧪 Experimental Analysis
+&lt;/h2&gt;&lt;h3 id="-two-stage-vs-one-stage-training"&gt;🔄 Two-Stage vs One-Stage Training
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Subset&lt;/th&gt;
+&lt;th&gt;1-stage&lt;/th&gt;
+&lt;th&gt;2-stage&lt;/th&gt;
+&lt;th&gt;Δ&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;arxiv_math&lt;/td&gt;
+&lt;td&gt;79.7&lt;/td&gt;
+&lt;td&gt;78.5&lt;/td&gt;
+&lt;td&gt;-1.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;baseline&lt;/td&gt;
+&lt;td&gt;99.6&lt;/td&gt;
+&lt;td&gt;99.7&lt;/td&gt;
+&lt;td&gt;+0.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;long_tiny_text&lt;/td&gt;
+&lt;td&gt;66.1&lt;/td&gt;
+&lt;td&gt;66.3&lt;/td&gt;
+&lt;td&gt;+0.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;multi_column&lt;/td&gt;
+&lt;td&gt;79.1&lt;/td&gt;
+&lt;td&gt;77.4&lt;/td&gt;
+&lt;td&gt;-1.7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;old_scans&lt;/td&gt;
+&lt;td&gt;35.6&lt;/td&gt;
+&lt;td&gt;31.6&lt;/td&gt;
+&lt;td&gt;-4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;old_scans_math&lt;/td&gt;
+&lt;td&gt;69.2&lt;/td&gt;
+&lt;td&gt;65.9&lt;/td&gt;
+&lt;td&gt;-3.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;table_tests&lt;/td&gt;
+&lt;td&gt;76.2&lt;/td&gt;
+&lt;td&gt;76.4&lt;/td&gt;
+&lt;td&gt;+0.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Average&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;72.2&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;70.8&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;-1.4&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Finding&lt;/strong&gt;: Single-stage training outperforms two-stage, likely due to our large-scale dataset.&lt;/p&gt;
+&lt;h3 id="-teacher-model-size-imp"&gt;👨‍🏫 Teacher Model Size Imp
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Subset&lt;/th&gt;
+&lt;th&gt;7B teacher&lt;/th&gt;
+&lt;th&gt;72B teacher&lt;/th&gt;
+&lt;th&gt;Δ&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;arxiv_math&lt;/td&gt;
+&lt;td&gt;71.8&lt;/td&gt;
+&lt;td&gt;79.7&lt;/td&gt;
+&lt;td&gt;+7.9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;old_scans_math&lt;/td&gt;
+&lt;td&gt;52.2&lt;/td&gt;
+&lt;td&gt;69.2&lt;/td&gt;
+&lt;td&gt;+17&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;table_tests&lt;/td&gt;
+&lt;td&gt;67.4&lt;/td&gt;
+&lt;td&gt;76.2&lt;/td&gt;
+&lt;td&gt;+8.8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;old_scans&lt;/td&gt;
+&lt;td&gt;27.4&lt;/td&gt;
+&lt;td&gt;35.6&lt;/td&gt;
+&lt;td&gt;+8.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;multi_column&lt;/td&gt;
+&lt;td&gt;56.9&lt;/td&gt;
+&lt;td&gt;79.1&lt;/td&gt;
+&lt;td&gt;+22.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;long_tiny_text&lt;/td&gt;
+&lt;td&gt;53.2&lt;/td&gt;
+&lt;td&gt;66.1&lt;/td&gt;
+&lt;td&gt;+12.9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;baseline&lt;/td&gt;
+&lt;td&gt;93.7&lt;/td&gt;
+&lt;td&gt;99.6&lt;/td&gt;
+&lt;td&gt;+5.9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Average&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;60.4&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;72.2&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;+11.8&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Key Insight&lt;/strong&gt;: &lt;strong&gt;Annotation quality scales with teacher size&lt;/strong&gt; - investing in larger models
+for data generation meaningfully improves downstream accuracy.&lt;/p&gt;
+&lt;h3 id="-vocabulary-pruning"&gt;✂️ Vocabulary Pruning
+&lt;/h3&gt;&lt;p&gt;LightOnOCR offers variants with pruned vocabularies (32k and 16k tokens) for European languages:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Vocabulary Size&lt;/th&gt;
+&lt;th&gt;ArXiv&lt;/th&gt;
+&lt;th&gt;Tables&lt;/th&gt;
+&lt;th&gt;Multi-column&lt;/th&gt;
+&lt;th&gt;Overall&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;151k&lt;/td&gt;
+&lt;td&gt;81.4&lt;/td&gt;
+&lt;td&gt;76.4&lt;/td&gt;
+&lt;td&gt;80.0&lt;/td&gt;
+&lt;td&gt;76.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;32k&lt;/td&gt;
+&lt;td&gt;80.6&lt;/td&gt;
+&lt;td&gt;73.5&lt;/td&gt;
+&lt;td&gt;71.2&lt;/td&gt;
+&lt;td&gt;73.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;16k&lt;/td&gt;
+&lt;td&gt;82.3&lt;/td&gt;
+&lt;td&gt;75.3&lt;/td&gt;
+&lt;td&gt;78.6&lt;/td&gt;
+&lt;td&gt;75.4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/Wc6lg7vvif-tjuOz92WDv.png"
+loading="lazy"
+alt="Vocabulary Pruning Impact"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Result&lt;/strong&gt;: &lt;strong&gt;32k vocabulary delivers best speedup&lt;/strong&gt; while maintaining competitive accuracy for
+English OCR tasks.&lt;/p&gt;
+&lt;h3 id="-image-resolution-impact"&gt;🔍 Image Resolution Impact
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Subset&lt;/th&gt;
+&lt;th&gt;1024 px&lt;/th&gt;
+&lt;th&gt;1280 px&lt;/th&gt;
+&lt;th&gt;1540 px&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;arxiv_math&lt;/td&gt;
+&lt;td&gt;78.0&lt;/td&gt;
+&lt;td&gt;81.8&lt;/td&gt;
+&lt;td&gt;81.4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;old_scans_math&lt;/td&gt;
+&lt;td&gt;68.6&lt;/td&gt;
+&lt;td&gt;67.0&lt;/td&gt;
+&lt;td&gt;71.6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;table_tests&lt;/td&gt;
+&lt;td&gt;71.3&lt;/td&gt;
+&lt;td&gt;78.3&lt;/td&gt;
+&lt;td&gt;76.4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;long_tiny_text&lt;/td&gt;
+&lt;td&gt;65.8&lt;/td&gt;
+&lt;td&gt;83.9&lt;/td&gt;
+&lt;td&gt;88.7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Average&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;70.7&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;75.0&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;76.1&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Finding&lt;/strong&gt;: Higher resolution consistently improves performance, especially for dense text and
+small fonts.&lt;/p&gt;
+&lt;h3 id="-data-augmentation-effects"&gt;🎨 Data Augmentation Effects
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Subset&lt;/th&gt;
+&lt;th&gt;w/o aug&lt;/th&gt;
+&lt;th&gt;w/ aug&lt;/th&gt;
+&lt;th&gt;Δ&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;old_scans_math&lt;/td&gt;
+&lt;td&gt;67.0&lt;/td&gt;
+&lt;td&gt;72.5&lt;/td&gt;
+&lt;td&gt;+5.5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;long_tiny_text&lt;/td&gt;
+&lt;td&gt;83.9&lt;/td&gt;
+&lt;td&gt;85.1&lt;/td&gt;
+&lt;td&gt;+1.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;table_tests&lt;/td&gt;
+&lt;td&gt;78.3&lt;/td&gt;
+&lt;td&gt;72.7&lt;/td&gt;
+&lt;td&gt;-5.6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Average&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;75.0&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;74.8&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;-0.2&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;: Augmentations provide marginal improvements for noisy text but may reduce
+accuracy on clean structured content.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-fine-tuning-capability"&gt;🎯 Fine-tuning Capability
+&lt;/h2&gt;&lt;p&gt;Demonstrating adaptability by fine-tuning on OlmOCR-mix-0225 documents subset for just &lt;strong&gt;one epoch&lt;/strong&gt;:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Subset&lt;/th&gt;
+&lt;th&gt;Baseline&lt;/th&gt;
+&lt;th&gt;Fine-tuned&lt;/th&gt;
+&lt;th&gt;Δ&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;headers &amp;amp; footers&lt;/td&gt;
+&lt;td&gt;40.0&lt;/td&gt;
+&lt;td&gt;91.3&lt;/td&gt;
+&lt;td&gt;+51.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;long_tiny_text&lt;/td&gt;
+&lt;td&gt;66.1&lt;/td&gt;
+&lt;td&gt;87.8&lt;/td&gt;
+&lt;td&gt;+21.7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;multi_column&lt;/td&gt;
+&lt;td&gt;79.1&lt;/td&gt;
+&lt;td&gt;81.1&lt;/td&gt;
+&lt;td&gt;+2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Overall&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;68.2&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;77.2&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;+9.0&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Key Advantage&lt;/strong&gt;: Unlike pipeline-based approaches, LightOnOCR can be continuously improved
+through end-to-end fine-tuning.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-omnidocbench-analysis"&gt;📋 OmniDocBench Analysis
+&lt;/h2&gt;&lt;h3 id="-formatting-sensitivity"&gt;🎯 Formatting Sensitivity
+&lt;/h3&gt;&lt;p&gt;Testing format impact by comparing Markdown vs HTML table training:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;Baseline&lt;/th&gt;
+&lt;th&gt;HTML Tables&lt;/th&gt;
+&lt;th&gt;Δ&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Text edit&lt;/td&gt;
+&lt;td&gt;0.090&lt;/td&gt;
+&lt;td&gt;0.075&lt;/td&gt;
+&lt;td&gt;-0.015&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Formula edit&lt;/td&gt;
+&lt;td&gt;0.486&lt;/td&gt;
+&lt;td&gt;0.343&lt;/td&gt;
+&lt;td&gt;-0.143&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Table TEDS&lt;/td&gt;
+&lt;td&gt;70.1&lt;/td&gt;
+&lt;td&gt;78.6&lt;/td&gt;
+&lt;td&gt;+8.5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Table edit&lt;/td&gt;
+&lt;td&gt;0.262&lt;/td&gt;
+&lt;td&gt;0.159&lt;/td&gt;
+&lt;td&gt;-0.103&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Overall (En)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;0.234&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;0.168&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;-0.066&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Insight&lt;/strong&gt;: Edit-distance metrics are &lt;strong&gt;highly sensitive to formatting style&lt;/strong&gt;, highlighting
+limitations of such evaluation approaches.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/PpzKkmzZ8AfLW_8qrbzgz.png"
+loading="lazy"
+alt="OmniDocBench Results"
+&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-visual-example"&gt;🖼️ Visual Example
+&lt;/h2&gt;&lt;h3 id="example-1-math-dense-page"&gt;Example 1: Math Dense Page
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/qv1l90orHn47rGzJMI-2i.png"
+loading="lazy"
+alt="Math Example"
+&gt;&lt;/p&gt;
+&lt;h3 id="example-2-old-math-scan"&gt;Example 2: Old Math Scan
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/IoY8EEGQJkP6BxStWJJaa.png"
+loading="lazy"
+alt="Old Scan Example"
+&gt;&lt;/p&gt;
+&lt;h3 id="example-3-multi-column-with-tiny-text"&gt;Example 3: Multi-column with Tiny Text
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/OmWOJX_F-GsmQ2-j3Y0zU.png"
+loading="lazy"
+alt="Multi-column Example"
+&gt;&lt;/p&gt;
+&lt;h3 id="example-4-number-heavy-table"&gt;Example 4: Number-heavy Table
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62cd695e94b9dcedbf1818e5/Pwnw6_JUpBASk03Drbczo.png" width="45%"/&gt; &lt;img src="https://cdn-uploads.huggingface.co/production/upload
+s/62cd695e94b9dcedbf1818e5/Pa-XCYbBYE7qB7RCwmEP7.png" width="45%"/&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/lightonai/lightonocr" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/lightonai/lightonocr&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;LightOnOCR-1B&lt;/strong&gt; represents a significant advancement in document understanding, establishing a
+new Pareto frontier for OCR models. Key achievements include:&lt;/p&gt;
+&lt;p&gt;🎯 &lt;strong&gt;Performance Excellence&lt;/strong&gt;: State-of-the-art results in its weight class without benchmark-specific training&lt;/p&gt;
+&lt;p&gt;⚡ &lt;strong&gt;Efficiency Leadership&lt;/strong&gt;: Up to 6.49× faster than competing solutions with exceptional cost-effectiveness&lt;/p&gt;
+&lt;p&gt;🔧 &lt;strong&gt;End-to-End Simplicity&lt;/strong&gt;: Fully trainable single model replacing complex multi-component pipelines&lt;/p&gt;
+&lt;p&gt;🌐 &lt;strong&gt;Flexibility&lt;/strong&gt;: Easy fine-tuning for specific domains, languages, and use cases&lt;/p&gt;
+&lt;p&gt;💰 &lt;strong&gt;Production Ready&lt;/strong&gt;: vLLM integration with high-throughput serving capabilities&lt;/p&gt;
+&lt;p&gt;The work demonstrates the strong potential for small, specialized models distilled from larger
+teachers, offering the community a simple, stable, and cost-effective solution for document OCR
+tasks. The upcoming release of the training dataset will further strengthen the open-source
+ecosystem for document understanding.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Citation:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bibtex" data-lang="bibtex"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nc"&gt;@misc&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;lightonocr2025&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;title&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;{LightOnOCR-1B: End-to-End and Efficient Domain-Specific Vision-Language Models for
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;OCR}&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;author&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;{Said Taghadouini and Baptiste Aubertin and Adrien Cavaillès}&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;year&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;{2025}&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;howpublished&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;{\url{https://huggingface.co/blog/lightonai/lightonocr}}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#OCR #VISIONLANGUAGEMODELS #DOCUMENTUNDERSTANDING #HUGGINGFACE #MACHINELEARNING #AI #EFFICIENCY #ENDTOEND&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

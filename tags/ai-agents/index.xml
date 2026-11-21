@@ -1,0 +1,1233 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI Agents on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/ai-agents/</link><description>Recent content in AI Agents on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 02:11:46 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/ai-agents/index.xml" rel="self" type="application/rss+xml"/><item><title>Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards</title><link>https://shoubhikbanerjee.github.io/blog/p/lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards/</link><pubDate>Tue, 28 Oct 2025 02:11:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards" /&gt;&lt;h1 id="lanser-cli-language-server-cli-empowers-language-agents-with-process-rewards-"&gt;Lanser-CLI: Language Server CLI Empowers Language Agents with Process Rewards 🛠️🏆
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Repo:&lt;/strong&gt; &lt;a class="link" href="https://github.com/yifanzhang-pro/lanser-cli" target="_blank" rel="noopener"
+&gt;https://github.com/yifanzhang-pro/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Project Page:&lt;/strong&gt; &lt;a class="link" href="https://yifanzhang-pro.github.io/lanser-cli" target="_blank" rel="noopener"
+&gt;https://yifanzhang-pro.github.io/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-tldr-aka-the-elevator-pitch-with-bass"&gt;🎯 TL;DR (a.k.a. the elevator pitch with bass)
+&lt;/h2&gt;&lt;p&gt;LLMs guess. Language servers &lt;strong&gt;check&lt;/strong&gt;. &lt;strong&gt;Lanser-CLI&lt;/strong&gt; is the official implementation of
+&lt;em&gt;Language Server CLI Empowers Language Agents with Process Rewards&lt;/em&gt; — a CLI-first bridge between
+your coding agent and an LSP (e.g., Pyright). It turns IDE-grade facts (defs, refs, types,
+diagnostics, safe edits) into &lt;strong&gt;deterministic, replayable artifacts&lt;/strong&gt; and a &lt;strong&gt;process reward&lt;/strong&gt;
+that tells your agent it&amp;rsquo;s actually getting somewhere.&lt;/p&gt;
+&lt;p&gt;Less &amp;ldquo;trust me bro,&amp;rdquo; more &amp;ldquo;here are the receipts.&amp;rdquo;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-why-this-exists-and-why-your-agent-will-thank-you"&gt;🤔 Why this exists (and why your agent will thank you)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hallucinated APIs&lt;/strong&gt; and &lt;strong&gt;mislocalized edits&lt;/strong&gt; are the jump-scares of agent coding.&lt;/li&gt;
+&lt;li&gt;Language servers already compute &lt;em&gt;verifiable&lt;/em&gt; answers.&lt;/li&gt;
+&lt;li&gt;Agents need those answers in a form that&amp;rsquo;s &lt;strong&gt;deterministic, auditable, and safe to apply&lt;/strong&gt;
+—and they need &lt;strong&gt;shaped feedback&lt;/strong&gt; (XP!) on every step, not just the final diff.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Lanser-CLI&lt;/strong&gt; is the orchestration layer that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pins and speaks LSP like a pro&lt;/li&gt;
+&lt;li&gt;Emits byte-stable, hash-addressed &lt;strong&gt;Analysis Bundles&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Provides &lt;strong&gt;robust selectors&lt;/strong&gt; that survive edits&lt;/li&gt;
+&lt;li&gt;Wraps edits in a &lt;strong&gt;safety envelope&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Computes a &lt;strong&gt;process reward&lt;/strong&gt; so your agent stops flailing and starts leveling up&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-meme-level-overview"&gt;😂 Meme-level overview
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Language Agent:&lt;/strong&gt; &amp;ldquo;I renamed it.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Language Server:&lt;/strong&gt; &amp;ldquo;No you didn&amp;rsquo;t.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Lanser-CLI:&lt;/strong&gt; &amp;ldquo;Here&amp;rsquo;s the diff, the diagnostics delta, the safety check, and the hash. You&amp;rsquo;re
+welcome.&amp;rdquo;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-features-you-actually-want"&gt;⚙️ The features you actually want
+&lt;/h2&gt;&lt;h3 id="1-robust-selectors-goodbye-filelinecol-fragility"&gt;1) Robust Selectors (goodbye &lt;code&gt;file:line:col&lt;/code&gt; fragility)
+&lt;/h3&gt;&lt;p&gt;Address code by &lt;strong&gt;intent&lt;/strong&gt;, not just coordinates:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Symbolic&lt;/strong&gt;: &lt;code&gt;py://pkg.mod#Class.method:body&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AST path&lt;/strong&gt;: &lt;code&gt;ast://[module=pkg.mod]/[class=Class]/[def=method]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Content anchor&lt;/strong&gt;: &lt;code&gt;anchor://src/app.py#&amp;quot;def load_data(&amp;quot;?ctx=24&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;They &lt;strong&gt;relocate deterministically&lt;/strong&gt; as code changes. No more off-by-one chaos.&lt;/p&gt;
+&lt;h3 id="2-analysis-bundles-the-auditable-artifact"&gt;2) Analysis Bundles (the auditable artifact)
+&lt;/h3&gt;&lt;p&gt;Every command emits a JSON bundle that includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Resolved target + facts (defs/refs/hover/diags)&lt;/li&gt;
+&lt;li&gt;Environment capture (server version, position encoding, interpreter, config digest)&lt;/li&gt;
+&lt;li&gt;Stable &lt;strong&gt;&lt;code&gt;bundleId&lt;/code&gt;&lt;/strong&gt; (hash over canonicalized JSON)&lt;/li&gt;
+&lt;li&gt;Optional trace for &lt;strong&gt;offline replay&lt;/strong&gt; and CI audits&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-safety-envelope-because-prod-still-matters"&gt;3) Safety Envelope (because prod still matters)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Preview-first&lt;/strong&gt; for mutations (rename/code actions)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workspace jail&lt;/strong&gt; prevents writes outside project root&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Git-aware&lt;/strong&gt;: clean tree required unless overridden&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transactional apply&lt;/strong&gt; (atomic writes) + conflict reporting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4-process-rewards-xp-for-agents"&gt;4) Process Rewards (XP for agents)
+&lt;/h3&gt;&lt;p&gt;When your agent takes a step, it gets a &lt;strong&gt;score&lt;/strong&gt; shaped by:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Diagnostics going down&lt;/li&gt;
+&lt;li&gt;Safety checks passing&lt;/li&gt;
+&lt;li&gt;Selector ambiguity shrinking&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That&amp;rsquo;s feedback your planner can actually use—online and &lt;strong&gt;replayable&lt;/strong&gt; offline.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-60-second-tour-copypaste-these"&gt;🚀 60-second tour (copy/paste these)
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 0) Clone &amp;amp; explore&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone https://github.com/yifanzhang-pro/lanser-cliuv venv --python 3.12 .venv &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;source&lt;/span&gt; .venv/bin/activate
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uv pip install -e &lt;span class="s2"&gt;&amp;#34;.[dev]&amp;#34;&lt;/span&gt; lanser --help
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Inspect the environment and verify the orchestrator is healthy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser doctor
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Resolve a symbol definition via the selector DSL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser def py://lanser.cli#definition:def --json
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Run document diagnostics with deterministic bundles&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser diag src/lanser/cli.py@L1:C1 --json
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Preview a rename before applying workspace edits&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lanser rename py://lanser.cli#definition:def new_definition --json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Pro tip:&lt;/strong&gt; Everything above emits &lt;strong&gt;deterministic bundles&lt;/strong&gt; you can stash, diff, replay, and
+score.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-what-deterministic-actually-means-plain-english-edition"&gt;📊 What &amp;ldquo;deterministic&amp;rdquo; actually means (plain-English edition)
+&lt;/h2&gt;&lt;p&gt;When you freeze the workspace + server version + config, the same query yields the &lt;strong&gt;same
+bundle&lt;/strong&gt; with the &lt;strong&gt;same hash&lt;/strong&gt;. Lists are sorted deterministically; JSON is canonicalized
+before hashing. That&amp;rsquo;s why CI can trust it, and why offline replay works without re-running the server.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-under-the-hood-the-short-nerd-bit"&gt;🔧 Under the hood (the short nerd bit)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LSP lifecycle orchestration&lt;/strong&gt;: start/stop, capability negotiation, restarts with backoff&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Single-flight cache&lt;/strong&gt;: dedup identical in-flight queries&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Position encoding sanity&lt;/strong&gt;: negotiates UTF-16 per LSP, handles UTF-8/&amp;ldquo;codepoint&amp;rdquo; IO
+correctly&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trace &amp;amp; replay&lt;/strong&gt;: optional JSON-RPC frame capture; regenerate byte-stable bundles offline&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Currently instantiated with Pyright for Python&lt;/strong&gt;; design is LSP-agnostic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-who-this-is-for"&gt;👥 Who this is for
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Agent developers&lt;/strong&gt; who want planning on &lt;strong&gt;facts&lt;/strong&gt; (not &amp;ldquo;hopefully correct&amp;rdquo; heuristics)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infra/CI owners&lt;/strong&gt; who want &lt;strong&gt;reproducible&lt;/strong&gt; static checks and safe automated edits&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Refactor wranglers&lt;/strong&gt; doing large-scale code moves with auditability&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-a-tiny-beforeafter-to-vibe-check-the-reward"&gt;📈 A tiny before/after to vibe-check the reward
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Before:&lt;/strong&gt; Agent renames function, diagnostics unchanged, selector ambiguous → low/negative
+reward.
+&lt;strong&gt;After:&lt;/strong&gt; Diagnostics drop, &lt;code&gt;prepareRename&lt;/code&gt; passes, ambiguity shrinks → &lt;strong&gt;positive reward&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The signal is simple on purpose: it&amp;rsquo;s &lt;strong&gt;shaping&lt;/strong&gt;, not a research paper in disguise. Your
+trainer/evaluator will thank you.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-faq-fast-and-slightly-feral"&gt;❓ FAQ (fast and slightly feral)
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Is this an IDE?&lt;/strong&gt; No. This is a &lt;strong&gt;CLI-first orchestrator&lt;/strong&gt; that makes language-server power
+usable by agents and CI.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Will it break my repo?&lt;/strong&gt; Mutations are preview-by-default, jailed, git-aware, and
+transactional. You&amp;rsquo;d have to try to make it spicy.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Does it only do Python?&lt;/strong&gt; Today&amp;rsquo;s demo rides with &lt;strong&gt;Pyright&lt;/strong&gt;. The design is &lt;strong&gt;LSP-agnostic&lt;/strong&gt;.
+Bring your favorite server via PRs.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Do I need to publish anything to use process rewards?&lt;/strong&gt; Nope. Rewards are computed from
+bundles you already produced. They&amp;rsquo;re replayable offline for evals.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-roadmap-ish-community-flavored"&gt;🗺️ Roadmap-ish (community-flavored
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;More LSP servers + language flavors&lt;/li&gt;
+&lt;li&gt;Richer selectors and ambiguity evidence&lt;/li&gt;
+&lt;li&gt;Expanded batch SDK for high-throughput agent farms&lt;/li&gt;
+&lt;li&gt;First-class eval harness using replayed bundles&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Want a thing? Open an issue. Even better: open a PR.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-try-it-on-your-codebase-today"&gt;🧪 Try it on your codebase today
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Clone the repo 2. Install Lanser-CLI&lt;/li&gt;
+&lt;li&gt;Point Lanser-CLI at a project 4. Run &lt;code&gt;lanser def&lt;/code&gt;, &lt;code&gt;lanser refs&lt;/code&gt;, &lt;code&gt;lanser diag&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Preview a &lt;code&gt;rename&lt;/code&gt; and watch the bundle + reward kick in&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;👉 &lt;strong&gt;Repo:&lt;/strong&gt; &lt;a class="link" href="https://github.com/yifanzhang-pro/lanser-cli" target="_blank" rel="noopener"
+&gt;https://github.com/yifanzhang-pro/lanser-cli&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;⭐ &lt;strong&gt;Star it so your agent gets gains.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;🙌 &lt;strong&gt;Contribute memes, ideas, and code.&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Final punchline:&lt;/strong&gt; Tool-use shouldn&amp;rsquo;t be theatrical. With &lt;strong&gt;Lanser-CLI&lt;/strong&gt;, language servers
+become a &lt;strong&gt;ground truth API&lt;/strong&gt;, edits come with &lt;strong&gt;guardrails&lt;/strong&gt;, and agents get a &lt;strong&gt;scoreboard&lt;/strong&gt;
+for every step they take. Ship confidently; leave the guesswork to the ghosts.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/yifAI/lanser-cli" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/yifAI/lanser-cli&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;Lanser-CLI represents a significant leap forward in bridging the gap between language servers
+and AI agents. By providing deterministic, auditable artifacts and process rewards, it
+transforms how agents interact with code - moving from guesswork to ground truth. The tool&amp;rsquo;s
+focus on safety, reproducibility, and shaped feedback makes it an essential addition to any
+serious agent development workflow.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re building coding agents, managing CI/CD pipelines, or conducting large-scale
+refactoring operations, Lanser-CLI offers the reliability and insight needed to operate
+confidently in production environments.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#LANGUAGESERVERS #AI #AGENTS #DEVTOOLS #CLI #PYTHON #LSP #AUTOMATION #REFACTORING #CICD&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Demystifying AI Agents: Understanding the Core Components of Agentic Systems</title><link>https://shoubhikbanerjee.github.io/blog/p/demystifying-ai-agents-understanding-the-core-components-of-agentic-systems/</link><pubDate>Tue, 28 Oct 2025 01:20:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/demystifying-ai-agents-understanding-the-core-components-of-agentic-systems/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Demystifying AI Agents: Understanding the Core Components of Agentic Systems" /&gt;&lt;h1 id="-demystifying-ai-agents-understanding-the-core-components-of-agentic-systems"&gt;🤖 Demystifying AI Agents: Understanding the Core Components of Agentic Systems
+&lt;/h1&gt;&lt;p&gt;&lt;em&gt;Amazon vice president and distinguished engineer Marc Brooker explains how agentic systems work
+under the hood — and how AWS&amp;rsquo;s new AgentCore framework implements their essential components.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://assets.amazon.science/video-placeholder"
+loading="lazy"
+alt="Amazon Science Video"
+&gt;
+&lt;em&gt;Amazon vice president and distinguished engineer Marc Brooker on Amazon Bedrock AgentCore.&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-rise-of-agentic-ai"&gt;🚀 The Rise of Agentic AI
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;&lt;a class="link" href="https://www.amazon.science/blog/agents" target="_blank" rel="noopener"
+&gt;Agents&lt;/a&gt;&lt;/strong&gt; are the trendiest topic in AI today, and
+with good reason. AI agents act on their users&amp;rsquo; behalf, autonomously doing things like making
+online purchases, building software, researching business trends, or booking travel. By taking
+generative AI out of the sandbox of the chat interface and allowing it to act directly on the
+world, agentic AI represents a leap forward in the power and utility of AI.&lt;/p&gt;
+&lt;p&gt;Agentic AI has been moving really fast: for example, one of the core building blocks of today&amp;rsquo;s
+agents, the &lt;strong&gt;model context protocol (MCP)&lt;/strong&gt;, is only a year old! As in any fast-moving field,
+there are many competing definitions, hot takes, and misleading opinions.&lt;/p&gt;
+&lt;p&gt;To cut through the noise, I&amp;rsquo;d like to describe the core components of an agentic AI system and
+how they fit together. Hopefully, when you&amp;rsquo;ve finished reading this post, agents won&amp;rsquo;t seem as
+mysterious. You&amp;rsquo;ll also understand why we made the choices we did in designing Amazon Web
+Services&amp;rsquo; &lt;strong&gt;Bedrock AgentCore&lt;/strong&gt;, a set of services and tools that lets customers quickly and
+easily design and build their own agentic AI systems.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-agentic-ecosystem"&gt;⚙️ The Agentic Ecosystem
+&lt;/h2&gt;&lt;p&gt;Definitions of the word &amp;ldquo;agent&amp;rdquo; abound, but I like a slight variation on the British programmer
+Simon Willison&amp;rsquo;s minimalist take:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;An agent runs models and tools in a loop to achieve a goal.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The user prompts an AI model (typically a large language model, or LLM) with the goal to be
+attained — say, booking a table at a restaurant near the theater where a movie is playing. Along
+with the goal, the model receives a list of the tools available to it, such as a database of
+restaurant locations or a record of the user&amp;rsquo;s food preferences. The model then plans how to
+achieve the goal and takes a first step by calling one of the tools. The tool provides a
+response, and based on that, the model calls a new tool. Through repetitions of this process,
+the agent ratchets toward accomplishment of the goal.&lt;/p&gt;
+&lt;h3 id="-core-components-of-an-agentic-system"&gt;🧩 Core Components of an Agentic System
+&lt;/h3&gt;&lt;p&gt;An agentic system needs a few core components:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A way to build the agent&lt;/strong&gt; - When you deploy an agent, you don&amp;rsquo;t want to have to code it
+from scratch. There are several agent development frameworks out there, but I&amp;rsquo;m partial to
+Amazon Web Services&amp;rsquo; own &lt;a class="link" href="https://github.com/awslabs/strands" target="_blank" rel="noopener"
+&gt;Strands Agents&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Somewhere to run the AI model&lt;/strong&gt; - A seasoned AI developer can download an open-weight LLM,
+but it takes expertise to do that right. It also takes expensive hardware that&amp;rsquo;s going to be
+poorly utilized for the average user.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Somewhere to run the agentic code&lt;/strong&gt; - With frameworks like Strands, the user creates code
+for an agent object with a defined set of functions. Most of those functions involve sending
+prompts to an AI model, but the code needs to run somewhere.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A mechanism for translating between the text-based LLM and tool calls&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A short-term memory&lt;/strong&gt; for tracking the content of agentic interactions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A long-term memory&lt;/strong&gt; for tracking the user&amp;rsquo;s preferences and affinities across sessions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A way to trace&lt;/strong&gt; the system&amp;rsquo;s execution, to evaluate the agent&amp;rsquo;s performance&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="-building-an-agent-the-react-model"&gt;🔧 Building an Agent: The ReAct Model
+&lt;/h2&gt;&lt;p&gt;It&amp;rsquo;s well known that asking an LLM to explain how it plans to approach a task improves its
+performance on that task. Such &amp;ldquo;chain-of-thought reasoning&amp;rdquo; is now ubiquitous in AI.&lt;/p&gt;
+&lt;p&gt;The analogue in agentic systems is the &lt;strong&gt;ReAct (reasoning + action) model&lt;/strong&gt;, in which the agent has:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;thought&lt;/strong&gt; (&amp;ldquo;I&amp;rsquo;ll use the map function to locate nearby restaurants&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;Performs an &lt;strong&gt;action&lt;/strong&gt; (issuing an API call to the map function)&lt;/li&gt;
+&lt;li&gt;Makes an &lt;strong&gt;observation&lt;/strong&gt; (&amp;ldquo;There are two pizza places and one Indian restaurant within two
+blocks of the movie theater&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![Agent Development Process](&lt;a class="link" href="https://assets.amazon.science/dims4/default/5f29cf3/2147483647/strip/true/crop/1080x1080&amp;#43;0&amp;#43;0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspo" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/5f29cf3/2147483647/strip/true/crop/1080x1080+0+0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspo&lt;/a&gt;
+t.s3.amazonaws.com%2Fscience%2F85%2F0b%2F3cd7bc80466c8ed52f56cd2cc5a8%2Fagent-development.gif)
+&lt;em&gt;AgentCore lets the developer use any agent development framework and any model.&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-tool-integration-and-code-generation"&gt;💡 Tool Integration and Code Generation
+&lt;/h3&gt;&lt;p&gt;The &lt;em&gt;tools&lt;/em&gt; available to the agent can include local tools and remote tools such as databases,
+microservices, and software as a service. A tool&amp;rsquo;s specification includes a natural-language
+explanation of how and when it&amp;rsquo;s used and the syntax of its API calls.&lt;/p&gt;
+&lt;p&gt;The developer can also tell the agent to build its own tools on the fly. For example, if a tool
+retrieves a table stored as comma-separated text and the agent needs to sort it, rather than
+waste resources sending it through an LLM repeatedly, the developer can instruct the agent to
+generate Python code for such repetitive tasks.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-runtime-architecture-firecracker-microvms"&gt;☁️ Runtime Architecture: Firecracker MicroVMs
+&lt;/h2&gt;&lt;p&gt;Historically, there were two main ways to isolate code running on shared servers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Containerization&lt;/strong&gt;: Efficient but offered lower security&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Virtual machines (VMs)&lt;/strong&gt;: Secure but came with computational overhead&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In 2018, Amazon Web Services&amp;rsquo; Lambda serverless-computing service deployed
+&lt;strong&gt;&lt;a class="link" href="https://firecracker-microvm.github.io/" target="_blank" rel="noopener"
+&gt;Firecracker&lt;/a&gt;&lt;/strong&gt;, a new paradigm offering the best of
+both worlds. Firecracker creates &amp;ldquo;microVMs&amp;rdquo; with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Complete hardware isolation&lt;/li&gt;
+&lt;li&gt;Their own Linux kernels&lt;/li&gt;
+&lt;li&gt;Reduced overhead (as low as a few megabytes)&lt;/li&gt;
+&lt;li&gt;Fast startup times (as low as a few milliseconds)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![AWS AgentCore Architecture](&lt;a class="link" href="https://assets.amazon.science/dims4/default/d90c4d6/2147483647/strip/true/crop/1080x1080&amp;#43;0&amp;#43;0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightsp" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/d90c4d6/2147483647/strip/true/crop/1080x1080+0+0/resize/1200x1200!/quality/90/?url=http%3A%2F%2Famazon-topics-brightsp&lt;/a&gt;
+ot.s3.amazonaws.com%2Fscience%2Fb4%2Fa5%2Ff5f50ee842a48ef1e9ea9c58e962%2Fadobe-express-agentcore
+-asw-scalable-10-16-toedit-11-45.gif)&lt;/p&gt;
+&lt;p&gt;AgentCore uses &lt;strong&gt;session-based isolation&lt;/strong&gt;, where every session with an agent is assigned its
+own Firecracker microVM. When the session finishes, the LLM&amp;rsquo;s state information is copied to
+long-term memory, and the microVM is destroyed.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-tool-calls-and-communication-protocols"&gt;🔗 Tool Calls and Communication Protocols
+&lt;/h2&gt;&lt;p&gt;![AgentCore Gateway](&lt;a class="link" href="https://assets.amazon.science/dims4/default/1df0f0b/2147483647/strip/true/crop/1038x584&amp;#43;0&amp;#43;0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazo" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/1df0f0b/2147483647/strip/true/crop/1038x584+0+0/resize/1200x675!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazo&lt;/a&gt;
+naws.com%2Fscience%2Fe7%2F5e%2F7b3efa2447c2a1e24c2c15e0ed1e%2Fgateway.png)
+&lt;em&gt;AgentCore Gateway manages the tool calls issued by the agent.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Just as there are several existing development frameworks for agent creation, there are several
+existing standards for communication between agents and tools, the most popular of which is
+&lt;strong&gt;MCP (Model Context Protocol)&lt;/strong&gt;. MCP establishes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Standard format for passing data between the LLM and its server&lt;/li&gt;
+&lt;li&gt;A way for servers to describe available tools and data to the agent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In AgentCore, tool calls are handled by the &lt;strong&gt;AgentCore Gateway&lt;/strong&gt; service, which:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses MCP by default&lt;/li&gt;
+&lt;li&gt;Is configurable and supports a growing set of protocols&lt;/li&gt;
+&lt;li&gt;Manages translation between LLM output and tool input specifications&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-computer-use-capabilitie"&gt;🖥️ Computer Use Capabilitie
+&lt;/h3&gt;&lt;p&gt;Sometimes, the necessary tool lacks a public API. In such cases, the only way to retrieve data
+is by pointing and clicking on a website. &lt;strong&gt;Computer use&lt;/strong&gt; services like Amazon&amp;rsquo;s &lt;strong&gt;Nova Act&lt;/strong&gt;
+can be used with AgentCore&amp;rsquo;s secure Browser tool, making any website a potential tool for agents.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-memory-systems"&gt;🧠 Memory Systems
+&lt;/h2&gt;&lt;h3 id="short-term-memory"&gt;Short-term Memory
+&lt;/h3&gt;&lt;p&gt;LLMs are next-word prediction engines, with predictions based on long sequences of words they&amp;rsquo;ve
+seen, known as &lt;em&gt;context&lt;/em&gt;. However, agents need additional memory systems beyond just context.&lt;/p&gt;
+&lt;p&gt;For example, if an agent retrieves information about dozens of restaurants, it doesn&amp;rsquo;t want to
+dump all that data into the LLM&amp;rsquo;s context. Instead, it stores the complete list in &lt;strong&gt;short-term
+memory&lt;/strong&gt; and retrieves specific records based on user preferences and proximity.&lt;/p&gt;
+&lt;h3 id="long-term-memory"&gt;Long-term Memory
+&lt;/h3&gt;&lt;p&gt;Agents must remember prior interactions with clients. If a user previously specified food
+preferences, price tolerance, or ambiance preferences, the agent shouldn&amp;rsquo;t need to ask again.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Long-term memory&lt;/strong&gt; features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Storage of user preferences across sessions&lt;/li&gt;
+&lt;li&gt;LLM summarization and &amp;ldquo;chunking&amp;rdquo; of documents&lt;/li&gt;
+&lt;li&gt;Topic-based grouping for easier retrieval&lt;/li&gt;
+&lt;li&gt;Configurable strategies for summarization and information extraction&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-observability-and-monitoring"&gt;📊 Observability and Monitoring
+&lt;/h2&gt;&lt;p&gt;![AgentCore Observability](&lt;a class="link" href="https://assets.amazon.science/dims4/default/5ef3a72/2147483647/strip/true/crop/1023x615&amp;#43;0&amp;#43;0/resize/1200x721!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/5ef3a72/2147483647/strip/true/crop/1023x615+0+0/resize/1200x721!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3&lt;/a&gt;
+.amazonaws.com%2Fscience%2Fb7%2F8a%2F887ef82f4e0cbfa8a702eb7bac73%2Ftraces.png)
+&lt;em&gt;AgentCore Observability lets the customer track an agent&amp;rsquo;s execution.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Agents are a new kind of software system requiring new approaches to observation, monitoring,
+and auditing. Key questions include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Are agents running fast enough?&lt;/li&gt;
+&lt;li&gt;How much are they costing?&lt;/li&gt;
+&lt;li&gt;How many tool calls are they making?&lt;/li&gt;
+&lt;li&gt;Are users satisfied with the results?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In &lt;strong&gt;AgentCore Observability&lt;/strong&gt;, &lt;em&gt;traces&lt;/em&gt; provide an end-to-end view of session execution,
+breaking down step-by-step which actions were taken and why. These traces are essential for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Understanding agent performance&lt;/li&gt;
+&lt;li&gt;Providing data to improve agent effectiveness&lt;/li&gt;
+&lt;li&gt;Debugging and optimization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://www.amazon.science/blog/demystifying-agents" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/demystifying-agents&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;This explanation has demystified agentic AI by breaking down its core components: agent building
+frameworks, runtime infrastructure, tool communication protocols, memory systems, and
+observability tools. AWS&amp;rsquo;s &lt;strong&gt;AgentCore&lt;/strong&gt; provides a comprehensive platform implementing all
+these essential components, from &lt;strong&gt;Strands Agents&lt;/strong&gt; for development to &lt;strong&gt;Firecracker microVMs&lt;/strong&gt;
+for secure runtime isolation.&lt;/p&gt;
+&lt;p&gt;The future of AI lies in agents that can act autonomously on behalf of users, and understanding
+these fundamental building blocks is crucial for anyone looking to build or deploy agentic
+systems. Whether you&amp;rsquo;re booking restaurants, building software, or researching business trends,
+agents represent the next evolution of AI from passive chat interfaces to active, goal-oriented systems.&lt;/p&gt;
+&lt;p&gt;Ready to build your own agents? All the tools you need are available at the &lt;a class="link" href="https://aws.amazon.com/bedrock/agentcore/" target="_blank" rel="noopener"
+&gt;AgentCore
+website&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AWS #AI #AGENTS #BEDROCK #AGENTCORE #FIRECRACKER #CLOUDCOMPUTING #MACHINELEARNING #LLM
+#AGENTIC&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Accelerating Qwen3-8B Agent on Intel Core Ultra with Depth-Pruned Draft Models</title><link>https://shoubhikbanerjee.github.io/blog/p/accelerating-qwen3-8b-agent-on-intel-core-ultra-with-depth-pruned-draft-models/</link><pubDate>Tue, 28 Oct 2025 01:08:28 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/accelerating-qwen3-8b-agent-on-intel-core-ultra-with-depth-pruned-draft-models/</guid><description>&lt;img src="https://huggingface.co/blog/assets/intel-qwen3-agent/smolagents-1300-650.png" alt="Featured image of post Accelerating Qwen3-8B Agent on Intel Core Ultra with Depth-Pruned Draft Models" /&gt;&lt;h1 id="-accelerating-qwen3-8b-agent-on-intel-core-ultra-with-depth-pruned-draft-models"&gt;🚀 Accelerating Qwen3-8B Agent on Intel® Core™ Ultra with Depth-Pruned Draft Models
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/intel-qwen3-agent/smolagents-1300-650.png"
+loading="lazy"
+alt="Banner Image"
+&gt;
+&lt;em&gt;Optimizing AI agents with speculative decoding and pruned models&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-tldr"&gt;📋 TL;DR
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Qwen/Qwen3-8B" target="_blank" rel="noopener"
+&gt;Qwen3-8B&lt;/a&gt;&lt;/strong&gt; is one of the most exciting recent
+releases—a model with native agentic capabilities, making it a natural fit for the AIPC.&lt;/li&gt;
+&lt;li&gt;With &lt;strong&gt;&lt;a class="link" href="https://github.com/openvinotoolkit/openvino.genai" target="_blank" rel="noopener"
+&gt;OpenVINO.GenAI&lt;/a&gt;&lt;/strong&gt;, we&amp;rsquo;ve been able
+to accelerate generation by ~1.3× using speculative decoding with a lightweight Qwen3-0.6B draft.&lt;/li&gt;
+&lt;li&gt;By using speculative decoding and applying a simple pruning process to the draft, we pushed
+the speedup even further to &lt;strong&gt;~1.4×&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;We wrapped this up by showing how these improvements can be used to run a fast, local AI Agent
+with 🤗 &lt;strong&gt;&lt;a class="link" href="https://github.com/huggingface/smolagents" target="_blank" rel="noopener"
+&gt;smolagents&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-qwen3"&gt;🧠 Qwen3
+&lt;/h2&gt;&lt;p&gt;Qwen3-8B is part of the latest Qwen family, trained with explicit agentic behaviors. It supports
+tool invocation, multi-step reasoning, and long-context handling capabilities, that make it
+well-suited for complex agent workflows. When integrated with frameworks like Hugging Face
+🤗smolagents, QwenAgent, or AutoGen, it enables a wide range of agentic applications built
+around tool use and reasoning.&lt;/p&gt;
+&lt;p&gt;Unlike single-turn chatbots, agentic applications rely on reasoning models that produce
+&amp;ldquo;thinking aloud&amp;rdquo; traces, intermediate steps that expand token usage, making inference speed
+critical to responsiveness. The combination of optimized inference and built-in agentic
+intelligence makes Qwen3-8B a compelling foundation for next-gen AI agents.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-accelerating-qwen3-8b-on-intel-core-ultra-with-speculative-decoding"&gt;⚡ Accelerating Qwen3-8B on Intel® Core™ Ultra with Speculative Decoding
+&lt;/h2&gt;&lt;p&gt;We started by benchmarking the 4-bit optimized OpenVINO version of Qwen3-8B on an Intel Lunar
+Lake integrated GPU, establishing this as our baseline for further acceleration.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a class="link" href="https://arxiv.org/abs/2211.17192" target="_blank" rel="noopener"
+&gt;Speculative decoding&lt;/a&gt;&lt;/strong&gt; is a method to speed up
+auto-regressive generation. It works by using a smaller, faster model as a draft to propose
+multiple tokens in a single forward pass, which are then validated by the larger target model in
+one forward pass. In our setup, &lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Qwen/Qwen3-8B" target="_blank" rel="noopener"
+&gt;Qwen3-8B&lt;/a&gt;&lt;/strong&gt; served as
+the target model while &lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Qwen/Qwen3-0.6B" target="_blank" rel="noopener"
+&gt;Qwen3-0.6B&lt;/a&gt;&lt;/strong&gt; was used as the
+draft. This approach delivered an average of &lt;strong&gt;1.3× speedup&lt;/strong&gt; over the baseline.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;openvino_genai&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;LLMPipeline&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;draft_model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;target_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;/path/to/target/Qwen3-8B-int4-ov&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;draft_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;/path/to/draft/Qwen3-0.6B-int8-ov&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;device&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;GPU&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;LLMPipeline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;draft_model&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;draft_model&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;draft_path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;device&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;streamer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;What is speculative decoding and how does it improve inference speed?&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_new_tokens&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;streamer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;streamer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;💡 &lt;strong&gt;Note:&lt;/strong&gt; Before initializing the &lt;code&gt;LLMPipeline&lt;/code&gt;, make sure both the target and draft models
+are converted to OpenVINO. You can either download pre-converted models from the provided links
+or follow these &lt;strong&gt;&lt;a class="link" href="https://docs.openvino.ai/2024/learn-openvino/llm_inference_guide/genai-guide.html" target="_blank" rel="noopener"
+&gt;instructions&lt;/a&gt;&lt;/strong&gt; to convert your own.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="-pushing-performance-further"&gt;🔧 Pushing Performance Further
+&lt;/h2&gt;&lt;p&gt;The speculative decoding speedup depends on the average number of generated tokens per forward
+step of the target, &lt;strong&gt;γ&lt;/strong&gt;, the speculation window size, and the ratio between the target and
+draft models&amp;rsquo; latency &lt;strong&gt;c&lt;/strong&gt;. A smaller, faster (though less accurate) draft can often deliver
+greater acceleration. This inspired us to shrink the draft model while still preserving its
+quality, i.e. &lt;strong&gt;E(# generated_tokens)&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Speedup = E(# generated_tokens) / (γc + 1)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Our &lt;strong&gt;&lt;a class="link" href="https://arxiv.org/abs/2403.17887" target="_blank" rel="noopener"
+&gt;recent work&lt;/a&gt;&lt;/strong&gt; shows that model depth (number of
+layers) is a major contributor to inference latency. We drew inspiration from recent work on
+layer-wise compression[1]. In our approach, we identify blocks of layers that contribute little,
+measured using angular distance, and remove them. After pruning, we apply fine-tuning to recover accuracy.&lt;/p&gt;
+&lt;p&gt;Using this method, we pruned &lt;strong&gt;6 out of 28 layers&lt;/strong&gt; from the Qwen3-0.6B draft model. To recover
+the quality of the pruned draft model, we further finetuned it using synthetic data generated by
+Qwen3-8B. The data was produced by generating responses to 500k prompts from
+&lt;strong&gt;&lt;a class="link" href="https://huggingface.co/datasets/BAAI/Infinity-Instruct" target="_blank" rel="noopener"
+&gt;BAAI/Infinity-Instruct dataset&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The resulting pruned draft model delivered &lt;strong&gt;~1.4x speedup&lt;/strong&gt; compared to the baseline, an
+improvement over the ~1.3× gain achieved with the original draft. This outcome aligns with
+theoretical expectations - reducing draft latency improves the over-all speedup, enabling faster
+and more efficient inference.&lt;/p&gt;
+&lt;p&gt;This demonstrates how pruning + speculative decoding can unlock faster and more efficient
+inference—making local AI agents even more practical.&lt;/p&gt;
+&lt;p&gt;Check out the &lt;strong&gt;&lt;a class="link" href="https://github.com/intel/intel-extension-for-transformers/tree/main/examples/huggingface/pytorch/text-generation/inference" target="_blank" rel="noopener"
+&gt;notebook&lt;/a&gt;&lt;/strong&gt; and the Qwen3-0.6B depth-pruned
+&lt;strong&gt;&lt;a class="link" href="https://huggingface.co/Intel/Qwen3-0.6B-pruned-draft" target="_blank" rel="noopener"
+&gt;draft model&lt;/a&gt;&lt;/strong&gt; to reproduce our results
+step by step.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-integration-with-smolagents"&gt;🤗 Integration with 🤗smolagents
+&lt;/h2&gt;&lt;p&gt;To showcase the real-world potential, we deployed our optimized setup with the 🤗smolagents
+library. With this integration, developers can plug in Qwen3-8B (paired with our pruned draft)
+to build agents that call APIs and external tools, write and execute code, handle long-context
+reasoning and run efficiently on Intel® Core™ Ultra.&lt;/p&gt;
+&lt;p&gt;The benefits aren&amp;rsquo;t limited to Hugging Face, this model pairing can also be used seamlessly with
+frameworks like AutoGen or QwenAgent, further strengthening the agentic ecosystem.&lt;/p&gt;
+&lt;p&gt;In our demo, we assigned the accelerated Qwen3-based agent a task: 👉 &lt;strong&gt;Summarize the key
+features of the Qwen3 model series and present them in a slide deck.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s how it worked:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The agent used a web search tool to gather up-to-date information.&lt;/li&gt;
+&lt;li&gt;It then switched to the Python interpreter to generate slides with the &lt;code&gt;python-pptx&lt;/code&gt; library.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This simple workflow highlights just a fraction of the possibilities unlocked when accelerated
+Qwen3 models meet frameworks like 🤗smolagents, bringing practical, efficient AI agents to life
+on AI PC. Try it &lt;strong&gt;&lt;a class="link" href="https://huggingface.co/spaces/Intel/Qwen3-8B-Agent-Demo" target="_blank" rel="noopener"
+&gt;here&lt;/a&gt;&lt;/strong&gt; 🚀&lt;/p&gt;
+&lt;h3 id="-references"&gt;📚 References
+&lt;/h3&gt;&lt;p&gt;[1] Gromov, A., Tirumala, K., Shapourian, H., Glorioso, P., &amp;amp; Roberts, D. A. (2025, January 22).
+The unreasonable ineffectiveness of the deeper layers. Poster presented at ICLR 2025.
+&lt;strong&gt;&lt;a class="link" href="https://arxiv.org/abs/2403.17887" target="_blank" rel="noopener"
+&gt;https://arxiv.org/abs/2403.17887&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/intel-qwen3-agent" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/intel-qwen3-agent&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;The integration of depth-pruned draft models with speculative decoding represents a significant
+advancement in accelerating AI inference on consumer hardware. By achieving a &lt;strong&gt;1.4× speedup&lt;/strong&gt;
+with Qwen3-8B on Intel® Core™ Ultra processors, this approach makes sophisticated AI agents
+more accessible and practical for local deployment.&lt;/p&gt;
+&lt;p&gt;The combination of OpenVINO optimization, intelligent layer pruning, and speculative decoding
+demonstrates how multiple optimization techniques can be synergistically combined to unlock
+better performance. The seamless integration with 🤗smolagents further validates the real-world
+applicability of these optimizations, enabling developers to build responsive, capable AI agents
+that run efficiently on edge devices.&lt;/p&gt;
+&lt;p&gt;This work opens new possibilities for deploying advanced agentic AI systems locally, reducing
+latency, improving privacy, and making AI more accessible across various applications and use cases.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Performance and Legal Notices:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Performance results are based on internal benchmarking with OpenVINO™ 2025.2 as of September
+2025, using a configuration with an Intel® Core™ Ultra 7 268V 2.20 GHz processor with an
+integrated Intel® Arc™ 140V GPU, paired with 32 GB of DDR5 memory.&lt;/li&gt;
+&lt;li&gt;Performance varies by use, configuration and other factors. Learn more at
+&lt;strong&gt;&lt;a class="link" href="http://www.Intel.com/PerformanceIndex" target="_blank" rel="noopener"
+&gt;www.Intel.com/PerformanceIndex&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;No product or component can be absolutely secure.&lt;/li&gt;
+&lt;li&gt;Your costs and results may vary.&lt;/li&gt;
+&lt;li&gt;Intel technologies may require enabled hardware, software, or service activation.&lt;/li&gt;
+&lt;li&gt;© Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel
+Corporation or its subsidiaries.&lt;/li&gt;
+&lt;li&gt;Other names and brands may be claimed as the property of others.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#QWEN3 #INTEL #AI #SPECULATIVE_DECODING #OPENVINO #AGENTS #INFERENCE_OPTIMIZATION #AIPC&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Scientific Frontiers of Agentic AI</title><link>https://shoubhikbanerjee.github.io/blog/p/scientific-frontiers-of-agentic-ai/</link><pubDate>Tue, 28 Oct 2025 01:01:19 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/scientific-frontiers-of-agentic-ai/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post Scientific Frontiers of Agentic AI" /&gt;&lt;h1 id="unable-to-convert-article-content"&gt;Unable to Convert Article Content
+&lt;/h1&gt;&lt;p&gt;The HTML provided contains primarily navigation structure and page framework elements from the
+Amazon Science website, but lacks the actual article content needed to create a meaningful Markdown blog post.&lt;/p&gt;
+&lt;h2 id="whats-missing"&gt;What&amp;rsquo;s Missing:
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Article body text&lt;/strong&gt; - The substantive content about agentic AI&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Embedded images&lt;/strong&gt; - Technical diagrams and illustrations&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Code examples&lt;/strong&gt; - Any technical demonstrations&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complete sections&lt;/strong&gt; - The main article sections and subsections&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="to-complete-this-task"&gt;To Complete This Task:
+&lt;/h2&gt;&lt;p&gt;Please provide the complete HTML content that includes the full article text, or alternatively,
+provide the article content directly so I can format it into a professional Markdown blog post
+according to your specifications.&lt;/p&gt;
+&lt;h2 id="available-information"&gt;Available Information:
+&lt;/h2&gt;&lt;p&gt;From the HTML structure, I can see this is an article by &lt;strong&gt;Michael Kearns&lt;/strong&gt; titled &lt;strong&gt;&amp;ldquo;Scientific
+frontiers of agentic AI&amp;rdquo;&lt;/strong&gt; that discusses the language AI agents might speak, sharing context
+without compromising privacy, modeling agentic negotiations, and understanding users&amp;rsquo; commonsense policies.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Would you like to provide the complete article content so I can create the properly formatted
+Markdown blog post?&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Practical Advice for Building AI Agents: Lessons from the GAIA Benchmark Challenge</title><link>https://shoubhikbanerjee.github.io/blog/p/practical-advice-for-building-ai-agents-lessons-from-the-gaia-benchmark-challenge/</link><pubDate>Tue, 28 Oct 2025 00:51:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/practical-advice-for-building-ai-agents-lessons-from-the-gaia-benchmark-challenge/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62d1687ee748e12e04e042e8/ScCZb2zq4EGhUOJZnofYz.png" alt="Featured image of post Practical Advice for Building AI Agents: Lessons from the GAIA Benchmark Challenge" /&gt;&lt;h1 id="-practical-advice-for-building-ai-agents-lessons-from-the-gaia-benchmark-challenge"&gt;🚀 Practical Advice for Building AI Agents: Lessons from the GAIA Benchmark Challenge
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62d1687ee748e12e04e042e8/ScCZb2zq4EGhUOJZnofYz.png"
+loading="lazy"
+alt="GAIA Benchmark Challenge"
+&gt;
+&lt;em&gt;Distribution of cognitive abilities required in the GAIA benchmark&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Hello! This is my first blog post on Hugging Face. My name is Charlie, and I&amp;rsquo;ll be using this
+space to share my experience solving the GAIA benchmark challenge from Hugging Face&amp;rsquo;s Agents
+course—what I learned along the way, and a few insights that I think are useful for AI agent design in general.&lt;/p&gt;
+&lt;p&gt;The main goal of this article is to walk through the technical decisions I had to make: the
+concepts I revisited, the trade-offs I encountered, and the new ideas I had to explore. My
+objective wasn&amp;rsquo;t to achieve a perfect solution, but rather to put into practice some of the
+theoretical knowledge I had accumulated and see how it held up in a real challenge.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll focus more on the &lt;strong&gt;why&lt;/strong&gt; than the &lt;strong&gt;how&lt;/strong&gt;. While I&amp;rsquo;ll explain my process in as much detail
+as needed, this is not intended to be a LangGraph tutorial. Instead, think of it as a &amp;ldquo;lessons
+learned for building better agents&amp;rdquo; post—zooming out from the implementation details to
+highlight the reasoning behind them.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-the-biggest-lessons"&gt;⚡ The Biggest Lessons
+&lt;/h2&gt;&lt;p&gt;Adding this as a quick summary of the findings:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Choosing the most powerful model does not always lead to the best results&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reasoning models can be a game changer at certain use cases, but sometimes non-reasoning
+ones show better results in simple tasks&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Your tools definition and behaviors can boost or kill the overall performance of your
+agent&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Every model has its own style to solve tasks, knowing this can help you on using the most
+out of each model&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="-about-the-challenge"&gt;📊 About the Challenge
+&lt;/h2&gt;&lt;p&gt;Some of you might have probably done the &lt;a class="link" href="https://huggingface.co/learn/cookbook/agents" target="_blank" rel="noopener"
+&gt;Hugging Face&amp;rsquo;s Agents
+Course&lt;/a&gt;, but if you don&amp;rsquo;t, I encourage you to give
+it a try. This course presents a final challenge consisting on creating an AI agent that could
+solve questions present in the GAIA benchmark. For fairness to the challenge, I&amp;rsquo;m not going to
+disclose the full code or the prompt used in this post.&lt;/p&gt;
+&lt;p&gt;To solve the challenge I had to understand what I was facing, so I started reading the GAIA
+benchmark paper: &lt;a class="link" href="https://arxiv.org/abs/2311.12983" target="_blank" rel="noopener"
+&gt;GAIA: A benchmark for General AI
+Assistants&lt;/a&gt;. I&amp;rsquo;m not going to deep dive in it, but I&amp;rsquo;ll remark
+the most relevant points for this problem:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GAIA presents auto-contained questions&lt;/strong&gt; that require a certain level of understanding,
+reasoning and in some cases capabilities to read files, search information, perform calculations
+or to write code to be solved&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Questions presented are easy in general&lt;/strong&gt;, they can be easily answered by a human and
+provide a clear ground-truth against AI&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;It is focused on the final answer&lt;/strong&gt;, it does not evaluate how the agent got there, but
+whether the answer is right or wrong&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Good! This actually gives us valuable insights to proceed: the kind of cognitive abilities our
+AI agent should have, and the extended capabilities given by tools.&lt;/p&gt;
+&lt;p&gt;With that in mind, I decided to frame my process around five main phases:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Selecting the best foundation model for the task 2. Designing a simple agent architecture&lt;/li&gt;
+&lt;li&gt;Choosing the right tools to face the challenge 4. Implementing the solution&lt;/li&gt;
+&lt;li&gt;Evaluating results and identifying improvements&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;With this roadmap in place, the first question I had to answer was: which foundation model
+should I rely on to tackle GAIA? That choice would shape everything else that followed.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-selecting-the-foundation-model"&gt;🧠 Selecting the Foundation Model
+&lt;/h2&gt;&lt;p&gt;Selecting the right foundation model for a problem is far from trivial. For this challenge, I
+considered a few guiding criteria:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Performance on the required cognitive tasks&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference speed&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Other aspects such as security, privacy, or infrastructure constraints could also play a role in
+real-world deployments, but for the scope of this experiment I set them aside. To approach
+GAIA, we need a broad basis to compare models&amp;rsquo; cognitive capabilities. The core skills required are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reasoning&lt;/li&gt;
+&lt;li&gt;Multimodality&lt;/li&gt;
+&lt;li&gt;Code generation&lt;/li&gt;
+&lt;li&gt;Tool usage&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A natural first step is to look at established benchmarks, since they provide a general snapshot
+of model capabilities. But it&amp;rsquo;s important to keep perspective: benchmarks measure performance
+in controlled settings and don&amp;rsquo;t guarantee superiority in real-world tasks.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Here comes the little twist:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As I stated at the beginning of this post, my objective here was not nailing the challenge, but
+to put in practice some ideas, hence, I&amp;rsquo;m going to compare two types of foundation models:
+&lt;a class="link" href="https://openai.com/o1/" target="_blank" rel="noopener"
+&gt;reasoning-oriented models&lt;/a&gt; vs non-reasoning models. Why? Well. I really
+want to put in perspective how much using one technique versus another turns out in a real scenario.&lt;/p&gt;
+&lt;p&gt;Below a table with a summary of the benchmarks I used to compare the models&amp;rsquo; capabilities:&lt;/p&gt;
+&lt;p&gt;| Benchmark | GPT-5 | Gemini 2.5 Pro | Grok 4 | Claude Opus 4.1 | Llama 4 Maverick | GPT-4o |&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Gemini-2.5-flash&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ARC AGI&lt;/td&gt;
+&lt;td&gt;9.9&lt;/td&gt;
+&lt;td&gt;4.9&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;15.9&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;8.6&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MATH&lt;/td&gt;
+&lt;td&gt;93.4&lt;/td&gt;
+&lt;td&gt;85.8&lt;/td&gt;
+&lt;td&gt;90.6&lt;/td&gt;
+&lt;td&gt;78.2&lt;/td&gt;
+&lt;td&gt;25.2&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MMMU&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;84.2&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;82&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;77.1&lt;/td&gt;
+&lt;td&gt;73.4&lt;/td&gt;
+&lt;td&gt;70.7&lt;/td&gt;
+&lt;td&gt;79.7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SWE-bench&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;74.9&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;67.2&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;74.5&lt;/td&gt;
+&lt;td&gt;21.1&lt;/td&gt;
+&lt;td&gt;21.62&lt;/td&gt;
+&lt;td&gt;28.73&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MMLU&lt;/td&gt;
+&lt;td&gt;87&lt;/td&gt;
+&lt;td&gt;86&lt;/td&gt;
+&lt;td&gt;87&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;89.5&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;80.5&lt;/td&gt;
+&lt;td&gt;77.9&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TAU-bench&lt;/td&gt;
+&lt;td&gt;81.1&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;82.4&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;71&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Input price (1M tokens)&lt;/td&gt;
+&lt;td&gt;1.25&lt;/td&gt;
+&lt;td&gt;1.25&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;0.19-0.49&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;0.30&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Output price (1M tokens)&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;75&lt;/td&gt;
+&lt;td&gt;0.19-0.49&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;2.50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Context window&lt;/td&gt;
+&lt;td&gt;400k&lt;/td&gt;
+&lt;td&gt;1M&lt;/td&gt;
+&lt;td&gt;256k&lt;/td&gt;
+&lt;td&gt;200k&lt;/td&gt;
+&lt;td&gt;10M&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;td&gt;-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Let&amp;rsquo;s analyze the three models that top at least one of the considered benchmarks:&lt;/p&gt;
+&lt;h3 id="-gpt-5"&gt;🔥 GPT-5
+&lt;/h3&gt;&lt;p&gt;This is a reasoning-oriented model created by OpenAI and launched recently compared to other
+models in the list. GPT-5 introduced some changes in the implementation according to &lt;a class="link" href="https://platform.openai.com/docs/" target="_blank" rel="noopener"
+&gt;OpenAI&amp;rsquo;s
+developer documentation&lt;/a&gt;. But the most important one is that
+unlike GPT-4o (for instance) it is a reasoning model by default, more on the line of o1 and o3.
+We can see it excels on multimodality (MMMU) and code generation (SWE-bench), and despite not
+being the best in ARC AGI it is pretty good on all the benchmarks, considering also tool-usage
+(TAU-bench). Strong candidate.&lt;/p&gt;
+&lt;h3 id="-grok-4"&gt;⚡ Grok 4
+&lt;/h3&gt;&lt;p&gt;This one absolutely beats ARC AGI as the best model at reasoning in the market, additionally
+being pretty solid at MATH and language understanding (MMLU). However, there is a consideration.
+The input pricing is not too far from GPT-5&amp;rsquo;s but it is actually more expensive. However,
+there&amp;rsquo;s not much information on the performance on the other benchmarks.&lt;/p&gt;
+&lt;h3 id="-claude-opus-41"&gt;🤖 Claude Opus 4.1
+&lt;/h3&gt;&lt;p&gt;Anthropic&amp;rsquo;s most advanced model at the time of writing. It leads in language understanding
+(MMLU) and tool usage (TAU-bench), and comes very close to GPT-5 in code generation (SWE-bench),
+making it a strong technical candidate. The main drawback is cost—particularly on output
+tokens, which are 7.5× more expensive than GPT-5 and 5× more expensive than Grok 4.&lt;/p&gt;
+&lt;p&gt;Before I said I would use a reasoning-oriented model vs a non-reasoning one. So for the
+comparison, &lt;strong&gt;I&amp;rsquo;ll go for GPT-5 and GPT-4o.&lt;/strong&gt; Still, as you&amp;rsquo;ll see in the next sections, there&amp;rsquo;s
+an interesting twist coming ;)&lt;/p&gt;
+&lt;p&gt;Also, as we expect to process audio files in the challenge, I decided to opt for gpt-4o-audio-preview.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-setting-up-the-agent-architectur"&gt;🏗️ Setting Up the Agent Architectur
+&lt;/h2&gt;&lt;p&gt;So, after the selection of the cognitive engine for our agent, I need to choose the overall
+architecture. Anthropic launched a blog post discussing about some patterns to &lt;a class="link" href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener"
+&gt;build effective
+agent workflows&lt;/a&gt; I recommend you
+to read. When solving problems with AI agents in mind, we need to consider many aspects such as
+the expected tasks to solve, whether a single agent can solve the problem or a multi-agent
+approach could present better performance.&lt;/p&gt;
+&lt;p&gt;For the sake of simplicity, I decided to go for a simple ReACT-like architecture using only one
+agent. If you want to learn more about how it works you can read the original &lt;a class="link" href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener"
+&gt;Yao&amp;rsquo;s
+paper&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To implement in code the agent I went for LangGraph due to its simplicity and power. Thus, I
+generated the graph structure for the agent, considering two nodes: the agent itself and the tools.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62d1687ee748e12e04e042e8/SARD6lfTyPR-UqDOHnE9S.png"
+loading="lazy"
+alt="Agent Architecture"
+&gt;
+&lt;em&gt;Simple ReACT-like agent architecture using LangGraph&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-prompt-engineerin"&gt;🛠️ Prompt Engineerin
+&lt;/h2&gt;&lt;p&gt;In general, I did not an extensive craft of my system prompt for this first attempt, though it
+is highly recommended for you to solve the challenge. I just tried with a simple prompt stating
+the nature of the tasks, the expected behavior of the agent, the format for the answers and the
+tools at hand. It is important to iterate over different prompts and measure the impact using
+tools such as Langfuse or MLflow to select the best one.&lt;/p&gt;
+&lt;h3 id="-the-tools-used"&gt;🔧 The Tools Used
+&lt;/h3&gt;&lt;p&gt;An important component for agentic AI architectures are the tools you implement. In this case,
+just as I did with the model election, I listed the actions that the agent should have as
+capabilities to answer the questions in the benchmark.&lt;/p&gt;
+&lt;p&gt;As we can see, web browsing is one of the most common abilities required to solve the questions,
+followed by coding. Also, we know that we need to read files to support multimodality in our
+agent. However, after a glance in the questions contained in the benchmark, we see more
+capabilities are going to be needed, such as YouTube video processing.&lt;/p&gt;
+&lt;p&gt;There are diverse options to add web-browsing capabilities to the agent, we can directly
+implement calls to Bing or the Google APIs for example, but in this case, I chose &lt;strong&gt;Tavily&lt;/strong&gt; as
+my service for web-browsing, the main reason behind this is the simplicity of integration.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nd"&gt;@tool&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;web_search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;Provides web search to retrieve information outside of LLMs knowledge &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tavily_client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;include_answer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;answer&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Some questions require youtube video processing to answer visual questions. This tool is a
+little more tricky, as it could be approached from different ways, and cannot be &amp;ldquo;browsed&amp;rdquo; by
+Tavily, which means we require an additional component.&lt;/p&gt;
+&lt;p&gt;At the end, after evaluating carefully, I decided to go for the simpler option as I could have a
+baseline to identify potential improvements later.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nd"&gt;@tool&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;youtube_search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;link&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;Search for youtube videos. Input must be only the youtube video URL &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;transcript&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;loader&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;YoutubeLoaderDL&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_youtube_url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;link&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;add_video_info&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;documents&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;loader&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;load&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="n"&gt;video_metadata&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;documents&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;metadata&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;video_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;video_metadata&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;source&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;ytt_api&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;YouTubeTranscriptApi&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;fetched_transcript&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ytt_api&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;video_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;snippet&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;fetched_transcript&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;transcript&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;transcript&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;snippet&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="n"&gt;TranscriptsDisabled&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;transcript&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;No description of video content available&amp;#34;&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;transcript&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-code-writing-and-execution-tool"&gt;💻 Code Writing and Execution Tool
+&lt;/h3&gt;&lt;p&gt;One of the most important abilities for our agent is the one of writing code and executing it
+safely. Actually, there is a complete guide here in Hugging Face about safe code execution for
+AI agents that you can visit here for additional details: &lt;a class="link" href="https://huggingface.co/learn/cookbook/en/agent_code_execution" target="_blank" rel="noopener"
+&gt;Secure code
+execution&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I decided to go for &lt;strong&gt;E2B&lt;/strong&gt; as the sandbox for code execution. Also, there is relevant to note
+that GAIA questions would need code execution in two manners:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A question that provides explicitly a Python file to execute&lt;/li&gt;
+&lt;li&gt;A question that could be answered by writing code, so the LLM produces this by itself&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nd"&gt;@tool&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;python_code_write_and_execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;Let&amp;#39;s the LLM to write and execute code if needed for a task &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;messages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="n"&gt;SystemMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;prompt_coding&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;HumanMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;assistant_model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;invoke&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;code&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;content&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;code&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;extract_python&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;Sandbox&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;sandbox&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;execution&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sandbox&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run_code&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;execution&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;execution&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;logs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;Exception&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;There was an error while trying to execute code&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-adding-compatibility-with-multiple-modalities"&gt;🎨 Adding Compatibility with Multiple Modalities
+&lt;/h3&gt;&lt;p&gt;Finally, the agent must be compatible with different modalities. In general, GAIA paper
+establishes that the agent must be able to process Python code files, PDF, excel, audio, images
+and video. At the beginning of the article I stated the use of gpt-4o-audio as a model to accept the audio inputs.&lt;/p&gt;
+&lt;p&gt;For those wondering about how the state for my agent is defined, let me explain a bit. My
+assistant had three things to keep track of: the messages list, and to support multimodality I
+decided to add a filename and the extension of the uploaded files.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;AssistantState&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TypedDict&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;messages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Annotated&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;AnyMessage&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;add_messages&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt; &lt;span class="n"&gt;file_extension&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-evaluation-and-comparison-in-langfuse-of-our-two-models"&gt;📊 Evaluation and Comparison in Langfuse of Our Two Models
+&lt;/h3&gt;&lt;p&gt;I reserved many of the different findings of the mini-project to this section. So I could
+explain them with detail and elaborate conclusions from here. At the beginning of the post it
+was defined the use of two LLMs to compare: GPT-5 and GPT-4o.&lt;/p&gt;
+&lt;p&gt;There is an option for the configuration in LangGraph when running a graph called
+&lt;strong&gt;recursion_limit&lt;/strong&gt; which controls the depth of the recursion allowed for the graph to execute,
+for this experiment, the value for that parameter was 10. If this limit is reached, then the
+graph fails and prevents an infinite execution. Well, this was exactly the problem in my case.
+It seems the reasoning capabilities of GPT-5 led the graph to execute multiple times, further
+than my recursion_limit. Never reaching an output.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62d1687ee748e12e04e042e8/brNXk073IHX6XF94CCo-L.png"
+loading="lazy"
+alt="Graph Execution Failure"
+&gt;
+&lt;em&gt;Graph execution failure due to recursion limit&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;From here, I decided to lower the &lt;strong&gt;reasoning_effort&lt;/strong&gt; to &amp;ldquo;minimal&amp;rdquo; which according to some of
+the documentation also could make the model to work more like a non-reasoning one, and even
+though this let the graph finish almost all the tasks, it was also more expensive (around 2x per
+question), had a worse latency (around 3.5x times) and in many cases, produced more steps than
+the needed to solve a question.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/62d1687ee748e12e04e042e8/a8KoGiOE6q-ZGWGX3ehZv.png"
+loading="lazy"
+alt="Performance Comparison"
+&gt;
+&lt;em&gt;Performance comparison between GPT-4o and GPT-5&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This is truly insightful, as for some cases we might be tempted to use the best model out there,
+or we can think that a given task required a level of reasoning that actually is not needed.
+For the case of GAIA, the questions are very straightforward and require good instruction
+following capabilities and very light reasoning than other types of tasks. Hence, a
+non-reasoning model could be a better fit here.&lt;/p&gt;
+&lt;p&gt;Following that comment, I decided to try with non-reasoning models: &lt;strong&gt;GPT-4o&lt;/strong&gt; and &lt;strong&gt;Gemini 2.5 Flash&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;In the table below general dimensions for comparison can be seen. For reference, the challenge
+evaluates the agents with 20 different questions.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Category&lt;/th&gt;
+&lt;th&gt;GPT-4o&lt;/th&gt;
+&lt;th&gt;Gemini 2.5 Flash&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Total latency (s)&lt;/td&gt;
+&lt;td&gt;103.28&lt;/td&gt;
+&lt;td&gt;414.79&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;p95 latency (s)&lt;/td&gt;
+&lt;td&gt;70.18&lt;/td&gt;
+&lt;td&gt;153.5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Price for all tasks (USD)&lt;/td&gt;
+&lt;td&gt;0.079&lt;/td&gt;
+&lt;td&gt;0.19&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Avg price per task (USD)&lt;/td&gt;
+&lt;td&gt;0.0043&lt;/td&gt;
+&lt;td&gt;0.0095&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Total tokens used&lt;/td&gt;
+&lt;td&gt;27,611&lt;/td&gt;
+&lt;td&gt;106,019&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Avg tokens per task&lt;/td&gt;
+&lt;td&gt;1,380&lt;/td&gt;
+&lt;td&gt;5,300&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Completed answers (%)&lt;/td&gt;
+&lt;td&gt;90&lt;/td&gt;
+&lt;td&gt;80&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Accuracy (right answers) (%)&lt;/td&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;40&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Effectivity - Right answers over total responses (%)&lt;/td&gt;
+&lt;td&gt;22&lt;/td&gt;
+&lt;td&gt;50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Most called tool&lt;/td&gt;
+&lt;td&gt;web_search&lt;/td&gt;
+&lt;td&gt;python_code_execution&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;As we can see, GPT-4o seems to be the fastest and cheaper model. We can also see that Gemini 2.5
+Flash got twice more right answers than GPT-4o and in overall is more effective. Given the rest
+of comparison categories is it worth the trade-off? Let&amp;rsquo;s see.&lt;/p&gt;
+&lt;h4 id="-comparing-how-each-agent-decided-to-proceed-on-the-same-questions"&gt;🔍 Comparing How Each Agent Decided to Proceed on the Same Questions
+&lt;/h4&gt;&lt;p&gt;Part of the things I wanted to understand on this challenge was how different models would
+behave to the same input, prompt and tools given, to understand better how each approached a
+problem, just like humans do.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Question: The attached Excel file contains the sales of menu items for a local fast-food
+chain. What were the total sales that the chain made from food (not including drinks)?&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;GPT-4o&lt;/strong&gt;: This model read the file and decided to redact all its content as plain text. And
+choose to solve all by itself &lt;strong&gt;without calling tools&lt;/strong&gt;. The model did the math but it failed
+the answer (even though it was close).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Gemini 2.5 Flash&lt;/strong&gt;: Gemini decided to make a tool call to solve this:
+&lt;strong&gt;python_code_executer&lt;/strong&gt;. In general, Gemini decided to write Python code to read the Excel
+file, convert it into a pandas dataframe and execute the operations needed to answer. This
+approached led to the right answer to this question, using more time and tokens to solve it than
+GPT-4o. Gemini wins here.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This insight is truly important and unveiling, as it is a good example that when working with
+agents the model is not the only thing we should care about. Tools are equally important. We
+need to audit them, test them and ensure the behavior is the one we expect.&lt;/p&gt;
+&lt;h3 id="-final-conclusions"&gt;💡 Final Conclusions
+&lt;/h3&gt;&lt;p&gt;Many important lessons have been discussed during the whole post, for this section, let me make
+a quick summary on this and future directions that I could follow to improve my agent&amp;rsquo;s performance.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Selecting the right model for the task can be challenging.&lt;/strong&gt; You can start by comparing
+benchmarks and other characteristics that are important trade-offs for your use case, but
+remember that these will be only general guides, the only way to make sure you&amp;rsquo;re choosing the
+right one is by testing on your use case and comparing results.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Each model has a tendency to solve problems in a unique way&lt;/strong&gt;, if you know these nuances it
+might be easier to choose each in a case where it is better suited.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Creating or integrating the right tools is as important as your model selection&lt;/strong&gt;, and in
+many cases you could use a less powerful model and make it shine with the right tools.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;You must evaluate your agent performance considering what&amp;rsquo;s important to you&lt;/strong&gt;: cost,
+latency, correctness, etc. For your domain you should select or build mini-benchmarks to
+evaluate how well your agent is doing.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Never underestimate the power of observability tools.&lt;/strong&gt; In this case I used Langfuse, and
+some weird behaviors would not have been spotted without its observability capabilities.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Evaluating your tools might become as important as evaluating the final performance of your
+agent.&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Directions to improve&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Finally, about some things that I could try in the future after this 15-hours adventure are the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Iterate more over the system prompt, adapting it to the recommendations from each lab and
+measuring the impact using an observability tool.&lt;/li&gt;
+&lt;li&gt;Compare the performance on web search and code execution tools between my open implementation
+and the official tools given by OpenAI and Gemini Platforms, to understand whether the results
+can be better if sticking to the official integrations.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Thanks for reading so far! It was really great to solve the challenge, register my observations
+and writing this post for you. I hope you can find something interesting here and we can keep
+talking. If you have experience in building agents and have faced these or other challenges and
+want to discuss feel free to leave a comment.&lt;/p&gt;
+&lt;p&gt;Have a great day!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/hetline/lessons-learned-on-gaia-agents" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/hetline/lessons-learned-on-gaia-agents&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;This exploration of the GAIA benchmark challenge provides valuable insights into the practical
+considerations of building AI agents. The key takeaways demonstrate that success in agent
+development goes beyond simply choosing the most powerful model—it requires thoughtful
+consideration of the specific use case, careful tool selection and implementation, and thorough
+evaluation of different approaches.&lt;/p&gt;
+&lt;p&gt;The comparison between reasoning-oriented and non-reasoning models reveals that complexity isn&amp;rsquo;t
+always better, especially for straightforward tasks where simpler models can achieve better
+results with lower latency and cost. The importance of observability tools like Langfuse cannot
+be overstated, as they provide crucial insights into agent behavior that would otherwise go unnoticed.&lt;/p&gt;
+&lt;p&gt;Most importantly, this work highlights that building effective AI agents is a holistic endeavor
+where model selection, tool design, prompt engineering, and evaluation methodology all play
+equally critical roles in determining success.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AIAGENTS #GAIA #HUGGINGFACE #MACHINELEARNING #LANGGRAPH #PROMPT_ENGINEERING #BENCHMARKING
+#OBSERVABILITY&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Building the Open Agent Ecosystem Together: Introducing OpenEnv</title><link>https://shoubhikbanerjee.github.io/blog/p/building-the-open-agent-ecosystem-together-introducing-openenv/</link><pubDate>Tue, 28 Oct 2025 00:46:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/building-the-open-agent-ecosystem-together-introducing-openenv/</guid><description>&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/openenv/rl-stack.png" alt="Featured image of post Building the Open Agent Ecosystem Together: Introducing OpenEnv" /&gt;&lt;h1 id="-building-the-open-agent-ecosystem-together-introducing-openenv"&gt;🚀 Building the Open Agent Ecosystem Together: Introducing OpenEnv
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/openenv/rl-stack.png"
+loading="lazy"
+alt="RL Stack"
+&gt;
+&lt;em&gt;The new post-training stack developed by Meta, showing how OpenEnv integrates with libraries
+like TRL, SkyRL, and Unsloth&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;With tools like TRL, TorchForge and verl, the open-source community has shown how to scale AI
+across complex compute infrastructure. But compute is only one side of the coin. The other side
+is the developer community; the people and tools that make agentic systems possible. That&amp;rsquo;s why
+Meta and Hugging Face are partnering to launch the &lt;strong&gt;OpenEnv Hub&lt;/strong&gt;: a shared and open community
+hub for agentic environments.&lt;/p&gt;
+&lt;p&gt;Agentic environments define everything an agent needs to perform a task: the tools, APIs,
+credentials, execution context, and nothing else. They bring clarity, safety, and sandboxed control to agent behavior.&lt;/p&gt;
+&lt;p&gt;These environments can be used for both training and deployment, and serve as the foundation for
+scalable agentic development.&lt;/p&gt;
+&lt;h2 id="-the-problem"&gt;⚠️ The Problem
+&lt;/h2&gt;&lt;p&gt;Modern AI agents can act autonomously across thousands of tasks. However, a large language model
+isn&amp;rsquo;t enough to get those tasks to actually run — it needs access to the right tools. Exposing
+millions of tools directly to a model isn&amp;rsquo;t reasonable (or safe). Instead, we need &lt;strong&gt;agentic
+environments&lt;/strong&gt;: secure, semantically clear sandboxes that define exactly what&amp;rsquo;s required for a
+task, and nothing more. These environments handle the critical details:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Clear semantics about what a task needs&lt;/li&gt;
+&lt;li&gt;Sandboxed execution and safety guarantees&lt;/li&gt;
+&lt;li&gt;Seamless access to authenticated tools and APIs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-the-solution"&gt;💡 The Solution
+&lt;/h2&gt;&lt;p&gt;To supercharge this next wave of agentic development, Meta-PyTorch and Hugging Face are
+partnering to launch a Hub for Environments: a shared space where developers can build, share,
+and explore OpenEnv-compatible environments for both training and deployment. The figure above
+shows how &lt;strong&gt;OpenEnv&lt;/strong&gt; fits in the new post-training stack being developed by &lt;strong&gt;Meta&lt;/strong&gt;, with
+integrations for other libraries like &lt;strong&gt;TRL&lt;/strong&gt;, &lt;strong&gt;SkyRL&lt;/strong&gt;, and &lt;strong&gt;Unsloth&lt;/strong&gt; underway.&lt;/p&gt;
+&lt;p&gt;Starting next week, developers can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Visit the new Environment Hub on Hugging Face where we will seed some initial environments&lt;/li&gt;
+&lt;li&gt;Interact with environments directly as a Human Agent&lt;/li&gt;
+&lt;li&gt;Enlist a model to solve tasks within the environment&lt;/li&gt;
+&lt;li&gt;Inspect which tools the environment exposes and how it defines its observations&lt;/li&gt;
+&lt;li&gt;Every environment uploaded to the Hub that conforms to the OpenEnv specification automatically
+gains this functionality — making it fast and easy to validate and iterate before running full RL training&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Alongside this, we&amp;rsquo;re releasing the OpenEnv 0.1 Spec (RFC) to gather community feedback and help shape the standard.&lt;/p&gt;
+&lt;h2 id="-the-rfcs"&gt;📋 The RFCs
+&lt;/h2&gt;&lt;p&gt;In the current state of the repository, environment creators can create environments using
+&lt;code&gt;step()&lt;/code&gt;, &lt;code&gt;reset()&lt;/code&gt;, &lt;code&gt;close()&lt;/code&gt; APIs (part of RFCs below). A few examples on how to create such
+environments can be seen in the documentation. Environment users can play with local Docker
+based environments for all environments already available in the repo. Following RFCs are under review:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;RFC 001:&lt;/strong&gt; Establish architecture for how the core components like Environment, Agent, Task,
+etc. are related&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RFC 002:&lt;/strong&gt; Propose basic env interface, packaging, isolation and communication w/
+environment&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RFC 003:&lt;/strong&gt; Propose encapsulation of MCP tools through environment abstraction and isolation
+boundaries&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RFC 004:&lt;/strong&gt; Extend tool support to cover unified action schema covering tool calling agents
+as well as CodeAct paradigm&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-use-cases"&gt;🎯 Use Cases
+&lt;/h2&gt;&lt;p&gt;The OpenEnv ecosystem enables several powerful use cases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;RL Post Training:&lt;/strong&gt; Pull in environments across collections and use them to train RL agents
+with TRL, TorchForge+Monarch, VeRL etc.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Environment Creation:&lt;/strong&gt; Build an environment and ensure that it interops with popular RL
+tools in the ecosystem, share with collaborators, etc.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reproduction of SOTA Methods:&lt;/strong&gt; Easily replicate methods like those from FAIR&amp;rsquo;s Code World
+Model by integrating environments for agentic coding and software engineering&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deployment:&lt;/strong&gt; Users can create an environment, train on the same environment and then use
+the same for inference too (the full pipeline)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-whats-next"&gt;⚙️ What&amp;rsquo;s Next
+&lt;/h2&gt;&lt;p&gt;This is just the beginning. We&amp;rsquo;re integrating the OpenEnv Hub with Meta&amp;rsquo;s new &lt;strong&gt;TorchForge RL
+library&lt;/strong&gt;, and collaborating with other open-source RL projects such as &lt;strong&gt;verl&lt;/strong&gt;, &lt;strong&gt;TRL&lt;/strong&gt;, and
+&lt;strong&gt;SkyRL&lt;/strong&gt; to expand compatibility. Join us at the PyTorch Conference on Oct 23 for a live demo
+and walkthrough of the spec, and stay tuned for our upcoming community meetup on environments,
+RL post-training, and agentic development.&lt;/p&gt;
+&lt;h3 id="getting-started-"&gt;Getting Started 🔧
+&lt;/h3&gt;&lt;p&gt;👉 &lt;strong&gt;Explore the OpenEnv Hub&lt;/strong&gt; on Hugging Face and start building the environments that will
+power the next generation of agents&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Check out the 0.1 spec&lt;/strong&gt; which can be found implemented in the OpenEnv project → we welcome
+ideas and contributions to making it better!&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Engage on Discord&lt;/strong&gt; and talk with the community about RL, environments and agentic development&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Try it out yourself&lt;/strong&gt; - We created a comprehensive notebook that walks you through an end
+to end example and of course you can easily pip install the package via PyPI. This notebook
+walks you through the abstractions we&amp;rsquo;ve built, along with an example of how to use existing
+integrations and how to add yours - Try it out in Google Colab!&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Check out supporting platforms&lt;/strong&gt; - Unsloth, TRL, Lightning.AI&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s build the future of open agents together, one environment at a time 🔥!&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/openenv" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/openenv&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;The launch of OpenEnv represents a pivotal moment in the evolution of agentic AI systems. By
+providing standardized, secure, and shareable environments, this collaboration between Meta and
+Hugging Face addresses one of the most critical challenges in agent development: creating safe,
+controlled spaces where AI agents can learn and operate effectively.&lt;/p&gt;
+&lt;p&gt;The OpenEnv Hub democratizes access to high-quality training environments while maintaining the
+safety and isolation necessary for responsible AI development. With its RFC-driven approach and
+integration with leading RL libraries, OpenEnv is positioned to become the foundation for the
+next generation of agentic systems.&lt;/p&gt;
+&lt;p&gt;As the community begins to contribute environments and provide feedback on the specifications,
+we&amp;rsquo;re likely to see rapid innovation in both agent capabilities and safety measures. This
+collaborative approach ensures that the benefits of advanced AI agents will be accessible to
+researchers, developers, and organizations worldwide.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#OPENENV #HUGGINGFACE #META #PYTORCH #REINFORCEMENTLEARNING #AGENTICSYSTEMS #AIAGENTS
+#MACHINELEARNING #OPENSOURCE #RLTRAINING&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

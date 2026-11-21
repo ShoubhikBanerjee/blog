@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AmazonWebServices on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/amazonwebservices/</link><description>Recent content in AmazonWebServices on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 12 Nov 2026 22:08:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/amazonwebservices/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore adds Web Search API</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-web-search-api/</link><pubDate>Thu, 12 Nov 2026 22:08:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-web-search-api/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-22165-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore adds Web Search API" /&gt;&lt;h1 id="amazon-bedrock-agentcore-adds-web-search-api"&gt;Amazon Bedrock AgentCore adds Web Search API
+&lt;/h1&gt;&lt;p&gt;Amazon announced a new Web Search API on Bedrock AgentCore that lets developers retrieve ranked web results with a single API call.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Web Search API returns ranked results from an Amazon‑operated web index.&lt;/li&gt;
+&lt;li&gt;Each result includes a text extract and, when available, the page title, URL, and publication time.&lt;/li&gt;
+&lt;li&gt;The API can be invoked via AWS SDKs or the AWS Command Line Interface (AWS CLI).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The API is exposed as the &lt;strong&gt;InvokeWebSearch&lt;/strong&gt; operation on the &lt;strong&gt;bedrock-agentcore&lt;/strong&gt; data plane.&lt;/li&gt;
+&lt;li&gt;It runs on the same search infrastructure that powers Alexa+, Kiro, Quick, and other Amazon products.&lt;/li&gt;
+&lt;li&gt;Calls are signed with AWS Signature Version 4 (SigV4) using standard IAM credentials; no separate API key is required.&lt;/li&gt;
+&lt;li&gt;The recommended integration point for most agentic workloads is the AgentCore Gateway, which provides a single Model Context Protocol (MCP) endpoint that combines web search with other tools.&lt;/li&gt;
+&lt;li&gt;When executed from a VPC, the call can travel through an interface VPC endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Result limits&lt;/strong&gt;: Request between 1 and 25 results per query; if &lt;code&gt;maxResults&lt;/code&gt; is omitted, up to 25 results are returned.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Result content&lt;/strong&gt;: Each result contains a text extract and, when available, title, URL, and publication time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Search query&lt;/strong&gt;: &lt;code&gt;searchQuery&lt;/code&gt; may be up to 200 characters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Domain filtering&lt;/strong&gt;: Include or exclude up to 100 domain names; a root domain also matches its subdomains.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Publication‑time filtering&lt;/strong&gt;: Use &lt;code&gt;publishedAfter&lt;/code&gt; and &lt;code&gt;publishedBefore&lt;/code&gt; (RFC 3339 UTC) to restrict results; both bounds are inclusive.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Permissions&lt;/strong&gt;: The caller must have the IAM permission &lt;code&gt;bedrock-agentcore:InvokeWebSearch&lt;/code&gt; on the managed web search tool. One IAM policy covers both the gateway and direct API routes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution context&lt;/strong&gt;: If code runs on AWS Lambda, Amazon ECS, Amazon EC2, or Amazon EKS, the execution role supplies credentials automatically.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Operation&lt;/td&gt;
+&lt;td&gt;InvokeWebSearch on the bedrock-agentcore data plane&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Endpoint&lt;/td&gt;
+&lt;td&gt;AgentCore Gateway MCP endpoint (recommended)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Permission&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;bedrock-agentcore:InvokeWebSearch&lt;/code&gt; IAM permission&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The API can be called from any environment that can use the AWS SDKs or AWS CLI.&lt;/li&gt;
+&lt;li&gt;Calls are signed with the same IAM credentials used for other AWS services.&lt;/li&gt;
+&lt;li&gt;When run inside a VPC, an interface VPC endpoint can be used for private connectivity.&lt;/li&gt;
+&lt;li&gt;Execution roles for Lambda, ECS, EC2, and EKS automatically provide the necessary credentials.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a direct, compliant web‑search capability for agents without managing external API keys.&lt;/li&gt;
+&lt;li&gt;Leverages Amazon’s own high‑quality search infrastructure, ensuring consistent quality and compliance.&lt;/li&gt;
+&lt;li&gt;Integrates seamlessly with other AgentCore tools such as AgentCore Browser through the same endpoint.&lt;/li&gt;
+&lt;li&gt;Enables developers to scope searches to trusted domains and recent publications, improving relevance for AI‑driven applications.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonWebServices #Bedrock #WebSearchAPI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-the-web-search-api-on-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Introducing the Web Search API on Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Epsilon Deploys Intent‑Driven UI Testing with Amazon Nova Act and Bedrock AgentCore Browser</title><link>https://shoubhikbanerjee.github.io/blog/p/epsilon-deploys-intentdriven-ui-testing-with-amazon-nova-act-and-bedrock-agentcore-browser/</link><pubDate>Fri, 30 Oct 2026 22:02:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/epsilon-deploys-intentdriven-ui-testing-with-amazon-nova-act-and-bedrock-agentcore-browser/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21285-featured-image.png" alt="Featured image of post Epsilon Deploys Intent‑Driven UI Testing with Amazon Nova Act and Bedrock AgentCore Browser" /&gt;&lt;h1 id="epsilon-deploys-intentdriven-ui-testing-with-amazon-nova-act-and-bedrock-agentcore-browser"&gt;Epsilon Deploys Intent‑Driven UI Testing with Amazon Nova Act and Bedrock AgentCore Browser
+&lt;/h1&gt;&lt;p&gt;Epsilon, the data, technology, and marketing‑services firm in Publicis Groupe, has extended its shared Agentic Platform to offer intent‑driven UI testing as a managed service. By wiring Amazon Nova Act to the Amazon Bedrock AgentCore Browser tool, the company can run natural‑language test workflows on isolated browser instances without the operational overhead of managing binaries or display servers.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Goal: layer intent‑based testing on top of an existing Playwright regression suite.&lt;/li&gt;
+&lt;li&gt;Requirements evaluated: natural‑language test authoring and managed, multi‑tenant browser infrastructure.&lt;/li&gt;
+&lt;li&gt;Outcome: a three‑component service that lets product teams create, execute, and audit UI tests in their own AWS accounts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Create a workflow&lt;/strong&gt; – A user calls the platform API with a &lt;code&gt;target_url&lt;/code&gt; and an ordered list of plain‑English steps.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Register with Nova Act&lt;/strong&gt; – The platform registers a Nova Act workflow definition on AWS.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execute&lt;/strong&gt; – A background task runner (Celery) launches an Amazon Bedrock AgentCore Browser session.
+&lt;ul&gt;
+&lt;li&gt;Each step is sent to Nova Act, which drives the browser via a Chrome DevTools Protocol (CDP) WebSocket.&lt;/li&gt;
+&lt;li&gt;Conditional logic (e.g., &lt;em&gt;&amp;ldquo;if a tour box appears, skip it&amp;rdquo;&lt;/em&gt;) is supported.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Capture &amp;amp; store&lt;/strong&gt; – For every step a screenshot is taken, pass/fail is recorded, an overall pass rate is computed, and the results JSON, screenshots, and session ID are saved to Amazon S3.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Completion hook&lt;/strong&gt; – The result is written back to the platform for reporting.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Shared infrastructure&lt;/strong&gt; built by the Agentic Platform team (50 engineers) provides:
+&lt;ul&gt;
+&lt;li&gt;Skills‑based agent builder&lt;/li&gt;
+&lt;li&gt;Federated identity &amp;amp; pre‑flight authorization&lt;/li&gt;
+&lt;li&gt;Model Context Protocol (MCP) integration&lt;/li&gt;
+&lt;li&gt;Cross‑account provisioning&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon Bedrock AgentCore Browser Tool&lt;/strong&gt; gives:
+&lt;ul&gt;
+&lt;li&gt;Isolated browser instances (no binaries, no display server)&lt;/li&gt;
+&lt;li&gt;Live view for human takeover (CAPTCHA, MFA)&lt;/li&gt;
+&lt;li&gt;Session recording to Amazon S3&lt;/li&gt;
+&lt;li&gt;AWS CloudTrail audit logs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Authentication &amp;amp; tenancy&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Nova Act uses the standard AWS credential chain (task role).&lt;/li&gt;
+&lt;li&gt;Teams provision via AWS STS &lt;code&gt;AssumeRole&lt;/code&gt;; each team runs tests in its own AWS account under a scoped role.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Why it mattered&lt;/strong&gt; – With hundreds of millions of consumer profiles and thousands of brand relationships, Epsilon needed UI testing that could keep pace with rapid application changes while removing the operational burden of managing browser infrastructure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The intent‑driven testing service is now available to all product teams on Epsilon’s Agentic Platform. Teams can start by defining a workflow through the platform API and executing it in their own AWS account.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Operational efficiency&lt;/strong&gt; – Eliminates the need to ship and maintain browser binaries or display servers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalable multi‑tenant model&lt;/strong&gt; – Each team operates within its own AWS account, preserving security isolation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Natural‑language authoring&lt;/strong&gt; – Engineers can author tests in plain English, complementing existing selector‑based Playwright tests.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Full auditability&lt;/strong&gt; – CloudTrail logs and session recordings provide traceability for compliance and debugging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21285-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21285-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21285-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonWebServices #AIagents #IntentTesting #UIAutomation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/building-intent-driven-ui-testing-with-amazon-nova-act/" target="_blank" rel="noopener"
+&gt;Building intent-driven UI testing with Amazon Nova Act | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-moengage-turned-over-400-apis-into-agent-tools-with-agentcore-gateway/" target="_blank" rel="noopener"
+&gt;How MoEngage turned over 400 APIs into agent tools with AgentCore Gateway | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

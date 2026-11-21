@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DFT on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/dft/</link><description>Recent content in DFT on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 18 Nov 2026 22:09:17 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/dft/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Introduces Daviator and Mixed Precision for DFT GPU Acceleration</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-daviator-and-mixed-precision-for-dft-gpu-acceleration/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-daviator-and-mixed-precision-for-dft-gpu-acceleration/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image4-10-660x370.png" alt="Featured image of post NVIDIA Introduces Daviator and Mixed Precision for DFT GPU Acceleration" /&gt;&lt;h1 id="nvidia-introduces-daviator-and-mixed-precision-for-dft-gpu-acceleration"&gt;NVIDIA Introduces Daviator and Mixed Precision for DFT GPU Acceleration
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced two new capabilities to address performance bottlenecks in generating ground-truth data for machine learning interatomic potentials (MLIPs): a library called Daviator for batched GPU kernels and a new mixed-precision execution layer. These updates target the high volume of density functional theory (DFT) calculations required to train next-generation models, offering up to 22x faster time-to-solution and up to 75% lower cost compared to CPU execution.&lt;/p&gt;
+&lt;h2 id="-the-problem-with-current-gpu-dft"&gt;🔍 The Problem with Current GPU DFT
+&lt;/h2&gt;&lt;p&gt;Training MLIPs requires tens to hundreds of millions of DFT calculations. Plane-wave DFT, primarily implemented via VASP, is the standard for this task. While VASP’s OpenACC implementation speeds up large-system calculations, it struggles with the small unit cells and dense k-point grids common in MLIP data generation.&lt;/p&gt;
+&lt;p&gt;In periodic systems with small unit cells, hundreds to thousands of k-points are required. Currently, VASP processes these k-points sequentially on the GPU. For small systems, this results in significant kernel launch overhead that dominates compute time. A single-atom iron system with 752 k-points, for instance, ran 8x slower on GPU hardware than on CPU. Additionally, modern NVIDIA GPUs are increasingly optimized for lower-precision data types (FP32), while traditional DFT runs in FP64, creating a gap in available throughput.&lt;/p&gt;
+&lt;h2 id="-how-daviator-and-mixed-precision-work"&gt;🧩 How Daviator and Mixed Precision Work
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Daviator&lt;/strong&gt; is a library of GPU kernels that replaces sequential per-k-point processing with batched operations. Its core is a batched Davidson eigensolver that swaps sequential loops for batched FFTs, GEMMs, and custom kernels. This approach reduces GPU kernel launches, allowing Streaming Multiprocessor (SM) occupancy to reach near saturation. Data remains resident in GPU memory, while VASP retains ownership of the self-consistent field (SCF) loop, mixing, symmetry, and I/O.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;mixed-precision execution layer&lt;/strong&gt; enables further performance gains by leveraging GPUs with a high FP32:FP64 throughput ratio. This is particularly effective on inference-class and workstation GPUs, such as the RTX PRO 6000, which features a 64:1 FP32:FP64 ratio.&lt;/p&gt;
+&lt;h2 id="-key-details-and-benchmarks"&gt;⚙️ Key Details and Benchmarks
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Integration:&lt;/strong&gt; Daviator is accessible through the NVIDIA ALCHEMI VASP microservice by setting &lt;code&gt;LDAVIATOR=True&lt;/code&gt; in the &lt;code&gt;INCAR&lt;/code&gt; file. Existing VASP inputs work without modification.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; On a projected reference dataset workload, the combination of these features shows up to 22x faster time-to-solution and up to 75% lower cost compared to CPU execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Speed-ups:&lt;/strong&gt; Daviator overcomes OpenACC limitations, achieving over 2x speed-ups relative to the CPU baseline for a single iron atom.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configuration:&lt;/strong&gt; Users must set specific environment variables to ensure efficient kernel caching:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;export CUDA_CACHE_PATH=/tmp/cudacache&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;export CUDA_CACHE_DISABLE=0&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability-and-limitations"&gt;🚀 Availability and Limitations
+&lt;/h2&gt;&lt;p&gt;Daviator is currently available for single-node execution. Multi-node support, coverage for systems with non-collinear spins (&lt;code&gt;vasp_ncl&lt;/code&gt;), and explicit gamma-only runs (&lt;code&gt;vasp_gam&lt;/code&gt;) are expected in a later stage. Some GPU kernels may trigger compilation on first use depending on the batch size.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;As AI workloads drive GPU hardware development toward lower-precision data types, the stagnation of FP64-only code performance threatens the scalability of DFT data generation. By addressing small-system GPU inefficiency and leveraging mixed precision, these capabilities allow researchers to generate the massive datasets required for MLIP training more efficiently and at a lower cost.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/mlip-tensor-core-featured-660x370-jpg.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image4-10-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image11.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#DFT #VASP #GPUComputing #HPC #MLIP #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/tackling-gpu-bottlenecks-in-plane-wave-dft-with-k-point-batching-and-mixed-precision/" target="_blank" rel="noopener"
+&gt;Tackling GPU Bottlenecks in Plane-Wave DFT with K-Point Batching and Mixed Precision | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reinforcement Learning on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/reinforcement-learning/</link><description>Recent content in Reinforcement Learning on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 20 Nov 2026 22:08:48 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/reinforcement-learning/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugging Face introduces RL-trained harness adapters for improved LLM efficiency</title><link>https://shoubhikbanerjee.github.io/blog/p/hugging-face-introduces-rl-trained-harness-adapters-for-improved-llm-efficiency/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/hugging-face-introduces-rl-trained-harness-adapters-for-improved-llm-efficiency/</guid><description>&lt;img src="https://huggingface.co/blog/assets/harness-adapters-at-scale/thumbnail.png" alt="Featured image of post Hugging Face introduces RL-trained harness adapters for improved LLM efficiency" /&gt;&lt;h1 id="hugging-face-introduces-rl-trained-harness-adapters-for-improved-llm-efficiency"&gt;Hugging Face introduces RL-trained harness adapters for improved LLM efficiency
+&lt;/h1&gt;&lt;p&gt;Hugging Face has introduced &amp;ldquo;harness adapters,&amp;rdquo; a method for adapting favorite models to specific agent harnesses using reinforcement learning (RL) to improve performance and cost efficiency. While base models generally target general performance, combining a model with a specific harness often leaves performance and efficiency on the table for targeted tasks. By training custom adapters on specific task distributions, developers can squeeze more capability out of existing models for their specific use cases.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The technique involves combining RL on a custom task distribution with the user&amp;rsquo;s favorite agent harness. This process yields more accurate and efficient models specifically for that target harness and task combination. The core mechanism is that models are not fully optimized for every harness and task; they are optimized for general performance. With RL, a custom harness adapter can be trained to optimize the model for the specific harness and task at hand.&lt;/p&gt;
+&lt;p&gt;In recent experiments, researchers froze the weights of the Qwen3.8-27B model and added a custom RL-trained LoRA adapter. This approach resulted in the model reasoning less, calling fewer tools, and performing better on the first attempt.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model / Configuration&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Terminal-Bench 2.1 Score&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Avg Tokens per Task&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3.8-27B (Base)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;39%&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.9K&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3.8-27B (with RL LoRA)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;55%&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.5K&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;To validate this approach on harder real-world software engineering tasks, the team trained one LoRA adapter for Qwen3.8-27B for each of three agent harnesses: Pi, Hermes Agent, and OpenCode. The RL training occurred inside the harness itself. Datasets, training, and agent rollouts were managed on the Hub in Jobs using TRL&amp;rsquo;s AsyncGRPOTrainer, OpenEnv, and harbor.&lt;/p&gt;
+&lt;p&gt;Key technical components of the recipe include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Super Adapter:&lt;/strong&gt; The three individual LoRAs were merged into a single &amp;ldquo;super adapter&amp;rdquo; that runs unchanged under all three harnesses.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Docker Images:&lt;/strong&gt; Ready-to-use docker images for RL tasks are provided with target harnesses pre-installed. The final images use Pi 1.5.2, OpenCode 2.2.7, and Hermes Agent v0.22.6.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Custom Dataset Pipeline:&lt;/strong&gt; A custom dataset for agentic coding was created using the Hub, OpenEnv, and Repo2RLEnv. This pipeline combines task retrieval from existing RL environments, task generation via Repo2RLEnv, and task validation with OpenEnv.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Task Sources:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;SWE-smith&lt;/em&gt; injects bugs into real Python and Go repositories using LLM rewrites or mutations.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;SWE-Gym&lt;/em&gt; (packaged as Harbor tasks in TaskTrove) converts real GitHub issues and merged fixes into tasks.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Tasksmith&lt;/em&gt; generates tasks from merged pull requests. In one instance, Tasksmith produced 24 valid tasks from 30 merged pull requests in 10 Python repositories.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Every task in the dataset passes an eligibility screen via &lt;code&gt;openenv validate&lt;/code&gt; and a difficulty check against the base model. Each harness adapter beat the base model under its own harness on both performance and efficiency benchmarks.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;All artifacts related to this work, including adapters, GGUFs, RL tasks, and the safeagents plugin, are browsable through a Hugging Face collection. A fully reusable recipe is shared so developers can reproduce these results on their own task, harness, and model combinations.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/buckets/huggingface/harness-adapters-blog-assets/resolve/images/task-pipeline.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#LLMs #ReinforcementLearning #LoRA #Agents #HuggingFace&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/harness-adapters-at-scale" target="_blank" rel="noopener"
+&gt;Introducing harness adapters: adapt your favorite model to your harness to improve performance and cost&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Dynamo Optimizes RL Training via Routing and Weight Updates</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-optimizes-rl-training-via-routing-and-weight-updates/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-optimizes-rl-training-via-routing-and-weight-updates/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-17-660x370.png" alt="Featured image of post NVIDIA Dynamo Optimizes RL Training via Routing and Weight Updates" /&gt;&lt;h1 id="nvidia-dynamo-optimizes-rl-training-via-routing-and-weight-updates"&gt;NVIDIA Dynamo Optimizes RL Training via Routing and Weight Updates
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced Dynamo as a serving layer designed to address constraints in reinforcement learning (RL) training, helping teams generate more accepted training samples and complete training iterations faster. By addressing bottlenecks in rollouts, weight updates, and worker recovery, the framework aims to prevent GPU capacity waste and training delays as RL workloads scale.&lt;/p&gt;
+&lt;h2 id="-how-rl-training-scales"&gt;🧩 How RL Training Scales
+&lt;/h2&gt;&lt;p&gt;Reinforcement learning uses rewards to train models to solve problems and complete tasks. The training process relies on several key components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Workers&lt;/strong&gt; generate rollouts, which are sequences of model outputs, actions, and environment interactions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RL Frameworks&lt;/strong&gt; score the results, update model weights, and send those weights back to the workers for the next round.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamo&lt;/strong&gt; sits between rollout orchestration and inference workers, routing generation requests from the RL framework to eligible inference capacity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details-addressing-training-bottlenecks"&gt;⚙️ Key Details: Addressing Training Bottlenecks
+&lt;/h2&gt;&lt;p&gt;As RL training scales, redundant compute, slow rollouts, and worker failures can delay progress. Dynamo addresses these issues through specific mechanisms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Routing and Cache Reuse&lt;/strong&gt;: Multiple RL attempts often begin with identical instructions or contexts. Dynamo’s router balances KV cache reuse and worker load, sending requests to workers that have already cached the prompt to avoid repeated processing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ModelExpress Weight Updates&lt;/strong&gt;: Sending full model checkpoints to every worker is time-consuming and can interrupt generation. ModelExpress uses delta weight transfer, sending a compressed representation of what changed rather than the full model. Compatible workers can also copy weights directly from another GPU over NIXL.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recovery and Resilience&lt;/strong&gt;: When a worker fails, Dynamo detects the loss and directs new requests toward eligible healthy workers. It adds replacement workers to the routing pool once they have loaded a checkpoint and applied subsequent deltas to catch up.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-real-world-applications"&gt;📊 Real-World Applications
+&lt;/h2&gt;&lt;p&gt;Several organizations have utilized NVIDIA Dynamo and ModelExpress to optimize their RL workloads:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Organization&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Application&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Microsoft AI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used Dynamo to support RL rollout inference during post-training.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CoreWeave&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses Dynamo and ModelExpress to accelerate model weight updates by up to 15×.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cognition&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used Dynamo to manage inference workers and route rollouts during the post-training of SWE-1.7.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Prime Intellect&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses Dynamo for distributed inference orchestration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;H Company&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used Dynamo and ModelExpress to reduce average training-step time by up to 20% and GPU-hours by up to 5%.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Addressing rollout bottlenecks allows teams to complete more training iterations within a fixed compute budget. By ensuring that GPU capacity is not wasted on redundant prefix processing or slow weight transfers, Dynamo helps maintain the momentum of the training run, even as model weights are updated and infrastructure fails.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image1-14.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-16.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image2-14.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #ReinforcementLearning #Dynamo #GPUTechnology #LLMTraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/reducing-rollout-bottlenecks-in-reinforcement-learning-with-nvidia-dynamo/" target="_blank" rel="noopener"
+&gt;Reducing Rollout Bottlenecks in Reinforcement Learning with NVIDIA Dynamo | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>ROLL: AI Library Enhances LLM Performance</title><link>https://shoubhikbanerjee.github.io/blog/p/roll-ai-library-enhances-llm-performance/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/roll-ai-library-enhances-llm-performance/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/1961952?v=4" alt="Featured image of post ROLL: AI Library Enhances LLM Performance" /&gt;&lt;h1 id="roll-ai-library-enhances-llm-performance"&gt;ROLL: AI Library Enhances LLM Performance
+&lt;/h1&gt;&lt;p&gt;ROLL, an efficient and user-friendly RL library, is designed for Large Language Models (LLMs) utilizing Large Scale GPU resources. It significantly enhances LLM performance in key areas such as human preference alignment, complex reasoning, and multi-turn agentic interaction scenarios.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;ROLL is an efficient and user-friendly RL library designed for Large Language Models (LLMs) utilizing Large Scale GPU resources.&lt;/li&gt;
+&lt;li&gt;It significantly enhances LLM performance in key areas such as human preference alignment, complex reasoning, and multi-turn agentic interaction scenarios.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Leveraging a multi-role distributed architecture with Ray for flexible resource allocation and heterogeneous task scheduling, ROLL integrates cutting-edge technologies like Megatron-Core, SGLang and vLLM to accelerate model training and inference.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;[16/06/2026] Our OSDI’26 RollArt paper is now available on &lt;a class="link" href="https://arxiv.org/abs/2512.22560" target="_blank" rel="noopener"
+&gt;arxiv&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;[03/06/2026] We support Qwen3.5 &lt;a class="link" href="examples/qwen3.5-35BA3-rlvr_megatron/rlvr_megatron_80GB.yaml" &gt;Dense&lt;/a&gt; and &lt;a class="link" href="examples/qwen3.5-35BA3-rlvr_megatron/rlvr_megatron_80GB.yaml" &gt;MoE&lt;/a&gt; series models and &lt;a class="link" href="docs_roll/i18n/zh-Hans/docusaurus-plugin-content-docs/current/User%20Guides/Pipeline/on_policy_distill_pipeline_start.md" &gt;on-policy distill&lt;/a&gt;. Welcome to use!&lt;/li&gt;
+&lt;li&gt;[02/03/2026] We released FSDP2 Strategy, Megatron with LoRA, GPU partial overlapping, Qwen3-Omni supports and other features. For more details, please refer to the release notes. Welcome to use!&lt;/li&gt;
+&lt;li&gt;[01/01/2026] Our &lt;a class="link" href="https://arxiv.org/abs/2512.24873" target="_blank" rel="noopener"
+&gt;Let It Flow: Agentic Crafting on Rock and Roll&lt;/a&gt; report released! Introducing ALE ecosystem and ROME, an open-source agentic model with novel IPA algorithm.&lt;/li&gt;
+&lt;li&gt;[11/08/2025] Our &lt;a class="link" href="https://github.com/alibaba/ROCK" target="_blank" rel="noopener"
+&gt;ROCK: Reinforcement Open Construction Kit&lt;/a&gt; released, Explore the new capabilities!&lt;/li&gt;
+&lt;li&gt;[10/23/2025] Our Papers released, see &lt;a class="link" href="https://arxiv.org/abs/2510.01656" target="_blank" rel="noopener"
+&gt;Asymmetric Proximal Policy Optimization: mini-critics boost LLM reasoning&lt;/a&gt; and &lt;a class="link" href="https://arxiv.org/abs/2510.13554" target="_blank" rel="noopener"
+&gt;Attention Illuminates LLM Reasoning: The Preplan-and-Anchor Rhythm Enables Fine-Grained Policy Optimization&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;[10/14/2025] Our Paper released, see &lt;a class="link" href="https://arxiv.org/abs/2510.11345" target="_blank" rel="noopener"
+&gt;Part II: ROLL Flash &amp;ndash; Accelerating RLVR and Agentic Training with Asynchrony&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;[09/28/2025] Huawei Ascend NPU support — see &lt;a class="link" href="https://alibaba.github.io/ROLL/docs/User%20Guides/Hardware%20Support/ascend_usage" target="_blank" rel="noopener"
+&gt;usage guide&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;[09/25/2025] Our Paper released, see &lt;a class="link" href="https://arxiv.org/abs/2509.21009" target="_blank" rel="noopener"
+&gt;RollPacker: Mitigating Long-Tail Rollouts for Fast, Synchronous RL Post-Training&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[09/24/2025] Support &lt;a class="link" href="examples/wan2.2-14B-reward_fl_ds/reward_fl_config.yaml" &gt;Wan2_2 Reward FL pipeline&lt;/a&gt;. Explore the new capabilities!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;ROLL is available on &lt;a class="link" href="https://github.com/alibaba/ROCK" target="_blank" rel="noopener"
+&gt;GitHub&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;ROLL significantly enhances LLM performance in key areas such as human preference alignment, complex reasoning, and multi-turn agentic interaction scenarios.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AI #LLM #RL #MachineLearning #DeepLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/alibaba/ROLL" target="_blank" rel="noopener"
+&gt;alibaba/ROLL&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>RadixArk Releases DaisyRose-27B Model With RL Training on Long-Horizon Agent Tasks</title><link>https://shoubhikbanerjee.github.io/blog/p/radixark-releases-daisyrose-27b-model-with-rl-training-on-long-horizon-agent-tasks/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/radixark-releases-daisyrose-27b-model-with-rl-training-on-long-horizon-agent-tasks/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6aeabf9f2efd990530425e58/faP4Su889q_DIgN3wmU9M.png" alt="Featured image of post RadixArk Releases DaisyRose-27B Model With RL Training on Long-Horizon Agent Tasks" /&gt;&lt;h1 id="radixark-releases-daisyrose-27b-model-with-rl-training-on-long-horizon-agent-tasks"&gt;RadixArk Releases DaisyRose-27B Model With RL Training on Long-Horizon Agent Tasks
+&lt;/h1&gt;&lt;p&gt;RadixArk has released DaisyRose-27B, its first model, built on Qwen3.8-27B and trained with reinforcement learning using the Miles framework. The model was trained on 1,200 curated long-horizon agent tasks over 18 days on 144 H200 GPUs, achieving a Terminal-Bench 4.1 pass@1 improvement from 5.6% to 12.0%.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;First model release from RadixArk&lt;/li&gt;
+&lt;li&gt;Base: Qwen3.8-27B&lt;/li&gt;
+&lt;li&gt;Training method: Reinforcement learning via Miles (open-source RL framework)&lt;/li&gt;
+&lt;li&gt;Training scale: 1,200 tasks, sessions up to 1M tokens, 18 days, 144 H200 GPUs&lt;/li&gt;
+&lt;li&gt;License: Apache 2.0 checkpoints available&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;h3 id="task-design"&gt;Task Design
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Tasks built in partnership with Eigent AI from a large pool covering machine learning, software engineering, science, and other fields&lt;/li&gt;
+&lt;li&gt;Thousands of candidates filtered to ~1,200 final tasks using three criteria:
+&lt;ul&gt;
+&lt;li&gt;Each task targets a mistake the original Qwen3.8-27B makes&lt;/li&gt;
+&lt;li&gt;Tasks redesigned around those mistakes, difficulty adjusted until solve rate falls in a useful learning range&lt;/li&gt;
+&lt;li&gt;Each task requires several interdependent steps: the agent must reason, plan, and execute across a long job&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Each attempt runs up to 1.5 hours in a sandbox with &amp;gt;100 tool calls and &amp;gt;256K output tokens&lt;/li&gt;
+&lt;li&gt;Tasks must reward actually solving the problem; every task reviewed alongside model attempts; flawed tasks fixed or removed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="training-backend-miles"&gt;Training Backend (Miles)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Fully asynchronous mode: agent keeps working while model learns, neither waits for the other&lt;/li&gt;
+&lt;li&gt;128 H200s run inference on agent tasks; 16 H200s run the trainer&lt;/li&gt;
+&lt;li&gt;After each step, updated model deployed to the 128 inference GPUs&lt;/li&gt;
+&lt;li&gt;Internal training backend built for agent training: each step learns from a handful of very long sessions (up to 1M tokens) folded into multiple trajectories via harness summarization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="sandbox-service"&gt;Sandbox Service
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Built on open-source AgentENV project (RadixArk contributes fixes)&lt;/li&gt;
+&lt;li&gt;Mid-September to mid-November: ~944,000 sandboxes run, up to 1,566 concurrent&lt;/li&gt;
+&lt;li&gt;Service scaled from 1 to 12 machines&lt;/li&gt;
+&lt;li&gt;10 upgrades shipped, nearly all while training was running&lt;/li&gt;
+&lt;li&gt;99% sandbox creation success across 9 weeks; &amp;gt;99.95% since late October&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;h3 id="benchmark-results"&gt;Benchmark Results
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Benchmark&lt;/th&gt;
+&lt;th&gt;Qwen3.8-27B&lt;/th&gt;
+&lt;th&gt;DaisyRose-27B&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Terminal-Bench 4.1 pass@1&lt;/td&gt;
+&lt;td&gt;5.6%&lt;/td&gt;
+&lt;td&gt;12.0%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;DaisyRose-27B scores higher than original Qwen3.8-27B on every benchmark evaluated&lt;/li&gt;
+&lt;li&gt;Largest gain on Terminal-Bench 4.1 (5.6% → 12.0%)&lt;/li&gt;
+&lt;li&gt;Gains also on reasoning, instruction following, and coding benchmarks&lt;/li&gt;
+&lt;li&gt;Scores use higher of BF16 and FP8 runs; difference &amp;lt;1 point where both evaluated&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="model-architecture"&gt;Model Architecture
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Retains Qwen3.8-27B architecture, tokenizer, chat template, image understanding, and 256K-token context window&lt;/li&gt;
+&lt;li&gt;Longer training sessions use harness summarization to span multiple trajectories&lt;/li&gt;
+&lt;li&gt;Model thinks before answering by default; reasoning returned in &lt;code&gt;reasoning_content&lt;/code&gt;, final answer in &lt;code&gt;content&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="training-efficiency"&gt;Training Efficiency
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;RadixArk Backend&lt;/th&gt;
+&lt;th&gt;Open-Source Trainer (Megatron)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Model FLOPs Utilization (MFU)&lt;/td&gt;
+&lt;td&gt;37%&lt;/td&gt;
+&lt;td&gt;16%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Training cost reduction&lt;/td&gt;
+&lt;td&gt;57% less GPU time&lt;/td&gt;
+&lt;td&gt;baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Throughput (tokens/sec across 144 GPUs)&lt;/td&gt;
+&lt;td&gt;~16,800&lt;/td&gt;
+&lt;td&gt;~8,300&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;End-to-end speed&lt;/td&gt;
+&lt;td&gt;2× faster&lt;/td&gt;
+&lt;td&gt;baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Stability: 63,000 GPU-hours over weeks; speed and efficiency held steady from first to last step&lt;/li&gt;
+&lt;li&gt;Larger gains on mixture-of-experts models: 6.2× on Qwen3.6-35B-A3B, &amp;gt;10× on ~300B GLM-5.3-Flash&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Checkpoints released under Apache 2.0&lt;/li&gt;
+&lt;li&gt;Recommended serving: SGLang with DSpark speculative decoding&lt;/li&gt;
+&lt;li&gt;SGLang cookbook provides launch configurations for different GPUs and checkpoint formats&lt;/li&gt;
+&lt;li&gt;Quickstart: start server with served model name &lt;code&gt;DaisyRose-27B&lt;/code&gt; on port 30000, then send requests via OpenAI Python client&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Demonstrates that carefully designed long-horizon agent tasks, an efficient asynchronous RL backend, and a robust sandbox service can jointly deliver large benchmark gains with substantially lower compute cost&lt;/li&gt;
+&lt;li&gt;57% less GPU time for equivalent training via higher MFU (37% vs 16%)&lt;/li&gt;
+&lt;li&gt;2× end-to-end throughput improvement&lt;/li&gt;
+&lt;li&gt;Sandbox infrastructure proved reliable at scale (99.95% success rate) with live upgrades during training&lt;/li&gt;
+&lt;li&gt;Gains generalize across benchmark categories and are especially pronounced on mixture-of-experts architectures&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.radixark.com/images/daisyrose-27b/benchmarks.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.radixark.com/images/daisyrose-27b/gpu-efficiency.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.radixark.com/images/daisyrose-27b/training-stability.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#RadixArk #DaisyRose #ReinforcementLearning #AIAgents #OpenSource #LLM&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/RadixArk/daisyrose-27b-pushing-the-frontier-of-post-trainin" target="_blank" rel="noopener"
+&gt;DaisyRose-27B: Pushing the Frontier of Post-Training Efficiency&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Study Reveals Reward Gain Imbalance Affects Ranking Accuracy in Rubric‑Based RL</title><link>https://shoubhikbanerjee.github.io/blog/p/study-reveals-reward-gain-imbalance-affects-ranking-accuracy-in-rubricbased-rl/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/study-reveals-reward-gain-imbalance-affects-ranking-accuracy-in-rubricbased-rl/</guid><description>&lt;h1 id="study-reveals-reward-gain-imbalance-affects-ranking-accuracy-in-rubricbased-rl"&gt;Study Reveals Reward Gain Imbalance Affects Ranking Accuracy in Rubric‑Based RL
+&lt;/h1&gt;&lt;p&gt;Rubric‑based reinforcement learning builds rewards for aligning large language models with human preferences by equally aggregating continuous scores that judges assign to individual criteria. New analysis shows that scoring heterogeneity across criteria can distort candidate rankings.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Rubric‑based RL aggregates per‑criterion scores equally.&lt;/li&gt;
+&lt;li&gt;Scoring heterogeneity across criteria may lead to ranking distortions.&lt;/li&gt;
+&lt;li&gt;Prior work has improved judges, learned criterion weights, or refined aggregation, but the link between heterogeneity and ranking has been under‑explored.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-reward-gain-imbalance-works"&gt;🧩 How Reward Gain Imbalance Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Heterogeneity is formalized as &lt;strong&gt;reward gain imbalance&lt;/strong&gt;: each criterion contributes with its own reward gain, defined as the gap between its expected scores on satisfied and unsatisfied responses.&lt;/li&gt;
+&lt;li&gt;An exact decomposition of the reward difference between any two candidates separates:
+&lt;ol&gt;
+&lt;li&gt;a base satisfaction signal,&lt;/li&gt;
+&lt;li&gt;a reward gain imbalance term, and&lt;/li&gt;
+&lt;li&gt;a residual term.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;The imbalance term can &lt;strong&gt;attenuate&lt;/strong&gt; or &lt;strong&gt;amplify&lt;/strong&gt; the base signal; misrankings tend to cluster where it attenuates.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-proposed-solution-dualcenter-clipping-dcc"&gt;⚙️ Proposed Solution: Dual‑Center Clipping (DCC)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Rather than removing the imbalance, the adaptive &lt;strong&gt;Dual‑Center Clipping aggregation (DCC)&lt;/strong&gt; bounds each criterion’s contribution to the reward difference.&lt;/li&gt;
+&lt;li&gt;DCC uses only the scores of the current candidate group to compute a clipping interval that imposes a common upper bound on per‑criterion score differences between candidates.&lt;/li&gt;
+&lt;li&gt;This limits the excessive influence of extreme scores while preserving continuous judgment information.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-findings"&gt;📊 Findings
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Experiments show that &lt;strong&gt;removing reward gain imbalance&lt;/strong&gt;, even with ground‑truth labels, &lt;strong&gt;lowers ranking accuracy&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Bounding contributions via DCC improves ranking stability compared to simple removal of the imbalance.&lt;/li&gt;
+&lt;li&gt;The analysis confirms that controlling imbalance, rather than eliminating it, better supports accurate candidate ranking.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#RLHF #RewardEngineering #RankingAccuracy&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.24005v1" target="_blank" rel="noopener"
+&gt;How Reward Gain Imbalance Shapes Ranking: Rethinking Rubric-Based Reward Aggregation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>PineScript Expert Agent and ReAgent Archival Update</title><link>https://shoubhikbanerjee.github.io/blog/p/pinescript-expert-agent-and-reagent-archival-update/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/pinescript-expert-agent-and-reagent-archival-update/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/156416587?v=4" alt="Featured image of post PineScript Expert Agent and ReAgent Archival Update" /&gt;&lt;h1 id="pinescript-expert-agent-and-reagent-archival-update"&gt;PineScript Expert Agent and ReAgent Archival Update
+&lt;/h1&gt;&lt;p&gt;Two recent developments in the AI and reinforcement learning space have been noted: the release of a RAG-based Pine Script expert agent built with Pydantic AI, and the official archival of the ReAgent reinforcement learning platform in favor of Pearl.&lt;/p&gt;
+&lt;h2 id="-pinescript-expert-agent"&gt;📗 PineScript Expert Agent
+&lt;/h2&gt;&lt;p&gt;PineScript Expert is a Retrieval-Augmented Generation (RAG) agent developed using Pydantic AI that serves as an expert on Pine Script v6, the programming language used for custom indicators and strategies on TradingView. The system leverages vector search technology and large language models to provide accurate, context-aware answers and generate working code examples.&lt;/p&gt;
+&lt;h3 id="key-features"&gt;Key Features
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Comprehensive Knowledge&lt;/strong&gt;: Accesses the entire Pine Script v6 documentation through natural language queries using a custom crawler.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Code Generation&lt;/strong&gt;: Creates custom indicators and strategies based on specific user requirements.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interfaces&lt;/strong&gt;: Offers a web-based UI built with Streamlit (with persistent chat history) and an interactive command-line interface.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi-Provider Support&lt;/strong&gt;: Utilizes either OpenAI or OpenRouter models as the LLM backend.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vector Search&lt;/strong&gt;: Uses pgvector for efficient semantic retrieval of relevant documentation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="technical-requirements"&gt;Technical Requirements
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Python 3.11+&lt;/li&gt;
+&lt;li&gt;PostgreSQL with pgvector extension (configured to run on port 54322)&lt;/li&gt;
+&lt;li&gt;OpenAI API key (required for embeddings and default LLM)&lt;/li&gt;
+&lt;li&gt;OpenRouter API key (optional, for alternative LLM providers)&lt;/li&gt;
+&lt;li&gt;Docker (optional, for running PostgreSQL with pgvector)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-reagent-archival"&gt;🛑 ReAgent Archival
+&lt;/h2&gt;&lt;p&gt;ReAgent, an open-source end-to-end platform for applied reinforcement learning developed and used at Facebook, is officially archived and no longer maintained. For latest support on production-ready reinforcement learning, the developers direct users to Pearl, a production-ready RL AI Agent Library developed by the Applied Reinforcement Learning team at Meta.&lt;/p&gt;
+&lt;h3 id="platform-details"&gt;Platform Details
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Architecture&lt;/strong&gt;: Built in Python, using PyTorch for modeling/training and TorchScript for model serving.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Use Case&lt;/strong&gt;: Designed for large-scale, distributed recommendation/optimization tasks where a simulator is not accessible, relying on offline training on batches of data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Methodology&lt;/strong&gt;: Utilizes off-policy algorithms because policies update slowly and in batches.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Key Tools&lt;/strong&gt;: Includes counterfactual policy evaluation (CPE) to test new policies without deployment, a Domain Analysis Tool to assess suitability for batch RL, and Behavior Cloning to bootstrap learning safely.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;License&lt;/strong&gt;: Released under a BSD 3-Clause license.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#PineScript #ReinforcementLearning #PydanticAI #TradingView #Meta #RL&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/FaustoS88/Pydantic-AI-Pinescript-Expert" target="_blank" rel="noopener"
+&gt;FaustoS88/Pydantic-AI-Pinescript-Expert&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://github.com/facebookresearch/ReAgent" target="_blank" rel="noopener"
+&gt;facebookresearch/ReAgent&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>verl-SpeCo adds speculative decoding to reinforcement learning loops</title><link>https://shoubhikbanerjee.github.io/blog/p/verl-speco-adds-speculative-decoding-to-reinforcement-learning-loops/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/verl-speco-adds-speculative-decoding-to-reinforcement-learning-loops/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/212961691?v=4" alt="Featured image of post verl-SpeCo adds speculative decoding to reinforcement learning loops" /&gt;&lt;h1 id="verl-speco-adds-speculative-decoding-to-reinforcement-learning-loops"&gt;verl-SpeCo adds speculative decoding to reinforcement learning loops
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🧩 Overview
+&lt;/h2&gt;&lt;p&gt;&lt;code&gt;verl-SpeCo&lt;/code&gt; is a lightweight overlay for the &lt;code&gt;verl&lt;/code&gt; reinforcement learning framework that enables the training and integration of speculative decoding drafters. It operates as an import-only dependency, keeping upstream &lt;code&gt;verl&lt;/code&gt; unpatched while adding drafter collection, training, and hot-update logic through the &lt;code&gt;verl_speco&lt;/code&gt; module. The tool is run via &lt;code&gt;python -m verl_speco.main&lt;/code&gt; and composes upstream PPO/GRPO configurations. It supports multiple drafter backends—including EAGLE-1, EAGLE-2, EAGLE3, DFlash, DSpark, Domino, and P-EAGLE—along with integration for both vLLM and SGLang rollout engines.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How It Works
+&lt;/h2&gt;&lt;p&gt;The overlay performs drafter co-training directly within the reinforcement learning loop. It collects hidden states during rollout or old-logprob computation, periodically trains the drafter, and publishes the updated weights back to the rollout engine. A key mechanism, known as &amp;ldquo;Bubble Time&amp;rdquo; training, utilizes rollout idle workers to run drafter optimizer steps. This approach publishes the trained drafter to all replicas, preserving generation benefits while keeping the drafter training time off the main critical path.&lt;/p&gt;
+&lt;p&gt;The tool maintains architectural flexibility; the drafter trainer runs on FSDP2, while the main actor can utilize verl&amp;rsquo;s FSDP/FSDP2 or VeOmni model engine.&lt;/p&gt;
+&lt;h2 id="-performance-metrics"&gt;📊 Performance Metrics
+&lt;/h2&gt;&lt;p&gt;The overlay exposes step-level observability, including drafter timing and vLLM speculative decoding acceptance metrics such as &lt;code&gt;drafter/spec_decode/mean_acceptance_length&lt;/code&gt;. Recent results cover both NPU EAGLE3 co-training and GPU DFlash Bubble Time training.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Qwen3-8B on vLLM-Ascend/NPU:&lt;/strong&gt; Using an EAGLE3 drafter for 100 steps, co-training increased mean acceptance length compared to a fixed-drafter setup. Relative to the baseline, this yielded approximately 20% faster rollout and 11% faster end-to-end training without accuracy regression.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Qwen3-4B GPU run:&lt;/strong&gt; In a DFlash run utilizing Bubble Time, the drafter training quota remained aligned with the synchronous path while shifting most drafter work off the main critical path. Excluding checkpoint-save steps, the end-to-end step time improved by about 6.7% compared with synchronous training, with similar acceptance length.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-backend-and-runtime-details"&gt;🛠️ Backend and Runtime Details
+&lt;/h2&gt;&lt;p&gt;Specific configurations govern how different backends operate. EAGLE-1 and EAGLE-2 share vLLM&amp;rsquo;s native draft method, with EAGLE-2 adding a dynamic-tree decoding policy. Domino is trained using the &lt;code&gt;DOMINO&lt;/code&gt; speculative algorithm but served as a DFlash projector sub-mode.&lt;/p&gt;
+&lt;p&gt;When serving a Domino checkpoint for rollout, &lt;code&gt;speculative_algorithm=DFLASH&lt;/code&gt; must be used on an engine version supporting the Domino projector. Additionally, LK loss is not supported for Domino; &lt;code&gt;dflash_lk_loss_alpha&lt;/code&gt; and &lt;code&gt;dspark_lk_loss_alpha&lt;/code&gt; must be set to zero, as positive values are rejected during layout resolution. While P-EAGLE training is available, its vLLM parallel-drafting rollout runtime is not yet integrated into the overlay, requiring users to keep rollout drafter serving disabled and manage training or serving separately. Standalone smoke tests for GPU training are maintained under &lt;code&gt;tests/special_standalone/&lt;/code&gt; and can be executed via scheduled or manual workflows.&lt;/p&gt;
+&lt;p&gt;#ReinforcementLearning #SpeculativeDecoding #vLLM #SGLang #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/verl-project/verl-SpeCo" target="_blank" rel="noopener"
+&gt;verl-project/verl-SpeCo&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Launches Nemotron for Science to Accelerate Agentic Scientific Workloads</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-launches-nemotron-for-science-to-accelerate-agentic-scientific-workloads/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-launches-nemotron-for-science-to-accelerate-agentic-scientific-workloads/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image4-5-660x370.png" alt="Featured image of post NVIDIA Launches Nemotron for Science to Accelerate Agentic Scientific Workloads" /&gt;&lt;h1 id="nvidia-launches-nemotron-for-science-to-accelerate-agentic-scientific-workloads"&gt;NVIDIA Launches Nemotron for Science to Accelerate Agentic Scientific Workloads
+&lt;/h1&gt;&lt;p&gt;NVIDIA released Nemotron for Science, a collection of models, datasets, tools, and recipes designed to accelerate agentic scientific workloads.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Agentic AI reshapes scientific research and innovation.&lt;/li&gt;
+&lt;li&gt;Researchers communicate hypotheses in natural language; autonomous agents plan tasks, run simulations, evaluate results, and self‑correct across iterations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Scientific agents tackle longer, more complex, and increasingly visual workflows.&lt;/li&gt;
+&lt;li&gt;Accuracy, inference efficiency, verification, latency, and compute costs are critical at every step.&lt;/li&gt;
+&lt;li&gt;NVIDIA Nemotron for Science addresses these hurdles.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Nemotron 3.5 Super VL&lt;/strong&gt; – open, customizable, multimodal model for specialized workflows.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Nemotron Litmus‑Bench V2.0&lt;/strong&gt; – open‑source chemistry‑reasoning dataset and benchmark for molecular properties.&lt;/li&gt;
+&lt;li&gt;Out‑of‑the‑box performance: frontier‑level accuracy on scientific benchmarks and fastest time to solution for scientific coding.&lt;/li&gt;
+&lt;li&gt;NVIDIA post‑training support enables model customization for specific research domains to increase accuracy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="training-pipeline"&gt;Training Pipeline
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Step&lt;/th&gt;
+&lt;th&gt;Tool&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Environment&lt;/td&gt;
+&lt;td&gt;NeMo Gym&lt;/td&gt;
+&lt;td&gt;Supplies infrastructure for reinforcement learning (RL).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Post‑Training&lt;/td&gt;
+&lt;td&gt;NeMo RL&lt;/td&gt;
+&lt;td&gt;Provides framework for fine‑tuning.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Reward&lt;/td&gt;
+&lt;td&gt;Verifiable rewards (RLVR)&lt;/td&gt;
+&lt;td&gt;Uses experimental ground truth from MetxBioDB; reward via Tanimoto similarity of molecular fingerprints.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Fine‑Tuning&lt;/td&gt;
+&lt;td&gt;GRPO + LoRA&lt;/td&gt;
+&lt;td&gt;Low‑rank adapters optimize policy.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Supervised Fine‑Tuning&lt;/td&gt;
+&lt;td&gt;12% accuracy increase&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RL Post‑Training&lt;/td&gt;
+&lt;td&gt;17% additional increase&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Warm‑Start&lt;/td&gt;
+&lt;td&gt;High‑quality reasoning traces&lt;/td&gt;
+&lt;td&gt;Improves starting point before RL loop.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Available as a collection of models, datasets, tools, and recipes for accelerating agentic scientific workloads.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enables autonomous scientific agents to independently plan, execute, evaluate, and self‑correct, reducing human effort and speeding discovery.&lt;/li&gt;
+&lt;li&gt;Provides verifiable rewards and efficient training pipelines that prevent error compounding and reduce latency and compute costs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image4-5-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/SC26-Fig-3.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-7.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AIAgents #ScientificAI #ReinforcementLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/post-training-nvidia-nemotron-to-increase-accuracy-in-your-scientific-domain/" target="_blank" rel="noopener"
+&gt;Post-Training NVIDIA Nemotron to Increase Accuracy in Your Scientific Domain | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Are Dense Rewards Worth Their Tokens in GRPO?</title><link>https://shoubhikbanerjee.github.io/blog/p/are-dense-rewards-worth-their-tokens-in-grpo/</link><pubDate>Wed, 11 Nov 2026 22:05:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/are-dense-rewards-worth-their-tokens-in-grpo/</guid><description>&lt;h1 id="are-dense-rewards-worth-their-tokens-in-grpo"&gt;Are Dense Rewards Worth Their Tokens in GRPO?
+&lt;/h1&gt;&lt;p&gt;Recent work on reinforcement learning from human feedback examines whether dense rewards are worth their tokens in group-relative policy optimization (GRPO).&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Reinforcement learning from human feedback trains language models to reason by rewarding correct final answers. A widely used algorithm, group-relative policy optimization (GRPO), gives every token of a solution the same credit. Because of this, dense process rewards have been proposed to credit intermediate steps, for example with a Monte-Carlo reward that scores each step by sampling continuations from it.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Comparing such a reward with GRPO per training update, or vetting it with a gradient test on a single batch, leaves out what it costs: in the setting, the continuations alone take 91% of all generated tokens.&lt;/p&gt;
+&lt;p&gt;The work introduces a matched-compute protocol that gives every training intervention the same budget, measured in generated tokens and training GPU-hours, and tests it in preregistered studies with controls for side effects.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Across 1,668 runs on six models, matching compute reverses the ranking.&lt;/li&gt;
+&lt;li&gt;On Qwen2.5-1.5B, the Monte-Carlo reward leads standard GRPO per update, yet ends 14.3 percentage points lower at equal tokens and 7.8 points lower at equal training time, and none of four dense-reward variants outperforms GRPO even with as much training time.&lt;/li&gt;
+&lt;li&gt;A per-token gradient test orders these rewards as training does but overestimates each by one to two points, as much as the gains it is meant to detect.&lt;/li&gt;
+&lt;li&gt;In contrast, training on the prompts whose predicted success is nearest 1/2 improves accuracy at matched compute, by 1.7 points on Qwen3-0.6B and 0.8 on Qwen2.5-1.5B.&lt;/li&gt;
+&lt;li&gt;The gains replicate on fresh seeds and unseen problems, and a simple rule, that the candidate prompts are predicted to fail more often than not, predicted where they appear in five of six preregistered tests.&lt;/li&gt;
+&lt;li&gt;Both gains come early in training, and standard GRPO with twice the initial learning rate comes within half a point of them.&lt;/li&gt;
+&lt;li&gt;The study argues that training interventions should be validated at matched compute, which overturns some apparent gains and confirms others.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The study reports that matching compute reverses the ranking.&lt;/li&gt;
+&lt;li&gt;It also reports that standard GRPO with twice the initial learning rate comes within half a point of the gains from training on prompts predicted to fail more often than not.&lt;/li&gt;
+&lt;li&gt;The evidence therefore presents a caution about evaluating dense rewards without matched compute.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#GRPO #ReinforcementLearning #DenseRewards&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.12964v1" target="_blank" rel="noopener"
+&gt;Exploration via Exploitation: The Blessing of Reward Diversity in Personalized Federated RL&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.13003v1" target="_blank" rel="noopener"
+&gt;Branch-and-Commit for Frozen RL Agents: When and Where to Spend Test-Time Compute&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.13013v1" target="_blank" rel="noopener"
+&gt;FaST: Factored Synthesis of Transitions for Offline Reinforcement Learning&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.13182v1" target="_blank" rel="noopener"
+&gt;Making Strides in Symbolic Imitation Learning: Offline Demonstrations, Online Tuning&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.13203v1" target="_blank" rel="noopener"
+&gt;Audited Gradients, Anchored Policies: Model-Based Reinforcement Learning for Efficient Flow Control&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.13560v1" target="_blank" rel="noopener"
+&gt;Are Dense Rewards Worth Their Tokens in GRPO?&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Reshard Collective Enables Efficient Weight Refit for Large‑Scale RL Training</title><link>https://shoubhikbanerjee.github.io/blog/p/reshard-collective-enables-efficient-weight-refit-for-largescale-rl-training/</link><pubDate>Sat, 07 Nov 2026 22:01:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/reshard-collective-enables-efficient-weight-refit-for-largescale-rl-training/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/green-cube.webp" alt="Featured image of post Reshard Collective Enables Efficient Weight Refit for Large‑Scale RL Training" /&gt;&lt;h1 id="reshard-collective-enables-efficient-weight-refit-for-largescale-rl-training"&gt;Reshard Collective Enables Efficient Weight Refit for Large‑Scale RL Training
+&lt;/h1&gt;&lt;p&gt;During reinforcement learning (RL) post‑training, training trajectories are generated on the fly by running inference with the current policy model. In large‑scale setups inference and training run on separate GPU resources in a disaggregated configuration, and the system periodically refreshes inference‑GPU weights with the latest parameters from the training GPUs; this transfer is called &lt;strong&gt;refit&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;RL post‑training generates trajectories on the fly via inference with the current policy model.&lt;/li&gt;
+&lt;li&gt;Inference and training run in parallel on separate GPU resources in a disaggregated setup.&lt;/li&gt;
+&lt;li&gt;Periodic weight refresh on inference GPUs is termed &lt;strong&gt;refit&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-refit-is-challenging"&gt;⚙️ Why refit is challenging
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Inference and training use different parallelism mappings (data, context, tensor, expert, pipeline), so weight shards are laid out differently.&lt;/li&gt;
+&lt;li&gt;Refit must move all model weights, making the communication payload comparable to the total model size.&lt;/li&gt;
+&lt;li&gt;Frontier models already require ~10 TB of data per refit (e.g., Kimi K3 ≈5.6 TB, Qwen 3.8 2.4T A95B ≈4.8 TB), and the payload grows with model scale.&lt;/li&gt;
+&lt;li&gt;Existing implementations use a gather‑and‑broadcast pattern:
+&lt;ul&gt;
+&lt;li&gt;Training GPUs all‑gather local shards into a complete tensor.&lt;/li&gt;
+&lt;li&gt;The complete tensor is broadcast to inference GPUs, each keeping only its needed shard.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;This sends the full tensor to every inference GPU, creating redundant communication in both phases.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-the-reshard-collective-solution"&gt;🧩 The Reshard collective solution
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Reshard collective is a new type of collective communication designed to accelerate RL weight refit.&lt;/li&gt;
+&lt;li&gt;Implemented as &lt;strong&gt;NCCL M2N Reshard&lt;/strong&gt;, an open‑source reference in the NVIDIA/nccl‑extensions GitHub repository.&lt;/li&gt;
+&lt;li&gt;Builds on PyTorch’s Distributed Tensor (DTensor) abstraction, which describes a tensor’s global shape, device mesh, and placements (shard or replicate).&lt;/li&gt;
+&lt;li&gt;Refit is reformulated as a DTensor‑to‑DTensor &lt;strong&gt;resharding&lt;/strong&gt; operation: converting the training layout to the inference layout directly, without constructing a full intermediate tensor.&lt;/li&gt;
+&lt;li&gt;This transfers only the theoretical minimum amount of data, respecting arbitrary shard boundaries and replication patterns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-model-size-examples"&gt;📊 Model size examples
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Parameters (trillion)&lt;/th&gt;
+&lt;th&gt;Approx. BF16 weight size (TB)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Kimi K3&lt;/td&gt;
+&lt;td&gt;2.8&lt;/td&gt;
+&lt;td&gt;5.6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen 3.8 2.4T A95B&lt;/td&gt;
+&lt;td&gt;2.4&lt;/td&gt;
+&lt;td&gt;4.8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;NCCL M2N Reshard source code is publicly available via the NVIDIA/nccl‑extensions GitHub repo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/direct-shard-to-shard-transfer-dtensor.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/reshard-operation-example.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/tp4-to-tp2dp2-example.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#RL #WeightRefit #Reshard #NCCL&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/accelerating-reinforcement-learning-weight-refit-with-the-reshard-collective/" target="_blank" rel="noopener"
+&gt;Accelerating Reinforcement Learning Weight Refit with the Reshard Collective | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>FlexFloor Enables Faster Reinforcement Learning Post‑Training for Large Language Models</title><link>https://shoubhikbanerjee.github.io/blog/p/flexfloor-enables-faster-reinforcement-learning-posttraining-for-large-language-models/</link><pubDate>Fri, 06 Nov 2026 22:02:31 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/flexfloor-enables-faster-reinforcement-learning-posttraining-for-large-language-models/</guid><description>&lt;h1 id="flexfloor-enables-faster-reinforcement-learning-posttraining-for-large-language-models"&gt;FlexFloor Enables Faster Reinforcement Learning Post‑Training for Large Language Models
+&lt;/h1&gt;&lt;p&gt;FlexFloor is a system that reduces the compute bottleneck of reinforcement‑learning (RL) post‑training for large language models by releasing resources earlier during synchronous response generation.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;RL post‑training improves the capabilities of large language models, but generating training responses consumes most of the compute.&lt;/li&gt;
+&lt;li&gt;In mixture‑of‑experts models, workers that finish generating their assigned responses often stay occupied because their experts are still needed by other workers processing longer responses.&lt;/li&gt;
+&lt;li&gt;About one‑third of occupied worker time in the baseline occurs after the local response generation has already finished.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;FlexFloor jointly adapts response scheduling and the active group of workers.&lt;/li&gt;
+&lt;li&gt;It leverages historical response lengths and memory constraints to decide how to batch prompts and where to place them.&lt;/li&gt;
+&lt;li&gt;Workers are progressively released once their expert computation is no longer required, while preserving expert availability and correct inter‑worker communication.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📈 Results
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;Improvement compared to baseline&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Response tokens per occupied computing time&lt;/td&gt;
+&lt;td&gt;+65.40%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Throughput (responses generated per unit time)&lt;/td&gt;
+&lt;td&gt;+52.74%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Rollout reward variation&lt;/td&gt;
+&lt;td&gt;Little observed change&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;FlexFloor generates roughly 65 % more response tokens for the same amount of occupied compute time.&lt;/li&gt;
+&lt;li&gt;Overall response generation throughput rises by about 53 %.&lt;/li&gt;
+&lt;li&gt;These gains are achieved without noticeable degradation in RL rollout reward.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By making RL post‑training more compute‑efficient, FlexFloor shortens the development cycle for large language models and AI agents.&lt;/li&gt;
+&lt;li&gt;Faster, cheaper iteration enables more frequent updates and experimentation, supporting ongoing improvements in model performance.&lt;/li&gt;
+&lt;li&gt;The approach maintains correctness of expert communication, ensuring that efficiency gains do not compromise training quality.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#ReinforcementLearning #LLM #ResourceEfficiency #AITraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.06984v1" target="_blank" rel="noopener"
+&gt;Resource-Efficient Reinforcement Learning Post-Training through Elastic Expert Parallelism&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.07048v1" target="_blank" rel="noopener"
+&gt;Adapting the Process of Adaptation: Darwinian, Lamarckian, and Agent-Directed Evolution in AI&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.07372v1" target="_blank" rel="noopener"
+&gt;EnvOpt: Automated Optimization for Agent Environments&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.07624v1" target="_blank" rel="noopener"
+&gt;Beneath the Surface: What We Overlook When We Talk About Agent Evolution&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>CONCUR Introduces Concordant Auxiliary Rewards for Multi‑Task RL</title><link>https://shoubhikbanerjee.github.io/blog/p/concur-introduces-concordant-auxiliary-rewards-for-multitask-rl/</link><pubDate>Wed, 28 Oct 2026 22:03:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/concur-introduces-concordant-auxiliary-rewards-for-multitask-rl/</guid><description>&lt;h1 id="concur-introduces-concordant-auxiliary-rewards-for-multitask-rl"&gt;CONCUR Introduces Concordant Auxiliary Rewards for Multi‑Task RL
+&lt;/h1&gt;&lt;p&gt;When a Large Language Model (LLM) is trained with Reinforcement Learning (RL) on multiple tasks, the primary reward can gate auxiliary rewards such as a length reward. Existing group‑relative advantage estimators may treat a gated auxiliary like any other component, which can reverse the primary’s ordering and allow auxiliaries to dominate at the primary’s ceiling. Keeping gated auxiliaries harms some tasks, while dropping them harms others.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Paper title: &lt;strong&gt;CONCUR: Concordant Auxiliary Rewards for Multi‑Task, Multi‑Reward Reinforcement Learning&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Submitted to &lt;em&gt;Computer Science &amp;gt; Computation and Language&lt;/em&gt; on 27 Oct 2026.&lt;/li&gt;
+&lt;li&gt;Goal: Align auxiliary rewards with the primary reward so that they never contradict the primary ordering.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;CONCUR replaces each gated auxiliary’s standardized score with the nearest score that satisfies two conditions:
+&lt;ol&gt;
+&lt;li&gt;Responses with higher primary rewards cannot receive lower scores.&lt;/li&gt;
+&lt;li&gt;Responses that have reached the primary’s ceiling receive equal scores.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Two variants are defined:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CONCUR‑T&lt;/strong&gt; – enforces both conditions continuously throughout training.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CONCUR‑A&lt;/strong&gt; – relaxes the second condition for an auxiliary when it agrees with the primary’s order more often than it reverses it among passing responses.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-variants--features"&gt;⚙️ Variants &amp;amp; Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CONCUR‑T&lt;/strong&gt;: strict monotonicity and ceiling equality.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CONCUR‑A&lt;/strong&gt;: conditional lifting of the ceiling‑equality rule based on agreement frequency.&lt;/li&gt;
+&lt;li&gt;Applies to any gated auxiliary reward in multi‑task RL settings.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📈 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Evaluated on three models from two families across four task types:
+&lt;ul&gt;
+&lt;li&gt;Mathematics&lt;/li&gt;
+&lt;li&gt;Code generation&lt;/li&gt;
+&lt;li&gt;Instruction following&lt;/li&gt;
+&lt;li&gt;Writing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Both CONCUR‑T and CONCUR‑A achieve higher average scores than all baselines and higher than the configuration where all gated auxiliaries are dropped.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a systematic way to keep auxiliary rewards concordant with the primary objective, improving performance across diverse downstream tasks without sacrificing any specific task.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#ReinforcementLearning #MultiTaskLearning #LanguageModels #AIResearch&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.36437v1" target="_blank" rel="noopener"
+&gt;CONCUR: Concordant Auxiliary Rewards for Multi-Task, Multi-Reward Reinforcement Learning&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker AI adds serverless training session APIs for custom model fine‑tuning</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-serverless-training-session-apis-for-custom-model-finetuning/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-serverless-training-session-apis-for-custom-model-finetuning/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21950-featured-image.png" alt="Featured image of post Amazon SageMaker AI adds serverless training session APIs for custom model fine‑tuning" /&gt;&lt;h1 id="amazon-sagemaker-ai-adds-serverless-training-session-apis-for-custom-model-finetuning"&gt;Amazon SageMaker AI adds serverless training session APIs for custom model fine‑tuning
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon SageMaker AI has expanded its serverless model‑customization offering with the general‑availability launch of &lt;strong&gt;training sessions&lt;/strong&gt;. The new APIs let customers write and coordinate their own post‑training logic—such as custom loss functions or reward signals—while SageMaker AI handles all GPU infrastructure, fault recovery, and checkpoint storage.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Training sessions expose low‑level operations (e.g., &lt;code&gt;forward_backward()&lt;/code&gt;, &lt;code&gt;optim_step()&lt;/code&gt;, &lt;code&gt;sample()&lt;/code&gt;) as SageMaker API calls. Users write the training loop in their own Python process; each call is executed on a live, stateful GPU‑backed session. The service takes care of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GPU allocation and distributed execution&lt;/li&gt;
+&lt;li&gt;Gradient synchronization and checkpoint storage&lt;/li&gt;
+&lt;li&gt;Fault recovery, tenant isolation, and scaling&lt;/li&gt;
+&lt;li&gt;Security configuration via IAM roles, optional KMS keys, and VPC settings&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Your data, checkpoints, and any custom weights stay in your Amazon S3 bucket in the region you choose, and SageMaker does not reuse them to train other models.&lt;/p&gt;
+&lt;h2 id="-key-features"&gt;⚙️ Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;No instance‑type or cluster management&lt;/strong&gt; – the service automatically provisions serverless GPUs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fine‑grained algorithmic control&lt;/strong&gt; – write custom loss, reward, or preference functions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multi‑turn reinforcement learning&lt;/strong&gt; – managed, serverless support for agents that require several interaction rounds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flexible adaptation&lt;/strong&gt; – choose Low‑Rank Adaptation (LoRA) or full fine‑tuning, and chain techniques through continuous customization.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pay‑per‑token&lt;/strong&gt; pricing model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Secure execution&lt;/strong&gt; – IAM execution role, optional KMS key, VPC configuration, data stays in your S3 bucket.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation before deployment&lt;/strong&gt; – built‑in steps for accuracy, bias, and safety checks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-programming-model"&gt;📚 Programming Model
+&lt;/h2&gt;&lt;p&gt;Training sessions are accessed through three SageMaker Python SDK clients:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;ServiceClient&lt;/strong&gt; – sets platform‑level settings (execution role, model package, S3 output location, optional KMS/VPC) and starts a session.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TrainingClient&lt;/strong&gt; – provides operations such as &lt;code&gt;forward()&lt;/code&gt;, &lt;code&gt;forward_backward()&lt;/code&gt;, &lt;code&gt;optim_step()&lt;/code&gt;, and checkpoint handling.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SamplingClient&lt;/strong&gt; – handles &lt;code&gt;sample()&lt;/code&gt; and &lt;code&gt;compute_logprobs()&lt;/code&gt; for generation and scoring during roll‑outs.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Each API call maps to a single step in your loop. An active session also exposes an OpenAI‑compatible chat completions endpoint, enabling existing client code to sample from the customized model.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The training‑session APIs are now generally available as part of SageMaker AI serverless model customization. A companion &lt;em&gt;training sessions cookbook&lt;/em&gt; provides ready‑to‑run SFT and RL recipes.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Customizing an open‑weight model with post‑training techniques such as reinforcement learning or preference optimization yields more accurate results for a specific business context (e.g., product catalogs, clinical vocabularies) and reduces inference cost. The new serverless APIs remove the operational burden of managing GPU clusters, allowing teams to focus on algorithmic innovation while still retaining full control over the training procedure.&lt;/p&gt;
+&lt;h3 id="techniques-supported"&gt;Techniques supported
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Technique&lt;/th&gt;
+&lt;th&gt;What it enables&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;SFT (Supervised Fine‑Tuning)&lt;/td&gt;
+&lt;td&gt;Custom loss or data curriculum&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DPO (Direct Preference Optimization)&lt;/td&gt;
+&lt;td&gt;Preference‑based alignment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RLVR&lt;/td&gt;
+&lt;td&gt;Reinforcement‑learning variant&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RLAIF (RL from AI Feedback)&lt;/td&gt;
+&lt;td&gt;Feedback‑driven RL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Multi‑turn RL&lt;/td&gt;
+&lt;td&gt;Agent training requiring several interaction rounds&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LoRA (Low‑Rank Adaptation)&lt;/td&gt;
+&lt;td&gt;Update a subset of model weights&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Full fine‑tuning&lt;/td&gt;
+&lt;td&gt;Update the entire model&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="realworld-usage-examples"&gt;Real‑world usage examples
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;A healthcare claim‑denial triage model built with training sessions validated the platform from day one.&lt;/li&gt;
+&lt;li&gt;Fine‑tuning &lt;code&gt;gpt‑oss‑20b&lt;/code&gt; for agentic multi‑turn tool calling against an Amazon Neptune knowledge graph succeeded with no manual GPU tuning, out‑of‑memory issues, or checkpoint‑resume problems.&lt;/li&gt;
+&lt;li&gt;The cookbook demonstrates reinforcement learning on competitive‑programming problems where generated code is scored against unit tests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/training-sessions-image.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21950-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/22/ML-21950-4.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #ModelCustomization #ServerlessAI #ReinforcementLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/announcing-new-ways-to-customize-models-with-sagemaker-ai-without-managing-gpus/" target="_blank" rel="noopener"
+&gt;Announcing new ways to customize models with SageMaker AI, without managing GPUs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/write-your-own-training-loop-without-managing-gpus-with-amazon-sagemaker-training-sessions/" target="_blank" rel="noopener"
+&gt;Write your own training loop — without managing GPUs — with Amazon SageMaker training session APIs | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Microsoft Research Asia releases Harnessed Agentic RL with Agent Lightning v1.0</title><link>https://shoubhikbanerjee.github.io/blog/p/microsoft-research-asia-releases-harnessed-agentic-rl-with-agent-lightning-v1-0/</link><pubDate>Wed, 07 Oct 2026 22:09:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/microsoft-research-asia-releases-harnessed-agentic-rl-with-agent-lightning-v1-0/</guid><description>&lt;img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2026/10/AgentLightning-TWLIFB-1200x627-1.jpg" alt="Featured image of post Microsoft Research Asia releases Harnessed Agentic RL with Agent Lightning v1.0" /&gt;&lt;h1 id="microsoft-research-asia-releases-harnessed-agentic-rl-with-agent-lightning-v10"&gt;Microsoft Research Asia releases Harnessed Agentic RL with Agent Lightning v1.0
+&lt;/h1&gt;&lt;p&gt;Microsoft Research Asia introduced the Harnessed Agentic RL training paradigm and open‑sourced Agent Lightning v1.0, a lightweight framework that lets the same agent harness used in deployment participate directly in reinforcement learning.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Harnessed Agentic RL removes the need to reimplement the agent inside the training framework.&lt;/li&gt;
+&lt;li&gt;Agent Lightning v1.0 provides a complete agent RL control plane in roughly &lt;strong&gt;3,500 lines of code&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The framework runs agents as standard &lt;strong&gt;Kubernetes jobs&lt;/strong&gt; on self‑managed clusters, cloud Kubernetes, or local infrastructure, without reliance on paid commercial sandbox services.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The agent continues to call the model through an &lt;strong&gt;LLM proxy&lt;/strong&gt;; the training system only observes the request‑response pairs.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;agent harness&lt;/strong&gt; that coordinates the deployed agent also handles the environment interaction loop during training.&lt;/li&gt;
+&lt;li&gt;Because only LLM calls are recorded, a single rollout can be split into a variable number of training samples.&lt;/li&gt;
+&lt;li&gt;Retokenization is required to obtain token IDs; re‑tokenizing text can shift token boundaries, so adjacent calls may not be merged into one sample.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lightweight design&lt;/strong&gt; – the entire codebase is about &lt;strong&gt;3,500 lines&lt;/strong&gt;, making it easy to understand, modify, and extend.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Native Kubernetes support&lt;/strong&gt; – agents run directly as Kubernetes jobs, supporting self‑managed, cloud, and local clusters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data‑efficient training recipe&lt;/strong&gt; – an end‑to‑end coding‑agent pipeline raised &lt;strong&gt;Qwen3.5‑9B&lt;/strong&gt; from &lt;strong&gt;41.8 %&lt;/strong&gt; to &lt;strong&gt;56.4 % Pass@1&lt;/strong&gt; on &lt;strong&gt;SWE‑bench Verified&lt;/strong&gt;, a &lt;strong&gt;14.6 percentage‑point&lt;/strong&gt; gain using only &lt;strong&gt;≈6,000&lt;/strong&gt; training samples from an open‑sourced dataset.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Traditional vs. harnessed RL&lt;/strong&gt; – conventional agentic RL assumes the training framework owns the interaction loop, requiring developers to rebuild the agent’s context management, tool protocols, and execution logic inside the RL framework. This rebuilding is costly and can produce a training agent that differs from the deployed agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-early-systems-and-agents"&gt;📊 Early systems and agents
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;verl&lt;/td&gt;
+&lt;td&gt;Early RL system built with training framework owning the loop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AReaL&lt;/td&gt;
+&lt;td&gt;Early RL system built with training framework owning the loop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;slime&lt;/td&gt;
+&lt;td&gt;Early RL system built with training framework owning the loop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;mini‑SWE‑agent&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OpenHands&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OpenCode&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Code&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Codex&lt;/td&gt;
+&lt;td&gt;Coding agent with its own context management, tool protocols, and execution logic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The researchers released &lt;strong&gt;Agent Lightning v1.0&lt;/strong&gt; as an open‑source project.&lt;/li&gt;
+&lt;li&gt;v1.0 emphasizes staying lightweight, integrating with real harnesses, and providing a reproducible agent RL training pipeline.&lt;/li&gt;
+&lt;li&gt;By pointing the endpoint that previously called the model API at Agent Lightning, developers can train using the same harness that will be deployed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AI agents now consist of complex full‑stack systems; their capabilities increasingly depend on the &lt;strong&gt;agent harness&lt;/strong&gt; that coordinates them from outside the model.&lt;/li&gt;
+&lt;li&gt;Harnessed Agentic RL aligns the training environment with the deployment environment, eliminating the mismatch that arises when agents are rebuilt for training.&lt;/li&gt;
+&lt;li&gt;The data‑efficient results demonstrate that strong performance gains are achievable with modest training data when the correct harness is used.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2026/09/AgentLightning-blog_EXT_FA_figure.1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIagents #ReinforcementLearning #Kubernetes #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/" target="_blank" rel="noopener"
+&gt;Agent Lightning: Lightweight RL agent-training framework&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Self-Evolving Curriculum Boosts RL Fine‑Tuning of Large Language Models</title><link>https://shoubhikbanerjee.github.io/blog/p/self-evolving-curriculum-boosts-rl-finetuning-of-large-language-models/</link><pubDate>Tue, 06 Oct 2026 22:08:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/self-evolving-curriculum-boosts-rl-finetuning-of-large-language-models/</guid><description>&lt;h1 id="self-evolving-curriculum-boosts-rl-finetuning-of-large-language-models"&gt;Self-Evolving Curriculum Boosts RL Fine‑Tuning of Large Language Models
+&lt;/h1&gt;&lt;p&gt;Reinforcement learning (RL) has proven effective for fine‑tuning large language models (LLMs), significantly enhancing their reasoning abilities in domains such as mathematics and code generation. A new automatic method called Self‑Evolving Curriculum (SEC) improves this process by learning a curriculum policy alongside the RL fine‑tuning itself.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;RL fine‑tuning success depends heavily on the &lt;strong&gt;training curriculum&lt;/strong&gt;, i.e., the order in which problems are presented.&lt;/li&gt;
+&lt;li&gt;Random curricula are common baselines but are &lt;strong&gt;suboptimal&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Manually designed curricula rely on heuristics, and online filtering methods can be &lt;strong&gt;computationally prohibitive&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;SEC is introduced to overcome these limitations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;SEC treats curriculum selection as a &lt;strong&gt;non‑stationary Multi‑Armed Bandit&lt;/strong&gt; problem, with each problem category (such as difficulty level or type) representing an arm.&lt;/li&gt;
+&lt;li&gt;It uses the &lt;strong&gt;absolute advantage from policy gradient methods&lt;/strong&gt; as a proxy for immediate learning gain.&lt;/li&gt;
+&lt;li&gt;At each training step, the curriculum policy &lt;strong&gt;selects categories that maximize this reward signal&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The policy is updated using the &lt;strong&gt;TD(0) method&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-results"&gt;⚙️ Key results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Experiments were run in three reasoning domains: &lt;strong&gt;planning, inductive reasoning, and mathematics&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;SEC &lt;strong&gt;significantly improves models’ reasoning capabilities&lt;/strong&gt;, leading to better generalization on harder, out‑of‑distribution test problems.&lt;/li&gt;
+&lt;li&gt;When fine‑tuning on multiple reasoning domains simultaneously, SEC achieves &lt;strong&gt;better skill balance&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The findings highlight SEC as a &lt;strong&gt;promising strategy for RL fine‑tuning of LLMs&lt;/strong&gt;, addressing curriculum design challenges while boosting performance across diverse reasoning tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#RL #CurriculumLearning #LLM #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.microsoft.com/en-us/research/publication/self-evolving-curriculum-for-llm-reasoning/" target="_blank" rel="noopener"
+&gt;Self-Evolving Curriculum for LLM Reasoning - Microsoft Research&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-featured-image.png" alt="Featured image of post Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization" /&gt;&lt;h1 id="amazon-payments-deploys-contextual-multiarmed-bandits-on-sagemaker-for-funnel-personalization"&gt;Amazon Payments Deploys Contextual Multi‑Armed Bandits on SageMaker for Funnel Personalization
+&lt;/h1&gt;&lt;p&gt;Amazon Payments applied AI‑based personalization to a product acquisition funnel, using a multi‑objective contextual multi‑armed bandit (MAB) on Amazon SageMaker AI.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;In this post, we share how Amazon Payments applied AI-based personalization to a product acquisition funnel, using a multi-objective contextual multi-armed bandit (MAB) on Amazon SageMaker AI.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;The customer journey in our use case comprises three steps: application start, submission, and approval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;In a seven-week online A/B test we currently see a high single-digit percentage relative lift in final-funnel conversion for one customer population, while another saw no improvement over the existing experience.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The problem turned out to be the content, not the model.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🤖 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;A multi-armed bandit (MAB) is a reinforcement learning method built for settings with many options and limited traffic.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It treats each content variation as an “arm,” tries each against live traffic, and steadily shifts impressions toward the arms that perform, while holding a fraction back to keep testing the rest.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;In Amazon Payments, we chose UCB, a strategy that selects the arm with the highest estimated reward plus an uncertainty bonus, naturally balancing exploitation and exploration.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Its deterministic selection rule gives an auditable, reproducible decision for every impression, which makes sure every serving decision can be explained and reproduced if needed.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Contextual bandits condition directly on a feature vector (a numeric representation of attributes), so a pattern learned in one context transfers to every similar visit without separate per-group traffic.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Our production system represents each customer as a context vector of behavioral signals (payment behavior, transaction mix, and similar features) in place of a fixed segment.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The entity ID (an opaque key such as entity_id) is used only to route the learned recommendation back to the right visitor.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The entity ID is never a model input.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;For a contextual approach, we selected Linear UCB (LinUCB), introduced by Li et al. (2010).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;LinUCB remains a battle-tested method that is computationally efficient, auditable (deterministic arm selection), and naturally handles a large arm space with limited warm-start data.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Its key assumption is that the expected reward for an arm is a linear function of the context vector, which lets it generalize to visitors it has not seen before.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Each arm keeps two running tallies updated on every impression: b , the reward ledger: which visitor signals led to conversions (b += reward · x).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;A , the experience ledger: which visitors the arm has seen (A += x·xᵀ, starting from identity).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Dividing reward by experience gives the estimate (θ = A⁻¹·b).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The experience ledger also shrinks the exploration bonus as evidence grows.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The bonus is context‑dependent.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It’s large for a kind of visitor the arm has rarely seen, and small for one it has seen often.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;A plain bandit explores at a single global rate, while LinUCB adjusts how much it explores for every visitor it scores.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Optimizing one stage in isolation can degrade another.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Our approach optimizes the entire funnel simultaneously by running one LinUCB model per stage (start, submit, approve) and combining their UCB scores through a linear combination.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The stage weights can be assigned based on business priorities or learned by a separate calibration step.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture--implementation"&gt;🛠️ Architecture &amp;amp; Implementation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;We also share a code repository that you can use to test this approach on synthetic data and understand the method hands‑on using Amazon SageMaker AI.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/29/ML-20979-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonPayments #MultiArmedBandit #Personalization #SageMaker&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/uplifting-conversion-across-the-acquisition-funnel-with-personalization-using-contextual-bandits-on-aws/" target="_blank" rel="noopener"
+&gt;Uplifting conversion across the acquisition funnel with personalization using contextual bandits on AWS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>EAGER Reinforcement Learning Framework Boosts Structured Event Extraction</title><link>https://shoubhikbanerjee.github.io/blog/p/eager-reinforcement-learning-framework-boosts-structured-event-extraction/</link><pubDate>Fri, 25 Sep 2026 22:04:20 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/eager-reinforcement-learning-framework-boosts-structured-event-extraction/</guid><description>&lt;h1 id="eager-reinforcement-learning-framework-boosts-structured-event-extraction"&gt;EAGER Reinforcement Learning Framework Boosts Structured Event Extraction
+&lt;/h1&gt;&lt;p&gt;A new reinforcement‑learning framework called EAGER has been introduced to improve generative event extraction.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;EAGER combines fine‑grained verifiable rewards with Schema‑Contrastive Advantage Estimation.&lt;/li&gt;
+&lt;li&gt;Designed to alleviate advantage collapse under sparse binary rewards.&lt;/li&gt;
+&lt;li&gt;Evaluated on seven benchmark datasets.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Reward design explicitly targets:
+&lt;ul&gt;
+&lt;li&gt;Structural validity&lt;/li&gt;
+&lt;li&gt;Extraction accuracy&lt;/li&gt;
+&lt;li&gt;Groundedness&lt;/li&gt;
+&lt;li&gt;Coverage&lt;/li&gt;
+&lt;li&gt;Over‑generation&lt;/li&gt;
+&lt;li&gt;Span precision&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Uses Schema‑Contrastive Advantage Estimation to compute advantages in a contrastive manner, addressing advantage collapse.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Experiments show EAGER consistently outperforms prompting, supervised fine‑tuning, and prior RL baselines.&lt;/li&gt;
+&lt;li&gt;Achieves a substantial improvement over the strongest prior method.&lt;/li&gt;
+&lt;li&gt;Results demonstrate that task‑aligned verifiable rewards and contrastive advantage estimation substantially improve structured extraction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Structured extraction benefits from more reliable reward signals, reducing errors in generated events.&lt;/li&gt;
+&lt;li&gt;The framework leverages large language models to enhance information extraction from complex texts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#EAGER #EventExtraction #ReinforcementLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.29230v1" target="_blank" rel="noopener"
+&gt;EAGER: Enhancing Generative Event Extraction via Reinforcement Learning with Verifiable Rewards&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.29370v1" target="_blank" rel="noopener"
+&gt;From Policy Documents to Structured Survey Responses: Evaluating Large Language Models for Policy Monitoring&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Evaluation Protocol and Method for Long-Horizon Reinforcement Learning Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/new-evaluation-protocol-and-method-for-long-horizon-reinforcement-learning-agents/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-evaluation-protocol-and-method-for-long-horizon-reinforcement-learning-agents/</guid><description>&lt;h1 id="new-evaluation-protocol-and-method-for-long-horizon-reinforcement-learning-agents"&gt;New Evaluation Protocol and Method for Long-Horizon Reinforcement Learning Agents
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced a new evaluation protocol called checkpoint handoff and a training method called Reward Stimulation Implicit Q-Learning (RSIQL) to improve and analyze language-model agents acting in live environments.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Reinforcement learning (RL) now trains agents capable of acting over dozens of steps in live environments. Because an agent in a closed loop writes its own inputs, the states it encounters late in an episode are partly of its own making. This creates a challenge when comparing Supervised Fine-Tuning (SFT) checkpoints and RL checkpoints, as they are scored from different states even on identical tasks.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To separate the factors contributing to endpoint success, the checkpoint handoff protocol clones a state reached by one released checkpoint and hands it to another without retraining. This splits endpoint gains into two metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;REACH&lt;/strong&gt;: How often a policy arrives at a state the environment confirms is a fixed number of actions from success.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SOLVE&lt;/strong&gt;: How often a policy finishes from an identical cloned state.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Regarding the RSIQL method for offline settings with sparse rewards and long-horizon dependencies:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Purpose&lt;/strong&gt;: It addresses issues where goal-completion information is temporally distant from early decisions and offline value estimation introduces error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mechanism&lt;/strong&gt;: It uses an auxiliary goal-conditioned value function to identify intermediate states that make progress toward the goal, applying reward stimulation for less-delayed training supervision.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Structure&lt;/strong&gt;: Unlike hierarchical methods, RSIQL is a simple non-hierarchical method that does not learn a separate high-level subgoal policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Evaluation and experimental results show:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The interaction between the reacher and solver is positive across two benchmarks and two independently released pipelines.&lt;/li&gt;
+&lt;li&gt;On ALFWorld, RL improves both REACH and SOLVE terms, and the SFT solver never succeeds where the RL solver fails.&lt;/li&gt;
+&lt;li&gt;An RL history is worth more to an RL solver than the same history is to an SFT solver.&lt;/li&gt;
+&lt;li&gt;RSIQL improves over goal-conditioned IQL on average and achieves performance competitive with hierarchical offline goal-conditioned methods on OGBench and D4RL goal-reaching benchmarks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#ReinforcementLearning #AIagents #MachineLearning #RSIQL&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.19636v1" target="_blank" rel="noopener"
+&gt;Reach or Solve? Attributing Agentic RL Gains with Checkpoint Handoffs&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.19414v1" target="_blank" rel="noopener"
+&gt;Improving Offline Goal-Conditioned Reinforcement Learning via Selective Reward Stimulation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Introduction of the Fork Ledger for Evaluating Deployment Stream Updates</title><link>https://shoubhikbanerjee.github.io/blog/p/introduction-of-the-fork-ledger-for-evaluating-deployment-stream-updates/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introduction-of-the-fork-ledger-for-evaluating-deployment-stream-updates/</guid><description>&lt;h1 id="introduction-of-the-fork-ledger-for-evaluating-deployment-stream-updates"&gt;Introduction of the Fork Ledger for Evaluating Deployment Stream Updates
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced the fork ledger, a mechanism designed to branch deployment streams at pre-registered decision points into matched update and hold continuations using common random numbers.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The system evaluates both update and hold continuations on the same episodes.&lt;/li&gt;
+&lt;li&gt;It records the difference in return as $\Delta R = R_{\mathrm{update}} - R_{\mathrm{hold}}$.&lt;/li&gt;
+&lt;li&gt;The task serves as the unit of inference, with each contributing 240 attempted forks across two drift directions and five pretrained checkpoints.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Applying one fixed update mechanism resulted in lowered returns across three simulated control tasks:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Task&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Return Change ($\Delta R$)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Checkpoint-Bootstrap 95% CI&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CartPole&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$-144.0$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$[-185.4,-116.1]$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Walker&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$-82.8$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$[-101.1,-61.7]$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cheetah&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$-18.6$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$[-29.0,-6.6]$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;When restricted to the 693 of 720 that did not collapse:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CartPole and Walker remained unchanged in sign ($-113.4$ and $-82.1$).&lt;/li&gt;
+&lt;li&gt;Cheetah became unresolved ($-3.9$; $[-17.5,+13.0]$).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AI #MachineLearning #SimulatedControl #DeploymentStreams&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.10954v1" target="_blank" rel="noopener"
+&gt;Measuring the Value of World-Model Updates: A Counterfactual Utility Protocol for Continual Adaptation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Manipulation on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/manipulation/</link><description>Recent content in Manipulation on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/manipulation/index.xml" rel="self" type="application/rss+xml"/><item><title>New Robotic Manipulation Methods: RePlan-VLA, LAGR, and GTI</title><link>https://shoubhikbanerjee.github.io/blog/p/new-robotic-manipulation-methods-replan-vla-lagr-and-gti/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-robotic-manipulation-methods-replan-vla-lagr-and-gti/</guid><description>&lt;h1 id="new-robotic-manipulation-methods-replan-vla-lagr-and-gti"&gt;New Robotic Manipulation Methods: RePlan-VLA, LAGR, and GTI
+&lt;/h1&gt;&lt;p&gt;Three new approaches address distinct challenges in robotic manipulation: managing long-horizon task execution, selecting task-oriented grasps, and maintaining semantic intent over multiple stages. These methods aim to improve reliability and success rates in complex physical environments by refining how Vision-Language-Action (VLA) models and grasping detectors process state and context.&lt;/p&gt;
+&lt;h2 id="-replan-vla-progress-aware-replanning"&gt;📋 RePlan-VLA: Progress-Aware Replanning
+&lt;/h2&gt;&lt;p&gt;A new framework called &lt;strong&gt;RePlan-VLA&lt;/strong&gt; addresses performance degradation in VLA models on long-horizon tasks involving multiple interdependent manipulations.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Core Logic:&lt;/strong&gt; It leverages the VLA&amp;rsquo;s existing short-horizon manipulation capabilities within an execution-aware framework, rather than burdening the policy with long-horizon reasoning, memory, or error recovery.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mechanism:&lt;/strong&gt; The framework explicitly monitors robot motion for progress evaluation and adaptively revises the future plan based on observed outcomes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compatibility:&lt;/strong&gt; It is VLA-agnostic and preserves the underlying policy entirely, requiring no additional fine-tuning.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Achieves a &lt;strong&gt;21.9%&lt;/strong&gt; improvement in success rate over the next strongest baseline on the RoboCasa365 benchmark.&lt;/li&gt;
+&lt;li&gt;Achieves a &lt;strong&gt;10.4%&lt;/strong&gt; improvement on the CALVIN benchmark.&lt;/li&gt;
+&lt;li&gt;Validated for real-world deployment on a Franka Research 3 robot.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-lagr-task-oriented-grasp-detection"&gt;🤏 LAGR: Task-Oriented Grasp Detection
+&lt;/h2&gt;&lt;p&gt;The &lt;strong&gt;LAGR&lt;/strong&gt; method and its accompanying dataset address the need for grasps that are both physically feasible and suitable for specific downstream tasks (e.g., holding a hammer by the handle for use vs. the head for handover).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dataset:&lt;/strong&gt; A newly constructed dataset contains &lt;strong&gt;2.68 million&lt;/strong&gt; scored 5-DoF grasp annotations across &lt;strong&gt;100,911&lt;/strong&gt; image-task pairs from &lt;strong&gt;17&lt;/strong&gt; object categories.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Architecture:&lt;/strong&gt;
+&lt;ol&gt;
+&lt;li&gt;Generates task-independent grasp proposals with a physical feasibility score.&lt;/li&gt;
+&lt;li&gt;Uses a language-conditioned re-ranker to score these proposals jointly.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Results:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Outperforms the next best method by &lt;strong&gt;9.3 percentage points&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Validated on real objects using a Franka Research 3 robot.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-gti-grounding-task-intent"&gt;🎯 GTI: Grounding Task Intent
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;GTI (Grounding Task Intent)&lt;/strong&gt; ensures that global task intent remains grounded in the currently executable context during long-horizon manipulation.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;How it Works:&lt;/strong&gt; Uses current observation and execution history to localize the active subtask and its execution phase.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Visual Targets:&lt;/strong&gt; For each local subtask, it generates two phase-dependent visual targets:
+&lt;ul&gt;
+&lt;li&gt;An interaction/contact state.&lt;/li&gt;
+&lt;li&gt;A local completion state.&lt;/li&gt;
+&lt;li&gt;These targets, alongside the local language instruction, jointly condition the VLA to specify both current actions and target states.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recovery:&lt;/strong&gt; Includes anomaly monitoring and local recovery mechanisms (rollback, re-observation, phase re-evaluation) to re-establish intent consistency after persistent deviation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance Gains:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;RoboCasa365:&lt;/strong&gt; GR00T success on seen composite tasks increases from &lt;strong&gt;14.6%&lt;/strong&gt; to &lt;strong&gt;31.8%&lt;/strong&gt; (Identity Distribution) and from &lt;strong&gt;12.1%&lt;/strong&gt; to &lt;strong&gt;20.4%&lt;/strong&gt; (Out-of-Distribution) compared to matched Global-FT baselines.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;VLA-Arena:&lt;/strong&gt; GTI + $\pi_{0.5}$ reaches &lt;strong&gt;47.6%&lt;/strong&gt; overall success versus &lt;strong&gt;45.2%&lt;/strong&gt; for an adapted ForeAct baseline, with significant gains on harder L1/L2 tasks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Real-World:&lt;/strong&gt; Mean full-task success on PiPER tasks increases from &lt;strong&gt;21.7%&lt;/strong&gt; to &lt;strong&gt;59.2%&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-submission-details"&gt;⚙️ Submission Details
+&lt;/h2&gt;&lt;p&gt;All three papers were submitted to arXiv on &lt;strong&gt;November 18, 2026&lt;/strong&gt;.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Paper&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Submission Time (UTC)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;File Size&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;RePlan-VLA&lt;/td&gt;
+&lt;td style="text-align: left"&gt;04:49:41&lt;/td&gt;
+&lt;td style="text-align: left"&gt;6.4 MB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LAGR&lt;/td&gt;
+&lt;td style="text-align: left"&gt;05:04:12&lt;/td&gt;
+&lt;td style="text-align: left"&gt;9.7 MB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#Robotics #VLA #Manipulation #Grasping #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23578v1" target="_blank" rel="noopener"
+&gt;DOCK: Dual-Stream-Inspired Self-Supervised Object-Centric Representations Grounded in Robot Kinematics&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23499v1" target="_blank" rel="noopener"
+&gt;BiCAT: Bimanual Coordination Action Tokenization&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23517v1" target="_blank" rel="noopener"
+&gt;RageVLA: Augmentation-Trained Perception and Action for State-of-the-Art Robustness on LIBERO&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23628v1" target="_blank" rel="noopener"
+&gt;LoRN: Low-Rank Noise Steering for Generative Robot Policies&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23714v1" target="_blank" rel="noopener"
+&gt;ExecGap: Exploiting Command-Execution Gap for Patch Attacks on Vision-Language-Action Models&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23719v1" target="_blank" rel="noopener"
+&gt;Improving While Deployed: Learning Proactive End-to-End Driving from Imperfect Human Takeover Data&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23731v1" target="_blank" rel="noopener"
+&gt;RecallFlow: Episodic Memory as the Source Distribution of Generative Robot Policies&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23746v1" target="_blank" rel="noopener"
+&gt;ZERITH V2.5: From Predictive Power to Policy Learnability&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23803v1" target="_blank" rel="noopener"
+&gt;CoT-WAM: Collaborative Training of Vision-Language Models and World-Action Models via Plan Latents&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23843v1" target="_blank" rel="noopener"
+&gt;RePlan-VLA: Progress-Aware Replanning for Long-Horizon Vision-Language-Action Models&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23858v1" target="_blank" rel="noopener"
+&gt;LAGR: Language-Aware Grasp Re-Ranking for Task Oriented Grasping&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23926v1" target="_blank" rel="noopener"
+&gt;GTI: Grounding Task Intent Throughout Long-Horizon VLA Manipulation&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23930v1" target="_blank" rel="noopener"
+&gt;A Hierarchical Onboard Vision-Language-Navigation Framework for Aerial Robots in Complex Environments&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

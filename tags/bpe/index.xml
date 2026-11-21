@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>BPE on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/bpe/</link><description>Recent content in BPE on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 21 Sep 2026 22:03:11 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/bpe/index.xml" rel="self" type="application/rss+xml"/><item><title>Introduction of tokenizers v1 with SIMD and Parallelism Improvements</title><link>https://shoubhikbanerjee.github.io/blog/p/introduction-of-tokenizers-v1-with-simd-and-parallelism-improvements/</link><pubDate>Mon, 21 Sep 2026 22:03:11 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introduction-of-tokenizers-v1-with-simd-and-parallelism-improvements/</guid><description>&lt;img src="https://huggingface.co/blog/assets/tokenizers-v1/thumbnail.png" alt="Featured image of post Introduction of tokenizers v1 with SIMD and Parallelism Improvements" /&gt;&lt;h1 id="introduction-of-tokenizers-v1-with-simd-and-parallelism-improvements"&gt;Introduction of tokenizers v1 with SIMD and Parallelism Improvements
+&lt;/h1&gt;&lt;p&gt;A new version of the tokenizers library, v1, has been released. The goal of this version was to improve performance while preserving the API, vocabulary, merge ranks, and output of v0.23, ensuring v1 produces the same token IDs as the previous version.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Tokenizers run conversions in four stages:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Stage&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Normalization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Applies operations such as Unicode normalization or lowercasing to raw text.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Pre-tokenization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Splits text into smaller pieces called pre-tokens.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Model&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Maps each pre-token to IDs in its vocabulary.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Post-processing&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Adds special tokens expected by the model.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="bpe-and-model-support"&gt;BPE and Model Support
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;The library supports three model types: Byte Pair Encoding (BPE), WordPiece, and Unigram.&lt;/li&gt;
+&lt;li&gt;Eight of the ten measured model families use BPE.&lt;/li&gt;
+&lt;li&gt;BPE models use regular expressions to split input text into pre-tokens; merges occur inside a pre-token and never across boundaries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="performance-optimizations"&gt;Performance Optimizations
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SIMD Instructions:&lt;/strong&gt; For a handful of common grammars, a hand-written function uses SIMD instructions to find splits via boolean operations over bitstreams instead of a regex engine. This process, using bitcannon, views input bytes as parallel streams and decides 64 bytes per register operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Management:&lt;/strong&gt; The merge working set uses a caller-owned scratch buffer to avoid touching the allocator. Merged pieces form an intrusive doubly-linked list inside one preallocated buffer, allowing merges to update two indices rather than moving data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Caching:&lt;/strong&gt; A thread-local memo maps pre-token bytes to finished IDs, allowing repeated words to be merged once.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Concurrency:&lt;/strong&gt; Each thread draws its scratch buffer and word cache from its own sub-pool, allowing one shared tokenizer to encode from many threads at once without queuing on a single lock.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="architecture-changes"&gt;Architecture Changes
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;The library remains general across tokenizer families and loads everything v0.23 loaded.&lt;/li&gt;
+&lt;li&gt;The project structure moved from one crate to a workspace:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;tk-encode&lt;/code&gt;: The required runtime.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tk-serialize&lt;/code&gt;, &lt;code&gt;tk-convert&lt;/code&gt;, and &lt;code&gt;tk-train&lt;/code&gt;: Linked only when an application needs them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/blog/assets/tokenizers/thumbnail.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#tokenizers #BPE #SIMD #NLP #Rust&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/tokenizers-v1" target="_blank" rel="noopener"
+&gt;tokenizers v1: encode, decode and scaling, measured&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Messaging on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/messaging/</link><description>Recent content in Messaging on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/messaging/index.xml" rel="self" type="application/rss+xml"/><item><title>New TypeScript AMQP 0-9-1 Client Supports Browsers and Node.js</title><link>https://shoubhikbanerjee.github.io/blog/p/new-typescript-amqp-0-9-1-client-supports-browsers-and-node-js/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-typescript-amqp-0-9-1-client-supports-browsers-and-node-js/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/1513401?v=4" alt="Featured image of post New TypeScript AMQP 0-9-1 Client Supports Browsers and Node.js" /&gt;&lt;h1 id="new-typescript-amqp-0-9-1-client-supports-browsers-and-nodejs"&gt;New TypeScript AMQP 0-9-1 Client Supports Browsers and Node.js
+&lt;/h1&gt;&lt;p&gt;A new TypeScript client for AMQP 0-9-1 has been released, supporting both Node.js and browsers via WebSocket. Developed and supported by CloudAMQP, the library is designed to replace other Node.js AMQP libraries and enables developers to write browser applications that communicate directly with AMQP servers.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The library is Promise-based, integrating well with async/await, and works with any AMQP 0-9-1 broker, including RabbitMQ, LavinMQ, and Apache Qpid. It supports self-hosted instances and managed providers such as CloudAMQP or Amazon MQ, as they all use the same protocol. The codebase is transpiled from TypeScript, and running Node with the &lt;code&gt;--enable-source-maps&lt;/code&gt; flag ensures proper stack traces.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The library offers two levels of abstraction:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;High-level (AMQPSession):&lt;/strong&gt; Provides automatic reconnection and consumer recovery. Users utilize &lt;code&gt;queue()&lt;/code&gt; and &lt;code&gt;exchange()&lt;/code&gt; handles for reconnect-safe operations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Low-level (AMQPClient / AMQPWebSocketClient):&lt;/strong&gt; Offers direct channel access with methods such as &lt;code&gt;queueDeclare&lt;/code&gt;, &lt;code&gt;basicPublish&lt;/code&gt;, and &lt;code&gt;basicConsume&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The transport mechanism is determined by the URL scheme: &lt;code&gt;amqp://&lt;/code&gt; or &lt;code&gt;amqps://&lt;/code&gt; utilizes TCP, while &lt;code&gt;ws://&lt;/code&gt; or &lt;code&gt;wss://&lt;/code&gt; uses WebSocket. To establish a session with automatic reconnection and consumer recovery, developers call &lt;code&gt;AMQPSession.connect(url, options)&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The library is secure by default; publishes are not fulfilled until data is sent on the wire or, if Publish Confirms are enabled on the channel, until the server acknowledges that the message has been enqueued.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Message Acknowledgement&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Messages are acknowledged after the callback returns.&lt;/li&gt;
+&lt;li&gt;If the callback throws, the message is negatively acknowledged (nacked) and requeued.&lt;/li&gt;
+&lt;li&gt;Developers can override this behavior by calling &lt;code&gt;msg.ack()&lt;/code&gt; or &lt;code&gt;msg.nack()&lt;/code&gt; directly.&lt;/li&gt;
+&lt;li&gt;Subscriptions created via &lt;code&gt;queue.subscribe()&lt;/code&gt; are automatically re-established after a reconnection.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;sub.consumerTag&lt;/code&gt; and &lt;code&gt;sub.channel&lt;/code&gt; properties reflect the current consumer and are updated upon reconnection.&lt;/li&gt;
+&lt;li&gt;Prefetch parameters in subscribe settings can be used to configure Quality of Service (QoS) on each connection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Codec Registry&lt;/strong&gt;
+Developers can opt into a codec registry to handle serialization and deserialization based on content-type and content-encoding:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Built-in parsers support JSON and text; built-in coders support gzip and deflate.&lt;/li&gt;
+&lt;li&gt;Defaults can be set to avoid repeating configurations on every publish.&lt;/li&gt;
+&lt;li&gt;When codecs are configured, &lt;code&gt;msg.body&lt;/code&gt; contains the decoded value; otherwise, it is a &lt;code&gt;Uint8Array&lt;/code&gt;. The &lt;code&gt;CodecMode&lt;/code&gt; generic infers this type at compile time.&lt;/li&gt;
+&lt;li&gt;Specific publishes can override defaults by passing &lt;code&gt;contentType&lt;/code&gt; or &lt;code&gt;contentEncoding&lt;/code&gt; in the options.&lt;/li&gt;
+&lt;li&gt;Custom codecs can be registered by merging them with the built-ins.&lt;/li&gt;
+&lt;li&gt;Decode failures surface as a plain &lt;code&gt;Error&lt;/code&gt; rather than an &lt;code&gt;AMQPError&lt;/code&gt;; in &lt;code&gt;subscribe()&lt;/code&gt; contexts, these failures nack the message, honoring &lt;code&gt;requeueOnNack&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AMQP #TypeScript #WebSockets #RabbitMQ #Messaging #CloudAMQP&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/cloudamqp/amqp-client.js" target="_blank" rel="noopener"
+&gt;cloudamqp/amqp-client.js&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

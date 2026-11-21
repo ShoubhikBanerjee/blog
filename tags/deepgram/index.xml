@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Deepgram on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/deepgram/</link><description>Recent content in Deepgram on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 11 Nov 2026 22:05:42 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/deepgram/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker AI Adds Usage-Based Metering for Bidirectional Streaming Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-usage-based-metering-for-bidirectional-streaming-inference/</link><pubDate>Wed, 11 Nov 2026 22:05:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-usage-based-metering-for-bidirectional-streaming-inference/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21045-featured-image.png" alt="Featured image of post Amazon SageMaker AI Adds Usage-Based Metering for Bidirectional Streaming Inference" /&gt;&lt;h1 id="amazon-sagemaker-ai-adds-usage-based-metering-for-bidirectional-streaming-inference"&gt;Amazon SageMaker AI Adds Usage-Based Metering for Bidirectional Streaming Inference
+&lt;/h1&gt;&lt;p&gt;Amazon has announced usage-based metering for Amazon SageMaker bidirectional (bidi) streaming inference. This update allows model providers to report actual usage for AWS Marketplace software charges, addressing a specific billing challenge for real-time speech AI applications.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;This capability builds on the previously introduced bidirectional streaming for real-time inference on Amazon SageMaker AI. Deepgram, a real-time speech AI company, serves as the launch partner, bringing usage-based Speech-to-Text (STT) and Text-to-Speech (TTS) billing to the AWS Marketplace.&lt;/p&gt;
+&lt;p&gt;Deepgram has also enhanced its support with AWS Identity and Access Management (AWS IAM) temporary delegation to simplify secure authentication and expanded its observability with enhanced metrics.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The solution introduces a dual-connection architecture to separate inference data from billing metadata:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Connection&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Data connection&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Carries inference request and response data through the existing bidirectional stream.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Metadata connection&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A companion WebSocket dedicated specifically to metering data.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In this workflow, a client streams audio and receives transcriptions through the SageMaker AI API using an HTTP/2 event stream. SageMaker AI then connects to the model server over WebSockets. Both connections utilize the same &lt;code&gt;X-Amzn-SageMaker-Request-Id&lt;/code&gt; header, allowing the model server to correlate metering records with active inference sessions.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Providers can align AWS Marketplace software charges with reported usage through several technical specifications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Opt-in Mechanism:&lt;/strong&gt; Model servers opt in by returning the header &lt;code&gt;X-Amzn-SageMaker-Metadata-Stream-Supported: true&lt;/code&gt; during the WebSocket upgrade.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Message Format:&lt;/strong&gt; Metering data is sent as JSON text frames. Each frame must contain exactly one metering record rather than an array.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quotas:&lt;/strong&gt; The metadata stream has a rate quota of one message per second per connection, with a maximum message size of 512 bytes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Billing Dimensions:&lt;/strong&gt; Messages use the &lt;code&gt;inference.count&lt;/code&gt; dimension, while the &lt;code&gt;ConsumedUnits&lt;/code&gt; field supplies the quantity (e.g., reporting 720 seconds for 12 minutes of audio).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reliability:&lt;/strong&gt; The metadata connection runs over TCP for ordered, reliable delivery. The &lt;code&gt;ClientToken&lt;/code&gt; field supports idempotency, and duplicate tokens are dropped silently.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;For organizations deploying models for transcription, contact centers, voice agents, or captioning, this update enables transparent, per-unit billing. Usage-based charges flow directly into the AWS bill, though Amazon SageMaker AI endpoint infrastructure charges still apply independently. Providers can also set &lt;code&gt;X-Amzn-SageMaker-Metadata-Stream-Required&lt;/code&gt; to true to ensure inference stops if the metadata stream becomes unavailable.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/16/ML-21067-6.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2024/09/10/llinx.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/21/Screenshot-2026-07-21-at-11.30.35%E2%80%AFAM.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonSageMaker #AWSMarketplace #Deepgram #RealTimeAI #CloudBilling&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming/" target="_blank" rel="noopener"
+&gt;Introducing usage-based pricing for Amazon SageMaker AI bidirectional streaming | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Deepgram Optimizes Nova-3 Speech-to-Text Model Using AWS Trainium2</title><link>https://shoubhikbanerjee.github.io/blog/p/deepgram-optimizes-nova-3-speech-to-text-model-using-aws-trainium2/</link><pubDate>Mon, 19 Oct 2026 22:04:08 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/deepgram-optimizes-nova-3-speech-to-text-model-using-aws-trainium2/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-21906-featured-image.png" alt="Featured image of post Deepgram Optimizes Nova-3 Speech-to-Text Model Using AWS Trainium2" /&gt;&lt;h1 id="deepgram-optimizes-nova-3-speech-to-text-model-using-aws-trainium2"&gt;Deepgram Optimizes Nova-3 Speech-to-Text Model Using AWS Trainium2
+&lt;/h1&gt;&lt;p&gt;Deepgram has collaborated with AWS to port its Nova-3 speech-to-text model to AWS Trainium2 to improve inference efficiency for offline batch workloads, such as medical transcription and contact-center analytics.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Deepgram and the AWS Forward Deployed Engineering (FDE) team transitioned Nova-3 from standard PyTorch code to AWS Trainium2 using the following process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Initial Porting:&lt;/strong&gt; Used TorchNeuron, the native PyTorch integration of the Neuron Compiler, supporting both eager execution and &lt;code&gt;torch.compile&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compilation:&lt;/strong&gt; The model was first run in eager mode to identify CPU fallbacks, then compiled with &lt;code&gt;torch.compile&lt;/code&gt; as separate static-shape graphs for the encoder and decoder, resulting in no CPU fallbacks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Accuracy Validation:&lt;/strong&gt; Numerical accuracy was verified via layer-level output consistency against CPU and end-to-end Word Error Rate (WER).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kernel Optimization:&lt;/strong&gt; Replaced several layers with fused kernels from the public NKI Library (NKILib), including:
+&lt;ul&gt;
+&lt;li&gt;Fused QKV projections&lt;/li&gt;
+&lt;li&gt;Fused feed-forward network (FFN) layers&lt;/li&gt;
+&lt;li&gt;Depthwise 1D convolution&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Infrastructure:&lt;/strong&gt; The final configuration runs eight model replicas on a single Amazon EC2 &lt;code&gt;trn2.3xlarge&lt;/code&gt; instance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Serving efficiency determines the amount of audio Deepgram can process within a specific infrastructure budget. By utilizing AWS AI chips, Deepgram achieved the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cost Efficiency:&lt;/strong&gt; Processed 11–70 percent more audio per dollar on offline, throughput-oriented batch workloads compared to previous compute options.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalability:&lt;/strong&gt; These gains allow Deepgram to scale more efficiently and provide models to customers at lower prices.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Customer Benefit:&lt;/strong&gt; These improvements extend to customers self-hosting Deepgram models in their own virtual private cloud (VPC) on Amazon SageMaker AI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Deepgram models are available through:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The Deepgram API&lt;/li&gt;
+&lt;li&gt;Self-hosted environments, including Amazon SageMaker AI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Deepgram #AWS #Trainium2 #SpeechToText #InferenceOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-deepgram-optimized-voice-ai-at-scale-with-aws-trainium/" target="_blank" rel="noopener"
+&gt;How Deepgram optimized voice AI at scale with AWS Trainium | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

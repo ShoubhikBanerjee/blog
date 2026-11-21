@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>I14 on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/i14/</link><description>Recent content in I14 on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 21 Oct 2026 22:03:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/i14/index.xml" rel="self" type="application/rss+xml"/><item><title>i14 Ports Laplace 3B Linear Attention Model to AWS Trainium2</title><link>https://shoubhikbanerjee.github.io/blog/p/i14-ports-laplace-3b-linear-attention-model-to-aws-trainium2/</link><pubDate>Wed, 21 Oct 2026 22:03:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/i14-ports-laplace-3b-linear-attention-model-to-aws-trainium2/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/14/ML-21817-featured-image.png" alt="Featured image of post i14 Ports Laplace 3B Linear Attention Model to AWS Trainium2" /&gt;&lt;h1 id="i14-ports-laplace-3b-linear-attention-model-to-aws-trainium2"&gt;i14 Ports Laplace 3B Linear Attention Model to AWS Trainium2
+&lt;/h1&gt;&lt;p&gt;AI research company i14 has updated the implementation of Laplace 3B, a linear attention alternative to traditional transformer architectures, by bringing the model to AWS Trainium2 using TorchNeuron Native.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Most large language models (LLMs) utilize transformer architectures with softmax attention, which causes the key-value (KV) cache to grow as conversation or document context increases. This growth can lead to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reduced concurrency&lt;/li&gt;
+&lt;li&gt;Increased serving costs&lt;/li&gt;
+&lt;li&gt;The need for agentic applications to discard useful history&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Laplace 3B is a 24-layer decoder that replaces softmax attention with Simple Gated Linear Attention (GLA).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Linear Attention:&lt;/strong&gt; Reorganizes computation around a recurrent state updated for each token, changing training attention complexity from O(T2) to O(T).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Context Compression:&lt;/strong&gt; GLA compresses prior context into a fixed-size matrix state.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fixed State:&lt;/strong&gt; The inference state remains fixed at 29.5 MB per sequence, independent of context length.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Working with the AWS Generative AI Innovation Center (GenAIIC), i14 transitioned the model from GPU-optimized Triton kernels to the TorchNeuron Native PyTorch backend. Technical adjustments included:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Kernel Optimization:&lt;/strong&gt; The team replaced the &lt;code&gt;fused_chunk_simple_gla&lt;/code&gt; Triton kernel with standard PyTorch operators, using 16 chunks of 128 tokens to match the 128 partitions of the NeuronCore on-chip buffer.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compiler Compatibility:&lt;/strong&gt; The 16 chunk steps of the GLA recurrence were statically unrolled to fit the on-chip memory limits and graph-size of the compiler.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Throughput Improvements:&lt;/strong&gt; Two &lt;code&gt;all_to_all&lt;/code&gt; collectives in MuonFSDP2 increased throughput by 1.63 times and reduced per-rank traffic by 24 times.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="hardware-specifications"&gt;Hardware Specifications
+&lt;/h3&gt;&lt;p&gt;Laplace 3B was deployed on a &lt;code&gt;trn2.48xlarge&lt;/code&gt; instance, which features:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Specification&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Chips&lt;/td&gt;
+&lt;td style="text-align: left"&gt;16 Trainium2 chips&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;NeuronCores&lt;/td&gt;
+&lt;td style="text-align: left"&gt;64 logical NeuronCores&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Connectivity&lt;/td&gt;
+&lt;td style="text-align: left"&gt;NeuronLink-v3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;SBUF&lt;/td&gt;
+&lt;td style="text-align: left"&gt;28 MiB State Buffer with 128 partitions per NeuronCore&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;PSUM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2 MiB partial-sum buffer wired to a 128×128 systolic Tensor Engine&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="performance-metrics"&gt;Performance Metrics
+&lt;/h3&gt;&lt;p&gt;On one &lt;code&gt;trn2.48xlarge&lt;/code&gt; instance, the model achieved the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Training Speed:&lt;/strong&gt; Approximately 120,000 tokens per second.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference Throughput:&lt;/strong&gt; 11,544 output tokens per second across 1,280 concurrent sequences.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AWS #Trainium2 #LinearAttention #LLM #i14&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/beyond-the-kv-cache-training-and-serving-i14s-laplace-3b-linear-attention-model-on-aws-trainium2-with-native-pytorch/" target="_blank" rel="noopener"
+&gt;Beyond the KV cache: Training and serving i14’s Laplace 3B linear attention model on AWS Trainium2 with native PyTorch | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

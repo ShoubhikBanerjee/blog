@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Memory Systems on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/memory-systems/</link><description>Recent content in Memory Systems on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 18 Nov 2026 22:09:17 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/memory-systems/index.xml" rel="self" type="application/rss+xml"/><item><title>Five new developments in long-term AI memory and agent evolution</title><link>https://shoubhikbanerjee.github.io/blog/p/five-new-developments-in-long-term-ai-memory-and-agent-evolution/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/five-new-developments-in-long-term-ai-memory-and-agent-evolution/</guid><description>&lt;h1 id="five-new-developments-in-long-term-ai-memory-and-agent-evolution"&gt;Five new developments in long-term AI memory and agent evolution
+&lt;/h1&gt;&lt;p&gt;Recent technical updates in artificial intelligence focus on improving how agents manage long-term memory, evolve their internal states, and handle stale data or corrupted inputs. These developments span architectural innovations for memory storage, learnable policies for memory transformation, governance strategies for conflicting facts, and the impact of data corruption on recall accuracy.&lt;/p&gt;
+&lt;h2 id="-overview-of-memory-innovations"&gt;🔍 Overview of Memory Innovations
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;KV-LTM:&lt;/strong&gt; A new memory tier stores raw session text plus the KV cache under a fixed reader model, answering queries by restoring cached sessions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;EvoDisco:&lt;/strong&gt; Formulates agent memory evolution as evolutionary strategy discovery, allowing agents to learn which operators to apply rather than following a static schedule.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RegimeCouncil:&lt;/strong&gt; An online router that arbitrates between local and global memory sharing scopes to manage stale facts without retraining the LLM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Corrupted Memory Testing:&lt;/strong&gt; A study testing whether intentionally corrupting training data prevents LLM agents from overfitting to recent events.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;KV-LTM Architecture&lt;/strong&gt;
+This approach is complementary to retrieval and indexing. It treats text as the memory of record while using the cache as a recompute-free prefill accelerator. The design includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Storage records and budget-derived retention.&lt;/li&gt;
+&lt;li&gt;An append-only read path and bounded aggregation.&lt;/li&gt;
+&lt;li&gt;Analytical sizing where per-token state spans approximately 31K-328K bytes for pinned BF16 full-attention and latent-cached MLA configurations.&lt;/li&gt;
+&lt;li&gt;A per-user-year storage estimate of approximately 0.34-3.6 TB at a 30K-token/day scenario, compared to approximately 49 MB of raw text.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;EvoDisco Policy&lt;/strong&gt;
+A learnable policy conditions on current memory state and recent task history to select and instantiate one of four semantic operators:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Operator&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Abstract&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Compress related memories&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Refine&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Decompose overloaded entries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Bridge&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Connect weakly linked experiences&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Reframe&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Reorganize retrieved reasoning chains&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The policy updates via a bi-level fitness: an inner signal scores transformation quality, while an outer signal scores strategic efficacy over past decisions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RegimeCouncil Governance&lt;/strong&gt;
+This system addresses the &amp;ldquo;memory conflict governance&amp;rdquo; problem where stored facts go stale. It uses a paired-evidence router with three modules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Local Advisor:&lt;/strong&gt; Tracks the latest outcome on a queried fact alone.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Global Advisor:&lt;/strong&gt; Pools recent outcomes across all stored facts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Meta Governor:&lt;/strong&gt; Defaults to the Local Advisor to avoid cross-fact interference but switches to the Global Advisor when global pooling shows a positive utility margin.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details-and-results"&gt;⚙️ Key Details and Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;KV-LTM Evaluation:&lt;/strong&gt; Requires no persistent-cache implementation for logical QA evaluation. It uses per-session prefill to emulate valid cache reuse. System-level comparisons on LongMemEval indicate that commercial assistants often score below models reading history offline, consistent with content loss between write and read phases.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;EvoDisco Performance:&lt;/strong&gt; In a one-pass online plus frozen-transfer protocol on ALFWorld, WebShop, and LifelongAgentBench, EvoDisco outperforms strong memory baselines like MemP and MemRL. The largest gains are observed on ALFWorld, with improvements of +8.8 to +12.9 points over MemP and +16.4 to +17.9 points over MemRL.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RegimeCouncil Performance:&lt;/strong&gt; Across LongMemEval update streams and historical drift tests on TempLAMA and TAQA, RegimeCouncil outperforms the better fixed-scope policy by 5.2-7.3 points on primary disagreement episodes. Ablations show that removing any of its three modules reduces accuracy by 2-7 points.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dream Hypothesis Test:&lt;/strong&gt; An agent using Claude Opus 5.5 stored learned information in text memory and rewrote it nightly from transcripts with 5-40% corruption. The results showed that corruption did not help the agent apply earlier learned tasks. Replacing details in 40% of turns lowered recall from 76% to 60%. Random-text corruption had no consistent effect because the model recognized it as corrupted and excluded it from memory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;These updates address critical inefficiencies in long-term AI interactions. KV-LTM trades storage for avoided re-prefill compute and write-time fidelity, solving the problem where personal assistants accumulate months of conversations but struggle with derivation and selection. EvoDisco moves beyond fixed memory operators, allowing agents to dynamically decide how to transform their memory based on strategic efficacy. RegimeCouncil provides a lightweight method to handle delayed feedback from stale facts without the complexity of full LLM retraining. Finally, the corruption testing suggests that pretrained models can easily separate corrupted text from real events, implying that fair tests of memory evolution require learners that cannot make this distinction as easily, such as those fine-tuned on specific corrupted data or operating in invented worlds.&lt;/p&gt;
+&lt;p&gt;#AIMemory #LLMAgents #KVCache #AIResearch #LongTermMemory&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.21998v1" target="_blank" rel="noopener"
+&gt;KV-LTM: Persistent Per-Session KV Caches as Long-Term Memory for Personal Assistants&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.22102v1" target="_blank" rel="noopener"
+&gt;EvoDisco: Strategy Discovery for Evolving Agent Memory&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.22113v1" target="_blank" rel="noopener"
+&gt;RegimeCouncil: Paired-Evidence Routing For Memory Conflict Governance In LLM Agents&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.21648v1" target="_blank" rel="noopener"
+&gt;Can an LLM dream? Testing the overfitted brain hypothesis on an agent with text memory&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>MemSearch Adds Cross-Platform Memory and Skills for AI Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/memsearch-adds-cross-platform-memory-and-skills-for-ai-agents/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/memsearch-adds-cross-platform-memory-and-skills-for-ai-agents/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/18416694?v=4" alt="Featured image of post MemSearch Adds Cross-Platform Memory and Skills for AI Agents" /&gt;&lt;h1 id="memsearch-adds-cross-platform-memory-and-skills-for-ai-agents"&gt;MemSearch Adds Cross-Platform Memory and Skills for AI Agents
+&lt;/h1&gt;&lt;p&gt;MemSearch has updated its capabilities to provide a persistent, unified memory layer across multiple AI coding agents. This update introduces a third procedural memory layer and extends support to additional platforms such as DeepSeek Harness, allowing memories to flow seamlessly between different development environments.&lt;/p&gt;
+&lt;p&gt;#AIagents #MemSearch #DeepSeekHarness #MemoryLayer #DeveloperTools&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/zilliztech/memsearch" target="_blank" rel="noopener"
+&gt;zilliztech/memsearch&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

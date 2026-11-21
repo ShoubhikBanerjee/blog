@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HSTU on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/hstu/</link><description>Recent content in HSTU on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 01 Oct 2026 22:03:23 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/hstu/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA accelerates generative recommender inference with HSTU and Dynamo-Triton</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-accelerates-generative-recommender-inference-with-hstu-and-dynamo-triton/</link><pubDate>Thu, 01 Oct 2026 22:03:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-accelerates-generative-recommender-inference-with-hstu-and-dynamo-triton/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/recsys-660x370.jpg" alt="Featured image of post NVIDIA accelerates generative recommender inference with HSTU and Dynamo-Triton" /&gt;&lt;h1 id="nvidia-accelerates-generative-recommender-inference-with-hstu-and-dynamo-triton"&gt;NVIDIA accelerates generative recommender inference with HSTU and Dynamo-Triton
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced an optimized production workflow for Hierarchical Sequential Transduction Unit (HSTU) generative recommenders using Dynamo-Triton and PyTorch Ahead-of-Time Inductor (AOTI). This update addresses inference challenges in large-scale personalization systems.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Generative recommender (GR) systems model user behavior as sequential prediction problems rather than isolated retrieval/ranking stages. HSTUs process high-cardinality event streams of user interactions, context, and items as tokens. This approach excels with long histories and dynamic catalogs but demands low-latency inference despite computational complexity.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sequence modeling&lt;/strong&gt;: User interactions become token sequences for next-item prediction&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Input composition&lt;/strong&gt;: Contextual (user), item, and action tokens form categorical inputs&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Preprocessing&lt;/strong&gt;: Embeddings are retrieved, interleaved, and positionally encoded&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HSTU blocks&lt;/strong&gt;: Process sequences before multitask ranking outputs&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;KV caching&lt;/strong&gt;: Stores reusable key-value states from prior computations to avoid redundant calculations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;HSTU&lt;/td&gt;
+&lt;td&gt;Processes sequential token streams for recommendation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PyTorch AOTI&lt;/td&gt;
+&lt;td&gt;Compiles models to optimized artifacts for C++ runtime&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FlexKV&lt;/td&gt;
+&lt;td&gt;GPU/host-backed key-value cache for HSTU attention states&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NV embedding cache&lt;/td&gt;
+&lt;td&gt;Accelerates high-cardinality embedding lookups&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Performance&lt;/strong&gt;: On RTX PRO 6000 GPUs with 100% KV cache hits:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;4.47× speedup (3-layer HSTU) at batch size 8&lt;/li&gt;
+&lt;li&gt;5.93× speedup (8-layer HSTU) at batch size 8&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The end-to-end workflow is available through NVIDIA&amp;rsquo;s recsys-examples repository. Key steps include:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Exporting models via &lt;code&gt;torch.export&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;AOTI compilation to optimized artifacts&lt;/li&gt;
+&lt;li&gt;Validation in Python/C++&lt;/li&gt;
+&lt;li&gt;Deployment via Dynamo-Triton with FlexKV caching&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This workflow reduces latency in production GR systems by:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Eliminating redundant computations through KV caching&lt;/li&gt;
+&lt;li&gt;Optimizing jagged sequence handling and large embedding tables&lt;/li&gt;
+&lt;li&gt;Enabling efficient serving of long user histories with incremental updates&lt;/li&gt;
+&lt;li&gt;Maintaining sequence modeling benefits while improving throughput&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/hstu-gr-inferencing-stack.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/pytorch-aoti-workflow.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/dynamo-triton-backend-comparisons-hstu.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AIRecommenders #HSTU #PyTorch #InferenceOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/deploying-an-hstu-generative-recommender-with-nvidia-dynamo-triton/" target="_blank" rel="noopener"
+&gt;Deploying an HSTU Generative Recommender with NVIDIA Dynamo-Triton | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

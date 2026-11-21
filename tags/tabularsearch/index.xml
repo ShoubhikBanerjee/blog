@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TabularSearch on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/tabularsearch/</link><description>Recent content in TabularSearch on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 16 Nov 2026 22:14:27 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/tabularsearch/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock Managed Knowledge Base adds tabular search for agentic retrieval</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-managed-knowledge-base-adds-tabular-search-for-agentic-retrieval/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-managed-knowledge-base-adds-tabular-search-for-agentic-retrieval/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-22293-featured-image.png" alt="Featured image of post Amazon Bedrock Managed Knowledge Base adds tabular search for agentic retrieval" /&gt;&lt;h1 id="amazon-bedrock-managed-knowledge-base-adds-tabular-search-for-agentic-retrieval"&gt;Amazon Bedrock Managed Knowledge Base adds tabular search for agentic retrieval
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock Managed Knowledge Base adds tabular search, enabling agentic retrieval to answer analytical questions from tables combined with related documents.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tabular search in Amazon Bedrock Managed Knowledge Base lets agents get answers from tables through agentic retrieval.&lt;/li&gt;
+&lt;li&gt;When a question needs data from CSV, XLSX, or XLS files, tabular search looks up values and runs calculations across every relevant row in one or more tables or sheets.&lt;/li&gt;
+&lt;li&gt;It combines results with facts from related documents to answer analytical questions that take several steps.&lt;/li&gt;
+&lt;li&gt;Example: A finance team closing the quarter asks &amp;ldquo;Which departments must write variance commentary?&amp;rdquo; No single file has the answer; it depends on the variance policy&amp;rsquo;s threshold, the quarter-close memo&amp;rsquo;s budget revisions, and math over every department in the profit and loss (P&amp;amp;L) workbook.&lt;/li&gt;
+&lt;li&gt;Most teams keep narratives and data in the same place; for example, a Microsoft SharePoint site holds workbooks next to policies, and an Amazon S3 bucket holds CSV exports next to PDFs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🔧 How It Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tabular search is part of the agentic retrieval flow; there&amp;rsquo;s nothing to turn on.&lt;/li&gt;
+&lt;li&gt;When a question needs the data in a table, the request moves through these stages:
+&lt;ul&gt;
+&lt;li&gt;Retrieve: Passages come back, including passages from a table file.&lt;/li&gt;
+&lt;li&gt;Plan: The agent uses the question and table structure to determine whether to run code over one or more retrieved tables.&lt;/li&gt;
+&lt;li&gt;Stage: Tabular search copies the original file into an isolated sandbox with no network access.&lt;/li&gt;
+&lt;li&gt;Compute: Model-written code runs over the whole table or sheet.&lt;/li&gt;
+&lt;li&gt;Return: The agent gets back only what the code prints, such as totals or matching rows.&lt;/li&gt;
+&lt;li&gt;Answer: The agent answers from the results and the passages, with citations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Tabular search starts when retrieved passages come from a CSV, XLSX, or XLS file and the question needs a calculation across rows or a lookup of specific values.&lt;/li&gt;
+&lt;li&gt;The Retrieve API keeps returning passages and doesn&amp;rsquo;t run code.&lt;/li&gt;
+&lt;li&gt;Tables lose information when split into passages, in ways that depend on the table&amp;rsquo;s shape:
+&lt;ul&gt;
+&lt;li&gt;Long tables: A table with thousands of rows spans many passages, and retrieval returns only the few that best match the question. An answer built from them uses a handful of rows, so a total, a comparison, or a threshold check can be incomplete.&lt;/li&gt;
+&lt;li&gt;Wide tables: In a table with hundreds of columns, one row can hold more text than a passage or a search model takes in at once. As a result, values in later columns are harder to match.&lt;/li&gt;
+&lt;li&gt;Long passages from wide tables can also match many unrelated questions and push more relevant passages out of the results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Retrieval also has to match a question to the right table; questions use business terms such as &amp;ldquo;controllable spend,&amp;rdquo; but tables hold cost center codes, account names, and numbers.&lt;/li&gt;
+&lt;li&gt;A draft and a final workbook look almost the same to search.&lt;/li&gt;
+&lt;li&gt;The rule that gives the numbers meaning is often in a separate document, such as a policy.&lt;/li&gt;
+&lt;li&gt;Tabular search therefore splits the work: retrieval only has to return one passage from the right table file, and code then reads the whole table.&lt;/li&gt;
+&lt;li&gt;Because retrieval still has to find that file first, naming the file in your question helps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tabular search is built for questions that need calculations or lookups over the table files it retrieves.&lt;/li&gt;
+&lt;li&gt;Running code adds at least one more agent turn, so answers that use table data take longer than text-only answers.&lt;/li&gt;
+&lt;li&gt;Governed metrics, recurring dashboards, warehouse-scale joins, and reporting controls still belong in business intelligence (BI) tools.&lt;/li&gt;
+&lt;li&gt;Tabular search works on table files stored next to your documents, and you don&amp;rsquo;t define a schema.&lt;/li&gt;
+&lt;li&gt;In this solution, an Amazon Bedrock Managed Knowledge Base stores your CSV and Excel files together with related documents.&lt;/li&gt;
+&lt;li&gt;Then an agent running Amazon Bedrock&amp;rsquo;s Claude 3 reads the files and decides whether to run code over them to answer specific questions.&lt;/li&gt;
+&lt;li&gt;The trace shows which files the code was run over.&lt;/li&gt;
+&lt;li&gt;To see what tabular search can do, build a knowledge base from a set of sample finance files, then run a question that needs a calculation across rows and check the trace to see which file the code read.&lt;/li&gt;
+&lt;li&gt;The knowledge base automatically converts the XLSX workbook to a CSV format for analysis.&lt;/li&gt;
+&lt;li&gt;The example question &amp;ldquo;Which departments must write variance commentary?&amp;rdquo; needs data from three sources: the variance threshold from the policy, the list of departments and their variances from the workbook, and the list of revised budgets from the memo.&lt;/li&gt;
+&lt;li&gt;Sending an AgenticRetrieveStream request with that prompt returns the full answer and citations to the sources.&lt;/li&gt;
+&lt;li&gt;The trace shows which passages the search model found and which of those passages the agent used to build the answer; for tabular search, it also shows which file the code was run over.&lt;/li&gt;
+&lt;li&gt;In the trace, look for a passage that says: &amp;ldquo;Based on the provided variance data, the following departments exceed the 5% threshold and require variance commentary: Sales (6.3%), Engineering (6.1%), and Operations (5.5%).&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;The source for that passage isn&amp;rsquo;t the P&amp;amp;L workbook; it&amp;rsquo;s a file that begins with &amp;ldquo;thought&amp;rdquo; and ends with &amp;ldquo;.csv&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;To see what that file contains, copy the &amp;ldquo;sourceUri&amp;rdquo; value, including the &amp;ldquo;s3://&amp;rdquo; prefix, into the URL bar of a browser logged into AWS, such as the AWS Management Console.&lt;/li&gt;
+&lt;li&gt;When you open the URL, you see the result of the calculation over the P&amp;amp;L workbook.&lt;/li&gt;
+&lt;li&gt;The file contains the question, the revised budgets from the memo, and the calculated variances.&lt;/li&gt;
+&lt;li&gt;Looking back at the trace, the agent used only two passages from the original files: the list of revised budgets from the memo and the definition of the variance threshold from the policy.&lt;/li&gt;
+&lt;li&gt;It didn&amp;rsquo;t refer to the workbook at all because it used the computed results instead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;With retrieval instructions in Amazon Bedrock Managed Knowledge Base, you can customize answers per tenant.&lt;/li&gt;
+&lt;li&gt;The same product and policy documents often serve several audiences, such as customers in different regions or internal teams, and each audience needs its own answer.&lt;/li&gt;
+&lt;li&gt;You set the voice, format, retrieval guidance, and answer policy that agentic retrieval applies to each request.&lt;/li&gt;
+&lt;li&gt;Before this feature, you couldn&amp;rsquo;t set the answer style, so agentic retrieval could use a different style from one request to the next.&lt;/li&gt;
+&lt;li&gt;For a fixed voice or structured output, you had to turn off response generation, call a model yourself, and maintain the prompt in every application.&lt;/li&gt;
+&lt;li&gt;Now you write that guidance once, as a managed, versioned Amazon Bedrock resource, and each request references it.&lt;/li&gt;
+&lt;li&gt;When you change an instruction, you can pin a version so that each application switches to the new version when you&amp;rsquo;re ready.&lt;/li&gt;
+&lt;li&gt;AnyCompany Smart Home, a fictitious company that sells a home controller and room sensors in three sales regions, serves as an example; its customer assistant serves all three regions, and its support, field sales, and legal teams use internal assistants built on the same documents; AnyCompany defines each region and internal team as a tenant, and each needs a different answer; a customer in Sales Region Central needs Spanish with day/month/year dates, and a support agent needs a short ticket note; to keep the example compact, every tenant queries one knowledge base, however agentic retrieval can search up to five knowledge bases in a single request, and the tenant&amp;rsquo;s instruction applies to all of them.&lt;/li&gt;
+&lt;li&gt;Retrieval instructions change how the assistant answers, but they aren&amp;rsquo;t an authorization or data-isolation boundary; use metadata filters or separate knowledge bases to control what each tenant can retrieve.&lt;/li&gt;
+&lt;li&gt;Tenants that share documents still differ in language, date and money conventions, voice, and which policy values they can quote.&lt;/li&gt;
+&lt;li&gt;A retrieval instruction has four fields for these differences: persona, who the assistant is including identity, tone, and language; answerFormat, how the answer is structured including how it cites sources; retrievalGuidance, how the agent interprets the question and what it prioritizes when it searches; answerPolicy, whether and how to answer, including questions outside scope.&lt;/li&gt;
+&lt;li&gt;The persona, answerFormat, and answerPolicy fields apply only when generateResponse is true, which is the default, and retrievalGuidance applies either way.&lt;/li&gt;
+&lt;li&gt;An instruction belongs to your AWS account and AWS Region, not to a knowledge base, and goes through these stages: Create (CreateRetrievalInstruction returns HTTP 202), Review (Amazon Bedrock reviews the instruction&amp;rsquo;s fields asynchronously, and you poll for the result), Activate (a passing review makes the instruction ACTIVE, and DRAFT points to its current content), Version (CreateRetrievalInstructionVersion saves an immutable numbered version), Apply (a request names the instruction and, optionally, a version, which defaults to DRAFT), Report (the first Planning trace event includes appliedInstruction).&lt;/li&gt;
+&lt;li&gt;Instructions set voice, format, conventions, and policy wording; they don&amp;rsquo;t limit which documents the agent can retrieve, and they don&amp;rsquo;t choose the tenant&amp;rsquo;s own values, which come from naming the tenant in the request; use metadata filters or separate knowledge bases to limit what each tenant can retrieve, and each tenant gets its own instruction and metadata filter; your backend chooses both from the authenticated tenant, so one shared knowledge base can serve every tenant; a request can query a shared global knowledge base and the tenant&amp;rsquo;s own knowledge base together, each with its own filter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonBedrock #TabularSearch #AgenticRetrieval&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/get-answers-from-tables-with-tabular-search-in-amazon-bedrock-managed-knowledge-base/" target="_blank" rel="noopener"
+&gt;Get answers from tables with tabular search in Amazon Bedrock Managed Knowledge Base | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/customize-answers-per-tenant-in-amazon-bedrock-managed-knowledge-base/" target="_blank" rel="noopener"
+&gt;Customize answers per tenant in Amazon Bedrock Managed Knowledge Base | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

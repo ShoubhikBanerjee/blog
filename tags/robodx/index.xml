@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RoboDx on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/robodx/</link><description>Recent content in RoboDx on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/robodx/index.xml" rel="self" type="application/rss+xml"/><item><title>RoboDx Benchmark Evaluates AI Repair of Robot Navigation Software</title><link>https://shoubhikbanerjee.github.io/blog/p/robodx-benchmark-evaluates-ai-repair-of-robot-navigation-software/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/robodx-benchmark-evaluates-ai-repair-of-robot-navigation-software/</guid><description>&lt;h1 id="robodx-benchmark-evaluates-ai-repair-of-robot-navigation-software"&gt;RoboDx Benchmark Evaluates AI Repair of Robot Navigation Software
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced RoboDx, a benchmark for evaluating how well AI models can diagnose and repair faults in simulated robot navigation software. The benchmark reveals that passing unit tests does not guarantee correct robot behavior, and that even verified repairs often fail to address all injected faults — especially undocumented configuration constants.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;RoboDx generates repair tasks for simulated robot navigation software with known injected faults&lt;/li&gt;
+&lt;li&gt;Includes 100 tasks in the RoboDx-Hard-100 set&lt;/li&gt;
+&lt;li&gt;Features a hidden verifier that only marks repairs verified if the robot drives correctly in hidden scenarios the agent never sees&lt;/li&gt;
+&lt;li&gt;Contains two evaluation tracks: one with code visible, another where code is hidden and the agent must pick the cause from a list of hypotheses&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hidden verification&lt;/strong&gt;: A repair is marked verified only if the robot drives correctly in hidden scenarios not shown to the agent&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Two-fault tasks with quiet faults&lt;/strong&gt;: A quiet fault makes no hidden scenario fail unless the other fault is also present&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Diagnostic track&lt;/strong&gt;: Models receive measurements from the faulty robot, selected so only the true cause produces all of them in the simulator&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hypothesis selection&lt;/strong&gt;: When code is hidden, agents choose from a list of hypothesized causes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Aspect&lt;/th&gt;
+&lt;th&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Total tasks analyzed&lt;/td&gt;
+&lt;td&gt;94&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Single-fault tasks&lt;/td&gt;
+&lt;td&gt;44&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Two-fault tasks&lt;/td&gt;
+&lt;td&gt;50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Verified repairs by Claude Opus 5.5 (two-fault tasks)&lt;/td&gt;
+&lt;td&gt;49 of 50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Verified repairs removing both injected edits&lt;/td&gt;
+&lt;td&gt;17 of 49&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Opus naming both faults without seeing code&lt;/td&gt;
+&lt;td&gt;10 of 50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Models naming true cause from measurements (max)&lt;/td&gt;
+&lt;td&gt;38 of 94&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Models with simulator output for every hypothesis&lt;/td&gt;
+&lt;td&gt;Right on almost all&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Gain from models&amp;rsquo; own predictions of simulator output&lt;/td&gt;
+&lt;td&gt;No detectable gain&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Real bug-fix PR tasks evaluated&lt;/td&gt;
+&lt;td&gt;97&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Most faults left behind after verified repairs are configuration constants whose correct values the task documentation does not state&lt;/li&gt;
+&lt;li&gt;On real bug-fix pull requests, Claude Haiku 5.5 scored lowest among four models tested; the other three models showed no clear ordering&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Unit tests alone are insufficient for validating robot navigation repairs&lt;/li&gt;
+&lt;li&gt;Verification via hidden driving scenarios catches patches that pass unit tests but drive the robot off course&lt;/li&gt;
+&lt;li&gt;Even when repairs pass verification, they frequently fail to fix all faults — particularly undocumented configuration values&lt;/li&gt;
+&lt;li&gt;Diagnostic ability from raw measurements remains limited across current models&lt;/li&gt;
+&lt;li&gt;Access to simulator outputs for hypotheses dramatically improves diagnostic accuracy, but models&amp;rsquo; own predictions provide no benefit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#RoboDx #RobotNavigation #AIBenchmark #SoftwareRepair #ClaudeOpus #DiagnosticAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23816v1" target="_blank" rel="noopener"
+&gt;RoboDx: Repair and Diagnosis of Faults in Robot Software&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

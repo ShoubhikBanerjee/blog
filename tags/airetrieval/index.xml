@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AIretrieval on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/airetrieval/</link><description>Recent content in AIretrieval on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 10 Nov 2026 22:09:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/airetrieval/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock Managed Knowledge Base adds single-shot RAG and retrieval‑only modes</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-managed-knowledge-base-adds-single-shot-rag-and-retrievalonly-modes/</link><pubDate>Tue, 10 Nov 2026 22:09:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-managed-knowledge-base-adds-single-shot-rag-and-retrievalonly-modes/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-22223-featured-image.png" alt="Featured image of post Amazon Bedrock Managed Knowledge Base adds single-shot RAG and retrieval‑only modes" /&gt;&lt;h1 id="amazon-bedrock-managed-knowledge-base-adds-single-shot-rag-and-retrievalonly-modes"&gt;Amazon Bedrock Managed Knowledge Base adds single-shot RAG and retrieval‑only modes
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock Managed Knowledge Base now supports two new request modes—single‑shot Retrieval Augmented Generation (RAG) and retrieval‑only—available through the &lt;strong&gt;AgenticRetrieveStream&lt;/strong&gt; API.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Single‑shot RAG&lt;/strong&gt;: the service performs one search of your knowledge bases and then uses a foundation model (FM) to generate an answer from the retrieved passages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval‑only&lt;/strong&gt;: the service returns the matching passages without invoking a foundation model, letting the application or user work directly with the source text.&lt;/li&gt;
+&lt;li&gt;These modes complement the existing &lt;em&gt;agentic retrieval&lt;/em&gt; workflow, where the service plans and runs multiple searches before answering.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The foundation model can break a question into sub‑queries, retrieve relevant evidence, and evaluate whether the results are sufficient.&lt;/li&gt;
+&lt;li&gt;If gaps are found, the model can refine the search and retrieve additional evidence, up to the configured iteration limit.&lt;/li&gt;
+&lt;li&gt;The planner may retrieve a full document when a passage lacks context, helping to fill gaps that a single retrieval might miss.&lt;/li&gt;
+&lt;li&gt;When response generation is enabled, the service combines retrieved information into an answer with citations.&lt;/li&gt;
+&lt;li&gt;Trace events expose the planning and retrieval steps so developers can inspect how an answer was produced.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-modes-comparison"&gt;⚙️ Modes comparison
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Mode&lt;/th&gt;
+&lt;th&gt;Retrievals&lt;/th&gt;
+&lt;th&gt;Foundation model calls&lt;/th&gt;
+&lt;th&gt;Planning rounds&lt;/th&gt;
+&lt;th&gt;Output&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Single‑shot RAG&lt;/td&gt;
+&lt;td&gt;One retrieval&lt;/td&gt;
+&lt;td&gt;One call to generate answer (no planning rounds)&lt;/td&gt;
+&lt;td&gt;None&lt;/td&gt;
+&lt;td&gt;Answer with citations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retrieval‑only&lt;/td&gt;
+&lt;td&gt;One retrieval&lt;/td&gt;
+&lt;td&gt;None (no answer generation)&lt;/td&gt;
+&lt;td&gt;None&lt;/td&gt;
+&lt;td&gt;Passages only&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Agentic retrieval&lt;/td&gt;
+&lt;td&gt;Multiple searches (iterative)&lt;/td&gt;
+&lt;td&gt;One call per iteration + final answer generation&lt;/td&gt;
+&lt;td&gt;One query rewrite + retrieval per planning round&lt;/td&gt;
+&lt;td&gt;Answer with citations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-technical-details"&gt;📊 Technical details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;maxAgentIteration&lt;/strong&gt; range is now &lt;strong&gt;0–5&lt;/strong&gt;, closing the gap for limited‑iteration use cases.&lt;/li&gt;
+&lt;li&gt;A value of &lt;em&gt;n&lt;/em&gt; allows up to &lt;em&gt;n − 1&lt;/em&gt; agentic planning rounds; the last iteration is reserved for answer generation.&lt;/li&gt;
+&lt;li&gt;Each planning round consists of one query rewrite followed by a retrieval.&lt;/li&gt;
+&lt;li&gt;The initial retrieval that runs before the first planning step is counted as a retrieval, not an iteration.&lt;/li&gt;
+&lt;li&gt;All three modes support multiple knowledge bases, including when &lt;code&gt;maxAgentIteration&lt;/code&gt; is set to 0 or 1.&lt;/li&gt;
+&lt;li&gt;Single‑shot RAG uses a single FM call, which can reduce latency and model usage compared with full agentic retrieval.&lt;/li&gt;
+&lt;li&gt;Retrieval‑only requests make &lt;strong&gt;no&lt;/strong&gt; foundation model calls.&lt;/li&gt;
+&lt;li&gt;Using &lt;code&gt;maxAgentIteration=0&lt;/code&gt; is the recommended setting when only passages are needed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The new request modes are accessible through the existing Bedrock Managed Knowledge Base API via &lt;strong&gt;AgenticRetrieveStream&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Developers can select the desired mode by setting the appropriate &lt;code&gt;maxAgentIteration&lt;/code&gt; value and toggling response generation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-22223-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-22223-2-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/02/ML-22223-3-1.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #RAG #AIretrieval #FoundationModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/single-shot-and-agentic-retrieval-with-amazon-bedrock-managed-knowledge-base/" target="_blank" rel="noopener"
+&gt;Single-shot and agentic retrieval with Amazon Bedrock Managed Knowledge Base | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

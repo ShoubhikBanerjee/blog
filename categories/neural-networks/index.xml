@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Neural Networks on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/neural-networks/</link><description>Recent content in Neural Networks on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 04 Nov 2026 22:02:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/neural-networks/index.xml" rel="self" type="application/rss+xml"/><item><title>Weight‑Space Programming: LLMs Read and Edit Neural Network Weights</title><link>https://shoubhikbanerjee.github.io/blog/p/weightspace-programming-llms-read-and-edit-neural-network-weights/</link><pubDate>Wed, 04 Nov 2026 22:02:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/weightspace-programming-llms-read-and-edit-neural-network-weights/</guid><description>&lt;h1 id="weightspace-programming-llms-read-and-edit-neural-network-weights"&gt;Weight‑Space Programming: LLMs Read and Edit Neural Network Weights
+&lt;/h1&gt;&lt;p&gt;Yesterday’s hot paper &lt;em&gt;Sparks of Weight‑Space Programming: LLMs can natively read &amp;amp; write neural network weights&lt;/em&gt; introduced a new capability called &lt;strong&gt;Weight‑Space Programming&lt;/strong&gt;. The authors (Rikiya Takehi, Jayden Teoh, Alex Zhang, Omar Khattab) showed that frontier language models can interpret and directly modify raw model weights.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;GPT‑6 Astra can look at a network’s raw floating‑point weight list and infer the task the network was trained for.&lt;/li&gt;
+&lt;li&gt;Without any environment feedback, Astra can also &lt;em&gt;write&lt;/em&gt; new small game‑playing networks that outperform PPO‑trained networks after 100 million steps.&lt;/li&gt;
+&lt;li&gt;Astra edited only 0.016 % of the weights of Qwen3.5‑0.8B to fix a reasoning‑loop issue identified in the model card, raising MATH‑500 from 7.9 % to 48.1 % and tripling IFEval performance.&lt;/li&gt;
+&lt;li&gt;All weight modifications were performed without granting the model the ability to write training loops.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The model receives a &lt;strong&gt;text description of a neural network&lt;/strong&gt; containing its floating‑point weights.&lt;/li&gt;
+&lt;li&gt;Using its internal reasoning, the model can:
+&lt;ol&gt;
+&lt;li&gt;Identify the purpose of the network (e.g., a game‑playing agent).&lt;/li&gt;
+&lt;li&gt;Detect problematic weight patterns (as with Qwen3.5‑0.8B’s math loops).&lt;/li&gt;
+&lt;li&gt;Generate corrected weight values and replace them directly in the text.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;The process is called &lt;strong&gt;Weight‑Space Programming&lt;/strong&gt; by the authors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-results"&gt;⚙️ Key results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Game‑playing networks&lt;/strong&gt; created by Astra beat PPO‑trained agents that had been trained for 100 million steps.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Math improvement&lt;/strong&gt; on Qwen3.5‑0.8B:
+&lt;ul&gt;
+&lt;li&gt;MATH‑500 accuracy: 7.9 % → 48.1 %.&lt;/li&gt;
+&lt;li&gt;IFEval score: increased threefold.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;No gradient‑based training or external feedback was required.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-experiments"&gt;🎮 Experiments
+&lt;/h2&gt;&lt;p&gt;The paper trained four neural networks for simplified 10×10 grid versions of classic Atari games:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Breakout&lt;/li&gt;
+&lt;li&gt;Pong&lt;/li&gt;
+&lt;li&gt;Pac‑Man (gridworld variant)&lt;/li&gt;
+&lt;li&gt;Freeway&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The accompanying GitHub repository (&lt;strong&gt;RikiyaT/lm_understand-logs&lt;/strong&gt;) contains the prompts and weight files in the &lt;code&gt;exp1_which_game&lt;/code&gt; folder. The prompts are self‑contained.&lt;/p&gt;
+&lt;h3 id="model-reasoning-examples-run-on-a-laptop"&gt;Model reasoning examples (run on a laptop)
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Game identified&lt;/th&gt;
+&lt;th&gt;Reasoning time&lt;/th&gt;
+&lt;th&gt;Tokens used&lt;/th&gt;
+&lt;th&gt;Confidence&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Kimi K3.1 Pro&lt;/td&gt;
+&lt;td&gt;Breakout&lt;/td&gt;
+&lt;td&gt;9 m 41 s&lt;/td&gt;
+&lt;td&gt;19,493&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen 3.8 27B (LM Studio)&lt;/td&gt;
+&lt;td&gt;Pac‑Man‑style gridworld&lt;/td&gt;
+&lt;td&gt;46 m 12 s&lt;/td&gt;
+&lt;td&gt;43,506&lt;/td&gt;
+&lt;td&gt;72 %&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen 3.8 27B (LM Studio)&lt;/td&gt;
+&lt;td&gt;Pong&lt;/td&gt;
+&lt;td&gt;1 h 4 m 54 s&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;td&gt;75 %&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen 3.8 27B (LM Studio)&lt;/td&gt;
+&lt;td&gt;Breakout&lt;/td&gt;
+&lt;td&gt;52 m 25 s&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;td&gt;—&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;“That’s still my favorite model to run on my own laptop—it’s just 17 GB … and somehow feels close to the leading proprietary models of 2025.”&lt;/em&gt; – user observation about Kimi K3.1 Pro.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-community-response"&gt;🗣️ Community response
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;spaCy author &lt;strong&gt;Matthew Honnibal&lt;/strong&gt; called the paper misleading for conflating reading and writing capabilities.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sean Goedecke&lt;/strong&gt; argued that the Qwen3.5‑0.8B weight‑editing example mirrors the steps a human ML researcher would take.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;📦 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Paper (classified as a “blog post” but paper‑shaped) is publicly referenced.&lt;/li&gt;
+&lt;li&gt;Code and data are hosted at &lt;strong&gt;github.com/RikiyaT/lm_understand-logs&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;exp1_which_game&lt;/code&gt; folder contains the exact prompts used in the experiments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#WeightSpace #LLM #NeuralNetworks #AIResearch&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/" target="_blank" rel="noopener"
+&gt;Qwen 3.8 27B on my laptop can interpret model weights, too&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Analysis of Class H Bipartite Architectures and Softmax Attention in Hopfield Networks</title><link>https://shoubhikbanerjee.github.io/blog/p/analysis-of-class-h-bipartite-architectures-and-softmax-attention-in-hopfield-networks/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/analysis-of-class-h-bipartite-architectures-and-softmax-attention-in-hopfield-networks/</guid><description>&lt;h1 id="analysis-of-class-h-bipartite-architectures-and-softmax-attention-in-hopfield-networks"&gt;Analysis of Class H Bipartite Architectures and Softmax Attention in Hopfield Networks
+&lt;/h1&gt;&lt;p&gt;A study of the bipartite architecture of Krotov and Hopfield, referred to as class H, has identified how higher-order and exponential extensions of Hopfield networks transform retrieval updates into softmax attention. This research characterizes associative memory as attractor dynamics within disordered many-body systems.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The class H architecture utilizes a bipartite structure where the model is defined by a specific Lagrangian for each layer. In this framework, the hidden neurons serve as the order parameter of retrieval.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The research utilizes the replica method to analyze phase diagrams and capacities. The behavior of the network depends on the type of load applied to the system:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Load Type&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Crosstalk Statistics&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Storage Capacity&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Polynomial&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Central-limit&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Closed-form capacities determined by visible entropy&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Exponential&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Large-deviation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Achieved through a softmax hidden layer&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Thermodynamic analysis using a copy representation maps the system onto random-energy-model counting, identifying paramagnetic, condensed, and frozen phases.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval Dynamics&lt;/strong&gt;: Higher-order and exponential extensions turn retrieval updates into softmax attention.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stability&lt;/strong&gt;: Typical Gaussian patterns remain metastable at every load level, though heating can destabilize retrieval via quantized reassignments of attention.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Crosstalk&lt;/strong&gt;: The crosstalk moment is common to both Ising and spherical visible neurons.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The class H model splits the retrieval process into two distinct functional roles. The visible Lagrangian is responsible for fixing stability, while the hidden Lagrangian determines the storage scale. These two axes are identified as potential guides for the design of new Lagrangians in neural architectures.&lt;/p&gt;
+&lt;p&gt;#HopfieldNetworks #MachineLearning #SoftmaxAttention #NeuralNetworks #Thermodynamics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.10976v1" target="_blank" rel="noopener"
+&gt;Phases in a class of associative memories via hidden neurons&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Slurm on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/slurm/</link><description>Recent content in Slurm on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2026 22:09:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/slurm/index.xml" rel="self" type="application/rss+xml"/><item><title>SageMaker HyperPod Adds Cluster Extensions and Global Inference Gateway</title><link>https://shoubhikbanerjee.github.io/blog/p/sagemaker-hyperpod-adds-cluster-extensions-and-global-inference-gateway/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sagemaker-hyperpod-adds-cluster-extensions-and-global-inference-gateway/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/l-ml-22428.png" alt="Featured image of post SageMaker HyperPod Adds Cluster Extensions and Global Inference Gateway" /&gt;&lt;h1 id="sagemaker-hyperpod-adds-cluster-extensions-and-global-inference-gateway"&gt;SageMaker HyperPod Adds Cluster Extensions and Global Inference Gateway
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker HyperPod has introduced two new capabilities: cluster extensions for managing software on running nodes and the Global Inference Gateway for routing requests across multiple clusters and regions. These updates aim to reduce configuration drift and simplify the management of distributed AI inference workloads.&lt;/p&gt;
+&lt;h2 id="-cluster-extensions-for-node-consistency"&gt;🧩 Cluster Extensions for Node Consistency
+&lt;/h2&gt;&lt;p&gt;Managing a shared Slurm cluster for foundation model development involves keeping configuration, software, network topology, and user rosters in sync with the actual nodes. Over time, these elements drift apart, and there is no automated way to detect when they do.&lt;/p&gt;
+&lt;p&gt;In November 2026, AWS launched cluster extensions to address the software and settings on running nodes. These are software packages managed by AWS that administrators can install, configure, update, and remove through APIs or the Amazon SageMaker AI console.&lt;/p&gt;
+&lt;p&gt;Key features of cluster extensions include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Managed Extensions:&lt;/strong&gt; Initial support includes observability and user management (including directory integration).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automatic Application:&lt;/strong&gt; HyperPod applies extensions to every node, including those added via scale-up or replacement, maintaining consistency as the cluster scales and heals.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Simplified Updates:&lt;/strong&gt; Settings can be changed or versions upgraded via API calls or the console, eliminating the need to edit scripts and replace nodes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Visibility:&lt;/strong&gt; Each extension reports its status and per-node health.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Administrators should use cluster extensions for managed software capabilities. Custom AMIs and lifecycle scripts remain the correct approach for organization-specific software or initialization not covered by available extensions.&lt;/p&gt;
+&lt;h2 id="-global-inference-gateway"&gt;🌐 Global Inference Gateway
+&lt;/h2&gt;&lt;p&gt;Previously, the SageMaker HyperPod Inference Gateway provided a single, GPU-aware endpoint for individual clusters. However, during traffic peaks, requests could queue on a saturated cluster while GPUs on another cluster, potentially in a different AWS Region, sat idle. Managing this required building and maintaining load balancers, DNS, and cross-Region networking manually.&lt;/p&gt;
+&lt;p&gt;The Global Inference Gateway is a SageMaker-managed gateway that routes across every registered cluster, whether in a single Region or across multiple Regions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;How it works:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Routing:&lt;/strong&gt; The gateway picks the best cluster and carries the request over the AWS backbone.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Failover:&lt;/strong&gt; If a cluster fails, the gateway moves traffic to the next-best cluster automatically.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Endpoint Consolidation:&lt;/strong&gt; Clients call a single SageMaker-managed endpoint instead of tracking one endpoint per cluster or model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security:&lt;/strong&gt; Every request is authenticated with AWS Signature Version 4 (SigV4) and IAM, and reaches clusters only over AWS PrivateLink.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example, a team serving four models across five HyperPod clusters in two Regions would normally track 20 endpoints (one per model per cluster). The Inference Gateway cuts this to five, and the Global Inference Gateway consolidates further by handling cross-region overflow during peaks.&lt;/p&gt;
+&lt;h2 id="-integration-with-existing-hyperpod-features"&gt;⚙️ Integration with Existing HyperPod Features
+&lt;/h2&gt;&lt;p&gt;The Global Inference Gateway is the second tier of the architecture described in the initial Inference Gateway launch. It integrates with existing HyperPod infrastructure:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Configuration:&lt;/strong&gt; Administrators enable global routing by turning on the &lt;code&gt;spec.globalRouting&lt;/code&gt; block in the cluster’s existing &lt;code&gt;InferenceGatewayConfig&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Creation:&lt;/strong&gt; The &lt;code&gt;CreateGlobalInferenceGateway&lt;/code&gt; API call registers clusters to route across, and SageMaker returns one endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Publishing:&lt;/strong&gt; The HyperPod Inference controller publishes the cluster privately from the user&amp;rsquo;s account, creating a Network Load Balancer, publishing a VPC endpoint service, and uploading the listener’s certificate to the user’s TLS bucket.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Request Flow:&lt;/strong&gt; Clients sign requests with SigV4 and send them to the gateway’s regional endpoint. The gateway authenticates the caller, selects the best cluster, and uses AWS PrivateLink to carry the request to that cluster, where the local Inference Gateway routes it to the appropriate model pod.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;These developments address two major pain points in large-scale AI infrastructure. First, they eliminate the &amp;ldquo;drift&amp;rdquo; between desired cluster state and actual node software by using managed extensions that automatically apply to new nodes. Second, they solve the inefficiency of idle GPUs during regional traffic peaks by enabling global routing that balances load across regions without manual load balancer management. For users like Bagelcode, who run LLM inference services on AWS, the Global Inference Gateway allows serving models across multiple regions through a single endpoint while maintaining high availability.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22428-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ml-22428-figure-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #HyperPod #Slurm #AWS #Inference #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagemaker-hyperpod-slurm/" target="_blank" rel="noopener"
+&gt;Introducing managed cluster extensions for observability and user management in Amazon SageMaker HyperPod Slurm | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-and-clusters/" target="_blank" rel="noopener"
+&gt;Introducing Amazon SageMaker HyperPod Global Inference Gateway: One endpoint across Regions and clusters | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Slurm 26.11 Introduces HRES to Enable Native Quantum Processor Scheduling</title><link>https://shoubhikbanerjee.github.io/blog/p/slurm-26-11-introduces-hres-to-enable-native-quantum-processor-scheduling/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/slurm-26-11-introduces-hres-to-enable-native-quantum-processor-scheduling/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/hybrid-quantum-classical-computing-architecture-660x370.png" alt="Featured image of post Slurm 26.11 Introduces HRES to Enable Native Quantum Processor Scheduling" /&gt;&lt;h1 id="slurm-2611-introduces-hres-to-enable-native-quantum-processor-scheduling"&gt;Slurm 26.11 Introduces HRES to Enable Native Quantum Processor Scheduling
+&lt;/h1&gt;&lt;p&gt;Slurm 26.11 adds Hierarchical Resources (HRES) plugins that enable quantum processing units (QPUs) to be scheduled as native cluster resources, allowing HPC centers to integrate quantum accelerators alongside traditional supercomputing systems.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;National programs across North America, Europe, and Asia are integrating quantum processing units (QPUs) into supercomputing centers worldwide. These QPUs operate as cluster-wide accelerators, distinct from node-attached GPUs.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The HRES plugin interface uses short, portable Lua scripts to manage QPU scheduling:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reports device health to the scheduler&lt;/li&gt;
+&lt;li&gt;Accepts device options as part of resource requests&lt;/li&gt;
+&lt;li&gt;Runs setup and teardown code at each job stage&lt;/li&gt;
+&lt;li&gt;Describes QPUs to HPC software via QRMI and QDMI open source efforts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The architecture differs fundamentally from GPU scheduling:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;th&gt;GRES (GPUs)&lt;/th&gt;
+&lt;th&gt;HRES (QPUs)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Scope&lt;/td&gt;
+&lt;td&gt;Per compute node&lt;/td&gt;
+&lt;td&gt;Cluster-wide&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Management&lt;/td&gt;
+&lt;td&gt;Built into Slurm&lt;/td&gt;
+&lt;td&gt;Plugin-based&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Access&lt;/td&gt;
+&lt;td&gt;Jobs on specific node&lt;/td&gt;
+&lt;td&gt;Jobs on allowed nodes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;A QPU is modeled using a single layer in resources.yaml covering nodes that can reach the device, with a count of one. The plugin logic is separate from site configuration, allowing vendors to distribute it across installations.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;HRES entered Slurm in version 25.05 as a beta feature and reached production maturity in version 26.11, representing an evolution of the licensing mechanism with similar counting semantics but node-specific associations.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/slurm-schedules-qpu-hres-integration-architecture.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Slurm #QuantumComputing #HPC #Supercomputing #QPU #Scheduling&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/integrating-qpus-into-supercomputing-centers-using-slurm-hres-plugins/" target="_blank" rel="noopener"
+&gt;Integrating QPUs into Supercomputing Centers Using Slurm HRES Plugins | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Releases Topograph Open Source Toolkit for Topology-Aware GPU Scheduling</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-topograph-open-source-toolkit-for-topology-aware-gpu-scheduling/</link><pubDate>Wed, 23 Sep 2026 22:05:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-topograph-open-source-toolkit-for-topology-aware-gpu-scheduling/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2025/09/inference-nvidia-dynamo-blog-1280x680-1-e1758728822171-660x370.jpg" alt="Featured image of post NVIDIA Releases Topograph Open Source Toolkit for Topology-Aware GPU Scheduling" /&gt;&lt;h1 id="nvidia-releases-topograph-open-source-toolkit-for-topology-aware-gpu-scheduling"&gt;NVIDIA Releases Topograph Open Source Toolkit for Topology-Aware GPU Scheduling
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced Topograph, an open source toolkit designed to identify cluster network topology to enable workload managers to make topology-aware scheduling decisions.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;AI factories are power-limited systems that require full optimization to deliver maximum value. Because GPUs exchange data continuously during training and inference, distributed workloads benefit from communication locality. Poor workload placement can lead to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fragmented topology domains&lt;/li&gt;
+&lt;li&gt;Increased traffic across shared links&lt;/li&gt;
+&lt;li&gt;Reduced throughput and higher job costs&lt;/li&gt;
+&lt;li&gt;GPUs consuming provisioned power while waiting for data without advancing the workload&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Topograph prevents these bottlenecks by mapping how cluster hardware is connected, allowing schedulers to favor nearby resources and avoid spreading tightly coupled workloads across distant domains.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Topograph solves the problem of maintaining an accurate view of GPU and fabric relationships as a cluster changes. It uses two primary concepts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Providers&lt;/strong&gt;: These discover topology from cloud APIs or on-premises systems and normalize it into a canonical model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Engines&lt;/strong&gt;: These translate the normalized model into formats expected by various workload managers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Within the NVIDIA DSX OS cluster orchestration layer, Topograph works alongside KAI Scheduler and Dynamic Resource Allocation (DRA) to enable topology-aware gang scheduling.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Topograph supports a variety of hardware and software integrations to ensure the scheduler works from current data rather than a manually maintained snapshot.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Supported Integration/Requirement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Cloud Providers&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Google Cloud, Lambda, Nebius, Nscale, and OCI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;On-Premises Providers&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;InfiniBand (with ibnetdiscover), NetQ (for Spectrum-X or Multi-Node NVLink domains)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Engines/Outputs&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Kubernetes node labels, Slurm topology configuration, Slinky ConfigMaps, Node Feature Discovery (NFD) resources, instance-oriented topology JSON&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Slurm Engine&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Requires a writable volume for its configured topology.conf output path&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;NFD Engine&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Requires the alpha NodeFeatureGroupAPI feature gate&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Crusoe Provider&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Runs in Kubernetes; reads fabric and accelerator-domain labels from Crusoe Managed Kubernetes nodes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Topograph is an open source toolkit with an open provider interface, allowing operators to add and contribute providers for their own environments upstream. As of September 16, 2026, the toolkit supports various provider-to-engine output combinations, though requirements may vary by version and configuration.&lt;/p&gt;
+&lt;p&gt;#NVIDIA #GPU #Kubernetes #Slurm #AIInfrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/topology-aware-workload-scheduling-with-nvidia-topograph/" target="_blank" rel="noopener"
+&gt;Topology-Aware Workload Scheduling with NVIDIA Topograph | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Agent Systems on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/agent-systems/</link><description>Recent content in Agent Systems on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 12 Nov 2026 22:08:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/agent-systems/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Reference Architecture Connects Enterprise LangChain Orchestrator to SaaS Compliance Agent via A2A</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-reference-architecture-connects-enterprise-langchain-orchestrator-to-saas-compliance-agent-via-a2a/</link><pubDate>Thu, 12 Nov 2026 22:08:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-reference-architecture-connects-enterprise-langchain-orchestrator-to-saas-compliance-agent-via-a2a/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21127-featured-image.png" alt="Featured image of post AWS Reference Architecture Connects Enterprise LangChain Orchestrator to SaaS Compliance Agent via A2A" /&gt;&lt;h1 id="aws-reference-architecture-connects-enterprise-langchain-orchestrator-to-saas-compliance-agent-via-a2a"&gt;AWS Reference Architecture Connects Enterprise LangChain Orchestrator to SaaS Compliance Agent via A2A
+&lt;/h1&gt;&lt;p&gt;A reference implementation on AWS demonstrates how the Agent-to-Agent (A2A) protocol lets an enterprise LangChain orchestrator work with a Strands Agents‑based compliance SaaS agent across separate AWS accounts.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Agents in multi‑agent systems that span organizational boundaries often need to collaborate in a composable, interoperable way, with agents that other organizations build and run.&lt;/li&gt;
+&lt;li&gt;The Agent-to-Agent (A2A) protocol addresses this constraint.&lt;/li&gt;
+&lt;li&gt;The A2A protocol is now a Linux Foundation project, and AWS is among the organizations that support it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Three agents run in two AWS accounts, one for the enterprise and one for the SaaS provider.&lt;/li&gt;
+&lt;li&gt;Each account has its own Amazon Cognito user pool, so each side authenticates with its own identity provider.&lt;/li&gt;
+&lt;li&gt;During onboarding the enterprise and the SaaS provider exchange only public values, such as identity provider URLs, client IDs, scopes, and endpoint URLs.&lt;/li&gt;
+&lt;li&gt;The enterprise app gets an access token from the enterprise’s Amazon Cognito user pool.&lt;/li&gt;
+&lt;li&gt;The app sends a question over HTTPS to the user API in Amazon API Gateway, then polls for the answer.&lt;/li&gt;
+&lt;li&gt;Amazon API Gateway forwards the request privately, through a VPC link and an internal Network Load Balancer, to the Enterprise Orchestrator, a LangChain agent.&lt;/li&gt;
+&lt;li&gt;When its model decides that the question needs a compliance scan, the orchestrator gets its own token from the enterprise user pool, using a client secret stored in AWS Secrets Manager.&lt;/li&gt;
+&lt;li&gt;The orchestrator sends an A2A request to the compliance SaaS agent on Amazon Bedrock AgentCore runtime, using the skill it read from the agent’s Agent Card at startup.&lt;/li&gt;
+&lt;li&gt;The compliance agent checks the enterprise context agent’s Agent Card at the callback URL registered at onboarding, then gets a token from the SaaS provider’s own pool.&lt;/li&gt;
+&lt;li&gt;The compliance agent calls back to the enterprise context agent for account metadata, finishes its scan, and returns the answer to the orchestrator and then to the app.&lt;/li&gt;
+&lt;li&gt;Both enterprise agents run on Amazon ECS with AWS Fargate in private subnets of an Amazon VPC, with no public IP addresses.&lt;/li&gt;
+&lt;li&gt;The SaaS agent reaches the context agent through an API Gateway partner API that accepts only the SaaS provider’s callback token.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Deployed agent uses the official a2a-sdk (AgentCard, AgentExecutor, and spec-conformant JSON-RPC routes), pinned to a2a-sdk[http-server]==1.2.2.&lt;/li&gt;
+&lt;li&gt;At startup the orchestrator fetches the SaaS agent’s Agent Card from its well‑known URL and creates a LangChain tool for each skill described on the card.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Agent&lt;/th&gt;
+&lt;th&gt;Runtime / Framework&lt;/th&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Enterprise Orchestrator&lt;/td&gt;
+&lt;td&gt;LangChain on Amazon ECS (Fargate)&lt;/td&gt;
+&lt;td&gt;Anthropic Claude Sonnet 4.6 (Bedrock)&lt;/td&gt;
+&lt;td&gt;Receives user queries, decides when to invoke compliance scan&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Enterprise Context Agent&lt;/td&gt;
+&lt;td&gt;LangChain on Amazon ECS (Fargate)&lt;/td&gt;
+&lt;td&gt;Amazon Nova Lite (Bedrock)&lt;/td&gt;
+&lt;td&gt;Provides internal account metadata, policy rules, data classification&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Compliance SaaS Agent&lt;/td&gt;
+&lt;td&gt;Strands Agents on Amazon Bedrock AgentCore&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;td&gt;Performs compliance scan and returns results&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The protocol uses existing authentication standards such as OAuth 2.0 and OpenID Connect (OIDC) for cross‑boundary security, and is designed to work across A2A‑compatible frameworks.&lt;/li&gt;
+&lt;li&gt;Independent software vendors (ISVs) can build composable, interoperable agents that work with the A2A‑compatible frameworks their customers already use.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Neither side depends on the other’s framework or SDK, and the two sides share no secrets.&lt;/li&gt;
+&lt;li&gt;The architecture shows how organizations can keep agents isolated in private subnets while still enabling secure, standards‑based cross‑account collaboration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AWS #A2A #LangChain #Bedrock&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-composable-interoperable-multi-agent-systems-with-a2a-on-aws/" target="_blank" rel="noopener"
+&gt;Build composable, interoperable multi-agent systems with A2A on AWS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

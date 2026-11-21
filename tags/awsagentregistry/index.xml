@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWSAgentRegistry on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/awsagentregistry/</link><description>Recent content in AWSAgentRegistry on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 18 Nov 2026 22:09:17 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/awsagentregistry/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Agent Registry Introduces Custom Metadata Schemas for Structured Governance</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-agent-registry-introduces-custom-metadata-schemas-for-structured-governance/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-agent-registry-introduces-custom-metadata-schemas-for-structured-governance/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22167-featured-image.png" alt="Featured image of post AWS Agent Registry Introduces Custom Metadata Schemas for Structured Governance" /&gt;&lt;h1 id="aws-agent-registry-introduces-custom-metadata-schemas-for-structured-governance"&gt;AWS Agent Registry Introduces Custom Metadata Schemas for Structured Governance
+&lt;/h1&gt;&lt;p&gt;Custom metadata schemas are now available in AWS Agent Registry. This update allows administrators to define a set of organization-specific key-value pairs that registry records must carry, enabling structured validation, discovery, and governance.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AWS Agent Registry provides a catalog to register, approve, and discover resources and custom records. Each record within the registry carries a name, a description, a protocol descriptor, and an approval status. With the introduction of custom metadata schemas, administrators can enforce structured metadata on every record to maintain consistency across teams.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;⚙️ How it works
+&lt;/h2&gt;&lt;p&gt;A custom metadata schema is a set of organization-defined key-value pairs. The registry administrator defines the schema—including field names, types, allowed values, and whether each field is required or optional—and applies it to the registry.&lt;/p&gt;
+&lt;p&gt;Key behaviors of the schema validation include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supported Field Types&lt;/strong&gt;: Each field can be configured as Text, Enum, URL, or Boolean.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scope of Fields&lt;/strong&gt;: The schema has common attributes that apply to every record type, and administrators can add dedicated fields that only apply to specific record types.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enforcement and Validation&lt;/strong&gt;: When a record is created or updated, AWS Agent Registry validates the custom metadata against the schema. If a record includes an unknown field, a missing required field, or an invalid value, it is rejected with a &lt;code&gt;ValidationException&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compliance Status&lt;/strong&gt;: If a record is created without any custom metadata, AWS Agent Registry saves it as &lt;code&gt;NON_COMPLIANT&lt;/code&gt;. Calling &lt;code&gt;GetRegistryRecord&lt;/code&gt; returns the record&amp;rsquo;s custom metadata values and its compliance status.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-supported-fields-and-enrichment"&gt;🧩 Supported Fields and Enrichment
+&lt;/h2&gt;&lt;p&gt;Organizations can use custom metadata fields to track ownership, environments, and compliance. Examples of these fields include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Environment &amp;amp; Ownership&lt;/strong&gt;: Fields such as &lt;code&gt;environment&lt;/code&gt; (prod, staging, or dev), &lt;code&gt;businessUnit&lt;/code&gt;, &lt;code&gt;ownerTeam&lt;/code&gt;, &lt;code&gt;supportContact&lt;/code&gt;, and &lt;code&gt;costCenter&lt;/code&gt; record where a resource runs, who is responsible for it, and who pays for it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inventory Integration&lt;/strong&gt;: A configuration management database (CMDB) ID links the record to an existing inventory, and a &lt;code&gt;support-tier&lt;/code&gt; field sets expectations for dependents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security &amp;amp; Compliance&lt;/strong&gt;: Fields such as data classification, compliance scope (like PCI or HIPAA), risk tier, scan status, and a scan report URL turn approvals into reviews of structured evidence. Existing scanners, CMDB sync jobs, and classification tools can write these values through the API before a record is submitted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-discovery-and-filtering"&gt;🔍 Discovery and Filtering
+&lt;/h2&gt;&lt;p&gt;Custom metadata values are indexed for search. Approvers can use the validated values when reviewing records, and consumers and agents can use Discovery APIs to filter records based on custom attributes.&lt;/p&gt;
+&lt;p&gt;For example, a consumer or agent can combine a natural-language query with specific metadata filters, such as:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;environment=prod AND businessUnit=payments AND securityScanStatus=PASSED
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;To ensure security, only approved records are returned; a record that matches the filters but has not been approved is omitted from the results.&lt;/p&gt;
+&lt;p&gt;As a use case, AnyCompany operates &lt;code&gt;anycompany-governed-registry&lt;/code&gt; without auto-approval. Its payments team publishes an MCP record, &lt;code&gt;payments-ledger-mcp&lt;/code&gt; (a read-only server for ledger lookups). Existing security and inventory systems enrich this MCP record before an approval function determines whether consumers can discover it.&lt;/p&gt;
+&lt;h2 id="-prerequisites"&gt;🚀 Prerequisites
+&lt;/h2&gt;&lt;p&gt;To get started with custom metadata schemas, you need:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An AWS account in a supported AWS Region.&lt;/li&gt;
+&lt;li&gt;Python 3.11 or later.&lt;/li&gt;
+&lt;li&gt;boto3 1.43.113 or later.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22167-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22167-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-22167-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWSAgentRegistry #CloudGovernance #MetadataSchemas #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/govern-and-discover-records-with-common-metadata-in-aws-agent-registry/" target="_blank" rel="noopener"
+&gt;Govern and discover records with common metadata in AWS Agent Registry | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

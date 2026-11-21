@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Model Context Protocol on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/model-context-protocol/</link><description>Recent content in Model Context Protocol on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/model-context-protocol/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore Gateway Networking Requirements for Private MCP and REST APIs</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-gateway-networking-requirements-for-private-mcp-and-rest-apis/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-gateway-networking-requirements-for-private-mcp-and-rest-apis/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22132-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Gateway Networking Requirements for Private MCP and REST APIs" /&gt;&lt;h1 id="amazon-bedrock-agentcore-gateway-networking-requirements-for-private-mcp-and-rest-apis"&gt;Amazon Bedrock AgentCore Gateway Networking Requirements for Private MCP and REST APIs
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore Gateway now supports agents that call internal REST APIs and Model Context Protocol (MCP) servers, provided they meet specific network ownership and traffic inspection requirements.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock AgentCore is a platform to build, connect, and optimize agents at scale, with any framework or model. The Gateway connects to private targets through an Amazon VPC Lattice resource gateway. This update clarifies where to place the resource gateway, who owns each network component, and the configuration decisions required for traffic to cross a central firewall in both directions.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The AgentCore Gateway reaches private targets through two private endpoint modes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Managed mode&lt;/strong&gt;: AgentCore creates the resource gateway for you. This fits environments where the Gateway account can own the subnets it runs in.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Self-managed mode&lt;/strong&gt;: You create the resource gateway and give the target a resource configuration. As documented, this places it in subnets with direct access to the backend, fitting environments that do not require inspection between the Gateway and the tool.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the pattern built and tested in the US East (N. Virginia) AWS Region (us-east-1), the network account owns the resource gateway and places it in subnets routed through AWS Transit Gateway. This ensures every request and reply between VPCs crosses the central firewall in an inspection VPC. The network team keeps ownership of every subnet, and traffic between the Gateway and private APIs and MCP servers crosses the central firewall in both directions.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The architecture relies on specific VPC Lattice objects and sharing mechanisms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Resource gateway&lt;/strong&gt;: The Amazon VPC Lattice entry point into a VPC, utilizing elastic network interfaces (ENIs) in subnets you choose.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Resource configuration&lt;/strong&gt;: A VPC Lattice object that names one backend (an internal load balancer or VPC endpoint DNS name and port) behind a resource gateway. This can be shared with other accounts through AWS Resource Access Manager (AWS RAM).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Key ownership and traffic rules include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A network account owns every VPC, subnet, and AWS Transit Gateway attachment, sharing application subnets through AWS RAM.&lt;/li&gt;
+&lt;li&gt;The Gateway account can own subnets that reach your tools.&lt;/li&gt;
+&lt;li&gt;The Gateway and application accounts build only in subnets shared to them through AWS RAM.&lt;/li&gt;
+&lt;li&gt;Tools are reachable on public endpoints if central inspection is not required for that specific flow, but in the documented pattern, every flow between VPCs crosses the central firewall.&lt;/li&gt;
+&lt;li&gt;The central firewall in the inspection VPC inspects the traffic between the Gateway and your private APIs and MCP servers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The pattern was validated in a lab with three member accounts and a management account in AWS Organizations. The AWS CloudFormation templates, test scripts, test evidence, and reference material (address plan, full validation checks, troubleshooting, quotas) are available in the companion repository.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/22132-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22132-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22132-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AgentCore #AI #Networking #MCP&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/connect-amazon-bedrock-agentcore-gateway-to-private-apis-in-a-hub-and-spoke-network-with-centralized-inspection/" target="_blank" rel="noopener"
+&gt;Connect Amazon Bedrock AgentCore Gateway to private APIs in a hub-and-spoke network with centralized inspection | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

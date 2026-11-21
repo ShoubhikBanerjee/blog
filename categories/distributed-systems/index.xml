@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Distributed Systems on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/distributed-systems/</link><description>Recent content in Distributed Systems on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 18 Nov 2026 22:09:17 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/distributed-systems/index.xml" rel="self" type="application/rss+xml"/><item><title>Databricks adopts adaptive concurrency limits for cluster creation</title><link>https://shoubhikbanerjee.github.io/blog/p/databricks-adopts-adaptive-concurrency-limits-for-cluster-creation/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/databricks-adopts-adaptive-concurrency-limits-for-cluster-creation/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/blog-og-how-we-raised-databricks-cluster-rate-limits-by-7.5x.png" alt="Featured image of post Databricks adopts adaptive concurrency limits for cluster creation" /&gt;&lt;h1 id="databricks-adopts-adaptive-concurrency-limits-for-cluster-creation"&gt;Databricks adopts adaptive concurrency limits for cluster creation
+&lt;/h1&gt;&lt;p&gt;Databricks&amp;rsquo; Compute Platform team applied adaptive concurrency limits to cluster creation to address the shortcomings of fixed request‑rate limits for long‑running operations.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;We turn cloud infrastructure into clusters ready to run customer workloads. Our day‑to‑day work includes provisioning virtual machines and coordinating cluster creation across AWS, Azure, and Google Cloud.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A request‑rate limiter at the API entry point caps requests per time window.&lt;/li&gt;
+&lt;li&gt;For cluster creation, the handler validates the request, records a work item, and returns.&lt;/li&gt;
+&lt;li&gt;A background workflow coordinates services, updates state, and provisions resources such as cloud virtual machines.&lt;/li&gt;
+&lt;li&gt;These operations complete asynchronously, and their duration depends on the health and capacity of their dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Conservative limits turned away customer requests despite spare capacity, yet kept accepting requests when our services or dependencies, such as cloud providers, slowed down.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Engineers manually lowered limits to shed load during incidents and raised them again after recovery.&lt;/li&gt;
+&lt;li&gt;Adaptive concurrency limits account for both unfinished work and changing system health.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;For long‑running operations, a fixed request rate is a poor model of capacity.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Limiting active workflows helps contain pressure and gives unfinished work a chance to drain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-definitions"&gt;📊 Definitions
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Limit type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Request-rate limit&lt;/td&gt;
+&lt;td&gt;A cap on requests accepted per unit time, such as 10 requests per second, with a possible burst allowance.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Concurrency limit&lt;/td&gt;
+&lt;td&gt;A cap on active operations, such as 100 at once.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The goal is to let customers run at full throttle when capacity allows, then ease off enough to keep useful work moving during degradation.&lt;/li&gt;
+&lt;li&gt;Fixed limits can reject work even when capacity exists, while adaptive limits adjust to system health.&lt;/li&gt;
+&lt;li&gt;A retry storm can sustain overload after traffic normalizes because internal retries bypass the request‑rate limiter.&lt;/li&gt;
+&lt;li&gt;Adaptive limits provide a final safety guardrail via a fixed API request‑rate ceiling while dynamically managing active workflow count.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/blog_images/how-we-raised-databricks-cluster-rate-limits-blog-img-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/blog_images/how-we-raised-databricks-cluster-rate-limits-blog-img-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/blog_images/how-we-raised-databricks-cluster-rate-limits-blog-img-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Databricks #ConcurrencyLimits #ClusterCreation #CloudInfrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/how-we-raised-databricks-cluster-rate-limits-75" target="_blank" rel="noopener"
+&gt;How we raised Databricks cluster rate limits by 7.5×&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Lakebase Postgres minimizes object‑storage reads using tiered caching</title><link>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/reads-served-from-cache-cover.png" alt="Featured image of post Lakebase Postgres minimizes object‑storage reads using tiered caching" /&gt;&lt;h1 id="lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching"&gt;Lakebase Postgres minimizes object‑storage reads using tiered caching
+&lt;/h1&gt;&lt;p&gt;Lakebase Postgres builds on object storage for durability while keeping reads off of it through a multi‑tier cache hierarchy.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Object storage provides the foundation: durable, bottomless storage, instant branches and restores, and a single copy of data for transactions and analytics (LTAP).&lt;/li&gt;
+&lt;li&gt;The system is designed so that object storage never sits in front of a query; reads travel through faster tiers first.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🧩 Architecture
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tier&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Compute node&lt;/td&gt;
+&lt;td&gt;Runs standard Postgres, holds no durable state, serves ~99.46% of page accesses from its local cache (memory or micro‑second latency).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pageserver&lt;/td&gt;
+&lt;td&gt;Owns local NVMe, serves ~0.54% of reads, builds an LSM tree, persists materialized history to object storage asynchronously.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Object storage&lt;/td&gt;
+&lt;td&gt;Holds immutable, long‑term history, backs pageservers, is accessed for only ~1 in 28 million page accesses.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-read-path-details"&gt;⚙️ Read Path Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;On a compute‑node cache miss, the request is sent over the network to a pageserver, which serves the page from its own NVMe.&lt;/li&gt;
+&lt;li&gt;Only if the pageserver also misses does the request reach object storage.&lt;/li&gt;
+&lt;li&gt;Production statistics:
+&lt;ul&gt;
+&lt;li&gt;Compute cache: ~1.1 billion page accesses / s (99.46% of total).&lt;/li&gt;
+&lt;li&gt;Pageserver NVMe: ~6 million reads / s (0.54% of total).&lt;/li&gt;
+&lt;li&gt;Object storage: ~39 requests / s (≈1 in 28 million accesses).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Reads that do reach object storage are rare one‑offs—old branches, restores, or databases that have been idle for weeks. Once cached, subsequent reads return to the faster tiers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability--durability"&gt;🚀 Availability &amp;amp; Durability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Transactions are committed after a quorum of safekeepers acknowledges the record.&lt;/li&gt;
+&lt;li&gt;A Paxos‑based protocol handles leader election and failover.&lt;/li&gt;
+&lt;li&gt;Because the compute layer holds no durable state, it can start, stop, scale, or fail without risking data.&lt;/li&gt;
+&lt;li&gt;The storage layer owns correctness, durability, and history.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By keeping the hot path in memory or NVMe, Lakebase Postgres achieves micro‑second latency comparable to a traditional warm‑cache Postgres instance.&lt;/li&gt;
+&lt;li&gt;Object storage provides virtually unlimited capacity and durability without becoming a performance bottleneck.&lt;/li&gt;
+&lt;li&gt;The tiered design ensures that even as data grows, the vast majority of reads stay on the fastest tier, making the system both scalable and responsive.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/read-paths-lakebase.gif?v=1794924287"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/build-page-at-LSN.gif?v=1794924287"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Lakebase #Postgres #ObjectStorage #DatabaseArchitecture&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/built-object-storage-served-cache" target="_blank" rel="noopener"
+&gt;Built on object storage, served from cache&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Understanding AI Coordination Patterns</title><link>https://shoubhikbanerjee.github.io/blog/p/understanding-ai-coordination-patterns/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/understanding-ai-coordination-patterns/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/16/ML-21577-featured-image.png" alt="Featured image of post Understanding AI Coordination Patterns" /&gt;&lt;h1 id="understanding-ai-coordination-patterns"&gt;Understanding AI Coordination Patterns
+&lt;/h1&gt;&lt;p&gt;AI coordination patterns are crucial for effective multi-agent systems. When early implementations fall short, the cause is rarely the model.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Multi-agent coordination is a distributed systems problem.&lt;/li&gt;
+&lt;li&gt;~88% of AI pilots never reach production.&lt;/li&gt;
+&lt;li&gt;Two models can perform worse collaborating than either alone when coordination overhead exceeds the benefit.&lt;/li&gt;
+&lt;li&gt;Teams are adding complexity faster than they build understanding.&lt;/li&gt;
+&lt;li&gt;Ten steps that are each 95 percent reliable deliver only 59.9 percent end-to-end reliability.&lt;/li&gt;
+&lt;li&gt;20 steps deliver 35.8 percent.&lt;/li&gt;
+&lt;li&gt;Each dependent handoff multiplies risk.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Coordination patterns fall into two tiers, based on who controls the flow.&lt;/p&gt;
+&lt;h3 id="tier-1-patterns-deterministic-control-flow"&gt;Tier 1: Patterns (deterministic control flow)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sequential Pipeline&lt;/strong&gt;: Orchestration patterns that implement linear execution where each node&amp;rsquo;s output feeds into the next node (A -&amp;gt; B -&amp;gt; C) supporting ordered processing with predictable execution timing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Conditional Workflow&lt;/strong&gt;: Logic-based edges select the next node by condition, so the workflow can branch and send each case down a different path.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Conditional Router&lt;/strong&gt;: A classification step examines the input and directs it to the appropriate processing path. Only one path is executed per request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Parallel Workflow&lt;/strong&gt;: A task splits into independent subtasks that run simultaneously across handlers, each on its own data. A fan-in step combines the results when all handlers complete, and a failure in one path retries only that path.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="tier-2-autonomous-patterns-llm-determined-control-flow"&gt;Tier 2: Autonomous patterns (LLM-determined control flow)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;In autonomous patterns, control flow is determined at runtime by the AI model itself, not predefined by developers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Plan-based orchestration&lt;/strong&gt;: In plan-based orchestration, a single orchestrator agent acts as a project manager.
+&lt;ul&gt;
+&lt;li&gt;The orchestrator maintains an explicit task plan with assignments and dependencies, sees all context while each worker receives only its slice, distributes work dynamically against the current plan, and monitors progress centrally.&lt;/li&gt;
+&lt;li&gt;Key design choice is that the workers are stateless and independent. If one fails, it doesn&amp;rsquo;t contaminate others.&lt;/li&gt;
+&lt;li&gt;The orchestrator retries only the failed worker, not the entire workflow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Handoff pattern&lt;/strong&gt;: Agents operate with limited, local knowledge and coordinate through peer-to-peer delegation.
+&lt;ul&gt;
+&lt;li&gt;Each makes local decisions about when and to whom to transfer control, based on the task and the agents it knows.&lt;/li&gt;
+&lt;li&gt;Control passes with state: each transfer carries validated task state, the evidence behind it, and any unresolved questions, so the receiving agent continues rather than reinterpreting a summary.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The practical default is to start with Tier 1 and move a task to Tier 2 only when its subtasks emerge during the work.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AICoordination #MultiAgentSystems #AIAgents #DistributedSystems&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/taxonomy-of-multi-agent-design-patterns-anti-patterns-and-lessons-from-manufacturing/" target="_blank" rel="noopener"
+&gt;Taxonomy of multi-agent design patterns, anti-patterns, and lessons from manufacturing | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SeaweedFS Offers Scalable O(1) Object and File Storage</title><link>https://shoubhikbanerjee.github.io/blog/p/seaweedfs-offers-scalable-o-1-object-and-file-storage/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/seaweedfs-offers-scalable-o-1-object-and-file-storage/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/11985425?v=4" alt="Featured image of post SeaweedFS Offers Scalable O(1) Object and File Storage" /&gt;&lt;h1 id="seaweedfs-offers-scalable-o1-object-and-file-storage"&gt;SeaweedFS Offers Scalable O(1) Object and File Storage
+&lt;/h1&gt;&lt;p&gt;SeaweedFS, a distributed storage system, has released a new iteration that enables scalable object storage and file serving.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;SeaweedFS is a distributed storage system for object storage (S3), file systems, Iceberg table buckets, and Lance vector buckets, designed to handle billions of files with O(1) disk access and effortless horizontal scaling.
+SeaweedFS is a simple and highly scalable distributed file system.
+There are two objectives: 1. to store billions of files! 2. to serve the files fast!&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;p&gt;One SeaweedFS cluster serves an S3 object store, a POSIX file system, a lakehouse with S3 Tables and a built-in Iceberg REST Catalog, and vector search with S3 Vector Buckets, all on shared storage.
+Each blob is one disk read away, capacity grows by starting another volume server, and cloud storage can be cached or tiered transparently.
+Blob reads and writes have O(1) complexity and can run at the full speed supported by the underlying hardware.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;HTTP REST API for the filer, master, and volume servers&lt;/li&gt;
+&lt;li&gt;Download Binaries for different platforms&lt;/li&gt;
+&lt;li&gt;SeaweedFS White Paper and introduction slides: 2025.5, 2021.5, 2019.3&lt;/li&gt;
+&lt;li&gt;Download the latest binary from the releases page and unzip the single weed (or weed.exe) file, or let the install script put it in /usr/local/bin&lt;/li&gt;
+&lt;li&gt;curl -fsSL &lt;a class="link" href="https://raw.githubusercontent.com/seaweedfs/seaweedfs/master/install.sh" target="_blank" rel="noopener"
+&gt;https://raw.githubusercontent.com/seaweedfs/seaweedfs/master/install.sh&lt;/a&gt; | bash&lt;/li&gt;
+&lt;li&gt;For SeaweedFS Enterprise binaries, pass &amp;ndash;enterprise to the script: &amp;hellip; | bash -s &amp;ndash; &amp;ndash;enterprise.&lt;/li&gt;
+&lt;li&gt;Community: Slack, Twitter, Telegram, Reddit, Mailing List&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;AWS_ACCESS_KEY_ID=admin AWS_SECRET_ACCESS_KEY=secret S3_BUCKET=my-bucket ./weed mini -dir=./data
+The S3 endpoint is at http://localhost:8333, my-bucket exists, and admin/secret are valid credentials
+aws &amp;ndash;endpoint-url http://localhost:8333 s3 cp README.md s3://my-bucket/
+The same process also runs the master, a volume server, the filer, WebDAV, the Iceberg REST catalog, and the Admin UI.
+Add S3_TABLE_BUCKET=warehouse to also create an Iceberg table bucket, or warehouse:LANCE for a Lance one.
+Drop the AWS keys to run without authentication for development.
+Without Admin authentication or mTLS, weed mini binds the Admin UI/API and its worker gRPC control port to localhost only.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Scales effortlessly by adding volume servers.&lt;/li&gt;
+&lt;li&gt;Provides O(1) disk access for billions of files.&lt;/li&gt;
+&lt;li&gt;Supports multiple interfaces: S3, POSIX, Iceberg, vector search.&lt;/li&gt;
+&lt;li&gt;Easy to deploy with a single binary or install script.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#SeaweedFS #DistributedStorage #ObjectStorage #S3 #FileSystem&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/seaweedfs/seaweedfs" target="_blank" rel="noopener"
+&gt;seaweedfs/seaweedfs&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Mike Walker Leads AI‑Powered Cyber Defense and Autonomous Hacking Tournament</title><link>https://shoubhikbanerjee.github.io/blog/p/mike-walker-leads-aipowered-cyber-defense-and-autonomous-hacking-tournament/</link><pubDate>Wed, 04 Nov 2026 22:02:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/mike-walker-leads-aipowered-cyber-defense-and-autonomous-hacking-tournament/</guid><description>&lt;img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2026/10/WeishungMike-MSRPod_TW_LI_FB_1920x1080-1.jpg" alt="Featured image of post Mike Walker Leads AI‑Powered Cyber Defense and Autonomous Hacking Tournament" /&gt;&lt;h1 id="mike-walker-leads-aipowered-cyber-defense-and-autonomous-hacking-tournament"&gt;Mike Walker Leads AI‑Powered Cyber Defense and Autonomous Hacking Tournament
+&lt;/h1&gt;&lt;p&gt;Mike Walker, a research manager at Microsoft Research, is advancing the use of artificial intelligence in cybersecurity. In a Microsoft Research Podcast he discusses his work on autonomous AI systems that discover and patch software vulnerabilities, the first all‑machine hacking tournament, and his perspective on the social role of security rules.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Walker’s career combines AI, cybersecurity, and large distributed systems.&lt;/li&gt;
+&lt;li&gt;He helped create the first all‑machine hacking tournament, showing how autonomous AI can compete in vulnerability discovery.&lt;/li&gt;
+&lt;li&gt;His work aims to improve how computers are trained to defend against cyberattacks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-background"&gt;🧩 Background
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;DARPA Cyber Grand Challenge (CGC):&lt;/strong&gt; Walker led the program that proved autonomous AI could find and patch software flaws. CGC marked its 10th anniversary in 2026.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Microsoft Research:&lt;/strong&gt; As a research manager, he leads projects at the intersection of AI, cybersecurity, and large distributed systems.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prior experience:&lt;/strong&gt; Participation in hacker culture guided his move into next‑generation cyber defense.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Technical focus areas:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Cloud‑native memory analysis&lt;/li&gt;
+&lt;li&gt;Automated malware analysis&lt;/li&gt;
+&lt;li&gt;Next‑generation cyber defense technologies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Philosophy on security rules:&lt;/strong&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;Well, you have to understand the rules if you want to be able to do what you want.&amp;rdquo;
+&amp;ldquo;Rules are a social construct… when a security system asks something of users, you’re asking for their trust. Trust is a precious commodity. When you squander user trust, the security regime falls down.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Core question raised:&lt;/strong&gt; Are today’s networked systems any safer than they were a decade ago?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-perspectives"&gt;💭 Perspectives
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Walker emphasizes the need to view security rules within their social context rather than applying instant adjudication.&lt;/li&gt;
+&lt;li&gt;He believes understanding the social dynamics of trust is essential for robust cyber defense.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;This story was shared in a Microsoft Research Podcast hosted by Principal Technical Program Manager Weishung Liu.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2020/08/Mike-Walker_360x360.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AI #Cybersecurity #DARPA #MicrosoftResearch&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.microsoft.com/en-us/research/podcast/learn-the-rules-the-hacker-mindset/" target="_blank" rel="noopener"
+&gt;Learn the rules: The hacker mindset - Microsoft Research&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS releases Ray Train Deep Learning Container for distributed PyTorch training</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-releases-ray-train-deep-learning-container-for-distributed-pytorch-training/</link><pubDate>Thu, 29 Oct 2026 18:01:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-releases-ray-train-deep-learning-container-for-distributed-pytorch-training/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22002-featured-image.png" alt="Featured image of post AWS releases Ray Train Deep Learning Container for distributed PyTorch training" /&gt;&lt;h1 id="aws-releases-ray-train-deep-learning-container-for-distributed-pytorch-training"&gt;AWS releases Ray Train Deep Learning Container for distributed PyTorch training
+&lt;/h1&gt;&lt;p&gt;AWS has released the Ray Train Deep Learning Container (DLC), a pre-integrated software stack designed to simplify distributed machine learning training. The image is built, tested as a single unit, and maintained by AWS to ensure compatibility across the various libraries required for multi-node workloads.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The Ray Train DLC is a PyTorch training image with Ray’s training libraries layered on top. It includes the full HuggingFace training stack, allowing users to run fine-tuning jobs without building or pushing new images. AWS publishes these images to the Amazon Elastic Container Registry (Amazon ECR) Public, where they can be pulled without credentials.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CUDA Runtime&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides the foundational environment for GPU acceleration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;PyTorch&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Compiled against the specific CUDA runtime in the image.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;NCCL&lt;/td&gt;
+&lt;td style="text-align: left"&gt;NVIDIA Collective Communications Library for GPU communication.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;EFA Libraries&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Userspace libraries for the Elastic Fabric Adapter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AWS OFI NCCL Plugin&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Connects NCCL to EFA for high-performance networking.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Ray&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Coordinates the cluster and manages training libraries.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Ray runs a job across machines as a single cluster with two distinct roles, both of which use the same tagged image. Whether running on Amazon Elastic Kubernetes Service (Amazon EKS) via KubeRay or on Amazon Elastic Compute Cloud (Amazon EC2), the container&amp;rsquo;s role is determined by the startup command.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Ray Head:&lt;/strong&gt; Coordinates the cluster, tracks state in the global control store, and runs the dashboard and job server.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ray Worker:&lt;/strong&gt; Supplies GPUs and executes the training processes, connecting to the head’s address at startup.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On Kubernetes, the KubeRay operator adds a RayCluster resource that builds and maintains these groups from a single manifest.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The Ray Train DLC is designed to be configured entirely from outside the image. Users specify instance types, GPU counts, and network transport settings through external configuration files rather than by modifying the container.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Compatibility:&lt;/strong&gt; The image entrypoint automatically enables bundled CUDA forward-compatibility libraries if the host&amp;rsquo;s NVIDIA driver is older than the image&amp;rsquo;s CUDA version.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; Collective operations between instances run over EFA automatically as soon as pods request it, as the EFA stack is pre-installed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Testing:&lt;/strong&gt; AWS gates each release on multi-node EFA and multi-node KubeRay training tests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The Ray Train DLC is available in the Amazon ECR repository under the &lt;code&gt;train-ml&lt;/code&gt; tag prefix, sharing a repository with Ray Serve and Ray LLM DLCs.&lt;/p&gt;
+&lt;p&gt;A provided sample demonstrates the DLC&amp;rsquo;s capabilities by fine-tuning a Qwen2.5-1.5B model using PyTorch Fully Sharded Data Parallel (FSDP) across eight NVIDIA L4 GPUs on two g6.12xlarge instances.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22002-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22002-2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/19/ML-22002-3-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #Ray #PyTorch #MachineLearning #Kubernetes&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/distributed-training-with-ray-train-dlcs-and-efa-on-eks/" target="_blank" rel="noopener"
+&gt;Distributed training with Ray Train DLCs and EFA on EKS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>FedAlphaEdit Enables Privacy-Preserving Collaborative Knowledge Editing</title><link>https://shoubhikbanerjee.github.io/blog/p/fedalphaedit-enables-privacy-preserving-collaborative-knowledge-editing/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/fedalphaedit-enables-privacy-preserving-collaborative-knowledge-editing/</guid><description>&lt;h1 id="fedalphaedit-enables-privacy-preserving-collaborative-knowledge-editing"&gt;FedAlphaEdit Enables Privacy-Preserving Collaborative Knowledge Editing
+&lt;/h1&gt;&lt;p&gt;Multiple institutions may each hold private knowledge edits and wish to integrate them into a single large language model without sharing raw edit requests. A new paper titled &lt;strong&gt;FedAlphaEdit: Null-Space-Aligned Merging for Collaborative Knowledge Editing&lt;/strong&gt; (submitted on 8 Oct 2026) proposes a solution.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Null-space‑constrained editing methods such as &lt;strong&gt;AlphaEdit&lt;/strong&gt; guarantee that each update leaves unrelated knowledge intact.&lt;/li&gt;
+&lt;li&gt;Collaborative frameworks such as &lt;strong&gt;CollabEdit&lt;/strong&gt; aggregate edits from multiple clients without data sharing.&lt;/li&gt;
+&lt;li&gt;A naive combination of these two approaches fails structurally; the paper identifies the cause.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FedAlphaEdit&lt;/strong&gt; is introduced to resolve this failure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Aligns local editing (AlphaEdit) and server‑side merging (CollabEdit) under a single null‑space principle.&lt;/li&gt;
+&lt;li&gt;Clients share &lt;em&gt;projected statistics&lt;/em&gt; rather than raw edit requests.&lt;/li&gt;
+&lt;li&gt;The server provably recovers the result of editing everything in one place under a one‑shot idealization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Described as the &lt;strong&gt;first&lt;/strong&gt; collaborative knowledge editing framework that aligns both local editing and server‑side merging under a null‑space principle for preserving existing knowledge.&lt;/li&gt;
+&lt;li&gt;Empirical results show the method repairs the collapse and brings edit success and preservation &lt;strong&gt;close to the level of centralized editing&lt;/strong&gt; across two architecture families.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Allows institutions that cannot share raw edit data—such as hospitals and financial firms—to jointly maintain a shared model.&lt;/li&gt;
+&lt;li&gt;The shared model &lt;strong&gt;closely approximates editing all facts in one place&lt;/strong&gt;, enabling collaborative updates while respecting data privacy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#FedAlphaEdit #KnowledgeEditing #NullSpace #CollaborativeAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.11033v1" target="_blank" rel="noopener"
+&gt;FedAlphaEdit: Null-Space-Aligned Merging for Collaborative Knowledge Editing&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

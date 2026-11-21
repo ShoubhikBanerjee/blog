@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ObjectStorage on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/objectstorage/</link><description>Recent content in ObjectStorage on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 17 Nov 2026 22:09:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/objectstorage/index.xml" rel="self" type="application/rss+xml"/><item><title>Lakebase Postgres minimizes object‑storage reads using tiered caching</title><link>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/reads-served-from-cache-cover.png" alt="Featured image of post Lakebase Postgres minimizes object‑storage reads using tiered caching" /&gt;&lt;h1 id="lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching"&gt;Lakebase Postgres minimizes object‑storage reads using tiered caching
+&lt;/h1&gt;&lt;p&gt;Lakebase Postgres builds on object storage for durability while keeping reads off of it through a multi‑tier cache hierarchy.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Object storage provides the foundation: durable, bottomless storage, instant branches and restores, and a single copy of data for transactions and analytics (LTAP).&lt;/li&gt;
+&lt;li&gt;The system is designed so that object storage never sits in front of a query; reads travel through faster tiers first.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🧩 Architecture
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tier&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Compute node&lt;/td&gt;
+&lt;td&gt;Runs standard Postgres, holds no durable state, serves ~99.46% of page accesses from its local cache (memory or micro‑second latency).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pageserver&lt;/td&gt;
+&lt;td&gt;Owns local NVMe, serves ~0.54% of reads, builds an LSM tree, persists materialized history to object storage asynchronously.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Object storage&lt;/td&gt;
+&lt;td&gt;Holds immutable, long‑term history, backs pageservers, is accessed for only ~1 in 28 million page accesses.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-read-path-details"&gt;⚙️ Read Path Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;On a compute‑node cache miss, the request is sent over the network to a pageserver, which serves the page from its own NVMe.&lt;/li&gt;
+&lt;li&gt;Only if the pageserver also misses does the request reach object storage.&lt;/li&gt;
+&lt;li&gt;Production statistics:
+&lt;ul&gt;
+&lt;li&gt;Compute cache: ~1.1 billion page accesses / s (99.46% of total).&lt;/li&gt;
+&lt;li&gt;Pageserver NVMe: ~6 million reads / s (0.54% of total).&lt;/li&gt;
+&lt;li&gt;Object storage: ~39 requests / s (≈1 in 28 million accesses).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Reads that do reach object storage are rare one‑offs—old branches, restores, or databases that have been idle for weeks. Once cached, subsequent reads return to the faster tiers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability--durability"&gt;🚀 Availability &amp;amp; Durability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Transactions are committed after a quorum of safekeepers acknowledges the record.&lt;/li&gt;
+&lt;li&gt;A Paxos‑based protocol handles leader election and failover.&lt;/li&gt;
+&lt;li&gt;Because the compute layer holds no durable state, it can start, stop, scale, or fail without risking data.&lt;/li&gt;
+&lt;li&gt;The storage layer owns correctness, durability, and history.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By keeping the hot path in memory or NVMe, Lakebase Postgres achieves micro‑second latency comparable to a traditional warm‑cache Postgres instance.&lt;/li&gt;
+&lt;li&gt;Object storage provides virtually unlimited capacity and durability without becoming a performance bottleneck.&lt;/li&gt;
+&lt;li&gt;The tiered design ensures that even as data grows, the vast majority of reads stay on the fastest tier, making the system both scalable and responsive.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/read-paths-lakebase.gif?v=1794924287"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/build-page-at-LSN.gif?v=1794924287"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Lakebase #Postgres #ObjectStorage #DatabaseArchitecture&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/built-object-storage-served-cache" target="_blank" rel="noopener"
+&gt;Built on object storage, served from cache&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SeaweedFS Offers Scalable O(1) Object and File Storage</title><link>https://shoubhikbanerjee.github.io/blog/p/seaweedfs-offers-scalable-o-1-object-and-file-storage/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/seaweedfs-offers-scalable-o-1-object-and-file-storage/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/11985425?v=4" alt="Featured image of post SeaweedFS Offers Scalable O(1) Object and File Storage" /&gt;&lt;h1 id="seaweedfs-offers-scalable-o1-object-and-file-storage"&gt;SeaweedFS Offers Scalable O(1) Object and File Storage
+&lt;/h1&gt;&lt;p&gt;SeaweedFS, a distributed storage system, has released a new iteration that enables scalable object storage and file serving.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;SeaweedFS is a distributed storage system for object storage (S3), file systems, Iceberg table buckets, and Lance vector buckets, designed to handle billions of files with O(1) disk access and effortless horizontal scaling.
+SeaweedFS is a simple and highly scalable distributed file system.
+There are two objectives: 1. to store billions of files! 2. to serve the files fast!&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;p&gt;One SeaweedFS cluster serves an S3 object store, a POSIX file system, a lakehouse with S3 Tables and a built-in Iceberg REST Catalog, and vector search with S3 Vector Buckets, all on shared storage.
+Each blob is one disk read away, capacity grows by starting another volume server, and cloud storage can be cached or tiered transparently.
+Blob reads and writes have O(1) complexity and can run at the full speed supported by the underlying hardware.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;HTTP REST API for the filer, master, and volume servers&lt;/li&gt;
+&lt;li&gt;Download Binaries for different platforms&lt;/li&gt;
+&lt;li&gt;SeaweedFS White Paper and introduction slides: 2025.5, 2021.5, 2019.3&lt;/li&gt;
+&lt;li&gt;Download the latest binary from the releases page and unzip the single weed (or weed.exe) file, or let the install script put it in /usr/local/bin&lt;/li&gt;
+&lt;li&gt;curl -fsSL &lt;a class="link" href="https://raw.githubusercontent.com/seaweedfs/seaweedfs/master/install.sh" target="_blank" rel="noopener"
+&gt;https://raw.githubusercontent.com/seaweedfs/seaweedfs/master/install.sh&lt;/a&gt; | bash&lt;/li&gt;
+&lt;li&gt;For SeaweedFS Enterprise binaries, pass &amp;ndash;enterprise to the script: &amp;hellip; | bash -s &amp;ndash; &amp;ndash;enterprise.&lt;/li&gt;
+&lt;li&gt;Community: Slack, Twitter, Telegram, Reddit, Mailing List&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;AWS_ACCESS_KEY_ID=admin AWS_SECRET_ACCESS_KEY=secret S3_BUCKET=my-bucket ./weed mini -dir=./data
+The S3 endpoint is at http://localhost:8333, my-bucket exists, and admin/secret are valid credentials
+aws &amp;ndash;endpoint-url http://localhost:8333 s3 cp README.md s3://my-bucket/
+The same process also runs the master, a volume server, the filer, WebDAV, the Iceberg REST catalog, and the Admin UI.
+Add S3_TABLE_BUCKET=warehouse to also create an Iceberg table bucket, or warehouse:LANCE for a Lance one.
+Drop the AWS keys to run without authentication for development.
+Without Admin authentication or mTLS, weed mini binds the Admin UI/API and its worker gRPC control port to localhost only.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Scales effortlessly by adding volume servers.&lt;/li&gt;
+&lt;li&gt;Provides O(1) disk access for billions of files.&lt;/li&gt;
+&lt;li&gt;Supports multiple interfaces: S3, POSIX, Iceberg, vector search.&lt;/li&gt;
+&lt;li&gt;Easy to deploy with a single binary or install script.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#SeaweedFS #DistributedStorage #ObjectStorage #S3 #FileSystem&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/seaweedfs/seaweedfs" target="_blank" rel="noopener"
+&gt;seaweedfs/seaweedfs&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Announces cuObject General Availability and Expands xio-sig Partnership</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-announces-cuobject-general-availability-and-expands-xio-sig-partnership/</link><pubDate>Thu, 01 Oct 2026 22:03:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-announces-cuobject-general-availability-and-expands-xio-sig-partnership/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/AI-Storage-660x370.png" alt="Featured image of post NVIDIA Announces cuObject General Availability and Expands xio-sig Partnership" /&gt;&lt;h1 id="nvidia-announces-cuobject-general-availability-and-expands-xio-sig-partnership"&gt;NVIDIA Announces cuObject General Availability and Expands xio-sig Partnership
+&lt;/h1&gt;&lt;p&gt;NVIDIA has announced the general availability of cuObject client and server libraries and is expanding xio-sig to include cuObject alongside cuFile in partnership with Microsoft and Google Cloud.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;SCADA serves as the software infrastructure supporting high-throughput, fine-grained, GPU-initiated storage access. This system enables compute accelerators—including GPUs, TPUs, and XPUs—to utilize remote direct memory access (RDMA) via NIC- or DPU-accelerated data transfers, such as NVIDIA ConnectX NIC or NVIDIA BlueField DPU.&lt;/p&gt;
+&lt;p&gt;This architecture allows AI accelerators to access file and object storage without routing data through the server CPU, resulting in:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Higher throughput&lt;/li&gt;
+&lt;li&gt;Lower latency&lt;/li&gt;
+&lt;li&gt;Reduced CPU utilization for data reads and writes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Through the NVIDIA Storage-Next initiative, NVIDIA is leading a group of over 40 vendors and customers—including hyperscalers, application developers, controller vendors, NAND vendors, and storage providers—to define GPU-driven storage and establish interoperable, open industry standards.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;cuObject&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides APIs and an RDMA wire protocol for building accelerated object-storage applications and servers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;xio-sig&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides a path for the cuObject client to interoperate with any server-side implementation adhering to the wire protocol.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SCADA Server SDK&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enables storage providers to build servers that respond to GPU-initiated requests from SCADA clients.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Storage Lender Service&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Part of the effort accompanying the SCADA command-line utility for configuration and deployment.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The general availability of cuObject libraries offers standardized methods for accelerated AI data access using both object and file protocols for storage consumers, storage providers, open source framework developers, and AI application developers.&lt;/p&gt;
+&lt;p&gt;Interoperability efforts include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;IBM:&lt;/strong&gt; Demonstrated a prototype integrating SCADA and IBM Storage Scale, where a SCADA client sends requests to a Storage Scale SCADA server built with the new SDK.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google Cloud:&lt;/strong&gt; A maintainer for cuFile in xio-sig, Google Cloud is evaluating expanding its participation for cuObject.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Microsoft:&lt;/strong&gt; Planning to join the xio-sig Board to improve storage I/O interoperability.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;cuObject client and server libraries are generally available.&lt;/li&gt;
+&lt;li&gt;cuObject Server 2.0.0 and NVIDIA CUDA 13.4 preview downloads are available.&lt;/li&gt;
+&lt;li&gt;Repository structures are established for cuFile and cuObject; headers, the cuObject wire protocol, and library implementation code (libxFile and xFilekernel) will be shared after the production-ready stack passes conformance tests.&lt;/li&gt;
+&lt;li&gt;Governance documents are currently under review by pending Board Members.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/figure-1-3.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #GPU #ObjectStorage #RDMA #cuObject&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/expanding-ai-storage-access-with-nvidia-cuobject-and-the-nvidia-scada-server-sdk/" target="_blank" rel="noopener"
+&gt;Expanding AI Storage Access with NVIDIA cuObject and the NVIDIA SCADA Server SDK | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

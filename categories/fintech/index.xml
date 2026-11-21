@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Fintech on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/fintech/</link><description>Recent content in Fintech on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 07 Nov 2026 22:01:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/fintech/index.xml" rel="self" type="application/rss+xml"/><item><title>Taxbit launches Assist, a permission‑aware AI assistant for compliance teams</title><link>https://shoubhikbanerjee.github.io/blog/p/taxbit-launches-assist-a-permissionaware-ai-assistant-for-compliance-teams/</link><pubDate>Sat, 07 Nov 2026 22:01:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/taxbit-launches-assist-a-permissionaware-ai-assistant-for-compliance-teams/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21532-featured-image.png" alt="Featured image of post Taxbit launches Assist, a permission‑aware AI assistant for compliance teams" /&gt;&lt;h1 id="taxbit-launches-assist-a-permissionaware-ai-assistant-for-compliance-teams"&gt;Taxbit launches Assist, a permission‑aware AI assistant for compliance teams
+&lt;/h1&gt;&lt;p&gt;Taxbit, the digital‑asset tax and accounting compliance platform founded in 2018, has added a cited, permission‑aware AI assistant – Taxbit Assist – directly inside its product dashboard. The assistant helps compliance teams answer questions without digging through documentation or opening support tickets.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Taxbit serves enterprises such as exchanges, payment services, and brokers.&lt;/li&gt;
+&lt;li&gt;Assist answers questions in‑context, providing source links and indicating when it does not know an answer.&lt;/li&gt;
+&lt;li&gt;More than 55 % of users who ask Assist a question return within 24 hours to ask another, according to internal production analytics.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;User query&lt;/strong&gt; – A user types a question in the Taxbit dashboard.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Secure forwarding&lt;/strong&gt; – A streaming chat API forwards the query to the AgentCore runtime together with the user’s verified identity (email, organization ID, dashboard roles).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Guardrails &amp;amp; PII masking&lt;/strong&gt; – Amazon Bedrock Guardrails screen the message; any personally identifiable information is masked in place. If the message is blocked, the model is never invoked.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval&lt;/strong&gt; – The agent pulls candidate passages from an Amazon Bedrock Knowledge Base (RAG capability backed by Amazon S3 Vectors) and reranks them server‑side.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reasoning &amp;amp; permission check&lt;/strong&gt; – Amazon Bedrock models reason over the passages and verify the user’s feature and role access before recommending any workflow.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Response&lt;/strong&gt; – The answer streams back to the dashboard with source links; AgentCore memory preserves context across turns.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Observability&lt;/strong&gt; – Each request emits OpenTelemetry traces to Amazon CloudWatch for evaluation tooling.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-technical-details"&gt;⚙️ Key technical details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Agent&lt;/strong&gt;: Small Python application (system prompt, model, eight tools).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Runtime&lt;/strong&gt;: Strands Agents SDK on Amazon Bedrock AgentCore.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deployment&lt;/strong&gt;: ARM64 container image stored in Amazon ECR, pulled and scaled on demand.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model access&lt;/strong&gt;: Runs a foundation model via Amazon Bedrock, using cross‑Region inference profiles and geography‑aware inference for data residency.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security model&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;The model never receives identity information; email, org ID, and roles are bound to tools before the model sees them.&lt;/li&gt;
+&lt;li&gt;The model can decide whether to check permissions but cannot set whose permissions to check.&lt;/li&gt;
+&lt;li&gt;Input is sanitized at the boundary, preventing prompt‑injection attacks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data access&lt;/strong&gt;: The agent has no read access to customer tax data; it answers only from product knowledge and can only create the caller’s own support tickets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compliance&lt;/strong&gt;: Developed and operated in line with ISO/IEC 42001, the international standard for AI management systems.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Assist is available as an integrated feature inside the Taxbit dashboard for all existing Taxbit customers.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides immediate, cited answers, reducing the need for manual documentation searches or support tickets.&lt;/li&gt;
+&lt;li&gt;Embeds robust security and privacy safeguards, ensuring identity data never reaches the language model.&lt;/li&gt;
+&lt;li&gt;Leverages Amazon Bedrock’s managed RAG, guardrails, and observability stack, demonstrating a production‑grade AI integration for regulated financial workflows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21532-1.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21532-2.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/03/ML-21532-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Taxbit #AIassistants #AmazonBedrock #ComplianceAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/taxbit-assist-a-grounded-role-aware-ai-agent-on-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Taxbit Assist: A grounded, role-aware AI agent on Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Anthropic launches Claude Personal Finance beta via Plaid</title><link>https://shoubhikbanerjee.github.io/blog/p/anthropic-launches-claude-personal-finance-beta-via-plaid/</link><pubDate>Fri, 06 Nov 2026 22:02:31 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/anthropic-launches-claude-personal-finance-beta-via-plaid/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Personal-Finance-in-Claude-hed.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200" alt="Featured image of post Anthropic launches Claude Personal Finance beta via Plaid" /&gt;&lt;h1 id="anthropic-launches-claude-personal-finance-beta-via-plaid"&gt;Anthropic launches Claude Personal Finance beta via Plaid
+&lt;/h1&gt;&lt;p&gt;Anthropic is adding a Personal Finance feature to Claude that connects to users’ bank and card accounts through the Plaid platform.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Claude can now read a user’s banking data (read‑only) and answer questions about spending, upcoming bills, affordability of purchases, and potential savings.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The connection is facilitated by Plaid, so Claude never sees banking passwords and banks do not have to deal with unvetted AI bots.&lt;/li&gt;
+&lt;li&gt;Access is read‑only; Claude cannot move, manage, or invest money and is not designed to give investment advice.&lt;/li&gt;
+&lt;li&gt;Claude can see the bank’s name, account names, account type, the last four digits of the number, balances, credit limits, and up to two years of transaction history.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Capability&lt;/th&gt;
+&lt;th&gt;What Claude can do&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Spending overview&lt;/td&gt;
+&lt;td&gt;Explain where money went this month and break down spending by categories such as rent, utilities, shopping, and food&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Bill tracking&lt;/td&gt;
+&lt;td&gt;Answer broader questions about what bills are left before the next payday&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Purchase affordability&lt;/td&gt;
+&lt;td&gt;Indicate if a big purchase like a holiday trip is affordable&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Savings insight&lt;/td&gt;
+&lt;td&gt;Estimate how much money could be saved each month&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Terminology help&lt;/td&gt;
+&lt;td&gt;Explain financial terms the user doesn’t understand&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Balance queries&lt;/td&gt;
+&lt;td&gt;Answer questions about balances and transactions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Personal Finance is rolling out in beta this week to Claude Pro, Max, and Ultra plan subscribers in the US.&lt;/li&gt;
+&lt;li&gt;Anthropic’s announcement follows OpenAI introducing a similar feature for ChatGPT in May, which also plugs into bank accounts through Plaid.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;“Personal Finance is a first step. For life’s bigger money decisions, we think people are best served by Claude working alongside the licensed professionals and regulated firms they trust. We’re exploring how to make that possible in Claude, and we’d like to hear from banks, wealth managers, and financial services companies who want to help shape it.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Allowing AI oversight into finances may ring some alarm bells, but Anthropic frames this as an early step toward collaborative financial assistance.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Personal-Finance-in-Claude-hed.jpg?quality=90&amp;amp;strip=all&amp;amp;crop=0%2C0%2C100%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Anthropic #Claude #PersonalFinance #AI #Fintech&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/ai-artificial-intelligence/1027652/anthropic-claude-plaid-personal-finance" target="_blank" rel="noopener"
+&gt;Claude AI can plug directly into your bank account&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
