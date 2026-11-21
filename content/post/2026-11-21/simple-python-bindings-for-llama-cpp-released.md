@@ -2,7 +2,7 @@
 title: "Simple Python bindings for llama.cpp released"
 slug: "simple-python-bindings-for-llama-cpp-released"
 description: "Simple Python bindings for the `llama.cpp` library are now available, providing low-level access to the C API via `ctypes` and a high-level Python API for text completion."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [llamacpp, Python, Llama, LocalLLM, CTypes]
 categories: ["AI", "Large Language Models", "Software Development", "Local AI", "Interoperability"]
 image: "https://avatars.githubusercontent.com/u/6826477?v=4"

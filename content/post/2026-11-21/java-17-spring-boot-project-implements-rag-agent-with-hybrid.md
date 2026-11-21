@@ -2,7 +2,7 @@
 title: "Java 17 Spring Boot project implements RAG agent with hybrid search and observability"
 slug: "java-17-spring-boot-project-implements-rag-agent-with-hybrid-search-and-observability"
 description: "This update describes a Java 17 AI agent service built on Spring Boot 3.5 and LangChain4j 0.34. Designed for enterprise knowledge Q&A and intelligent customer service, the project implements a..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [Java, SpringBoot, RAG, AIAgents, LangChain4j]
 categories: ["AI", "AI Agents", "Search and Retrieval", "Machine Learning", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/275442820?v=4"

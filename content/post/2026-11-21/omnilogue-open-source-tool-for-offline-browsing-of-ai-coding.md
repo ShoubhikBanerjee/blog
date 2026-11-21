@@ -2,7 +2,7 @@
 title: "Omnilogue Open-Source Tool for Offline Browsing of AI Coding Assistant History"
 slug: "omnilogue-open-source-tool-for-offline-browsing-of-ai-coding-assistant-history"
 description: "Omnilogue is an open‑source desktop application with an optional self‑hosted WebUI that lets you browse, search, and analyze the history of many AI coding assistants while keeping all data local."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [Omnilogue, AIHistory, OpenSource]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/60695299?v=4"

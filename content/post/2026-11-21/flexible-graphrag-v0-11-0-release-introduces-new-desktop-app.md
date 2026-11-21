@@ -2,7 +2,7 @@
 title: "Flexible GraphRAG v0.11.0 Release Introduces New Desktop App and State Options"
 slug: "flexible-graphrag-v0-11-0-release-introduces-new-desktop-app-and-state-options"
 description: "The v0.11.0 release introduces an early version of a Desktop App built with Tauri and Rust alongside various backend and architectural updates."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [GraphRAG, Python, Tauri, LlamaIndex, FastAPI]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Database Systems"]
 image: "https://avatars.githubusercontent.com/u/921792?v=4"

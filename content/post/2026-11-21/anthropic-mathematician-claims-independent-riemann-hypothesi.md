@@ -2,7 +2,7 @@
 title: "Anthropic mathematician claims independent Riemann Hypothesis proof using Claude"
 slug: "anthropic-mathematician-claims-independent-riemann-hypothesis-proof-using-claude"
 description: "Within a few hours of each other, two mathematicians claimed independent proofs of the Riemann Hypothesis, the most famous open problem in mathematics. Levent Alpöge of Anthropic first made his..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [RiemannHypothesis, Anthropic, FormalVerification, LeanCode, AIResearch]
 categories: ["AI", "Mathematics", "Formal Verification", "AI Systems", "Research"]
 image: "https://latent.space/og/card/post/ainews-riemann-hypothesis-proved-twice-independently/e5a84487c10f6433d047c718980d15e3da91212ba6d34d2720d3eb1a90a457ba.png"

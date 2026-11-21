@@ -2,7 +2,7 @@
 title: "Amazon Textract Insights: Generative AI for Document Processing"
 slug: "amazon-textract-insights-generative-ai-for-document-processing"
 description: "Amazon Textract Insights, a new generative AI feature of Amazon Textract, is now generally available. This feature allows users to describe the fields they want in natural language and submit..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [AmazonTextract, GenerativeAI, DocumentProcessing, AWS, AI]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Document Processing", "Cloud Computing"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22308-featured-image.png"

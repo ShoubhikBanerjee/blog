@@ -2,7 +2,7 @@
 title: "OpenAI Updates Safeguards to Combat Adversarial Distillation in GPT-6.2 Models"
 slug: "openai-updates-safeguards-to-combat-adversarial-distillation-in-gpt-6-2-models"
 description: "OpenAI has introduced updated protections to detect and disrupt adversarial distillation, a process where actors use a frontier model's outputs to train a separate model with similar capabilities but..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [AISafety, Cybersecurity, GPT6, MachineLearning]
 categories: ["AI", "AI Safety", "Machine Learning", "Cybersecurity"]
 image: "https://images.ctfassets.net/kftzwdyauwt9/5SUtPGdssrttC7LfP1yoJ1/b6b000846ab3576c1735c29534ab20b0/combatting-adversarial-distillation-social.png?w=1600&h=900&fit=fill"

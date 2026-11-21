@@ -2,7 +2,7 @@
 title: "MiniRAG v2 Alpha Brings Local-First Hybrid Search to MCP Clients"
 slug: "minirag-v2-alpha-brings-local-first-hybrid-search-to-mcp-clients"
 description: "MiniRAG v2 is now available as a test pre-release (2.0.0aN), offering a local-first Retrieval-Augmented Generation (RAG) Model Context Protocol (MCP) server written in Python. The update introduces..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [MiniRAG, LocalRAG, MCP, HybridSearch, PrivacyFirst]
 categories: ["AI", "AI Agents", "RAG Systems", "Local Computing"]
 image: "https://avatars.githubusercontent.com/u/12236835?v=4"

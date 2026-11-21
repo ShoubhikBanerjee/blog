@@ -2,7 +2,7 @@
 title: "AWS Quick Updates Enable Deterministic Multi-Agent Workflows and Desktop Integration"
 slug: "aws-quick-updates-enable-deterministic-multi-agent-workflows-and-desktop-integration"
 description: "AWS has released updates to AWS Quick, an AI workspace built specifically for work. These updates are designed to help teams complete everyday tasks by allowing users to describe a process in chat,..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [AWS, AIagents, WorkflowAutomation, Productivity, MultiAgent]
 categories: ["AI", "AI Agents", "Workflow Automation", "Productivity Tools", "Enterprise AI"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22322-featured-image.png"

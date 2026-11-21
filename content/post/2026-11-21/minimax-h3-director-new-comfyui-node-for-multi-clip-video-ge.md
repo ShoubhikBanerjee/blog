@@ -2,7 +2,7 @@
 title: "MiniMax H3 Director: New ComfyUI Node for Multi-Clip Video Generation"
 slug: "minimax-h3-director-new-comfyui-node-for-multi-clip-video-generation"
 description: "MiniMax H3 Director is a new ComfyUI node designed for long video and multi-segment generation. It integrates segment planning, conditional encoding, sampling, decoding, and export into a single..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [MiniMaxH3, ComfyUI, VideoGeneration, AIVideo, ComfyNodes]
 categories: ["AI", "Generative AI", "Video Generation", "Machine Learning", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/149470765?v=4"

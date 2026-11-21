@@ -2,7 +2,7 @@
 title: "Standard Bank Group Automates Generative AI Risk Assessment with AWS"
 slug: "standard-bank-group-automates-generative-ai-risk-assessment-with-aws"
 description: "Standard Bank Group has deployed an automated assessment system for generative AI use cases, built with AWS Professional Services, that scores each case against international AI standards and..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [GenerativeAI, RiskAssessment, AWS, Bedrock, LLMasJudge, Compliance]
 categories: ["AI", "Machine Learning", "AI Governance", "Cloud Computing", "Financial Services"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22493-featured-image.png"

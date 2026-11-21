@@ -2,7 +2,7 @@
 title: "Proposed Proof of the Generalized Riemann Hypothesis Developed with Claude AI"
 slug: "proposed-proof-of-the-generalized-riemann-hypothesis-developed-with-claude-ai"
 description: "A proposed proof of the Generalized Riemann Hypothesis, created by mathematician Alessandro Masullo with extensive AI assistance from Claude, has been released as a draft."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [Mathematics, RiemannHypothesis, AIResearch, Proof]
 categories: ["AI", "Mathematics", "Artificial Intelligence", "Theoretical Computer Science"]
 author: "Shoubhik Banerjee"

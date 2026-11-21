@@ -2,7 +2,7 @@
 title: "Self-learning AI agent with IDE, messaging, and memory"
 slug: "self-learning-ai-agent-with-ide-messaging-and-memory"
 description: "A new 24/7 self-learning AI agent has been introduced, featuring an integrated IDE workspace that runs itself. The system operates without requiring extra API keys, working directly with existing..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [AIagents, Developertools, Automation, Claude, OpenAICodex]
 categories: ["AI", "AI Agents", "Developer Tools", "Productivity", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/50865782?v=4"

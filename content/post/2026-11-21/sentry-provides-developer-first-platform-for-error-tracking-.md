@@ -2,7 +2,7 @@
 title: "Sentry Provides Developer-First Platform for Error Tracking and Performance Monitoring"
 slug: "sentry-provides-developer-first-platform-for-error-tracking-and-performance-monitoring"
 description: "Sentry provides a developer-first platform for error tracking and performance monitoring. The system is designed to assist every developer in detecting, tracing, and fixing issues to ensure code is..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [Sentry, Debugging, ErrorTracking, PerformanceMonitoring]
 categories: ["AI", "Software Development", "Debugging", "Performance Monitoring"]
 image: "https://avatars.githubusercontent.com/u/1396951?v=4"

@@ -2,7 +2,7 @@
 title: "Dokploy: Open Source PaaS Alternative to Vercel, Netlify, Heroku"
 slug: "dokploy-open-source-paas-alternative-to-vercel-netlify-heroku"
 description: "Dokploy is a free, self-hostable Platform as a Service (PaaS) that simplifies the deployment and management of applications and databases."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [Dokploy, PaaS, OpenSource, Deployment, Management]
 categories: ["AI", "Platform as a Service", "DevOps", "Open Source", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/156882017?v=4"

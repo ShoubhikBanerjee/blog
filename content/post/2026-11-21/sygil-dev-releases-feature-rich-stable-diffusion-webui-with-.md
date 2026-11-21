@@ -2,7 +2,7 @@
 title: "Sygil.Dev Releases Feature-Rich Stable Diffusion WebUI with Low VRAM Support"
 slug: "sygil-dev-releases-feature-rich-stable-diffusion-webui-with-low-vram-support"
 description: "Sygil.Dev has released a WebUI that provides an easy way to work with Stable Diffusion directly from a web browser. The application features a clean, widescreen-compatible user interface designed to..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [StableDiffusion, SygilDev, WebUI, GenerativeAI, ComputerVision]
 categories: ["AI", "Generative AI", "Image Generation", "Software Tools"]
 image: "https://avatars.githubusercontent.com/u/112985304?v=4"

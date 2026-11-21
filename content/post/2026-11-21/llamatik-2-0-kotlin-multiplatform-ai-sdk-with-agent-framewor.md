@@ -2,7 +2,7 @@
 title: "Llamatik 2.0: Kotlin Multiplatform AI SDK with Agent Framework"
 slug: "llamatik-2-0-kotlin-multiplatform-ai-sdk-with-agent-framework"
 description: "Llamatik 2.0 is a major architectural release of the Kotlin Multiplatform AI SDK, extracting reusable business logic into a clean, UI-agnostic, publishable SDK. It introduces a full Agent Framework..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [Kotlin, AI, AgentFramework, Multiplatform, Llamatik]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Development", "Kotlin"]
 image: "https://avatars.githubusercontent.com/u/287465123?v=4"

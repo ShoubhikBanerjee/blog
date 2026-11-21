@@ -2,7 +2,7 @@
 title: "ByteDance's Seedance 2.0 Video Generation Model Launches"
 slug: "bytedance-s-seedance-2-0-video-generation-model-launches"
 description: "ByteDance's Seedance 2.0, the industry's first model supporting simultaneous quad-modal input — image, video, audio, and text, has launched. This innovative tool offers a range of features and..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [Seedance20, VideoGeneration, ByteDance, AI, QuadModalInput]
 categories: ["AI", "Artificial Intelligence", "Video Generation", "Machine Learning", "Computer Vision"]
 image: "https://avatars.githubusercontent.com/u/245655810?v=4"

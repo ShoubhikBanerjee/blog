@@ -2,7 +2,7 @@
 title: "Pydantic AI Skills Enhances Agent Capabilities with Progressive Disclosure"
 slug: "pydantic-ai-skills-enhances-agent-capabilities-with-progressive-disclosure"
 description: "Pydantic AI Skills introduces enhanced capabilities for Agent Skills, supporting progressive disclosure and modular packages of instructions, resources, and scripts. This update allows agents to..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [PydanticAI, AgentSkills, ProgressiveDisclosure, AIAgents, AITools]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Development", "AI Tools"]
 image: "https://avatars.githubusercontent.com/u/8703022?v=4"

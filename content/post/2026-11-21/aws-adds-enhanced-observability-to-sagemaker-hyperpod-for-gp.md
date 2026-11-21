@@ -2,7 +2,7 @@
 title: "AWS Adds Enhanced Observability to SageMaker HyperPod for GPU Training"
 slug: "aws-adds-enhanced-observability-to-sagemaker-hyperpod-for-gpu-training"
 description: "Amazon has announced enhanced observability capabilities for Amazon SageMaker HyperPod, a new feature designed to help users diagnose GPU training issues more quickly. This update introduces..."
-date: 2026-11-21T18:08:57+05:30
+date: 2026-11-21T22:09:40+05:30
 tags: [AWS, SageMaker, HyperPod, GPU, Observability, CloudWatch]
 categories: ["AI", "Machine Learning", "Cloud Infrastructure", "DevOps", "Monitoring"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22438-featured-image-1.png"
