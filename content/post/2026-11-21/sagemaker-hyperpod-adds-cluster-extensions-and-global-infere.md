@@ -2,7 +2,7 @@
 title: "SageMaker HyperPod Adds Cluster Extensions and Global Inference Gateway"
 slug: "sagemaker-hyperpod-adds-cluster-extensions-and-global-inference-gateway"
 description: "Amazon SageMaker HyperPod has introduced two new capabilities: cluster extensions for managing software on running nodes and the Global Inference Gateway for routing requests across multiple clusters..."
-date: 2026-11-21T06:15:51+05:30
+date: 2026-11-21T12:13:14+05:30
 tags: [SageMaker, HyperPod, Slurm, AWS, Inference, MachineLearning]
 categories: ["AI", "Machine Learning", "Cloud Infrastructure", "MLOps", "AI Engineering"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/l-ml-22428.png"

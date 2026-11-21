@@ -2,7 +2,7 @@
 title: "Bell Canada Investigates Data Breach Linked to Agentic Threat Actor"
 slug: "bell-canada-investigates-data-breach-linked-to-agentic-threat-actor"
 description: "Bell Canada has confirmed that an 'agentic' threat actor breached its systems on November 17, 2026, and stole enterprise customer data. The unauthorized access targeted multiple systems, including a..."
-date: 2026-11-21T06:15:51+05:30
+date: 2026-11-21T12:13:14+05:30
 tags: [Cybersecurity, AIAgents, DataBreach]
 categories: ["AI", "Cybersecurity", "AI Agents", "Telecommunications"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/20/bell-canada.jpg"

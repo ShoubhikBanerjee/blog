@@ -2,7 +2,7 @@
 title: "TechSpar: An Evolving AI Technical Interview Training System"
 slug: "techspar-an-evolving-ai-technical-interview-training-system"
 description: "TechSpar is a continuously evolving interview training system designed to make every practice session count by connecting specialized training, resume interviews, JD interview prep, real-time..."
-date: 2026-11-21T06:15:51+05:30
+date: 2026-11-21T12:13:14+05:30
 tags: [TechSpar, InterviewPrep, AIAgents, DeveloperTools]
 categories: ["AI", "AI Applications", "Developer Tools", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/64579968?v=4"

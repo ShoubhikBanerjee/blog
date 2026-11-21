@@ -2,7 +2,7 @@
 title: "Amazon Threat Intelligence details AI agent hack on universities"
 slug: "amazon-threat-intelligence-details-ai-agent-hack-on-universities"
 description: "Amazon Threat Intelligence shared findings from an investigation into a Chinese-nexus threat actor who used autonomous AI agents to conduct hacking operations with minimal human involvement. The..."
-date: 2026-11-21T06:15:51+05:30
+date: 2026-11-21T12:13:14+05:30
 tags: [Cybersecurity, AIAgents, ThreatIntelligence, Amazon, Zeroday, AutonomousHacking]
 categories: ["AI", "Cybersecurity", "AI Agents", "Threat Intelligence", "Network Security"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2021/12/20/networked-system-computer.jpg"

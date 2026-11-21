@@ -2,7 +2,7 @@
 title: "Unit 42 tracks Com-affiliated vishing and data extortion campaigns"
 slug: "unit-42-tracks-com-affiliated-vishing-and-data-extortion-campaigns"
 description: "Unit 42 has tracked and responded to numerous waves of vishing attacks conducted by Com-affiliated threat actors in recent months, leading to data theft and extortion attempts. Since early 2026, the..."
-date: 2026-11-21T06:15:51+05:30
+date: 2026-11-21T12:13:14+05:30
 tags: [Unit42, ThreatIntel, Vishing, Comaffiliated, Cybersecurity]
 categories: ["AI", "Threat Intelligence", "Incident Response", "Cybersecurity", "Adversary Activity"]
 image: "https://unit42.paloaltonetworks.com/wp-content/uploads/2026/11/12_Cybercrime_Category_1920x900.jpg"

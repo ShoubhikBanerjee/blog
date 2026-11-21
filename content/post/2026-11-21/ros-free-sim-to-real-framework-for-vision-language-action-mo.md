@@ -2,7 +2,7 @@
 title: "ROS-Free Sim-to-Real Framework for Vision-Language-Action Models"
 slug: "ros-free-sim-to-real-framework-for-vision-language-action-models"
 description: "A new Robot Control Stack (RCS) provides a lean, ROS‑free sim‑to‑real framework for training and deploying Vision‑Language‑Action (VLA) models and reinforcement‑learning agents."
-date: 2026-11-21T06:15:51+05:30
+date: 2026-11-21T12:13:14+05:30
 tags: [RobotLearning, SimToReal, VisionLanguageAction, RL, Gymnasium]
 categories: ["AI", "Robotics", "Machine Learning", "Reinforcement Learning", "Computer Vision"]
 image: "https://avatars.githubusercontent.com/u/209346905?v=4"

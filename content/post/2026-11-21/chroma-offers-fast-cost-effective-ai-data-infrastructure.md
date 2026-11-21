@@ -2,7 +2,7 @@
 title: "Chroma Offers Fast, Cost‑Effective AI Data Infrastructure"
 slug: "chroma-offers-fast-costeffective-ai-data-infrastructure"
 description: "Chroma has released a new update that highlights its fast, cost‑effective open‑source data infrastructure for AI."
-date: 2026-11-21T06:15:51+05:30
+date: 2026-11-21T12:13:14+05:30
 tags: [Chroma, AIDataInfrastructure, OpenSource, VectorSearch]
 categories: ["AI", "Machine Learning", "Data Infrastructure", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/105881770?v=4"

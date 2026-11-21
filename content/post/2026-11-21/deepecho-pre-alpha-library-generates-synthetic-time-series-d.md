@@ -2,7 +2,7 @@
 title: "DeepEcho Pre-Alpha Library Generates Synthetic Time Series Data"
 slug: "deepecho-pre-alpha-library-generates-synthetic-time-series-data"
 description: "DataCebo's Synthetic Data Vault Project has released DeepEcho, a Python library for generating synthetic mixed-type multivariate time series data. The library is currently in Pre-Alpha stage and..."
-date: 2026-11-21T06:15:51+05:30
+date: 2026-11-21T12:13:14+05:30
 tags: [SyntheticData, TimeSeries, Python, DataGeneration, DataCebo, SDV]
 categories: ["AI", "Machine Learning", "Data Science", "Software Development", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/59050321?v=4"
