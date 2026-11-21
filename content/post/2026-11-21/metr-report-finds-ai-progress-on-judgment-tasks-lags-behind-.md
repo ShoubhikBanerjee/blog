@@ -2,7 +2,7 @@
 title: "METR Report Finds AI Progress on Judgment Tasks Lags Behind Coding Capabilities"
 slug: "metr-report-finds-ai-progress-on-judgment-tasks-lags-behind-coding-capabilities"
 description: "The AI evaluation nonprofit METR has released a new report showing that while some AI capabilities continue to improve along an exponential trajectory, models remain weak at tasks requiring judgment...."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [AIsafety, AIbenchmarks, METR, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "AI Research", "Machine Learning"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/metr2a.jpg?resize=1200,600"

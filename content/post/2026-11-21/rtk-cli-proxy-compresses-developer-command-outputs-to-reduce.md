@@ -2,7 +2,7 @@
 title: "RTK CLI Proxy Compresses Developer Command Outputs to Reduce AI Token Costs by 60-90%"
 slug: "rtk-cli-proxy-compresses-developer-command-outputs-to-reduce-ai-token-costs-by-60-90"
 description: "RTK is a new CLI proxy designed as a cost reduction engine for AI coding agents, reducing LLM token consumption by 60% to 90% on common development commands. Built as a single Rust binary with zero..."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [rtk, AIagents, LLM, DeveloperTools, Rust]
 categories: ["AI", "AI Agents", "Developer Tools", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/258253854?v=4"

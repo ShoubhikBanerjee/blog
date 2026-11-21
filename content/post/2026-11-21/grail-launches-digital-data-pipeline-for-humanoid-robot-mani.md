@@ -2,7 +2,7 @@
 title: "GRAIL Launches Digital Data Pipeline for Humanoid Robot Manipulation Training"
 slug: "grail-launches-digital-data-pipeline-for-humanoid-robot-manipulation-training"
 description: "GRAIL is a fully digital data-generation pipeline for humanoid loco-manipulation."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [Robotics, Simulation, Humanoid, GRAIL, DataGeneration]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Computer Vision", "Simulation"]
 image: "https://avatars.githubusercontent.com/u/2695301?v=4"

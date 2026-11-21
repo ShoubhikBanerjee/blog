@@ -2,7 +2,7 @@
 title: "AI Formal Verification Tools Combat Code Slop and Security Risks"
 slug: "ai-formal-verification-tools-combat-code-slop-and-security-risks"
 description: "The term 'slop' has become the industry's word of the year for 2026, describing low-quality output from large language models. As AI-generated code increases, software engineers are turning to formal..."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [FormalVerification, AI, Lean, Cybersecurity, cvc5]
 categories: ["AI", "Formal Verification", "Software Engineering", "Cybersecurity", "AI Research"]
 image: "https://beehiiv-images-production.s3.amazonaws.com/uploads/asset/file/b6f560cd-a37a-4d62-8d6b-da5b59cf4790/formal-verification-feature.png?t=1795207886"

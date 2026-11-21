@@ -2,7 +2,7 @@
 title: "Sentence Transformers Framework for Embedding and Reranking Models"
 slug: "sentence-transformers-framework-for-embedding-and-reranking-models"
 description: "The Sentence Transformers framework provides an easy method to compute embeddings for accessing, using, and training state-of-the-art embedding and reranker models."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [SentenceTransformers, EmbeddingModels, RerankerModels, SemanticSearch, NLP]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "Information Retrieval"]
 image: "https://avatars.githubusercontent.com/u/25720743?v=4"

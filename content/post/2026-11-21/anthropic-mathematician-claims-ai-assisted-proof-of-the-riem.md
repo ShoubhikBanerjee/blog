@@ -2,7 +2,7 @@
 title: "Anthropic mathematician claims AI‑assisted proof of the Riemann Hypothesis"
 slug: "anthropic-mathematician-claims-aiassisted-proof-of-the-riemann-hypothesis"
 description: "Levent Alpöge, a mathematician at Anthropic, announced that he and the company’s AI system Claude have produced a proof of the Riemann hypothesis."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [Anthropic, RiemannHypothesis, AIProof]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "Millennium Prize Problems"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2305894185.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

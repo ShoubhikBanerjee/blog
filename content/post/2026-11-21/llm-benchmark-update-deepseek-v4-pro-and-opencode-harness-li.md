@@ -2,7 +2,7 @@
 title: "LLM Benchmark Update: DeepSeek V4 Pro and OpenCode Harness Limitations"
 slug: "llm-benchmark-update-deepseek-v4-pro-and-opencode-harness-limitations"
 description: "This update documents new developments in an autonomous coding benchmark repository, specifically addressing how OpenCode harness effects impact cross-model comparisons and the recent successful..."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [LLMBenchmarks, DeepSeek, OpenCode, Claude, AIEngineering]
 categories: ["AI", "Large Language Models", "AI Benchmarking", "Software Development", "Agent Architecture"]
 image: "https://avatars.githubusercontent.com/u/2840?v=4"

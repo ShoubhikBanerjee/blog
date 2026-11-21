@@ -2,7 +2,7 @@
 title: "Largest Squid Ever Filmed Captured Near Japan's Ogasawara Islands in 2006"
 slug: "largest-squid-ever-filmed-captured-near-japan-s-ogasawara-islands-in-2006"
 description: "This is the story of the largest squid ever filmed, in December 2006 near Japan's Ogasawara Islands."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [MarineBiology, WildlifeFilming, OgasawaraIslands, Squid]
 categories: ["AI", "Marine Biology", "Wildlife", "Oceanography"]
 author: "Shoubhik Banerjee"

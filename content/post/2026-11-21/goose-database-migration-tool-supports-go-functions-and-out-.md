@@ -2,7 +2,7 @@
 title: "Goose database migration tool supports Go functions and out-of-order changes"
 slug: "goose-database-migration-tool-supports-go-functions-and-out-of-order-changes"
 description: "Goose is a database migration tool available as both a CLI and a library. It allows developers to manage database schemas by creating incremental SQL changes or Go functions."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [Goose, Database, Go, CLI, Migrations]
 categories: ["AI", "DevOps", "Backend Engineering", "Databases"]
 image: "https://avatars.githubusercontent.com/u/18835?v=4"

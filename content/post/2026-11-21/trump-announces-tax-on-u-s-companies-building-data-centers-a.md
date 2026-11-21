@@ -2,7 +2,7 @@
 title: "Trump Announces Tax on U.S. Companies Building Data Centers Abroad"
 slug: "trump-announces-tax-on-u-s-companies-building-data-centers-abroad"
 description: "President Donald Trump recently announced a plan to impose a significant tax on companies that build data centers outside the United States."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [Trump, DataCenters, TaxPolicy, AIInfrastructure]
 categories: ["AI", "Politics", "Technology", "Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/09/STK466_ELECTION_2024_CVirginia_E.jpg?quality=90&strip=all&crop=0%2C9.9676601489831%2C100%2C80.064679702034&w=1200"

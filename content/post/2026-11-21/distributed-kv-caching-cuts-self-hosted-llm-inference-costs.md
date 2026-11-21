@@ -2,7 +2,7 @@
 title: "Distributed KV Caching Cuts Self-Hosted LLM Inference Costs"
 slug: "distributed-kv-caching-cuts-self-hosted-llm-inference-costs"
 description: "Customers increasingly self-host large language models (LLMs) on GPUs for control over cost, accuracy, and latency. Consider a legal AI assistant that can accumulate hundreds of thousands of tokens..."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [LLMs, AI, AmazonElastiCache, DistributedKVCaching, AWS]
 categories: ["AI", "Machine Learning", "AI Agents", "Cloud Computing", "Artificial Intelligence"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22449-featured-image.png"

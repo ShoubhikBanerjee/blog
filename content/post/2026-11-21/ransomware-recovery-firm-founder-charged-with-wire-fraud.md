@@ -2,7 +2,7 @@
 title: "Ransomware Recovery Firm Founder Charged With Wire Fraud"
 slug: "ransomware-recovery-firm-founder-charged-with-wire-fraud"
 description: "Juan Ricardo Palacio Escobar, co-founder of the Florida-based ransomware recovery firm RansomwareHelp, has been charged with wire fraud after an FBI sting operation revealed that the company..."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [Ransomware, FBI, WireFraud, Cybersecurity, LawEnforcement]
 categories: ["AI", "Cybersecurity", "Legal", "Law Enforcement", "Fraud"]
 author: "Shoubhik Banerjee"

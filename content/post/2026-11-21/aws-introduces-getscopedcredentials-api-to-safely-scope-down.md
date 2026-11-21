@@ -2,7 +2,7 @@
 title: "AWS Introduces GetScopedCredentials API to Safely Scope Down Temporary Security Credentials"
 slug: "aws-introduces-getscopedcredentials-api-to-safely-scope-down-temporary-security-credentials"
 description: "AWS has launched GetScopedCredentials, a new AWS Security Token Service (AWS STS) API that enables you to scope down the permissions of existing temporary security credentials. This feature is..."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [AWS, Security, IAM, AIAgents, CloudSecurity]
 categories: ["AI", "Cloud Security", "Identity and Access Management", "AI Agents"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/10/21/Lock-data.jpeg"

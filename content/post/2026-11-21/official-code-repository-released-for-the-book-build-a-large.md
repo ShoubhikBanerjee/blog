@@ -2,7 +2,7 @@
 title: "Official code repository released for the book 'Build a Large Language Model (From Scratch)'"
 slug: "official-code-repository-released-for-the-book-build-a-large-language-model-from-scratch"
 description: "An official code repository has been released for the book *Build a Large Language Model (From Scratch)*. The repository contains the code required for developing, pretraining, and finetuning a..."
-date: 2026-11-21T12:13:14+05:30
+date: 2026-11-21T18:08:57+05:30
 tags: [LLM, GitHub, Manning, CodeRepository]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Programming"]
 image: "https://avatars.githubusercontent.com/u/5618407?v=4"
