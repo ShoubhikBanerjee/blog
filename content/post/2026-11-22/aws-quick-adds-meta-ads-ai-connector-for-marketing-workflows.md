@@ -2,7 +2,7 @@
 title: "AWS Quick adds Meta ads AI connector for marketing workflows"
 slug: "aws-quick-adds-meta-ads-ai-connector-for-marketing-workflows"
 description: "AWS Quick has added a Meta ads AI connector, enabling marketers to create, manage, and analyze campaigns using natural language while staying connected to the Meta ad management network."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [AWS, MetaAds, MarketingAutomation, AI]
 categories: ["AI", "Artificial Intelligence", "Marketing Technology", "Cloud Services", "Data Analytics"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22411-featured-image.png"

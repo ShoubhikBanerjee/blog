@@ -2,7 +2,7 @@
 title: "Microsoft Suffers Data Breach Following Entra Connect Health Vulnerability"
 slug: "microsoft-suffers-data-breach-following-entra-connect-health-vulnerability"
 description: "Microsoft is warning organizations that it suffered a data breach after attackers exploited a vulnerability in its Entra Connect Health service to gain unauthorized access to administrator email..."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [Microsoft, EntraConnectHealth, DataBreach, Cybersecurity]
 categories: ["AI", "Cybersecurity", "Cloud Computing", "Enterprise Software"]
 image: "https://www.bleepstatic.com/content/hl-images/2024/01/26/microsoft-red-header.jpg"

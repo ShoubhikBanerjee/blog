@@ -2,7 +2,7 @@
 title: "UN diplomats agree to begin discussions on autonomous weapon regulations"
 slug: "un-diplomats-agree-to-begin-discussions-on-autonomous-weapon-regulations"
 description: "During a week‑long UN diplomatic meeting in Geneva, representatives discussed rules for autonomous weapons, often called “killer robots.” The talks ended without a binding agreement, but countries..."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [AutonomousWeapons, UN, InternationalLaw, AIethics]
 categories: ["AI", "International Relations", "Artificial Intelligence", "Security", "Law"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/13611631/503831564.jpg.jpg?quality=90&strip=all&crop=0%2C11.089604074363%2C100%2C77.820791851273&w=1200"

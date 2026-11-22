@@ -2,7 +2,7 @@
 title: "Workshop teaches building local AI coding agents in Go"
 slug: "workshop-teaches-building-local-ai-coding-agents-in-go"
 description: "A new workshop is available that guides developers through the process of building their own AI-powered coding assistant. The course is designed for those who want to create tools similar to Roo..."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [AIagents, Claude, GoLanguage, CodingAssistants, Workshop]
 categories: ["AI", "AI Agents", "Developer Tools", "Programming", "Anthropic"]
 image: "https://avatars.githubusercontent.com/u/127353?v=4"

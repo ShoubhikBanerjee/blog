@@ -2,7 +2,7 @@
 title: "LangForce updates VLA-Arena results and accepts to ICML 2026"
 slug: "langforce-updates-vla-arena-results-and-accepts-to-icml-2026"
 description: "LangForce has released updated performance metrics on the VLA-Arena benchmark and received acceptance to ICML 2026. The framework addresses a specific pathology in Vision-Language-Action (VLA) model..."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [LangForce, VLA, Robotics, ICML2026, StarVLA]
 categories: ["AI", "Machine Learning", "Computer Vision", "Robotics", "Large Language Models"]
 image: "https://avatars.githubusercontent.com/u/250105273?v=4"

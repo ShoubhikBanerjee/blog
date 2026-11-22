@@ -2,7 +2,7 @@
 title: "AnythingMCP Launched as an Open-Source Gateway for AI Model Connectivity"
 slug: "anythingmcp-launched-as-an-open-source-gateway-for-ai-model-connectivity"
 description: "AnythingMCP is a newly released open-source, self-hosted Model Context Protocol (MCP) gateway designed to connect AI clients like Claude, ChatGPT, Copilot, and Gemini to enterprise software and..."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [MCP, AIIntegration, EnterpriseAI, OpenSource, Claude, ChatGPT]
 categories: ["AI", "AI Agents", "Enterprise Software", "Integration Tools", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/209786798?v=4"

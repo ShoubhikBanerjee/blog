@@ -2,7 +2,7 @@
 title: "DeepSeek AI releases open-source agent harness in developer preview"
 slug: "deepseek-ai-releases-open-source-agent-harness-in-developer-preview"
 description: "DeepSeek AI has released DeepSeek Harness (`dsh`), an open-source agent harness that is currently in developer preview."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [DeepSeek, AIagents, OpenSource, DeveloperPreview, Cordis]
 categories: ["AI", "AI Agents", "Open Source Software", "Developer Tools", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/148330874?v=4"

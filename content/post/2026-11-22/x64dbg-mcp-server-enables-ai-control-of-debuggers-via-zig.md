@@ -2,7 +2,7 @@
 title: "x64dbg-MCP Server enables AI control of debuggers via Zig"
 slug: "x64dbg-mcp-server-enables-ai-control-of-debuggers-via-zig"
 description: "The x64dbg-MCP Server, a native MCP (Model Context Protocol) plugin for x64dbg, has been released, allowing MCP-compatible AI assistants to control the debugger programmatically over HTTP. Built with..."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [x64dbg, MCP, Zig, AIAssistants, Debugging]
 categories: ["AI", "Developer Tools", "AI Agents", "Cybersecurity", "Programming Languages"]
 image: "https://avatars.githubusercontent.com/u/3162883?v=4"

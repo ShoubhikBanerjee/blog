@@ -2,7 +2,7 @@
 title: "ToolHive: An enterprise platform for managing Model Context Protocol servers"
 slug: "toolhive-an-enterprise-platform-for-managing-model-context-protocol-servers"
 description: "ToolHive is an enterprise-grade platform designed for running and managing Model Context Protocol (MCP) servers. It allows organizations to run any MCP server securely, instantly, and anywhere,..."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [ToolHive, MCP, Kubernetes, EnterpriseAI, DevSecOps]
 categories: ["AI", "AI Infrastructure", "Developer Tools", "Security", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/110237746?v=4"

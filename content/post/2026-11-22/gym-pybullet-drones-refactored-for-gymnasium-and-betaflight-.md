@@ -2,7 +2,7 @@
 title: "gym-pybullet-drones refactored for gymnasium and Betaflight SITL"
 slug: "gym-pybullet-drones-refactored-for-gymnasium-and-betaflight-sitl"
 description: "A minimalist refactoring of the `gym-pybullet-drones` repository has been released to ensure compatibility with `gymnasium`, `stable-baselines3` 2.0, and `betaflight` SIM. The project, originally..."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [gympybulletdrones, ReinforcementLearning, MultiAgent, gymnasium, betaflight]
 categories: ["AI", "Machine Learning", "Reinforcement Learning", "Simulation", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/19434714?v=4"

@@ -2,7 +2,7 @@
 title: "DeepFabric generates synthetic data for language model training"
 slug: "deepfabric-generates-synthetic-data-for-language-model-training"
 description: "DeepFabric is a tool designed to generate synthetic training data for language models and agent evaluations. It combines reasoning traces with tool-calling patterns to create high-quality,..."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [DeepFabric, SyntheticData, LLMTraining, AgentEvaluations, MCP, HuggingFace]
 categories: ["AI", "Machine Learning", "AI Agents", "Data Engineering", "LLM Development"]
 image: "https://avatars.githubusercontent.com/u/289819636?v=4"

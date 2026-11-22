@@ -2,7 +2,7 @@
 title: "New Open Source ChatGPT Web Fork Integrates Video Image and Audio APIs"
 slug: "new-open-source-chatgpt-web-fork-integrates-video-image-and-audio-apis"
 description: "An open-source, MIT-licensed secondary development of the chatgpt-web project has been released on GitHub. Based on the work of ChenZhaoYu and integrated with multiple backend APIs including..."
-date: 2026-11-22T18:07:49+05:30
+date: 2026-11-22T22:08:30+05:30
 tags: [OpenSource, ChatGPT, Midjourney, MultiModal, AIVideo]
 categories: ["AI", "Generative AI", "Software Development", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/3765401?v=4"
