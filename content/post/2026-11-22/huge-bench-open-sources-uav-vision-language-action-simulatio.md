@@ -2,7 +2,7 @@
 title: "HUGE-Bench Open-Sources UAV Vision-Language-Action Simulation Platform with 2.56M Meters of Trajectories"
 slug: "huge-bench-open-sources-uav-vision-language-action-simulation-platform-with-2-56m-meters-of-trajectories"
 description: "Researchers have released HUGE-Bench, an open-source UAV simulation platform targeting high-level vision-language-action tasks where agents ground brief, potentially ambiguous commands into safe,..."
-date: 2026-11-22T06:08:21+05:30
+date: 2026-11-22T12:09:58+05:30
 tags: [UAV, VisionLanguageAction, Simulation, Robotics, OpenSource, 3DGS]
 categories: ["AI", "Machine Learning", "Robotics", "Computer Vision", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/83287600?v=4"

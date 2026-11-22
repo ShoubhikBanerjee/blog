@@ -2,7 +2,7 @@
 title: "New Langfuse Workshop Teaches the AI Engineering Loop Using a TypeScript Agent"
 slug: "new-langfuse-workshop-teaches-the-ai-engineering-loop-using-a-typescript-agent"
 description: "An end-to-end, step-by-step Langfuse workshop has been introduced to teach the full AI engineering loop using a TypeScript sample application. Based on hands-on concepts from the Langfuse Academy,..."
-date: 2026-11-22T06:08:21+05:30
+date: 2026-11-22T12:09:58+05:30
 tags: [Langfuse, TypeScript, LLMOps, AIagents]
 categories: ["AI", "Developer Tools", "AI Engineering", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/134601687?v=4"

@@ -2,7 +2,7 @@
 title: "SocratiCode Releases Open-Source Codebase Context Engine for AI Assistants"
 slug: "socraticode-releases-open-source-codebase-context-engine-for-ai-assistants"
 description: "SocratiCode has launched as an open-source, zero-configuration codebase context engine designed to give AI assistants automated, deep semantic understanding of entire codebases and infrastructure...."
-date: 2026-11-22T06:08:21+05:30
+date: 2026-11-22T12:09:58+05:30
 tags: [SocratiCode, OpenSource, DeveloperTools, AIagents, ModelContextProtocol]
 categories: ["AI", "Developer Tools", "Artificial Intelligence", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/105157948?v=4"

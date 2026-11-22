@@ -2,7 +2,7 @@
 title: "MirrorFlow Releases End-to-End Toolchain for Digital Clones and Data Distillation"
 slug: "mirrorflow-releases-end-to-end-toolchain-for-digital-clones-and-data-distillation"
 description: "MirrorFlow has released version v0.1.6-dev of its end-to-end toolchain, currently in active development under the Apache-2.0 license. The project provides tools to process dialogue data, clean it,..."
-date: 2026-11-22T06:08:21+05:30
+date: 2026-11-22T12:09:58+05:30
 tags: [MirrorFlow, DigitalClone, FineTuning, DataDistillation]
 categories: ["AI", "Generative AI", "Language Models", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/104579013?v=4"

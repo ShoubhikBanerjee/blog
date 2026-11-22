@@ -2,7 +2,7 @@
 title: "KiCAD MCP and Konnect-EDA Bring AI-Assisted PCB Design to Claude"
 slug: "kicad-mcp-and-konnect-eda-bring-ai-assisted-pcb-design-to-claude"
 description: "KiCAD MCP and Konnect-EDA introduce Model Context Protocol implementations that enable Large Language Models like Claude to directly interact with KiCAD for printed circuit board design automation."
-date: 2026-11-22T06:08:21+05:30
+date: 2026-11-22T12:09:58+05:30
 tags: [KiCAD, EDA, Claude, ModelContextProtocol, PCBDesign]
 categories: ["AI", "Hardware Design", "AI Agents", "Open Source", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/11727006?v=4"

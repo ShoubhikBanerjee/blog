@@ -2,7 +2,7 @@
 title: "Koreader Now Accessible via Browser Using Docker Container"
 slug: "koreader-now-accessible-via-browser-using-docker-container"
 description: "A new development allows the Koreader e-book reader to run inside a Docker container and be accessed through a standard web browser. This setup is built using a base image that incorporates VNC..."
-date: 2026-11-22T06:08:21+05:30
+date: 2026-11-22T12:09:58+05:30
 tags: [Koreader, Docker, VNC, WebBrowser, DevOps]
 categories: ["AI", "Docker", "Web Technologies", "Developer Tools", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/67867662?v=4"

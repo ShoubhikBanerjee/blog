@@ -2,7 +2,7 @@
 title: "Graham Dumpleton Announces Muru, a New AI-Assisted Rust Server for Python Apps"
 slug: "graham-dumpleton-announces-muru-a-new-ai-assisted-rust-server-for-python-apps"
 description: "Graham Dumpleton, who started mod_wsgi 20 years ago, has introduced Muru, a new AI-assisted Rust server designed to serve Python web applications."
-date: 2026-11-22T06:08:21+05:30
+date: 2026-11-22T12:09:58+05:30
 tags: [Python, Rust, AI, WebServers, ASGI]
 categories: ["AI", "Software Development", "Artificial Intelligence", "Programming Languages"]
 author: "Shoubhik Banerjee"
