@@ -2,7 +2,7 @@
 title: "Free-LLM Router aggregates dozens of free LLM APIs behind a single endpoint"
 slug: "free-llm-router-aggregates-dozens-of-free-llm-apis-behind-a-single-endpoint"
 description: "The Free‑LLM project has updated its open‑source router to combine dozens of free LLM APIs behind one OpenAI/Anthropic‑compatible endpoint, providing instant failover and a unified developer..."
-date: 2026-11-22T12:09:58+05:30
+date: 2026-11-22T18:07:49+05:30
 tags: [FreeLLM, OpenAICompatibility, LLMRouter, DeveloperTools]
 categories: ["AI", "Machine Learning", "Open Source", "AI Infrastructure", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/10485460?v=4"

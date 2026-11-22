@@ -2,7 +2,7 @@
 title: "Introducing the Universal Agent Evaluation Framework for AI Agents"
 slug: "introducing-the-universal-agent-evaluation-framework-for-ai-agents"
 description: "The Universal Agent Evaluation Framework (UAEF) has been released as a framework-agnostic evaluation system for AI agents, allowing users to invoke any agent and score it on multiple metrics."
-date: 2026-11-22T12:09:58+05:30
+date: 2026-11-22T18:07:49+05:30
 tags: [AI, Agents, Evaluation, AWS, Python]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/3299148?v=4"

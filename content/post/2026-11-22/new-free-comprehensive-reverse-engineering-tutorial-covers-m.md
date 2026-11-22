@@ -2,7 +2,7 @@
 title: "New Free Comprehensive Reverse Engineering Tutorial Covers Multiple CPU Architectures"
 slug: "new-free-comprehensive-reverse-engineering-tutorial-covers-multiple-cpu-architectures"
 description: "A new free comprehensive reverse engineering tutorial has been released, covering a wide range of architectures including x86, ARM, and RISC-V. Assembled by @0xInfection on Twitter, the instructional..."
-date: 2026-11-22T12:09:58+05:30
+date: 2026-11-22T18:07:49+05:30
 tags: [ReverseEngineering, Cybersecurity, AssemblyLanguage, MalwareAnalysis, RISCV]
 categories: ["AI", "Cybersecurity", "Software Development", "Education"]
 image: "https://avatars.githubusercontent.com/u/7095767?v=4"

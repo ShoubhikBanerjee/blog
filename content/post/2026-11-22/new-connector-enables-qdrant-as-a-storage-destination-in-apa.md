@@ -2,7 +2,7 @@
 title: "New Connector Enables Qdrant as a Storage Destination in Apache Spark"
 slug: "new-connector-enables-qdrant-as-a-storage-destination-in-apache-spark"
 description: "A new connector has been released that enables Qdrant to serve as a storage destination in Apache Spark, a distributed computing framework designed for big data processing and analytics."
-date: 2026-11-22T12:09:58+05:30
+date: 2026-11-22T18:07:49+05:30
 tags: [Qdrant, ApacheSpark, VectorDatabase, BigData, DataEngineering]
 categories: ["AI", "Big Data", "Vector Databases", "Data Integration"]
 image: "https://avatars.githubusercontent.com/u/73504361?v=4"

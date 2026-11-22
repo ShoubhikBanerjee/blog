@@ -2,7 +2,7 @@
 title: "WhisperLiveKit: Self-Hosted, Real-Time Speech-to-Text Pipeline"
 slug: "whisperlivekit-self-hosted-real-time-speech-to-text-pipeline"
 description: "WhisperLiveKit is a self-hosted, ultra-low-latency speech-to-text pipeline that provides real-time transcription, speaker diarization, and translation. It is designed to handle streaming audio..."
-date: 2026-11-22T12:09:58+05:30
+date: 2026-11-22T18:07:49+05:30
 tags: [WhisperLiveKit, SpeechToText, RealTimeAI, SelfHosted, Translation]
 categories: ["AI", "Speech Recognition", "Natural Language Processing", "Software Development", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/38427957?v=4"

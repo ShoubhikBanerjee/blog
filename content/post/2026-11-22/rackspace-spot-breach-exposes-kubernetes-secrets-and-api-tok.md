@@ -2,7 +2,7 @@
 title: "Rackspace Spot Breach Exposes Kubernetes Secrets and API Tokens"
 slug: "rackspace-spot-breach-exposes-kubernetes-secrets-and-api-tokens"
 description: "Rackspace has warned customers that hackers breached its Rackspace Spot cloud platform using compromised credentials. The intrusion allowed unauthorized parties to deploy workloads and access..."
-date: 2026-11-22T12:09:58+05:30
+date: 2026-11-22T18:07:49+05:30
 tags: [Rackspace, Kubernetes, CloudSecurity, DataBreach]
 categories: ["AI", "Cloud Computing", "Cybersecurity", "Kubernetes"]
 image: "https://www.bleepstatic.com/content/hl-images/2022/12/09/Rackspace.jpg"

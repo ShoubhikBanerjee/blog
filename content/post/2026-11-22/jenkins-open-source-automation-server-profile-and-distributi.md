@@ -2,7 +2,7 @@
 title: "Jenkins open-source automation server profile and distribution methods"
 slug: "jenkins-open-source-automation-server-profile-and-distribution-methods"
 description: "Jenkins is an open-source automation server built with Java that provides official distributions and source code for users and developers."
-date: 2026-11-22T12:09:58+05:30
+date: 2026-11-22T18:07:49+05:30
 tags: [Jenkins, OpenSource, CICD, Automation, DevOps]
 categories: ["AI", "Software Engineering", "DevOps", "Automation", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/107424?v=4"

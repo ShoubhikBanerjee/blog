@@ -2,7 +2,7 @@
 title: "Sandbox API now scales to 50,000 microVMs in 10-15 seconds"
 slug: "sandbox-api-now-scales-to-50-000-microvms-in-10-15-seconds"
 description: "The `Sandbox` API now supports a high-performance serving path that scales to 50,000 running microVMs in 10–15 seconds by scatter-gathering per-node inventory instead of storing per-sandbox objects."
-date: 2026-11-22T12:09:58+05:30
+date: 2026-11-22T18:07:49+05:30
 tags: [Kubernetes, MicroVMs, Sandboxing, AIInfrastructure, Performance]
 categories: ["AI", "Cloud Infrastructure", "AI Agents", "Developer Tools", "Kubernetes"]
 image: "https://avatars.githubusercontent.com/u/272786924?v=4"

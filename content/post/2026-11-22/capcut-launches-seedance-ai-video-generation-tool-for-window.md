@@ -2,7 +2,7 @@
 title: "CapCut Launches Seedance AI Video Generation Tool for Windows"
 slug: "capcut-launches-seedance-ai-video-generation-tool-for-windows"
 description: "CapCut has introduced CapCut Seedance, a new AI video generation tool built for Windows that turns text prompts and still images into short motion clips. Designed to integrate directly into the..."
-date: 2026-11-22T12:09:58+05:30
+date: 2026-11-22T18:07:49+05:30
 tags: [CapCut, CapCutSeedance, AIVideo, GenerativeAI, VideoEditing]
 categories: ["AI", "Generative AI", "Computer Vision", "Video Editing"]
 image: "https://avatars.githubusercontent.com/u/358617157?v=4"

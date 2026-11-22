@@ -2,7 +2,7 @@
 title: "Metaswarm: AI Agent Orchestration Framework for Production Code"
 slug: "metaswarm-ai-agent-orchestration-framework-for-production-code"
 description: "Metaswarm is a self-improving multi-agent orchestration framework for Claude Code, Gemini CLI, and Codex CLI, designed to coordinate 23 AI agents and 14 orchestration skills through a complete..."
-date: 2026-11-22T12:09:58+05:30
+date: 2026-11-22T18:07:49+05:30
 tags: [AIagents, SoftwareDevelopment, TDD, QualityGates, Metaswarm]
 categories: ["AI", "AI Agents", "Software Development", "Machine Learning", "Computer Science"]
 image: "https://avatars.githubusercontent.com/u/244816?v=4"
