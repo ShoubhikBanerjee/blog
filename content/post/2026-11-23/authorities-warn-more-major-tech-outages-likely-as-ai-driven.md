@@ -2,7 +2,7 @@
 title: "Authorities Warn More Major Tech Outages Likely as AI-Driven Upgrades Create System Vulnerability"
 slug: "authorities-warn-more-major-tech-outages-likely-as-ai-driven-upgrades-create-system-vulnerability"
 description: "Recent weeks have seen a cascade of high-profile disruptions—including a nationwide FAA ground stop, a multi-day Outlook outage, and a JPMorgan Chase banking outage—prompting US intelligence and tech..."
-date: 2026-11-23T06:10:57+05:30
+date: 2026-11-23T12:15:20+05:30
 tags: [cybersecurity, systemoutage, AIrisk, infrastructure]
 categories: ["AI", "Cybersecurity", "Technology Policy", "Artificial Intelligence", "System Infrastructure"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/23318433/akrales_220309_4977_0182.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

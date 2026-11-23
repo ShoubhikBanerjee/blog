@@ -2,7 +2,7 @@
 title: "Neo.mjs Introduces Self-Evolving AI Engineering Team and Engine Updates"
 slug: "neo-mjs-introduces-self-evolving-ai-engineering-team-and-engine-updates"
 description: "Neo.mjs has emerged as a self-evolving software organism functioning as an end-to-end AI engineering team, featuring a cross-model swarm that inhabits live apps via Neural Link, Active Hybrid..."
-date: 2026-11-23T06:10:57+05:30
+date: 2026-11-23T12:15:20+05:30
 tags: [Neomjs, JavaScript, AIAgents, WebDevelopment, SoftwareEngineering]
 categories: ["AI", "Software Development", "Artificial Intelligence", "JavaScript", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/55371235?v=4"

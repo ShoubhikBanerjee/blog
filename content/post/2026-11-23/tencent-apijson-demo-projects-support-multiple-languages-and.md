@@ -2,7 +2,7 @@
 title: "Tencent APIJSON demo projects support multiple languages and frameworks"
 slug: "tencent-apijson-demo-projects-support-multiple-languages-and-frameworks"
 description: "Tencent has published demo projects for APIJSON, featuring usage examples, documentation, and test data SQL files for various programming languages, frameworks, and clients."
-date: 2026-11-23T06:10:57+05:30
+date: 2026-11-23T12:15:20+05:30
 tags: [APIJSON, Tencent, GitHub, Programming, Testing]
 categories: ["AI", "Programming", "Software Development", "APIs", "Testing"]
 image: "https://avatars.githubusercontent.com/u/41146037?v=4"

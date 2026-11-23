@@ -2,7 +2,7 @@
 title: "Google and Partners Introduce A2A Protocol for AI Agent Communication"
 slug: "google-and-partners-introduce-a2a-protocol-for-ai-agent-communication"
 description: "A2A (Agent2Agent) is an open protocol from Google and partners enabling different AI agents from various vendors and frameworks to communicate securely and collaborate on tasks. The protocol aims to..."
-date: 2026-11-23T06:10:57+05:30
+date: 2026-11-23T12:15:20+05:30
 tags: [A2A, AIAgents, Google, OpenProtocol]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/70333750?v=4"

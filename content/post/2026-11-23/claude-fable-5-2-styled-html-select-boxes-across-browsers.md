@@ -2,7 +2,7 @@
 title: "Claude Fable 5.2 Styled HTML Select Boxes Across Browsers"
 slug: "claude-fable-5-2-styled-html-select-boxes-across-browsers"
 description: "I got frustrated at how HTML <select> boxes default to looking different in different browsers, and are (I think) quite ugly in Chrome. So I had Claude Fable 5.2 build me this page showing all of the..."
-date: 2026-11-23T06:10:57+05:30
+date: 2026-11-23T12:15:20+05:30
 tags: [Claude, CSS, HTML, Styling, Frontend]
 categories: ["AI", "Web Development", "Frontend Engineering", "User Interface Design", "Browser Compatibility"]
 author: "Shoubhik Banerjee"
