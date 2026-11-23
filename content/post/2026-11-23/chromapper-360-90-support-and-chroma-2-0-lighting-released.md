@@ -2,7 +2,7 @@
 title: "ChroMapper 360/90 Support and Chroma 2.0 Lighting Released"
 slug: "chromapper-360-90-support-and-chroma-2-0-lighting-released"
 description: "ChroMapper, a Unity-based map editor for Beat Saber, has introduced 360/90 support for the first time ever in a community map editor, along with Chroma 2.0 Lighting."
-date: 2026-11-23T12:15:20+05:30
+date: 2026-11-23T18:10:50+05:30
 tags: [BeatSaber, MapEditor, Unity, VR, GameDevelopment, OpenSource]
 categories: ["AI", "Game Development", "Virtual Reality", "Open Source Software", "AI Tools"]
 image: "https://avatars.githubusercontent.com/u/30004286?v=4"

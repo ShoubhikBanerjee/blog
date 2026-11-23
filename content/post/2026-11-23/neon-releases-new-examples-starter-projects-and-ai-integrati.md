@@ -2,7 +2,7 @@
 title: "Neon Releases New Examples, Starter Projects, and AI Integrations"
 slug: "neon-releases-new-examples-starter-projects-and-ai-integrations"
 description: "Neon has introduced a collection of new examples, starter projects, and code snippets demonstrating how to integrate Neon with various frameworks and languages."
-date: 2026-11-23T12:15:20+05:30
+date: 2026-11-23T18:10:50+05:30
 tags: [Neon, Postgres, Serverless, AI, Databases]
 categories: ["AI", "Databases", "Cloud Computing", "Artificial Intelligence", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/77690634?v=4"

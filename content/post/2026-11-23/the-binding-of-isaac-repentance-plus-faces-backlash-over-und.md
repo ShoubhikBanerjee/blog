@@ -2,7 +2,7 @@
 title: "The Binding of Isaac: Repentance Plus faces backlash over undiscovered AI music"
 slug: "the-binding-of-isaac-repentance-plus-faces-backlash-over-undiscovered-ai-music"
 description: "The Binding of Isaac: Repentance Plus has spent the last few days getting review-bombed on Steam after it was discovered that a particular segment of the game used AI music. The controversy centers..."
-date: 2026-11-23T12:15:20+05:30
+date: 2026-11-23T18:10:50+05:30
 tags: [BindingOfIsaac, AImusic, Steam, gameDev, Suno, EdmundMcMillen]
 categories: ["AI", "Gaming", "Artificial Intelligence", "Consumer Technology"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/j7yPmbNCP4I-HD.jpg?quality=90&strip=all&crop=0%2C3.4613147178592%2C100%2C93.077370564282&w=1200"

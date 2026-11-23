@@ -2,7 +2,7 @@
 title: "New Dockerized React/FastAPI app replicates LLM Council for model comparison"
 slug: "new-dockerized-react-fastapi-app-replicates-llm-council-for-model-comparison"
 description: "A new React/FastAPI application is available for comparing model answers, peer rankings, and a chairman's synthesis, inspired by Andrej Karpathy's LLM Council concept."
-date: 2026-11-23T12:15:20+05:30
+date: 2026-11-23T18:10:50+05:30
 tags: [OpenRouter, Ollama, Docker, FastAPI, LLMCouncil]
 categories: ["AI", "Large Language Models", "Developer Tools", "Software Engineering", "Infrastructure"]
 image: "https://avatars.githubusercontent.com/u/4634893?v=4"

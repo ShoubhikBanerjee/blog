@@ -2,7 +2,7 @@
 title: "New tool converts moderation policies into traceable preference data"
 slug: "new-tool-converts-moderation-policies-into-traceable-preference-data"
 description: "A new development called Preference Lab has been released, providing a workflow to turn content moderation policies into traceable preference data for machine learning and data teams. The tool allows..."
-date: 2026-11-23T12:15:20+05:30
+date: 2026-11-23T18:10:50+05:30
 tags: [DataEngineering, ContentModeration, MachineLearning, OpenSourceAI, PreferenceData]
 categories: ["AI", "Machine Learning", "Data Engineering", "AI Ethics"]
 image: "https://avatars.githubusercontent.com/u/265749943?v=4"

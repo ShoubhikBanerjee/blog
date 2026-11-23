@@ -2,7 +2,7 @@
 title: "A Curated Survey of Agent Harness Research and Engineering"
 slug: "a-curated-survey-of-agent-harness-research-and-engineering"
 description: "A curated, multiply-verified survey of **agent harness** research and engineering — the right level of abstraction for understanding the current frontier of LLM agents."
-date: 2026-11-23T12:15:20+05:30
+date: 2026-11-23T18:10:50+05:30
 tags: [AIagents, MachineLearning, OpenSource, SoftwareDevelopment]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/128061718?v=4"

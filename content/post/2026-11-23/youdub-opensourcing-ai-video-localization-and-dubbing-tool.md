@@ -2,7 +2,7 @@
 title: "YouDub Opensourcing AI Video Localization and Dubbing Tool"
 slug: "youdub-opensourcing-ai-video-localization-and-dubbing-tool"
 description: "YouDub is a new open-source desktop application that automates video localization and dubbing through an integrated pipeline of speech recognition, translation, voice cloning, and audio rendering...."
-date: 2026-11-23T12:15:20+05:30
+date: 2026-11-23T18:10:50+05:30
 tags: [AIdubbing, videolocalization, opensource, voicecloning, subtitletranslation, YouDub]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Development", "Digital Media"]
 image: "https://avatars.githubusercontent.com/u/15737086?v=4"

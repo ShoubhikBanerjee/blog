@@ -2,7 +2,7 @@
 title: "Specular Uses AI Agents to Find Deep Bugs in Concurrent and Distributed Systems"
 slug: "specular-uses-ai-agents-to-find-deep-bugs-in-concurrent-and-distributed-systems"
 description: "Specular (formerly Specula) is a tool that uses coding agents to find deep bugs in concurrent and distributed system code. It employs AI coding agents to write TLA+ specifications of target systems,..."
-date: 2026-11-23T12:15:20+05:30
+date: 2026-11-23T18:10:50+05:30
 tags: []
 categories: ["AI"]
 image: "https://avatars.githubusercontent.com/u/218440141?v=4"
