@@ -2,7 +2,7 @@
 title: "DeepSpeed Expands with Training, Inference, and Compression Examples"
 slug: "deepspeed-expands-with-training-inference-and-compression-examples"
 description: "The DeepSpeed repository contains various examples including training, inference, compression, benchmarks, and applications that use DeepSpeed."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [DeepSpeed, AI, MachineLearning, Inference, Training, Compression]
 categories: ["AI", "Machine Learning", "Software Development", "AI Infrastructure", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/74068820?v=4"

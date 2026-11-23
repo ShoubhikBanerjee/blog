@@ -2,7 +2,7 @@
 title: "Programming Navigation Launches Open-Source AI Quiz WeChat Mini-Program"
 slug: "programming-navigation-launches-open-source-ai-quiz-wechat-mini-program"
 description: "Programming Navigation has launched a new open-source educational project: an AI quiz WeChat mini-program built on Taro, React, FastAPI, and DeepSeek. Developed by Programmer Yupi and the Programming..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [AIProgramming, WeChatMiniProgram, RAG, LangGraph, FastAPI, EducationalProject]
 categories: ["AI", "AI Development", "Web Development", "Large Language Models", "Educational Technology"]
 image: "https://avatars.githubusercontent.com/u/26037703?v=4"

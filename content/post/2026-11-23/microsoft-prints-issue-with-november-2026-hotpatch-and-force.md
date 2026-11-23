@@ -2,7 +2,7 @@
 title: "Microsoft Prints Issue with November 2026 Hotpatch and Forcepoint DLP"
 slug: "microsoft-prints-issue-with-november-2026-hotpatch-and-forcepoint-dlp"
 description: "Microsoft has identified a compatibility issue affecting printing functionality for certain users after installing the November 2026 Windows 11 hotpatch. The problem specifically impacts systems..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [Windows, Microsoft, SecurityUpdate, Forcepoint, Hotfix]
 categories: ["AI", "Software Updates", "Cybersecurity", "Enterprise IT", "Windows Security"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/10/05/Windows_11.jpg"

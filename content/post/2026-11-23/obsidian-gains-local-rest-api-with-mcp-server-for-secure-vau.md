@@ -2,7 +2,7 @@
 title: "Obsidian Gains Local REST API with MCP Server for Secure Vault Access"
 slug: "obsidian-gains-local-rest-api-with-mcp-server-for-secure-vault-access"
 description: "A new plugin provides a secure REST API and Model Context Protocol (MCP) server for Obsidian vaults, enabling scripts, browser extensions, and AI agents to interact directly with vault contents."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [Obsidian, RESTAPI, MCP, Vault, Plugin]
 categories: ["AI", "Software Plugins", "API Development", "Data Access", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/527661?v=4"

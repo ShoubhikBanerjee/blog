@@ -2,7 +2,7 @@
 title: "Peruvian Call Center Operator Sentenced for $15 Million Fraud Scheme"
 slug: "peruvian-call-center-operator-sentenced-for-15-million-fraud-scheme"
 description: "A Peruvian call‑center operator, Carla Magaly Alcedo Mendoza, was sentenced to eight years in prison for running a multi‑year fraud scheme that stole $15 million from more than 30,000..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [Fraud, Extradition, CallCenter, Cybercrime]
 categories: ["AI", "Cybersecurity", "Law Enforcement", "International Crime", "Fraud Prevention"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/23/Hacker_scammer.jpg"

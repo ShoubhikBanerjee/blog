@@ -2,7 +2,7 @@
 title: "New Comprehensive AI Infrastructure Learning Resource Collection Released"
 slug: "new-comprehensive-ai-infrastructure-learning-resource-collection-released"
 description: "A comprehensive artificial intelligence infrastructure learning resource collection has been introduced, covering the complete technical stack from hardware foundations to advanced applications. This..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [AIInfrastructure, GPU, CUDA, Kubernetes, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Hardware", "Software Engineering"]
 image: "https://avatars.githubusercontent.com/u/46103187?v=4"

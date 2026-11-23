@@ -2,7 +2,7 @@
 title: "Gymnasium-Robotics Library Releases with Reinforcement Learning Robotic Environments"
 slug: "gymnasium-robotics-library-releases-with-reinforcement-learning-robotic-environments"
 description: "The Gymnasium-Robotics library has been released, offering a collection of Reinforcement Learning robotic environments built on the Gymnasium API and powered by the MuJoCo physics engine. Users can..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [ReinforcementLearning, Robotics, MuJoCo, Gymnasium, RLENvironments]
 categories: ["AI", "Machine Learning", "Robotics", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/62961550?v=4"

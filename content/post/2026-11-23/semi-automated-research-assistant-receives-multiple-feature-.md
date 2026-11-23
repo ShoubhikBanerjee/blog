@@ -2,7 +2,7 @@
 title: "Semi‑Automated Research Assistant Receives Multiple Feature Updates"
 slug: "semiautomated-research-assistant-receives-multiple-feature-updates"
 description: "A semi‑automated research assistant for academic research and software development has received a new update."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [AIResearch, Automation, APIs, SoftwareDev]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Research Tools", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/121143489?v=4"

@@ -2,7 +2,7 @@
 title: "New Software Development Study Repository Launched"
 slug: "new-software-development-study-repository-launched"
 description: "I have recently created a new study repository called 'estudy' that contains a collection of my records from studying and researching software development. Starting as a simple theory log, it has..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [SoftwareDevelopment, KnowledgeManagement, PersonalArchive, Estudy]
 categories: ["AI", "Software Engineering", "Knowledge Management", "Academic Research", "Personal Development"]
 image: "https://avatars.githubusercontent.com/u/105429536?v=4"

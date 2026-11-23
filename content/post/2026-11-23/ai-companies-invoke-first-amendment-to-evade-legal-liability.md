@@ -2,7 +2,7 @@
 title: "AI Companies Invoke First Amendment to Evade Legal Liability"
 slug: "ai-companies-invoke-first-amendment-to-evade-legal-liability"
 description: "AI developers are increasingly using the First Amendment to shield their models from liability for harmful outputs or actions, while simultaneously arguing that AI acts as a separate entity when..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [AIRegulation, FirstAmendment, AILiability, TechLaw, OpenAI, xAI]
 categories: ["AI", "AI Policy", "Legal Tech", "AI Agents", "Regulation"]
 author: "Shoubhik Banerjee"

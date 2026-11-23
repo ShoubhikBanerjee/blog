@@ -2,7 +2,7 @@
 title: "OneRAG Launches Production-Ready RAG Framework with Multi-Provider Flexibility"
 slug: "onerag-launches-production-ready-rag-framework-with-multi-provider-flexibility"
 description: "OneRAG is a production-ready Retrieval-Augmented Generation (RAG) framework built with Python and FastAPI that supports seamless switching between multiple vector databases and language models..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [RAG, AI, FastAPI, LLM, VectorDB, OpenAI]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Development", "API"]
 image: "https://avatars.githubusercontent.com/u/163302162?v=4"

@@ -2,7 +2,7 @@
 title: "Tencent Launches WeKnora: An Open-Source LLM-Powered Knowledge Framework"
 slug: "tencent-launches-weknora-an-open-source-llm-powered-knowledge-framework"
 description: "Tencent has released WeKnora, an open-source, LLM-powered knowledge framework for enterprise document understanding, semantic retrieval and reasoning. It brings a team's documents together so they..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [WeKnora, OpenSource, LLM, KnowledgeManagement, RAG]
 categories: ["AI", "Artificial Intelligence", "Enterprise Software", "Knowledge Management", "Large Language Models"]
 image: "https://avatars.githubusercontent.com/u/18461506?v=4"

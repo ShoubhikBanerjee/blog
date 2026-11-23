@@ -2,7 +2,7 @@
 title: "Seoul World Model Enables Real-City Video Generation from Street-View Data"
 slug: "seoul-world-model-enables-real-city-video-generation-from-street-view-data"
 description: "Researchers have released the Seoul World Model (SWM), a city-scale autoregressive world model that renders videos of the real city of Seoul rather than imagined places. The model fine-tunes a..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [WorldModel, NVIDIA, Seoul, VideoGeneration, RetrievalAugmentedGeneration]
 categories: ["AI", "Computer Vision", "Machine Learning", "Generative AI", "Urban Modeling"]
 image: "https://avatars.githubusercontent.com/u/73585370?v=4"

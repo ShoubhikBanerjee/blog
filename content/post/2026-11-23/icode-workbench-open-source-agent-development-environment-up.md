@@ -2,7 +2,7 @@
 title: "iCode Workbench Open-Source Agent Development Environment Update"
 slug: "icode-workbench-open-source-agent-development-environment-update"
 description: "iCode Workbench serves as the control room for a fleet of CLI agents, allowing users to run 44 launchable CLI agents in parallel. The environment features 21 agents with managed status hooks,..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [AIAgents, OpenSource, DeveloperTools, GitWorktrees]
 categories: ["AI", "AI Agents", "Developer Tools", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/341013090?v=4"

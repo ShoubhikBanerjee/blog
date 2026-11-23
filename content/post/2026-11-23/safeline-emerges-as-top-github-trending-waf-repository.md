@@ -2,7 +2,7 @@
 title: "SafeLine Emerges as Top GitHub Trending WAF Repository"
 slug: "safeline-emerges-as-top-github-trending-waf-repository"
 description: "SafeLine has newly appeared as a top-ranked GitHub trending repository for Go projects, establishing itself as a self-hosted Web Application Firewall (WAF) designed to protect web applications from..."
-date: 2026-11-23T18:10:50+05:30
+date: 2026-11-23T22:18:20+05:30
 tags: [WAF, cybersecurity, GoLang, GitHub, WebSecurity]
 categories: ["AI", "Cybersecurity", "Web Development", "Open Source", "Go Programming"]
 image: "https://avatars.githubusercontent.com/u/7302766?v=4"
