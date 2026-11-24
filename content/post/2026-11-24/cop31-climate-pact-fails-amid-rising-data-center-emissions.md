@@ -2,7 +2,7 @@
 title: "COP31 Climate Pact Fails Amid Rising Data Center Emissions"
 slug: "cop31-climate-pact-fails-amid-rising-data-center-emissions"
 description: "The United Nations climate conference, COP31, concluded in Antalya, Turkey, with global climate negotiations failing to pass a key pact due to disagreements over the growing carbon footprint of AI..."
-date: 2026-11-24T06:12:57+05:30
+date: 2026-11-24T12:08:32+05:30
 tags: [COP31, DataCenters, ClimateAction, AI, Electricity]
 categories: ["AI", "Climate Policy", "AI Infrastructure", "Energy", "Technology Industry"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2306098413.jpg?quality=90&strip=all&crop=0%2C10.750882913364%2C100%2C78.498234173273&w=1200"

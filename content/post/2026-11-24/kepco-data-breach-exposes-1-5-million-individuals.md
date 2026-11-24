@@ -2,7 +2,7 @@
 title: "KEPCO Data Breach Exposes 1.5 Million Individuals"
 slug: "kepco-data-breach-exposes-1-5-million-individuals"
 description: "A threat actor breached the internal network of Korea Electric Power Corporation (KEPCO), exposing details of more than 1.5 million individuals."
-date: 2026-11-24T06:12:57+05:30
+date: 2026-11-24T12:08:32+05:30
 tags: [KEPCO, DataBreach, CyberSecurity, SouthKorea, CriticalInfrastructure]
 categories: ["AI", "Cybersecurity", "Data Privacy", "Critical Infrastructure"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/23/towers.jpg"

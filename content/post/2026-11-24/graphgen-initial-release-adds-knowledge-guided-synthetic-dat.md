@@ -1,0 +1,65 @@
+---
+title: "GraphGen Initial Release Adds Knowledge-Guided Synthetic Data for LLMs"
+slug: "graphgen-initial-release-adds-knowledge-guided-synthetic-data-for-llms"
+description: "The initial version of GraphGen has been released, a framework designed for synthetic data generation guided by knowledge graphs. It constructs fine-grained knowledge graphs from source text and..."
+date: 2026-11-24T12:08:32+05:30
+tags: [GraphGen, KnowledgeGraphs, SyntheticData, LLMTraining, ACL2026]
+categories: ["AI", "Natural Language Processing", "Synthetic Data", "Knowledge Graphs", "Machine Learning"]
+image: "https://avatars.githubusercontent.com/u/154449623?v=4"
+author: "Shoubhik Banerjee"
+draft: false
+---
+
+# GraphGen Initial Release Adds Knowledge-Guided Synthetic Data for LLMs
+
+The initial version of GraphGen has been released, a framework designed for synthetic data generation guided by knowledge graphs. It constructs fine-grained knowledge graphs from source text and identifies knowledge gaps in Large Language Models (LLMs) using the expected calibration error metric, prioritizing QA pairs that target high-value, long-tail knowledge. The associated paper, “Knowledge-to-Verification: Exploring RLVR for LLMs in Knowledge-Intensive Domains,” has been accepted to the ACL 2026 Main Conference.
+
+## 🧩 How it works
+
+GraphGen operates by first constructing a fine-grained knowledge graph from the source text. It then identifies knowledge gaps in LLMs using the expected calibration error metric, which allows it to prioritize the generation of QA pairs that target high-value, long-tail knowledge. The framework incorporates multi-hop neighborhood sampling to capture complex relational information and employs style-controlled generation to diversify the resulting QA data. Additionally, support for community detection in knowledge graphs using the Leiden algorithm enables the synthesis of Chain-of-Thought (CoT) data.
+
+## ⚙️ Key details
+
+GraphGen supports a range of input sources and data formats, including HuggingFace Datasets and PDF files processed via MinerU. It also supports Visual Question Answering (VQA) data generation. The framework includes knowledge graph evaluation metrics covering:
+
+- Accuracy (entity/relation)
+- Consistency (conflict detection)
+- Structural robustness (noise, connectivity, degree distribution)
+
+The backend infrastructure includes support for rocksdb as a key-value storage backend and kuzudb as a graph database backend. Local inference is supported via vllm. For distributed execution and resource management, the data generation pipeline has been refactored using Ray.
+
+## 🔌 Integration and Clients
+
+After data generation, users can fine-tune their LLMs using LLaMA-Factory and xtuner. GraphGen supports several new LLM clients and inference backends:
+
+| Component | Function/Details |
+|---|---|
+| Ollama_client | Supported LLM client |
+| http_client | Supported LLM client |
+| HuggingFace Transformers | Supported inference backend |
+| SGLang | Supported inference backend |
+| vllm | Local inference backend |
+
+Search support has been added for several back-ends and databases, enabling the extraction of specific data types:
+
+- Google, Bing, and Wikipedia search back-ends.
+- UniProt, NCBI, and RNAcentral databases for extracting DNA and RNA data from bioinformatics sources.
+
+## 📈 Data Modalities
+
+LLM benchmark synthesis within GraphGen supports multiple question formats, which is ideal for education:
+
+- Single-choice
+- Multiple-choice
+- Fill-in-the-blank
+- True-or-false
+
+## 🚀 Availability
+
+The initial version of GraphGen is available with auto-updating Gradio demos hosted on Hugging Face and ModelScope.
+
+#GraphGen #KnowledgeGraphs #SyntheticData #LLMTraining #ACL2026
+
+---
+
+*Source: [InternScience/GraphGen](https://github.com/InternScience/GraphGen)*

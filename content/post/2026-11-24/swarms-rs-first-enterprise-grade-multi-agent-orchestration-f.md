@@ -2,7 +2,7 @@
 title: "Swarms-rs: First Enterprise-Grade Multi-Agent Orchestration Framework in Rust"
 slug: "swarms-rs-first-enterprise-grade-multi-agent-orchestration-framework-in-rust"
 description: "Swarms-rs has launched as the first-ever enterprise-grade, production-ready multi-agent orchestration framework built in Rust. The framework is designed to handle demanding tasks with unparalleled..."
-date: 2026-11-24T06:12:57+05:30
+date: 2026-11-24T12:08:32+05:30
 tags: [Rust, MultiAgent, Orchestration, LLM, Enterprise]
 categories: ["AI", "AI Agents", "Systems Programming", "Enterprise Software", "Large Language Models"]
 image: "https://avatars.githubusercontent.com/u/167784574?v=4"

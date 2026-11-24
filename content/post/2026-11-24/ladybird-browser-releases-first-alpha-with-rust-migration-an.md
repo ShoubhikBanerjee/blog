@@ -2,7 +2,7 @@
 title: "Ladybird Browser Releases First Alpha with Rust Migration and Performance Gains"
 slug: "ladybird-browser-releases-first-alpha-with-rust-migration-and-performance-gains"
 description: "The Ladybird project has released its first alpha version, allowing users on macOS and Linux to install the browser without the need for manual compilation. This project aims to build a new browser..."
-date: 2026-11-24T06:12:57+05:30
+date: 2026-11-24T12:08:32+05:30
 tags: [Ladybird, Browser, Rust, WebAssembly, OpenSource]
 categories: ["AI", "Web Browsers", "Software Engineering", "Programming Languages"]
 image: "https://static.simonwillison.net/static/2026/ladybird-ffmpeg.webp"

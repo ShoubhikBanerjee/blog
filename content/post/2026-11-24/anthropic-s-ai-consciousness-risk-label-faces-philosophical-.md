@@ -2,7 +2,7 @@
 title: "Anthropic's AI Consciousness Risk Label Faces Philosophical Criticism"
 slug: "anthropic-s-ai-consciousness-risk-label-faces-philosophical-criticism"
 description: "Anthropic has taken a distinctive stance in its public filings by naming the possibility that AI systems could be conscious or sentient as a risk factor for investors. This approach sets the company..."
-date: 2026-11-24T06:12:57+05:30
+date: 2026-11-24T12:08:32+05:30
 tags: [Anthropic, AIConsciousness, Philosophy, IPO]
 categories: ["AI", "AI Ethics", "Corporate Filings", "Philosophy", "Artificial Intelligence"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/simulacra2a.jpg?resize=1200,600"

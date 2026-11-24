@@ -2,7 +2,7 @@
 title: "LaLiga Discloses Data Breach Affecting Fan and Club User Information"
 slug: "laliga-discloses-data-breach-affecting-fan-and-club-user-information"
 description: "LaLiga, Spain's top men's professional football league, disclosed a data breach that exposed personal information belonging to users of its services and those of some affiliated clubs."
-date: 2026-11-24T06:12:57+05:30
+date: 2026-11-24T12:08:32+05:30
 tags: []
 categories: ["AI"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/23/laliga.jpg"

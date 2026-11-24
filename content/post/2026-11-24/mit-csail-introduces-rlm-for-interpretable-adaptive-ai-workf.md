@@ -2,7 +2,7 @@
 title: "MIT CSAIL Introduces RLM for Interpretable, Adaptive AI Workflows"
 slug: "mit-csail-introduces-rlm-for-interpretable-adaptive-ai-workflows"
 description: "Researchers at MIT CSAIL have released predict-rlm, a production-focused runtime that lets language models execute complex, adaptive workflows while maintaining full interpretability. Built on the..."
-date: 2026-11-24T06:12:57+05:30
+date: 2026-11-24T12:08:32+05:30
 tags: [AI, ML, LLM, MITCSAIL, DSPy, predictrlm]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "AI Agents", "Natural Language Processing"]
 image: "https://avatars.githubusercontent.com/u/298785241?v=4"

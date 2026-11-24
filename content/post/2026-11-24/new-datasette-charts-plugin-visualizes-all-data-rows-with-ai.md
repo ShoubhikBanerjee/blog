@@ -2,7 +2,7 @@
 title: "New Datasette Charts Plugin Visualizes All Data Rows with AI Assistance"
 slug: "new-datasette-charts-plugin-visualizes-all-data-rows-with-ai-assistance"
 description: "I've been thinking about this problem for over a year now, but on Sunday I finally fired up Claude Fable 5.2 to build an initial prototype. The prototype went so well that this is now a full plugin...."
-date: 2026-11-24T06:12:57+05:30
+date: 2026-11-24T12:08:32+05:30
 tags: [Datasette, AI, DataVisualization, SQL, Claude, AlphaRelease]
 categories: ["AI", "Data Visualization", "Software Development", "Artificial Intelligence", "Database Analytics"]
 image: "https://static.simonwillison.net/static/2026/datasette-charts-0.1a0.webp"

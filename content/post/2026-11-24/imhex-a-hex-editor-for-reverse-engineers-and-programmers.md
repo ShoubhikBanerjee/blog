@@ -2,7 +2,7 @@
 title: "ImHex: A Hex Editor for Reverse Engineers and Programmers"
 slug: "imhex-a-hex-editor-for-reverse-engineers-and-programmers"
 description: "ImHex is a powerful hex editor designed for reverse engineers, programmers, and anyone who values their retinas when working at 3 AM. It offers a range of features to enhance the user experience and..."
-date: 2026-11-24T06:12:57+05:30
+date: 2026-11-24T12:08:32+05:30
 tags: [HexEditor, ReverseEngineering, Programming, Productivity, OpenSource]
 categories: ["AI", "Software Development", "Programming Tools", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/10835354?v=4"

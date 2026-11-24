@@ -2,7 +2,7 @@
 title: "Oregon and Virginia Attorney Generals Sue SpaceX Over Grok AI Safety Concerns"
 slug: "oregon-and-virginia-attorney-generals-sue-spacex-over-grok-ai-safety-concerns"
 description: "Oregon Attorney General Dan Rayfield and Virginia Attorney General Jay Jones have filed separate lawsuits against SpaceX, alleging the company violated state consumer protection laws. The complaints..."
-date: 2026-11-24T06:12:57+05:30
+date: 2026-11-24T12:08:32+05:30
 tags: [Grok, xAI, SpaceX, Deepfakes, Lawsuit]
 categories: ["AI", "Artificial Intelligence", "Legal and Policy", "Social Media"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2025/06/STK419_DEEPFAKE_CVIRGINIA_F.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"
