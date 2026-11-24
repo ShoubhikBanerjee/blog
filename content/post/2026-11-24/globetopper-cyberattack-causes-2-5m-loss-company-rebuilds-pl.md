@@ -2,7 +2,7 @@
 title: "GlobeTopper cyberattack causes $2.5M loss, company rebuilds platform on AWS"
 slug: "globetopper-cyberattack-causes-2-5m-loss-company-rebuilds-platform-on-aws"
 description: "A cyberattack disrupted operations at B2B top-up solutions provider GlobeTopper, causing an estimated $2.5 million in lost revenue, while the attacker redeemed digital gift cards worth $70,000."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: []
 categories: ["AI"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/23/giftcard.jpg"

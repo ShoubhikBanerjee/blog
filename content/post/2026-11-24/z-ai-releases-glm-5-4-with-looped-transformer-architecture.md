@@ -2,7 +2,7 @@
 title: "Z.ai releases GLM 5.4 with looped transformer architecture"
 slug: "z-ai-releases-glm-5-4-with-looped-transformer-architecture"
 description: "Z.ai has launched GLM 5.4, their first model to use a looped transformer architecture. This innovation allows for deeper networks without increasing the parameter count, making it more efficient for..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [AI, MachineLearning, Zai, GLM, LoopedTransformer]
 categories: ["AI", "Machine Learning", "AI Models", "Natural Language Processing"]
 image: "https://static.simonwillison.net/static/2026/glm-family-4.webp"

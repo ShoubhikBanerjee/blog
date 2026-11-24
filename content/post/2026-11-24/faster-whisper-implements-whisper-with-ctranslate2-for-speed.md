@@ -2,7 +2,7 @@
 title: "Faster-Whisper Implements Whisper with CTranslate2 for Speed and Memory Efficiency"
 slug: "faster-whisper-implements-whisper-with-ctranslate2-for-speed-and-memory-efficiency"
 description: "faster-whisper is a reimplementation of OpenAI's Whisper model using CTranslate2, a fast inference engine for Transformer models. It delivers up to 4 times faster transcription than openai/whisper..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [whisper, ctranslate2, speechtotext, aiinference, quantization]
 categories: ["AI", "Machine Learning", "AI Inference", "Computer Vision", "Natural Language Processing"]
 image: "https://avatars.githubusercontent.com/u/1520500?v=4"

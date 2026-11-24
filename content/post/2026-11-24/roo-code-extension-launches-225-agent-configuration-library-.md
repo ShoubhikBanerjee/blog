@@ -2,7 +2,7 @@
 title: "Roo Code Extension Launches 225-Agent Configuration Library for 2026 Standards"
 slug: "roo-code-extension-launches-225-agent-configuration-library-for-2026-standards"
 description: "Roo Code has released a professional AI agent configuration library featuring 225 specialized agents for VS Code. This update provides enhanced AI coding assistance configurations aligned with modern..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [RooCode, AIagents, VSCode, DevOps, SecurityFirst]
 categories: ["AI", "AI Agents", "Software Development", "Developer Tools", "Cybersecurity"]
 image: "https://avatars.githubusercontent.com/u/12466587?v=4"

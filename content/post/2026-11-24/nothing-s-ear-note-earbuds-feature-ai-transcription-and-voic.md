@@ -2,7 +2,7 @@
 title: "Nothing's Ear Note Earbuds Feature AI Transcription and Voice Control"
 slug: "nothing-s-ear-note-earbuds-feature-ai-transcription-and-voice-control"
 description: "Nothing has revealed the Ear Note, a new set of AI-enabled earbuds that record and transcribe conversations. The device is set to launch on December 8th, following demonstrations by CEO Carl Pei...."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [Nothing, EarNote, AITranscription, Earbuds, ConsumerTech]
 categories: ["AI", "AI Hardware", "Audio Devices", "Consumer Electronics", "Product Launches"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/nothing.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

@@ -2,7 +2,7 @@
 title: "Nvidia CEO Jensen Huang Resigns and Returns Amid Scandal Involving Alleged Chinese Spy"
 slug: "nvidia-ceo-jensen-huang-resigns-and-returns-amid-scandal-involving-alleged-chinese-spy"
 description: "Nvidia CEO Jensen Huang resigned in November 2025 after mounting scrutiny over his alleged affairs, including one with Alice Huang, described as a Chinese intelligence asset. The situation involved..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: []
 categories: ["AI"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Nvidia_Jensen_huang_06.jpg?quality=90&strip=all&crop=0%2C12.339110464558%2C100%2C75.321779070884&w=1200"

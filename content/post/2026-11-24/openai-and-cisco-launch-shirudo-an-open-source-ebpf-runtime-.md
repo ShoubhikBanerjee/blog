@@ -2,7 +2,7 @@
 title: "OpenAI and Cisco launch Shirudo, an open-source eBPF runtime for Linux security"
 slug: "openai-and-cisco-launch-shirudo-an-open-source-ebpf-runtime-for-linux-security"
 description: "OpenAI and Cisco are launching Shirudo, an open-source runtime designed to help teams protect Linux systems while they roll out patches. The tool is built to assist security teams in managing the..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [OpenAI, Cisco, eBPF, Cybersecurity, Linux, OpenSource]
 categories: ["AI", "Cybersecurity", "Linux", "Open Source", "AI Agents"]
 image: "https://images.ctfassets.net/kftzwdyauwt9/5K7gFDr3r8vgjdIcsW6RVY/aba5325ce7902e5d1499b907f8e78f0b/shirudo-partner-logos-landscape-2x.png?w=1600&h=900&fit=fill"

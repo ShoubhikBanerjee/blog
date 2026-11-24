@@ -2,7 +2,7 @@
 title: "AWS Simplifies WAF Pricing with Three-Dimensional Model"
 slug: "aws-simplifies-waf-pricing-with-three-dimensional-model"
 description: "Starting today, AWS WAF pricing is easier to predict. Your bill is now based on three dimensions: the resources you protect, the traffic AWS WAF inspects, and the level of protection you apply to..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [AWS, WAF, CloudSecurity, Pricing]
 categories: ["AI", "Cloud Security", "Web Application Firewalls", "Pricing Models", "Infrastructure"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/23/WAF-pricing-hero-image-v2-1260x630.jpg"

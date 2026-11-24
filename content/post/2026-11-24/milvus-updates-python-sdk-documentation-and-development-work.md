@@ -2,7 +2,7 @@
 title: "Milvus Updates Python SDK Documentation and Development Workflow"
 slug: "milvus-updates-python-sdk-documentation-and-development-workflow"
 description: "The Milvus Vector Database project has released documentation and guidelines for its Python SDK, outlining installation methods, contribution processes, and version management practices."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [Milvus, PythonSDK, VectorDatabase, DevOps, Programming]
 categories: ["AI", "Database", "Developer Tools", "Software Engineering", "Data Infrastructure"]
 image: "https://avatars.githubusercontent.com/u/51735404?v=4"

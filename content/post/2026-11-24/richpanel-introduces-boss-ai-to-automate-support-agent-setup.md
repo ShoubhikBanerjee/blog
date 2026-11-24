@@ -2,7 +2,7 @@
 title: "Richpanel Introduces Boss AI to Automate Support Agent Setup"
 slug: "richpanel-introduces-boss-ai-to-automate-support-agent-setup"
 description: "Richpanel, a company helping firms automate 50% of support interactions within 30 days, has introduced a new AI system known as Boss AI. This development allows the company to handle the complex..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [Richpanel, BossAI, CustomerSupport, OpenAI, AIAutomation]
 categories: ["AI", "AI Agents", "OpenAI", "Enterprise Software", "Customer Support"]
 image: "https://images.ctfassets.net/kftzwdyauwt9/4aVhQ1EicxWg7i6lIkBrLQ/cdabc180f7e5f780dbb43c302e7163d8/richpanel-social.png?w=1600&h=900&fit=fill"

@@ -2,7 +2,7 @@
 title: "Datasette Agent Gains Charting Integration"
 slug: "datasette-agent-gains-charting-integration"
 description: "Datasette Agent has gained integration with a new charting plugin for Datasette. This allows users to request charts through chat, with the agent generating them using the same underlying chart..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [Datasette, Charting, AIAgents, Python, DataVisualization]
 categories: ["AI", "Data Visualization", "AI Agents", "Developer Tools", "Web Development"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Analysis of 5,400 Malicious NPM Packages Reveals Evolving Supply Chain Tactics"
 slug: "analysis-of-5-400-malicious-npm-packages-reveals-evolving-supply-chain-tactics"
 description: "In this first part, we analyzed approximately 5,400 confirmed malicious npm packages published between December 2025 and October 2026, the first year following npm's revocation of long-lived..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [npmSecurity, SupplyChainAttack, MalwareAnalysis, ThreatIntelligence, OpenSource]
 categories: ["AI", "Cybersecurity", "Software Supply Chain", "Threat Intelligence", "Development Tools"]
 image: "https://www.databricks.com/sites/default/files/2026-11/cover-notext.png"

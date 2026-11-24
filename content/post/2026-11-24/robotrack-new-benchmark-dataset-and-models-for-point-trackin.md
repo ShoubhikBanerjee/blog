@@ -2,7 +2,7 @@
 title: "RoboTrack: New Benchmark, Dataset, and Models for Point Tracking in Robotics"
 slug: "robotrack-new-benchmark-dataset-and-models-for-point-tracking-in-robotics"
 description: "Today we release RoboTrack, a new benchmark and training data suite for point tracking in robotic manipulation, along with two new models."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [RoboTrack, PointTracking, Robotics, ComputerVision, Dataset]
 categories: ["AI", "Machine Learning", "Computer Vision", "Robotics", "Datasets"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/0KlbITzhyUGtGPyvi09um.png"

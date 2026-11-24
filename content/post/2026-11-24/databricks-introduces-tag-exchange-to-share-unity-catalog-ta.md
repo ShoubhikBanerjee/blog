@@ -2,7 +2,7 @@
 title: "Databricks introduces Tag Exchange to share Unity Catalog tags via Iceberg"
 slug: "databricks-introduces-tag-exchange-to-share-unity-catalog-tags-via-iceberg"
 description: "Databricks announced support for catalog labels, a new capability in the Apache Iceberg REST Catalog API that enables platforms, engines, and agents to access context such as business purpose,..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [Databricks, ApacheIceberg, Metadata, TagExchange, DataGovernance, Interoperability]
 categories: ["AI", "Data Management", "Metadata & Governance", "Open Standards", "AI Infrastructure"]
 image: "https://www.databricks.com/sites/default/files/2026-11/blog-og-Sharing-catalog-metadata-across-data-platforms-engines-and-agents.png"

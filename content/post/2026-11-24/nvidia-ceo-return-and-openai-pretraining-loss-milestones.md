@@ -2,7 +2,7 @@
 title: "Nvidia CEO Return and OpenAI Pretraining Loss Milestones"
 slug: "nvidia-ceo-return-and-openai-pretraining-loss-milestones"
 description: "Nvidia announced the return of Jensen Huang as CEO eleven days after his resignation, while OpenAI published its pretraining loss curve, identifying a capability jump at a specific log-perplexity..."
-date: 2026-11-24T12:08:32+05:30
+date: 2026-11-24T18:09:57+05:30
 tags: [Nvidia, OpenAI, AIRegulation, JensenHuang, LogPerplexity]
 categories: ["AI", "Corporate Governance", "Model Development", "AI Regulation", "Industry News"]
 image: "https://latent.space/og/card/post/ainews-jensen-is-back-and-openai-shows-its-pretraining-curve-joined-by-microsoft/61bd4f7b88db330282f3164cc381940e0d45c69d877e1c8c04da1be405b9c254.png"
