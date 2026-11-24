@@ -2,7 +2,7 @@
 title: "Recent cyber incidents not linked to AI"
 slug: "recent-cyber-incidents-not-linked-to-ai"
 description: "Microsoft, the FAA, banks, United Airlines, the NSA—it’s been a really bad week in cyberspace."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [Cybersecurity, AI, Infrastructure, Capitalism, Regulation]
 categories: ["AI", "Cybersecurity", "Technology", "Infrastructure", "Economics"]
 author: "Shoubhik Banerjee"

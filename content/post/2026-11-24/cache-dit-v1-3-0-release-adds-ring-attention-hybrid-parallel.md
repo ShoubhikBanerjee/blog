@@ -2,7 +2,7 @@
 title: "Cache-DiT v1.3.0 Release Adds Ring Attention, Hybrid Parallelism"
 slug: "cache-dit-v1-3-0-release-adds-ring-attention-hybrid-parallelism"
 description: "Cache-DiT v1.3.0 has been released. The new version introduces several key updates."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [CacheDiT, DiffusionModels, Parallelism]
 categories: ["AI", "Machine Learning", "Deep Learning", "Distributed Systems"]
 image: "https://avatars.githubusercontent.com/u/204302598?v=4"

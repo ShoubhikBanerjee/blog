@@ -2,7 +2,7 @@
 title: "OpenRouter Removes Three AI Providers After Data‑Handling Violations"
 slug: "openrouter-removes-three-ai-providers-after-datahandling-violations"
 description: "OpenRouter removed three AI providers from its platform after discovering they had violated data‑handling policies and exposed sensitive data."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [OpenRouter, AI, DataSecurity, ModelBroker, ZeroDataRetention]
 categories: ["AI", "Machine Learning", "Security", "Artificial Intelligence"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/06/29/DataLeak.jpg"

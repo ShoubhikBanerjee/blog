@@ -2,7 +2,7 @@
 title: "Octocode: A Rust CLI and MCP server for codebase intelligence"
 slug: "octocode-a-rust-cli-and-mcp-server-for-codebase-intelligence"
 description: "Octocode is a Rust CLI and MCP server designed for exploring codebases by combining semantic search, structural search, and a live graph of symbols and dependencies. It provides AI agents, such as..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [Octocode, MCP, Rust, CodeIntelligence, AIAgents]
 categories: ["AI", "AI Agents", "Developer Tools", "Search", "Programming"]
 image: "https://avatars.githubusercontent.com/u/25336907?v=4"

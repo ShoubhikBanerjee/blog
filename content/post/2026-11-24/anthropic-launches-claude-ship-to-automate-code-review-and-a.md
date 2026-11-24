@@ -2,7 +2,7 @@
 title: "Anthropic launches Claude Ship to automate code review and approvals"
 slug: "anthropic-launches-claude-ship-to-automate-code-review-and-approvals"
 description: "Anthropic has launched Claude Ship, a new product that enables AI to review, fix, and approve pull requests to help software engineers ship code."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [Anthropic, Claude, AI, SoftwareEngineering, CodeReview]
 categories: ["AI", "AI Agents", "Software Development", "Artificial Intelligence"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/07/STKB364_CLAUDE_2_C_96d15c-1.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

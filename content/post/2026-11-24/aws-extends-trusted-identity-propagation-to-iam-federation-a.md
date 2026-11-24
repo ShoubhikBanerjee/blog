@@ -2,7 +2,7 @@
 title: "AWS extends Trusted Identity Propagation to IAM Federation and Roles Anywhere"
 slug: "aws-extends-trusted-identity-propagation-to-iam-federation-and-roles-anywhere"
 description: "AWS has extended Trusted Identity Propagation (TIP) to support IAM federation and AWS IAM Roles Anywhere, enabling customers to grant access and audit activity based on the specific user or workload..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [AWS, IAM, CloudSecurity, IdentityManagement, CloudTrail, DevSecOps]
 categories: ["AI", "Cloud Security", "Identity Management", "DevOps", "Enterprise IT"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/05/13/AdobeStock_1376596821-1260x630.jpeg"

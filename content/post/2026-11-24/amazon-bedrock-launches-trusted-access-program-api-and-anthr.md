@@ -2,7 +2,7 @@
 title: "Amazon Bedrock Launches Trusted Access Program API and Anthropic Enterprise Safeguards"
 slug: "amazon-bedrock-launches-trusted-access-program-api-and-anthropic-enterprise-safeguards"
 description: "Amazon Web Services has announced the general availability of the trusted access program API on Amazon Bedrock, along with the public preview of two new security-focused offerings developed in..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [AWS, AmazonBedrock, AISecurity, Anthropic, EnterpriseAI, MachineLearning]
 categories: ["AI", "Artificial Intelligence", "Cloud Computing", "Cybersecurity", "Machine Learning"]
 image: "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/23/ML-22385-featured-image.png"

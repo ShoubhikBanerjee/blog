@@ -2,7 +2,7 @@
 title: "Databricks Launches Native Lakebase Sink for Apache Spark Structured Streaming"
 slug: "databricks-launches-native-lakebase-sink-for-apache-spark-structured-streaming"
 description: "Databricks has announced the general availability of a native Lakebase sink for Apache Spark™ Structured Streaming, simplifying real-time data ingestion into its serverless PostgreSQL offering. The..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [Databricks, Lakebase, ApacheSpark, RealTimeStreaming, FeatureEngineering]
 categories: ["AI", "Database", "Streaming Analytics", "Machine Learning", "Data Engineering"]
 image: "https://www.databricks.com/sites/default/files/2026-11/lakebase-sink-optB-pipeline-2400x1256.png"

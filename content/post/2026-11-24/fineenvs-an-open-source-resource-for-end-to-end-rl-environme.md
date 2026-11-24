@@ -2,7 +2,7 @@
 title: "FineEnvs: An Open-Source Resource for End-to-End RL Environments"
 slug: "fineenvs-an-open-source-resource-for-end-to-end-rl-environments"
 description: "A new open-source resource called FineEnvs has been released to address the shifting bottleneck in reinforcement learning (RL) for LLMs, where the environment design now poses a greater challenge..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [FineEnvs, ReinforcementLearning, OpenSource, LLMTraining, HuggingFace]
 categories: ["AI", "Reinforcement Learning", "Machine Learning", "Open Source Software", "Large Language Models"]
 image: "https://avatars.githubusercontent.com/u/27956426?v=4"

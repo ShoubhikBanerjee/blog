@@ -2,7 +2,7 @@
 title: "Kubernetes v1.38 introduces breaking changes to WebSockets, cgroup drivers, and kubeconfig APIs"
 slug: "kubernetes-v1-38-introduces-breaking-changes-to-websockets-cgroup-drivers-and-kubeconfig-apis"
 description: "As the Kubernetes community approaches the v1.38 release, several deprecated features are being removed or deprecated to improve the project's long-term health and maintainability. These changes..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [Kubernetes, Containers, cgroups, Kubectl]
 categories: ["AI", "Cloud Native", "Container Orchestration", "DevOps", "Infrastructure"]
 author: "Shoubhik Banerjee"

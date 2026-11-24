@@ -2,7 +2,7 @@
 title: "GraphGen Initial Release Adds Knowledge-Guided Synthetic Data for LLMs"
 slug: "graphgen-initial-release-adds-knowledge-guided-synthetic-data-for-llms"
 description: "The initial version of GraphGen has been released, a framework designed for synthetic data generation guided by knowledge graphs. It constructs fine-grained knowledge graphs from source text and..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [GraphGen, KnowledgeGraphs, SyntheticData, LLMTraining, ACL2026]
 categories: ["AI", "Natural Language Processing", "Synthetic Data", "Knowledge Graphs", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/154449623?v=4"

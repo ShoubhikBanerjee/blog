@@ -2,7 +2,7 @@
 title: "Unofficial Go Client for OpenAI API Supports Responses and GPT-6"
 slug: "unofficial-go-client-for-openai-api-supports-responses-and-gpt-6"
 description: "An unofficial Go client for the OpenAI API is now available, providing support for both the new Responses API and legacy Chat Completions surfaces. The library requires Go 1.18 or later and covers a..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [Go, OpenAI, API, GPT6, DeveloperTools]
 categories: ["AI", "Machine Learning", "Programming Languages", "APIs", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/677093?v=4"

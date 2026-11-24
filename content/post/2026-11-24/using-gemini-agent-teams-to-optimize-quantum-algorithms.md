@@ -2,7 +2,7 @@
 title: "Using Gemini agent teams to optimize quantum algorithms"
 slug: "using-gemini-agent-teams-to-optimize-quantum-algorithms"
 description: "Researchers have utilized teams of Gemini 4 agents to improve well-known quantum algorithms by creating highly efficient quantum circuits. This approach uses proof-checked AI search to compress years..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [QuantumComputing, Gemini, AIAgents, Lean, ScientificResearch]
 categories: ["AI", "Artificial Intelligence", "Quantum Computing", "Scientific Computing"]
 image: "https://lh3.googleusercontent.com/jIoM2lo98EDqLMQjIaXBlXPmXgPbUPpM2GgtXcDsGekZBOPUY41IjBsnuZIhLac7MSOuRkklNBsp20a5M25oDz-xTIY0BIqoBxUqmmXvEHwlM3MJJw=w1200-h630-n-nu-rw"

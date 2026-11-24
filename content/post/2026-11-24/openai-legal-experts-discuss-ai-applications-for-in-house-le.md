@@ -2,7 +2,7 @@
 title: "OpenAI, Legal Experts Discuss AI Applications for In-House Legal Teams"
 slug: "openai-legal-experts-discuss-ai-applications-for-in-house-legal-teams"
 description: "OpenAI hosted a discussion featuring Stacey Wang and Craig Bruney, Mary O'Carroll of LECG, and Cooley's Richard Segal on how AI can assist in-house legal teams in connecting business context,..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [OpenAI, LegalTech, AIApplications, InHouseLegal]
 categories: ["AI", "Artificial Intelligence", "Legal Technology", "Corporate Law", "Workflow Automation"]
 image: "https://images.ctfassets.net/kftzwdyauwt9/40q0vnGDp1zwWuJrVjXtu6/79ebb13b84e11ce1711a27adfd6ffafe/connected-intelligence-for-in-house-legal-cover.png?w=1600&h=900&fit=fill"

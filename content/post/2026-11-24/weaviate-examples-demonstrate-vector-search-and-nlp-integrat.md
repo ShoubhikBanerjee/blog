@@ -2,7 +2,7 @@
 title: "Weaviate Examples Demonstrate Vector Search and NLP Integration"
 slug: "weaviate-examples-demonstrate-vector-search-and-nlp-integration"
 description: "New examples and guides demonstrate how to use Weaviate for semantic search and NLP tasks, ranging from basic Python client setups to advanced multi-modal applications. These resources show..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [Weaviate, VectorSearch, NLP, ComputerVision, SemanticSearch, Python]
 categories: ["AI", "Vector Databases", "Natural Language Processing", "Computer Vision", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/37794290?v=4"

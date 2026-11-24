@@ -2,7 +2,7 @@
 title: "Amazon Cognito Adds Point-in-Time Recovery for User Pools"
 slug: "amazon-cognito-adds-point-in-time-recovery-for-user-pools"
 description: "Amazon Cognito has introduced point-in-time recovery (PITR) for user pools, enabling administrators to restore user data to an earlier point in time. This feature addresses challenges that previously..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: []
 categories: ["AI"]
 image: "https://d2908q01vomqb2.cloudfront.net/827bfc458708f0b442009c9c9836f7e4b65557fb/2020/06/03/Blog-Post_thumbnail.png"

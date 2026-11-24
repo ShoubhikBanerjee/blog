@@ -2,7 +2,7 @@
 title: "NVIDIA Releases cuDSS 1.0 and DuckDB Sirius Extension"
 slug: "nvidia-releases-cudss-1-0-and-duckdb-sirius-extension"
 description: "NVIDIA has released version 1.0 of its cuDSS library for sparse linear systems and collaborated with DuckLabs to release Sirius, a GPU-accelerated extension for DuckDB, enabling high-performance..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [NVIDIA, cuDSS, DuckDB, GPU, HighPerformanceComputing]
 categories: ["AI", "High-Performance Computing", "Data Analytics", "Software Development", "Hardware"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2024/06/DatacenterKV-2-660x370.png"

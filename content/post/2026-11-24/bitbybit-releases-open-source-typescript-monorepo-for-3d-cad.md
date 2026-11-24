@@ -2,7 +2,7 @@
 title: "Bitbybit Releases Open-Source TypeScript Monorepo for 3D CAD Algorithms with AI Integration"
 slug: "bitbybit-releases-open-source-typescript-monorepo-for-3d-cad-algorithms-with-ai-integration"
 description: "Bitbybit has released a new open-source monorepo that provides TypeScript implementations of 3D CAD algorithms for browser-based geometry programming. The repository contains all Bitbybit NPM..."
-date: 2026-11-24T18:09:57+05:30
+date: 2026-11-24T22:08:41+05:30
 tags: [TypeScript, 3D, CAD, WebAssembly, Monorepo, AI]
 categories: ["AI", "Software Development", "Computer Graphics", "Open Source", "AI Tools"]
 image: "https://avatars.githubusercontent.com/u/66118789?v=4"
