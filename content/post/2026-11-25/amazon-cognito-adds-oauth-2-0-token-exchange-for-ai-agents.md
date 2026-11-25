@@ -2,7 +2,7 @@
 title: "Amazon Cognito adds OAuth 2.0 token exchange for AI agents"
 slug: "amazon-cognito-adds-oauth-2-0-token-exchange-for-ai-agents"
 description: "Amazon Cognito introduces a new OAuth token exchange feature that enables services and AI agents to call APIs on behalf of users. This functionality aligns with OAuth 2.0 Token Exchange standards..."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: [AmazonCognito, OAuth20, AIAgents, TokenExchange, Security]
 categories: ["AI", "Cloud Security", "AI Agents", "Identity & Access Management", "API Development"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Token-Exchange-Image.jpg"

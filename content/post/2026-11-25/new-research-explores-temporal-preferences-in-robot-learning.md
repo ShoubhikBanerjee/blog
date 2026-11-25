@@ -2,7 +2,7 @@
 title: "New Research Explores Temporal Preferences in Robot Learning from Human Corrections"
 slug: "new-research-explores-temporal-preferences-in-robot-learning-from-human-corrections"
 description: "A paper submitted to arXiv on November 23, 2026, introduces a novel approach to learning from human corrections in robotics by leveraging both when and how humans choose to intervene."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: [Robotics, HumanRobotInteraction, LearningFromCorrections, PreferenceLearning, ValueAlignment, ICRA2027]
 categories: ["AI", "Robotics", "Machine Learning", "Human-Computer Interaction", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

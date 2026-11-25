@@ -2,7 +2,7 @@
 title: "New Algorithm Teaches Robots When to Ask for Human Help"
 slug: "new-algorithm-teaches-robots-when-to-ask-for-human-help"
 description: "Researchers have developed a new algorithm that enables robots to learn when to request human intervention during complex tasks, improving efficiency and reducing unnecessary interruptions."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: []
 categories: ["AI", "Robotics", "Artificial Intelligence", "Human-Robot Interaction", "Reinforcement Learning"]
 author: "Shoubhik Banerjee"

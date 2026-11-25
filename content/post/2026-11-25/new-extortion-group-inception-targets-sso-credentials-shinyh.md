@@ -2,7 +2,7 @@
 title: "New Extortion Group Inception Targets SSO Credentials; ShinyHunters Claims Return"
 slug: "new-extortion-group-inception-targets-sso-credentials-shinyhunters-claims-return"
 description: "A newly formed data extortion group named 'Inception' has been linked to a large-scale campaign targeting single sign-on (SSO) credentials of multiple global brands. The gang surfaced on November 17,..."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: [ShinyHunters, Inception, SSO, DataExtortion, Phishing, Okta]
 categories: ["AI", "Cybersecurity", "Data Extortion", "Phishing", "Threat Intelligence"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/24/inception.jpg"

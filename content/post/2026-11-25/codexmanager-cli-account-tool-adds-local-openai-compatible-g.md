@@ -2,7 +2,7 @@
 title: "CodexManager CLI Account Tool Adds Local OpenAI-Compatible Gateway"
 slug: "codexmanager-cli-account-tool-adds-local-openai-compatible-gateway"
 description: "A new utility called **CodexManager** provides account pool management for the Codex CLI and a local gateway that mimics OpenAI's API."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: [CodexManager, AItools, OpenSource, Sponsorship]
 categories: ["AI", "Artificial Intelligence", "Developer Tools", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/51312019?v=4"

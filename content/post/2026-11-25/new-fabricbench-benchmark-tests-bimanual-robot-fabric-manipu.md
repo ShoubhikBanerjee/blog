@@ -2,7 +2,7 @@
 title: "New FabricBench Benchmark Tests Bimanual Robot Fabric Manipulation Across Six Tasks"
 slug: "new-fabricbench-benchmark-tests-bimanual-robot-fabric-manipulation-across-six-tasks"
 description: "A new benchmark called FabricBench has been introduced for evaluating bimanual fabric manipulation in robotics, addressing the gap in standardized evaluation tools that focus on rigid objects rather..."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: []
 categories: ["AI", "Robotics", "Artificial Intelligence", "Computer Vision", "Machine Learning"]
 author: "Shoubhik Banerjee"

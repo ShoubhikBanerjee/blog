@@ -2,7 +2,7 @@
 title: "NVIDIA Cosmos 3 Nano Enables Video Generation on 12GB GPUs Through System RAM Offloading"
 slug: "nvidia-cosmos-3-nano-enables-video-generation-on-12gb-gpus-through-system-ram-offloading"
 description: "NVIDIA has released Cosmos 3 Nano, a world foundation model that generates videos from text, images, and other inputs to support physical AI development. The model can run on consumer GPUs with as..."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: [NVIDIA, AI, videogeneration, Cosmos, PyTorch, HuggingFace]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Computer Vision", "GPU Computing"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/ai-model-660x370.jpg"

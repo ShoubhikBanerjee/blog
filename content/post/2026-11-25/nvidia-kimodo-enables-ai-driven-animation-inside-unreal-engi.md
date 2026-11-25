@@ -2,7 +2,7 @@
 title: "NVIDIA Kimodo Enables AI‑Driven Animation Inside Unreal Engine 5.9 Preview"
 slug: "nvidia-kimodo-enables-aidriven-animation-inside-unreal-engine-5-9-preview"
 description: "NVIDIA has introduced Kimodo, the first AI motion‑generation model integrated into Unreal Engine 5.9 Preview’s new guided animation framework."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: [NVIDIA, UnrealEngine, AIAnimation, Kimodo]
 categories: ["AI", "Artificial Intelligence", "Computer Graphics", "Game Development"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/Featured-War-Thunder-DLSS-5-on-660x370.jpg"

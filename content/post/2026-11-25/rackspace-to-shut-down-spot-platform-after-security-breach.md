@@ -2,7 +2,7 @@
 title: "Rackspace to Shut Down Spot Platform After Security Breach"
 slug: "rackspace-to-shut-down-spot-platform-after-security-breach"
 description: "Rackspace is shutting down its Rackspace Spot cloud platform, which allows organizations to deploy and manage containerized applications using Kubernetes, following a security breach that allowed..."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: [Rackspace, Security, Kubernetes, Cloud, DataBreach]
 categories: ["AI", "Cloud Computing", "Cybersecurity", "Containers", "IT Infrastructure"]
 image: "https://www.bleepstatic.com/content/hl-images/2022/12/09/Rackspace.jpg"

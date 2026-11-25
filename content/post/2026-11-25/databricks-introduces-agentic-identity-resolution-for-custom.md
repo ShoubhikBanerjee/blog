@@ -2,7 +2,7 @@
 title: "Databricks Introduces Agentic Identity Resolution for Customer Data Platforms"
 slug: "databricks-introduces-agentic-identity-resolution-for-customer-data-platforms"
 description: "Databricks has launched Agentic Identity Resolution, an approach that combines deterministic, probabilistic, and LLM-based matching to connect fragmented customer records. This capability is part of..."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: [AIagents, CDP, CustomerData, IdentityResolution, Databricks]
 categories: ["AI", "Data Management", "Customer Experience", "Artificial Intelligence", "Machine Learning"]
 image: "https://www.databricks.com/sites/default/files/2026-11/Blog-Data-Modeling-Best-Practices-for-an-Agentic-CDP-Part-1-The-Data-Foundation.png"

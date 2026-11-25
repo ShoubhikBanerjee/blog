@@ -2,7 +2,7 @@
 title: "Vision Transformer Implementation and Recent Architectural Simplifications"
 slug: "vision-transformer-implementation-and-recent-architectural-simplifications"
 description: "A PyTorch implementation of the Vision Transformer (ViT) demonstrates a simple method for achieving state-of-the-art vision classification using only a single transformer encoder. The significance of..."
-date: 2026-11-25T12:10:39+05:30
+date: 2026-11-25T18:07:47+05:30
 tags: [VisionTransformer, PyTorch, ComputerVision, MachineLearning, DeepLearning]
 categories: ["AI", "Computer Vision", "Machine Learning", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/108653?v=4"
