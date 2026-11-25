@@ -2,7 +2,7 @@
 title: "GPT‑6.2 Astra Identifies 1808 Sketchbook Creator in 22 Minutes"
 slug: "gpt6-2-astra-identifies-1808-sketchbook-creator-in-22-minutes"
 description: "In a recent demonstration, GPT‑6.2 Astra was able to autonomously identify the creator of an anonymous 1808 sketchbook held at Yale’s Beinecke Library."
-date: 2026-11-25T06:12:19+05:30
+date: 2026-11-25T12:10:39+05:30
 tags: [AI, History, DigitalResearch]
 categories: ["AI", "Artificial Intelligence", "Digital Humanities", "Historical Research"]
 author: "Shoubhik Banerjee"

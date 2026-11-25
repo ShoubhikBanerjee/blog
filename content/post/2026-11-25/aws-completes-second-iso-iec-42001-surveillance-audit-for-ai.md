@@ -2,7 +2,7 @@
 title: "AWS Completes Second ISO/IEC 42001 Surveillance Audit for AI Services"
 slug: "aws-completes-second-iso-iec-42001-surveillance-audit-for-ai-services"
 description: "AWS successfully completed its second surveillance audit for ISO/IEC 42001:2023, the standard for Artificial Intelligence Management Systems (AIMS). This audit resulted in no findings and marks the..."
-date: 2026-11-25T06:12:19+05:30
+date: 2026-11-25T12:10:39+05:30
 tags: [AWS, ISO42001, AICompliance, ResponsibleAI, Certification]
 categories: ["AI", "Artificial Intelligence", "Compliance", "Cloud Services", "Security"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/05/05/aws_logo.jpg"

@@ -2,7 +2,7 @@
 title: "AI Deepfakes of Jensen Huang Go Viral"
 slug: "ai-deepfakes-of-jensen-huang-go-viral"
 description: "AI-generated deepfakes of Nvidia CEO Jensen Huang dancing in Ibiza have gone viral on Instagram, sparking memes about his cheating scandal."
-date: 2026-11-25T06:12:19+05:30
+date: 2026-11-25T12:10:39+05:30
 tags: [AI, Deepfakes, Nvidia, JensenHuang, Scandal, Memes]
 categories: ["AI", "Artificial Intelligence", "Deepfakes", "Technology", "Entertainment"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/ai-label_1c35e3.jpg?quality=90&strip=all&crop=0%2C19.887257893553%2C100%2C60.225484212893&w=1200"

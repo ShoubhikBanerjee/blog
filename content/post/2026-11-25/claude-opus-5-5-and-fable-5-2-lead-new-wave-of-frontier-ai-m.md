@@ -2,7 +2,7 @@
 title: "Claude Opus 5.5 and Fable 5.2 Lead New Wave of Frontier AI Models"
 slug: "claude-opus-5-5-and-fable-5-2-lead-new-wave-of-frontier-ai-models"
 description: "Today, November 24th 2026, marks the one year anniversary of the release of Claude Opus 4.5."
-date: 2026-11-25T06:12:19+05:30
+date: 2026-11-25T12:10:39+05:30
 tags: [Claude, AI, OpenAI, GPT, Gemini]
 categories: ["AI", "Artificial Intelligence", "Large Language Models", "AI Agents", "Software Development"]
 image: "https://img.youtube.com/vi/9RKrSF9d2SE/maxresdefault.jpg"

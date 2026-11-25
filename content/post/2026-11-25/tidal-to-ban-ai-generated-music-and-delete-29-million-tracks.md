@@ -2,7 +2,7 @@
 title: "Tidal to Ban AI-Generated Music and Delete 29 Million Tracks"
 slug: "tidal-to-ban-ai-generated-music-and-delete-29-million-tracks"
 description: "Tidal has announced it will officially ban AI-generated music starting December 9th. As part of this policy, the platform will delete approximately 29 million existing AI-generated songs and reject..."
-date: 2026-11-25T06:12:19+05:30
+date: 2026-11-25T12:10:39+05:30
 tags: [Tidal, AIMusic, Streaming, ContentModeration, MusicIndustry]
 categories: ["AI", "AI & Machine Learning", "Music & Media", "Platform Policy", "Content Safety"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25319678/STK301_Tidal_01.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

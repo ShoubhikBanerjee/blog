@@ -2,7 +2,7 @@
 title: "NVIDIA Megatron Core Supports Market Forecasting via Patch Embeddings"
 slug: "nvidia-megatron-core-supports-market-forecasting-via-patch-embeddings"
 description: "NVIDIA has released a workflow for applying Megatron Core, its open-source library for training transformer models at scale, to financial market forecasting. The approach processes stream data—trades..."
-date: 2026-11-25T06:12:19+05:30
+date: 2026-11-25T12:10:39+05:30
 tags: [Megatron, Transformer, TimeSeries, FinancialAI, NVIDIA]
 categories: ["AI", "Machine Learning", "Finance", "Deep Learning", "Data Engineering"]
 image: "https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/megatron-market-forecasting-e1795123732504-660x370.webp"

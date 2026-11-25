@@ -2,7 +2,7 @@
 title: "Jensen Huang denies Trump's role in Nvidia reinstatement"
 slug: "jensen-huang-denies-trump-s-role-in-nvidia-reinstatement"
 description: "Nvidia CEO Jensen Huang addressed staff during his first all-hands meeting since returning to the company, explicitly denying that President Donald Trump or other political figures helped him regain..."
-date: 2026-11-25T06:12:19+05:30
+date: 2026-11-25T12:10:39+05:30
 tags: [Nvidia, JensenHuang, AILeaders, CorporateGovernance, TechNews]
 categories: ["AI", "Corporate Governance", "Technology Leadership", "Business News", "AI Industry"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/gettyimages-2300373989.jpg?quality=90&strip=all&crop=0%2C1.2974525602559%2C100%2C78.525377525853&w=1200"

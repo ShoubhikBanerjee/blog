@@ -2,7 +2,7 @@
 title: "AI Models Help Independent Researchers Identify New Exoplanet Candidates"
 slug: "ai-models-help-independent-researchers-identify-new-exoplanet-candidates"
 description: "Independent researchers have used AI coding and analysis tools to identify new planetary signals in data from NASA's Kepler and TESS missions, contributing to the growing catalog of over 6,400..."
-date: 2026-11-25T06:12:19+05:30
+date: 2026-11-25T12:10:39+05:30
 tags: [Exoplanets, Astronomy, GenerativeAI, NASA, DataScience]
 categories: ["AI", "AI in Science", "Astronomy", "Machine Learning"]
 image: "https://images.ctfassets.net/kftzwdyauwt9/318YLaAKlMKQFzOdMutjeX/8b6e4e516fd1a7894c97318838f43a0f/searching-for-distant-planets-with-astra-social.png?w=1600&h=900&fit=fill"

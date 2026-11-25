@@ -2,7 +2,7 @@
 title: "Turnitin Warns Customers of Unauthorized Access to its Systems - An Adaptive Security Solution Could Help Identify Risks"
 slug: "turnitin-warns-customers-of-unauthorized-access-to-its-systems-an-adaptive-security-solution-could-help-identify-risks"
 description: "**Turnitin, an educational technology company, reports unauthorized access to their customer-facing systems.** The investigation continues, and law enforcement and cyber regulators have been..."
-date: 2026-11-25T06:12:19+05:30
+date: 2026-11-25T12:10:39+05:30
 tags: [Turnitin, cybersecurity, educationaltechnology, AI, emailsecurity]
 categories: ["AI", "Artificial Intelligence", "Cybersecurity", "Education Technology"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/24/turnitin.jpg"
