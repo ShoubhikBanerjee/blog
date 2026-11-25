@@ -2,7 +2,7 @@
 title: "Venture-backed startups use AI and FOIA requests to map government spending data"
 slug: "venture-backed-startups-use-ai-and-foia-requests-to-map-government-spending-data"
 description: "Venture-backed startups have raised over $100 million to collect data from thousands of government agencies, using AI to turn that information into “signals” that help businesses sell to governments...."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [FOIA, GovTech, DataCollection, PublicRecords]
 categories: ["AI", "Government Technology", "Data Privacy", "Public Policy", "Venture Capital"]
 image: "https://wp.technologyreview.com/wp-content/uploads/2026/11/loc-sales2a.jpg?resize=1200,600"

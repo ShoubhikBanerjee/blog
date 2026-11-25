@@ -2,7 +2,7 @@
 title: "New Deployment Method Bridges Real Vehicle Gap for Autonomous Driving Models"
 slug: "new-deployment-method-bridges-real-vehicle-gap-for-autonomous-driving-models"
 description: "A new deployment methodology called Released-to-Real (R2R) addresses the gap between high-performing autonomous-driving models and their real-world vehicle deployment. The approach corrects..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [autonomousdriving, AIdeployment, reinforcementlearning, computervision]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Robotics", "Computer Vision"]
 author: "Shoubhik Banerjee"

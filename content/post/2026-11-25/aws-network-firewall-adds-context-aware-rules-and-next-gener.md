@@ -2,7 +2,7 @@
 title: "AWS Network Firewall Adds Context-Aware Rules and Next Generation Policies"
 slug: "aws-network-firewall-adds-context-aware-rules-and-next-generation-policies"
 description: "AWS Network Firewall has updated its capabilities to support context-aware rules, allowing you to match traffic based on the AWS resources that send and receive it rather than by their IP addresses...."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [AWS, NetworkFirewall, CloudSecurity, VPC, TransitGateway]
 categories: ["AI", "Cloud Computing", "Cybersecurity", "Infrastructure"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/25/4026.main_.jpg"

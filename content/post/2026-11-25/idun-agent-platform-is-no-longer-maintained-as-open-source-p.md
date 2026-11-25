@@ -2,7 +2,7 @@
 title: "Idun Agent Platform Is No Longer Maintained as Open-Source Project"
 slug: "idun-agent-platform-is-no-longer-maintained-as-open-source-project"
 description: "The Idun Agent Platform is no longer maintained. Its code stays open source under the GPLv3 license, and its official documentation remains online for reference."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [LangGraph, FastAPI, OpenSource, AIAgents, Python]
 categories: ["AI", "AI Agents", "Open Source", "Software Tools"]
 image: "https://avatars.githubusercontent.com/u/170414217?v=4"

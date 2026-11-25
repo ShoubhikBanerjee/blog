@@ -2,7 +2,7 @@
 title: "Pane Launches Open-Source AI Agent Manager for Terminal-First Development"
 slug: "pane-launches-open-source-ai-agent-manager-for-terminal-first-development"
 description: "Pane is an open-source AI agent manager designed for terminal-first workflows. It supports any CLI-based agent including Claude Code, Codex, Cursor Agent, Aider, Goose, and others."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: []
 categories: ["AI"]
 image: "https://avatars.githubusercontent.com/u/264294815?v=4"

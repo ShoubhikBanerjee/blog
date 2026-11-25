@@ -2,7 +2,7 @@
 title: "POISE: Curvature-Aware Critic Regularization for Smooth Actor-Critic Control"
 slug: "poise-curvature-aware-critic-regularization-for-smooth-actor-critic-control"
 description: "PAV inger-critic methods achieve high returns in robotic control, yet trained actors exhibit high-frequency action oscillations. Most smoothness methods constrain the actor, whereas PAVE regularizes..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [AI, ActorCritic, Robotics, CurvatureRegularization]
 categories: ["AI", "Machine Learning", "Robotics", "Control Systems", "Reinforcement Learning"]
 author: "Shoubhik Banerjee"

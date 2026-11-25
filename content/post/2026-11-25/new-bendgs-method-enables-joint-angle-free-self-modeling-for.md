@@ -2,7 +2,7 @@
 title: "New BendGS Method Enables Joint-Angle-Free Self-Modeling for Continuum Robots"
 slug: "new-bendgs-method-enables-joint-angle-free-self-modeling-for-continuum-robots"
 description: "A new AI development called BendGS enables continuum robots to predict their next 3D shape, appearance, and tip pose from observed images without relying on measured joint angles or fixed link..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [Robotics, ComputerVision, AIResearch, SelfModeling, 3DGaussians]
 categories: ["AI", "Robotics", "Computer Vision", "Machine Learning"]
 author: "Shoubhik Banerjee"

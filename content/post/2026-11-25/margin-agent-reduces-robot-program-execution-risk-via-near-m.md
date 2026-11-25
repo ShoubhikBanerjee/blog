@@ -2,7 +2,7 @@
 title: "MARGIN Agent Reduces Robot Program Execution Risk via Near-Miss Evidence"
 slug: "margin-agent-reduces-robot-program-execution-risk-via-near-miss-evidence"
 description: "Robot-programming agents typically improve executable control policies through repeated testing and repair, but binary success metrics often saturate while execution risk remains high in unseen..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [Robotics, AIAgents, ControlPolicies, RiskAwareness, LIBERO]
 categories: ["AI", "Robotics", "AI Agents", "Machine Learning", "Software Testing"]
 author: "Shoubhik Banerjee"

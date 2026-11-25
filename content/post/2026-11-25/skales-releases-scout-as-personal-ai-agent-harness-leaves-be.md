@@ -2,7 +2,7 @@
 title: "Skales Releases Scout as Personal AI Agent Harness Leaves Beta"
 slug: "skales-releases-scout-as-personal-ai-agent-harness-leaves-beta"
 description: "Skales has updated its personal AI agent harness, officially bringing Skales Scout out of beta. The application installs locally to execute multi-step tasks directly on a user's computer across..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [Skales, AIAgents, LocalAI, Automation]
 categories: ["AI", "Artificial Intelligence", "AI Agents", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/266460664?v=4"

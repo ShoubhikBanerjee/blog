@@ -2,7 +2,7 @@
 title: "Ada-BFM Adapts Behavior Foundation Models for Humanoid Scene Interaction"
 slug: "ada-bfm-adapts-behavior-foundation-models-for-humanoid-scene-interaction"
 description: "Ada-BFM, a post-training framework, adapts behavior foundation models for humanoid scene interaction while preserving pretrained whole-body control capabilities."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [Robotics, MachineLearning, SceneInteraction]
 categories: ["AI", "Robotics", "Machine Learning", "Foundation Models"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Zotero Model Context Protocol Connects Research Library to Claude, ChatGPT and More"
 slug: "zotero-model-context-protocol-connects-research-library-to-claude-chatgpt-and-more"
 description: "Zotero has released the Model Context Protocol (MCP) integration, allowing its research library to be accessed directly from AI assistants such as Claude and ChatGPT."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [Zotero, AIIntegration, ModelContextProtocol]
 categories: ["AI", "Research Tools", "Artificial Intelligence", "Productivity"]
 image: "https://avatars.githubusercontent.com/u/27888654?v=4"

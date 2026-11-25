@@ -2,7 +2,7 @@
 title: "CIA and FinCEN Report Cyberattacks Using ARTEX Framework"
 slug: "cia-and-fincen-report-cyberattacks-using-artex-framework"
 description: "Unknown attackers breached an open-source intelligence (OSINT) analysis system at the US Central Intelligence Agency (CIA) and also affected the Office of the Director of National Intelligence (ODNI)..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [cybersecurity, CIA, FinCEN, AI, databreach]
 categories: ["AI", "Cybersecurity", "Government Security", "Incident Response"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/25/CIA_headpic.jpg"

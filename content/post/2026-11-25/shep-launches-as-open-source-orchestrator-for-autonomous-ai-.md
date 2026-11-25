@@ -2,7 +2,7 @@
 title: "Shep Launches as Open-Source Orchestrator for Autonomous AI Development"
 slug: "shep-launches-as-open-source-orchestrator-for-autonomous-ai-development"
 description: "Shep is the open-source orchestrator for the autonomous development cycle. It runs parallel AI agents — Claude Code, Kimi Code, Codex CLI, Copilot CLI, Cursor CLI, Gemini CLI, Cline, or any agent CLI..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: []
 categories: ["AI"]
 image: "https://avatars.githubusercontent.com/u/252908629?v=4"

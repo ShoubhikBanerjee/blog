@@ -2,7 +2,7 @@
 title: "New robotics research addresses VLA brittleness with neuro-symbolic integration"
 slug: "new-robotics-research-addresses-vla-brittleness-with-neuro-symbolic-integration"
 description: "Several new robotics papers submitted on 23 Nov 2026 address persistent barriers in real-world robot deployment, focusing on reliability, safety auditing, and robustness under coupled uncertainties."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [Robotics, NeuroSymbolicAI, TrajectoryPlanning, ReinforcementLearning, CollisionDetection]
 categories: ["AI", "Robotics", "Machine Learning", "Computer Vision", "Autonomous Systems"]
 author: "Shoubhik Banerjee"

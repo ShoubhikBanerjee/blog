@@ -2,7 +2,7 @@
 title: "GPT-6 Designs Proteins Using Reasoning and Code"
 slug: "gpt-6-designs-proteins-using-reasoning-and-code"
 description: "OpenAI has demonstrated that its GPT-6 family of models can design new protein shapes and amino acid sequences using only reasoning and code, eliminating the need for specialized biology models to..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [GPT6, ProteinDesign, OpenAI, Bioinformatics, AIResearch]
 categories: ["AI", "Large Language Models", "Bioinformatics", "Artificial Intelligence", "Scientific Computing"]
 image: "https://images.ctfassets.net/kftzwdyauwt9/Eg5mCwwaA3KqnznOVCh0n/8e6deaef25fd508d9853ff86a95187c1/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities-social.png?w=1600&h=900&fit=fill"

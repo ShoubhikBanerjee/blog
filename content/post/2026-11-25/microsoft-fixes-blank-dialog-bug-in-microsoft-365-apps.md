@@ -2,7 +2,7 @@
 title: "Microsoft Fixes Blank Dialog Bug in Microsoft 365 Apps"
 slug: "microsoft-fixes-blank-dialog-bug-in-microsoft-365-apps"
 description: "Earlier this week, Microsoft resolved a known issue that was preventing some Microsoft 365 customers from accessing Office applications."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [Microsoft365, OfficeApps, BugFix, Productivity, Updates]
 categories: ["AI", "Software Updates", "Microsoft", "Productivity Tools", "Bug Fixes"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/25/Office-headpic.jpg"

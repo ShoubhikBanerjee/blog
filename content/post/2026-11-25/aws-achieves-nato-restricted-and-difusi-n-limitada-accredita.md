@@ -2,7 +2,7 @@
 title: "AWS Achieves NATO Restricted and Difusión Limitada Accreditation in Spain"
 slug: "aws-achieves-nato-restricted-and-difusion-limitada-accreditation-in-spain"
 description: "Amazon Web Services (AWS) has achieved Spain’s national Limited Distribution (“Difusión Limitada”) and NATO Restricted accreditation for the AWS Europe (Spain) Region, marking a significant milestone..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [AWS, CloudSecurity, NATO, Spain, Accreditation]
 categories: ["AI", "Cloud Computing", "Cybersecurity", "Government Technology", "Compliance"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Spain_flag800x400.png"

@@ -2,7 +2,7 @@
 title: "Automated AI paper writing skill pack for coding agents released"
 slug: "automated-ai-paper-writing-skill-pack-for-coding-agents-released"
 description: "A new open-source skill pack has been released that enables standard coding agents to execute the multi-agent pipeline defined in the PaperOrchestra framework, turning unstructured research materials..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [PaperOrchestra, AIAgents, AutomatedResearch, CodingAgents, LaTeX]
 categories: ["AI", "AI Agents", "Research Automation", "Developer Tools", "Academic Writing"]
 image: "https://avatars.githubusercontent.com/u/29639685?v=4"

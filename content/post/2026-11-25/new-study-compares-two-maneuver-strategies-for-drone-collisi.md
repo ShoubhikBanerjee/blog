@@ -2,7 +2,7 @@
 title: "New Study Compares Two Maneuver Strategies for Drone Collision Avoidance"
 slug: "new-study-compares-two-maneuver-strategies-for-drone-collision-avoidance"
 description: "A recent paper presents two maneuver‑selection strategies for autonomous drones operating in shared airspace, evaluating their performance against conventional approaches."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [AutonomousDrones, CollisionAvoidance, DAA, UnmannedAviation]
 categories: ["AI", "Autonomous Systems", "Drone Technology", "Air Traffic Management"]
 author: "Shoubhik Banerjee"

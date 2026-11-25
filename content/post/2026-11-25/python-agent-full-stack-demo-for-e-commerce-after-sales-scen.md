@@ -2,7 +2,7 @@
 title: "Python Agent Full-Stack Demo for E-Commerce After-Sales Scenarios"
 slug: "python-agent-full-stack-demo-for-e-commerce-after-sales-scenarios"
 description: "A new full-stack Python Agent demonstration for e-commerce after-sales scenarios has been released, migrating a Dify prototype into a code implementation."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [Python, FastAPI, LangGraph, LangChain, Vue3, AIagents]
 categories: ["AI", "Artificial Intelligence", "Software Development", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/275657804?v=4"

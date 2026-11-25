@@ -2,7 +2,7 @@
 title: "OpenHands Benchmarks Updated for V1 Agent SDK with New Evaluation Pipelines"
 slug: "openhands-benchmarks-updated-for-v1-agent-sdk-with-new-evaluation-pipelines"
 description: "The OpenHands benchmark repository now runs on the OpenHands Software Agent SDK V1, providing standardized evaluation pipelines for a range of real‑world agent tasks."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [OpenHands, AIbenchmarks, SoftwareAgents]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Engineering", "Benchmarking"]
 image: "https://avatars.githubusercontent.com/u/225919603?v=4"

@@ -2,7 +2,7 @@
 title: "IBM releases CUGA, an open-source agent harness for Indic voice"
 slug: "ibm-releases-cuga-an-open-source-agent-harness-for-indic-voice"
 description: "IBM Research has released CUGA (ConfigUrable Generalist Agent), an open-source agent harness designed as a text-in, text-out brain. The system is built to handle Indic languages, addressing the..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [IBMResearch, CUGA, IndicAI, OpenSource, VoiceAgents]
 categories: ["AI", "AI Agents", "Open Source", "Natural Language Processing", "Sovereign AI"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/67fe070a4e8cc28ba346f53c/-QNcrxSDbjI8VOCBlhi-C.png"

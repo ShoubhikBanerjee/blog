@@ -2,7 +2,7 @@
 title: "Exposed API Leads to Customer Credential Exposure at Radware"
 slug: "exposed-api-leads-to-customer-credential-exposure-at-radware"
 description: "Cybersecurity company Radware experienced a data breach after an unauthorized party accessed an unauthenticated internal Cloud WAF management API left reachable from the public internet on November..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [Cybersecurity, DataBreach, Radware, CloudSecurity, APISecurity]
 categories: ["AI", "Cybersecurity", "Data Breaches", "Cloud Security"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/24/Radware.jpg"

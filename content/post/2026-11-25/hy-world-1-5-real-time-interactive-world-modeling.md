@@ -2,7 +2,7 @@
 title: "HY-World 1.5: Real-Time Interactive World Modeling"
 slug: "hy-world-1-5-real-time-interactive-world-modeling"
 description: "We are excited to announce the release of HY-World 1.5 (WorldPlay), the first open-source, real-time interactive, and long-term geometrically consistent world model. This breakthrough bridges the gap..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [AI, WorldModeling, RealTime, GeometricConsistency, OpenSource]
 categories: ["AI", "Machine Learning", "Computer Vision", "AI Research", "3D Modeling"]
 image: "https://avatars.githubusercontent.com/u/210980732?v=4"

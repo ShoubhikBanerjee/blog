@@ -2,7 +2,7 @@
 title: "Agency Swarm Updates Framework with OpenAI Agents SDK Integration and 2.0 Beta"
 slug: "agency-swarm-updates-framework-with-openai-agents-sdk-integration-and-2-0-beta"
 description: "Agency Swarm has updated to a new SDK-based version, including a 2.0 beta release, designed for building, orchestrating, and managing multi-agent applications. The framework leverages and extends the..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [AgencySwarm, OpenAI, AIAgents, Python, MultiAgent]
 categories: ["AI", "AI Agents", "Software Development", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/71930995?v=4"

@@ -2,7 +2,7 @@
 title: "New Benchmark CALVIN-MAX Tests Robot Policies Under Dynamic World Changes"
 slug: "new-benchmark-calvin-max-tests-robot-policies-under-dynamic-world-changes"
 description: "Robots must often keep working after the world changes, for example when a block moves or the camera shifts while the robot still acts on what it saw before. A new benchmark, CALVIN-MAX, introduces..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [robotics, benchmarking, AIevaluation, CALVIN, robotpolicies]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Machine Learning", "Benchmark Development"]
 author: "Shoubhik Banerjee"

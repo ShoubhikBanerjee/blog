@@ -2,7 +2,7 @@
 title: "New World Model Research Papers Expand Capabilities in Robotics and Autonomous Systems"
 slug: "new-world-model-research-papers-expand-capabilities-in-robotics-and-autonomous-systems"
 description: "Researchers have released multiple new papers advancing world models for robotics, autonomous driving, and video generation. These developments focus on creating more robust and versatile models that..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [WorldModels, Robotics, AutonomousDriving, VideoGeneration, EmbodiedAI]
 categories: ["AI", "Artificial Intelligence", "Robotics", "Computer Vision", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/48375324?v=4"

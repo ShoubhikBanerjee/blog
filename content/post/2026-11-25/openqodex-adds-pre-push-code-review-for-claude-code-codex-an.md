@@ -2,7 +2,7 @@
 title: "OpenQodex adds pre-push code review for Claude Code, Codex, and Cursor"
 slug: "openqodex-adds-pre-push-code-review-for-claude-code-codex-and-cursor"
 description: "Open source code review tool OpenQodex now runs inside coding agents to check every change before you push. It operates without requiring a separate account or API key, acting as a separate reviewer..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [OpenQodex, CodeReview, AIagents, ClaudeCode, OpenSource]
 categories: ["AI", "AI Agents", "Developer Tools", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/336816094?v=4"

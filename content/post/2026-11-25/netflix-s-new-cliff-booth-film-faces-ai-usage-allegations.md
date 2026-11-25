@@ -2,7 +2,7 @@
 title: "Netflix’s New Cliff Booth Film Faces AI‑Usage Allegations"
 slug: "netflixs-new-cliff-booth-film-faces-aiusage-allegations"
 description: "Early screenings of David Fincher’s latest film, The Further Mis‑Adventures of Cliff Booth, have raised questions about whether generative AI was used in the movie."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [AI, Netflix, Fincher, CliffBooth]
 categories: ["AI", "Film", "Artificial Intelligence", "Netflix", "David Fincher"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/UFP25_R4_Rec709_2p4gamma_6188x3240_20260828.0363314_R2.jpg?quality=90&strip=all&crop=20.043648851915%2C0%2C79.914576075467%2C100&w=1200"

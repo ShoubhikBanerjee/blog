@@ -2,7 +2,7 @@
 title: "Claude and OpenAI Publish Proofs of VP ≠ VNP, GPT-6 Advances in Science and Code"
 slug: "claude-and-openai-publish-proofs-of-vp-vnp-gpt-6-advances-in-science-and-code"
 description: "An internal Claude research model reportedly provided a proof that VP ≠ VNP, which Anthropic shared in a GitHub repository. OpenAI subsequently posted its own proof, claiming it was 'obtained on..."
-date: 2026-11-25T18:07:47+05:30
+date: 2026-11-25T22:10:10+05:30
 tags: [AI, OpenAI, Claude, GPT6, VPnotVNP, ProteinDesign]
 categories: ["AI", "Artificial Intelligence", "Machine Learning Models", "AI Research", "Computational Complexity"]
 image: "https://latent.space/og/card/post/ainews-gemini-4-neon-marks-gdm-s-full-return-as-a-frontier-lab/cbe347eb1fb1cb87c986d8fbe2e2206521e0bdecbfd20fbb16e0c4595e118daa.png"
