@@ -2,7 +2,7 @@
 title: "New LSRP*-LA Planner Solves Large-Agent MAPF with Scalable Asynchronous Coordination"
 slug: "new-lsrp-la-planner-solves-large-agent-mapf-with-scalable-asynchronous-coordination"
 description: "Researchers have introduced LSRP*-LA, a novel multi-agent path finding (MAPF) planner designed for large agents with asynchronous actions. Unlike prior approaches, LSRP*-LA scales to 800 agents,..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [multiagentpathfinding, roboticsplanning, asynchronousagents, pathfindingalgorithm, scalableAI]
 categories: ["AI", "Artificial Intelligence", "Robotics", "Algorithms", "Computer Science"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "sqlite3_rsync Enables Remote SQLite Database Copies Over SSH"
 slug: "sqlite3-rsync-enables-remote-sqlite-database-copies-over-ssh"
 description: "sqlite3_rsync is a database remote-copy tool for SQLite that was added as experimental in SQLite 3.47.0 in October 2024 and later enhanced in SQLite 3.50.0 in May 2025. This tool allows copying a..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [SQLite, Database, rsync, SSH, Backup]
 categories: ["AI", "Databases", "Software Development", "System Administration"]
 author: "Shoubhik Banerjee"

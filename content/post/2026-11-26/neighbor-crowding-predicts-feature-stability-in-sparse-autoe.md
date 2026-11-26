@@ -2,7 +2,7 @@
 title: "Neighbor Crowding Predicts Feature Stability in Sparse Autoencoders"
 slug: "neighbor-crowding-predicts-feature-stability-in-sparse-autoencoders"
 description: "Researchers have introduced a method to predict feature stability in TopK Sparse Autoencoders (SAEs) using computationally inexpensive statistics derived from a single training run, addressing the..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [SparseAutoencoders, FeatureStability, TopK, RepresentationLearning, ComputationalEfficiency]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Representation Learning", "Neural Networks"]
 author: "Shoubhik Banerjee"

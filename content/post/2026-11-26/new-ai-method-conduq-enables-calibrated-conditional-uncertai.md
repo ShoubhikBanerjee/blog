@@ -2,7 +2,7 @@
 title: "New AI Method CondUQ Enables Calibrated Conditional Uncertainty Quantification"
 slug: "new-ai-method-conduq-enables-calibrated-conditional-uncertainty-quantification"
 description: "Researchers have introduced CondUQ, a novel approach for conditional uncertainty quantification in machine learning systems that improves safety-critical applications requiring accurate error..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [uncertainty, machinelearning, CalibratedUQ, safety, reliability]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Signal Processing", "Robotics"]
 author: "Shoubhik Banerjee"

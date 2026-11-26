@@ -2,7 +2,7 @@
 title: "AWS Security Blog Launches Remediation Guides and AI Agents for Vulnerability Management"
 slug: "aws-security-blog-launches-remediation-guides-and-ai-agents-for-vulnerability-management"
 description: "AWS Security Blog released 19 October posts detailing remediation flows from security findings to tested fixes, including AI-powered guidance for finding, confirming, and repairing vulnerabilities...."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [AWS, AI, Security, Vulnerability, PenetrationTesting]
 categories: ["AI", "Cybersecurity", "Artificial Intelligence", "Security Operations", "DevSecOps"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/05/05/aws_logo.jpg"

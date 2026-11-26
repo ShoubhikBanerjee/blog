@@ -2,7 +2,7 @@
 title: "New Bandit Algorithms Achieve Near-Optimal Regret in Adversarial Convex Optimization"
 slug: "new-bandit-algorithms-achieve-near-optimal-regret-in-adversarial-convex-optimization"
 description: "Researchers have advanced the state of the art in adversarial bandit convex optimization and robust reinforcement learning with new theoretical bounds and algorithms."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: []
 categories: ["AI"]
 author: "Shoubhik Banerjee"

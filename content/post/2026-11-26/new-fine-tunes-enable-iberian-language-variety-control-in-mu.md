@@ -2,7 +2,7 @@
 title: "New Fine-Tunes Enable Iberian Language Variety Control in Multilingual Translation"
 slug: "new-fine-tunes-enable-iberian-language-variety-control-in-multilingual-translation"
 description: "Researchers have introduced new fine-tuned variants of the MADLAD-400-3B-MT multilingual translation model that add control over regional language varieties, particularly for Spanish dialects and..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [machinetranslation, multilingualAI, languagevarieties, opensource]
 categories: ["AI", "Machine Translation", "Natural Language Processing", "Multilingual AI", "Open Source Software"]
 author: "Shoubhik Banerjee"

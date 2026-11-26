@@ -2,7 +2,7 @@
 title: "Dograh Launches Fully Open‑Source Voice AI Platform with One‑Click Self‑Hosting"
 slug: "dograh-launches-fully-opensource-voice-ai-platform-with-oneclick-selfhosting"
 description: "Dograh, an open‑source voice AI platform, is now available as a self‑hosted alternative to Vapi and Retell."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [VoiceAI, OpenSource, SelfHosting, Dograh]
 categories: ["AI", "Artificial Intelligence", "Open Source Software", "Voice Technology", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/191861025?v=4"

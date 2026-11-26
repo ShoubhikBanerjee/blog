@@ -2,7 +2,7 @@
 title: "Persistent Agent introduces proactive, goal-oriented AI assistant for Slack teams"
 slug: "persistent-agent-introduces-proactive-goal-oriented-ai-assistant-for-slack-teams"
 description: "Persistent Agent has been introduced as a proactive, always-on, goal-oriented AI assistant designed to integrate into Slack teams. Built on Managed Deep Agents (MDA), the system functions as a..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [PersistentAgent, AIAgents, Slack, LangSmith, Automation]
 categories: ["AI", "AI Agents", "Productivity Tools", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/245194860?v=4"

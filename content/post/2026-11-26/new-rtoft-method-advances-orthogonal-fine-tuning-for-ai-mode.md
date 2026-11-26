@@ -2,7 +2,7 @@
 title: "New RTOFT Method Advances Orthogonal Fine-Tuning for AI Models"
 slug: "new-rtoft-method-advances-orthogonal-fine-tuning-for-ai-models"
 description: "RTOFT (Restarted Tangent Orthogonal Fine-tuning) is a new approach to orthogonal fine-tuning that ensures exact orthogonality by using a polar decomposition only when the drift reaches a tolerance..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [AI, machinelearning, finetuning, orthogonaltransformation, RTOFT]
 categories: ["AI", "Machine Learning", "AI Development", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

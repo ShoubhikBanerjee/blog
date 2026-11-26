@@ -2,7 +2,7 @@
 title: "Two New AI Approaches for Humanoid Locomotion and Object Transport"
 slug: "two-new-ai-approaches-for-humanoid-locomotion-and-object-transport"
 description: "Two new AI development papers have been submitted to arXiv on 24 and 25 November 2026, introducing novel methods for training humanoid robots in complex locomotion and object transport tasks using..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [AI, Robotics, ReinforcementLearning, Humanoid, ComputerVision]
 categories: ["AI", "Computer Science > Robotics", "Machine Learning"]
 author: "Shoubhik Banerjee"

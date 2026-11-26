@@ -2,7 +2,7 @@
 title: "Autumn-27 ARTEX Open-Source Fork Now Maintained by ChainReactors"
 slug: "autumn-27-artex-open-source-fork-now-maintained-by-chainreactors"
 description: "The Autumn-27/ARTEX project, an AI autonomous penetration testing system originally built with a Go backend and Next.js frontend, has seen its open-source continuation. The repository RuoJi6/ARTEX is..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [ARTEX, PenetrationTesting, OpenSource, SecurityTools, ChainReactors]
 categories: ["AI", "Cybersecurity", "Open Source", "AI Agents", "Development Tools"]
 image: "https://avatars.githubusercontent.com/u/79234113?v=4"

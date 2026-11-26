@@ -2,7 +2,7 @@
 title: "New MWAPG Algorithm Advances Multi-Objective Wasserstein Optimization"
 slug: "new-mwapg-algorithm-advances-multi-objective-wasserstein-optimization"
 description: "A new algorithm called multiobjective Wasserstein accelerated proximal gradient (MWAPG) has been developed for multi-objective optimization of Kullback-Leibler divergences over probability measures...."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [Wasserstein, Optimization, MachineLearning, Probability]
 categories: ["AI", "Machine Learning", "Optimization", "Probability Theory"]
 author: "Shoubhik Banerjee"

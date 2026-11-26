@@ -2,7 +2,7 @@
 title: "Google Patents My Channel: AI-Generated Personalized Videos"
 slug: "google-patents-my-channel-ai-generated-personalized-videos"
 description: "Google filed a patent for a system called My Channel that aims to create personalized, AI-generated videos and advertisements using user data. The patent has been rejected, but the company may appeal..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [Google, AI, Patents, MyChannel, VideoGeneration]
 categories: ["AI", "Artificial Intelligence", "Patents and Intellectual Property", "Consumer Technology", "Content Creation"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Screenshot-2026-11-25-at-11.34.07-AM.png?quality=90&strip=all&crop=2.859375%2C11.97652241473%2C93.788122558594%2C75.148782257541&w=1200"

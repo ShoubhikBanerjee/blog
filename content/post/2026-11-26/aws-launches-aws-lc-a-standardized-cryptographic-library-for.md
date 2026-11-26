@@ -2,7 +2,7 @@
 title: "AWS Launches AWS-LC, a Standardized Cryptographic Library for PQC"
 slug: "aws-launches-aws-lc-a-standardized-cryptographic-library-for-pqc"
 description: "AWS has released AWS‑LC, a unified cryptographic library that supports post‑quantum algorithms while maintaining compatibility, assurance, and performance."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [Cryptography, PostQuantum, AWSLC, Security]
 categories: ["AI", "Security", "Cloud Computing", "Cryptography"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2025/06/11/main-2841.png"

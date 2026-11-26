@@ -2,7 +2,7 @@
 title: "New Reranking Method Combines Multiple Models Without Joint Training"
 slug: "new-reranking-method-combines-multiple-models-without-joint-training"
 description: "Researchers have introduced a method for combining heterogeneous rerankers without requiring joint training, offering improvements in both accuracy and speed for multistage RAG pipelines. The..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [AI, reranking, transformers, RAG, retrieval, languagemodels]
 categories: ["AI", "Computer Science", "Artificial Intelligence", "Machine Learning", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

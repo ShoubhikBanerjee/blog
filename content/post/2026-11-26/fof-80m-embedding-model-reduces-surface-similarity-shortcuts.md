@@ -2,7 +2,7 @@
 title: "FOF-80M embedding model reduces surface similarity shortcuts in factual text retrieval"
 slug: "fof-80m-embedding-model-reduces-surface-similarity-shortcuts-in-factual-text-retrieval"
 description: "Text embedding models that conflate surface-form similarity with factual identity can lead to misleading results in information retrieval and semantic search applications. FOF-80M demonstrates that..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [NLP, embeddings, factchecking, contrastivelearning, benchmarking]
 categories: ["AI", "Natural Language Processing", "Machine Learning", "Information Retrieval", "Text Embeddings"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Sports Agent: A Self-Evolving System for Conversational Data Analytics"
 slug: "sports-agent-a-self-evolving-system-for-conversational-data-analytics"
 description: "Conversational sports analytics requires accurate, evidence-based responses with low latency. However, changes in query distributions, data resources, and model behavior can degrade static agent..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [SportsAnalytics, AIAgents, MachineLearning, ConversationalAI]
 categories: ["AI", "AI Agents", "Machine Learning", "Data Analytics"]
 author: "Shoubhik Banerjee"

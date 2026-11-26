@@ -2,7 +2,7 @@
 title: "AI Model Simulates European Population Responses from Published Statistics Alone"
 slug: "ai-model-simulates-european-population-responses-from-published-statistics-alone"
 description: "Researchers have developed a new AI approach that simulates how European population groups respond to surveys using only published statistics, without relying on interview data or individual records...."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [AIsimulation, Europeanpopulations, biasaudits, languagemodels]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Social Sciences"]
 author: "Shoubhik Banerjee"

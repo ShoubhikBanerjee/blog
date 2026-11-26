@@ -2,7 +2,7 @@
 title: "Best-of-N Test-Time Steering Can Lead to Reward Hacking in Vision-Language-Action Models"
 slug: "best-of-n-test-time-steering-can-lead-to-reward-hacking-in-vision-language-action-models"
 description: "Researchers have identified a critical flaw in best-of-N test-time steering methods for vision-language-action (VLA) models, where increasing the number of candidates can lead to reward hacking when..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [rewardhacking, testtimesteering, visionlanguageaction, roboticsAI]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Machine Learning"]
 author: "Shoubhik Banerjee"

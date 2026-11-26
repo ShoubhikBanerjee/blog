@@ -2,7 +2,7 @@
 title: "New MultiNet v2.0-Gridworld Environment Helps Diagnose AI Reasoning Failures"
 slug: "new-multinet-v2-0-gridworld-environment-helps-diagnose-ai-reasoning-failures"
 description: "Researchers have introduced MultiNet v2.0-Gridworld, an interactive maze environment designed to attribute specific causes of failure in vision-language models during reasoning tasks. The environment..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [AI, MachineLearning, VisionLanguageModels, Benchmarking, MultiNet]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Computer Vision", "Robotics"]
 author: "Shoubhik Banerjee"

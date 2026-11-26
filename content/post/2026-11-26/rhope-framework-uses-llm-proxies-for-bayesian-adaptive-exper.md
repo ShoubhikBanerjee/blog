@@ -2,7 +2,7 @@
 title: "RHOPE Framework Uses LLM Proxies for Bayesian Adaptive Experimentation"
 slug: "rhope-framework-uses-llm-proxies-for-bayesian-adaptive-experimentation"
 description: "A new research framework called Residual Horizon Optimization for Prediction-Powered Experimentation (RHOPE) has been introduced. This approach combines large language models (LLMs) with Bayesian..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [LLMs, BayesianAdaptation, ExperimentalDesign, RHOPE]
 categories: ["AI", "Machine Learning", "Statistical Methods", "Experimental Design", "Generative AI"]
 author: "Shoubhik Banerjee"

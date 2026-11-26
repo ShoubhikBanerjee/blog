@@ -2,7 +2,7 @@
 title: "Measuring the Value of One Shared Image at Robot Handoffs in Vision-and-Language Navigation"
 slug: "measuring-the-value-of-one-shared-image-at-robot-handoffs-in-vision-and-language-navigation"
 description: "A new research paper titled 'Measuring the Value of One Shared Image at Robot Handoffs in Vision-and-Language Navigation' has been submitted to arXiv under Computer Science and Robotics on November..."
-date: 2026-11-26T12:19:42+05:30
+date: 2026-11-26T18:08:23+05:30
 tags: [Robotics, ComputerVision, AI, Navigation]
 categories: ["AI", "Computer Science", "Robotics", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"
