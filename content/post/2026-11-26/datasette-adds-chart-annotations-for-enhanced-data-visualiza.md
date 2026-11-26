@@ -2,7 +2,7 @@
 title: "Datasette Adds Chart Annotations for Enhanced Data Visualization"
 slug: "datasette-adds-chart-annotations-for-enhanced-data-visualization"
 description: "I added chart annotations to datasette-charts! You can now render a chart and then annotate it with lines, shaded areas, labels, or a combination of the three."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [Datasette, datavisualization, annotations, charts]
 categories: ["AI", "Data Visualization", "Software Development"]
 image: "https://static.simonwillison.net/static/2026/chart-annotate.gif"

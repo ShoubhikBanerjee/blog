@@ -2,7 +2,7 @@
 title: "New Python Package partialid Enables Tractable Sharp Bounds for Causal Inference with Unobserved Confounding"
 slug: "new-python-package-partialid-enables-tractable-sharp-bounds-for-causal-inference-with-unobserved-confounding"
 description: "A new paper titled *A Graphical Criterion for Linear Causal Bounds* (submitted 25 Nov 2026) presents a graphical criterion for deriving sharp causal bounds in the presence of unobserved confounding...."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [CausalInference, MachineLearning, Python, Statistics, LinearProgramming]
 categories: ["AI", "Machine Learning", "Statistics", "Artificial Intelligence", "Algorithms"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "New DFLAT Algorithm Enables Subsecond Long-Horizon Kinodynamic Planning for Tractor-Trailers"
 slug: "new-dflat-algorithm-enables-subsecond-long-horizon-kinodynamic-planning-for-tractor-trailers"
 description: "Researchers have introduced DFLAT, a diffusion-based planning algorithm that achieves subsecond planning times for long-horizon kinodynamic trajectory optimization, particularly enabling practical..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [robotics, motionplanning, diffusionmodels, kinodynamics, trajectoryoptimization]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Computer Science", "Machine Learning"]
 author: "Shoubhik Banerjee"

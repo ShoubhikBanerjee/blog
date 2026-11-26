@@ -2,7 +2,7 @@
 title: "New Study Explains Double Descent in Deep Learning via Universal Compression"
 slug: "new-study-explains-double-descent-in-deep-learning-via-universal-compression"
 description: "Researchers have developed a new theoretical framework for understanding the double-descent phenomenon in deep learning models. The study introduces universal compression as a lens to interpret why..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [DoubleDescent, DeepLearning, UniversalCompression, MachineLearning]
 categories: ["AI", "Machine Learning", "Statistics", "Artificial Intelligence", "Theoretical Computer Science"]
 author: "Shoubhik Banerjee"

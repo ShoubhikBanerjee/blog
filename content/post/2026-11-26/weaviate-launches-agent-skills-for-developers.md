@@ -2,7 +2,7 @@
 title: "Weaviate Launches Agent Skills for Developers"
 slug: "weaviate-launches-agent-skills-for-developers"
 description: "Weaviate introduces Agent Skills to empower developers building AI applications."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [Weaviate, AIagents, DeveloperTools, RAG, AgentSkills]
 categories: ["AI", "Machine Learning", "AI Agents", "Developer Tools", "Cloud Services"]
 image: "https://avatars.githubusercontent.com/u/37794290?v=4"

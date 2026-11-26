@@ -2,7 +2,7 @@
 title: "New AI Development Framework TRIAGE Optimizes Model Selection and Adaptation"
 slug: "new-ai-development-framework-triage-optimizes-model-selection-and-adaptation"
 description: "Researchers have introduced TRIAGE, a novel framework for selecting and adapting public AI checkpoints to specific deployment scenarios. The approach addresses how organizations can effectively..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [AI, machinelearning, modeloptimization, robotics, computervision]
 categories: ["AI", "Machine Learning", "Robotics", "Computer Vision", "AI Frameworks"]
 author: "Shoubhik Banerjee"

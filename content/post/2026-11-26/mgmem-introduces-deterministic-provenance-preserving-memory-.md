@@ -2,7 +2,7 @@
 title: "MGMem Introduces Deterministic, Provenance-Preserving Memory for Long-Horizon LLM Agents"
 slug: "mgmem-introduces-deterministic-provenance-preserving-memory-for-long-horizon-llm-agents"
 description: "Long-horizon Large Language Model (LLM) agents need persistent memory that surfaces the right past interaction at the right time across thousands of turns. Many existing systems rely on generative..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [LLM, Memory, AIAgents, NLP]
 categories: ["AI", "Machine Learning", "AI Agents", "Natural Language Processing"]
 author: "Shoubhik Banerjee"

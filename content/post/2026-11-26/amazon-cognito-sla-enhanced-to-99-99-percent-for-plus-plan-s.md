@@ -2,7 +2,7 @@
 title: "Amazon Cognito SLA Enhanced to 99.99 Percent for Plus Plan Starting November 2026"
 slug: "amazon-cognito-sla-enhanced-to-99-99-percent-for-plus-plan-starting-november-2026"
 description: "Amazon Cognito's Service Level Agreement (SLA) for user pools on the Plus feature plan is increasing from 99.9 percent to 99.99 percent, effective November 1, 2026. This enhancement ensures tighter..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [AWS, Cognito, SLA, IAM, HighAvailability, UserPools]
 categories: ["AI", "Web Development", "Cloud Computing", "Security", "DevOps"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/23/AWS-Security-Blog-99.99_-Hero-Image.jpg"

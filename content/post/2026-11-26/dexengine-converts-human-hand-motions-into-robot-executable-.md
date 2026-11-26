@@ -2,7 +2,7 @@
 title: "DexEngine Converts Human Hand Motions into Robot-Executable Data at Scale"
 slug: "dexengine-converts-human-hand-motions-into-robot-executable-data-at-scale"
 description: "A new pipeline called DexEngine has been introduced to convert human hand-object demonstrations into large-scale, physically executable trajectories for training robotic manipulation policies."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [Robotics, ImitationLearning, DexEngine, Manipulation, DepthSensing]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Computer Vision", "Machine Learning"]
 author: "Shoubhik Banerjee"

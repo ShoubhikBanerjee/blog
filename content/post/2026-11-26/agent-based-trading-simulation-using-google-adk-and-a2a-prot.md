@@ -2,7 +2,7 @@
 title: "Agent-based trading simulation using Google ADK and A2A protocol"
 slug: "agent-based-trading-simulation-using-google-adk-and-a2a-protocol"
 description: "This project demonstrates an agent-based trading system simulation featuring distinct agents for trading logic and risk management, communicating via the Agent-to-Agent (A2A) protocol. It includes a..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [AIAgents, GoogleADK, A2AProtocol, TradingSimulation, FastAPI]
 categories: ["AI", "AI Agents", "Trading Systems", "Developer Tools", "Simulation"]
 image: "https://avatars.githubusercontent.com/u/11586922?v=4"

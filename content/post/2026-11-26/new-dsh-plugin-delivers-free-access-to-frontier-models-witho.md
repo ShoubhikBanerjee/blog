@@ -2,7 +2,7 @@
 title: "New DSH Plugin Delivers Free Access to Frontier Models Without Login or API Keys"
 slug: "new-dsh-plugin-delivers-free-access-to-frontier-models-without-login-or-api-keys"
 description: "The plugin installs directly into dsh and activates a free lane to frontier models. Users can access DeepSeek V4.1 Flash, Kimi K3, and other models instantly without creating accounts or managing API..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [AI, OpenAPI, Plugins, FreeModels, DSH, LLM]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Software Development", "API Integration"]
 image: "https://avatars.githubusercontent.com/u/245557608?v=4"

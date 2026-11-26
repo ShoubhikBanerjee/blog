@@ -2,7 +2,7 @@
 title: "NVIDIA Releases Nemotron 3.5 Parse with Enhanced Chart and Table Extraction"
 slug: "nvidia-releases-nemotron-3-5-parse-with-enhanced-chart-and-table-extraction"
 description: "NVIDIA has released Nemotron 3.5 Parse, a compact document model that turns page images into structured data for retrieval-augmented generation (RAG) and agents. The new version significantly extends..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [NVIDIA, AI, DocumentAI, RAG]
 categories: ["AI", "Machine Learning", "Computer Vision", "Natural Language Processing"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/6365c3f398da81987e2753f2/zArpuP9uLsLz9luMW0K2g.png"

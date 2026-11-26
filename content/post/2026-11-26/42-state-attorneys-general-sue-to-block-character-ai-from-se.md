@@ -2,7 +2,7 @@
 title: "42 State Attorneys General Sue to Block Character.AI From Selling User Chat Data in Bankruptcy"
 slug: "42-state-attorneys-general-sue-to-block-character-ai-from-selling-user-chat-data-in-bankruptcy"
 description: "A bipartisan coalition of 42 state attorneys general has moved to prevent Character.AI from selling off user data as it navigates Chapter 11 bankruptcy proceedings. The lawsuit accuses the company of..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [CharacterAI, Bankruptcy, Privacy, AttorneysGeneral, AIregulation]
 categories: ["AI", "Artificial Intelligence", "Legal Affairs", "Data Privacy", "Corporate Bankruptcy"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25557391/STK278_character_ai_B.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200"

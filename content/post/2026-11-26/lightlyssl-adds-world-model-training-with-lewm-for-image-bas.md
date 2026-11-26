@@ -2,7 +2,7 @@
 title: "LightlySSL Adds World Model Training with LeWM for Image-based Agents"
 slug: "lightlyssl-adds-world-model-training-with-lewm-for-image-based-agents"
 description: "LightlySSL, a Python library and computer vision framework for self-supervised learning and latent world models on images, has introduced new world model training capabilities. The update allows the..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [LightlySSL, SelfSupervisedLearning, WorldModels, ComputerVision, LeWM]
 categories: ["AI", "Machine Learning", "Computer Vision", "AI Development", "Open Source"]
 image: "https://avatars.githubusercontent.com/u/50146475?v=4"

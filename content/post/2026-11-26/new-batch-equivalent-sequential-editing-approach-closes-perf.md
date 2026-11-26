@@ -2,7 +2,7 @@
 title: "New Batch-Equivalent Sequential Editing Approach Closes Performance Gap in AI Knowledge Updates"
 slug: "new-batch-equivalent-sequential-editing-approach-closes-performance-gap-in-ai-knowledge-updates"
 description: "Researchers have introduced a batch-equivalent sequential editing approach that addresses stability issues in large language model knowledge updates, closing the performance gap between sequential..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [AI, MachineLearning, LanguageModels, KnowledgeEditing, SequentialLearning]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Natural Language Processing", "Model Optimization"]
 author: "Shoubhik Banerjee"

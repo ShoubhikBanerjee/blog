@@ -2,7 +2,7 @@
 title: "AWS Sign-In Adds Enterprise-Managed Authorization for AI Agents via ID-JAG"
 slug: "aws-sign-in-adds-enterprise-managed-authorization-for-ai-agents-via-id-jag"
 description: "AWS Sign‑In is adding Enterprise‑Managed Authorization (EMA) that lets organizations authorize AI agents such as Claude to access AWS MCP Server using existing enterprise identity providers like Okta."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [AWS, AIAgents, EnterpriseAuthorization, Okta, OAuth]
 categories: ["AI", "Cloud Computing", "Artificial Intelligence", "Security", "Identity Management"]
 image: "https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/25/Secure-Agentic-Access-to-AWS-4.jpg"

@@ -2,7 +2,7 @@
 title: "Thariq Shihipar Discusses AI Coding Agents and Moves to OpenAI"
 slug: "thariq-shihipar-discusses-ai-coding-agents-and-moves-to-openai"
 description: "At AI Engineer CODE, Thariq Shihipar presented an existing development regarding the coexistence of high-volume software production and careful craft, and subsequently announced his move to OpenAI..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [AIEngineer, ThariqShihipar, OpenAI, CodingAgents, SoftwareDevelopment]
 categories: ["AI", "AI Agents", "Software Engineering", "Technology News"]
 image: "https://i.ytimg.com/vi/Qe9d9dWyED0/maxresdefault.jpg"

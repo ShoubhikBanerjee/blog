@@ -2,7 +2,7 @@
 title: "Rethinking Knowledge Distillation for Diffusion Language Models and ViCARD for Visual Reasoning"
 slug: "rethinking-knowledge-distillation-for-diffusion-language-models-and-vicard-for-visual-reasoning"
 description: "Recent developments in AI research highlight two distinct studies addressing limitations in knowledge distillation and visual reasoning: an investigation into knowledge distillation for diffusion..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [KnowledgeDistillation, DiffusionModels, VisualReasoning, MachineLearning, ArtificialIntelligence]
 categories: ["AI", "Machine Learning", "Computer Vision", "Natural Language Processing", "Artificial Intelligence"]
 author: "Shoubhik Banerjee"

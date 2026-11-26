@@ -2,7 +2,7 @@
 title: "Langfuse Releases Agent Skills for AI Coding Assistants"
 slug: "langfuse-releases-agent-skills-for-ai-coding-assistants"
 description: "Agent Skills for Langfuse have been released as an open-source toolkit that teaches AI coding assistants like Claude Code and Cursor how to work with Langfuse, the open-source LLM engineering..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [Langfuse, AI, LLM, Observability, Evals, CodingAssistants]
 categories: ["AI", "AI Development", "Machine Learning", "Software Engineering", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/134601687?v=4"

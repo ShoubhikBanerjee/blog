@@ -2,7 +2,7 @@
 title: "RoboARC benchmarks robot manipulation under precise spatial constraints"
 slug: "roboarc-benchmarks-robot-manipulation-under-precise-spatial-constraints"
 description: "RoboARC is a new benchmark designed to test whether robot agents can reason out the correct motions for hard manipulation tasks that hinge on exact spatial constraints. The collection features 90..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [robotics, manipulation, benchmark, spatial, AI]
 categories: ["AI", "Robotics", "Artificial Intelligence", "Machine Learning", "Computer Vision"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Dependency-Ready Decoding in Masked Diffusion Models Has Narrow Scope"
 slug: "dependency-ready-decoding-in-masked-diffusion-models-has-narrow-scope"
 description: "Recent research examines whether dependency-ready decoding improves the accuracy of masked diffusion models (MDMs) on structured reasoning tasks. The study finds that when a specific attention-based..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [MaskedDiffusionModels, DecodingStrategies, StructuredReasoning, InformationTheory, NLP]
 categories: ["AI", "Machine Learning", "Natural Language Processing", "Generative Models", "Theoretical AI"]
 author: "Shoubhik Banerjee"

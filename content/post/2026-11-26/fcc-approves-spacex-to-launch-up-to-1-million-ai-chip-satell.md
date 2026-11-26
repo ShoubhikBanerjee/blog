@@ -2,7 +2,7 @@
 title: "FCC approves SpaceX to launch up to 1 million AI‑chip satellites under Starmind"
 slug: "fcc-approves-spacex-to-launch-up-to-1-million-aichip-satellites-under-starmind"
 description: "The FCC announced Wednesday that it has authorized SpaceX to deploy up to one million AI‑chip‑equipped satellites under the company’s Starmind initiative."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [SpaceX, AISatellites, Starmind, FCC, SpaceAI]
 categories: ["AI", "Satellite Technology", "Artificial Intelligence", "Space Industry"]
 image: "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/gettyimages-2269580650.jpg?quality=90&strip=all&crop=0%2C10.756615395926%2C100%2C78.486769208148&w=1200"

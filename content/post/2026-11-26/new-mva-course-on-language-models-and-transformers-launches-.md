@@ -2,7 +2,7 @@
 title: "New MVA Course on Language Models and Transformers Launches in Fall 2026"
 slug: "new-mva-course-on-language-models-and-transformers-launches-in-fall-2026"
 description: "The Master Vision Apprentissage (MVA) program is introducing a new course focused on language models and transformers during the first semester of the academic year 2026–2027. Taught in English, the..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [MLCourse, Transformers, LargeLanguageModels, AIAlignment, MVA]
 categories: ["AI", "Machine Learning", "AI Education", "Language Models", "Deep Learning"]
 image: "https://avatars.githubusercontent.com/u/7555483?v=4"

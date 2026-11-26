@@ -2,7 +2,7 @@
 title: "New Adaptive Estimators for FIR System Identification Achieve Asymptotic Efficiency Without Noise Knowledge"
 slug: "new-adaptive-estimators-for-fir-system-identification-achieve-asymptotic-efficiency-without-noise-knowledge"
 description: "Researchers have introduced a new class of adaptive estimators for identifying finite impulse response systems under unknown or heavy-tailed noise conditions. The approach, published on 25 Nov 2026,..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [systemidentification, adaptiveestimation, fir, asymptoticefficiency, kerneldensityestimation]
 categories: ["AI", "Systems and Control", "Signal Processing", "Statistical Estimation", "Machine Learning"]
 author: "Shoubhik Banerjee"

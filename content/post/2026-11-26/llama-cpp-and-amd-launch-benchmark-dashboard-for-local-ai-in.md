@@ -2,7 +2,7 @@
 title: "llama.cpp and AMD Launch Benchmark Dashboard for Local AI Inference"
 slug: "llama-cpp-and-amd-launch-benchmark-dashboard-for-local-ai-inference"
 description: "The llama.cpp project and AMD have released a new benchmark dashboard for measuring local inference performance on AMD Ryzen and Radeon hardware. Available on Hugging Face, the dashboard enables..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [llamacpp, AMD, benchmarking, localinference]
 categories: ["AI", "Machine Learning", "Hardware", "Artificial Intelligence"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/67289c93ff90038d9a6e5675/tbIvyMSISXCm64WYP3atl.png"

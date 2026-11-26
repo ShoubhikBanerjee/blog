@@ -2,7 +2,7 @@
 title: "1Password discloses breach after GitHub account compromise"
 slug: "1password-discloses-breach-after-github-account-compromise"
 description: "1Password disclosed a data breach after an employee's corporate GitHub account was hacked. The attacker used the compromised account to deploy malicious code to the company's backend services to..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [1Password, DataBreach, CyberSecurity, GitHub, Phishing]
 categories: ["AI", "Cybersecurity", "Data Privacy", "Software Security"]
 image: "https://www.bleepstatic.com/content/hl-images/2023/10/23/1Password_binary.jpg"

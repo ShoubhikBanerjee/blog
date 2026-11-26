@@ -2,7 +2,7 @@
 title: "New CAFE Framework Addresses Correlations in Multi-View Classification"
 slug: "new-cafe-framework-addresses-correlations-in-multi-view-classification"
 description: "Trusted multi-view classification aims to make accurate and reliable predictions by integrating information from multiple views. Existing methods typically estimate class evidence and uncertainty for..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [multiviewclassification, AIframeworks, correlationawarefusion, trustedAI, evidencefusion, calibration]
 categories: ["AI", "Machine Learning", "Artificial Intelligence", "Data Fusion", "Uncertainty Estimation"]
 author: "Shoubhik Banerjee"

@@ -2,7 +2,7 @@
 title: "Applying Evidence-First Method to Application Modernization"
 slug: "applying-evidence-first-method-to-application-modernization"
 description: "A request to modernize an application often starts with a technology question: Which framework should replace the old one? Before you choose, find out what still works. This post walks through an..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: []
 categories: ["AI"]
 image: "https://github.blog/wp-content/uploads/2026/11/38b3dc4817bfb01261d608e093dda2cdf3392f0886a14b95208bc6f1cd49e58d-1920x1080-1.png"

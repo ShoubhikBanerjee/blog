@@ -2,7 +2,7 @@
 title: "Japanese Vision-Language Model Safety Evaluation Framework Released with New Dataset"
 slug: "japanese-vision-language-model-safety-evaluation-framework-released-with-new-dataset"
 description: "Researchers have extended the Multimodal Safety Test Suite (MSTS) to Japanese, creating the 12th language version with machine-translated and post-edited test cases to address the lack of multimodal..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [AIsafety, visionlanguagemodels, JapaneseNLP, multimodalevaluation, VLMs]
 categories: ["AI", "Artificial Intelligence", "Natural Language Processing", "Computer Vision", "Machine Learning"]
 author: "Shoubhik Banerjee"

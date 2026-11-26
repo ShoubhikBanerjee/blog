@@ -2,7 +2,7 @@
 title: "New paper certifies Gaussian dependence for learned weighted FDR control"
 slug: "new-paper-certifies-gaussian-dependence-for-learned-weighted-fdr-control"
 description: "Researchers have introduced a new methodology for controlling the false discovery rate (FDR) in multiple testing scenarios using learned hypothesis weights from auxiliary data. The approach relies on..."
-date: 2026-11-26T18:08:23+05:30
+date: 2026-11-26T22:08:01+05:30
 tags: [Statistics, Methodology, FDR, MultipleTesting, GaussianDependence, MachineLearning]
 categories: ["AI", "Statistics", "Machine Learning", "Methodology", "Data Science"]
 author: "Shoubhik Banerjee"
