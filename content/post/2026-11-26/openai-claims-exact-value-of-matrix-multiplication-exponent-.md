@@ -2,7 +2,7 @@
 title: "OpenAI Claims Exact Value of Matrix Multiplication Exponent ω = 9/4 with Matching Lower Bound"
 slug: "openai-claims-exact-value-of-matrix-multiplication-exponent-9-4-with-matching-lower-bound"
 description: "During a single dinner conversation, Scott Aaronson was digestively processing two proofs of VP ≠ VNP when OpenAI announced a breakthrough in computational complexity. Before dessert, an OpenAI paper..."
-date: 2026-11-26T06:13:08+05:30
+date: 2026-11-26T12:19:42+05:30
 tags: []
 categories: ["AI"]
 image: "https://latent.space/og/card/post/ainews-math-proofs-are-landing-faster-than-we-can-read-them/a8d88191c53bdfffb796ec34d8bd3d83a9031dc0a6d34673e0da1fb9264aec06.png"

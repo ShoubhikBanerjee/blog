@@ -2,7 +2,7 @@
 title: "Researchers Identify Five Trust Dimensions for Safe AI Agents in Science"
 slug: "researchers-identify-five-trust-dimensions-for-safe-ai-agents-in-science"
 description: "A new study involving 17 scientists from the natural, applied, and social sciences explores how to develop and trust AI agents capable of performing research tasks with varying degrees of autonomy...."
-date: 2026-11-26T06:13:08+05:30
+date: 2026-11-26T12:19:42+05:30
 tags: [AIinScience, ResponsibleAI, ScientificResearch, TrustandSafety]
 categories: ["AI", "Artificial Intelligence", "Science", "Research Ethics"]
 image: "https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/F32BgZC_rj0kg99apJlto.png"

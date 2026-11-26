@@ -2,7 +2,7 @@
 title: "AI Advances Reveal New Continent of Mathematical Truth"
 slug: "ai-advances-reveal-new-continent-of-mathematical-truth"
 description: "It is now evident that AI development is not limited to providing one-off solutions to specific complexity questions, but is instead revealing a whole new continent of mathematical truth previously..."
-date: 2026-11-26T06:13:08+05:30
+date: 2026-11-26T12:19:42+05:30
 tags: [AI, Mathematics, ComplexityTheory, Research, FutureOfAI]
 categories: ["AI", "Artificial Intelligence", "Mathematics", "Complexity Theory", "Research & Development"]
 author: "Shoubhik Banerjee"

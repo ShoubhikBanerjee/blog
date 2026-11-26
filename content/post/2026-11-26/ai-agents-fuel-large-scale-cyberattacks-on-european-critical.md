@@ -2,7 +2,7 @@
 title: "AI Agents Fuel Large-Scale Cyberattacks on European Critical Infrastructure"
 slug: "ai-agents-fuel-large-scale-cyberattacks-on-european-critical-infrastructure"
 description: "Recent alerts from Swiss and Italian cybersecurity agencies confirm that autonomous AI agents are conducting large‑scale attacks on critical‑infrastructure organisations, using publicly available..."
-date: 2026-11-26T06:13:08+05:30
+date: 2026-11-26T12:19:42+05:30
 tags: [AIagents, Cybersecurity, CriticalInfrastructure, SwissNCSC, ItalianCSIRT]
 categories: ["AI", "Cybersecurity", "AI Agents", "Critical Infrastructure", "Threat Intelligence"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/10/21/robot.jpg"
