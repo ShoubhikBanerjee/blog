@@ -2,7 +2,7 @@
 title: "Adaptive Security launches AI agents for email threat detection"
 slug: "adaptive-security-launches-ai-agents-for-email-threat-detection"
 description: "Adaptive Security has introduced AI agents that analyze email intent, context, and behavior to uncover phishing, business email compromise, and invoice fraud."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [AdaptiveSecurity, EmailSecurity, AIagents]
 categories: ["AI", "Cybersecurity", "Artificial Intelligence", "Email Protection"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/18/Windows--Server.jpg"

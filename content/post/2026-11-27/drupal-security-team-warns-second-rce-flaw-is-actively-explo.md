@@ -2,7 +2,7 @@
 title: "Drupal Security Team Warns Second RCE Flaw Is Actively Exploited"
 slug: "drupal-security-team-warns-second-rce-flaw-is-actively-exploited"
 description: "The Drupal security team announced that attackers are exploiting a second critical vulnerability that allows them to breach and hijack unpatched websites. This follows the recent patching of a remote..."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [Drupal, Security, CVE2026136716, WebSecurity, VulnerabilityManagement]
 categories: ["AI", "Web Security", "Vulnerability Management", "Cryptography", "Software Development"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/27/Drupal_headpic.jpg"

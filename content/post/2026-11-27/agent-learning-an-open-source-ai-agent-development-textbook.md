@@ -2,7 +2,7 @@
 title: "agent_learning: An Open-Source AI Agent Development Textbook"
 slug: "agent-learning-an-open-source-ai-agent-development-textbook"
 description: "An open-source AI Agent textbook and learning repository called `agent_learning` has been released to address the skill gap between calling an LLM API and building a complete Agent system. The..."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [AIAgents, OpenSource, LLM, RAG, LangChain, DeveloperEducation]
 categories: ["AI", "AI Agents", "Open Source", "Developer Tools", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/41740840?v=4"

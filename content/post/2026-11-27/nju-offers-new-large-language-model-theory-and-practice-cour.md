@@ -2,7 +2,7 @@
 title: "NJU Offers New Large Language Model Theory and Practice Course"
 slug: "nju-offers-new-large-language-model-theory-and-practice-course"
 description: "A new academic course on Large Language Models (LLMs) has been launched, focusing on both theoretical foundations and practical implementation. The curriculum guides students through the end-to-end..."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [LLM, DeepLearning, NJU, Education, PyTorch]
 categories: ["AI", "Artificial Intelligence", "Education", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/184465282?v=4"

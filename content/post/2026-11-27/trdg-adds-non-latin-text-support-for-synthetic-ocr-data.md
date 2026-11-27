@@ -2,7 +2,7 @@
 title: "TRDG Adds Non‑Latin Text Support for Synthetic OCR Data"
 slug: "trdg-adds-nonlatin-text-support-for-synthetic-ocr-data"
 description: "A new update to the Text Recognition Data Generator (TRDG) introduces synthetic data generation for non‑Latin scripts, expanding its utility for OCR training."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [SyntheticData, OCR, TRDG, TextRecognition]
 categories: ["AI", "Computer Vision", "Data Generation", "Machine Learning", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/5399488?v=4"

@@ -2,7 +2,7 @@
 title: "Major US Infrastructure Outages Are Coincidence, Not Cyberattack"
 slug: "major-us-infrastructure-outages-are-coincidence-not-cyberattack"
 description: "A recent series of outages affecting major US infrastructure providers, including Microsoft, the FAA, banks, United Airlines, an unnamed NSA network, and Apple, has raised suspicions of a coordinated..."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [Infrastructure, Cybersecurity, Technology, Business]
 categories: ["AI", "Technology Infrastructure", "Cybersecurity", "Economics", "System Reliability"]
 author: "Shoubhik Banerjee"

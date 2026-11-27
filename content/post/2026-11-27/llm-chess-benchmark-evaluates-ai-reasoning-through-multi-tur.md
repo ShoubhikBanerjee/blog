@@ -2,7 +2,7 @@
 title: "LLM Chess Benchmark Evaluates AI Reasoning Through Multi-Turn Games"
 slug: "llm-chess-benchmark-evaluates-ai-reasoning-through-multi-turn-games"
 description: "LLM Chess is a new benchmark that evaluates Large Language Models (LLMs) on their reasoning and instruction-following abilities in an agentic setting. The benchmark engages LLMs in multi-turn dialogs..."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [LLMBenchmark, ChessAI, LargeLanguageModels, AIReasoning, MultiTurnDialog]
 categories: ["AI", "Artificial Intelligence", "Machine Learning Benchmark", "AI Agents", "Game AI"]
 image: "https://avatars.githubusercontent.com/u/7947027?v=4"

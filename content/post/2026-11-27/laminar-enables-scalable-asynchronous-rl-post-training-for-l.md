@@ -2,7 +2,7 @@
 title: "Laminar Enables Scalable Asynchronous RL Post-Training for LLMs"
 slug: "laminar-enables-scalable-asynchronous-rl-post-training-for-llms"
 description: "Laminar is a scalable reinforcement learning post‑training framework that enables large language models and long‑horizon agents to be fine‑tuned at scale."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [Laminar, ReinforcementLearning, LargeLanguageModels, OpenSource]
 categories: ["AI", "Machine Learning", "AI Agents", "Distributed Systems", "Open Source Software"]
 image: "https://avatars.githubusercontent.com/u/212961691?v=4"

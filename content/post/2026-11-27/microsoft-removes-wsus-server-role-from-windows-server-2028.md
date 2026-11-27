@@ -2,7 +2,7 @@
 title: "Microsoft removes WSUS server role from Windows Server 2028"
 slug: "microsoft-removes-wsus-server-role-from-windows-server-2028"
 description: "Microsoft will remove the WSUS server role from Windows Server 2028, the next major release of its server operating system, as it encourages enterprises to transition to cloud-based update management..."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [Microsoft, WindowsServer, WSUS, ITSecurity, EnterpriseIT]
 categories: ["AI", "Enterprise Systems", "Network Security", "Windows Operating Systems", "Cloud Management"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/27/Windows-Server.jpg"

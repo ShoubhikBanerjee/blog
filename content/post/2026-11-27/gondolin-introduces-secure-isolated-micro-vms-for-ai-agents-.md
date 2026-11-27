@@ -2,7 +2,7 @@
 title: "Gondolin introduces secure, isolated micro-VMs for AI agents running generated code"
 slug: "gondolin-introduces-secure-isolated-micro-vms-for-ai-agents-running-generated-code"
 description: "Gondolin is a new agent sandbox that runs AI-generated code inside local Linux micro-VMs, providing programmable network and filesystem control. It addresses security risks from autonomous code..."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [AIagents, Security, Virtualization, MicroVM, TypeScript, Rust]
 categories: ["AI", "AI Agents", "Security", "Virtualization", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/207902832?v=4"

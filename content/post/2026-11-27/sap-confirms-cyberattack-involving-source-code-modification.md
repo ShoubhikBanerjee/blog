@@ -2,7 +2,7 @@
 title: "SAP Confirms Cyberattack Involving Source Code Modification"
 slug: "sap-confirms-cyberattack-involving-source-code-modification"
 description: "SAP has confirmed taking urgent action to protect its customers after detecting suspicious activity in its IT environment, a cyberattack the company tracks under the code name “Project Granite.”"
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [SAP, Cybersecurity, DataBreach, AIsecurity]
 categories: ["AI", "Cybersecurity", "Enterprise Software", "Internet Security"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/27/sap.jpg"

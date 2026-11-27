@@ -2,7 +2,7 @@
 title: "Generating Video on AWS Trainium3 with Lightricks LTX-2.5 via Diffusers"
 slug: "generating-video-on-aws-trainium3-with-lightricks-ltx-2-5-via-diffusers"
 description: "A developer partnered with AWS to access a Trainium3 machine (trn3.48xlarge, 64 NeuronCores) for a month, using it to generate video and sound with Lightricks' LTX-2.5 model through the diffusers..."
-date: 2026-11-27T18:08:33+05:30
+date: 2026-11-27T22:09:22+05:30
 tags: [AWS, Trainium, Lightricks, Diffusers, VideoGeneration]
 categories: ["AI", "Cloud Computing", "Video Generation", "Deep Learning", "Hardware Optimization"]
 image: "https://huggingface.co/blog/assets/video-trainium3/thumbnail.jpg"
