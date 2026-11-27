@@ -2,7 +2,7 @@
 title: "New phishing campaign 'GoodGuys' uses AI-generated fake pages to steal corporate credentials"
 slug: "new-phishing-campaign-goodguys-uses-ai-generated-fake-pages-to-steal-corporate-credentials"
 description: "An ongoing phishing campaign dubbed 'GoodGuys' impersonates major brands including Google, Nvidia, Accenture, and SpaceX to steal corporate Google and Okta credentials using fake paid interview and..."
-date: 2026-11-27T12:07:17+05:30
+date: 2026-11-27T18:08:33+05:30
 tags: []
 categories: ["AI"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/06/Phishing.jpg"

@@ -2,7 +2,7 @@
 title: "Oracle Launches AI Development Resources for RAG, Agents, and Database Integration"
 slug: "oracle-launches-ai-development-resources-for-rag-agents-and-database-integration"
 description: "Oracle has released a suite of technical resources to help developers build AI applications, agents, and systems using Oracle AI Database and OCI services. These materials include reference apps,..."
-date: 2026-11-27T12:07:17+05:30
+date: 2026-11-27T18:08:33+05:30
 tags: [OracleAI, RAG, LangChain, VectorDatabase, AIAgents, LangGraph]
 categories: ["AI", "Artificial Intelligence", "Database Systems", "Software Development", "Cloud Computing"]
 image: "https://avatars.githubusercontent.com/u/83461399?v=4"

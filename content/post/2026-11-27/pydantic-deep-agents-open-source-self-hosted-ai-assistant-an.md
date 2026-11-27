@@ -2,7 +2,7 @@
 title: "Pydantic Deep Agents: Open‑Source, Self‑Hosted AI Assistant and Framework"
 slug: "pydantic-deep-agents-opensource-selfhosted-ai-assistant-and-framework"
 description: "Pydantic Deep Agents releases an open‑source terminal AI assistant and Python framework. It lets you point any model—Claude, GPT, Gemini, or a local model—to the same harness."
-date: 2026-11-27T12:07:17+05:30
+date: 2026-11-27T18:08:33+05:30
 tags: [AIagents, OpenSource, Python, Pydantic]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Development"]
 image: "https://avatars.githubusercontent.com/u/80465946?v=4"

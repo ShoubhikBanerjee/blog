@@ -2,7 +2,7 @@
 title: "AutoClip MCP – Auto‑based Video Re‑editing and AI Agents Platform"
 slug: "autoclip-mcp-autobased-video-reediting-and-ai-agents-platform"
 description: "AutoClip is an open‑source, local‑first AI video clipping and Machine‑Learning‑control (MCP) server that runs entirely on your computer without any subscription or upload queues. It adds smart..."
-date: 2026-11-27T12:07:17+05:30
+date: 2026-11-27T18:08:33+05:30
 tags: [OpenAI, AIagents, AutoClip]
 categories: ["AI", "Machine Learning", "Computer Vision", "Video Editing", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/78066887?v=4"
