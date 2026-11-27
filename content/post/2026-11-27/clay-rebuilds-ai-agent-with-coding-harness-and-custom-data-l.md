@@ -2,7 +2,7 @@
 title: "Clay Rebuilds AI Agent with Coding Harness and Custom Data Layer"
 slug: "clay-rebuilds-ai-agent-with-coding-harness-and-custom-data-layer"
 description: "Clay rebuilt its AI agent, Sculptor, from a limited tool-calling system into a coding agent on the Pi harness, adding a new data layer called Audiences to unify CRM and Gong data. The new system..."
-date: 2026-11-27T06:07:38+05:30
+date: 2026-11-27T12:07:17+05:30
 tags: [AIagents, MachineLearning, ProductDevelopment, Startup]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Startup News", "Technology"]
 image: "https://i.ytimg.com/vi/qjPcaZf_plo/maxresdefault.jpg"

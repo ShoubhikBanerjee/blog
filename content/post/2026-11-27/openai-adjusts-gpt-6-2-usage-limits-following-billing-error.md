@@ -2,7 +2,7 @@
 title: "OpenAI Adjusts GPT-6.2 Usage Limits Following Billing Error"
 slug: "openai-adjusts-gpt-6-2-usage-limits-following-billing-error"
 description: "OpenAI has confirmed a fix for a billing bug that incorrectly discounted usage for GPT-6.2 Astra and Sol models. This adjustment means that performing the same tasks will now consume more of a user's..."
-date: 2026-11-27T06:07:38+05:30
+date: 2026-11-27T12:07:17+05:30
 tags: [OpenAI, ChatGPT, Billing, GPT62]
 categories: ["AI", "Artificial Intelligence", "Technology News", "Software Updates"]
 image: "https://www.bleepstatic.com/content/hl-images/2023/04/11/OpenAI-headpic.jpg"
