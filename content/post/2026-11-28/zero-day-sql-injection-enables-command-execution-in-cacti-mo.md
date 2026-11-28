@@ -2,7 +2,7 @@
 title: "Zero-Day SQL Injection Enables Command Execution in Cacti Monitoring Platform"
 slug: "zero-day-sql-injection-enables-command-execution-in-cacti-monitoring-platform"
 description: "A zero‑day SQL injection vulnerability in the open‑source network monitoring tool Cacti was publicly disclosed, accompanied by a proof‑of‑concept exploit that lets unauthenticated attackers execute..."
-date: 2026-11-28T06:07:08+05:30
+date: 2026-11-28T12:09:39+05:30
 tags: [ZeroDay, Cacti, SQLInjection, Cybersecurity, NetworkMonitoring]
 categories: ["AI", "Cybersecurity", "Network Monitoring", "Software Vulnerabilities", "Information Technology"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/27/cacti.jpg"
