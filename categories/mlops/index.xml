@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MLOps on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/mlops/</link><description>Recent content in MLOps on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2026 22:09:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/mlops/index.xml" rel="self" type="application/rss+xml"/><item><title>SageMaker HyperPod Adds Cluster Extensions and Global Inference Gateway</title><link>https://shoubhikbanerjee.github.io/blog/p/sagemaker-hyperpod-adds-cluster-extensions-and-global-inference-gateway/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sagemaker-hyperpod-adds-cluster-extensions-and-global-inference-gateway/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/l-ml-22428.png" alt="Featured image of post SageMaker HyperPod Adds Cluster Extensions and Global Inference Gateway" /&gt;&lt;h1 id="sagemaker-hyperpod-adds-cluster-extensions-and-global-inference-gateway"&gt;SageMaker HyperPod Adds Cluster Extensions and Global Inference Gateway
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker HyperPod has introduced two new capabilities: cluster extensions for managing software on running nodes and the Global Inference Gateway for routing requests across multiple clusters and regions. These updates aim to reduce configuration drift and simplify the management of distributed AI inference workloads.&lt;/p&gt;
+&lt;h2 id="-cluster-extensions-for-node-consistency"&gt;🧩 Cluster Extensions for Node Consistency
+&lt;/h2&gt;&lt;p&gt;Managing a shared Slurm cluster for foundation model development involves keeping configuration, software, network topology, and user rosters in sync with the actual nodes. Over time, these elements drift apart, and there is no automated way to detect when they do.&lt;/p&gt;
+&lt;p&gt;In November 2026, AWS launched cluster extensions to address the software and settings on running nodes. These are software packages managed by AWS that administrators can install, configure, update, and remove through APIs or the Amazon SageMaker AI console.&lt;/p&gt;
+&lt;p&gt;Key features of cluster extensions include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Managed Extensions:&lt;/strong&gt; Initial support includes observability and user management (including directory integration).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automatic Application:&lt;/strong&gt; HyperPod applies extensions to every node, including those added via scale-up or replacement, maintaining consistency as the cluster scales and heals.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Simplified Updates:&lt;/strong&gt; Settings can be changed or versions upgraded via API calls or the console, eliminating the need to edit scripts and replace nodes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Visibility:&lt;/strong&gt; Each extension reports its status and per-node health.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Administrators should use cluster extensions for managed software capabilities. Custom AMIs and lifecycle scripts remain the correct approach for organization-specific software or initialization not covered by available extensions.&lt;/p&gt;
+&lt;h2 id="-global-inference-gateway"&gt;🌐 Global Inference Gateway
+&lt;/h2&gt;&lt;p&gt;Previously, the SageMaker HyperPod Inference Gateway provided a single, GPU-aware endpoint for individual clusters. However, during traffic peaks, requests could queue on a saturated cluster while GPUs on another cluster, potentially in a different AWS Region, sat idle. Managing this required building and maintaining load balancers, DNS, and cross-Region networking manually.&lt;/p&gt;
+&lt;p&gt;The Global Inference Gateway is a SageMaker-managed gateway that routes across every registered cluster, whether in a single Region or across multiple Regions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;How it works:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Routing:&lt;/strong&gt; The gateway picks the best cluster and carries the request over the AWS backbone.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Failover:&lt;/strong&gt; If a cluster fails, the gateway moves traffic to the next-best cluster automatically.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Endpoint Consolidation:&lt;/strong&gt; Clients call a single SageMaker-managed endpoint instead of tracking one endpoint per cluster or model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security:&lt;/strong&gt; Every request is authenticated with AWS Signature Version 4 (SigV4) and IAM, and reaches clusters only over AWS PrivateLink.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example, a team serving four models across five HyperPod clusters in two Regions would normally track 20 endpoints (one per model per cluster). The Inference Gateway cuts this to five, and the Global Inference Gateway consolidates further by handling cross-region overflow during peaks.&lt;/p&gt;
+&lt;h2 id="-integration-with-existing-hyperpod-features"&gt;⚙️ Integration with Existing HyperPod Features
+&lt;/h2&gt;&lt;p&gt;The Global Inference Gateway is the second tier of the architecture described in the initial Inference Gateway launch. It integrates with existing HyperPod infrastructure:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Configuration:&lt;/strong&gt; Administrators enable global routing by turning on the &lt;code&gt;spec.globalRouting&lt;/code&gt; block in the cluster’s existing &lt;code&gt;InferenceGatewayConfig&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Creation:&lt;/strong&gt; The &lt;code&gt;CreateGlobalInferenceGateway&lt;/code&gt; API call registers clusters to route across, and SageMaker returns one endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Publishing:&lt;/strong&gt; The HyperPod Inference controller publishes the cluster privately from the user&amp;rsquo;s account, creating a Network Load Balancer, publishing a VPC endpoint service, and uploading the listener’s certificate to the user’s TLS bucket.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Request Flow:&lt;/strong&gt; Clients sign requests with SigV4 and send them to the gateway’s regional endpoint. The gateway authenticates the caller, selects the best cluster, and uses AWS PrivateLink to carry the request to that cluster, where the local Inference Gateway routes it to the appropriate model pod.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;These developments address two major pain points in large-scale AI infrastructure. First, they eliminate the &amp;ldquo;drift&amp;rdquo; between desired cluster state and actual node software by using managed extensions that automatically apply to new nodes. Second, they solve the inefficiency of idle GPUs during regional traffic peaks by enabling global routing that balances load across regions without manual load balancer management. For users like Bagelcode, who run LLM inference services on AWS, the Global Inference Gateway allows serving models across multiple regions through a single endpoint while maintaining high availability.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ML-22428-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/20/ml-22428-figure-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #HyperPod #Slurm #AWS #Inference #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-managed-cluster-extensions-for-observability-and-user-management-in-amazon-sagemaker-hyperpod-slurm/" target="_blank" rel="noopener"
+&gt;Introducing managed cluster extensions for observability and user management in Amazon SageMaker HyperPod Slurm | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-amazon-sagemaker-hyperpod-global-inference-gateway-one-endpoint-across-regions-and-clusters/" target="_blank" rel="noopener"
+&gt;Introducing Amazon SageMaker HyperPod Global Inference Gateway: One endpoint across Regions and clusters | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Hayhooks deploys AI agents and pipelines as REST and MCP endpoints</title><link>https://shoubhikbanerjee.github.io/blog/p/hayhooks-deploys-ai-agents-and-pipelines-as-rest-and-mcp-endpoints/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/hayhooks-deploys-ai-agents-and-pipelines-as-rest-and-mcp-endpoints/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/51827949?v=4" alt="Featured image of post Hayhooks deploys AI agents and pipelines as REST and MCP endpoints" /&gt;&lt;h1 id="hayhooks-deploys-ai-agents-and-pipelines-as-rest-and-mcp-endpoints"&gt;Hayhooks deploys AI agents and pipelines as REST and MCP endpoints
+&lt;/h1&gt;&lt;p&gt;Hayhooks allows developers to deploy Python wrappers or YAML pipelines as typed, validated endpoints, supporting REST APIs, OpenAI-compatible chat, MCP tools, and A2A agents with durable execution and built-in tracing.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Endpoint Generation&lt;/strong&gt;: Deployments use method type hints to validate requests and generate the API schema.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Protocol Support&lt;/strong&gt;: The system supports REST APIs, OpenAI-compatible chat completions, Model Context Protocol (MCP) tools, and Agent2Agent (A2A) agents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UI Integration&lt;/strong&gt;: Users can connect Open WebUI or use the embedded Chainlit UI to chat with agents.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Streaming &amp;amp; Responses&lt;/strong&gt;: Serves streaming Chat Completions and Responses endpoints, with responses arriving as server-sent events.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Durable Execution&lt;/strong&gt;: Long-running work is checkpointed in Redis, allowing the system to wait for human approval, retry failures, and recover after restarts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Observability&lt;/strong&gt;: Executions and component traces can be inspected in a terminal dashboard or exported to an OpenTelemetry backend using &lt;code&gt;hayhooks[tracing]&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MCP &amp;amp; A2A Capabilities&lt;/strong&gt;: Runs an MCP server that exposes pipelines and agents as tools for Cursor, Claude Desktop, and other clients. Exposes chat-capable pipelines through the Agent2Agent protocol with generated agent cards for discovery and task delegation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Requirements&lt;/strong&gt;: Python 3.10 through 3.14 and an OpenAI API key are required.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access&lt;/strong&gt;: API docs are available at &lt;code&gt;http://localhost:1416/docs&lt;/code&gt; for inspection and testing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Hayhooks #MCP #RESTAPI #AIAgents #Observability&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/deepset-ai/hayhooks" target="_blank" rel="noopener"
+&gt;deepset-ai/hayhooks&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AUMOVIO Standardizes Enterprise AI Access with Databricks Unity Gateway</title><link>https://shoubhikbanerjee.github.io/blog/p/aumovio-standardizes-enterprise-ai-access-with-databricks-unity-gateway/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aumovio-standardizes-enterprise-ai-access-with-databricks-unity-gateway/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/2026-11-Blog-How-AUMOVIO-centralized-AI-access-with-Databricks-Unity-Gateway-1200x628-2x.png" alt="Featured image of post AUMOVIO Standardizes Enterprise AI Access with Databricks Unity Gateway" /&gt;&lt;h1 id="aumovio-standardizes-enterprise-ai-access-with-databricks-unity-gateway"&gt;AUMOVIO Standardizes Enterprise AI Access with Databricks Unity Gateway
+&lt;/h1&gt;&lt;p&gt;As AI adoption expanded across AUMOVIO, teams previously relied on diverse methods to access large language models. The company has now consolidated these approaches by implementing Databricks Unity Gateway as a shared entry point for AI workloads, unifying governance and access management.&lt;/p&gt;
+&lt;h2 id="-problem-fragmentation-and-complexity"&gt;🧩 Problem: Fragmentation and Complexity
+&lt;/h2&gt;&lt;p&gt;Teams at AUMOVIO had developed various ways to access LLMs, including provider integrations and gateways built for specific use cases. While these approaches addressed immediate needs, their variety introduced operational complexity, particularly in:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cost attribution.&lt;/li&gt;
+&lt;li&gt;Consistent governance.&lt;/li&gt;
+&lt;li&gt;General operations management.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-solution-a-central-ai-gateway"&gt;⚙️ Solution: A Central AI Gateway
+&lt;/h2&gt;&lt;p&gt;A cross-functional AI taskforce, comprising stakeholders from security, data protection, business areas, and IT, established one central AI Gateway as the shared route for LLM access. The team selected Databricks Unity Gateway based on several key factors:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Existing Data Platform:&lt;/strong&gt; Databricks already powers 1ADP, the One AUMOVIO Data Platform. Consolidating model access with governed enterprise data avoids adding new vendors or isolated operational stacks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Native Identity Integration:&lt;/strong&gt; The gateway is integrated with the corporate Microsoft Entra ID tenant. Applications authenticate via token exchange, eliminating the need for separate accounts or distributed API keys. Access permissions are tied directly to corporate identity and revoke automatically when that identity is terminated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Unified Governance:&lt;/strong&gt; Model approvals, access policies, usage tracking, and logging are consolidated in a single location rather than being re-implemented per application.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Protection Compliance:&lt;/strong&gt; Payload logging via inference tables is disabled by default and requires explicit, approved justification to enable, aligning with corporate data protection agreements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-management-and-cost-tracking"&gt;📈 Management and Cost Tracking
+&lt;/h2&gt;&lt;p&gt;AUMOVIO uses a curated catalog of &lt;code&gt;1adp-*&lt;/code&gt; model aliases, which routes users to providers including Databricks-hosted foundation models, Google Vertex AI, Azure OpenAI, and AWS Bedrock. This abstraction allows the organization to re-point aliases to different providers or models without requiring consumers to change their code.&lt;/p&gt;
+&lt;p&gt;To manage consumption, users assign token usage to personal cost centers or specific projects. Pipelines join this assignment with Databricks system tables to calculate costs, which are then published via dashboards showing model usage, user activity, and financial impact.&lt;/p&gt;
+&lt;h2 id="-infrastructure-as-code"&gt;🔒 Infrastructure as Code
+&lt;/h2&gt;&lt;p&gt;The Unity Gateway is provisioned using Terraform, which defines endpoints, routing providers, fallback orders, rate limits, and safety guardrails. This approach ensures that adding models or tightening controls is handled through reviewed, versioned pull requests. It also allows operations teams to diagnose production misbehaviors by reviewing version control history.&lt;/p&gt;
+&lt;p&gt;#Databricks #AUMOVIO #AI-Governance #Unity-Gateway #Enterprise-AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/how-aumovio-centralized-ai-access-databricks-unity-gateway" target="_blank" rel="noopener"
+&gt;How AUMOVIO centralized AI access with Databricks Unity Gateway&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>TraceML Diagnoses Slow PyTorch Training and Catches Performance Regressions</title><link>https://shoubhikbanerjee.github.io/blog/p/traceml-diagnoses-slow-pytorch-training-and-catches-performance-regressions/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/traceml-diagnoses-slow-pytorch-training-and-catches-performance-regressions/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/226997947?v=4" alt="Featured image of post TraceML Diagnoses Slow PyTorch Training and Catches Performance Regressions" /&gt;&lt;h1 id="traceml-diagnoses-slow-pytorch-training-and-catches-performance-regressions"&gt;TraceML Diagnoses Slow PyTorch Training and Catches Performance Regressions
+&lt;/h1&gt;&lt;p&gt;A new tool called TraceML has emerged to help developers diagnose why PyTorch training is slow, compare training runs, and catch performance regressions in continuous integration.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;TraceML breaks down training-step time, identifies likely bottlenecks, and saves reports for comparison or CI pipelines. It provides detailed diagnostics including verdicts like INPUT-BOUND (CRITICAL), explaining which component consumed the most time and suggesting concrete next steps such as increasing workers, prefetching, or improving storage throughput.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Automatic setup for supported trainers with no training script changes required for standard trainer APIs.&lt;/li&gt;
+&lt;li&gt;Explicit step instrumentation is available for custom PyTorch loops when full control is needed.&lt;/li&gt;
+&lt;li&gt;Compares rank timings to identify stragglers across GPUs and nodes.&lt;/li&gt;
+&lt;li&gt;Exports per-step, per-rank timing and resource records from the aggregator to JSONL or a custom backend.&lt;/li&gt;
+&lt;li&gt;When training finishes, TraceML prints a diagnosis and writes &lt;code&gt;final_summary.json&lt;/code&gt; and &lt;code&gt;final_summary.txt&lt;/code&gt; under &lt;code&gt;logs/&amp;lt;run-name&amp;gt;/&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The terminal report identifies the likely bottleneck, shows the timing and resource evidence behind it, and suggests the next investigation. An example verdict might read:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Verdict: INPUT-BOUND (CRITICAL)
+Why: Input Wait took 64% of Step Time.
+Next: Increase workers, prefetch, or storage throughput.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Capability&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Bottleneck Detection&lt;/td&gt;
+&lt;td&gt;Breaks down training-step time and flags the most impactful slowdown&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Cross-Node Straggler Identification&lt;/td&gt;
+&lt;td&gt;Compares rank timings across GPUs and nodes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CI Integration&lt;/td&gt;
+&lt;td&gt;Saves reports for regression detection over time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Data Export&lt;/td&gt;
+&lt;td&gt;Per-step, per-rank timing and resource records to JSONL or a custom backend&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Zero-Change Setup&lt;/td&gt;
+&lt;td&gt;Works out of the box for supported trainer APIs with no script modifications&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Interactive demo: &lt;a class="link" href="https://huggingface.co/spaces/abhinavsriva/traceml-training-diagnosis" target="_blank" rel="noopener"
+&gt;huggingface.co/spaces/abhinavsriva/traceml-training-diagnosis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Colab example covering a data-loading bottleneck scenario&lt;/li&gt;
+&lt;li&gt;RF-DETR sample-data demo at traceopt-ai.github.io, requiring no dataset download&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;PyTorch training slowdowns often stem from multiple overlapping causes — data loading, GPU utilization, inter-node communication. TraceML consolidates timing diagnostics into a single pass, surfaces actionable verdicts, and stores reports so teams can track whether optimization efforts actually improve subsequent runs.&lt;/p&gt;
+&lt;p&gt;#PyTorch #MLEngineering #PerformanceOptimization #MLOps #TrainingDiagnosis&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/traceopt-ai/traceml" target="_blank" rel="noopener"
+&gt;traceopt-ai/traceml&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>GS Caltex Automates Handoff Between SageMaker Canvas and SageMaker Pipelines</title><link>https://shoubhikbanerjee.github.io/blog/p/gs-caltex-automates-handoff-between-sagemaker-canvas-and-sagemaker-pipelines/</link><pubDate>Sat, 14 Nov 2026 22:03:04 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/gs-caltex-automates-handoff-between-sagemaker-canvas-and-sagemaker-pipelines/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21878-featured-image.png" alt="Featured image of post GS Caltex Automates Handoff Between SageMaker Canvas and SageMaker Pipelines" /&gt;&lt;h1 id="gs-caltex-automates-handoff-between-sagemaker-canvas-and-sagemaker-pipelines"&gt;GS Caltex Automates Handoff Between SageMaker Canvas and SageMaker Pipelines
+&lt;/h1&gt;&lt;p&gt;GS Caltex has implemented an automated workflow that connects machine learning models built in Amazon SageMaker Canvas to production environments via Amazon SageMaker Pipelines. This update streamlines the collaboration between process engineers, who design no-code models, and machine learning (ML) engineers, who manage production deployment and monitoring.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The integration addresses previous requirements for manual work when moving assets between environments. In the updated workflow, process engineers use their domain expertise to build and validate models in SageMaker Canvas without writing code. ML engineers then configure the necessary workflows to automate model deployment and scheduled inference.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The machine learning operations (MLOps) workflow at GS Caltex now follows two distinct paths: preparing new model versions and running batch inference.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model Preparation:&lt;/strong&gt; Process engineers prepare data visually and build models. Validated assets are registered in the Amazon SageMaker Model Registry.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated Handoff:&lt;/strong&gt; ML engineers receive the preprocessing flow and model to review data formats. They use a separate handoff process that converts these assets into executable SageMaker Pipelines steps.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Production Execution:&lt;/strong&gt; ML engineers configure input and output paths and schedule runs through Amazon EventBridge. SageMaker Pipelines then extracts input data from Amazon S3, runs preprocessing logic, and executes SageMaker Batch Transform.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The technical roles and components involved in the automated workflow are summarized below:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon SageMaker Canvas&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enables visual data preparation and no-code model building for process engineers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon SageMaker Pipelines&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Reuses preprocessing logic and trained models to run production workflows.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon SageMaker Model Registry&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Stores model versions and manages the approval process for deployment.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon S3&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Stores preprocessing flows, input data for batch inference, and results.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon EventBridge&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Triggers pipeline runs every 30 minutes for scheduled batch inference.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The automation of the handoff process has significantly accelerated GS Caltex&amp;rsquo;s deployment cycles. ML engineers are now able to deploy models within a few hours, a process that previously took approximately one week. Additionally, by running batch inference every 30 minutes instead of utilizing continuously running endpoints, the company has meaningfully lowered its inference costs. The system also improves monitoring, as ML engineers can inspect step status and CloudWatch logs to track the health of the production pipeline.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21878-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/10/ML-21878-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #SageMaker #MLOps #GS_Caltex #Automation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/production-mlops-at-gs-caltex-with-amazon-sagemaker-canvas-part-1/" target="_blank" rel="noopener"
+&gt;Production MLOps at GS Caltex with Amazon SageMaker Canvas, part 1 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-a-model-improvement-flywheel-with-amazon-sagemaker-hyperpod-data-capture/" target="_blank" rel="noopener"
+&gt;Build a model improvement flywheel with Amazon SageMaker HyperPod Data Capture | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker JumpStart Adds One‑Click Model Deployment and Pre‑Configured Endpoints (2026 Update)</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-jumpstart-adds-oneclick-model-deployment-and-preconfigured-endpoints-2026-update/</link><pubDate>Wed, 14 Oct 2026 22:09:38 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-jumpstart-adds-oneclick-model-deployment-and-preconfigured-endpoints-2026-update/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22153-featured-image.png" alt="Featured image of post Amazon SageMaker JumpStart Adds One‑Click Model Deployment and Pre‑Configured Endpoints (2026 Update)" /&gt;&lt;h1 id="amazon-sagemaker-jumpstart-adds-oneclick-model-deployment-and-preconfigured-endpoints-2026-update"&gt;Amazon SageMaker JumpStart Adds One‑Click Model Deployment and Pre‑Configured Endpoints (2026 Update)
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker JumpStart, the service that gives users access to a broad catalog of pretrained models, announced two 2026 improvements that make finding and deploying models easier.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Model Hub section of the Amazon SageMaker AI console lets you browse the JumpStart catalog, view sample notebooks, and open them directly in SageMaker Studio.&lt;/li&gt;
+&lt;li&gt;Two new capabilities were added in 2026:
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Deep‑link integration&lt;/strong&gt; – a single click takes you from a Hugging Face model discovery page to SageMaker AI deployment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pre‑configured endpoint deployment options&lt;/strong&gt; – named configurations tuned for low cost, low latency, or general‑purpose workloads, including Neuron‑optimized settings for generative AI models.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-new-features"&gt;🛠️ New Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;One‑click model deployment&lt;/strong&gt; from Hugging Face to SageMaker via the deep link.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Named endpoint configurations&lt;/strong&gt; that automatically select instance types and settings based on the chosen priority:
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Priority&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Low Cost&lt;/td&gt;
+&lt;td&gt;Optimized for minimal expense&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Low Latency&lt;/td&gt;
+&lt;td&gt;Optimized for fastest response&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;General‑Purpose&lt;/td&gt;
+&lt;td&gt;Balanced cost and performance&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;Support for a wide range of generative AI models, with Neuron‑optimized options where applicable.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-to-use"&gt;📦 How to Use
+&lt;/h2&gt;&lt;p&gt;A reusable Python script demonstrates the workflow in three steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Discover and deploy&lt;/strong&gt; a model from JumpStart.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Run sample prompts&lt;/strong&gt; to measure latency, output length, and single‑request generation rate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Clean up&lt;/strong&gt; the endpoint.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;REGION&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;us-east-1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;MODEL_ID&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;huggingface-vlm-qwen3-5-27b&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;MODEL_VERSION&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;1.13.0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.core.jumpstart.notebook_utils&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;list_jumpstart_models&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.core.jumpstart.accessors&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;JumpStartModelsAccessor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.core.jumpstart.configs&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;JumpStartConfig&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.core.training.configs&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Compute&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.serve&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ModelBuilder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sagemaker.core.payloads&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;retrieve_all_examples&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;The SageMaker Python SDK runs a lightweight, repeatable performance test.&lt;/li&gt;
+&lt;li&gt;The pattern works for many compatible JumpStart models, although model‑specific payload formats, required instance types, EULA requirements, and response schemas may need adjustments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-technical-details"&gt;⚙️ Technical Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Deployment time varies by model, instance type, quota, and AWS Region.&lt;/li&gt;
+&lt;li&gt;Pre‑configured endpoint options provide ready‑made configurations for different workload priorities, simplifying the selection of compute resources.&lt;/li&gt;
+&lt;li&gt;The deep‑link integration eliminates manual steps between Hugging Face model discovery and SageMaker deployment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;These improvements were introduced in 2026 and are accessible through the SageMaker console in supported AWS Regions (e.g., &lt;code&gt;us-east-1&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22153-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22153-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/12/ML-22153-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #SageMaker #JumpStart #AIModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/deploy-and-evaluate-models-with-amazon-sagemaker-jumpstart/" target="_blank" rel="noopener"
+&gt;Deploy and evaluate models with Amazon SageMaker JumpStart | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker Enhances MLflow Integration with Automated Model Registry Sync</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-enhances-mlflow-integration-with-automated-model-registry-sync/</link><pubDate>Wed, 09 Sep 2026 00:51:34 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-enhances-mlflow-integration-with-automated-model-registry-sync/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/ML-21407-featured-image-1.png" alt="Featured image of post Amazon SageMaker Enhances MLflow Integration with Automated Model Registry Sync" /&gt;&lt;h1 id="amazon-sagemaker-enhances-mlflow-integration-with-automated-model-registry-sync"&gt;Amazon SageMaker Enhances MLflow Integration with Automated Model Registry Sync
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker has introduced an enhanced synchronization capability between Managed MLflow and the SageMaker Model Registry. This update automates the transfer of critical model metadata, streamlining governance and deployment workflows.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The new integration automatically synchronizes MLflow-registered models to the SageMaker Model Registry, including training metrics, evaluation results, lineage, and lifecycle stages. This eliminates manual metadata management and provides governance teams with complete model context directly in SageMaker.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Automatic Sync&lt;/strong&gt;: When activated, every MLflow model registration triggers creation of a corresponding Model Package Group and version in SageMaker.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metadata Transfer&lt;/strong&gt;: Four categories of metadata are automatically carried over:
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Run metadata&lt;/strong&gt;: Parameters, training metrics, dataset location, model artifact path&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation metrics&lt;/strong&gt;: Attached as model cards for performance review&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference specification&lt;/strong&gt;: Container image, model data location, supported instance types&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lineage&lt;/strong&gt;: Relationships between MLflow experiments, models, containers, and packages&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metadata Type&lt;/th&gt;
+&lt;th&gt;Included Content&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Run metadata&lt;/td&gt;
+&lt;td&gt;Model parameters, training metrics, dataset location, artifact path&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Evaluation metrics&lt;/td&gt;
+&lt;td&gt;Model card with performance measures (rendered in SageMaker Studio Evaluate tab)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Inference spec&lt;/td&gt;
+&lt;td&gt;Container image, model data location, instance types (requires inference handler)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Lineage&lt;/td&gt;
+&lt;td&gt;MLflow experiment → model version → container → Model Package Group relationships&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Opt-in feature&lt;/strong&gt;: Enabled via &lt;code&gt;AutoModelRegistrationEnabled&lt;/code&gt; setting in MLflow apps&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IAM requirements&lt;/strong&gt;: Service role needs permissions for package creation, tagging, and lineage recording&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Activation&lt;/strong&gt;: Single MLflow call registers models and triggers sync&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data scientists&lt;/strong&gt;: Maintain experimentation workflows in MLflow without manual lineage tracking&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Governance officers&lt;/strong&gt;: Access complete, consistent metadata for lifecycle management in SageMaker&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Organizations&lt;/strong&gt;: Unified system of record for experiments (MLflow) and production models (SageMaker)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Working implementation notebooks are available in the accompanying GitHub repository.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/mlflow-artifacts.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/model-metrics.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/model-lineage.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#MLflow #SageMaker #MLOps #ModelGovernance #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/govern-models-with-mlflow-and-amazon-sagemaker-ai-model-registry-sync-part-1/" target="_blank" rel="noopener"
+&gt;Govern models with MLflow and Amazon SageMaker AI Model Registry sync: Part 1 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

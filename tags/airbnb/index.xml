@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Airbnb on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/airbnb/</link><description>Recent content in Airbnb on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/airbnb/index.xml" rel="self" type="application/rss+xml"/><item><title>Using Amazon Bedrock CloudWatch metrics and evals for LLM observability</title><link>https://shoubhikbanerjee.github.io/blog/p/using-amazon-bedrock-cloudwatch-metrics-and-evals-for-llm-observability/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/using-amazon-bedrock-cloudwatch-metrics-and-evals-for-llm-observability/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/18/ML-22452-featured-image.png" alt="Featured image of post Using Amazon Bedrock CloudWatch metrics and evals for LLM observability" /&gt;&lt;h1 id="using-amazon-bedrock-cloudwatch-metrics-and-evals-for-llm-observability"&gt;Using Amazon Bedrock CloudWatch metrics and evals for LLM observability
+&lt;/h1&gt;&lt;p&gt;Airbnb uses Amazon Bedrock to run its internal coding agent tool, AirChat, and has developed a specific observability workflow that combines AWS CloudWatch metrics with custom evaluations. This approach allows the engineering team to monitor production performance, manage costs, and validate model changes effectively.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock provides access to foundation models from multiple providers through a common API, with AWS managing the underlying infrastructure. At Airbnb, thousands of engineers use AirChat weekly to run coding agents. These agents send model requests through an internal LLM gateway that runs on Amazon Bedrock, ensuring that Airbnb’s code, prompts, and model responses are processed within AWS. The system integrates with standard AWS access controls and monitoring tools.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;To manage the impact of frequent model updates, Airbnb utilizes a combination of operational metrics and quality evaluations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Evaluations (Evals):&lt;/strong&gt; Before a new model rollout, the team runs evals on a fixed set of representative tasks to measure the model&amp;rsquo;s score and cost per task.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Production Observability:&lt;/strong&gt; After a rollout, observability data is used to compare production usage against eval results. If discrepancies exist, the team investigates the cause.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost Per Task:&lt;/strong&gt; This is defined as the list-price cost of all tokens an agent uses to finish one task. It serves as a key metric alongside performance scores to determine default model and reasoning effort settings.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="cloudwatch-metrics-for-bedrock"&gt;CloudWatch Metrics for Bedrock
+&lt;/h3&gt;&lt;p&gt;Most production problems can be diagnosed using specific signals in the AWS/Bedrock namespace in CloudWatch. The following table outlines the key metrics used to monitor latency, throttling, and cost:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Category&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Latency&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;InvocationLatency&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Measures time from API call to response.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Latency&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;TimeToFirstToken&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Time until the first token is generated.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Latency&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;OutputTokenCount&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Total output tokens generated.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Latency&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;OTPS&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Output tokens per second (derived metric).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Throttling&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;InvocationThrottles&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Count of throttled requests.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Throttling&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;EstimatedTPMQuotaUsage&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Estimated tokens per minute quota consumption, including cache write tokens and output burndown multipliers, across inference APIs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cost&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;InputTokenCount&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uncached input tokens.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cost&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;CacheReadInputTokenCount&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Input tokens read from cache (lower cost than uncached).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cost&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;CacheWriteInputTokenCount&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Input tokens written to cache (can have higher cost depending on model).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cost&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;OutputTokenCount&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Generated output tokens.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The &lt;code&gt;EstimatedTPMQuotaUsage&lt;/code&gt; metric helps teams set proactive alarms, track quota consumption across models, and request quota increases before hitting rate limits. A lower cache hit rate can increase the cost per request due to the pricing differences between uncached input and cache reads.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;In a period of about five weeks, eight new models were released. By mid-October, approximately two-thirds of engineer requests through coding agents were directed to these new models. Each release can simultaneously change output tokens, cost, latency, and capacity. Since published benchmark charts do not always reflect how a model handles specific internal workloads, Airbnb’s approach of running evals on their own tasks and monitoring distinct CloudWatch signals allows them to choose appropriate default models and reasoning effort ceilings for their engineers.&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #CloudWatch #LLMObservability #Airbnb #AIEngineering&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-airbnb-uses-cost-per-task-to-operate-coding-agents-on-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;How Airbnb uses cost per task to operate coding agents on Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Airbnb to Launch AI‑Native Travel Agent in Early 2027</title><link>https://shoubhikbanerjee.github.io/blog/p/airbnb-to-launch-ainative-travel-agent-in-early-2027/</link><pubDate>Fri, 06 Nov 2026 22:02:31 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/airbnb-to-launch-ainative-travel-agent-in-early-2027/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2025/04/acastro_STK090_06.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.761835884455%2C100%2C78.47632823109&amp;w=1200" alt="Featured image of post Airbnb to Launch AI‑Native Travel Agent in Early 2027" /&gt;&lt;h1 id="airbnb-to-launch-ainative-travel-agent-in-early-2027"&gt;Airbnb to Launch AI‑Native Travel Agent in Early 2027
+&lt;/h1&gt;&lt;p&gt;Airbnb announced that it will roll out an AI‑native travel‑agent experience in the first half of 2027, according to its Q3 2026 earnings shareholder letter.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;📅 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Airbnb is working on an AI travel agent that will provide an “AI‑native” trip‑planning experience.&lt;/li&gt;
+&lt;li&gt;The agent is scheduled to roll out in the first half of 2027 (next year).&lt;/li&gt;
+&lt;li&gt;Airbnb describes the new experience as different from today’s AI agents, which it says are good at simple, routine tasks such as restaurant reservations or appointment scheduling.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Airbnb says a traditional chatbot is not the right way to plan a trip.&lt;/li&gt;
+&lt;li&gt;The company is developing a custom‑designed, AI‑native experience that builds the interface around the user’s question.&lt;/li&gt;
+&lt;li&gt;Instead of a chat window, the agent draws on a library of &lt;strong&gt;hundreds of travel‑specific interface elements&lt;/strong&gt;—maps, photos, comparisons, calendars, itineraries—and composes them in real time to match what the user is looking for.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Interface Element&lt;/th&gt;
+&lt;th&gt;Role in the AI‑native experience&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Maps&lt;/td&gt;
+&lt;td&gt;Visual location context for destinations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Photos&lt;/td&gt;
+&lt;td&gt;Visual inspiration and property previews&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Comparisons&lt;/td&gt;
+&lt;td&gt;Side‑by‑side evaluation of options&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Calendars&lt;/td&gt;
+&lt;td&gt;Date selection and availability checking&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Itineraries&lt;/td&gt;
+&lt;td&gt;Structured travel plans that can be edited&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;The agent will help guests explore options, make decisions with travel companions, and take action directly in Airbnb.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Airbnb argues its existing experience matching hosts and guests, its current role in reservations, and a new interface built specifically for travel give it an edge.&lt;/li&gt;
+&lt;li&gt;CEO Brian Chesky previously said the upcoming interface would be “much richer than a chatbot.”&lt;/li&gt;
+&lt;li&gt;In the shareholder letter, Airbnb called AI “the best thing to ever happen to Airbnb” and said it has changed how the company develops products and operates.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The AI travel agent will be released in the first half of 2027, as part of the planned AI‑native trip‑planning rollout.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Airbnb believes the AI‑native approach will tackle the complexity of trip planning, which it describes as “different” from the simple tasks current AI agents handle.&lt;/li&gt;
+&lt;li&gt;By leveraging its reservation data and a bespoke interface, Airbnb aims to streamline the end‑to‑end travel experience within its platform.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/Screenshot-2026-11-05-at-1.59.05-PM.png?quality=90&amp;amp;strip=all&amp;amp;crop=1.7629566694987%2C0%2C96.474086661003%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/unnamed-4.png?quality=90&amp;amp;strip=all&amp;amp;crop=0%2C22.030318131706%2C100%2C37.500061950622&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Airbnb #AITravel #AIagents #TravelTech&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/tech/1028412/airbnb-ai-travel-agent-q3-2026-earnings" target="_blank" rel="noopener"
+&gt;Airbnb is working on an AI travel agent&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

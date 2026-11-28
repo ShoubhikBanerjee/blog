@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/linux/</link><description>Recent content in Linux on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 28 Nov 2026 22:07:57 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Nix Sandbox Provides Declarative Security for AI CLI Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/nix-sandbox-provides-declarative-security-for-ai-cli-agents/</link><pubDate>Sat, 28 Nov 2026 22:07:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nix-sandbox-provides-declarative-security-for-ai-cli-agents/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/93987987?v=4" alt="Featured image of post Nix Sandbox Provides Declarative Security for AI CLI Agents" /&gt;&lt;h1 id="nix-sandbox-provides-declarative-security-for-ai-cli-agents"&gt;Nix Sandbox Provides Declarative Security for AI CLI Agents
+&lt;/h1&gt;&lt;p&gt;A new lightweight, declarative sandboxing tool has been introduced for AI agents operating on Linux and macOS. Built using Nix, the project aims to prevent &amp;ldquo;YOLO mode&amp;rdquo; agents from performing destructive actions such as deleting home directories, force pushing to main branches, or publishing SSH keys online.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The sandbox supports any CLI-based AI agent and utilizes underlying system tools to create restricted environments:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Linux&lt;/strong&gt;: Uses &lt;a class="link" href="https://github.com/containers/bubblewrap" target="_blank" rel="noopener"
+&gt;bubblewrap&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;macOS&lt;/strong&gt;: Uses &lt;code&gt;sandbox-exec&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Access controls are defined declaratively, allowing developers to specify exactly what the agent can read, write, or execute. By default, network access is open, but it can be filtered to specific domains. Ports are closed by default unless explicitly exposed or connected to.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The sandbox enforces strict boundaries on file system access and environment variables. Only changes to the project directory and declared read/write paths are persisted; all other writes, including to the agent&amp;rsquo;s home directory, are discarded upon exit.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Category&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Behavior&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Project Directory&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Read/write access to the launch directory or a fixed &lt;code&gt;workspaceDir&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Declared State&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Read/write access via &lt;code&gt;rwDirs&lt;/code&gt;/&lt;code&gt;rwFiles&lt;/code&gt;; read-only access via &lt;code&gt;roDirs&lt;/code&gt;/&lt;code&gt;roFiles&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Allowed Packages&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Binaries listed in &lt;code&gt;allowedPackages&lt;/code&gt; are added to the PATH, alongside &lt;code&gt;bash&lt;/code&gt; and &lt;code&gt;cacert&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Environment&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Restricted to declared environment variables only.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Git&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supports git commands, including those launched within a worktree.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Nix&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Disabled by default, though agents can be explicitly permitted to run nix commands.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The repository provides templates for common agent CLIs. To get started, users can use a flake template which creates a &lt;code&gt;flake.nix&lt;/code&gt; in the project directory. For those not using flakes, a plain &lt;code&gt;shell.nix&lt;/code&gt; setup is available. Users can adapt existing templates or contribute new ones by adjusting parameters such as &lt;code&gt;pkg&lt;/code&gt;, &lt;code&gt;binName&lt;/code&gt;, &lt;code&gt;outName&lt;/code&gt;, &lt;code&gt;allowedDomains&lt;/code&gt;, and required &lt;code&gt;rwDirs&lt;/code&gt; for configuration and cache.&lt;/p&gt;
+&lt;p&gt;#Nix #AIagents #Linux #macOS #Sandboxing #DevOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/archie-judd/agent-sandbox.nix" target="_blank" rel="noopener"
+&gt;archie-judd/agent-sandbox.nix&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>12-Year-Old Linux NFS Vulnerability Lets Remote Attackers Gain Root</title><link>https://shoubhikbanerjee.github.io/blog/p/12-year-old-linux-nfs-vulnerability-lets-remote-attackers-gain-root/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/12-year-old-linux-nfs-vulnerability-lets-remote-attackers-gain-root/</guid><description>&lt;img src="https://www.bleepstatic.com/content/hl-images/2026/10/29/Linux_tux.jpg" alt="Featured image of post 12-Year-Old Linux NFS Vulnerability Lets Remote Attackers Gain Root" /&gt;&lt;h1 id="12-year-old-linux-nfs-vulnerability-lets-remote-attackers-gain-root"&gt;12-Year-Old Linux NFS Vulnerability Lets Remote Attackers Gain Root
+&lt;/h1&gt;&lt;p&gt;A 12‑year‑old critical vulnerability in the Linux kernel’s NFS server, CVE‑2026‑99362, lets remote attackers gain root privileges.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The flaw, dubbed NFS2ROOT by OpenSec, is a heap buffer overflow in the nfsd server.&lt;/li&gt;
+&lt;li&gt;Remote attackers can send crafted requests that write beyond an allocated buffer.&lt;/li&gt;
+&lt;li&gt;Successful exploitation corrupts kernel memory and grants root access on exposed Linux servers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;An attacker sends malicious NFSv4.1 requests causing the server to write past a buffer.&lt;/li&gt;
+&lt;li&gt;This allows reading of kernel memory, bypassing KASLR.&lt;/li&gt;
+&lt;li&gt;A callback is placed in a released memory area that executes a command.&lt;/li&gt;
+&lt;li&gt;When the connection closes, the kernel runs the embedded command with root privileges.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Vulnerability exists since Linux kernel 3.16 (March 2014).&lt;/li&gt;
+&lt;li&gt;Affects kernels older than 6.12.117, 6.18.61, 7.3.2, or 7.4‑rc1 when nfsd (v4.1 or 4.2) is loaded and TCP port 2049 is reachable over the Internet.&lt;/li&gt;
+&lt;li&gt;No user interaction required; low‑complexity attack.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;ANSSI’s Jérémy Jean submitted a fix in August; the patch was shared with NFSD maintainers in late September.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;No wild exploitation reports yet, but the flaw can give attackers full control.&lt;/li&gt;
+&lt;li&gt;Apply the latest kernel security updates immediately and reboot.&lt;/li&gt;
+&lt;li&gt;If patching isn’t possible, restrict TCP port 2049 to trusted clients or disable nfs-server in /etc/nfs.conf.&lt;/li&gt;
+&lt;li&gt;Kernel hardening does not remove the overflow; patch every host.&lt;/li&gt;
+&lt;li&gt;Monitor for signs such as kernel warnings from nfsd4_check_resp_size, shells spawned by kernel workers, bursts of short NFSv4.1 sessions, and kernel oopses with nfsd4_* or svc_* frames.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-related-flaws"&gt;📚 Related Flaws
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Other privilege escalation bugs disclosed this year include RefluXFS, CIFSwitch, Dirty Frag, Fragnesia, PinTheft, Copy Fail, Pack2TheRoot, and DirtyDecrypt/DirtyCBC.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.bleepstatic.com/images/news/u/1109292/2026/NFS2ROOT-attack-flow.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Linux #NFS #KernelSecurity #CVE202699362 #PrivilegeEscalation #CyberSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.bleepingcomputer.com/news/security/new-nfs2root-linux-flaw-can-let-attackers-gain-root-privileges/" target="_blank" rel="noopener"
+&gt;New NFS2ROOT Linux flaw can let attackers gain root privileges&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>F5 Patches NGINX nginx2root Vulnerabilities Enabling Remote Code Execution</title><link>https://shoubhikbanerjee.github.io/blog/p/f5-patches-nginx-nginx2root-vulnerabilities-enabling-remote-code-execution/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/f5-patches-nginx-nginx2root-vulnerabilities-enabling-remote-code-execution/</guid><description>&lt;img src="https://www.bleepstatic.com/content/hl-images/2026/11/19/nginx.jpg" alt="Featured image of post F5 Patches NGINX nginx2root Vulnerabilities Enabling Remote Code Execution" /&gt;&lt;h1 id="f5-patches-nginx-nginx2root-vulnerabilities-enabling-remote-code-execution"&gt;F5 Patches NGINX nginx2root Vulnerabilities Enabling Remote Code Execution
+&lt;/h1&gt;&lt;p&gt;F5 has released security updates for multiple NGINX vulnerabilities, including two critical flaws dubbed &amp;ldquo;nginx2root.&amp;rdquo; These vulnerabilities allow unauthenticated attackers to execute code remotely on vulnerable web servers and can be chained with a Linux kernel bug to gain root access to the underlying host.&lt;/p&gt;
+&lt;p&gt;Researchers at Xint, Wiz, Ikotas Labs, Metnir, and Rapid7 discovered the two primary HTTP/2 vulnerabilities independently. Xint researchers demonstrated that by chaining one of these flaws with a separate vulnerability in the Linux kernel&amp;rsquo;s SCTP subsystem, an attacker can escape an NGINX Docker container and gain root privileges.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The &amp;ldquo;nginx2root&amp;rdquo; vulnerabilities involve memory corruption and session management errors within the NGINX worker process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CVE-2026-123007:&lt;/strong&gt; A flow-control bug that causes memory corruption in an NGINX worker. It impacts versions 1.31.8 down to 1.9.5.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CVE-2026-123633:&lt;/strong&gt; A use-after-free issue that occurs when NGINX accepts HTTP/2 connections and proxies them to a backend. When the worker runs low on connection slots, it may close an active connection and free memory that a request is still using.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Vulnerability&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-123007&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Memory corruption flaw in NGINX worker via HTTP/2 flow-control.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-123633&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use-after-free vulnerability affecting HTTP/2 requests proxied to backends.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-118899&lt;/td&gt;
+&lt;td style="text-align: left"&gt;High-severity DoS flaw causing an infinite loop over TLS 1.3.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-121810&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use-after-free vulnerability affecting HTTP/3 reverse proxying.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-123634&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use-after-free vulnerability affecting DNS resolution with subrequests.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-113425&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use-after-free vulnerability affecting mail proxy authentication.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;F5 has fixed these issues in the latest versions of NGINX Open Source and NGINX Plus. System administrators are recommended to upgrade immediately:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NGINX Open Source:&lt;/strong&gt; Update to 1.30.7 (stable) or 1.31.9 (mainline).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NGINX Plus:&lt;/strong&gt; Update to 37.0.8.1 or 37.3.0.1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As a temporary mitigation for the two &amp;ldquo;nginx2root&amp;rdquo; flaws, administrators can disable HTTP/2, although this does not address the other vulnerabilities included in the security update.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Exploitability depends heavily on specific server configurations. Security researcher Florian Roth notes that these flaws are exploitable in non-default configurations and may not be an imminent threat for most deployments. The vulnerabilities require HTTP/2 to be enabled on a reachable listener, and CVE-2026-123633 specifically requires NGINX to be proxying requests to a backend.&lt;/p&gt;
+&lt;p&gt;According to Censys, approximately 8.8 million NGINX services were potentially exposed to CVE-2026-123007 as of November 19, based on version numbers and HTTP/2 support. More than 511,000 previously exposed services have already been patched or mitigated.&lt;/p&gt;
+&lt;p&gt;#Cybersecurity #NGINX #InfoSec #Linux #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.bleepingcomputer.com/news/security/critical-nginx-nginx2root-bugs-let-attackers-hijack-servers/" target="_blank" rel="noopener"
+&gt;Critical NGINX ‘NGINX2Root’ bugs let attackers hijack servers&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Kernel-Enforced Sandbox Released for AI Coding Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/kernel-enforced-sandbox-released-for-ai-coding-agents/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/kernel-enforced-sandbox-released-for-ai-coding-agents/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/11848947?v=4" alt="Featured image of post Kernel-Enforced Sandbox Released for AI Coding Agents" /&gt;&lt;h1 id="kernel-enforced-sandbox-released-for-ai-coding-agents"&gt;Kernel-Enforced Sandbox Released for AI Coding Agents
+&lt;/h1&gt;&lt;p&gt;An update has been released regarding cplt, a kernel-enforced sandbox designed for AI coding agents to prevent credential theft, unauthorized pushes to main, PR merges, and secret exfiltration.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AI agents execute arbitrary code, and a compromised agent can read &lt;code&gt;~/.ssh&lt;/code&gt;, push to main, merge PRs, or exfiltrate code unless the operating system prevents it. The cplt tool acts as a kernel-level sandbox and wrapper for various AI coding interfaces and shells.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The tool wraps multiple coding agents and shells to ensure that while the agent can write code, it cannot perform restricted destructive actions or access sensitive files. Every restriction applies to the agent and to every process it spawns.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Runs Copilot CLI, Claude Code, OpenCode, Gemini CLI, Antigravity, Pi, goose, DeepSeek Harness, or a plain shell&lt;/li&gt;
+&lt;li&gt;Deny by default for credentials, secrets, and sensitive files&lt;/li&gt;
+&lt;li&gt;Command-level git and gh interception&lt;/li&gt;
+&lt;li&gt;Outbound network filtering with an audit log&lt;/li&gt;
+&lt;li&gt;Per-repo policy in &lt;code&gt;.cplt.toml&lt;/code&gt;, committed to version control for tamper-proof auditing&lt;/li&gt;
+&lt;li&gt;Zero-config start for developers with escape hatches&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Operating system support and isolation mechanisms vary by platform:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Platform&lt;/th&gt;
+&lt;th&gt;Mechanism&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;macOS&lt;/td&gt;
+&lt;td&gt;Apple Seatbelt/SBPL via &lt;code&gt;sandbox-exec&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Linux&lt;/td&gt;
+&lt;td&gt;Landlock LSM + seccomp-BPF + optional Bubblewrap&lt;/td&gt;
+&lt;td&gt;Kernel 5.13+, full network filtering on 6.7+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Windows&lt;/td&gt;
+&lt;td&gt;No native support&lt;/td&gt;
+&lt;td&gt;Run inside WSL2 (ordinary Linux install where Microsoft kernel ships Landlock)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Additional configuration and usage commands include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;brew install navikt/tap/cplt&lt;/code&gt; (macOS)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cplt --shell-install&lt;/code&gt; to make &amp;lsquo;copilot&amp;rsquo; run sandboxed persistently&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cplt doctor&lt;/code&gt; to check the environment&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cplt -- -p &amp;quot;fix the tests&amp;quot;&lt;/code&gt; to run Copilot in the sandbox&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cplt config set git_guard.protect_default_branch_only false&lt;/code&gt; to block every push instead of just main&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cplt config set git_guard.mode warn&lt;/code&gt; to observe instead of blocking&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Distributed as a single binary that runs on a locked-down laptop&lt;/li&gt;
+&lt;li&gt;Installation available via Homebrew for macOS (&lt;code&gt;brew install navikt/tap/cplt&lt;/code&gt;) and via apt for Debian or Ubuntu&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AI #Security #DeveloperTools #AIAgents #Linux&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/navikt/cplt" target="_blank" rel="noopener"
+&gt;navikt/cplt&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA releases gds-diag tool to simplify GPUDirect Storage diagnostics</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-gds-diag-tool-to-simplify-gpudirect-storage-diagnostics/</link><pubDate>Fri, 30 Oct 2026 22:02:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-gds-diag-tool-to-simplify-gpudirect-storage-diagnostics/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/inline-image-1-e1793140900880-660x370.webp" alt="Featured image of post NVIDIA releases gds-diag tool to simplify GPUDirect Storage diagnostics" /&gt;&lt;h1 id="nvidia-releases-gds-diag-tool-to-simplify-gpudirect-storage-diagnostics"&gt;NVIDIA releases gds-diag tool to simplify GPUDirect Storage diagnostics
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced &lt;strong&gt;gds‑diag&lt;/strong&gt;, an open‑source command‑line utility (with an optional AI‑agent skill) that assesses environments, identifies problems, and suggests improvements for GPUDirect Storage deployments.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;GPUDirect Storage (GDS) accelerates GPU storage access in on‑premises and cloud environments.&lt;/li&gt;
+&lt;li&gt;It provides a robust, portable, and efficient data path between NVIDIA GPUs and storage targets to increase bandwidth, minimize latency, and reduce CPU and memory utilization across a broad range of platforms, application frameworks, and workload patterns.&lt;/li&gt;
+&lt;li&gt;Configuring GDS starts with understanding your environment – which settings and storage paths are appropriate for your platform and workload?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-gdsdiag-works"&gt;🛠️ How gds‑diag works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Command‑line mode&lt;/strong&gt; – a single Python script with multiple subcommands that focus on different diagnostic tasks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI‑agent mode&lt;/strong&gt; – a natural‑language interface that interprets intent, selects and invokes the appropriate subcommands, and coordinates multi‑step diagnostic workflows.&lt;/li&gt;
+&lt;li&gt;The agent skill adds model‑guided reasoning: it can interpret diagnostic results, apply relevant system context, and propose or carry out appropriate remediation.&lt;/li&gt;
+&lt;li&gt;The tool runs on Linux systems with Python 3.8 or newer. NVIDIA datacenter‑class GPU and CUDA Toolkit 12.2 or newer are required for GDS itself, but they are &lt;strong&gt;not&lt;/strong&gt; dependencies of gds‑diag.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-getting-started"&gt;🚀 Getting Started
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Clone the repository: &lt;code&gt;git clone https://github.com/NVIDIA/MagnumIO.git&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Choose a usage model:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Command‑line tool&lt;/strong&gt; – deterministic, minimal‑dependency path.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AI agent&lt;/strong&gt; – intuitive, flexible, natural‑language interaction (recommended when available).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Open the &lt;code&gt;gds-diag&lt;/code&gt; directory in your preferred AI coding assistant and follow the Agent skill usage guidance (if using the agent mode).&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;./gds-diag.py --help&lt;/code&gt; to browse subcommands, or run &lt;code&gt;./gds-diag.py all /path/to/check&lt;/code&gt; for an end‑to‑end diagnostic sequence.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-diagnostic-command-categories"&gt;📋 Diagnostic command categories
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Category&lt;/th&gt;
+&lt;th&gt;Example subcommand&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;End‑to‑end checks&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;all&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Automatically selects appropriate diagnostics for your environment and runs them in sequence.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Preparing for installation&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;pre-install&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Checks GPU support and CUDA Toolkit installation.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Storage planning&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;support-matrix&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Views supported storage targets and helps plan your deployment.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The tool works in bare‑metal, virtual‑machine, and container environments.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;📦 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;gds‑diag is bundled with the NVIDIA Magnum IO GitHub repository and has &lt;strong&gt;no additional dependencies&lt;/strong&gt; to install.&lt;/li&gt;
+&lt;li&gt;It is validated with both Claude and Codex, and may work with other AI tools as well.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a robust, portable, and efficient data path for GPU‑centric workloads.&lt;/li&gt;
+&lt;li&gt;Reduces CPU and memory utilization while increasing bandwidth and lowering latency.&lt;/li&gt;
+&lt;li&gt;Offers both a deterministic command‑line experience and a flexible natural‑language agent, giving users multiple ways to optimize GDS deployments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/gds-diag-blog-overview-simpler.drawio-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-2-10.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/inline-image-1-e1793140900880-1024x576.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #GPUDirectStorage #AIagents #Linux #Diagnostics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/how-to-check-and-configure-nvidia-gpudirect-storage-for-your-platform/" target="_blank" rel="noopener"
+&gt;How to Check and Configure NVIDIA GPUDirect Storage for Your Platform | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SpaceXAI Joins Omacom Foundation, Donates $1.5M Grok Tokens to Omarchy</title><link>https://shoubhikbanerjee.github.io/blog/p/spacexai-joins-omacom-foundation-donates-1-5m-grok-tokens-to-omarchy/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/spacexai-joins-omacom-foundation-donates-1-5m-grok-tokens-to-omarchy/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK262_GROK_A.png?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200" alt="Featured image of post SpaceXAI Joins Omacom Foundation, Donates $1.5M Grok Tokens to Omarchy" /&gt;&lt;h1 id="spacexai-joins-omacom-foundation-donates-15m-grok-tokens-to-omarchy"&gt;SpaceXAI Joins Omacom Foundation, Donates $1.5M Grok Tokens to Omarchy
+&lt;/h1&gt;&lt;p&gt;SpaceXAI announced it will become a Founding Corporate Patron of the Omacom Foundation – the body that oversees the Omarchy Linux distribution – and will donate $1.5 million worth of Grok tokens to the project.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;SpaceXAI is backing Omarchy, a controversial Linux distro, by joining its overseeing foundation as a founding patron.&lt;/li&gt;
+&lt;li&gt;The partnership was announced today and includes a sizeable token donation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-funding-details"&gt;💰 Funding Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;$1.5 million worth of Grok tokens&lt;/strong&gt; donated to David Heinemeier Hansson’s Linux project.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;$1.5 million in compute resources&lt;/strong&gt; pledged to support Omarchy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-token-use"&gt;🛠️ Token Use
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;According to Hansson’s blog post, the Grok tokens will be used to:
+&lt;ul&gt;
+&lt;li&gt;Accelerate development of the distro.&lt;/li&gt;
+&lt;li&gt;Review code.&lt;/li&gt;
+&lt;li&gt;Patch bugs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-figures"&gt;👤 Key Figures
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;David Heinemeier Hansson&lt;/strong&gt; – Danish entrepreneur, creator of Ruby on Rails and co‑founder of the company behind Basecamp; leads the Omarchy Linux project.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Elon Musk&lt;/strong&gt; – Mentioned in speculation that he and SpaceXAI would back a Linux distro, suggesting alignment with Omarchy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-controversy"&gt;⚠️ Controversy
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Hansson has attracted criticism for anti‑immigration blog posts, including a July comparison of immigrants to wolves with the statement, &amp;ldquo;When wolves get out of control, you shoot them.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Other companies such as 1Password and Cloudflare have faced scrutiny for contributing to Omarchy.&lt;/li&gt;
+&lt;li&gt;Cloudflare CEO Matthew Prince, when asked about the contributions on the Decoder podcast, said he did not see it as his job to &amp;ldquo;police different people’s political beliefs.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/STK262_GROK_A.png?quality=90&amp;amp;strip=all&amp;amp;crop=0%2C0%2C100%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SpaceXAI #Omarchy #GrokTokens #OpenSource #Linux&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/tech/1008148/spacexai-omarchy-grok-david-heinemeier-hansson" target="_blank" rel="noopener"
+&gt;SpaceXAI backs Omarchy, the controversial Linux distro, with $1.5 million in compute&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Nouveau/NVK Driver Runs on NVIDIA Spark Box After Extensive Patching</title><link>https://shoubhikbanerjee.github.io/blog/p/nouveau-nvk-driver-runs-on-nvidia-spark-box-after-extensive-patching/</link><pubDate>Wed, 07 Oct 2026 22:09:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nouveau-nvk-driver-runs-on-nvidia-spark-box-after-extensive-patching/</guid><description>&lt;h1 id="nouveaunvk-driver-runs-on-nvidia-spark-box-after-extensive-patching"&gt;Nouveau/NVK Driver Runs on NVIDIA Spark Box After Extensive Patching
+&lt;/h1&gt;&lt;p&gt;After much back and forth and hoops jumping, I can finally reveal nouveau/nvk running on a NVIDIA Spark box.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The open‑source &lt;strong&gt;nouveau/nvk&lt;/strong&gt; driver has been demonstrated on a &lt;strong&gt;NVIDIA Spark&lt;/strong&gt; platform.&lt;/li&gt;
+&lt;li&gt;The effort involved a large patch series and new firmware.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-what-was-required"&gt;🛠️ What was required
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;100 patches&lt;/strong&gt; were prepared for the driver.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;new firmware&lt;/strong&gt; was required for the hardware.&lt;/li&gt;
+&lt;li&gt;The author notes it &amp;ldquo;might mean it&amp;rsquo;s a wait for nova type situation&amp;rdquo; when considering upstream integration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Upstreaming is still uncertain; the author is &amp;ldquo;not sure how best to upstream it all.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;No official release or integration status is provided beyond the demonstration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-watching-the-demo"&gt;📺 Watching the demo
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;To view the live stream of the demonstration, go to the YouTube schedule overview and hover over the paperclip to see the &lt;strong&gt;‘Live Stream’ link&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Live streams are only available for &lt;strong&gt;A/V assisted tracks&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;For a two‑way conversation during the stream, you need a &lt;strong&gt;Matrix account&lt;/strong&gt;, join the &lt;strong&gt;Linux Plumbers Space&lt;/strong&gt;, and find the room corresponding to the track you’re watching.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-acpi-operation-region-conflicts-related-kernel-insight"&gt;⚠️ ACPI Operation Region Conflicts (Related Kernel Insight)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Many people mistakenly think warnings like &lt;code&gt;ACPI Warning: SystemIO range … conflicts with OpRegion …&lt;/code&gt; indicate a firmware bug; &lt;strong&gt;this is generally untrue&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;Advanced Configuration and Power Interface (ACPI)&lt;/strong&gt; specification abstracts hardware details.&lt;/li&gt;
+&lt;li&gt;ACPI provides information as &lt;strong&gt;code&lt;/strong&gt; via the &lt;strong&gt;ACPI Source Language (ASL)&lt;/strong&gt;, which is compiled into bytecode interpreted by the OS at runtime.&lt;/li&gt;
+&lt;li&gt;ASL can define &lt;strong&gt;Operation Regions&lt;/strong&gt; that map to hardware registers.&lt;/li&gt;
+&lt;li&gt;Example: an operation region &lt;strong&gt;OPR1&lt;/strong&gt; at I/O port &lt;code&gt;0x400&lt;/code&gt;, 2 bytes long, with 8‑bit fields &lt;code&gt;INDX&lt;/code&gt; and &lt;code&gt;DATA&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;ACPI methods lock access to these registers; however, a Linux driver that accesses the hardware directly &lt;strong&gt;has no knowledge of ACPI&lt;/strong&gt; and can race with ACPI methods.&lt;/li&gt;
+&lt;li&gt;The kernel detects such conflicts and emits warnings such as:
+&lt;code&gt;ACPI Warning: SystemIO range 0x0000000000000400-0x000000000000401 conflicts with OpRegion 0x0000000000000400-0x0000000000000401 (OPR1)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;This warning indicates a driver is attempting to allocate I/O ports that an ACPI operation region already claims.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;All statements are drawn directly from the provided evidence.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#Nouveau #NVK #NVIDIA #Linux #ACPI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://planet.kernel.org" target="_blank" rel="noopener"
+&gt;Kernel Planet&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Meta's Muse AI Exposes Cloud Filesystem to Users</title><link>https://shoubhikbanerjee.github.io/blog/p/meta-s-muse-ai-exposes-cloud-filesystem-to-users/</link><pubDate>Sat, 26 Sep 2026 22:01:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/meta-s-muse-ai-exposes-cloud-filesystem-to-users/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKB394_MUSE_AI_CVIRGINIA_D.png?quality=90&amp;strip=all&amp;crop=0%2C9.9676601489831%2C100%2C80.064679702034&amp;w=1200" alt="Featured image of post Meta's Muse AI Exposes Cloud Filesystem to Users" /&gt;&lt;h1 id="metas-muse-ai-exposes-cloud-filesystem-to-users"&gt;Meta&amp;rsquo;s Muse AI Exposes Cloud Filesystem to Users
+&lt;/h1&gt;&lt;p&gt;Recent developments show that Meta’s Muse now allows users to access and download its entire filesystem, a capability described as &amp;ldquo;intended behavior.&amp;rdquo;&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Muse utilizes an architecture that differs fundamentally from other AI platforms like Gemini and ChatGPT. Its structure is closer to running OpenClaw on a local machine, but the machine is hosted in the cloud. Key architectural details include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each user is provided with their own persistent Linux VM in Meta’s cloud.&lt;/li&gt;
+&lt;li&gt;The Muse Secure VM functions as the user&amp;rsquo;s own computer in the cloud.&lt;/li&gt;
+&lt;li&gt;Users can operate this Linux box to install software, write and compile code, and use a browser to surf the web.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;While Muse previously only offered a text file download of its directory tree, recent updates have expanded this access:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Muse now provides a clickable file browser with root access when asked to see its filesystem.&lt;/li&gt;
+&lt;li&gt;Muse will zip up the root directory for download, providing &amp;ldquo;the full filesystem listings&amp;rdquo; with &amp;ldquo;all with secrets stripped out.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Muse is identified as the first consumer-accessible agentic AI system. Due to these capabilities, there are concerns regarding how powerful and dangerous the system is, particularly when running on a Mac.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKB394_MUSE_AI_CVIRGINIA_D.png?quality=90&amp;amp;strip=all&amp;amp;crop=0.95588235294118%2C0%2C98.088235294118%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Meta #Muse #AIagents #Linux #CloudComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/ai-artificial-intelligence/1000784/meta-muse-filesystem" target="_blank" rel="noopener"
+&gt;Meta makes the Muse filesystem even more accessible&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/25/john-gruber/" target="_blank" rel="noopener"
+&gt;A quote from John Gruber&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Deployment Specifications for Kubernetes Cluster Infrastructure</title><link>https://shoubhikbanerjee.github.io/blog/p/new-deployment-specifications-for-kubernetes-cluster-infrastructure/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-deployment-specifications-for-kubernetes-cluster-infrastructure/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/36015203?v=4" alt="Featured image of post New Deployment Specifications for Kubernetes Cluster Infrastructure" /&gt;&lt;h1 id="new-deployment-specifications-for-kubernetes-cluster-infrastructure"&gt;New Deployment Specifications for Kubernetes Cluster Infrastructure
+&lt;/h1&gt;&lt;p&gt;A new infrastructure deployment specification has been released, supporting highly available clusters across a wide range of cloud providers and Linux distributions.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The system can be deployed on the following platforms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS&lt;/li&gt;
+&lt;li&gt;GCE&lt;/li&gt;
+&lt;li&gt;Azure&lt;/li&gt;
+&lt;li&gt;OpenStack&lt;/li&gt;
+&lt;li&gt;vSphere&lt;/li&gt;
+&lt;li&gt;Equinix Metal (bare metal)&lt;/li&gt;
+&lt;li&gt;Oracle Cloud Infrastructure (Experimental)&lt;/li&gt;
+&lt;li&gt;Baremetal&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="supported-operating-systems"&gt;Supported Operating Systems
+&lt;/h3&gt;&lt;p&gt;The system supports most popular Linux distributions, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Debian Bookworm, Trixie&lt;/li&gt;
+&lt;li&gt;Ubuntu 22.04, 24.04, 26.04&lt;/li&gt;
+&lt;li&gt;CentOS Stream / RHEL 9, 10&lt;/li&gt;
+&lt;li&gt;Fedora 39, 40, 41, 42&lt;/li&gt;
+&lt;li&gt;Fedora CoreOS&lt;/li&gt;
+&lt;li&gt;openSUSE Leap 16.x/Tumbleweed&lt;/li&gt;
+&lt;li&gt;Oracle Linux 9, 10&lt;/li&gt;
+&lt;li&gt;Alma Linux 9, 10&lt;/li&gt;
+&lt;li&gt;Rocky Linux 9, 10 (experimental in 10)&lt;/li&gt;
+&lt;li&gt;Flatcar Container Linux by Kinvolk&lt;/li&gt;
+&lt;li&gt;Kylin Linux Advanced Server V10 (experimental)&lt;/li&gt;
+&lt;li&gt;Amazon Linux 2 (experimental)&lt;/li&gt;
+&lt;li&gt;UOS Linux (experimental)&lt;/li&gt;
+&lt;li&gt;openEuler (experimental)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Upstart/SysV init based OS types are not supported.&lt;/p&gt;
+&lt;h3 id="component-versions"&gt;Component Versions
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Version&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;kubernetes&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.36.4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;etcd&lt;/td&gt;
+&lt;td style="text-align: left"&gt;3.6.14&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;docker&lt;/td&gt;
+&lt;td style="text-align: left"&gt;28.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;containerd&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.3.5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;cri-o&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.36.5 (experimental; Fedora, Ubuntu, and CentOS based OS only)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;cni-plugins&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.9.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;calico&lt;/td&gt;
+&lt;td style="text-align: left"&gt;3.31.7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;cilium&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.20.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;flannel&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.28.9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;kube-ovn&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.12.21&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;kube-router&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.1.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;multus&lt;/td&gt;
+&lt;td style="text-align: left"&gt;4.2.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;kube-vip&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1.0.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Composable:&lt;/strong&gt; Users have a choice of the network plugin for instances.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Testing:&lt;/strong&gt; The system utilizes continuous integration tests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Kubernetes #CloudInfrastructure #Linux #DevOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/kubernetes-sigs/kubespray" target="_blank" rel="noopener"
+&gt;kubernetes-sigs/kubespray&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Composable Highly Available Cluster Deployment with Kubernetes 1.36.4</title><link>https://shoubhikbanerjee.github.io/blog/p/new-composable-highly-available-cluster-deployment-with-kubernetes-1-36-4/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-composable-highly-available-cluster-deployment-with-kubernetes-1-36-4/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/36015203?v=4" alt="Featured image of post New Composable Highly Available Cluster Deployment with Kubernetes 1.36.4" /&gt;&lt;h1 id="new-composable-highly-available-cluster-deployment-with-kubernetes-1364"&gt;New Composable Highly Available Cluster Deployment with Kubernetes 1.36.4
+&lt;/h1&gt;&lt;p&gt;A new composable, highly available cluster has been introduced, supporting a wide range of cloud environments, bare metal deployments, and popular Linux distributions.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The system can be deployed on the following platforms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS&lt;/li&gt;
+&lt;li&gt;GCE&lt;/li&gt;
+&lt;li&gt;Azure&lt;/li&gt;
+&lt;li&gt;OpenStack&lt;/li&gt;
+&lt;li&gt;vSphere&lt;/li&gt;
+&lt;li&gt;Equinix Metal (bare metal)&lt;/li&gt;
+&lt;li&gt;Oracle Cloud Infrastructure (Experimental)&lt;/li&gt;
+&lt;li&gt;Baremetal&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="supported-operating-systems"&gt;Supported Operating Systems
+&lt;/h3&gt;&lt;p&gt;The cluster supports most popular Linux distributions, though Upstart/SysV init based OS types are not supported. Support includes:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;OS Family&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Supported Versions&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Ubuntu&lt;/td&gt;
+&lt;td style="text-align: left"&gt;22.04, 24.04, 26.04&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Fedora&lt;/td&gt;
+&lt;td style="text-align: left"&gt;39, 40, 41, 42&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Debian&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Bookworm, Trixie&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CentOS Stream / RHEL&lt;/td&gt;
+&lt;td style="text-align: left"&gt;9, 10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Alma Linux&lt;/td&gt;
+&lt;td style="text-align: left"&gt;9, 10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Rocky Linux&lt;/td&gt;
+&lt;td style="text-align: left"&gt;9, 10 (experimental in 10)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Oracle Linux&lt;/td&gt;
+&lt;td style="text-align: left"&gt;9, 10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;openSUSE&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Leap 16.x/Tumbleweed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Specialized&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Flatcar Container Linux by Kinvolk, Fedora CoreOS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Experimental&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Kylin Linux Advanced Server V10, Amazon Linux 2, UOS Linux, openEuler&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="technical-stack"&gt;Technical Stack
+&lt;/h3&gt;&lt;p&gt;The deployment utilizes the following components and versions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Core:&lt;/strong&gt; kubernetes 1.36.4, etcd 3.6.14&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Container Runtimes:&lt;/strong&gt; docker 28.3, containerd 2.3.5, cri-o 1.36.5 (experimental; available only on Fedora, Ubuntu, and CentOS based OS)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Networking &amp;amp; Plugins:&lt;/strong&gt; cni-plugins 1.9.1, calico 3.31.7, cilium 1.20.2, flannel 0.28.9, kube-ovn 1.12.21, kube-router 2.1.1, multus 4.2.2, kube-vip 1.0.3&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Management &amp;amp; Tools:&lt;/strong&gt; cert-manager 1.15.3, coredns 1.14.2, argocd 2.14.5, helm 3.18.4, metallb 0.13.9, registry 2.8.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Composable Architecture:&lt;/strong&gt; Users have a choice of the network plugin for instances.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quality Assurance:&lt;/strong&gt; The system utilizes continuous integration tests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Kubernetes #CloudComputing #Linux #Infrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/kubernetes-sigs/kubespray" target="_blank" rel="noopener"
+&gt;kubernetes-sigs/kubespray&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Proton-Autogen launches Windows executables on Linux without manual configuration</title><link>https://shoubhikbanerjee.github.io/blog/p/proton-autogen-launches-windows-executables-on-linux-without-manual-configuration/</link><pubDate>Sun, 13 Sep 2026 22:03:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/proton-autogen-launches-windows-executables-on-linux-without-manual-configuration/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/29118895?v=4" alt="Featured image of post Proton-Autogen launches Windows executables on Linux without manual configuration" /&gt;&lt;h1 id="proton-autogen-launches-windows-executables-on-linux-without-manual-configuration"&gt;Proton-Autogen launches Windows executables on Linux without manual configuration
+&lt;/h1&gt;&lt;p&gt;Proton-Autogen is a new, lightweight Linux utility designed to streamline the execution of Windows applications by automatically managing Proton and Wine environments. It eliminates the need for manual Steam shortcut creation or complex prefix configuration, allowing users to run executables directly through their file manager.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Proton-Autogen functions as an orchestration layer that automates the setup of runtime environments. When a user selects a Windows .exe file, the tool detects available Proton installations and configures the environment to optimize compatibility. In cases where Proton cannot be used, the utility provides automatic Wine fallback support.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Integration:&lt;/strong&gt; Features native support for Nautilus (GNOME), Nemo (Cinnamon), and Dolphin (KDE Plasma) file managers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compatibility:&lt;/strong&gt; Supports Proton-CachyOS, GE-Proton, and custom Proton builds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interface:&lt;/strong&gt; Built with a GTK4 graphical interface, including advanced options and a CLI.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Diagnostics:&lt;/strong&gt; Includes integrated tools to generate reports for troubleshooting via the &lt;code&gt;proton-autogen --diag&lt;/code&gt; command.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Maintenance:&lt;/strong&gt; Automatically handles prefix management and runtime detection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The recommended installation method for Ubuntu-based systems is via the official PPA:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo add-apt-repository ppa:n3oray/proton-autogen&lt;/code&gt;
+&lt;code&gt;sudo apt update&lt;/code&gt;
+&lt;code&gt;sudo apt install proton-autogen&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;#Linux #Proton #Wine #Gaming #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/N3oRay/proton-autogen" target="_blank" rel="noopener"
+&gt;N3oRay/proton-autogen&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Trynix Provides Browser-Based x86_64 Linux VMs via WebAssembly</title><link>https://shoubhikbanerjee.github.io/blog/p/trynix-provides-browser-based-x86-64-linux-vms-via-webassembly/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/trynix-provides-browser-based-x86-64-linux-vms-via-webassembly/</guid><description>&lt;h1 id="trynix-provides-browser-based-x86_64-linux-vms-via-webassembly"&gt;Trynix Provides Browser-Based x86_64 Linux VMs via WebAssembly
+&lt;/h1&gt;&lt;p&gt;trynix.dev has launched a service that allows users to run an x86_64 Linux virtual machine entirely within a web browser using WebAssembly.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The service is powered by qemu-wasm.&lt;/li&gt;
+&lt;li&gt;The virtual machines are URL addressable, allowing users to navigate to specific package links.&lt;/li&gt;
+&lt;li&gt;There are no servers involved; the process runs only in browsers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Users can boot the VM with any Nix package from the past 13 years.&lt;/li&gt;
+&lt;li&gt;An interactive shell can be accessed by selecting a package (such as Python 3.6.2 from 2017) and clicking &amp;ldquo;Load&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The service is available at trynix.dev.&lt;/li&gt;
+&lt;li&gt;It introduces trynix-preview, a GitHub action that comments a link on a pull request, enabling users to boot the build of that PR in the browser via trynix.dev.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#WebAssembly #Linux #Nix #VirtualMachine #GitHubActions&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/10/trynix/" target="_blank" rel="noopener"
+&gt;Any Nix package, live in your browser&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Ezurio Releases Tiny OSM-MF Module Featuring Linux Support and AI Capabilities</title><link>https://shoubhikbanerjee.github.io/blog/p/ezurio-releases-tiny-osm-mf-module-featuring-linux-support-and-ai-capabilities/</link><pubDate>Sat, 05 Sep 2026 22:02:16 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ezurio-releases-tiny-osm-mf-module-featuring-linux-support-and-ai-capabilities/</guid><description>&lt;h1 id="ezurio-releases-tiny-osm-mf-module-featuring-linux-support-and-ai-capabilities"&gt;Ezurio Releases Tiny OSM-MF Module Featuring Linux Support and AI Capabilities
+&lt;/h1&gt;&lt;p&gt;Ezurio has introduced the Tiny OSM-MF module, a hardware component designed to run Linux on the Sitara AM67 processor with integrated 4-TOPS AI performance.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The module is built for the Cortex-A53 cores and supports a variety of operating systems. Ezurio provides software support for the following environments:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Operating System&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Support Status&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Yocto Linux&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Buildroot Linux&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Android&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Debian&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;QNX&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supported&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#Ezurio #Linux #Hardware #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://techrights.org/n/2026/09/05/Over_at_Tux_Machines.shtml" target="_blank" rel="noopener"
+&gt;Over at Tux Machines&amp;hellip;&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Omarchy: A New Arch-Based Linux Distribution with Hyprland</title><link>https://shoubhikbanerjee.github.io/blog/p/omarchy-a-new-arch-based-linux-distribution-with-hyprland/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/omarchy-a-new-arch-based-linux-distribution-with-hyprland/</guid><description>&lt;img src="https://addrom.com/wp-content/uploads/2026/09/omarchy-linux.webp" alt="Featured image of post Omarchy: A New Arch-Based Linux Distribution with Hyprland" /&gt;&lt;h1 id="omarchy-a-new-arch-based-linux-distribution-with-hyprland"&gt;Omarchy: A New Arch-Based Linux Distribution with Hyprland
+&lt;/h1&gt;&lt;p&gt;A new Arch-based Linux distribution, Omarchy, has been introduced, offering a complete, opinionated desktop experience with minimal configuration overhead.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Omarchy is an Arch-based Linux distribution designed to deliver a complete, opinionated desktop experience without the usual configuration overhead.&lt;/li&gt;
+&lt;li&gt;It combines Arch Linux, the Hyprland tiling Wayland compositor, and Quickshell for the status bar, launcher, notifications, and other desktop components.&lt;/li&gt;
+&lt;li&gt;The project is created and maintained by David Heinemeier Hansson.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Omarchy ships with development and productivity tools such as Neovim, Chromium, LibreOffice, Obsidian, and Spotify.&lt;/li&gt;
+&lt;li&gt;It includes full-disk encryption by default, Btrfs with Snapper snapshots, UFW firewall, and a collection of synchronized themes that can be switched instantly.&lt;/li&gt;
+&lt;li&gt;It embraces Arch Linux as the foundation, providing access to the full Arch ecosystem, the AUR, and rolling updates.&lt;/li&gt;
+&lt;li&gt;The desktop experience centers on keyboard-driven workflows.&lt;/li&gt;
+&lt;li&gt;The Super key acts as the command center, with shortcuts for launching applications, managing windows, switching workspaces, and accessing system menus.&lt;/li&gt;
+&lt;li&gt;Hyprland provides automatic tiling, animations, and a modern Wayland-based compositor.&lt;/li&gt;
+&lt;li&gt;Quickshell ties together the status bar, theme switcher, notifications, and other interface elements into a cohesive layer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-system-requirements"&gt;🖥️ System requirements
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Omarchy targets x86_64 hardware and expects a relatively modern system.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Minimum requirements:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;64-bit Intel or AMD processor (dual-core)&lt;/li&gt;
+&lt;li&gt;4 GB of RAM&lt;/li&gt;
+&lt;li&gt;10 GB of free disk space&lt;/li&gt;
+&lt;li&gt;SSD recommended for responsiveness&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recommended specs:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Quad-core CPU (Intel Core i5, i7, or AMD Ryzen 5 and above)&lt;/li&gt;
+&lt;li&gt;8 GB of RAM or more&lt;/li&gt;
+&lt;li&gt;20 GB or more of free SSD storage&lt;/li&gt;
+&lt;li&gt;Modern GPU with up-to-date drivers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-graphics-support"&gt;🎨 Graphics support
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Omarchy includes automated detection and installation of graphics drivers, including NVIDIA support optimized for Hyprland.&lt;/li&gt;
+&lt;li&gt;AMD graphics are generally preferred for Wayland, but recent NVIDIA drivers work well on supported hardware.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The recommended approach for most users is the official ISO.&lt;/li&gt;
+&lt;li&gt;Existing Arch users can also transform their system with the installation script.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-installation"&gt;📥 Installation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Download the latest Omarchy ISO from the official site.&lt;/li&gt;
+&lt;li&gt;Create a bootable USB drive using a tool such as balenaEtcher or dd.&lt;/li&gt;
+&lt;li&gt;Disable Secure Boot and TPM in your BIOS if necessary, then boot from the USB.&lt;/li&gt;
+&lt;li&gt;The graphical installer guides you through partitioning, full-disk LUKS encryption setup, user creation, and package installation.&lt;/li&gt;
+&lt;li&gt;The process typically completes within a few minutes on modern hardware.&lt;/li&gt;
+&lt;li&gt;If you already run a clean Arch Linux installation, you can apply Omarchy on top of it.
+&lt;ul&gt;
+&lt;li&gt;The installer expects a vanilla Arch system with no conflicting desktop environments such as GNOME or KDE.&lt;/li&gt;
+&lt;li&gt;Run the installation script: &lt;code&gt;curl -fsSL https://omarchy.org/install | bash&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;The script performs preflight checks, installs required packages, configures Hyprland, sets up Quickshell, applies themes, and enables system services.&lt;/li&gt;
+&lt;li&gt;Do not run the installer as root. It must be executed by a regular user on a supported Arch system.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-post-installation"&gt;🎯 Post-installation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;After installation, Omarchy boots directly into the Hyprland session.&lt;/li&gt;
+&lt;li&gt;Press Super plus Space to open the app launcher.&lt;/li&gt;
+&lt;li&gt;Press Super plus K to view the keybindings reference, which lists available shortcuts and their actions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Linux #ArchLinux #Hyprland #Omarchy #Wayland #DesktopEnvironment&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://addrom.com/omarchy-install-and-use-the-opinionated-arch-linux-desktop/" target="_blank" rel="noopener"
+&gt;Omarchy: Install and Use the Opinionated Arch Linux Desktop - addROM&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Debian Project Approves New Policy Allowing Generative AI in Linux Development</title><link>https://shoubhikbanerjee.github.io/blog/p/debian-project-approves-new-policy-allowing-generative-ai-in-linux-development/</link><pubDate>Mon, 31 Aug 2026 22:56:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/debian-project-approves-new-policy-allowing-generative-ai-in-linux-development/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2025/09/STK414_AI_CVIRGINIA_I__0009_7.png?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200" alt="Featured image of post Debian Project Approves New Policy Allowing Generative AI in Linux Development" /&gt;&lt;h1 id="debian-project-approves-new-policy-allowing-generative-ai-in-linux-development"&gt;Debian Project Approves New Policy Allowing Generative AI in Linux Development
+&lt;/h1&gt;&lt;p&gt;The Debian Project has voted to allow developers to use AI tools in their contributions to the Linux distribution’s development, maintenance, and documentation. The new policy acknowledges that the responsible use of AI can improve productivity while clarifying that the project neither endorses nor prohibits the use of generative AI tools.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The decision follows a vote by project developers who considered several other proposals, including options that would have banned contributions made using AI tools. Under the new policy, generative AI is neither exempt from nor subject to special rules beyond the standards already expected of Debian contributors.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Debian has established specific guidelines for how AI-assisted work must be handled within the project:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Maintained Standards&lt;/strong&gt;: All contributions must satisfy the same standards of quality, correctness, maintainability, and legal compliance, regardless of the tools used.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Contributor Responsibility&lt;/strong&gt;: Using a generative AI tool does not diminish a contributor’s responsibility for the work they submit.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Review Requirements&lt;/strong&gt;: Contributors are expected to understand, review, test, and modify AI-assisted output before incorporating it into the distribution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Human Oversight&lt;/strong&gt;: The project states that blindly accepting or uploading AI-generated material without human review is inconsistent with established development practices.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Disclosure&lt;/strong&gt;: Debian encourages contributors to disclose if a contribution was made with AI assistance, but it does not require them to do so.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The policy change has caused friction within the community. One contributor has indicated he is quitting the project and is no longer interested in Debian following the vote. This reaction mirrors a similar backlash faced by Ubuntu developer Canonical earlier this year regarding its own stance on AI tools.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/installer_c1a629.jpg?quality=90&amp;amp;strip=all&amp;amp;crop=7.8419071518193%2C0%2C84.316185696361%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Debian #Linux #GenerativeAI #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/tech/986789/linux-debian-generative-ai-policy" target="_blank" rel="noopener"
+&gt;Debian won’t ban AI code from its Linux distribution&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

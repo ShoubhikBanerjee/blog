@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>StableDiffusion on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/stablediffusion/</link><description>Recent content in StableDiffusion on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 28 Nov 2026 22:07:57 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/stablediffusion/index.xml" rel="self" type="application/rss+xml"/><item><title>Forge Neo Remi introduces a Gradio-free, Anima-first Stable Diffusion workbench</title><link>https://shoubhikbanerjee.github.io/blog/p/forge-neo-remi-introduces-a-gradio-free-anima-first-stable-diffusion-workbench/</link><pubDate>Sat, 28 Nov 2026 22:07:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/forge-neo-remi-introduces-a-gradio-free-anima-first-stable-diffusion-workbench/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/98527099?v=4" alt="Featured image of post Forge Neo Remi introduces a Gradio-free, Anima-first Stable Diffusion workbench" /&gt;&lt;h1 id="forge-neo-remi-introduces-a-gradio-free-anima-first-stable-diffusion-workbench"&gt;Forge Neo Remi introduces a Gradio-free, Anima-first Stable Diffusion workbench
+&lt;/h1&gt;&lt;p&gt;Forge Neo Remi is a new downstream distribution of Forge Neo, built as an Anima-first Stable Diffusion WebUI workbench. It replaces the traditional Gradio interface with a fast, Gradio-free React 19 single-page application (SPA) powered by FastAPI, aiming to provide a zero-node, conflict-safe environment for studio-grade AI image creation on consumer hardware.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Remi is an independent downstream branch, not an official release of Forge Neo or any bundled model family. It pairs Forge Neo&amp;rsquo;s runtime and modern DiT model stack with a reimagined web workbench. The system is designed to be Anima-first and multi-DiT capable, utilizing a persistent job queue managed via SQLite and exposed through a REST API.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The core of Remi is its shift away from node-based graph wiring toward integrated, conflict-safe workflows.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Remi.UI Architecture:&lt;/strong&gt; The interface uses declarative, capability-driven controls defined in &lt;code&gt;remi.ui v1&lt;/code&gt;. It features refined light and dark themes, phone layouts, full keyboard control, and reload-free language switching between English and Simplified Chinese.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Capability Logic:&lt;/strong&gt; The &lt;code&gt;ModelCapability&lt;/code&gt; system automatically hides panels that do not apply to the loaded model family, providing clear reasons for exclusion. It displays quantization and capability badges (including Diffusers, GGUF, INT8-ConvRot, FP8, NVFP4, Turbo, RGBA, and Control) and offers actionable pre-submit workflow advice with one-click fixes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workflows:&lt;/strong&gt; Users can execute Linear Multi-Stage Pipelines (Prompt Upsample → Generate → Refine → Finish) with content-addressed upstream stage caching. This allows downstream parameter changes to reuse earlier outputs without manual node wiring. Cross-model &amp;ldquo;Recipes&amp;rdquo; allow saving and applying conflict-checked parameter subsets.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Remi is engineered to run on 8–24 GB consumer GPUs and Apple Silicon unified memory.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;UI Framework&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;React 19 SPA with FastAPI backend; no Gradio dependency.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Inference Workers&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supports in-process execution by default, or isolated inference via &lt;code&gt;WorkerProtocol&lt;/code&gt; flags (&lt;code&gt;--worker-process&lt;/code&gt;, &lt;code&gt;--worker-gpus&lt;/code&gt;, &lt;code&gt;--worker-mlx&lt;/code&gt;).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Model Support&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Full support for 2B, 2.9B, and 3.8B models (28/40/52-block layouts) with native Qwen3.5 semantic connector.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Apple Silicon&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Includes MPS dequantized-weight caching, unified-memory awareness, and optional MLX/mflux sidecar via &lt;code&gt;--worker-mlx&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;Note: While worker process flags are available, the queue currently does not dispatch to isolated workers and still runs every job in-process.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-features-and-tools"&gt;🎨 Features and Tools
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Asset Management:&lt;/strong&gt; Gallery Boards for organization, Asset Lineage for tracing parent/child outputs, and a pixel slider for comparing two runs via structured Parameter Diff.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transparency:&lt;/strong&gt; Lightbox allows switching between four backdrops to inspect alpha transparency.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reference Integration:&lt;/strong&gt; Send-to-Reference-Image function with model-aware slot badges (&lt;code&gt;&amp;lt;image_1&amp;gt;&lt;/code&gt;, &lt;code&gt;ref_image_0&lt;/code&gt;, &lt;code&gt;ref_0&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prompting:&lt;/strong&gt; Multimodal/Local Prompt Upsampler (PUP) and a JSON Builder for composing structured layouts in MOSS-Image, FLUX.3 Layout, and Bria Fibo 2.0 VGL 2.0.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Control &amp;amp; LoRA:&lt;/strong&gt; Supports cross-depth LoRA, ControlNet-LLLite remapping, Control-LoRA, VACE, and native samplers/guidance. &amp;ldquo;Anima Remi Presets&amp;rdquo; provide safe baselines with mutually exclusive stacks locked before sampling.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Testing &amp;amp; Diagnostics:&lt;/strong&gt; Includes versioned &lt;code&gt;remi.ui&lt;/code&gt; APIs, per-extension diagnostics (load times, errors), and a &lt;code&gt;remi.testing&lt;/code&gt; contract verifier. Frequently used extensions are ported to &lt;code&gt;remi.ui&lt;/code&gt; and guarded by automated Python, Vitest, and Playwright + axe gates.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Remi favors integrated workflows over compatibility with every legacy extension. Third-party extensions built for the old Gradio UI must be ported to &lt;code&gt;remi.ui&lt;/code&gt; to function within this environment.&lt;/p&gt;
+&lt;p&gt;#StableDiffusion #AIImageGeneration #ForgeNeo #ReactJS #OpenSourceAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/beautifulrem/forge-neo-remi" target="_blank" rel="noopener"
+&gt;beautifulrem/forge-neo-remi&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SwarmUI v0.9.8 Beta Released as Modular AI Generation Web UI</title><link>https://shoubhikbanerjee.github.io/blog/p/swarmui-v0-9-8-beta-released-as-modular-ai-generation-web-ui/</link><pubDate>Mon, 23 Nov 2026 22:18:20 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/swarmui-v0-9-8-beta-released-as-modular-ai-generation-web-ui/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/43497670?v=4" alt="Featured image of post SwarmUI v0.9.8 Beta Released as Modular AI Generation Web UI" /&gt;&lt;h1 id="swarmui-v098-beta-released-as-modular-ai-generation-web-ui"&gt;SwarmUI v0.9.8 Beta Released as Modular AI Generation Web UI
+&lt;/h1&gt;&lt;p&gt;SwarmUI, formerly known as StableSwarmUI, has released version 0.9.8 Beta as a modular web-user-interface for AI image, video, and audio generation with an emphasis on accessible powertools, high performance, and extensibility.&lt;/p&gt;
+&lt;p&gt;#SwarmUI #StableDiffusion #Flux #AIArt #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/mcmonkeyprojects/SwarmUI" target="_blank" rel="noopener"
+&gt;mcmonkeyprojects/SwarmUI&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Mochi Diffusion enables native Stable Diffusion and FLUX.2 on Mac</title><link>https://shoubhikbanerjee.github.io/blog/p/mochi-diffusion-enables-native-stable-diffusion-and-flux-2-on-mac/</link><pubDate>Sun, 22 Nov 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/mochi-diffusion-enables-native-stable-diffusion-and-flux-2-on-mac/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/163610650?v=4" alt="Featured image of post Mochi Diffusion enables native Stable Diffusion and FLUX.2 on Mac" /&gt;&lt;h1 id="mochi-diffusion-enables-native-stable-diffusion-and-flux2-on-mac"&gt;Mochi Diffusion enables native Stable Diffusion and FLUX.2 on Mac
+&lt;/h1&gt;&lt;p&gt;Mochi Diffusion is a new native macOS application that allows users to run Stable Diffusion and FLUX.2 Klein models locally and completely offline. The app is built with SwiftUI and leverages Apple&amp;rsquo;s Core ML implementation for Stable Diffusion and the Iris pipeline for FLUX.2 Klein and Z-Image Turbo to achieve maximum performance and speed with reduced memory requirements.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The application supports multiple model pipelines and compute configurations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Core ML Stable Diffusion&lt;/strong&gt;: Uses specially converted models for Apple hardware. These are extremely fast and memory efficient, especially on Apple Silicon Macs with Neural Engine, though each model generates images of a fixed size baked in during conversion.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FLUX.2 Klein and Z-Image Turbo&lt;/strong&gt;: Run via the Iris pipeline with native Metal GPU acceleration. No conversion is required for FLUX.2 Klein models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Draw Things Server&lt;/strong&gt;: Mochi Diffusion can also generate images using models hosted on a Draw Things server.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For Stable Diffusion, users must convert or download Core ML models. The &lt;code&gt;split_einsum&lt;/code&gt; version is compatible with all compute unit options, including the Neural Engine, while the &lt;code&gt;original&lt;/code&gt; version is only compatible with the &lt;code&gt;CPU &amp;amp; GPU&lt;/code&gt; option. Users need to select the correct model version corresponding to their chosen compute option.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Compute Options&lt;/strong&gt;: &lt;code&gt;CPU &amp;amp; Neural Engine&lt;/code&gt; provides a balance between speed and low memory usage. &lt;code&gt;CPU &amp;amp; GPU&lt;/code&gt; may be faster on M1 Max, Ultra, and later chips but uses more memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Management&lt;/strong&gt;: The model folder is created by default under the user&amp;rsquo;s home directory, customizable in Settings. Users create a new folder with the desired display name and move or extract converted models into it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compilation Time&lt;/strong&gt;: The first use of a model may take up to 2 minutes for the Neural Engine to compile a cached version; subsequent generations are much faster.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Input Handling&lt;/strong&gt;: FLUX.2 Klein supports up to 4 input images. Due to pipeline constraints, Mochi automatically resizes inputs to fit the attention budget and indicates the new sizes in the UI.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Features&lt;/strong&gt;: Includes a built-in gallery with import, save, and sync support. Generated images are saved as PNG with embedded generation settings, readable by AUTOMATIC1111-compatible tools and Civitai uploads (viewable in Finder&amp;rsquo;s Get Info window).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Capabilities&lt;/strong&gt;: Supports generating images based on a starting image or using ControlNet with Stable Diffusion.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The app is available for macOS. Users can obtain FLUX.2 Klein model components (text_encoder, tokenizer, transformer, and vae) from provided download links or using the &lt;code&gt;download_model.sh&lt;/code&gt; script.&lt;/p&gt;
+&lt;p&gt;#MochiDiffusion #StableDiffusion #MacOS #CoreML #FLUX2 #ImageGeneration&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/MochiDiffusion/MochiDiffusion" target="_blank" rel="noopener"
+&gt;MochiDiffusion/MochiDiffusion&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Stable Diffusion runs on Android via Snapdragon NPU acceleration</title><link>https://shoubhikbanerjee.github.io/blog/p/stable-diffusion-runs-on-android-via-snapdragon-npu-acceleration/</link><pubDate>Sun, 22 Nov 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/stable-diffusion-runs-on-android-via-snapdragon-npu-acceleration/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/157940664?v=4" alt="Featured image of post Stable Diffusion runs on Android via Snapdragon NPU acceleration" /&gt;&lt;h1 id="stable-diffusion-runs-on-android-via-snapdragon-npu-acceleration"&gt;Stable Diffusion runs on Android via Snapdragon NPU acceleration
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;📢 Overview
+&lt;/h2&gt;&lt;p&gt;Run Stable Diffusion on Android devices using Snapdragon NPU acceleration. This project is now open-sourced and completely free, supporting both NPU and CPU/GPU inference paths.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;p&gt;Local Dream is built on top of many excellent open-source projects, including:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qualcomm QNN SDK&lt;/td&gt;
+&lt;td style="text-align: left"&gt;NPU model execution&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;alibaba/MNN&lt;/td&gt;
+&lt;td style="text-align: left"&gt;CPU model execution&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;happyyzy/stable-diffusion.cpp&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Deep performance optimizations for on-device DiT inference&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;xtensor-stack&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tensor operations &amp;amp; scheduling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;mlc-ai/tokenizers-cpp&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Text tokenization&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;yhirose/cpp-httplib&lt;/td&gt;
+&lt;td style="text-align: left"&gt;HTTP server&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;nothings/stb&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Image processing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;facebook/zstd&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Model compression&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;nlohmann/json&lt;/td&gt;
+&lt;td style="text-align: left"&gt;JSON processing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;square/okhttp&lt;/td&gt;
+&lt;td style="text-align: left"&gt;HTTP client&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;coil-kt/coil&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Image loading &amp;amp; processing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;MoyuruAizawa/Cropify&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Image cropping&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;AOSP, Material Design, Jetpack Compose&lt;/td&gt;
+&lt;td style="text-align: left"&gt;UI framework&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CompVis/stable-diffusion&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Base model framework&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;xinhtao/Real-ESRGAN&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Image upscaling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Kim2091/UltraSharpV2&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Image upscaling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;bhky/opennsfw2&lt;/td&gt;
+&lt;td style="text-align: left"&gt;NSFW content filtering&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Currently focused on SD1.5 and SDXL models.&lt;/li&gt;
+&lt;li&gt;SD2.1 is no longer maintained due to poor quality and limited popularity.&lt;/li&gt;
+&lt;li&gt;SD1.5 models are supported on Snapdragon NPUs with Hexagon V68 architecture or newer.&lt;/li&gt;
+&lt;li&gt;SDXL models are supported on Snapdragon 8 Gen 3 and newer devices.&lt;/li&gt;
+&lt;li&gt;CPU/GPU inference supports SD1.5 and imported SDXL MNN packages.&lt;/li&gt;
+&lt;li&gt;Large SDXL models require substantially more memory than SD1.5.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-community"&gt;💬 Community
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;You can join the Local Dream telegram group for discussion or help with testing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#StableDiffusion #Android #Snapdragon #NPU #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/xororz/local-dream" target="_blank" rel="noopener"
+&gt;xororz/local-dream&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Tag Autocomplete Extension for Stable Diffusion AUTOMATIC1111 Web UI</title><link>https://shoubhikbanerjee.github.io/blog/p/new-tag-autocomplete-extension-for-stable-diffusion-automatic1111-web-ui/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-tag-autocomplete-extension-for-stable-diffusion-automatic1111-web-ui/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/34448969?v=4" alt="Featured image of post New Tag Autocomplete Extension for Stable Diffusion AUTOMATIC1111 Web UI" /&gt;&lt;h1 id="new-tag-autocomplete-extension-for-stable-diffusion-automatic1111-web-ui"&gt;New Tag Autocomplete Extension for Stable Diffusion AUTOMATIC1111 Web UI
+&lt;/h1&gt;&lt;p&gt;Tag Autocomplete is an extension for the popular AUTOMATIC1111 web UI for Stable Diffusion that provides suggested tags from image booru boards. It displays autocompletion hints for recognized tags to improve prompt accuracy.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The extension displays autocompletion hints for recognized tags from image booru boards such as Danbooru and e621. These tags are primarily used for browsing Anime-style illustrations, but they are relevant to a wide range of Stable Diffusion models.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Danbooru &amp;amp; e621 Tags&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Top 100k tags by post count as of November 2022&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Wildcard Support&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Works with wildcard files from extensions or scripts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Extra Networks&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Support for Extra Network previews&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;UI Modes&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Dark and Light mode support with specific tag colors&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Completion is triggered by typing a double underscore (&lt;code&gt;__&lt;/code&gt;). The extension searches for wildcard files in every extension folder and the &lt;code&gt;scripts/wildcards&lt;/code&gt; folder to support legacy versions. It also supports nested folders for grouped wildcards. Because this was one of the first extensions available, it appears high in the inbuilt extensions list when sorting by &amp;ldquo;oldest first.&amp;rdquo;&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Users can locate the extension by using CTRL + F to search for text on the extensions page. It is compatible with wildcard files used by the AUTOMATIC1111 wildcards extension and other similar scripts. Completion provides exact tags that match training data for many popular models.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Installation is available through three primary methods:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Using the inbuilt available extensions list within the web UI.&lt;/li&gt;
+&lt;li&gt;Manual cloning of the extension files from the repository.&lt;/li&gt;
+&lt;li&gt;Downloading pre-packaged versions from the project&amp;rsquo;s Releases page.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Most custom Stable Diffusion models were trained using booru tag information or merged with models that were. Using exact tags in prompts can improve composition and consistency, even if the model itself is designed for a photorealistic style.&lt;/p&gt;
+&lt;p&gt;#StableDiffusion #Danbooru #AUTOMATIC1111 #AItools #ImageGeneration&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/DominikDoom/a1111-sd-webui-tagcomplete" target="_blank" rel="noopener"
+&gt;DominikDoom/a1111-sd-webui-tagcomplete&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Sygil.Dev Releases Feature-Rich Stable Diffusion WebUI with Low VRAM Support</title><link>https://shoubhikbanerjee.github.io/blog/p/sygil-dev-releases-feature-rich-stable-diffusion-webui-with-low-vram-support/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sygil-dev-releases-feature-rich-stable-diffusion-webui-with-low-vram-support/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/112985304?v=4" alt="Featured image of post Sygil.Dev Releases Feature-Rich Stable Diffusion WebUI with Low VRAM Support" /&gt;&lt;h1 id="sygildev-releases-feature-rich-stable-diffusion-webui-with-low-vram-support"&gt;Sygil.Dev Releases Feature-Rich Stable Diffusion WebUI with Low VRAM Support
+&lt;/h1&gt;&lt;p&gt;Sygil.Dev has released a WebUI that provides an easy way to work with Stable Diffusion directly from a web browser. The application features a clean, widescreen-compatible user interface designed to streamline image generation and editing tasks.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The tool offers a complete environment for generating and refining images, featuring a dynamic live preview of generations as they are created and an integrated gallery to show outputs for a prompt. It comes with an automated launcher that activates conda and runs Stable Diffusion with a single command. Users can easily customize their defaults right from the WebUI&amp;rsquo;s Settings tab.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The WebUI incorporates a wide range of features to optimize performance and give users detailed control over their generations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Resource Management&lt;/strong&gt;: It is designed to be lighter on VRAM, allowing 512x512 Text2Image and Image2Image tasks to work on 4GB of VRAM with the optimized mode enabled in settings. Users can also select GPU usage from the Settings tab or run additional upscaling models on the CPU to save VRAM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Samplers and Upscalers&lt;/strong&gt;: It supports a collection of K-Diffusion samplers, including k_euler, k_lms, k_euler_a, k_dpm_2, k_dpm_2_a, k_heun, PLMS, and DDIM. It has access to upscaling models including GFPGAN, realESRGAN, and LSDR.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Face and Image Editing&lt;/strong&gt;: Users can improve faces using the GFPGAN model, either at 100% via a checkbox in every tab or by using a dedicated tab with a strength slider. The Gradio advanced img2img editor supports mask and crop capabilities, including mask painting to re-generate specific parts of an image.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prompt and Seed Control&lt;/strong&gt;: Features include prompt weighting, negative prompts, and prompt validation with warning messages for overly long prompts. A prompt matrix generates images for every combination of prompts separated by the &amp;ldquo;|&amp;rdquo; character. Additionally, users can utilize word seeds instead of seed numbers, sequential seeds for batches, and dynamic prompt entry to change settings based on &amp;ldquo;&amp;ndash;params&amp;rdquo; in a prompt. Loopback mode automatically feeds the last generated sample back into img2img.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Text and Image Extensions&lt;/strong&gt;: The interface supports training custom embeddings on any photo via Textual Inversion training, running existing custom embeddings via the Concepts Library, and an Image to Text feature powered by the CLIP Interrogator. A Text to Video generation feature is also included as a work-in-progress.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Although the older Gradio interface is functional and feature-complete, it is no longer being actively developed by Sygil.Dev and is only receiving bug fixes. However, multiple features are currently in development, including Stable Horde integration, ImgLab, batch inputs, and the Gradio mask editor.&lt;/p&gt;
+&lt;p&gt;#StableDiffusion #SygilDev #WebUI #GenerativeAI #ComputerVision&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/Sygil-Dev/sygil-webui" target="_blank" rel="noopener"
+&gt;Sygil-Dev/sygil-webui&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>ComfyUI-Easy-Use Adds Support for Anima and Krea2 Models</title><link>https://shoubhikbanerjee.github.io/blog/p/comfyui-easy-use-adds-support-for-anima-and-krea2-models/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/comfyui-easy-use-adds-support-for-anima-and-krea2-models/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73304135?v=4" alt="Featured image of post ComfyUI-Easy-Use Adds Support for Anima and Krea2 Models" /&gt;&lt;h1 id="comfyui-easy-use-adds-support-for-anima-and-krea2-models"&gt;ComfyUI-Easy-Use Adds Support for Anima and Krea2 Models
+&lt;/h1&gt;&lt;p&gt;ComfyUI-Easy-Use, a custom node integration package for ComfyUI built upon TinyTerraNodes, has added support for Anima and Krea2 diffusion models. The update introduces new nodes and security fixes while enhancing workflow efficiency for various Stable Diffusion model variants.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The package integrates and optimizes popular custom nodes to create faster and more convenient workflows, restoring a smooth image production experience similar to traditional Stable Diffusion. Key functional updates include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Anima and Krea2 Support&lt;/strong&gt;: Enabled via &lt;code&gt;easy diffusionModelLoader&lt;/code&gt; and &lt;code&gt;easy XYInputs: DiffusionModel&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Loader Requirements&lt;/strong&gt;: The loader requires an explicit text encoder and VAE selection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Noise Injection&lt;/strong&gt;: Achieved in latent space using &lt;code&gt;easy latentNoisy&lt;/code&gt; or &lt;code&gt;easy preSamplingNoiseIn&lt;/code&gt; nodes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prompt Mode&lt;/strong&gt;: The loader enables A1111 prompt mode, reproducing images nearly identical to those generated by webui.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Recent additions and fixes to the ComfyUI-Easy-Use package include:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature / Update&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;New Nodes&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Added &lt;code&gt;easy PassOrNone&lt;/code&gt; with optional default input and matching types; added &lt;code&gt;easy tableEditor&lt;/code&gt; for data editing.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Model Support&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Supports SD1.x, SD2.x, SDXL, SVD, Zero123, Stable Cascade, Layer Diffuse, InstantID, SD3, Kolors, Flux, Anima, and Krea2.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Security Fixes&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Fixed style preview path traversal; restricted model downloads to public HTTP(S) addresses; fixed &lt;code&gt;easy saveText&lt;/code&gt; to confine outputs to the directory.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Performance&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use native &lt;code&gt;VAEDecodeTiled&lt;/code&gt; for tiled decode with Qwen Image VAE support.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;UI Updates&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Fixed &lt;code&gt;easy imageChooser&lt;/code&gt; inactivity after frontend updates; fixed disabled Alt+1–9 template shortcuts blocking browser shortcuts.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Users can install ComfyUI-Easy-Use by cloning the repository into the &lt;code&gt;custom_nodes&lt;/code&gt; directory and installing the requirements. For specific integrations like InstantID, the &lt;code&gt;ComfyUI_InstantID&lt;/code&gt; package must be present. Layer Diffuse usage may require running &lt;code&gt;pip install -r requirements.txt&lt;/code&gt; for dependencies.&lt;/p&gt;
+&lt;p&gt;#ComfyUI #StableDiffusion #Anima #Krea2 #CustomNodes #AIImageGeneration&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/yolain/ComfyUI-Easy-Use" target="_blank" rel="noopener"
+&gt;yolain/ComfyUI-Easy-Use&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SD Prompt Reader Available as ComfyUI Node and Desktop App</title><link>https://shoubhikbanerjee.github.io/blog/p/sd-prompt-reader-available-as-comfyui-node-and-desktop-app/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sd-prompt-reader-available-as-comfyui-node-and-desktop-app/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/28808141?v=4" alt="Featured image of post SD Prompt Reader Available as ComfyUI Node and Desktop App" /&gt;&lt;h1 id="sd-prompt-reader-available-as-comfyui-node-and-desktop-app"&gt;SD Prompt Reader Available as ComfyUI Node and Desktop App
+&lt;/h1&gt;&lt;p&gt;A simple standalone viewer for reading prompt from Stable Diffusion generated image outside the webui. The SD Prompt Reader is now available as a ComfyUI node.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The SD Prompt Reader provides both GUI and CLI. It allows you to perform the following actions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Simple drag and drop interaction&lt;/li&gt;
+&lt;li&gt;Copy prompt to clipboard&lt;/li&gt;
+&lt;li&gt;Remove prompt from image&lt;/li&gt;
+&lt;li&gt;Export prompt to text file&lt;/li&gt;
+&lt;li&gt;Edit or import prompt to images&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Vertical orientation display and sorting by alphabet are also included.
+Dark and light mode support is provided.
+For desktop builds from current source, see &lt;a class="link" href="docs/building.md" &gt;Building desktop applications&lt;/a&gt;.
+For Windows users, Download executable from &lt;a class="link" href="https://github.com/receyuki/stable-diffusion-prompt-reader/releases/latest" target="_blank" rel="noopener"
+&gt;GitHub Releases&lt;/a&gt;.
+For macOS users, Download executable from &lt;a class="link" href="https://github.com/receyuki/stable-diffusion-prompt-reader/releases/latest" target="_blank" rel="noopener"
+&gt;GitHub Releases&lt;/a&gt;.
+You may also install SD Prompt Reader via &lt;a class="link" href="http://brew.sh/" target="_blank" rel="noopener"
+&gt;Homebrew&lt;/a&gt; cask.
+brew install &amp;ndash;no-quarantine&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;RuinedFooocus PNG support is available in the development version only (&lt;a class="link" href="https://github.com/receyuki/stable-diffusion-prompt-reader/issues/77" target="_blank" rel="noopener"
+&gt;#77&lt;/a&gt;).
+If you are using a tool or format that is not on this list, please help me to support your format by uploading the original file generated by your tool to the issues, thx.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The following Safe Diffusion UIs are supported with specified formats.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tool&lt;/th&gt;
+&lt;th&gt;Supported Formats&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A1111&amp;rsquo;s webUI&lt;/td&gt;
+&lt;td&gt;PNG, JPEG, WEBP, TXT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Easy Diffusion&lt;/td&gt;
+&lt;td&gt;PNG, JPEG, WEBP&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;StableSwarmUI&lt;/td&gt;
+&lt;td&gt;PNG, JPEG (prior to 0.5.8-alpha)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Fooocus-MRE&lt;/td&gt;
+&lt;td&gt;PNG, JPEG&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ComfyUI&lt;/td&gt;
+&lt;td&gt;PNG&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Draw Things&lt;/td&gt;
+&lt;td&gt;PNG&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NovelAI (stealth pnginfo)&lt;/td&gt;
+&lt;td&gt;PNG, WEBP&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NovelAI (legacy)&lt;/td&gt;
+&lt;td&gt;PNG&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;InvokeAI&lt;/td&gt;
+&lt;td&gt;PNG (prior to 2.3.5-post.2 and prior to 1.15)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Naifu(4chan)&lt;/td&gt;
+&lt;td&gt;PNG&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Multi-format support includes PNG, JPEG, WEBP, and TXT.
+The ComfyUI Prompt Reader Node is a subproject of this project. It is recommended to embed the &lt;a class="link" href="https://github.com/receyuki/comfyui-prompt-reader-node#prompt-saver-node--parameter-generator-node" target="_blank" rel="noopener"
+&gt;Prompt Saver node&lt;/a&gt; in the &lt;a class="link" href="https://github.com/receyuki/comfyui-prompt-reader-node" target="_blank" rel="noopener"
+&gt;ComfyUI Prompt Reader Node&lt;/a&gt; within your workflow to ensure maximum compatibility.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Check out the &lt;a class="link" href="https://github.com/receyuki/comfyui-prompt-reader-node" target="_blank" rel="noopener"
+&gt;ComfyUI Prompt Reader Node&lt;/a&gt; for more information on the node update.&lt;/p&gt;
+&lt;h2 id="-contribute"&gt;🛠 Contribute
+&lt;/h2&gt;&lt;p&gt;For macOS and Linux users, see &lt;a class="link" href="https://github.com/receyuki/stable-diffusion-prompt-reader/releases/latest" target="_blank" rel="noopener"
+&gt;GitHub Releases&lt;/a&gt; for executables.
+Support from &lt;a class="link" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" target="_blank" rel="noopener"
+&gt;A1111&amp;rsquo;s webUI&lt;/a&gt; in PNG, JPEG, WEBP, and TXT.
+Support from &lt;a class="link" href="https://github.com/easydiffusion/easydiffusion" target="_blank" rel="noopener"
+&gt;Easy Diffusion&lt;/a&gt; in PNG, JPEG, and WEBP.
+Support from &lt;a class="link" href="https://github.com/Stability-AI/StableSwarmUI" target="_blank" rel="noopener"
+&gt;StableSwarmUI&lt;/a&gt; in PNG and JPEG (prior to 0.5.8-alpha).
+Support from &lt;a class="link" href="https://github.com/MoonRide303/Fooocus-MRE" target="_blank" rel="noopener"
+&gt;Fooocus-MRE&lt;/a&gt; in PNG and JPEG.
+Support from &lt;a class="link" href="https://novelai.net/" target="_blank" rel="noopener"
+&gt;NovelAI&lt;/a&gt; in PNG, WEBP, and PNG only.
+Support from &lt;a class="link" href="https://github.com/invoke-ai/InvokeAI" target="_blank" rel="noopener"
+&gt;InvokeAI&lt;/a&gt; in PNG only (prior to 2.3.5-post.2 and prior to 1.15).
+Support from &lt;a class="link" href="https://github.com/comfyanonymous/ComfyUI" target="_blank" rel="noopener"
+&gt;ComfyUI&lt;/a&gt; in PNG only.
+Support from &lt;a class="link" href="https://drawthings.ai/" target="_blank" rel="noopener"
+&gt;Draw Things&lt;/a&gt; in PNG only.
+Support from Naifu(4chan) in PNG only.&lt;/p&gt;
+&lt;p&gt;#stable-diffusion #ai-tools #prompt-reader #open-source #generation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/receyuki/stable-diffusion-prompt-reader" target="_blank" rel="noopener"
+&gt;receyuki/stable-diffusion-prompt-reader&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>BFL Releases FLUX 3, Training Models on Video Signals Together</title><link>https://shoubhikbanerjee.github.io/blog/p/bfl-releases-flux-3-training-models-on-video-signals-together/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/bfl-releases-flux-3-training-models-on-video-signals-together/</guid><description>&lt;img src="https://i.ytimg.com/vi/8cGfJOU3AlQ/maxresdefault.jpg" alt="Featured image of post BFL Releases FLUX 3, Training Models on Video Signals Together" /&gt;&lt;h1 id="bfl-releases-flux-3-training-models-on-video-signals-together"&gt;BFL Releases FLUX 3, Training Models on Video Signals Together
+&lt;/h1&gt;&lt;h2 id="intro"&gt;Intro
+&lt;/h2&gt;&lt;p&gt;BFL released FLUX 3, training a new image generation model on video signals together to improve temporal consistency and understanding of motion.&lt;/p&gt;
+&lt;h2 id="-origins"&gt;🧩 Origins
+&lt;/h2&gt;&lt;p&gt;Stable Diffusion’s release prompted Dustin Podell and others to go fulltime into AI. Podell stuck to human content creation while immersing in AI content creation with Andreas Blattmann and Stability AI’s image generation team. After Stability AI fell apart, Anj Midha helped the core group spin out to BFL, which built the FLUX series.&lt;/p&gt;
+&lt;h2 id="-flux-3s-approach"&gt;🔍 FLUX 3’s Approach
+&lt;/h2&gt;&lt;p&gt;BFL’s argument for training FLUX 3 was to combine three signals: a still shows where the ball is, a video shows how it got there, and the sound of impact can tell when it hit something even if the camera missed contact. A key example in the FLUX 3 release is the horse in motion.&lt;/p&gt;
+&lt;h2 id="-video-upscaling"&gt;⚙️ Video Upscaling
+&lt;/h2&gt;&lt;p&gt;FLUX 3 derives its video upscaler from the same FLUX 3 backbone. Sharpening each frame independently might look terrific, but playing it back can show shimmering as the upscaler makes slightly different decisions per frame. Temporal consistency matters even for higher-resolution files. Andreas Blattmann notes that ordinary 2D video contains evidence about what objects look like from other angles.&lt;/p&gt;
+&lt;h2 id="-technical-execution"&gt;🚀 Technical Execution
+&lt;/h2&gt;&lt;p&gt;An autoregressive model can learn from all tokens in a training example at once. On the diffusion side, the team distilled long sampling processes down to a handful of steps. Dustin Podell’s early Kontext experiment showed that a model able to draw a dog wearing a hat seemed to know where hats go. A few hours of training got the model to place a logo on a shirt, which was rough but sufficient for offsite discussion. The team then spent months refining the data and model.&lt;/p&gt;
+&lt;h2 id="-unexpected-use-case"&gt;💡 Unexpected Use Case
+&lt;/h2&gt;&lt;p&gt;Users fed FLUX old, degraded family photos to restore them, then shared the pictures with families. Podell hadn’t predicted this use. After discussing identity preservation across edits and frames, he noted it’s a nice example of users noticing when something is done right.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://latent.space/brand/wordmark.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/user/profile_picture/0ac84106-c2bb-4348-891f-fa5737b90805/thumb_swyxski.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/asset/file/349354cd-819f-4893-a1cf-c7bae8662f05/flux3-strip.jpg?t=1794863695"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#StableDiffusion #AI #FLUX3 #VideoGeneration #ImageGeneration&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://latent.space/p/bfl/" target="_blank" rel="noopener"
+&gt;Building Visual Intelligence — Andreas Blattmann &amp;amp; Dustin Podell, Black Forest Labs — Latent Space&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Stability Matrix: Multi-Platform Package Manager and Inference UI for Stable Diffusion</title><link>https://shoubhikbanerjee.github.io/blog/p/stability-matrix-multi-platform-package-manager-and-inference-ui-for-stable-diffusion/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/stability-matrix-multi-platform-package-manager-and-inference-ui-for-stable-diffusion/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/136279213?v=4" alt="Featured image of post Stability Matrix: Multi-Platform Package Manager and Inference UI for Stable Diffusion" /&gt;&lt;h1 id="stability-matrix-multi-platform-package-manager-and-inference-ui-for-stable-diffusion"&gt;Stability Matrix: Multi-Platform Package Manager and Inference UI for Stable Diffusion
+&lt;/h1&gt;&lt;p&gt;Stability Matrix is a multi-platform package manager and inference interface designed for Stable Diffusion. It provides one-click installation and updates for various Stable Diffusion Web UI packages and includes a built-in Inference interface.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Package Management&lt;/strong&gt;: Manages plugins and extensions for supported packages, including Automatic1111, Comfy UI, SD Web UI-UX, and SD.Next.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dependency Handling&lt;/strong&gt;: Easily installs or updates Python dependencies for each package without requiring global installation of Git or Python.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Portability&lt;/strong&gt;: The application is fully portable; users can move Stability Matrix&amp;rsquo;s Data Directory to a new drive or computer at any time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Version Channels&lt;/strong&gt;: The software is available in Latest Stable, Latest Preview, and Latest Dev versions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference Interface&lt;/strong&gt;: A reimagined interface built into Stability Matrix featuring:
+&lt;ul&gt;
+&lt;li&gt;Powerful auto-completion and syntax highlighting using a formal language grammar.&lt;/li&gt;
+&lt;li&gt;Workspaces that open in tabs and save/load from &lt;code&gt;.smproj&lt;/code&gt; project files.&lt;/li&gt;
+&lt;li&gt;Customizable dockable and float panels.&lt;/li&gt;
+&lt;li&gt;Generated images that contain Inference Project, ComfyUI Nodes, and A1111-compatible data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Documentation&lt;/strong&gt;: Users can refer to the documentation index for installation, package management, model, and Inference guides. Recommended starting points include generating a first image, importing local models, or managing installed packages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The application supports the following operating systems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows 10 and 11&lt;/li&gt;
+&lt;li&gt;Linux (AppImage)&lt;/li&gt;
+&lt;li&gt;Arch Linux (AUR)&lt;/li&gt;
+&lt;li&gt;macOS (Apple Silicon)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#StableDiffusion #StabilityMatrix #PackageManagement #ComfyUI #Automatic1111&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/LykosAI/StabilityMatrix" target="_blank" rel="noopener"
+&gt;LykosAI/StabilityMatrix&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Multimodal Generative Framework for Culturally Faithful Ulos Motif Generation</title><link>https://shoubhikbanerjee.github.io/blog/p/multimodal-generative-framework-for-culturally-faithful-ulos-motif-generation/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/multimodal-generative-framework-for-culturally-faithful-ulos-motif-generation/</guid><description>&lt;h1 id="multimodal-generative-framework-for-culturally-faithful-ulos-motif-generation"&gt;Multimodal Generative Framework for Culturally Faithful Ulos Motif Generation
+&lt;/h1&gt;&lt;p&gt;Researchers have proposed a multimodal generative framework designed to enable the controllable and culturally faithful generation of Ulos motifs.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The framework integrates two primary models:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Stable Diffusion XL v1.0&lt;/strong&gt;: A Latent Diffusion Model fine-tuned via LoRA.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LLaMA 1.5-7B&lt;/strong&gt;: A Multimodal Large Language Model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To guide the generation process, the system employs four complementary conditioning mechanisms:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Mechanism&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Text&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Governs semantic intent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Image&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Governs generation aspects&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Representation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Governs generation aspects&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Semantic Map (via ControlNet)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Governs spatial layout&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;An ablation study conducted across three scenarios—shape transformation, colour variation, and high-complexity input—found that conditioning effectiveness is not proportional to the number of mechanisms combined:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Text + Image + Semantic Map&lt;/strong&gt;: Achieved the best FID (270) and CLIP Score (0.65 - 0.70), but the weakest SSIM (0.65).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Text + Image + Representation&lt;/strong&gt;: Offered the best overall balance with a stable SSIM (0.84) and competitive FID (280).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;All four mechanisms&lt;/strong&gt;: Yielded the weakest FID (330), suggesting conflicting optimization signals.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Qualitative evaluation showed statistically significant positive acceptance from nine weavers (Wilcoxon, p=0.007) and thirty public participants (p&amp;lt;0.001). Additionally, a web-based prototype supporting image-to-image and text-to-image generation was developed as a digital design tool for cultural heritage preservation.&lt;/p&gt;
+&lt;p&gt;#GenerativeAI #CulturalHeritage #StableDiffusion #LLaMA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.17987v1" target="_blank" rel="noopener"
+&gt;Multimodal Conditioning of Fine-Tuned Stable Diffusion XL for Controllable and Culturally Faithful Ulos Motif Generation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

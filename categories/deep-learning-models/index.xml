@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Deep Learning Models on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/deep-learning-models/</link><description>Recent content in Deep Learning Models on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 20 Oct 2026 22:03:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/deep-learning-models/index.xml" rel="self" type="application/rss+xml"/><item><title>Jane Street Implements Mamba‑2 in NVIDIA cuTile Python DSL</title><link>https://shoubhikbanerjee.github.io/blog/p/jane-street-implements-mamba2-in-nvidia-cutile-python-dsl/</link><pubDate>Tue, 20 Oct 2026 22:03:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/jane-street-implements-mamba2-in-nvidia-cutile-python-dsl/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2025/11/Solving-Math-660x370.jpg" alt="Featured image of post Jane Street Implements Mamba‑2 in NVIDIA cuTile Python DSL" /&gt;&lt;h1 id="jane-street-implements-mamba2-in-nvidia-cutile-python-dsl"&gt;Jane Street Implements Mamba‑2 in NVIDIA cuTile Python DSL
+&lt;/h1&gt;&lt;p&gt;Machine learning engineers at Jane Street have implemented the state‑of‑the‑art Mamba‑2 sequence model using NVIDIA’s cuTile Python‑based DSL and partnered with NVIDIA to optimize the kernels.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;cuTile&lt;/strong&gt; is a Python‑based domain‑specific language and parallel programming model for NVIDIA GPUs that automatically leverages advanced hardware capabilities to deliver peak performance for tile‑level GPU programming.&lt;/li&gt;
+&lt;li&gt;By abstracting thread‑ and warp‑level scheduling behind high‑level, tile‑centric primitives, cuTile enables you to write GPU kernels in Python while compiler optimizations automatically target advanced hardware features like Tensor Cores.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mamba‑2&lt;/strong&gt; is a sequence model that aims for the best of both worlds: the fixed‑size hidden state of an RNN and the efficient, chunk‑wise computation of attention‑style models.&lt;/li&gt;
+&lt;li&gt;Jane Street, a global trading firm that uses deep learning for quantitative research, implemented Mamba‑2 in cuTile and worked with NVIDIA to optimize the kernels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-cutile-works"&gt;🧩 How cuTile Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Import the package as &lt;code&gt;cuda.tile&lt;/code&gt; and expose it as &lt;code&gt;ct&lt;/code&gt; throughout the kernel implementations.&lt;/li&gt;
+&lt;li&gt;High‑level tile primitives hide the low‑level details of thread and warp scheduling.&lt;/li&gt;
+&lt;li&gt;The compiler maps these primitives to Tensor‑Core‑friendly matrix operations without the user writing explicit CUDA kernels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-mamba2-architecture-in-cutile"&gt;🧩 Mamba‑2 Architecture in cuTile
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The core recurrence is:
+$$h_t = \exp(A \cdot dt_t) h_{t-1} + dt_t B_t x_t$$&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;h_t&lt;/code&gt; is a fixed‑size hidden &lt;strong&gt;matrix&lt;/strong&gt; of size \(S, H\); it carries state across tokens.&lt;/li&gt;
+&lt;li&gt;Inputs per token \(t\):
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;x_t&lt;/code&gt; (vector of size H) – similar to values in attention.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dt_t&lt;/code&gt; (scalar per head, always negative) – controls update magnitude.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;B_t&lt;/code&gt; (vector of size S) – similar to keys.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c_t&lt;/code&gt; (vector of size S) – similar to queries and used to produce outputs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The output equation can be written as:
+$$y_t = c_t^{\mathsf{T}} h_{t-1} + D x_t$$&lt;/li&gt;
+&lt;li&gt;When processing a chunk of \(T\) tokens, the recurrence can be expressed with Tensor‑Core‑friendly matrix products:
+$$h_{t+T} = h_t + B X^{\mathsf{T}}$$
+where \(B\) stacks the \(b_{t+i}\) vectors and \(X\) stacks the \(x_{t+i}\) vectors.&lt;/li&gt;
+&lt;li&gt;Adding the skip connection yields the full chunk computation:
+$$Y = C h_t + ((C B^{\mathsf{T}}) \cdot M) X + D X$$
+where &lt;code&gt;M&lt;/code&gt; is a causal mask, analogous to the mask used in causal softmax attention.&lt;/li&gt;
+&lt;li&gt;Removing the decay term reduces Mamba‑2 to linear attention with renamed components.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-implementation-details"&gt;⚙️ Key Implementation Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The implementation groups &lt;code&gt;x_t&lt;/code&gt;, &lt;code&gt;b_t&lt;/code&gt;, &lt;code&gt;c_t&lt;/code&gt;, and &lt;code&gt;y_t&lt;/code&gt; into matrices, enabling the use of Tensor Cores for the bulk of the work.&lt;/li&gt;
+&lt;li&gt;Traditional softmax attention scales compute and memory linearly with sequence length during inference, while RNNs have a fixed memory footprint but suffer from slow, non‑parallelizable training.&lt;/li&gt;
+&lt;li&gt;Mamba‑2’s matrix‑based hidden state and chunked computation aim to combine a fixed memory cost with Tensor‑Core acceleration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By expressing the recurrence as matrix multiplications, the workload becomes memory‑bound rather than compute‑bound, allowing the fast Tensor Core pathways to be used.&lt;/li&gt;
+&lt;li&gt;The approach avoids materializing an enormous hidden‑state tensor, which would otherwise limit performance.&lt;/li&gt;
+&lt;li&gt;This joint effort shows how a high‑level Python DSL can bridge sophisticated sequence models and low‑level GPU hardware features without hand‑written CUDA kernels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/mamba-2-chunk-computation.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/performance-cutile-mamba-2-forward-pass.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/causal-masking-safe-exponential.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#cuTile #Mamba2 #TensorCores&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/accelerating-mamba-2-with-high-performance-forward-pass-kernels-in-nvidia-cuda-tile/" target="_blank" rel="noopener"
+&gt;Accelerating Mamba-2 with High-Performance Forward Pass Kernels in NVIDIA CUDA Tile | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

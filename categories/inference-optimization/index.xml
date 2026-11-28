@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Inference Optimization on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/inference-optimization/</link><description>Recent content in Inference Optimization on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 18 Nov 2026 22:09:17 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/inference-optimization/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker AI introduces KV cache-aware routing</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-introduces-kv-cache-aware-routing/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-introduces-kv-cache-aware-routing/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22381-featured-image.png" alt="Featured image of post Amazon SageMaker AI introduces KV cache-aware routing" /&gt;&lt;h1 id="amazon-sagemaker-ai-introduces-kv-cache-aware-routing"&gt;Amazon SageMaker AI introduces KV cache-aware routing
+&lt;/h1&gt;&lt;p&gt;Today, Amazon SageMaker AI introduces KV cache-aware routing (KV-aware routing), a new routing strategy for real-time endpoints. It uses the cache state that the model container reports to send each request to an instance that already holds a long cached match for its prompt and isn’t too busy.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;KV-aware routing is designed for teams that serve large language models (LLMs) with multi-turn conversations, long shared prompts, or heavy load. It addresses limitations in the previously introduced prefix-aware routing, which infers where a prefix is cached from the request alone. Because prefix-aware routing hashes the start of the request, it cannot tell when an instance has evicted that cache. Consequently, if an instance evicts older KV cache entries when its GPU memory fills up, the router keeps sending matching requests there as if the cache were still warm. Additionally, in multi-turn chats, each turn adds to the history; while a request is shorter than the configured &lt;code&gt;PrefixLength&lt;/code&gt;, every new turn changes the text the router hashes, so the next turn can land on a different instance than the one that cached the earlier turns.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;A model keeps the work it did on a prompt in GPU memory, the KV cache, and skips that work when the same start reaches the same instance again. KV-aware routing operates through three main components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Model Container Reporting&lt;/strong&gt;: The model container reports what it has cached.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Managed Cache Index&lt;/strong&gt;: SageMaker AI keeps a managed cache index of that state for the endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Endpoint Routing&lt;/strong&gt;: The endpoint uses the index to choose an instance for each request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When a request arrives, the endpoint tokenizes the prompt and looks up the tokens in the index. The index holds only pointers: one-way, truncated hashes of cached content, each mapped to the instance or inference component copy that holds it. It never stores prompts, token IDs, request payloads, or KV tensors. Because the index matches on tokens rather than a fixed number of bytes, a multi-turn history can match in full as it grows. If instance A holds the cached start of a conversation, the next turn of that conversation goes to A.&lt;/p&gt;
+&lt;p&gt;The endpoint picks among candidates by weighing how much of the prompt each one has cached against how busy it is. A candidate that is too busy is skipped, so if the instance with the longest match is busy, the request goes to the next-best one that is available. If no candidate has a useful match or all of them are busy, the request falls back to load-aware routing.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;You turn on KV-aware routing in two places:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add one environment variable to your model so the container reports its cache contents.&lt;/li&gt;
+&lt;li&gt;Set &lt;code&gt;RoutingStrategy&lt;/code&gt; to &lt;code&gt;KV_AWARE&lt;/code&gt; in the endpoint configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Specifically, when you turn events on with &lt;code&gt;SM_VLLM_KV_EVENTS_CONFIG&lt;/code&gt;, the container publishes a KV cache event each time it stores or evicts cache entries, and SageMaker AI uses these events to keep the index current. Clients call the endpoint with the same APIs as before. You do not configure a concurrency threshold for this, as you do with prefix-aware routing.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This strategy ensures that requests sharing a prompt are routed to instances where that prompt is already in the GPU memory cache, maximizing computational efficiency. By tracking actual cache eviction and storage events rather than relying on static prefix hashes, the system prevents routing requests to instances where the cache has been cleared due to memory pressure.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22381-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22381-2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/17/ML-22381-3-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonSageMaker #LLM #KVCache #Routing #Inference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-ai-real-time-endpoints-now-support-kv-cache-aware-routing/" target="_blank" rel="noopener"
+&gt;Amazon SageMaker AI real-time endpoints now support KV cache aware routing | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Stable Sampling and Head-Specific Fixes Improve Long-Form AI Performance</title><link>https://shoubhikbanerjee.github.io/blog/p/stable-sampling-and-head-specific-fixes-improve-long-form-ai-performance/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/stable-sampling-and-head-specific-fixes-improve-long-form-ai-performance/</guid><description>&lt;h1 id="stable-sampling-and-head-specific-fixes-improve-long-form-ai-performance"&gt;Stable Sampling and Head-Specific Fixes Improve Long-Form AI Performance
+&lt;/h1&gt;&lt;p&gt;Recent findings indicate that the performance of open-weight language models during long generation depends heavily on the sampling method used, while specific attention heads in sparse models often cause long-context retrieval failures.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Open-weight models frequently degrade in quality as generation length increases.&lt;/li&gt;
+&lt;li&gt;Standard attempts to fix this often involve additional training.&lt;/li&gt;
+&lt;li&gt;At high temperature, the sampler— the rule selecting the next token— determines whether long and agentic generation succeeds.&lt;/li&gt;
+&lt;li&gt;Sparse attention models that read limited key blocks can lose significant long-context retrieval accuracy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;h3 id="sampling-stability"&gt;Sampling Stability
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Top-nsigma&lt;/strong&gt;: Keeps the pool of candidate tokens small and steady as temperature rises, maintaining accuracy without letting in low-probability tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Top-p / Top-k&lt;/strong&gt;: Pool sizes grow significantly with temperature. For example, in Llama-3.1-8B, top-p&amp;rsquo;s pool grew from 4 tokens at temperature 1 to 51,845 at temperature 2.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mechanism&lt;/strong&gt;: Counting how many tokens a sampler lets through explains performance differences. Top-nsigma stops collapsing when the pool is picked at temperature 1 and temperature is applied afterwards.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="attention-head-calibration"&gt;Attention Head Calibration
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Diagnosis&lt;/strong&gt;: A calibration probe identifies &amp;ldquo;blind&amp;rdquo; attention heads that miss the needle in retrieval tasks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metrics&lt;/strong&gt;: The probe reads two quantities in every head: the forfeited needle attention and the share of the answer&amp;rsquo;s log-probability restored by fixing the selection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Root Cause&lt;/strong&gt;: These heads attend to the needle, but a mean-pooled key summary dilutes the single decisive token.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Applying full attention in specific identified heads or using a 4-bit scorer recovers accuracy without retraining the model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Benchmark / Model&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Condition&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3.5 (Coding Agents)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Temp 2, top-p/top-k/Top-H&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0/100 GitHub issues resolved&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3.5 (Coding Agents)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Temp 2, top-nsigma&lt;/td&gt;
+&lt;td style="text-align: left"&gt;46 to 62 issues resolved&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;All Benchmarks (Median)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Top-nsigma vs Top-p&lt;/td&gt;
+&lt;td style="text-align: left"&gt;100% vs 26% of temp-1 score retained&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;MiniCPM4.1-8B (64K)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Multi-key Retrieval&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Accuracy increased from 54.1% to 97.5%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3-8B (SeerAttention-R)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Multi-key Retrieval&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Accuracy increased from 29.8% to 97.7%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Correlation&lt;/strong&gt;: Typical pool size predicts judged quality with a Spearman correlation of -0.77 across 133 sampler/temperature combinations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Latency Trade-off&lt;/strong&gt;: In production serving, full attention in fixed heads keeps 84 to 89% of the time to first token (TTFT) saved by sparse attention at 32K to 128K contexts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Consistency&lt;/strong&gt;: Four checkpoints of the InfLLM-V2 family and NOSA-8B lose multi-key retrieval in the same three blind heads.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Top-nsigma and similar stable samplers prevent the degradation seen in long-form writing, structured outputs, and coding agents at high temperatures.&lt;/li&gt;
+&lt;li&gt;Identifying and fixing specific attention heads allows sparse attention models to achieve near-full attention retrieval accuracy while maintaining high inference speeds.&lt;/li&gt;
+&lt;li&gt;The findings suggest that sampler behavior and targeted attention head modifications are more effective for long-context stability than additional training.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;All code and data related to the sampler tests are released to the public.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#LargeLanguageModels #Inference #AttentionMechanism #OpenWeights #LongContext&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.22148v1" target="_blank" rel="noopener"
+&gt;Long-Context Generation Is a Sampling Problem (When You Turn Up the Heat)&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.21917v1" target="_blank" rel="noopener"
+&gt;Lost in a Few Heads: Diagnosing and Repairing Block Selection in Sparse Attention&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Bi-directional KV Cache Transfer Cuts Latency for Multi-turn AI Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/bi-directional-kv-cache-transfer-cuts-latency-for-multi-turn-ai-agents/</link><pubDate>Mon, 19 Oct 2026 22:04:08 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/bi-directional-kv-cache-transfer-cuts-latency-for-multi-turn-ai-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21811-featured-image.png" alt="Featured image of post Bi-directional KV Cache Transfer Cuts Latency for Multi-turn AI Agents" /&gt;&lt;h1 id="bi-directional-kv-cache-transfer-cuts-latency-for-multi-turn-ai-agents"&gt;Bi-directional KV Cache Transfer Cuts Latency for Multi-turn AI Agents
+&lt;/h1&gt;&lt;p&gt;Multi‑turn agentic workloads accumulate context as an agent reasons, invokes tools, and incorporates earlier results. Each new turn resends the full conversation history – system instructions, prior prompts, tool results, and model responses – causing the growing context to be processed repeatedly.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;In Prefill‑decode (P‑D) disaggregation, a &lt;strong&gt;prefill node&lt;/strong&gt; builds the key‑value (KV) cache for the prompt, while a &lt;strong&gt;decode node&lt;/strong&gt; retrieves those KV blocks to generate the response.&lt;/li&gt;
+&lt;li&gt;Conventional disaggregated serving moves KV cache only from prefill → decode. This one‑directional flow creates two inefficiencies for multi‑turn workloads:
+&lt;ol&gt;
+&lt;li&gt;After a response, the decode node holds KV entries for both the prompt and newly generated tokens. The prefill node cannot retrieve these entries for the next turn and must recompute KV projections for the previous response tokens.&lt;/li&gt;
+&lt;li&gt;Session state is kept on the decode node but not on prefill nodes, increasing the chance of cache eviction for active sessions on the prefill side.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;When a full cache miss occurs, the prefill node recomputes KV projections for the entire conversation history, consuming more accelerator capacity and increasing time‑to‑first‑token (TTFT).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21811-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21811-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/15/ML-21811-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIInference #KVCache #MultiTurnAgents #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/improve-ttft-for-multi-turn-agentic-workloads-with-bi-directional-kv-transfer-in-vllm/" target="_blank" rel="noopener"
+&gt;Improve TTFT for multi-turn agentic workloads with bi-directional KV transfer in vLLM | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

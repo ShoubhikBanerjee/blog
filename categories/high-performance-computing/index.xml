@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>High-Performance Computing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/high-performance-computing/</link><description>Recent content in High-Performance Computing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/high-performance-computing/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Releases cuDSS 1.0 and DuckDB Sirius Extension</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cudss-1-0-and-duckdb-sirius-extension/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cudss-1-0-and-duckdb-sirius-extension/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2024/06/DatacenterKV-2-660x370.png" alt="Featured image of post NVIDIA Releases cuDSS 1.0 and DuckDB Sirius Extension" /&gt;&lt;h1 id="nvidia-releases-cudss-10-and-duckdb-sirius-extension"&gt;NVIDIA Releases cuDSS 1.0 and DuckDB Sirius Extension
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released version 1.0 of its cuDSS library for sparse linear systems and collaborated with DuckLabs to release Sirius, a GPU-accelerated extension for DuckDB, enabling high-performance analytical queries on NVIDIA hardware.&lt;/p&gt;
+&lt;h2 id="-how-cudss-works"&gt;🧩 How cuDSS Works
+&lt;/h2&gt;&lt;p&gt;The cuDSS library is designed to solve large sparse linear systems for engineering and scientific simulations. It targets numerically challenging sparse systems, particularly symmetric indefinite ones, by offering symmetry-preserving matching and scaling as well as Bunch-Kaufman pivoting.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Matching and Scaling&lt;/strong&gt;: Uses the HSL MC64 algorithm from the HSL collection of Fortran codes. This feature preserves symmetry and is enabled by default in cuDSS 1.0, improving accuracy and reducing memory and performance penalties associated with previous nonsymmetric matching.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bunch-Kaufman Pivoting&lt;/strong&gt;: Allows 2×2 pivots to maintain factorization stability while preserving symmetry. The algorithm applies a local test to each column to choose between 1×1 pivots, interchanged 1×1 pivots, or 2×2 blocks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Default Configuration&lt;/strong&gt;: cuDSS 1.0 defaults to using matching and scaling with &lt;code&gt;CUDSS_MATCHING_ALG_MAX_DIAG_PRODUCT&lt;/code&gt; and Bunch-Kaufman pivoting with &lt;code&gt;CUDSS_PIVOT_BUNCH_KAUFMAN&lt;/code&gt;. Users can restore previous behavior using &lt;code&gt;CUDSS_CONFIG_FORCE_NONSYMMETRIC_MATCHING&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-cudss-performance"&gt;📊 cuDSS Performance
+&lt;/h2&gt;&lt;p&gt;Benchmark matrices for cuDSS were selected from semiconductor design, manufacturing, and computer-aided engineering workflows, including circuit simulation, TCAD, thermal, structural, electromagnetic, and fluid dynamics. Performance was benchmarked against Intel MKL version 2026.1.0 using an NVIDIA B200 GPU and an Intel Xeon Platinum 8570 CPU.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Phase&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Geometric-Mean Speedup&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Analysis&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.5x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Numerical Factorization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;5.9x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Triangular Solve&lt;/td&gt;
+&lt;td style="text-align: left"&gt;151x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;cuDSS performance has improved over previous releases, with optimizations for superpanels in factorization, multithreaded analysis, and tuned solve-phase kernels. Developers can access these gains by upgrading without changing application code.&lt;/p&gt;
+&lt;h2 id="-sirius-for-duckdb"&gt;🐝 Sirius for DuckDB
+&lt;/h2&gt;&lt;p&gt;Sirius is an open-source, GPU-native SQL engine developed through a collaboration between the University of Wisconsin–Madison and NVIDIA, released as a DuckDB core extension in partnership with DuckLabs.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Integration&lt;/strong&gt;: Developers can install and load Sirius using two SQL commands (&lt;code&gt;INSTALL sirius;&lt;/code&gt; and &lt;code&gt;LOAD sirius;&lt;/code&gt;). It requires DuckDB 2.0 and an NVIDIA GPU with a compatible driver.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Architecture&lt;/strong&gt;: DuckDB handles SQL parsing and optimization, while Sirius executes the resulting query plans on the GPU using a CUDA backend.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: In TPC-H benchmarks with data stored in Amazon S3, Sirius delivered significant speedups over CPU-based DuckDB.
+&lt;ul&gt;
+&lt;li&gt;At Scale Factor 1,000 (1 TB), total query runtime fell from 347.3 seconds to 63.2 seconds.&lt;/li&gt;
+&lt;li&gt;At Scale Factor 3,000 (3 TB), runtime dropped from 752.4 seconds to 160.6 seconds, a 4.69x speedup.&lt;/li&gt;
+&lt;li&gt;With tuned settings, a two-GPU AWS instance configuration achieved 3.25x to 5.50x speedups over the best CPU-based configurations, reducing query-time compute cost by up to approximately 79%.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The general availability of cuDSS marks it as a production-ready library for commercial applications. Sirius is available as a DuckDB core extension, with a download size of approximately 700 MB.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/analysis-phase-speedup-cudss-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/factorization-phase-speedup-cudss-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/solve-phase-speedup-cudss-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #cuDSS #DuckDB #GPU #HighPerformanceComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/accelerating-direct-sparse-solvers-for-computational-engineering-with-nvidia-cudss-1-0/" target="_blank" rel="noopener"
+&gt;Accelerating Direct Sparse Solvers for Computational Engineering with NVIDIA cuDSS 1.0 | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/get-started-with-gpu-accelerated-duckdb-analytics-using-the-sirius-core-extension/" target="_blank" rel="noopener"
+&gt;Get Started with GPU-Accelerated DuckDB Analytics Using the Sirius Core Extension | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>EleutherAI releases GPT-NeoX 2.0 for large-scale language model training</title><link>https://shoubhikbanerjee.github.io/blog/p/eleutherai-releases-gpt-neox-2-0-for-large-scale-language-model-training/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/eleutherai-releases-gpt-neox-2-0-for-large-scale-language-model-training/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/68924597?v=4" alt="Featured image of post EleutherAI releases GPT-NeoX 2.0 for large-scale language model training" /&gt;&lt;h1 id="eleutherai-releases-gpt-neox-20-for-large-scale-language-model-training"&gt;EleutherAI releases GPT-NeoX 2.0 for large-scale language model training
+&lt;/h1&gt;&lt;p&gt;EleutherAI has announced version 2.0 of the GPT‑NeoX library, a framework for training massive autoregressive language models on GPU clusters. The update moves the codebase onto the latest DeepSpeed release and adds versioned releases for backward compatibility.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Implementation of model‑parallel autoregressive transformers on GPUs.&lt;/li&gt;
+&lt;li&gt;Built on NVIDIA&amp;rsquo;s Megatron Language Model and augmented with DeepSpeed techniques and novel optimizations.&lt;/li&gt;
+&lt;li&gt;Repository records EleutherAI&amp;rsquo;s library for training large‑scale language models on GPUs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Employs model parallelism to distribute transformer layers across multiple GPUs.&lt;/li&gt;
+&lt;li&gt;Supports launch via Slurm, MPI, and the IBM Job Step Manager.&lt;/li&gt;
+&lt;li&gt;Executed at scale on NVIDIA and AMD GPUs on platforms such as AWS, CoreWeave, ORNL Summit, ORNL Frontier, LUMI, and CINECA Leonardo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Two versioned releases are provided:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Version 2.0&lt;/strong&gt; – built on the latest upstream DeepSpeed and maintained going forward.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version 1.0&lt;/strong&gt; – snapshots of the older stack used for GPT‑NeoX‑20B and the Pythia Suite.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Prior to 3/9/2023, GPT‑NeoX relied on DeeperSpeed, which was based on DeepSpeed 0.3.15.&lt;/li&gt;
+&lt;li&gt;Leverages many of the same features as the Megatron‑DeepSpeed library but with increased usability and novel optimizations.&lt;/li&gt;
+&lt;li&gt;Not intended for generic inference; for inference‑only needs, Hugging Face &lt;code&gt;transformers&lt;/code&gt; is recommended.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability--adoption"&gt;🚀 Availability &amp;amp; Adoption
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;More than 40 organizations in academia, industry, and government have used GPT‑NeoX to train over 50 models.&lt;/li&gt;
+&lt;li&gt;Notable model families include:
+&lt;ul&gt;
+&lt;li&gt;Pythia (EleutherAI)&lt;/li&gt;
+&lt;li&gt;StableLM (Stability AI)&lt;/li&gt;
+&lt;li&gt;RedPajama‑INCITE (Together.ai)&lt;/li&gt;
+&lt;li&gt;FORGE (Oak Ridge National Lab)&lt;/li&gt;
+&lt;li&gt;Sarashina1 (SB Intuitions)&lt;/li&gt;
+&lt;li&gt;TildeOpen‑30B (Tilde)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Evo 2 from the Arc Institute was trained with Savanna, a framework derived from GPT‑NeoX.&lt;/li&gt;
+&lt;li&gt;A full list of models and publications is maintained in &lt;code&gt;USERS.md&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a centralized, accessible location for techniques that train large‑scale autoregressive language models.&lt;/li&gt;
+&lt;li&gt;Accelerates research into large‑scale training by offering a usable, versioned codebase and support for diverse HPC environments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#GPTNeoX #EleutherAI #DeepSpeed #LargeScaleTraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/EleutherAI/gpt-neox" target="_blank" rel="noopener"
+&gt;EleutherAI/gpt-neox&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Introduces Daviator and Mixed Precision for DFT GPU Acceleration</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-daviator-and-mixed-precision-for-dft-gpu-acceleration/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-daviator-and-mixed-precision-for-dft-gpu-acceleration/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image4-10-660x370.png" alt="Featured image of post NVIDIA Introduces Daviator and Mixed Precision for DFT GPU Acceleration" /&gt;&lt;h1 id="nvidia-introduces-daviator-and-mixed-precision-for-dft-gpu-acceleration"&gt;NVIDIA Introduces Daviator and Mixed Precision for DFT GPU Acceleration
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced two new capabilities to address performance bottlenecks in generating ground-truth data for machine learning interatomic potentials (MLIPs): a library called Daviator for batched GPU kernels and a new mixed-precision execution layer. These updates target the high volume of density functional theory (DFT) calculations required to train next-generation models, offering up to 22x faster time-to-solution and up to 75% lower cost compared to CPU execution.&lt;/p&gt;
+&lt;h2 id="-the-problem-with-current-gpu-dft"&gt;🔍 The Problem with Current GPU DFT
+&lt;/h2&gt;&lt;p&gt;Training MLIPs requires tens to hundreds of millions of DFT calculations. Plane-wave DFT, primarily implemented via VASP, is the standard for this task. While VASP’s OpenACC implementation speeds up large-system calculations, it struggles with the small unit cells and dense k-point grids common in MLIP data generation.&lt;/p&gt;
+&lt;p&gt;In periodic systems with small unit cells, hundreds to thousands of k-points are required. Currently, VASP processes these k-points sequentially on the GPU. For small systems, this results in significant kernel launch overhead that dominates compute time. A single-atom iron system with 752 k-points, for instance, ran 8x slower on GPU hardware than on CPU. Additionally, modern NVIDIA GPUs are increasingly optimized for lower-precision data types (FP32), while traditional DFT runs in FP64, creating a gap in available throughput.&lt;/p&gt;
+&lt;h2 id="-how-daviator-and-mixed-precision-work"&gt;🧩 How Daviator and Mixed Precision Work
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Daviator&lt;/strong&gt; is a library of GPU kernels that replaces sequential per-k-point processing with batched operations. Its core is a batched Davidson eigensolver that swaps sequential loops for batched FFTs, GEMMs, and custom kernels. This approach reduces GPU kernel launches, allowing Streaming Multiprocessor (SM) occupancy to reach near saturation. Data remains resident in GPU memory, while VASP retains ownership of the self-consistent field (SCF) loop, mixing, symmetry, and I/O.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;mixed-precision execution layer&lt;/strong&gt; enables further performance gains by leveraging GPUs with a high FP32:FP64 throughput ratio. This is particularly effective on inference-class and workstation GPUs, such as the RTX PRO 6000, which features a 64:1 FP32:FP64 ratio.&lt;/p&gt;
+&lt;h2 id="-key-details-and-benchmarks"&gt;⚙️ Key Details and Benchmarks
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Integration:&lt;/strong&gt; Daviator is accessible through the NVIDIA ALCHEMI VASP microservice by setting &lt;code&gt;LDAVIATOR=True&lt;/code&gt; in the &lt;code&gt;INCAR&lt;/code&gt; file. Existing VASP inputs work without modification.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; On a projected reference dataset workload, the combination of these features shows up to 22x faster time-to-solution and up to 75% lower cost compared to CPU execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Speed-ups:&lt;/strong&gt; Daviator overcomes OpenACC limitations, achieving over 2x speed-ups relative to the CPU baseline for a single iron atom.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configuration:&lt;/strong&gt; Users must set specific environment variables to ensure efficient kernel caching:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;export CUDA_CACHE_PATH=/tmp/cudacache&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;export CUDA_CACHE_DISABLE=0&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability-and-limitations"&gt;🚀 Availability and Limitations
+&lt;/h2&gt;&lt;p&gt;Daviator is currently available for single-node execution. Multi-node support, coverage for systems with non-collinear spins (&lt;code&gt;vasp_ncl&lt;/code&gt;), and explicit gamma-only runs (&lt;code&gt;vasp_gam&lt;/code&gt;) are expected in a later stage. Some GPU kernels may trigger compilation on first use depending on the batch size.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;As AI workloads drive GPU hardware development toward lower-precision data types, the stagnation of FP64-only code performance threatens the scalability of DFT data generation. By addressing small-system GPU inefficiency and leveraging mixed precision, these capabilities allow researchers to generate the massive datasets required for MLIP training more efficiently and at a lower cost.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/mlip-tensor-core-featured-660x370-jpg.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image4-10-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image11.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#DFT #VASP #GPUComputing #HPC #MLIP #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/tackling-gpu-bottlenecks-in-plane-wave-dft-with-k-point-batching-and-mixed-precision/" target="_blank" rel="noopener"
+&gt;Tackling GPU Bottlenecks in Plane-Wave DFT with K-Point Batching and Mixed Precision | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Slurm 26.11 Introduces HRES to Enable Native Quantum Processor Scheduling</title><link>https://shoubhikbanerjee.github.io/blog/p/slurm-26-11-introduces-hres-to-enable-native-quantum-processor-scheduling/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/slurm-26-11-introduces-hres-to-enable-native-quantum-processor-scheduling/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/hybrid-quantum-classical-computing-architecture-660x370.png" alt="Featured image of post Slurm 26.11 Introduces HRES to Enable Native Quantum Processor Scheduling" /&gt;&lt;h1 id="slurm-2611-introduces-hres-to-enable-native-quantum-processor-scheduling"&gt;Slurm 26.11 Introduces HRES to Enable Native Quantum Processor Scheduling
+&lt;/h1&gt;&lt;p&gt;Slurm 26.11 adds Hierarchical Resources (HRES) plugins that enable quantum processing units (QPUs) to be scheduled as native cluster resources, allowing HPC centers to integrate quantum accelerators alongside traditional supercomputing systems.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;National programs across North America, Europe, and Asia are integrating quantum processing units (QPUs) into supercomputing centers worldwide. These QPUs operate as cluster-wide accelerators, distinct from node-attached GPUs.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The HRES plugin interface uses short, portable Lua scripts to manage QPU scheduling:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reports device health to the scheduler&lt;/li&gt;
+&lt;li&gt;Accepts device options as part of resource requests&lt;/li&gt;
+&lt;li&gt;Runs setup and teardown code at each job stage&lt;/li&gt;
+&lt;li&gt;Describes QPUs to HPC software via QRMI and QDMI open source efforts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The architecture differs fundamentally from GPU scheduling:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;th&gt;GRES (GPUs)&lt;/th&gt;
+&lt;th&gt;HRES (QPUs)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Scope&lt;/td&gt;
+&lt;td&gt;Per compute node&lt;/td&gt;
+&lt;td&gt;Cluster-wide&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Management&lt;/td&gt;
+&lt;td&gt;Built into Slurm&lt;/td&gt;
+&lt;td&gt;Plugin-based&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Access&lt;/td&gt;
+&lt;td&gt;Jobs on specific node&lt;/td&gt;
+&lt;td&gt;Jobs on allowed nodes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;A QPU is modeled using a single layer in resources.yaml covering nodes that can reach the device, with a count of one. The plugin logic is separate from site configuration, allowing vendors to distribute it across installations.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;HRES entered Slurm in version 25.05 as a beta feature and reached production maturity in version 26.11, representing an evolution of the licensing mechanism with similar counting semantics but node-specific associations.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/slurm-schedules-qpu-hres-integration-architecture.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Slurm #QuantumComputing #HPC #Supercomputing #QPU #Scheduling&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/integrating-qpus-into-supercomputing-centers-using-slurm-hres-plugins/" target="_blank" rel="noopener"
+&gt;Integrating QPUs into Supercomputing Centers Using Slurm HRES Plugins | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>cuBLAS Enhances FP64 Performance Using Integer Tensor Cores</title><link>https://shoubhikbanerjee.github.io/blog/p/cublas-enhances-fp64-performance-using-integer-tensor-cores/</link><pubDate>Sat, 14 Nov 2026 22:03:04 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/cublas-enhances-fp64-performance-using-integer-tensor-cores/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image5-7-660x370.png" alt="Featured image of post cuBLAS Enhances FP64 Performance Using Integer Tensor Cores" /&gt;&lt;h1 id="cublas-enhances-fp64-performance-using-integer-tensor-cores"&gt;cuBLAS Enhances FP64 Performance Using Integer Tensor Cores
+&lt;/h1&gt;&lt;p&gt;NVIDIA cuBLAS now provides automatic acceleration for DGEMM (real 64-bit floating-point) and ZGEMM (complex 64-bit floating-point) operations without requiring application code changes. This capability leverages the Automatic Dynamic Precision (ADP) framework to map FP64 arithmetic onto integer Tensor Cores while maintaining native FP64 accuracy.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;cuBLAS breaks double-precision numbers into integer pieces, performs multiplication on the GPU’s Tensor Cores, and reassembles the results. Both the Ozaki and 2M schemes align input matrix exponents and convert them to a shared-exponent, variable-length integer representation for accurate accumulation.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Algorithm&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Efficiency Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Ozaki-I&lt;/td&gt;
+&lt;td style="text-align: left"&gt;DGEMM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Grows with the square of the slice count&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Ozaki-II&lt;/td&gt;
+&lt;td style="text-align: left"&gt;DGEMM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses Chinese Remainder Theorem; linear scaling in number of moduli&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;2M&lt;/td&gt;
+&lt;td style="text-align: left"&gt;ZGEMM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Cuts complex matrix multiplication from four real multiplications to two&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Heuristics:&lt;/strong&gt; cuBLAS automatically selects between Ozaki-I and Ozaki-II for optimal performance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Management:&lt;/strong&gt; cuBLAS utilizes memory-parsimonious tiling, discarding residue pairs immediately after their corresponding GEMM operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fallback:&lt;/strong&gt; The system reverts to native FP64 MMA instructions if the required mantissa bits exceed library defaults or user-defined limits.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;New Format:&lt;/strong&gt; Rubin GPUs utilize the TI16 format (12-bit integer) to accelerate Ozaki computations via the tcgen05.mma instruction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-metrics"&gt;🚀 Performance Metrics
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;DGEMM (Ozaki-II):&lt;/strong&gt; Achieves 5.5x and 3.9x speedups on NVIDIA VR NVL72 and GB200 respectively. Throughput reaches up to 175, 147, and 37 TFLOPS on VR NVL72, GB200, and RTX PRO 6000.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ZGEMM (2M):&lt;/strong&gt; Achieves a 5x speedup over native Complex FP64 on the NVIDIA GB200.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;End-to-End (CCSD):&lt;/strong&gt; Achieves 2x and 1.4x speedups on VR NVL72 and GB200 using DGEMM with Ozaki-II.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;End-to-End (BerkeleyGW):&lt;/strong&gt; Achieves 6.6x and 3.9x speedups using ZGEMM with the 2M algorithm.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image5-7-1024x575-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image4-7.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image6-7.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #cuBLAS #GPU #HPC #TensorCores&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/faster-scientific-simulations-with-new-fp64-algorithms-in-nvidia-cublas/" target="_blank" rel="noopener"
+&gt;Faster Scientific Simulations with New FP64 Algorithms in NVIDIA cuBLAS | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA cuPhoton.xBeam Accelerates Black Hole Interferometry Processing</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuphoton-xbeam-accelerates-black-hole-interferometry-processing/</link><pubDate>Sat, 14 Nov 2026 22:03:04 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuphoton-xbeam-accelerates-black-hole-interferometry-processing/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/black-hole-interferometry-featured-660x370.png" alt="Featured image of post NVIDIA cuPhoton.xBeam Accelerates Black Hole Interferometry Processing" /&gt;&lt;h1 id="nvidia-cuphotonxbeam-accelerates-black-hole-interferometry-processing"&gt;NVIDIA cuPhoton.xBeam Accelerates Black Hole Interferometry Processing
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced cuPhoton.xBeam, a GPU-based FX correlator within the cuPhoton toolkit designed to accelerate the processing of radio astronomical data used to image black holes. Developed in collaboration with the Harvard-Smithsonian Center for Astrophysics and the MIT Haystack Observatory, this technology addresses the significant computational demands of very-long-baseline interferometry (VLBI).&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Imaging distant, small-scale black holes like M87* requires capturing radio emissions from gas outside the event horizon using globally distributed telescope stations. The Event Horizon Telescope (EHT) links these stations to record high-speed voltage streams, producing petabytes of data that must be synchronized and correlated to reconstruct images.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Interferometry involves correlating signals from pairs of telescopes to produce complex visibilities, which sample Fourier components of the sky’s brightness. The cuPhoton.xBeam component organizes these radio signals for parallel processing on GPUs:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Data Indexing&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Indexes VDIF frames by timestamp, thread, and physical location via .vdix sidecars&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Correlation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Correlates signals between telescope pairs to produce complex visibilities&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Data Tracking&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Explicitly tracks missing or invalid data without rewriting recordings&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Performance testing demonstrated significant improvements in data processing speed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Execution: Processed a 10 TB dataset in 70 seconds on an NVIDIA Vera Rubin NVL72 system with 64 GPUs.&lt;/li&gt;
+&lt;li&gt;Efficiency: Achieved a 460x speedup compared to an x86 CPU baseline of 31,992 seconds.&lt;/li&gt;
+&lt;li&gt;Infrastructure: Utilizes GPUDirect Storage (GDS) in compatibility mode for high-speed data ingestion.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Future initiatives, such as the next-generation EHT (ngEHT) and the proposed Black Hole Explorer (BHEX), aim to improve image quality and measure the photon ring near a black hole&amp;rsquo;s shadow. The current cuPhoton.xBeam tool provides a scalable pipeline to handle the massive data rates generated by these observation arrays, enabling researchers to construct 3D gas models from visibility data.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/black-hole-interferometry-featured-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/figure-1-3.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/black-hole-interferometry-figure-4-updated.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Astronomy #GPUComputing #Interferometry #NVIDIA #DataProcessing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/run-gpu-powered-black-hole-interferometry-with-nvidia-cuphoton/" target="_blank" rel="noopener"
+&gt;Run GPU-Powered Black Hole Interferometry with NVIDIA cuPhoton | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Correlated Expert Placement and Token Shuffling Cut MoE Training Overhead</title><link>https://shoubhikbanerjee.github.io/blog/p/correlated-expert-placement-and-token-shuffling-cut-moe-training-overhead/</link><pubDate>Thu, 08 Oct 2026 22:04:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/correlated-expert-placement-and-token-shuffling-cut-moe-training-overhead/</guid><description>&lt;h1 id="correlated-expert-placement-and-token-shuffling-cut-moe-training-overhead"&gt;Correlated Expert Placement and Token Shuffling Cut MoE Training Overhead
+&lt;/h1&gt;&lt;p&gt;Mixture‑of‑Experts (MoE) layers replace the feed‑forward block of a Transformer with &lt;strong&gt;E&lt;/strong&gt; expert networks, routing each token to &lt;strong&gt;k&lt;/strong&gt; experts. When experts are spread across GPUs under expert parallelism (EP), every MoE layer must perform all‑to‑all collectives in both forward and backward passes to dispatch tokens and then combine results.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;On a cluster of 8 AMD Instinct MI300X GPUs per node, all‑to‑all communication can dominate training: 45 % of a step at EP32 with top‑2 routing and 60 % with top‑6 routing.&lt;/li&gt;
+&lt;li&gt;Early in pre‑training, routers already learn &lt;strong&gt;correlated expert selection&lt;/strong&gt;: at top‑2, only 0.8 % of expert pairs in a layer are chosen together, yet they account for 42 % of token assignments, and the experts a token picks in one layer predict its picks in the next layer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-moe-works"&gt;🧩 How MoE Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Expert parallelism (EP)&lt;/strong&gt; distributes experts across GPUs.&lt;/li&gt;
+&lt;li&gt;Each token is routed to &lt;strong&gt;k&lt;/strong&gt; experts (top‑2 or top‑6 routing are common).&lt;/li&gt;
+&lt;li&gt;All‑to‑all collectives move tokens to the GPUs that host the selected experts, then gather the computed results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-communication-bottleneck"&gt;⚙️ Communication Bottleneck
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The all‑to‑all step is expensive because tokens frequently travel between GPUs and even across nodes.&lt;/li&gt;
+&lt;li&gt;At EP32, the collective alone consumes up to &lt;strong&gt;60 %&lt;/strong&gt; of the training step (top‑6 routing).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-optimizations"&gt;🚀 Optimizations
+&lt;/h2&gt;&lt;h3 id="1-correlated-expert-placement"&gt;1️⃣ Correlated Expert Placement
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Experts that are often selected together are placed on the same GPU.&lt;/li&gt;
+&lt;li&gt;A dispatcher that sends each token to each GPU &lt;strong&gt;once&lt;/strong&gt; removes up to &lt;strong&gt;58 %&lt;/strong&gt; of dispatched rows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-token-shuffling"&gt;2️⃣ Token Shuffling
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;When sequence parallelism shards tokens across the EP group, each token is moved during the reduce‑scatter that follows attention to the GPU predicted to hold its next‑layer experts.&lt;/li&gt;
+&lt;li&gt;On a single node this raises the share of token‑expert assignments served locally from &lt;strong&gt;12.5 %&lt;/strong&gt; to &lt;strong&gt;59 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📈 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Across EP degrees 8‑64 in Megatron‑LM, the two methods together:
+&lt;ul&gt;
+&lt;li&gt;Reduce all‑to‑all time by &lt;strong&gt;1.16‑2.63×&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Reduce end‑to‑end step time by up to &lt;strong&gt;1.41×&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Neither optimization alters the model’s routing decisions or expert parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;By exploiting the natural correlated patterns learned by MoE routers, these techniques dramatically cut communication overhead without changing model behavior, enabling faster and more scalable training of large MoE models.&lt;/p&gt;
+&lt;p&gt;#MoE #GPU #Parallelism #DeepLearning #TrainingEfficiency&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.09372v1" target="_blank" rel="noopener"
+&gt;Expert Coupling in MoE Pretraining: Reducing All-to-All Overhead with Correlated Placement and Token Shuffling&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA cuPhoton GPU Toolkit Accelerates End-to-End Astronomical Image Processing</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuphoton-gpu-toolkit-accelerates-end-to-end-astronomical-image-processing/</link><pubDate>Wed, 07 Oct 2026 22:09:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-cuphoton-gpu-toolkit-accelerates-end-to-end-astronomical-image-processing/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/Satellite-Stars-e1791320112446-660x370.webp" alt="Featured image of post NVIDIA cuPhoton GPU Toolkit Accelerates End-to-End Astronomical Image Processing" /&gt;&lt;h1 id="nvidia-cuphoton-gpu-toolkit-accelerates-end-to-end-astronomical-image-processing"&gt;NVIDIA cuPhoton GPU Toolkit Accelerates End-to-End Astronomical Image Processing
+&lt;/h1&gt;&lt;p&gt;NVIDIA released cuPhoton 0.1.3, an open‑source CUDA‑X toolkit that moves the entire image‑processing path for astronomy, laser, and X‑ray data onto the GPU, collapsing wait times from seconds to minutes and enabling interactive analysis.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Modern observatories and high‑throughput instruments generate image data faster than CPU‑bound pipelines can process it.&lt;/li&gt;
+&lt;li&gt;The bottleneck spans the whole path: sensor readout, point‑spread‑function (PSF) matching, subtraction, fitting, classification, and alert generation.&lt;/li&gt;
+&lt;li&gt;A GPU‑native path that stays on the GPU from sensor to decision is missing – cuPhoton provides exactly that.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;cuPhoton implements each stage of the pipeline as GPU‑accelerated building blocks, keeping data resident on the GPU.&lt;/li&gt;
+&lt;li&gt;Typical workflow steps include:
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;xDataReader&lt;/strong&gt; – Loads raw sensor data directly into GPU memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;xRep&lt;/strong&gt; – Handles PSF‑matching and image subtraction.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;xPois&lt;/strong&gt; – Performs statistical processing of photon events.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;xFit&lt;/strong&gt; – Fits dual‑PSF models to dipoles produced by moving objects.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;xScan&lt;/strong&gt; – Classifies detections as transients or artifacts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;xRay&lt;/strong&gt; – Specialized for time‑domain X‑ray detector analysis.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;xDataReader&lt;/td&gt;
+&lt;td&gt;GPU‑resident image loading&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;xRep&lt;/td&gt;
+&lt;td&gt;PSF‑match and subtraction&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;xPois&lt;/td&gt;
+&lt;td&gt;Photon‑event processing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;xFit&lt;/td&gt;
+&lt;td&gt;Dual‑PSF fitting&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;xScan&lt;/td&gt;
+&lt;td&gt;Classification of detections&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;xRay&lt;/td&gt;
+&lt;td&gt;X‑ray time‑domain analysis&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: On workloads of hundreds of terabytes, cuPhoton achieved up to &lt;strong&gt;14,900×&lt;/strong&gt; speedup for image loading and up to &lt;strong&gt;14,550×&lt;/strong&gt; for signal processing, turning months of CPU time into minutes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;End‑to‑end impact&lt;/strong&gt;: Data analytics that previously required nine months completed in four hours on GPU‑accelerated Python.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Latency&lt;/strong&gt;: For kilobyte‑scale datasets, the entire pipeline runs in milliseconds or microseconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scaling&lt;/strong&gt;: Works on multi‑GPU, multi‑node systems such as NVIDIA Grace Blackwell and NVIDIA Vera Rubin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Supported environments&lt;/strong&gt;: cuPhoton 0.1.3 runs on Linux with Python 3.12–3.14 and CUDA 13. Building from source needs a C++17 compiler, CUDA and cuFile headers, and a re‑entrant CFITSIO installation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone --branch v0.1.3 --depth &lt;span class="m"&gt;1&lt;/span&gt; https://github.com/NVIDIA/cuPhoton.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The toolkit is open‑source and part of the NVIDIA CUDA‑X ecosystem.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Instruments like the &lt;strong&gt;NSF‑DOE Vera C. Rubin Observatory&lt;/strong&gt; capture a 3.2‑gigapixel exposure every 39 seconds, producing up to &lt;strong&gt;20 TB&lt;/strong&gt; of images and &lt;strong&gt;10 million&lt;/strong&gt; candidate objects per night.&lt;/li&gt;
+&lt;li&gt;The Prompt Processing pipeline must classify ~10,000 detections within 60–120 seconds; cuPhoton’s GPU‑resident path makes such rapid turnaround feasible.&lt;/li&gt;
+&lt;li&gt;By eliminating the CPU‑bound bottleneck, researchers can iterate interactively, extract insights faster, and keep pace with ever‑growing data volumes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-3-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/cuphoton-figure-2-contrast.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/cuphoton-figure-5-updated.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#GPUComputing #Astronomy #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/faster-scientific-image-analysis-with-nvidia-cuphoton/" target="_blank" rel="noopener"
+&gt;Faster Scientific Image Analysis with NVIDIA cuPhoton | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

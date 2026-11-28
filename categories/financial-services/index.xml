@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Financial Services on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/financial-services/</link><description>Recent content in Financial Services on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2026 22:09:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/financial-services/index.xml" rel="self" type="application/rss+xml"/><item><title>Standard Bank Group Automates Generative AI Risk Assessment with AWS</title><link>https://shoubhikbanerjee.github.io/blog/p/standard-bank-group-automates-generative-ai-risk-assessment-with-aws/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/standard-bank-group-automates-generative-ai-risk-assessment-with-aws/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22493-featured-image.png" alt="Featured image of post Standard Bank Group Automates Generative AI Risk Assessment with AWS" /&gt;&lt;h1 id="standard-bank-group-automates-generative-ai-risk-assessment-with-aws"&gt;Standard Bank Group Automates Generative AI Risk Assessment with AWS
+&lt;/h1&gt;&lt;p&gt;Standard Bank Group has deployed an automated assessment system for generative AI use cases, built with AWS Professional Services, that scores each case against international AI standards and internal policies while operating entirely within the bank&amp;rsquo;s own AWS account.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The assessment produces reports and a dashboard showing what controls are already in place, what is working well, and what still needs mitigation.&lt;/li&gt;
+&lt;li&gt;The bank already had an established model risk practice covering explainability and fairness, plus a change risk process that assesses each new use case by risk level before it goes live.&lt;/li&gt;
+&lt;li&gt;Generative AI increases complexity because models and tooling change every three to six months, yet each use case must still meet the same high security and compliance bar.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The pipeline runs in four stages:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A pre-assessment agent collects evidence about the use case.&lt;/li&gt;
+&lt;li&gt;The pipeline examines the evidence and tests the application directly.&lt;/li&gt;
+&lt;li&gt;The pipeline evaluates that evidence against defined controls.&lt;/li&gt;
+&lt;li&gt;The pipeline summarizes results in a standard, predefined format and delivers them to the people who act on them.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Four kinds of evidence feed the assessment:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;System documentation&lt;/strong&gt; — describes how the application was designed, built, and evaluated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Policy documents&lt;/strong&gt; — set out roles, responsibilities, and procedures such as incident handling.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Source code and the system prompt&lt;/strong&gt; — show how controls are implemented.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Live calls to the application&lt;/strong&gt; — show how it behaves in practice.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For live testing, the pipeline calls the application through its AWS Lambda function or API. The delivery team supplies questions a typical user would ask. The pipeline adds a built-in set of jailbreak attempts and off-topic questions, which the application is expected to decline. It also sends the same prompt several times, in its original and reworded forms, and uses an embedding model on Amazon Bedrock to check that the answers stay consistent in meaning. Every response is stored in Amazon S3, so reviewers can see exactly what the application generated.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS Well-Architected Tool&lt;/strong&gt; handles intake, using a custom lens that holds about 40 questions, each covering a risk event such as incomplete technical documentation or insufficient human oversight.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Step Functions&lt;/strong&gt; orchestrates the pipeline.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;foundation model on Amazon Bedrock&lt;/strong&gt; evaluates the evidence using a technique called LLM-as-a-judge, in which a large language model checks evidence against defined criteria.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;pre-assessment agent running on AWS Fargate&lt;/strong&gt; scans the use case&amp;rsquo;s code repository and documentation, maps relevant files to each question, and pre-populates the lens with answers and links to the evidence.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amazon S3&lt;/strong&gt; stores documents, code, and test results in the bank&amp;rsquo;s own bucket.&lt;/li&gt;
+&lt;li&gt;Access to the model is controlled through &lt;strong&gt;AWS Identity and Access Management (IAM)&lt;/strong&gt;, just as for other AWS workloads.&lt;/li&gt;
+&lt;li&gt;Amazon Bedrock does not share the bank&amp;rsquo;s prompts or model outputs with model providers, and does not use them to train models.&lt;/li&gt;
+&lt;li&gt;Because Bedrock offers many foundation models through one API, the team can move to a newer judge model by changing a configuration setting instead of rebuilding the pipeline.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The assessment runs entirely in Standard Bank Group&amp;rsquo;s own AWS account, keeping data and evaluation within existing security boundaries.&lt;/li&gt;
+&lt;li&gt;The bank continues to use the controls it already runs on AWS, without stepping outside them.&lt;/li&gt;
+&lt;li&gt;Model updates are handled through configuration changes, reducing operational overhead as foundation models evolve.&lt;/li&gt;
+&lt;li&gt;Full evidence traceability — every response stored in S3 — supports audit and review requirements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#GenerativeAI #RiskAssessment #AWS #Bedrock #LLMasJudge #Compliance&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai/" target="_blank" rel="noopener"
+&gt;How Standard Bank Group automates AI risk assessment for generative AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Databricks Wins AI in Capital Markets Award</title><link>https://shoubhikbanerjee.github.io/blog/p/databricks-wins-ai-in-capital-markets-award/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/databricks-wins-ai-in-capital-markets-award/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-10/Databricks_AICM26_social.png" alt="Featured image of post Databricks Wins AI in Capital Markets Award" /&gt;&lt;h1 id="databricks-wins-ai-in-capital-markets-award"&gt;Databricks Wins AI in Capital Markets Award
+&lt;/h1&gt;&lt;p&gt;Databricks has won the Best AI Solution for Data Intelligence &amp;amp; Governance award at the 2nd annual AI in Capital Markets Awards 2026. Selected by the industry community, this is Databricks&amp;rsquo; first A-Team award in this category, a distinction arriving as the industry differentiates between experimental AI and production-grade systems capable of withstanding regulatory scrutiny.&lt;/p&gt;
+&lt;h2 id="-award-recognition"&gt;🏆 Award Recognition
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Award:&lt;/strong&gt; Best AI Solution for Data Intelligence &amp;amp; Governance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Event:&lt;/strong&gt; 2nd annual AI in Capital Markets Awards 2026.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Significance:&lt;/strong&gt; Recognizes Databricks&amp;rsquo; excellence and innovation in driving AI capabilities across capital markets.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-market-context-and-challenges"&gt;📈 Market Context and Challenges
+&lt;/h2&gt;&lt;p&gt;Capital markets firms face acute pressure from elevated intraday volatility and the compression of operational windows due to T+1 settlement in North America. Simultaneously, regulators are sharpening expectations around AI governance, model transparency, and data lineage, citing sources such as ESMA&amp;rsquo;s supervisory briefing on algorithmic trading and the FSB&amp;rsquo;s 2026 work program on AI sound practices.&lt;/p&gt;
+&lt;p&gt;Recent survey data of managers overseeing roughly $2 trillion in assets indicates:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;94%&lt;/strong&gt; of portfolio managers and analysts use AI or machine learning in alternative data research.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;71%&lt;/strong&gt; cite combining data from different sources as their most frustrating challenge.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;While large language models are powerful, they cannot inherently access a firm&amp;rsquo;s proprietary order flow, internal research, or risk positions. Traditional cloud approaches often require stitching together separate services for storage, compute, orchestration, and governance, whereas terminal extensions often lack the ability to reason across internal systems.&lt;/p&gt;
+&lt;h2 id="-platform-capabilities-and-use-cases"&gt;🧩 Platform Capabilities and Use Cases
+&lt;/h2&gt;&lt;p&gt;The Databricks Data + AI Platform is positioned as the proprietary data layer where the competitive edge lies. Institutions are using the platform to unify data ingestion, AI-driven analysis, and content generation within a single governed environment.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Use Case / Partner&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Implementation Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;RBC Capital Markets&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Built &lt;strong&gt;Aiden QuickTakes&lt;/strong&gt;, a proprietary AI agent on Databricks. This system auto-generates draft research reports up to 95% faster while maintaining governance and security standards for regulated markets.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;LSEG Partnership&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Brought AI-ready financial data natively into the platform. AI agents can query 350,000+ investments using plain English, reducing manual fund screening from hours to minutes.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Post-Trade Operations&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Institutions have built unified cybersecurity analytics platforms to centralize structured and unstructured security data for threat detection and compliance reporting.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Core Banking&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Firms have migrated core banking systems to a governed lakehouse architecture using OpenSharing and Unity Catalog to replace manual reconciliations.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-governance-and-access"&gt;⚙️ Governance and Access
+&lt;/h2&gt;&lt;p&gt;A key differentiator for Databricks in capital markets is its governance architecture, which supports board-level and regulatory scrutiny. The platform ensures that AI applications are trustworthy by grounding answers in Unity Catalog.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Databricks Genie One:&lt;/strong&gt; Acts as a data-smart AI coworker for business users. Portfolio managers, analysts, and risk officers can ask questions in plain language without using SQL or notebooks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Context Protocol (MCP):&lt;/strong&gt; Extends the governed layer to Microsoft Teams, Excel, and assistants such as Claude and ChatGPT.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security Controls:&lt;/strong&gt; Every request is authorized against Unity Catalog permissions and logged, with generated SQL and lineage remaining inspectable.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This approach allows firms to point large language models at their own proprietary data with the necessary controls in place, scaling AI across workflows without compromising security.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Databricks_AICM26_banner.png?v=1792096358"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Databricks #CapitalMarkets #AIGovernance #DataPlatform #FinTech&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/databricks-wins-team-award-ai-capital-markets-0" target="_blank" rel="noopener"
+&gt;Databricks Wins A-Team Award for AI in Capital Markets&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>ATLAS-Finance Benchmark Tests AI Agents in Complex Banking Tasks</title><link>https://shoubhikbanerjee.github.io/blog/p/atlas-finance-benchmark-tests-ai-agents-in-complex-banking-tasks/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/atlas-finance-benchmark-tests-ai-agents-in-complex-banking-tasks/</guid><description>&lt;h1 id="atlas-finance-benchmark-tests-ai-agents-in-complex-banking-tasks"&gt;ATLAS-Finance Benchmark Tests AI Agents in Complex Banking Tasks
+&lt;/h1&gt;&lt;h1 id="-overview"&gt;🔍 Overview
+&lt;/h1&gt;&lt;p&gt;Researchers introduced &lt;strong&gt;ATLAS-Finance&lt;/strong&gt;, a benchmark designed to evaluate how well frontier AI agents can perform realistic banking tasks. These tasks mirror the challenges of professional work—where information is fragmented across emails, files, and tools—and require agents to reconcile conflicting data and build financial models. The benchmark assesses 100 investment-banking tasks across 13 simulated firms, developed by experienced bankers based on real-world workflows.&lt;/p&gt;
+&lt;h1 id="-how-it-works"&gt;🧩 How it works
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Task Design&lt;/strong&gt;: Each task mimics the complexity of real banking assignments, taking &lt;strong&gt;15–30 hours&lt;/strong&gt; for human professionals to complete.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Sources&lt;/strong&gt;: Agents must search &lt;strong&gt;emails, chats, calendars, notes, and files&lt;/strong&gt; to identify requirements and gather information.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation Criteria&lt;/strong&gt;: Deliverables are judged by expert rubrics covering &lt;strong&gt;financial rationale, spreadsheet construction, completeness, and formatting&lt;/strong&gt; (median: &lt;strong&gt;124.5 criteria&lt;/strong&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Current Performance&lt;/strong&gt;: Despite partial task completion, &lt;strong&gt;no frontier AI agent&lt;/strong&gt; (including Claude Opus and Fable) passes &lt;strong&gt;fewer than 11%&lt;/strong&gt; of tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="-key-details"&gt;⚙️ Key details
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Benchmark Scope&lt;/strong&gt;: 100 end-to-end investment-banking tasks across 13 simulated firms.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Agent Models Tested&lt;/strong&gt;: Claude Opus and Fable (performance metrics not explicitly detailed beyond passing &amp;lt;11% of tasks).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation Method&lt;/strong&gt;: Expert-authored rubrics with &lt;strong&gt;124.5+ criteria&lt;/strong&gt; per task.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="-availability"&gt;🚀 Availability
+&lt;/h1&gt;&lt;p&gt;The research paper is available for download via:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://example.com/ATLAS-Finance-paper.pdf" target="_blank" rel="noopener"
+&gt;View PDF&lt;/a&gt; &lt;em&gt;(Note: Replace placeholder URL with actual source if available; evidence does not specify a direct link.)&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h1&gt;&lt;p&gt;ATLAS-Finance highlights the persistent gap between AI agents’ capabilities and the demands of professional, real-world workflows. By exposing how poorly current models handle fragmented, dynamic data—key to banking—it sets a critical benchmark for future advancements in AI-driven financial automation.&lt;/p&gt;
+&lt;p&gt;#aiagents #financialai #benchmarking #realworldai #bankingautomation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.22085v1" target="_blank" rel="noopener"
+&gt;ATLAS-Finance: Benchmarking AI Agents in Realistic Banking Environments&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Databricks Solution Accelerator Enables Real-Time Next-Best-Offer Recommenders</title><link>https://shoubhikbanerjee.github.io/blog/p/databricks-solution-accelerator-enables-real-time-next-best-offer-recommenders/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/databricks-solution-accelerator-enables-real-time-next-best-offer-recommenders/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/real-time-nbo-og.png" alt="Featured image of post Databricks Solution Accelerator Enables Real-Time Next-Best-Offer Recommenders" /&gt;&lt;h1 id="databricks-solution-accelerator-enables-real-time-next-best-offer-recommenders"&gt;Databricks Solution Accelerator Enables Real-Time Next-Best-Offer Recommenders
+&lt;/h1&gt;&lt;p&gt;Databricks has released an open-source Solution Accelerator that uses Feature Views to build a real-time next-best-offer (NBO) recommender for financial services. The solution addresses the challenge of real-time personalization by allowing developers to define features once for both training and serving, preventing duplicate definitions that can drift over time.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The accelerator enables a system that ranks a catalog of offers—including credit card upgrades, savings products, and personal loans—based on in-session intent. When a retail banking customer checks their accounts, explores credit cards, or opens a loan calculator, these interactions signal current intent. The system ensures that relevant offers reach the customer while they are still in the session. The accelerator includes two main parts: a recommender using batch features and an extension that adds streaming, in-session intent. Both are built end-to-end on Databricks with runnable notebooks that users can clone and deploy.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;p&gt;Raw clickstream data is aggregated into time-windowed features for two purposes: training on historical values as they existed at a given point in time, and serving predictions using current values with millisecond latency. To avoid train/serve skew, which can degrade model accuracy, features must be computed the same way during training and serving. Databricks Feature Views eliminate the need for separate feature definitions by letting users define features once for both contexts.&lt;/p&gt;
+&lt;p&gt;The training process uses the &lt;code&gt;create_training_set&lt;/code&gt; API, which retrieves feature values as they existed at each labeled event to prevent future data leakage. This utilizes the Feature Engineering SDK to reconstruct feature values via a point-in-time join. The resulting training set feeds a LightGBM ranker registered in Unity Catalog. At inference time, the Model Serving endpoint fetches batch features from the online store using &lt;code&gt;customer_id&lt;/code&gt; and scores all 40 offers directly without an additional candidate-narrowing step. Each request contains the &lt;code&gt;customer_id&lt;/code&gt;, candidate offers, and session context.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;The architecture supports specific performance and structural requirements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Latency:&lt;/strong&gt; One declarative definition powers point-in-time training and warm online ranking at p95 34 ms, with in-session signals live in under 130 ms.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model:&lt;/strong&gt; A single ranking model combines stable customer context (balances, spending, tenure, and risk band) with recent clickstream activity.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Optimization:&lt;/strong&gt; &lt;code&gt;SawtoothWindow&lt;/code&gt; keeps longer streaming windows practical, allowing a 30-day category count to stay fresh as new events arrive without recomputing entire history.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Structure:&lt;/strong&gt; The accelerator consists of three steps delivered as runnable notebooks across two parts that share a catalog, schema, online store, and feature definitions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it Matters
+&lt;/h2&gt;&lt;p&gt;Real-time personalization depends on understanding what customers want in the moment. By ensuring that features are computed identically for offline training and online serving, organizations can maintain model accuracy while serving predictions with millisecond latency. The shared definitions reduce the risk of feature drift that typically occurs when training and serving pipelines are built separately.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/image1_144.png?v=1794598267"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/image4_83.png?v=1794617944"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Databricks #MachineLearning #RecommendationSystems #FinTech #MLOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/build-real-time-next-best-offer-recommender-using-databricks-feature-views" target="_blank" rel="noopener"
+&gt;Build a real-time next-best-offer recommender using Databricks Feature Views&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Banks Test LLM Harnesses for Compliance with EU‑style Rules</title><link>https://shoubhikbanerjee.github.io/blog/p/banks-test-llm-harnesses-for-compliance-with-eustyle-rules/</link><pubDate>Thu, 05 Nov 2026 22:04:09 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/banks-test-llm-harnesses-for-compliance-with-eustyle-rules/</guid><description>&lt;h1 id="banks-test-llm-harnesses-for-compliance-with-eustyle-rules"&gt;Banks Test LLM Harnesses for Compliance with EU‑style Rules
+&lt;/h1&gt;&lt;p&gt;Banks are validating language models not in isolation but inside &lt;em&gt;harnesses&lt;/em&gt;—software wrappers that choose what the model sees, which external tools it may call, and who reviews its actions. An internal study examined whether these harnesses affect compliance with banking conduct rules when the underlying model is held constant.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Four open‑weight large language models (LLMs) were each paired with five distinct harness designs.&lt;/li&gt;
+&lt;li&gt;The models tackled 156 pre‑registered customer cases in a simulated retail bank.&lt;/li&gt;
+&lt;li&gt;The bank’s rule set comprised 11 families that paraphrase EU consumer‑credit, payments, investor‑protection, data‑protection, and anti‑money‑laundering provisions.&lt;/li&gt;
+&lt;li&gt;In total, 3 120 two‑turn episodes (156 cases × 5 harnesses × 4 models) were executed and scored deterministically from the tool trace, separating &lt;em&gt;violations&lt;/em&gt; from &lt;em&gt;over‑refusals&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-the-harnesses-work"&gt;🧩 How the Harnesses Work
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Harness&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Structured‑decision pipeline&lt;/td&gt;
+&lt;td&gt;A single, rule‑driven decision flow that produces a structured output.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ReAct‑style tool loop&lt;/td&gt;
+&lt;td&gt;The model interleaves reasoning and tool use in a loop, following the ReAct paradigm.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Search‑only policy loop&lt;/td&gt;
+&lt;td&gt;The policy is reachable only through a search operation inside the loop.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Long benign‑memory loop&lt;/td&gt;
+&lt;td&gt;The loop includes an extended, harmless customer memory to provide context.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Same‑model compliance reviewer&lt;/td&gt;
+&lt;td&gt;The model itself is invoked a second time to review its own actions for compliance.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-findings"&gt;⚙️ Key Findings
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Overall impact&lt;/strong&gt;: Across all models the harness shifted the correct‑case rate only modestly, ranging from &lt;strong&gt;87.3 %&lt;/strong&gt; to &lt;strong&gt;92.1 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model‑specific effect&lt;/strong&gt;: For one model the spread between its best and worst harness was &lt;strong&gt;11.5 percentage points&lt;/strong&gt;, enough to move it from first to last place among the four models. For another model, the harness made no detectable difference.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Same‑model reviewer&lt;/strong&gt;: Adding a reviewer reduced violations from &lt;strong&gt;9.6 %&lt;/strong&gt; to &lt;strong&gt;6.4 %&lt;/strong&gt; without increasing over‑refusals, contrary to the pre‑registered expectation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Date‑arithmetic rules&lt;/strong&gt;: Every harness failed on rules that required date calculations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Blind check insight&lt;/strong&gt;: An exploratory analysis with two LLM judges and a blind human reviewer found that &lt;strong&gt;26 %&lt;/strong&gt; of flagged violations were accompanied by a customer message denying the action, which a transcript‑only review would have marked as a correct refusal.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Risk‑management unit&lt;/strong&gt;: The study suggests that validation should focus on the &lt;em&gt;model‑harness pair&lt;/em&gt; rather than the model alone.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Testing methodology&lt;/strong&gt;: Conduct testing should read the full action log (the tool trace) instead of relying solely on the conversational transcript.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compliance tooling&lt;/strong&gt;: Harness design can materially affect a model’s adherence to regulatory rules, indicating a lever for banks to improve AI‑driven customer service without changing the underlying model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AICompliance #BankingAI #LLMTesting&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.06116v1" target="_blank" rel="noopener"
+&gt;The Harness Is the Model: Agent Scaffolding Changes a Fixed LLM&amp;rsquo;s Compliance with Banking Conduct Rules, Unevenly Across Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Vanguard’s Jing Wang Discusses Building Scalable AI Foundations at EmTech Future</title><link>https://shoubhikbanerjee.github.io/blog/p/vanguards-jing-wang-discusses-building-scalable-ai-foundations-at-emtech-future/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/vanguards-jing-wang-discusses-building-scalable-ai-foundations-at-emtech-future/</guid><description>&lt;img src="https://wp.technologyreview.com/wp-content/uploads/2026/10/EmTech_092926_084.jpg?resize=1200,600" alt="Featured image of post Vanguard’s Jing Wang Discusses Building Scalable AI Foundations at EmTech Future" /&gt;&lt;h1 id="vanguards-jing-wang-discusses-building-scalable-ai-foundations-at-emtech-future"&gt;Vanguard’s Jing Wang Discusses Building Scalable AI Foundations at EmTech Future
+&lt;/h1&gt;&lt;p&gt;Jing Wang, Principal of Vanguard’s Center for AI &amp;amp; Insights, presented at MIT Technology Review’s EmTech Future conference, where the session explored how to build a strong foundation for scalable AI in a highly regulated environment.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A scalable AI system requires a strong foundation.&lt;/li&gt;
+&lt;li&gt;Data, engineering, platforms, operating models, and governance must converge to work as one.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-foundations-for-scalable-ai"&gt;🏗️ Foundations for Scalable AI
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Engineering&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Platforms&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Operating models&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Governance&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-responsible-implementation"&gt;✅ Responsible Implementation
+&lt;/h2&gt;&lt;p&gt;This session from MIT Technology Review&amp;rsquo;s EmTech Future conference explores what it takes to build that foundation in a highly regulated environment and how a responsible, trustworthy implementation can turn emerging capabilities, including agentic systems, into lasting value for investors.&lt;/p&gt;
+&lt;h2 id="-speaker-profile"&gt;👩‍💼 Speaker Profile
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Jing Wang leads Vanguard&amp;rsquo;s Center for AI &amp;amp; Insights (CAI), advancing the firm&amp;rsquo;s AI, machine learning, generative AI, and behavioral science capabilities.&lt;/li&gt;
+&lt;li&gt;Her team drives enterprise-wide innovation, research, and delivery, enabling Vanguard to translate emerging technologies into trusted solutions that enhance client experiences, improve investor outcomes, and create measurable business value.&lt;/li&gt;
+&lt;li&gt;Before her current position, Jing served in a range of leadership roles across Vanguard&amp;rsquo;s Financial Services, Workplace Solutions, International, and Corporate Services divisions.&lt;/li&gt;
+&lt;li&gt;She joined Vanguard in 2009 after several years as a Principal at the Boston Consulting Group.&lt;/li&gt;
+&lt;li&gt;Jing earned a B.S. in Physics from the University of Science and Technology of China, a Ph.D. from the University of Pennsylvania, and an M.B.A. in Finance and Marketing from the Wharton School of Business at the University of Pennsylvania.&lt;/li&gt;
+&lt;li&gt;Jing holds Series 7, 24, and 65 licenses.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://wp.technologyreview.com/wp-content/uploads/2026/10/EmTech_092926_084.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://wp.technologyreview.com/wp-content/uploads/2026/10/Wang_forweb.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIGovernance #ScalableAI #Vanguard #EmTech #ResponsibleAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.technologyreview.com/2026/10/22/1146103/the-foundations-of-scalable-ai/" target="_blank" rel="noopener"
+&gt;The Foundations of Scalable AI&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Wealth Management AI Progress Stalls Without Strong Backend Infrastructure</title><link>https://shoubhikbanerjee.github.io/blog/p/wealth-management-ai-progress-stalls-without-strong-backend-infrastructure/</link><pubDate>Mon, 05 Oct 2026 22:07:36 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/wealth-management-ai-progress-stalls-without-strong-backend-infrastructure/</guid><description>&lt;h1 id="wealth-management-ai-progress-stalls-without-strong-backend-infrastructure"&gt;Wealth Management AI Progress Stalls Without Strong Backend Infrastructure
+&lt;/h1&gt;&lt;p&gt;The Wealth Mosaic’s AI in Wealth 2026: APAC conference in Singapore on 24 September highlighted that the wealth‑management industry’s rapid move from digitalisation to artificial intelligence is now hitting a bottleneck: the surrounding systems, processes and human relationships.&lt;/p&gt;
+&lt;h2 id="-industry-momentum"&gt;📈 Industry Momentum
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The sector has “moved quickly from digitalisation to artificial intelligence (AI)” but the next stage “may depend less on the capabilities of the technology itself than on the systems, processes and human relationships around it.”&lt;/li&gt;
+&lt;li&gt;This theme recurred throughout the morning sessions at the event.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-infrastructure-gap"&gt;⚙️ Infrastructure Gap
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Kaushik Kadayam, Executive Director at Standard Chartered, opened the event warning that “AI is great – but AI needs a robust backend workflow and operations and technology is important.”&lt;/li&gt;
+&lt;li&gt;He likened the situation to “lifting a lot more on the right arm and we&amp;rsquo;re really bulking it up here. But the left arm is still very skimpy and skinny.”&lt;/li&gt;
+&lt;li&gt;He said sophisticated AI can only take firms so far if “processes beneath them remain fragmented or manual.”&lt;/li&gt;
+&lt;li&gt;Legacy systems that “lack APIs” and manual information transfers still dominate many firms.&lt;/li&gt;
+&lt;li&gt;The uneven spread of technology means markets such as Singapore, Hong Kong and London are ahead, while “greenfield markets where technology adoption remains less advanced could offer more scope for genuinely transformative applications.”&lt;/li&gt;
+&lt;li&gt;Risk appetite is a further challenge: client confidentiality, data restrictions, regulators, compliance and risk teams must be comfortable with the technology.&lt;/li&gt;
+&lt;li&gt;Consequently, “much current technology investment is going towards the foundations required for transformation rather than AI alone.”&lt;/li&gt;
+&lt;li&gt;Kadayam estimated that “around 90 percent of banking technology investment is still directed towards upgrading technology, moving to the cloud, and ‘getting the basics right’ – leaving a much smaller proportion for transformation.”&lt;/li&gt;
+&lt;li&gt;He sees the opportunity to shift from isolated AI use cases to “end‑to‑end processes” and predicts firms will “automate the entire process front‑to‑back with AI.”&lt;/li&gt;
+&lt;li&gt;Yet he stresses that automation will not remove the relationship element: “The fact that we still need relationship managers, and we don&amp;rsquo;t have AI talking to clients, signifies that trust is the biggest win here.”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-ai-use-cases--caution"&gt;🤖 AI Use Cases &amp;amp; Caution
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Tawishi Singh, Head of Partnerships &amp;amp; Channels at Keenai, sees clear internal productivity gains from AI but advises a cautious rollout to clients: “Do we want to necessarily be the first one to be out there doing it? No, because I think we&amp;rsquo;d rather tread carefully than necessarily be the first one out and doing it wrong.”&lt;/li&gt;
+&lt;li&gt;She notes that adoption takes time because of “data, risk governance, regulation, people, education, and differing levels of enthusiasm across an organisation.”&lt;/li&gt;
+&lt;li&gt;Singh adds, “I don&amp;rsquo;t care about the speed necessarily. I care that it’s accurate and achieves the results.”&lt;/li&gt;
+&lt;li&gt;She highlights portfolio generation and analysis as proven internal uses, while emphasizing that “ultimately the human has to assess it.”&lt;/li&gt;
+&lt;li&gt;Singh also points to risk and compliance as a productivity use case where AI can handle repetitive work, freeing specialists for higher‑value tasks.&lt;/li&gt;
+&lt;li&gt;Yee (name only) identifies portfolio reporting, reconciliations and document review as areas where technology can deliver “substantial efficiency gains while maintaining human oversight.”&lt;/li&gt;
+&lt;li&gt;Yee urges vendors to stop selling AI‑enabled software without first defining the pain point, asking “What is it they are actually solving for? Is this three hours saved or not?”&lt;/li&gt;
+&lt;li&gt;He warns against merely “dressing up the same chatbots with AI conversation” when AI is added to existing processes without real improvement.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-human-relationship--trust"&gt;🤝 Human Relationship &amp;amp; Trust
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Kadayam stresses that firms must continue to win client trust and keep customers informed as new AI‑driven processes are introduced.&lt;/li&gt;
+&lt;li&gt;In a fireside chat, Nicole Teo (Vice President Marketing, Lighthouse Canton) and Mark Yeo Tee Shen (Head of Investment Advisory, StashAway) discussed AI’s potential to personalise marketing and client interactions, but cautioned that excessive personalisation could erode trust if clients feel “they are being watched too closely.”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-path-forward"&gt;🚀 Path Forward
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The consensus at the conference is that the wealth‑management industry must first solidify its backend workflow, APIs and data governance before AI can deliver end‑to‑end automation.&lt;/li&gt;
+&lt;li&gt;Successful transformation will blend robust infrastructure, selective internal AI use cases, and a continued focus on relationship‑manager‑led trust with clients.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Speaker&lt;/th&gt;
+&lt;th&gt;Focus Area&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Kaushik Kadayam (Standard Chartered)&lt;/td&gt;
+&lt;td&gt;Need for robust backend workflow; 90 % of tech spend on basics&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tawishi Singh (Keenai)&lt;/td&gt;
+&lt;td&gt;Internal productivity; cautious client‑facing rollout&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Yee (unspecified)&lt;/td&gt;
+&lt;td&gt;Efficiency in reporting, reconciliations, document review; vendor skepticism&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nicole Teo &amp;amp; Mark Yeo Tee Shen (Lighthouse Canton &amp;amp; StashAway)&lt;/td&gt;
+&lt;td&gt;AI‑driven personalisation vs trust risk&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#WealthTech #AI #FinTech #RiskManagement&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.thewealthmosaic.com/vendors/the-wealth-mosaic/blogs/from-ai-experimentation-to-ai-enabled-wealth-manag" target="_blank" rel="noopener"
+&gt;The Wealth Mosaic&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Leading Bank Expands Internal Defensive Security Team with Detection Engineers</title><link>https://shoubhikbanerjee.github.io/blog/p/leading-bank-expands-internal-defensive-security-team-with-detection-engineers/</link><pubDate>Thu, 01 Oct 2026 22:03:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/leading-bank-expands-internal-defensive-security-team-with-detection-engineers/</guid><description>&lt;h1 id="leading-bank-expands-internal-defensive-security-team-with-detection-engineers"&gt;Leading Bank Expands Internal Defensive Security Team with Detection Engineers
+&lt;/h1&gt;&lt;p&gt;A leading bank is appointing Detection Engineers to join a growing internal defensive security team, transitioning detection engineering from a secondary responsibility within the Cloud function to a specialist, full-time discipline.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The role is focused on defensive security and threat hunting, prioritizing the creation of high-quality detections over increasing volume. The position is part of a global team operating across the UK, Poland, and Mexico.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Responsibilities:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Develop high-quality detection use cases utilizing internal security data and external threat intelligence.&lt;/li&gt;
+&lt;li&gt;Translate intelligence into effective detections for the organization.&lt;/li&gt;
+&lt;li&gt;Use Red Team outputs to identify gaps, understand attack techniques, and determine where to detect malicious activity.&lt;/li&gt;
+&lt;li&gt;Conduct threat hunting to identify opportunities for improved defensive coverage.&lt;/li&gt;
+&lt;li&gt;Optimize detection capability by working with technology and security teams.&lt;/li&gt;
+&lt;li&gt;Deliver engineering through Scrum, Agile, and sprint-based ways of working.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Requirements:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;3-5 years of experience in security, development, or technology operations.&lt;/li&gt;
+&lt;li&gt;Hands-on experience in writing and developing security detections.&lt;/li&gt;
+&lt;li&gt;Proficiency in threat hunting and defensive security.&lt;/li&gt;
+&lt;li&gt;Experience translating threat intelligence into actionable detections.&lt;/li&gt;
+&lt;li&gt;Background working in a large financial services organization or a similarly complex, highly regulated environment.&lt;/li&gt;
+&lt;li&gt;Comfort working within an Agile/Scrum delivery environment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Role:&lt;/strong&gt; Contractor&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Location:&lt;/strong&gt; Sheffield or London (1-2 days per week onsite)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Contract Length:&lt;/strong&gt; Initial 6-month contract&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rate:&lt;/strong&gt; £600 per day via umbrella (Inside IR35)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Cybersecurity #DetectionEngineering #ThreatHunting #DefensiveSecurity #Banking&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.itjobboard.co.uk/states/jobs-in-london/" target="_blank" rel="noopener"
+&gt;Jobs in London&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

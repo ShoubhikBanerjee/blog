@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>VectorDB on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/vectordb/</link><description>Recent content in VectorDB on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 23 Nov 2026 22:18:20 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/vectordb/index.xml" rel="self" type="application/rss+xml"/><item><title>OneRAG Launches Production-Ready RAG Framework with Multi-Provider Flexibility</title><link>https://shoubhikbanerjee.github.io/blog/p/onerag-launches-production-ready-rag-framework-with-multi-provider-flexibility/</link><pubDate>Mon, 23 Nov 2026 22:18:20 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/onerag-launches-production-ready-rag-framework-with-multi-provider-flexibility/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/163302162?v=4" alt="Featured image of post OneRAG Launches Production-Ready RAG Framework with Multi-Provider Flexibility" /&gt;&lt;h1 id="onerag-launches-production-ready-rag-framework-with-multi-provider-flexibility"&gt;OneRAG Launches Production-Ready RAG Framework with Multi-Provider Flexibility
+&lt;/h1&gt;&lt;p&gt;OneRAG is a production-ready Retrieval-Augmented Generation (RAG) framework built with Python and FastAPI that supports seamless switching between multiple vector databases and language models through simple configuration changes. The framework offers 1-line config swaps for 6 vector databases (Weaviate, Pinecone, Qdrant, ChromaDB, pgvector, MongoDB), 5 LLM providers (Gemini, OpenAI, Claude, Ollama, OpenRouter), and includes an OpenAI-compatible API for easy integration with existing codebases. With over 2100 tests and support for hybrid search (Dense + BM25), it enables developers to start locally without API keys using Ollama LLMs, scale to production without rebuilding, and maintain compatibility with OpenAI SDK code via the &lt;code&gt;/v1/chat/completions&lt;/code&gt; endpoint. Setup is straightforward: clone the repository, sync dependencies, copy the quickstart environment file, and launch the service. Sample data is preloaded and ready to use, while the framework automatically generates environment files if missing.&lt;/p&gt;
+&lt;p&gt;#RAG #AI #FastAPI #LLM #VectorDB #OpenAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/notadev-iamaura/OneRAG" target="_blank" rel="noopener"
+&gt;notadev-iamaura/OneRAG&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Weaviate Helm Chart v17.1.0: Raft Bootstrap and Resource Limit Changes</title><link>https://shoubhikbanerjee.github.io/blog/p/weaviate-helm-chart-v17-1-0-raft-bootstrap-and-resource-limit-changes/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/weaviate-helm-chart-v17-1-0-raft-bootstrap-and-resource-limit-changes/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/37794290?v=4" alt="Featured image of post Weaviate Helm Chart v17.1.0: Raft Bootstrap and Resource Limit Changes" /&gt;&lt;h1 id="weaviate-helm-chart-v1710-raft-bootstrap-and-resource-limit-changes"&gt;Weaviate Helm Chart v17.1.0: Raft Bootstrap and Resource Limit Changes
+&lt;/h1&gt;&lt;p&gt;The Weaviate Helm chart has released version 17.1.0, introducing significant updates to cluster bootstrapping in Weaviate v1.25 and removing default resource constraints to improve module performance.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Weaviate can be deployed to a Kubernetes cluster using the provided Helm chart, provided that Helm is installed. Version 17.1.0 of the chart addresses specific infrastructure changes required by newer Weaviate releases and resolves performance restrictions in default configurations.&lt;/p&gt;
+&lt;h2 id="-key-details-cluster-bootstrapping"&gt;⚙️ Key Details: Cluster Bootstrapping
+&lt;/h2&gt;&lt;p&gt;Weaviate v1.25 introduced a significant change in how the cluster bootstraps, driven by the adoption of a Raft-based consensus model.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;podManagementPolicy&lt;/code&gt; was changed from &lt;code&gt;OrderedReady&lt;/code&gt; to &lt;code&gt;Parallel&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;This change is required for the Raft cluster to bootstrap properly, as all pods must start simultaneously.&lt;/li&gt;
+&lt;li&gt;Once the Raft cluster is established, rolling updates are possible.&lt;/li&gt;
+&lt;li&gt;This change takes effect when migrating from versions prior to v1.25 or when bootstrapping a new v1.25 cluster.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-migration-steps"&gt;⚠️ Migration Steps
+&lt;/h2&gt;&lt;p&gt;When upgrading from a version older than v1.25 to v1.25 or above, the following one-time operation is required:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Delete Weaviate&amp;rsquo;s Statefulset.&lt;/li&gt;
+&lt;li&gt;Update the Statefulset settings to reflect the new policy.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This process will not remove your data but is necessary to make the update of Statefulset settings possible.&lt;/p&gt;
+&lt;h2 id="-key-details-resource-limits"&gt;📉 Key Details: Resource Limits
+&lt;/h2&gt;&lt;p&gt;In Weaviate-Helm version 17.1.0, the default resource limits and requests defined in the &lt;code&gt;values.yml&lt;/code&gt; file have been removed.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Reason:&lt;/strong&gt; Previous default values restricted the performance of some modules, making them almost unusable unless &lt;code&gt;resources.requests&lt;/code&gt; and &lt;code&gt;resources.limits&lt;/code&gt; were overridden.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Impact:&lt;/strong&gt; Modules deployed with default values prior to version 17.1.0 will have their resource values removed upon upgrading to 17.1.0 or above, resulting in no constraints on memory or CPU usage.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recommendation:&lt;/strong&gt; To prevent modules from consuming all system resources, users are strongly recommended to override &lt;code&gt;modules.$MODULE.resources.requests&lt;/code&gt; and &lt;code&gt;modules.$MODULE.resources.limits&lt;/code&gt; with values that suit their specific system.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-release-process"&gt;🛠 Release Process
+&lt;/h2&gt;&lt;p&gt;To release a new version of the chart, the following steps are taken:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bump the chart version in &lt;code&gt;./weaviate/Chart.yaml&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Create a commit and an annotated tag matching the version number (prefixed with &lt;code&gt;v&lt;/code&gt;, e.g., &lt;code&gt;v1.4.3&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Push the commit and tag to the repository.&lt;/li&gt;
+&lt;li&gt;A GitHub Action creates a drafted release with the packaged chart attached.&lt;/li&gt;
+&lt;li&gt;The draft is edited to include release notes and published.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Weaviate #Kubernetes #Helm #VectorDB #DevOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/weaviate/weaviate-helm" target="_blank" rel="noopener"
+&gt;weaviate/weaviate-helm&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Exa Optimizes Web Embedding Pipeline on AWS Neuron Hardware</title><link>https://shoubhikbanerjee.github.io/blog/p/exa-optimizes-web-embedding-pipeline-on-aws-neuron-hardware/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/exa-optimizes-web-embedding-pipeline-on-aws-neuron-hardware/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-featured-image-1.png" alt="Featured image of post Exa Optimizes Web Embedding Pipeline on AWS Neuron Hardware" /&gt;&lt;h1 id="exa-optimizes-web-embedding-pipeline-on-aws-neuron-hardware"&gt;Exa Optimizes Web Embedding Pipeline on AWS Neuron Hardware
+&lt;/h1&gt;&lt;p&gt;Exa is updating its web‑index embedding infrastructure to run more cheaply and flexibly on AWS Inferentia2 and Trainium2 hardware.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Exa builds one of the few true web indexes by aggregating knowledge from public, private and synthetic sources.&lt;/li&gt;
+&lt;li&gt;Multi‑tower semantic machine‑learning models embed web data and query data into the same vector space, allowing natural‑language and keyword queries.&lt;/li&gt;
+&lt;li&gt;An in‑house vector database is the keystone technology for serving this embedded knowledge.&lt;/li&gt;
+&lt;li&gt;Every structured web document that ranks as high enough quality must be embedded before it can be served.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-optimization-details"&gt;⚙️ Optimization Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Moving to a superior document model required re‑embedding 30 billion high‑priority documents, temporarily doubling the embedding load and prompting a hardware re‑evaluation.&lt;/li&gt;
+&lt;li&gt;Selected AWS Neuron hardware (Inferentia2 xlarge instance with one chip and two NeuronCores); the workload runs on a single NeuronCore, and Kubernetes pods pack onto larger instances to avoid idle cores.&lt;/li&gt;
+&lt;li&gt;Initial Inferentia2 implementation used straightforward data‑parallel FP16 representation of the model.&lt;/li&gt;
+&lt;li&gt;A progressive series of optimizations delivered roughly a &lt;strong&gt;1.5×&lt;/strong&gt; throughput improvement:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Weight layout optimization&lt;/strong&gt; aligned weight layout with model scheduling, eliminating unnecessary transposes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Autocast&lt;/strong&gt; allowed the compiler to down‑cast matrix multiplications to lower precision while preserving dynamic range; the down‑cast outputs met a 0.999 cosine‑similarity correctness gate.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;Neuron Kernel Interface (NKI) library&lt;/strong&gt; supplied optimized kernels for common layers; using these pre‑built kernels gave immediate gains.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;drop‑in attention kernel&lt;/strong&gt; added the next performance bump.&lt;/li&gt;
+&lt;li&gt;Profiling with Neuron Explorer revealed large HBM spill/reload; a custom &lt;strong&gt;weight‑stationary fused SwiGLU MLP kernel&lt;/strong&gt; eliminated those stalls.&lt;/li&gt;
+&lt;li&gt;Most kernel logic was written in the higher‑level NKI language for readability and easier debugging; lower‑level NKI ISA was used only for specific tensor operations.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;attention kernel&lt;/strong&gt; was rewritten to match the exact shapes of Exa’s model, cutting FLOPs spent on padding and further improving performance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment-model"&gt;🚀 Deployment Model
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Inference runs on an asynchronous pipeline that must be high‑volume and fast to serve recent data quickly and shrink the time between discovery and serving.&lt;/li&gt;
+&lt;li&gt;Pods are scheduled to keep all NeuronCores busy, providing container homogeneity across the embedding fleet.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Faster, cheaper embedding enables more up‑to‑date web documents to be available in Exa’s index.&lt;/li&gt;
+&lt;li&gt;All optimizations preserve model accuracy (≥ 0.999 cosine similarity) while reducing hardware cost and improving utilization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-3-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Exa #AWSNeuron #EmbeddingOptimization #VectorDB&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on-aws-ai-chips/" target="_blank" rel="noopener"
+&gt;Exa boosts embedding throughput by 50% to index billions of documents on AWS AI chips | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

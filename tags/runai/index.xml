@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Runai on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/runai/</link><description>Recent content in Runai on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/runai/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Run:ai GPU Fractioning Enables Shared GPU Memory on EKS</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-run-ai-gpu-fractioning-enables-shared-gpu-memory-on-eks/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-run-ai-gpu-fractioning-enables-shared-gpu-memory-on-eks/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22238-featured-image.png" alt="Featured image of post NVIDIA Run:ai GPU Fractioning Enables Shared GPU Memory on EKS" /&gt;&lt;h1 id="nvidia-runai-gpu-fractioning-enables-shared-gpu-memory-on-eks"&gt;NVIDIA Run:ai GPU Fractioning Enables Shared GPU Memory on EKS
+&lt;/h1&gt;&lt;p&gt;NVIDIA has open-sourced Run:ai, an AI workload orchestration platform for Kubernetes, and validated a GPU Fractioning capability that allows multiple Pods to share a single GPU on Amazon Elastic Kubernetes Service (Amazon EKS). In the validated example, two Pods successfully shared one NVIDIA A10G Tensor Core GPU on an EC2 g5.xlarge instance, each allocating 6 GiB within an 8 GiB memory limit while an allocation above the limit was rejected as expected.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;GPU sharing is not new — Multi-Instance GPU (MIG), time-slicing, and Multi-Process Service (MPS) address different isolation and utilization needs. NVIDIA Run:ai GPU Fractioning builds on MPS with Kubernetes-integrated scheduling, per-Pod memory contracts, enforcement, and metrics. The GPU Fractioning Operator helps several teams share one or two GPUs, addressing scenarios where notebooks, model evaluations, and small inference services leave teams waiting even when GPU memory remains available.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;In the baseline configuration, the NVIDIA device plugin exposes a single GPU as one &lt;code&gt;nvidia.com/gpu&lt;/code&gt; resource with GPU sharing disabled. Two Pods each requesting &lt;code&gt;nvidia.com/gpu: 1&lt;/code&gt; cannot run concurrently on that node, even when their combined GPU-memory demand fits. NVIDIA Run:ai GPU Fractioning adds:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Kubernetes scheduling integration via the KAI Scheduler&lt;/li&gt;
+&lt;li&gt;Enforced GPU-memory limits per Pod&lt;/li&gt;
+&lt;li&gt;Per-Pod GPU-memory metrics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The approach applies to NVIDIA GPUs that meet the GPU Fractioning Operator&amp;rsquo;s hardware and software requirements, including GPUs without MIG. It uses NvFractions annotations, not Dynamic Resource Allocation (DRA).&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Validated GPU&lt;/td&gt;
+&lt;td&gt;NVIDIA A10G Tensor Core GPU (23,028 MiB)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Validated instance&lt;/td&gt;
+&lt;td&gt;Amazon EC2 g5.xlarge&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;System node&lt;/td&gt;
+&lt;td&gt;m7i.large hosting operator controllers and KAI Scheduler&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPU worker OS&lt;/td&gt;
+&lt;td&gt;Custom Amazon Linux 2023 (AL2023)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPU driver&lt;/td&gt;
+&lt;td&gt;NVIDIA R615 driver branch&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Container runtime&lt;/td&gt;
+&lt;td&gt;containerd with NVIDIA Container Toolkit&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sharing mechanism&lt;/td&gt;
+&lt;td&gt;MPS via fractiond with Node Resource Interface (NRI) integration&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Metrics collection&lt;/td&gt;
+&lt;td&gt;metricsd daemon exports per-Pod GPU-memory metrics&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Compute modes&lt;/td&gt;
+&lt;td&gt;Time-slicing (default) or sm-sharing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Error domains&lt;/td&gt;
+&lt;td&gt;Separate workload error domains for default mode; shared error domain for sm-sharing (not security guarantees)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Each Pod receives an 8 GiB GPU-memory limit and allocates 6 GiB. The KAI Scheduler places both Pods on a tainted g5.xlarge node. The walkthrough establishes a whole-GPU baseline, verifies 6 GiB allocations, inspects per-Pod metrics, tests rejection of a 9 GiB allocation, and cleans up the disposable environment.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;NVIDIA announced the open source release of NVIDIA Run:ai on October 13, 2026. This walkthrough uses two of its four modular components: KAI Scheduler and GPU Fractioning Operator. KAI Resource Management and Workload Map address organizational governance and additional workload types, outside this walkthrough&amp;rsquo;s scope. Other configurations require compatibility checks and validation.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Choose GPU fractioning when you need enforced per-Pod GPU-memory limits on GPUs without MIG and can run fixed-size GPU node groups. A memory limit does not reserve proportional compute. This walkthrough tests memory limits, not fault containment or compute performance. The solution enables better GPU utilization for workloads that don&amp;rsquo;t require a full GPU, reducing wait times for development and inference tasks.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22238-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22238-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22238-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Kubernetes #GPU #EKS #AI #Run:ai&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/using-nvidia-runai-gpu-fractioning-on-amazon-eks/" target="_blank" rel="noopener"
+&gt;Using NVIDIA Run:ai GPU Fractioning on Amazon EKS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

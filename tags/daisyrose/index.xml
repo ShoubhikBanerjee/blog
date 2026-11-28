@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DaisyRose on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/daisyrose/</link><description>Recent content in DaisyRose on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/daisyrose/index.xml" rel="self" type="application/rss+xml"/><item><title>RadixArk Releases DaisyRose-27B Model With RL Training on Long-Horizon Agent Tasks</title><link>https://shoubhikbanerjee.github.io/blog/p/radixark-releases-daisyrose-27b-model-with-rl-training-on-long-horizon-agent-tasks/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/radixark-releases-daisyrose-27b-model-with-rl-training-on-long-horizon-agent-tasks/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6aeabf9f2efd990530425e58/faP4Su889q_DIgN3wmU9M.png" alt="Featured image of post RadixArk Releases DaisyRose-27B Model With RL Training on Long-Horizon Agent Tasks" /&gt;&lt;h1 id="radixark-releases-daisyrose-27b-model-with-rl-training-on-long-horizon-agent-tasks"&gt;RadixArk Releases DaisyRose-27B Model With RL Training on Long-Horizon Agent Tasks
+&lt;/h1&gt;&lt;p&gt;RadixArk has released DaisyRose-27B, its first model, built on Qwen3.8-27B and trained with reinforcement learning using the Miles framework. The model was trained on 1,200 curated long-horizon agent tasks over 18 days on 144 H200 GPUs, achieving a Terminal-Bench 4.1 pass@1 improvement from 5.6% to 12.0%.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;First model release from RadixArk&lt;/li&gt;
+&lt;li&gt;Base: Qwen3.8-27B&lt;/li&gt;
+&lt;li&gt;Training method: Reinforcement learning via Miles (open-source RL framework)&lt;/li&gt;
+&lt;li&gt;Training scale: 1,200 tasks, sessions up to 1M tokens, 18 days, 144 H200 GPUs&lt;/li&gt;
+&lt;li&gt;License: Apache 2.0 checkpoints available&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;h3 id="task-design"&gt;Task Design
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Tasks built in partnership with Eigent AI from a large pool covering machine learning, software engineering, science, and other fields&lt;/li&gt;
+&lt;li&gt;Thousands of candidates filtered to ~1,200 final tasks using three criteria:
+&lt;ul&gt;
+&lt;li&gt;Each task targets a mistake the original Qwen3.8-27B makes&lt;/li&gt;
+&lt;li&gt;Tasks redesigned around those mistakes, difficulty adjusted until solve rate falls in a useful learning range&lt;/li&gt;
+&lt;li&gt;Each task requires several interdependent steps: the agent must reason, plan, and execute across a long job&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Each attempt runs up to 1.5 hours in a sandbox with &amp;gt;100 tool calls and &amp;gt;256K output tokens&lt;/li&gt;
+&lt;li&gt;Tasks must reward actually solving the problem; every task reviewed alongside model attempts; flawed tasks fixed or removed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="training-backend-miles"&gt;Training Backend (Miles)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Fully asynchronous mode: agent keeps working while model learns, neither waits for the other&lt;/li&gt;
+&lt;li&gt;128 H200s run inference on agent tasks; 16 H200s run the trainer&lt;/li&gt;
+&lt;li&gt;After each step, updated model deployed to the 128 inference GPUs&lt;/li&gt;
+&lt;li&gt;Internal training backend built for agent training: each step learns from a handful of very long sessions (up to 1M tokens) folded into multiple trajectories via harness summarization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="sandbox-service"&gt;Sandbox Service
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Built on open-source AgentENV project (RadixArk contributes fixes)&lt;/li&gt;
+&lt;li&gt;Mid-September to mid-November: ~944,000 sandboxes run, up to 1,566 concurrent&lt;/li&gt;
+&lt;li&gt;Service scaled from 1 to 12 machines&lt;/li&gt;
+&lt;li&gt;10 upgrades shipped, nearly all while training was running&lt;/li&gt;
+&lt;li&gt;99% sandbox creation success across 9 weeks; &amp;gt;99.95% since late October&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;h3 id="benchmark-results"&gt;Benchmark Results
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Benchmark&lt;/th&gt;
+&lt;th&gt;Qwen3.8-27B&lt;/th&gt;
+&lt;th&gt;DaisyRose-27B&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Terminal-Bench 4.1 pass@1&lt;/td&gt;
+&lt;td&gt;5.6%&lt;/td&gt;
+&lt;td&gt;12.0%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;DaisyRose-27B scores higher than original Qwen3.8-27B on every benchmark evaluated&lt;/li&gt;
+&lt;li&gt;Largest gain on Terminal-Bench 4.1 (5.6% → 12.0%)&lt;/li&gt;
+&lt;li&gt;Gains also on reasoning, instruction following, and coding benchmarks&lt;/li&gt;
+&lt;li&gt;Scores use higher of BF16 and FP8 runs; difference &amp;lt;1 point where both evaluated&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="model-architecture"&gt;Model Architecture
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Retains Qwen3.8-27B architecture, tokenizer, chat template, image understanding, and 256K-token context window&lt;/li&gt;
+&lt;li&gt;Longer training sessions use harness summarization to span multiple trajectories&lt;/li&gt;
+&lt;li&gt;Model thinks before answering by default; reasoning returned in &lt;code&gt;reasoning_content&lt;/code&gt;, final answer in &lt;code&gt;content&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="training-efficiency"&gt;Training Efficiency
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;RadixArk Backend&lt;/th&gt;
+&lt;th&gt;Open-Source Trainer (Megatron)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Model FLOPs Utilization (MFU)&lt;/td&gt;
+&lt;td&gt;37%&lt;/td&gt;
+&lt;td&gt;16%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Training cost reduction&lt;/td&gt;
+&lt;td&gt;57% less GPU time&lt;/td&gt;
+&lt;td&gt;baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Throughput (tokens/sec across 144 GPUs)&lt;/td&gt;
+&lt;td&gt;~16,800&lt;/td&gt;
+&lt;td&gt;~8,300&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;End-to-end speed&lt;/td&gt;
+&lt;td&gt;2× faster&lt;/td&gt;
+&lt;td&gt;baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Stability: 63,000 GPU-hours over weeks; speed and efficiency held steady from first to last step&lt;/li&gt;
+&lt;li&gt;Larger gains on mixture-of-experts models: 6.2× on Qwen3.6-35B-A3B, &amp;gt;10× on ~300B GLM-5.3-Flash&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Checkpoints released under Apache 2.0&lt;/li&gt;
+&lt;li&gt;Recommended serving: SGLang with DSpark speculative decoding&lt;/li&gt;
+&lt;li&gt;SGLang cookbook provides launch configurations for different GPUs and checkpoint formats&lt;/li&gt;
+&lt;li&gt;Quickstart: start server with served model name &lt;code&gt;DaisyRose-27B&lt;/code&gt; on port 30000, then send requests via OpenAI Python client&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Demonstrates that carefully designed long-horizon agent tasks, an efficient asynchronous RL backend, and a robust sandbox service can jointly deliver large benchmark gains with substantially lower compute cost&lt;/li&gt;
+&lt;li&gt;57% less GPU time for equivalent training via higher MFU (37% vs 16%)&lt;/li&gt;
+&lt;li&gt;2× end-to-end throughput improvement&lt;/li&gt;
+&lt;li&gt;Sandbox infrastructure proved reliable at scale (99.95% success rate) with live upgrades during training&lt;/li&gt;
+&lt;li&gt;Gains generalize across benchmark categories and are especially pronounced on mixture-of-experts architectures&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.radixark.com/images/daisyrose-27b/benchmarks.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.radixark.com/images/daisyrose-27b/gpu-efficiency.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.radixark.com/images/daisyrose-27b/training-stability.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#RadixArk #DaisyRose #ReinforcementLearning #AIAgents #OpenSource #LLM&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/RadixArk/daisyrose-27b-pushing-the-frontier-of-post-trainin" target="_blank" rel="noopener"
+&gt;DaisyRose-27B: Pushing the Frontier of Post-Training Efficiency&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

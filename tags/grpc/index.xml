@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GRPC on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/grpc/</link><description>Recent content in GRPC on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/grpc/index.xml" rel="self" type="application/rss+xml"/><item><title>Qdrant .NET Client Adds gRPC Support and TLS Configuration</title><link>https://shoubhikbanerjee.github.io/blog/p/qdrant-net-client-adds-grpc-support-and-tls-configuration/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/qdrant-net-client-adds-grpc-support-and-tls-configuration/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post Qdrant .NET Client Adds gRPC Support and TLS Configuration" /&gt;&lt;h1 id="qdrant-net-client-adds-grpc-support-and-tls-configuration"&gt;Qdrant .NET Client Adds gRPC Support and TLS Configuration
+&lt;/h1&gt;&lt;p&gt;A new .NET client library for Qdrant has been released, allowing .NET applications to connect to the vector database at &lt;code&gt;http://localhost:6334&lt;/code&gt; using gRPC.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Install the library with &lt;code&gt;dotnet add package Qdrant.Client&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The client connects by default to Qdrant on &lt;code&gt;http://localhost:6334&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Internally, the high‑level client relies on a low‑level gRPC client to communicate with Qdrant.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The client creates a channel via &lt;code&gt;QdrantChannel.ForAddress&lt;/code&gt;, which is used by both &lt;code&gt;QdrantClient(&amp;quot;localhost&amp;quot;)&lt;/code&gt; and the &lt;code&gt;ClientConfiguration&lt;/code&gt; overloads.&lt;/li&gt;
+&lt;li&gt;When the channel is created, the client automatically adds a &lt;code&gt;qdrant-dotnet/&amp;lt;version&amp;gt;&lt;/code&gt; token to the request &lt;code&gt;User-Agent&lt;/code&gt; alongside the gRPC library token.&lt;/li&gt;
+&lt;li&gt;This token enables server‑side tooling to attribute traffic to the .NET client and its version.&lt;/li&gt;
+&lt;li&gt;On .NET Framework, where the underlying channel handler must be configured manually, the token is &lt;strong&gt;not&lt;/strong&gt; added automatically.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-configuration-options"&gt;⚙️ Configuration options
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Additional constructor overloads give developers more control over gRPC client configuration.&lt;/li&gt;
+&lt;li&gt;TLS can be configured, validating the server certificate using its thumbprint, and API‑key authentication can be added.&lt;/li&gt;
+&lt;li&gt;.NET Framework has limited support for gRPC over HTTP/2, but support can be enabled by:
+&lt;ul&gt;
+&lt;li&gt;Referencing &lt;code&gt;System.Net.Http.WinHttpHandler&lt;/code&gt; version 6.0.1 or later.&lt;/li&gt;
+&lt;li&gt;Configuring &lt;code&gt;WinHttpHandler&lt;/code&gt; as the inner handler for &lt;code&gt;GrpcChannelOptions&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-usage-example"&gt;🚀 Usage example
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CreateCollectionAsync&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;my_collection&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;VectorParams&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;Size&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Distance&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Distance&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Cosine&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Query examples (illustrative):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// return the 5 closest points&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// return the 5 closest points where rand_number &amp;gt;= 3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-compatibility-notes"&gt;📡 Compatibility notes
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;On .NET Framework, manual configuration of the channel handler is required, and the automatic &lt;code&gt;User-Agent&lt;/code&gt; token is not added.&lt;/li&gt;
+&lt;li&gt;The client works out‑of‑the‑box on platforms where gRPC over HTTP/2 is supported without additional handlers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Qdrant #dotnet #gRPC #vectorsearch #TLS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/qdrant-dotnet" target="_blank" rel="noopener"
+&gt;qdrant/qdrant-dotnet&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Java Library for Qdrant Vector Search Engine Released</title><link>https://shoubhikbanerjee.github.io/blog/p/new-java-library-for-qdrant-vector-search-engine-released/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-java-library-for-qdrant-vector-search-engine-released/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post New Java Library for Qdrant Vector Search Engine Released" /&gt;&lt;h1 id="new-java-library-for-qdrant-vector-search-engine-released"&gt;New Java Library for Qdrant Vector Search Engine Released
+&lt;/h1&gt;&lt;p&gt;A new Java library for the Qdrant vector search engine has been released, providing a high-level client with utility methods for interfacing with Qdrant. The library requires Java 8 or above and uses a low-level gRPC client internally to interact with Qdrant.&lt;/p&gt;
+&lt;h2 id="-installation"&gt;📦 Installation
+&lt;/h2&gt;&lt;p&gt;To install the library, add the following lines to your build config file. Please ensure all necessary dependencies listed in the documentation are included in your project.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How It Works
+&lt;/h2&gt;&lt;p&gt;The client provides convenient methods and overloads for common operations, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Creating a new collection&lt;/li&gt;
+&lt;li&gt;Inserting vectors into a collection&lt;/li&gt;
+&lt;li&gt;Searching for similar vectors&lt;/li&gt;
+&lt;li&gt;Searching for similar vectors with filtering conditions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-configuration"&gt;🔐 Configuration
+&lt;/h2&gt;&lt;p&gt;Additional constructor overloads allow fine-grained control over the gRPC client configuration. For example, the following demonstrates how to configure a client to use TLS with certificate validation via the root CA and API key authentication.&lt;/p&gt;
+&lt;h2 id="-lifecycle-management"&gt;🔄 Lifecycle Management
+&lt;/h2&gt;&lt;p&gt;The client implements &lt;code&gt;AutoCloseable&lt;/code&gt;, though it is typically created once and used for the application&amp;rsquo;s lifetime. When constructed by passing a &lt;code&gt;ManagedChannel&lt;/code&gt;, the client does not shut down the channel on close by default. It can be configured to shut down the channel upon closing instead.&lt;/p&gt;
+&lt;h2 id="-asynchronous-operations"&gt;⏱️ Asynchronous Operations
+&lt;/h2&gt;&lt;p&gt;All client methods return &lt;code&gt;ListenableFuture&amp;lt;T&amp;gt;&lt;/code&gt;, enabling asynchronous workflows.&lt;/p&gt;
+&lt;h2 id="-resources"&gt;📚 Resources
+&lt;/h2&gt;&lt;p&gt;Usage examples are available in the Qdrant documentation and API Reference.&lt;/p&gt;
+&lt;p&gt;#Java #Qdrant #VectorSearch #gRPC #ArtificialIntelligence&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/java-client" target="_blank" rel="noopener"
+&gt;qdrant/java-client&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>A2A Java SDK releases client and server support for agent communication</title><link>https://shoubhikbanerjee.github.io/blog/p/a2a-java-sdk-releases-client-and-server-support-for-agent-communication/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/a2a-java-sdk-releases-client-and-server-support-for-agent-communication/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/217270365?v=4" alt="Featured image of post A2A Java SDK releases client and server support for agent communication" /&gt;&lt;h1 id="a2a-java-sdk-releases-client-and-server-support-for-agent-communication"&gt;A2A Java SDK releases client and server support for agent communication
+&lt;/h1&gt;&lt;p&gt;A new Java library has been released to support the execution of agentic applications as Agent2Agent (A2A) servers. This multi-module Maven library provides both client and server capabilities, enabling A2A agent communication across JSON-RPC, gRPC, and REST transports.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The library facilitates agent-to-agent interaction by implementing the A2A Protocol. For gRPC support, the project copies the &lt;code&gt;a2a.proto&lt;/code&gt; file from the A2A specification repository into the &lt;code&gt;spec-grpc/&lt;/code&gt; project. The &lt;code&gt;java_package&lt;/code&gt; option is adjusted to target the &lt;code&gt;org.a2aproject.sdk.grpc&lt;/code&gt; package. Developers can regenerate the gRPC classes by building the module with the command &lt;code&gt;mvn clean install -Dskip.protobuf.generate=false&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Language Requirement&lt;/strong&gt;: Java 17 or later is required.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transport Protocols&lt;/strong&gt;: Supports JSON-RPC, gRPC, and REST.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Licensing&lt;/strong&gt;: The project is licensed under the Apache 2.0 License.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Documentation&lt;/strong&gt;: Full documentation is available at a2aproject.github.io/a2a-java.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability-and-integrations"&gt;🚀 Availability and Integrations
+&lt;/h2&gt;&lt;p&gt;Developers can add the A2A Java SDK reference server for JSON-RPC to their Maven projects. The SDK includes examples for cross-language integration, such as a Java A2A server communicating with a Python client, and a Java A2A client communicating with a Python server.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;OpenTelemetry&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Available as an optional add-on in the extras folder&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;JPA-backed task store&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Available as an optional add-on in the extras folder&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Kafka-based replicated queue manager&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Available as an optional add-on in the extras folder&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Vert.x and Android HTTP clients&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Available as optional add-ons in the extras folder&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Integrations with Java runtimes are documented in the Server Integrations section of the reference materials.&lt;/p&gt;
+&lt;p&gt;#Java #AIagents #A2A #Maven #gRPC&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/a2aproject/a2a-java" target="_blank" rel="noopener"
+&gt;a2aproject/a2a-java&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Go client released for Qdrant vector search engine</title><link>https://shoubhikbanerjee.github.io/blog/p/go-client-released-for-qdrant-vector-search-engine/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/go-client-released-for-qdrant-vector-search-engine/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post Go client released for Qdrant vector search engine" /&gt;&lt;h1 id="go-client-released-for-qdrant-vector-search-engine"&gt;Go client released for Qdrant vector search engine
+&lt;/h1&gt;&lt;p&gt;The Go client for the Qdrant vector search engine has been released, making it easier for developers to integrate vector search capabilities into their Go applications. Internally, the high-level client uses a low-level gRPC client to interact with Qdrant, abstracting away the complexity of direct API calls. The client supports secure communication with TLS 1.3 as the minimum required version when UseTLS is enabled.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;📦 Availability
+&lt;/h2&gt;&lt;p&gt;The client can be installed using the Go package manager:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;go get -u github.com/qdrant/go-client&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-security"&gt;🔐 Security
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Uses TLS 1.3 as the minimum security version when &lt;code&gt;UseTLS: true&lt;/code&gt; is set&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🧩 Architecture
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;High-level client provides simplified API for common operations&lt;/li&gt;
+&lt;li&gt;Low-level gRPC client handles direct communication with Qdrant server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This release enables Go developers to leverage Qdrant&amp;rsquo;s vector search capabilities without implementing low-level networking code, accelerating the development of AI and machine learning applications that require semantic search functionality.&lt;/p&gt;
+&lt;p&gt;#Go #Qdrant #VectorSearch #gRPC #TLS #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/go-client" target="_blank" rel="noopener"
+&gt;qdrant/go-client&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>vLLM Open Data Hub Adapter Released on PyPi</title><link>https://shoubhikbanerjee.github.io/blog/p/vllm-open-data-hub-adapter-released-on-pypi/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/vllm-open-data-hub-adapter-released-on-pypi/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/57720972?v=4" alt="Featured image of post vLLM Open Data Hub Adapter Released on PyPi" /&gt;&lt;h1 id="vllm-open-data-hub-adapter-released-on-pypi"&gt;vLLM Open Data Hub Adapter Released on PyPi
+&lt;/h1&gt;&lt;p&gt;A new adapter, vllm-tgis-adapter, has been made available on PyPi, facilitating the integration of vLLM with specific server infrastructure.&lt;/p&gt;
+&lt;h2 id="-installation-and-monitoring"&gt;📦 Installation and Monitoring
+&lt;/h2&gt;&lt;p&gt;The package is distributed via PyPi. The installation process includes an additional tool that assists in monitoring the underlying services:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Installing the adapter also installs a grpc healthcheck CLI.&lt;/li&gt;
+&lt;li&gt;This CLI can be used to monitor the status of the grpc server.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-server-configuration"&gt;⚙️ Server Configuration
+&lt;/h2&gt;&lt;p&gt;The adapter interacts with a gRPC server environment:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This will start serving a grpc server on port 8033.&lt;/li&gt;
+&lt;li&gt;This can be queried with grpcurl.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-container-image"&gt;🐳 Container Image
+&lt;/h2&gt;&lt;p&gt;An image for deployment is available at:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;quay.io/opendatahub/vllm&lt;/li&gt;
+&lt;li&gt;This image is built from opendatahub-io/vllm&amp;rsquo;s Dockerfile.ubi.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-development-and-testing-tools"&gt;🧪 Development and Testing Tools
+&lt;/h2&gt;&lt;p&gt;The project utilizes specific tools for test automation and environment management:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nox is used to manage test automation.&lt;/li&gt;
+&lt;li&gt;UV is used for venv management.&lt;/li&gt;
+&lt;li&gt;The standard vllm built requires an Nvidia GPU.&lt;/li&gt;
+&lt;li&gt;When this is not available, it is possible to compile vllm from source with CPU support.&lt;/li&gt;
+&lt;li&gt;This makes it possible to run the tests on most hardware.&lt;/li&gt;
+&lt;li&gt;Please note that the uv extra index url is required in order to install the torch CPU version.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#vLLM #Python #gRPC #DevTools #OpenDataHub&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/opendatahub-io/vllm-tgis-adapter" target="_blank" rel="noopener"
+&gt;opendatahub-io/vllm-tgis-adapter&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Container Orchestration on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/container-orchestration/</link><description>Recent content in Container Orchestration on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/container-orchestration/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes v1.38 introduces breaking changes to WebSockets, cgroup drivers, and kubeconfig APIs</title><link>https://shoubhikbanerjee.github.io/blog/p/kubernetes-v1-38-introduces-breaking-changes-to-websockets-cgroup-drivers-and-kubeconfig-apis/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/kubernetes-v1-38-introduces-breaking-changes-to-websockets-cgroup-drivers-and-kubeconfig-apis/</guid><description>&lt;h1 id="kubernetes-v138-introduces-breaking-changes-to-websockets-cgroup-drivers-and-kubeconfig-apis"&gt;Kubernetes v1.38 introduces breaking changes to WebSockets, cgroup drivers, and kubeconfig APIs
+&lt;/h1&gt;&lt;p&gt;As the Kubernetes community approaches the v1.38 release, several deprecated features are being removed or deprecated to improve the project&amp;rsquo;s long-term health and maintainability. These changes affect kubectl behavior, cgroup configuration, and API stability, requiring cluster administrators to update their configurations and scripts.&lt;/p&gt;
+&lt;h2 id="-kubectl-websockets-transition"&gt;📡 Kubectl WebSockets Transition
+&lt;/h2&gt;&lt;p&gt;Kubernetes has progressively moved kubectl from SPDY to WebSockets for exec, attach, and port-forward operations:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Version&lt;/th&gt;
+&lt;th&gt;WebSocket Support&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;v1.30&lt;/td&gt;
+&lt;td&gt;Default for exec, attach, cp operations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;v1.31&lt;/td&gt;
+&lt;td&gt;Default for port-forward operations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The environment variables &lt;code&gt;KUBECTL_REMOTE_COMMAND_WEBSOCKETS&lt;/code&gt; and &lt;code&gt;KUBECTL_PORT_FORWARD_WEBSOCKETS&lt;/code&gt; were introduced to disable WebSocket usage. In v1.38, these variables will be removed. kubectl will always prefer WebSockets and fall back to SPDY when necessary. Scripts or CI environments that set these variables can remove them as they will no longer have any effect.&lt;/p&gt;
+&lt;h2 id="-kubeconfig-api-changes"&gt;⚙️ Kubeconfig API Changes
+&lt;/h2&gt;&lt;p&gt;The kuberc file manages kubectl user preferences and credential plugin allowlists. In the beta &lt;code&gt;kubectl.config.k8s.io/v1beta1&lt;/code&gt; API, the &lt;code&gt;name&lt;/code&gt; field served as an alias for &lt;code&gt;command&lt;/code&gt;. The &lt;code&gt;name&lt;/code&gt; field was deprecated in v1.36. With kuberc graduating to stable in v1.38, the new &lt;code&gt;kubectl.config.k8s.io/v1&lt;/code&gt; API will not include &lt;code&gt;name&lt;/code&gt;. Users with allowlist entries using &lt;code&gt;name&lt;/code&gt; should update them to use &lt;code&gt;command&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="-container-runtime-and-cgroup-driver-updates"&gt;🔧 Container Runtime and cgroup Driver Updates
+&lt;/h2&gt;&lt;p&gt;Support for cgroup v1 is being phased out. Since v1.35, kubelet fails to start on cgroup v1 nodes unless &lt;code&gt;failCgroupV1: false&lt;/code&gt; is set in the kubelet configuration. This option remains in v1.38 but should be treated as a short-term workaround. Users are encouraged to migrate to cgroup v2.&lt;/p&gt;
+&lt;p&gt;Additionally, the legacy cgroup driver configuration mechanism is being deprecated. The kubelet will default to not allowing this mechanism in v1.38 and will require the container runtime to be running to query the recommended cgroup driver via CRI RuntimeConfig RPC. If the kubelet cannot retrieve the cgroup driver from the runtime after retrying, it will exit with an error before registering the node. The &lt;code&gt;cgroupDriver&lt;/code&gt; field in the kubelet configuration file will be deprecated, and specifying it will be rejected unless the &lt;code&gt;LegacyCgroupDriverFallback&lt;/code&gt; feature gate is enabled.&lt;/p&gt;
+&lt;p&gt;kubeadm will no longer default &lt;code&gt;cgroupDriver&lt;/code&gt; to systemd and will report an error during preflight checks if the runtime doesn&amp;rsquo;t support the RPC.&lt;/p&gt;
+&lt;h2 id="-admission-webhook-behavior-changes"&gt;🌐 Admission Webhook Behavior Changes
+&lt;/h2&gt;&lt;p&gt;Since v1.37, the &lt;code&gt;ExcludeAdmissionWebhookVirtualResources&lt;/code&gt; feature gate is enabled by default. With this gate active, validating and mutating admission webhooks no longer receive requests for virtual resources like TokenReview, SelfSubjectReview, SubjectAccessReview, SelfSubjectAccessReview, and LocalSubjectAccessReview. Creating or updating a webhook configuration targeting these resources triggers a deprecation warning. Users relying on webhooks for these requests can disable the gate temporarily, but it is planned to be locked on when the feature graduates to stable.&lt;/p&gt;
+&lt;h2 id="-resource-limit-enforcement-for-cgroup-v2"&gt;💾 Resource Limit Enforcement for cgroup v2
+&lt;/h2&gt;&lt;p&gt;On Linux nodes using cgroup v2 and configured with LimitedSwap, v1.38&amp;rsquo;s kubelet will begin applying swap limits based on the Pod&amp;rsquo;s memory settings.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;These changes are planned for the Kubernetes v1.38 release. The information reflects the current status and may change before the actual release date.&lt;/p&gt;
+&lt;p&gt;#Kubernetes #Containers #cgroups #Kubectl&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://kubernetes.io/blog/2026/11/23/kubernetes-v1-38-sneak-peek/" target="_blank" rel="noopener"
+&gt;Kubernetes v1.38 Sneak Peek&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Awesome‑Kubernetes List Published as GitBook Release</title><link>https://shoubhikbanerjee.github.io/blog/p/awesomekubernetes-list-published-as-gitbook-release/</link><pubDate>Sun, 01 Nov 2026 22:01:19 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/awesomekubernetes-list-published-as-gitbook-release/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/8342133?v=4" alt="Featured image of post Awesome‑Kubernetes List Published as GitBook Release" /&gt;&lt;h1 id="awesomekubernetes-list-published-as-gitbook-release"&gt;Awesome‑Kubernetes List Published as GitBook Release
+&lt;/h1&gt;&lt;p&gt;The community‑maintained Awesome‑Kubernetes repository has been packaged into a GitBook, allowing anyone to download and read the curated list as a book.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Kubernetes is an open‑source system for automating deployment, scaling, and management of containerized applications.&lt;/li&gt;
+&lt;li&gt;It groups containers that make up an application into logical units for easy management and discovery.&lt;/li&gt;
+&lt;li&gt;Kubernetes is known to be a descendant of Google’s system BORG.&lt;/li&gt;
+&lt;li&gt;The first unified container‑management system developed at Google was the system internally called Borg.&lt;/li&gt;
+&lt;li&gt;Borg was built to manage both long‑running services and batch jobs, which had previously been handled by two separate systems: Babysitter and the Global Work Queue.&lt;/li&gt;
+&lt;li&gt;The latter’s architecture strongly influenced Borg, but was focused on batch jobs; both predated Linux control groups.&lt;/li&gt;
+&lt;li&gt;Kubernetes celebrates its birthday every year on 21 July.&lt;/li&gt;
+&lt;li&gt;Kubernetes 1.0 was released on July 21 2015, after being first announced to the public at Dockercon in June 2014.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-awesomekubernetes-collection"&gt;📚 Awesome‑Kubernetes Collection
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A curated list for awesome kubernetes sources inspired by @sindresorhus&amp;rsquo; awesome.&lt;/li&gt;
+&lt;li&gt;Without the help from these amazing contributors, building this awesome‑repo would never have been possible.&lt;/li&gt;
+&lt;li&gt;Thanks to Gitbook. This awesome list can now be downloaded and read in the form of a book.&lt;/li&gt;
+&lt;li&gt;Check it out → &lt;a class="link" href="https://ramitsurana.gitbook.io/awesome-kubernetes/docs" target="_blank" rel="noopener"
+&gt;https://ramitsurana.gitbook.io/awesome-kubernetes/docs&lt;/a&gt; . Keep Learning Keep Sharing !!&lt;/li&gt;
+&lt;li&gt;If you see a package or project here that is no longer maintained or is not a good fit, please submit a pull request to improve this file.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The awesome‑kubernetes will now soon be available in the form of different releases and package bundles.&lt;/li&gt;
+&lt;li&gt;The release for awesome‑kubernetes 2015 bundle is released.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;📦 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The GitBook version can be downloaded directly from the linked URL.&lt;/li&gt;
+&lt;li&gt;Future bundles will allow downloading the awesome‑kubernetes release up to a certain period of time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-resources"&gt;📜 Resources
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Resource&lt;/th&gt;
+&lt;th&gt;Author&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Kubernetes Community Overview and Contributions Guide&lt;/td&gt;
+&lt;td&gt;Ihor Dvoretskyi&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;An Intro to Google’s Kubernetes and How to Use It&lt;/td&gt;
+&lt;td&gt;Laura Frank&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kubernetes: The Future of Cloud Hosting&lt;/td&gt;
+&lt;td&gt;Meteorhacks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kubernetes by Google&lt;/td&gt;
+&lt;td&gt;Gaston Pantana&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Key Concepts&lt;/td&gt;
+&lt;td&gt;Arun Gupta&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Application Containers: Kubernetes and Docker from Scratch&lt;/td&gt;
+&lt;td&gt;Keith Tenzer&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Learn the Kubernetes Key Concepts in 10 Minutes&lt;/td&gt;
+&lt;td&gt;Omer Dawelbeit&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The Children&amp;rsquo;s Illustrated Guide to Kubernetes&lt;/td&gt;
+&lt;td&gt;Deis&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;The ‘kubectl run’ command&lt;/td&gt;
+&lt;td&gt;Michael Hausenblas&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a single, community‑vetted source of Kubernetes learning material.&lt;/li&gt;
+&lt;li&gt;Encourages contributions and continuous updates through pull requests.&lt;/li&gt;
+&lt;li&gt;Makes the knowledge portable as a downloadable book, supporting offline learning.&lt;/li&gt;
+&lt;li&gt;Highlights the lineage from Google’s Borg system to modern Kubernetes practice.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Kubernetes #OpenSource #GitBook #Containers&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/ramitsurana/awesome-kubernetes" target="_blank" rel="noopener"
+&gt;ramitsurana/awesome-kubernetes&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>GPU Fractioning Operator Enables Fine‑Grained GPU Sharing in Kubernetes</title><link>https://shoubhikbanerjee.github.io/blog/p/gpu-fractioning-operator-enables-finegrained-gpu-sharing-in-kubernetes/</link><pubDate>Wed, 28 Oct 2026 22:03:50 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/gpu-fractioning-operator-enables-finegrained-gpu-sharing-in-kubernetes/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/CUDAMemoryKV-660x370.webp" alt="Featured image of post GPU Fractioning Operator Enables Fine‑Grained GPU Sharing in Kubernetes" /&gt;&lt;h1 id="gpu-fractioning-operator-enables-finegrained-gpu-sharing-in-kubernetes"&gt;GPU Fractioning Operator Enables Fine‑Grained GPU Sharing in Kubernetes
+&lt;/h1&gt;&lt;p&gt;Many AI workloads need only a fraction of a GPU, and allocating a whole device to each workload can leave capacity idle. An open‑source Kubernetes operator called &lt;strong&gt;gpu‑fractioning&lt;/strong&gt; now lets platform teams share GPUs at the memory and compute level, using new CUDA 13.4 enforcement features and NVIDIA’s existing sharing mechanisms.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AI workloads often require only part of a GPU’s memory and compute resources.&lt;/li&gt;
+&lt;li&gt;Sharing GPUs lets platform teams serve more workloads with the same hardware.&lt;/li&gt;
+&lt;li&gt;NVIDIA GPUs already support several sharing approaches: MIG, time‑slicing, and Multi‑Process Service (MPS).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CUDA 13.4 memory enforcement&lt;/strong&gt;: a workload requests a memory size; CUDA reserves it and rejects allocations that exceed the limit, giving the workload a guaranteed minimum and a maximum it can grow into when memory is free.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compute modes&lt;/strong&gt;: each workload can run in the default time‑sharing mode or choose the sm‑sharing mode (MPS) that runs processes concurrently in separate address spaces.&lt;/li&gt;
+&lt;li&gt;The enforcement logic runs on the node; it is independent of the scheduler that placed the workload.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-components"&gt;⚙️ Key components
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;gpu‑fractioning operator&lt;/strong&gt; (hosted under the KAI Scheduler GitHub organization) – sets up MPS on every GPU node, applies per‑workload memory limits and compute mode, and measures usage per fraction.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NVIDIA GPU Operator&lt;/strong&gt; – provides the driver and container‑runtime setup; gpu‑fractioning runs alongside it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pod annotations&lt;/strong&gt; – developers specify resource limits and compute mode in the pod YAML; the scheduler writes the chosen GPU slice and mode into per‑container annotations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU Fractioning Operator&lt;/strong&gt; – reads those annotations and configures the assigned GPUs to enforce the requested memory and compute settings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;KAI Scheduler&lt;/strong&gt; – first scheduler integrated with gpu‑fractioning; from version v0.18.0 it offers a sharing mode called &lt;strong&gt;NvFractions&lt;/strong&gt; that selects a slice of a GPU for each workload and writes the required annotations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The gpu‑fractioning operator is open source and lives on GitHub under the KAI Scheduler organization.&lt;/li&gt;
+&lt;li&gt;It works with any Kubernetes scheduler capable of writing the required annotations; KAI Scheduler is the reference implementation.&lt;/li&gt;
+&lt;li&gt;Starting with KAI Scheduler v0.18.0, the NvFractions mode is available out‑of‑the‑box.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enables multiple AI workloads to run on a single GPU without idle capacity.&lt;/li&gt;
+&lt;li&gt;Provides transparent memory enforcement and optional compute sharing modes.&lt;/li&gt;
+&lt;li&gt;Allows administrators to choose the sharing strategy that best fits their cluster.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="gpu-sharing-techniques-in-nvidia-gpus"&gt;GPU sharing techniques in NVIDIA GPUs
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Technique&lt;/th&gt;
+&lt;th&gt;Key property&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Multi‑Instance GPU (MIG)&lt;/td&gt;
+&lt;td&gt;Splits a GPU into hardware‑isolated instances that are transparent to the application&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Time‑slicing&lt;/td&gt;
+&lt;td&gt;Lets several processes take turns without memory enforcement&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Multi‑Process Service (MPS) – sm‑sharing&lt;/td&gt;
+&lt;td&gt;Runs processes concurrently in separate address spaces&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/CUDAMemoryKV-1024x576.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/kai-scheduler-representation-660x370.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#GPUSharing #Kubernetes #CUDA #AIWorkloads&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/memory-enforced-gpu-sharing-in-kubernetes-with-nvidia-cuda-13-4/" target="_blank" rel="noopener"
+&gt;Memory-Enforced GPU Sharing in Kubernetes with NVIDIA CUDA 13.4 | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

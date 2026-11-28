@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SecurityMigration on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/securitymigration/</link><description>Recent content in SecurityMigration on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Nov 2026 22:08:01 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/securitymigration/index.xml" rel="self" type="application/rss+xml"/><item><title>Migrating AWS CloudHSM Workloads to AWS KMS</title><link>https://shoubhikbanerjee.github.io/blog/p/migrating-aws-cloudhsm-workloads-to-aws-kms/</link><pubDate>Thu, 26 Nov 2026 22:08:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/migrating-aws-cloudhsm-workloads-to-aws-kms/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/storage.jpeg" alt="Featured image of post Migrating AWS CloudHSM Workloads to AWS KMS" /&gt;&lt;h1 id="migrating-aws-cloudhsm-workloads-to-aws-kms"&gt;Migrating AWS CloudHSM Workloads to AWS KMS
+&lt;/h1&gt;&lt;p&gt;AWS Key Management Service (AWS KMS) now supports the security certifications, algorithms, and performance required by most AWS CloudHSM workloads, enabling organizations to migrate and significantly reduce costs while eliminating hardware security module (HSM) provisioning, patching, and high-availability management.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Most AWS CloudHSM workloads can migrate to AWS KMS. Organizations are advised to review their compliance documentation for explicit single-tenant language, as many organizations find that it is assumed rather than mandated. While AWS KMS embeds cryptographic best practices in a managed service, some payment systems still rely on older cryptography such as TDES. For these cases, AWS Payment Cryptography supports payment use cases, including TDES-based algorithms such as CVV2, ARQC, and PIN validation, and provides low-level algorithms like AES-CBC that third-party systems might require for interoperability.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Migration consists of three parts: updating application code to call KMS APIs, rotating or importing cryptographic keys, and transitioning existing data.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Application Refactoring:&lt;/strong&gt; This is the bulk of the effort. The interfaces involved are a communication pattern, not an architectural constraint. Organizations are encouraged to contact their AWS account team to assess the effort needed to use modern RESTful interfaces and to evaluate whether dependencies on older systems can be retired as part of security modernization.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Key Management:&lt;/strong&gt; If AWS CloudHSM allows you to export (wrap) a copy of your private key, you can import it directly into AWS KMS to maintain continuity. If the key is non-exportable, you must create a new key pair in AWS KMS. During the transition, the AWS CloudHSM private key continues to sign existing workloads, while a new asymmetric KMS key (or the imported key) signs new data flowing to AWS KMS.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Transition:&lt;/strong&gt; You re-encrypt previously encrypted data under KMS keys. Existing signatures remain verifiable without AWS CloudHSM. You can complete each part of the migration gradually with zero downtime. For organizations that created a new key pair, export the CloudHSM public key before decommissioning and use it to verify existing signatures locally with libraries such as AWS-LC or OpenSSL.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The following points outline specific considerations and capabilities for the migration:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS KMS does not support importing public keys.&lt;/li&gt;
+&lt;li&gt;Traffic can be shifted from AWS CloudHSM to AWS KMS at your own pace.&lt;/li&gt;
+&lt;li&gt;Per-operation pricing is only one of several factors affecting cost; organizations should also consider saved staff time, patching, and high-availability management.&lt;/li&gt;
+&lt;li&gt;With envelope encryption, optional data key caching can further reduce API call volume.&lt;/li&gt;
+&lt;li&gt;Because application code is being refactored, this migration provides an opportunity to adopt post-quantum cryptography (PQC) algorithms when creating new signing keys.&lt;/li&gt;
+&lt;li&gt;AI-assisted code transformation tools can reduce the workload associated with application refactoring.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Migrating from AWS CloudHSM to AWS KMS allows organizations to eliminate the operational overhead of managing HSMs while retaining the security features required for their workloads. The process supports a gradual transition with zero downtime and opens the door to modernizing cryptographic dependencies, including the adoption of post-quantum algorithms.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Figure-1-Digital-signature-migration.png"
+loading="lazy"
+alt="Figure 1: Digital signature migration"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Figure-2-Encryption-migration-with-AWS-KMS-API.png"
+loading="lazy"
+alt="Figure 2: Encryption migration with AWS KMS API"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Figure-1-Digital-signature-migration.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Figure-2-Encryption-migration-with-AWS-KMS-API.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWSKMS #AWSCloudHSM #SecurityMigration #Cryptography #PostQuantum&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/reduce-operational-overhead-by-migrating-from-aws-cloudhsm-to-aws-kms/" target="_blank" rel="noopener"
+&gt;Reduce operational overhead by migrating from AWS CloudHSM to AWS KMS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

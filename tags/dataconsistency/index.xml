@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DataConsistency on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/dataconsistency/</link><description>Recent content in DataConsistency on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 20 Nov 2026 22:08:48 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/dataconsistency/index.xml" rel="self" type="application/rss+xml"/><item><title>PostgreSQL 19 Released with New Read-Your-Writes Consistency Feature</title><link>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-released-with-new-read-your-writes-consistency-feature/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-released-with-new-read-your-writes-consistency-feature/</guid><description>&lt;h1 id="postgresql-19-released-with-new-read-your-writes-consistency-feature"&gt;PostgreSQL 19 Released with New Read-Your-Writes Consistency Feature
+&lt;/h1&gt;&lt;p&gt;PostgreSQL 19 has been released, arriving two months later than the typical September schedule due to a flurry of issues related to AI-reported vulnerabilities.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The release was delayed from September by two months.&lt;/li&gt;
+&lt;li&gt;The delay was attributed to addressing ongoing AI-reported vulnerability issues.&lt;/li&gt;
+&lt;li&gt;The author considers the release &amp;ldquo;definitely worth the wait.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The release introduces a &amp;ldquo;read-your-writes&amp;rdquo; consistency feature for applications sending reads to standbys using the new &lt;code&gt;WAIT FOR LSN&lt;/code&gt; command. This allows a session on a standby to wait until it has replayed the write-ahead log (WAL) up to a specific log sequence number (LSN) before running a query. This ensures the application can read data it just wrote on the primary.&lt;/p&gt;
+&lt;h3 id="example-workflow"&gt;Example Workflow
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Update a record on the primary: &lt;code&gt;UPDATE movie SET genre = 'Dramatic' WHERE genre = 'Drama';&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Get the current LSN: &lt;code&gt;SELECT pg_current_wal_insert_lsn();&lt;/code&gt; (returns a value like &lt;code&gt;0/0306EE20&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Store the LSN value (e.g., in a signed cookie).&lt;/li&gt;
+&lt;li&gt;On a subsequent request, use the stored LSN on a standby: &lt;code&gt;WAIT FOR LSN '0/0306EE20' WITH (TIMEOUT '0.1s');&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Run the query: &lt;code&gt;SELECT * FROM movie WHERE genre = 'Drama';&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The timeout parameter is optional. If provided, the system returns an error if the replica does not catch up within the specified time.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This pattern ensures users see events in chronological order and maintain a consistent view across subsequent requests. Similar patterns have previously been implemented in hand-rolled solutions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Wikipedia/MediaWiki&lt;/strong&gt;: Uses a hand-rolled version against MySQL replication, saving the primary binlog position in the session and waiting for replicas to catch up before reads. MediaWiki now uses MySQL&amp;rsquo;s &lt;code&gt;WAIT_FOR_EXECUTED_GTID_SET()&lt;/code&gt; function and falls back to &lt;code&gt;SOURCE_POS_WAIT()&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#PostgreSQL #Database #SQL #DataConsistency #WaitForLSN&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/19/postgresql-19/" target="_blank" rel="noopener"
+&gt;PostgreSQL 19 Released&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

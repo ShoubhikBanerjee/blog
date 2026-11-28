@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HermesAgent on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/hermesagent/</link><description>Recent content in HermesAgent on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2026 22:09:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/hermesagent/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenTelemetry plugin enables comprehensive tracing and metrics for Hermes Agent</title><link>https://shoubhikbanerjee.github.io/blog/p/opentelemetry-plugin-enables-comprehensive-tracing-and-metrics-for-hermes-agent/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/opentelemetry-plugin-enables-comprehensive-tracing-and-metrics-for-hermes-agent/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/13635706?v=4" alt="Featured image of post OpenTelemetry plugin enables comprehensive tracing and metrics for Hermes Agent" /&gt;&lt;h1 id="opentelemetry-plugin-enables-comprehensive-tracing-and-metrics-for-hermes-agent"&gt;OpenTelemetry plugin enables comprehensive tracing and metrics for Hermes Agent
+&lt;/h1&gt;&lt;p&gt;An OpenTelemetry plugin has been released for Hermes Agent, enabling detailed observability for AI agent workflows. This update allows every interaction and process within the agent to be tracked and exported to compatible backends.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The plugin integrates Hermes Agent with OpenTelemetry (OTel) standards. It captures various operational aspects of the agent, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Model calls and API requests&lt;/li&gt;
+&lt;li&gt;Tool calls and skill loads&lt;/li&gt;
+&lt;li&gt;Approvals and delegated sub-agents&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All of these events are structured into a single OTel trace for each Hermes turn. This trace includes metrics for tokens, costs, and latency. Optionally, logs and structured events are also captured and exported to any OTLP backend via HTTP or gRPC.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The plugin uses a comprehensive attribute schema to log details across different components of the agent. Attributes are emitted in two conventions to support various backends:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;OpenInference&lt;/strong&gt; (&lt;code&gt;llm.*&lt;/code&gt;, &lt;code&gt;input.value&lt;/code&gt;): Optimized for Phoenix.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;OTel GenAI&lt;/strong&gt; (&lt;code&gt;gen_ai.*&lt;/code&gt;): Optimized for Langfuse, Weave, and generic dashboards.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This dual-convention approach eliminates the need for custom mapping in backend configurations.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Specific trace data includes:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Tracked Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Skills&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Name, source (&lt;code&gt;skill_view&lt;/code&gt; / path read), path; remains open until the turn ends&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Model Calls&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Model, provider, input user message, output assistant response&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Metrics&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Token counts (incl. cache and reasoning buckets), duration, finish reason, request parameters&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Errors&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;ERROR&lt;/code&gt; status, exception details, and retry metadata&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Tool Calls&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Arguments, results, inferred target/command, and &lt;code&gt;hermes.tool.outcome&lt;/code&gt; (&lt;code&gt;completed&lt;/code&gt;, &lt;code&gt;error&lt;/code&gt;, &lt;code&gt;timeout&lt;/code&gt;, &lt;code&gt;blocked&lt;/code&gt;, &lt;code&gt;cancelled&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Approvals&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Decision wait time, choice (&lt;code&gt;once&lt;/code&gt;, &lt;code&gt;session&lt;/code&gt;, &lt;code&gt;always&lt;/code&gt;, &lt;code&gt;deny&lt;/code&gt;, &lt;code&gt;timeout&lt;/code&gt;, &lt;code&gt;smart_approve&lt;/code&gt;, &lt;code&gt;smart_deny&lt;/code&gt;, &lt;code&gt;smart_escalate&lt;/code&gt;), and who decided&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Sub-agents&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Role, goal, status, duration, summary, child&amp;rsquo;s model, and total subtree cost&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Kanban&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A card&amp;rsquo;s run is traced from the dispatcher&amp;rsquo;s claim through the worker&amp;rsquo;s turn&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The &lt;code&gt;hermes.query_source&lt;/code&gt; attribute distinguishes the origin of calls:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;main&lt;/code&gt;: The agent loop&amp;rsquo;s own calls&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;subagent&lt;/code&gt;: A delegated child&amp;rsquo;s calls&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;auxiliary&lt;/code&gt;: Calls made on the agent&amp;rsquo;s behalf (e.g., titling, compression, Mixture-of-Agents references, vision). These are tagged with &lt;code&gt;hermes.auxiliary.task&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For successful &lt;code&gt;git commit&lt;/code&gt; operations, the plugin records &lt;code&gt;hermes.tool.git_commit&lt;/code&gt;, which is also counted as a &lt;code&gt;hermes.commit.count&lt;/code&gt; and a &lt;code&gt;commit&lt;/code&gt; event.&lt;/p&gt;
+&lt;h2 id="-multi-agent-support"&gt;🚀 Multi-agent Support
+&lt;/h2&gt;&lt;p&gt;The plugin supports complex orchestration patterns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Delegated children&lt;/li&gt;
+&lt;li&gt;Kanban workers operating on different profiles and models&lt;/li&gt;
+&lt;li&gt;Swarms&lt;/li&gt;
+&lt;li&gt;Mixture-of-Agents&lt;/li&gt;
+&lt;li&gt;Cron jobs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In multi-agent runs, child executions are nested within the trace, ensuring that a single connected trace represents the entire workflow. GPU and CPU utilization are monitored using host metrics.&lt;/p&gt;
+&lt;p&gt;#OpenTelemetry #AIAgents #HermesAgent #Observability #LLMOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/briancaffey/hermes-otel" target="_blank" rel="noopener"
+&gt;briancaffey/hermes-otel&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Hermes Memory UI Released for Agent Inspection</title><link>https://shoubhikbanerjee.github.io/blog/p/hermes-memory-ui-released-for-agent-inspection/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/hermes-memory-ui-released-for-agent-inspection/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/20925002?v=4" alt="Featured image of post Hermes Memory UI Released for Agent Inspection" /&gt;&lt;h1 id="hermes-memory-ui-released-for-agent-inspection"&gt;Hermes Memory UI Released for Agent Inspection
+&lt;/h1&gt;&lt;p&gt;The Read-only Hermes Agent plugin has been introduced for inspecting memory in the Hermes Dashboard and Hermes Desktop, providing a unified Python backend API alongside separate delivery artifacts.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Read-only Hermes Agent plugin for inspecting memory in Hermes Dashboard and Hermes Desktop.&lt;/li&gt;
+&lt;li&gt;The Dashboard and Desktop interfaces are separate delivery artifacts sharing only the profile-aware Python backend API.&lt;/li&gt;
+&lt;li&gt;The plugin is intentionally read-only and does not add, edit, replace, or remove memories.&lt;/li&gt;
+&lt;li&gt;Writes must go through Hermes&amp;rsquo; memory and fact_store tools or provider classes to preserve validation, locking, mirroring, FTS, HRR vectors, and memory-bank maintenance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-supported-memory-sources"&gt;🧩 Supported Memory Sources
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Memory Source&lt;/th&gt;
+&lt;th&gt;Description / Capabilities&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Built-in memory (&lt;code&gt;MEMORY.md&lt;/code&gt;, &lt;code&gt;USER.md&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;Agent notes, environment facts, project conventions, user profile, and preferences. Works always.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Session search&lt;/td&gt;
+&lt;td&gt;Explicit read-only search over previous Hermes sessions via session_search tool, with optional source/type filters (CLI, Telegram, cron, Discord, web, API).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Holographic memory&lt;/td&gt;
+&lt;td&gt;Local SQLite fact store at &lt;code&gt;$HERMES_HOME/memory_store.db&lt;/code&gt; tracking facts, categories, trust scores, retrieval counters, and timestamps.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Mem0 memory&lt;/td&gt;
+&lt;td&gt;Read-only Mem0 Platform memories via provider config, including scopes, scores, timestamps, and metadata.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Honcho memory&lt;/td&gt;
+&lt;td&gt;Read-only Honcho workspace, host, peer, and provider configuration state with user/AI peer cards, representations, conclusions, and context search.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Mnemosyne memory&lt;/td&gt;
+&lt;td&gt;Read-only local SQLite store inspection for episodes, facts, instructions, gists, and graph rows, with explicit recall and injected-context preview.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hindsight memory&lt;/td&gt;
+&lt;td&gt;Read-only/query-only Hindsight provider configuration state with explicit recall and reflect actions, and contents view for memory units and retained source documents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ByteRover memory&lt;/td&gt;
+&lt;td&gt;Read-only ByteRover CLI (brv) project status and registered locations, supporting explicit BM25 search and optional query/synthesis action.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-technical-details"&gt;⚙️ Key Technical Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Built-in memory view works always, while external memory provider sections show only when configured.&lt;/li&gt;
+&lt;li&gt;Dashboard is a web plugin with its own manifest, tracked browser bundle, and stylesheet (&lt;code&gt;dashboard/&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Desktop plugin (&lt;code&gt;desktop/plugin.js&lt;/code&gt;) is a standalone, uncompiled ESM disk plugin importing only the Hermes Desktop SDK, React, and the JSX runtime without requiring an npm build.&lt;/li&gt;
+&lt;li&gt;The Desktop plugin registers the &lt;code&gt;/memory&lt;/code&gt; full-page route, a Memory sidebar item, and an Open Memory command-palette action.&lt;/li&gt;
+&lt;li&gt;Desktop requests use the plugin-scoped, profile-aware &lt;code&gt;ctx.rest&lt;/code&gt; client reaching the same &lt;code&gt;/api/plugins/hermes-memory-ui/&lt;/code&gt; backend used by Dashboard.&lt;/li&gt;
+&lt;li&gt;The regular plugin must be installed and present in &lt;code&gt;plugins.enabled&lt;/code&gt; so Hermes mounts &lt;code&gt;dashboard/plugin_api.py&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-installation-and-availability"&gt;🚀 Installation and Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Default profile lives at &lt;code&gt;~/.hermes&lt;/code&gt;, while a named profile lives at &lt;code&gt;~/.hermes/profiles/&amp;lt;name&amp;gt;&lt;/code&gt; (use &lt;code&gt;hermes -p &amp;lt;name&amp;gt;&lt;/code&gt; and set &lt;code&gt;HERMES_HOME=&amp;quot;$HOME/.hermes/profiles/&amp;lt;name&amp;gt;&amp;quot;&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Install directly from GitHub: &lt;code&gt;hermes plugins install xraysight/hermes-memory-ui --enable&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;To enable the Hermes Desktop interface, copy the disk plugin to &lt;code&gt;$HERMES_HOME/desktop-plugins/hermes-memory-ui/plugin.js&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Hermes Desktop inventories the UI separately under Settings → Plugins.&lt;/li&gt;
+&lt;li&gt;Update existing installation using &lt;code&gt;hermes plugins update hermes-memory-ui&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#HermesAgent #AIPlugins #MemoryManagement #DeveloperTools&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/xraysight/hermes-memory-ui" target="_blank" rel="noopener"
+&gt;xraysight/hermes-memory-ui&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Turning a VPS into a 24/7 AI Worker with Hermes Agent or OpenClaw</title><link>https://shoubhikbanerjee.github.io/blog/p/turning-a-vps-into-a-24-7-ai-worker-with-hermes-agent-or-openclaw/</link><pubDate>Mon, 05 Oct 2026 22:07:36 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/turning-a-vps-into-a-24-7-ai-worker-with-hermes-agent-or-openclaw/</guid><description>&lt;img src="https://tino.vn/blog/wp-admin/admin-ajax.php?action=rank_math_overlay_thumb&amp;id=130428&amp;type=play&amp;hash=24aee8205432ec2b86acdf0abafefc06" alt="Featured image of post Turning a VPS into a 24/7 AI Worker with Hermes Agent or OpenClaw" /&gt;&lt;h1 id="turning-a-vps-into-a-247-ai-worker-with-hermes-agent-or-openclaw"&gt;Turning a VPS into a 24/7 AI Worker with Hermes Agent or OpenClaw
+&lt;/h1&gt;&lt;p&gt;A VPS can now be turned into an AI Worker by installing an AI Agent platform such as Hermes Agent or OpenClaw, connecting a language model, granting tools, and configuring a command channel.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AI Worker&lt;/strong&gt;: an AI Agent deployed on a VPS that receives tasks, uses AI and authorized tools, and operates continuously 24/7.&lt;/li&gt;
+&lt;li&gt;The concept is supported by platforms like &lt;strong&gt;Hermes Agent&lt;/strong&gt; and &lt;strong&gt;OpenClaw&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Communication can be routed through Telegram or Slack, allowing you to assign work from a phone.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-to-build-an-ai-worker"&gt;🛠️ How to Build an AI Worker
+&lt;/h2&gt;&lt;p&gt;The general workflow consists of six steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Prepare VPS&lt;/strong&gt; – provision a Linux VPS (commonly Ubuntu) with suitable CPU, RAM, and admin/SSH access.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Install AI Agent&lt;/strong&gt; – deploy an Agent platform such as Hermes Agent or OpenClaw.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Connect Model&lt;/strong&gt; – link the Agent to an external LLM via API key (e.g., GPT, Claude, Gemini, OpenRouter).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grant Tools&lt;/strong&gt; – provide the Agent with the utilities it needs (browser, file handlers, custom scripts, Docker if required).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Set Communication Channel&lt;/strong&gt; – configure Telegram, Slack, or another webhook for inbound commands.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Create Automation&lt;/strong&gt; – define schedules, scripts, or pipelines the Agent will execute autonomously.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-technical-requirements"&gt;⚙️ Technical Requirements
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Operating System&lt;/strong&gt;: Linux (Ubuntu is typical).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access&lt;/strong&gt;: SSH or full administrative rights.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Access&lt;/strong&gt;: API key for the chosen LLM service.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Docker&lt;/strong&gt;: Needed only if the selected Agent or sandbox demands it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Communication&lt;/strong&gt;: Telegram or Slack bot/webhook for remote task submission.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Additional&lt;/strong&gt;: Domain name and HTTPS if a web interface or external webhook is exposed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware&lt;/strong&gt;: No GPU required when the Agent calls models via API; CPU and RAM support the Agent, browser, tools, and background services.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-capabilities"&gt;🤖 Capabilities
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Receive requests from Telegram/Slack.&lt;/li&gt;
+&lt;li&gt;Process files, perform web searches, run shell commands.&lt;/li&gt;
+&lt;li&gt;Utilize &lt;strong&gt;Skills&lt;/strong&gt; and &lt;strong&gt;Persistent Memory&lt;/strong&gt; (Hermes Agent) to reuse experience across sessions.&lt;/li&gt;
+&lt;li&gt;Remember data between interactions and execute scheduled jobs.&lt;/li&gt;
+&lt;li&gt;Operate continuously without dependence on a personal computer’s power state.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-platform-comparison"&gt;📊 Platform Comparison
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Platform&lt;/th&gt;
+&lt;th&gt;Type&lt;/th&gt;
+&lt;th&gt;Notable Features&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Hermes Agent&lt;/td&gt;
+&lt;td&gt;AI Agent&lt;/td&gt;
+&lt;td&gt;Skills, Persistent Memory, learning loop, extensible memory providers (as described in official docs)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OpenClaw&lt;/td&gt;
+&lt;td&gt;AI Agent&lt;/td&gt;
+&lt;td&gt;General AI Agent example for deployment on a VPS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;The practical capability of an AI Worker depends on the chosen Agent, the language model, and the granted tools.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://tino.vn/blog/wp-content/uploads/2026/10/bien-vps-thanh-ai-worker-cover-150x150.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://tino.vn/blog/wp-content/uploads/2026/10/bien-vps-thanh-ai-worker-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://tino.vn/blog/wp-content/uploads/2026/10/bien-vps-thanh-ai-worker-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AIWorker #VPS #AIAgents #HermesAgent #OpenClaw&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://tino.vn/blog/bien-vps-thanh-ai-worker/" target="_blank" rel="noopener"
+&gt;Cách biến VPS thành AI Worker: Xây dựng AI Agent làm việc 24/7&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA NeMo Relay Integration for Hermes Agent Observability</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-nemo-relay-integration-for-hermes-agent-observability/</link><pubDate>Wed, 30 Sep 2026 22:03:54 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-nemo-relay-integration-for-hermes-agent-observability/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/Tracing-Agent-Harness-660x370.png" alt="Featured image of post NVIDIA NeMo Relay Integration for Hermes Agent Observability" /&gt;&lt;h1 id="nvidia-nemo-relay-integration-for-hermes-agent-observability"&gt;NVIDIA NeMo Relay Integration for Hermes Agent Observability
+&lt;/h1&gt;&lt;p&gt;The Hermes Agent harness now includes native integration with NVIDIA NeMo Relay, allowing developers to record and evaluate agent sessions, turns, model calls, and tool calls.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;NeMo Relay records lifecycle events as work begins and ends, preserving timing and parent-child relationships. This integration utilizes several formats and standards for observability:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Format/Standard&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Agent Trajectory Observability Format (ATOF)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A JSONL log of scope starts, ends, and point-in-time marks with IDs and timestamps to reconstruct the agent run.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Agent Trajectory Interchange Format (ATIF)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A step-by-step JSON record of agent interactions, tool calls, and observations assembled from lifecycle events.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;OpenTelemetry with OpenInference&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Records the run as parent-child spans, using OpenInference to label agent, LLM, and tool spans and define their attributes.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Users can run Hermes Agent examples using a self-contained environment (Python 3.11, Hermes 0.21.1, and NeMo Relay 0.8.3) created via a setup script in the &lt;code&gt;nemoclaw-community&lt;/code&gt; repository.&lt;/p&gt;
+&lt;p&gt;Capabilities and constraints include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Terminal Tool Sandbox&lt;/strong&gt;: Hermes uses a terminal tool to run Python scripts inside an isolated Docker container that cannot access the network, repository checkout, or NVIDIA API key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Host Security&lt;/strong&gt;: Hermes cannot fall back to running terminal commands on the host.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Observability Tools&lt;/strong&gt;: Users can explore OpenTelemetry traces in Arize Phoenix.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation&lt;/strong&gt;: The Hermes ToolPerf case study demonstrates using this approach to evaluate harness changes across repeated runs by combining task verification with trace evidence.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;To get started, the following prerequisites are required:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;macOS or Linux&lt;/li&gt;
+&lt;li&gt;Git and curl&lt;/li&gt;
+&lt;li&gt;Docker Desktop or Docker Engine&lt;/li&gt;
+&lt;li&gt;An NVIDIA Build API key for NVIDIA Nemotron 3.5 Lightning&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/Tracing-Agent-Harness-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #NeMoRelay #HermesAgent #OpenTelemetry #AIAgents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/tracing-agent-harness-behavior-with-nvidia-nemo-relay/" target="_blank" rel="noopener"
+&gt;Tracing Agent Harness Behavior with NVIDIA NeMo Relay | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Graph Computing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/graph-computing/</link><description>Recent content in Graph Computing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 18 Nov 2026 22:09:17 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/graph-computing/index.xml" rel="self" type="application/rss+xml"/><item><title>Parseltongue v1.7.2 Adds TreeSitter Code Analysis API and Rust Graph Algorithms</title><link>https://shoubhikbanerjee.github.io/blog/p/parseltongue-v1-7-2-adds-treesitter-code-analysis-api-and-rust-graph-algorithms/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/parseltongue-v1-7-2-adds-treesitter-code-analysis-api-and-rust-graph-algorithms/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/183183660?v=4" alt="Featured image of post Parseltongue v1.7.2 Adds TreeSitter Code Analysis API and Rust Graph Algorithms" /&gt;&lt;h1 id="parseltongue-v172-adds-treesitter-code-analysis-api-and-rust-graph-algorithms"&gt;Parseltongue v1.7.2 Adds TreeSitter Code Analysis API and Rust Graph Algorithms
+&lt;/h1&gt;&lt;p&gt;Parseltongue released v1.7.2 on 2026-02-12, a stable version designed to parse codebases using TreeSitter for 12 languages and expose dependency analysis via an HTTP API. The tool builds dependency graphs in CozoDB and executes graph algorithms in Rust, providing endpoints for impact analysis, complexity scoring, and community detection.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The release supports incremental reindexing through a file watcher and provides a query interface consisting of 26 HTTP endpoints. The system parses codebases using TreeSitter for 12 languages and stores the resulting dependency graph in CozoDB.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Users index a codebase using the &lt;code&gt;parseltongue pt01-folder-to-cozodb-streamer&lt;/code&gt; command and start the HTTP server with &lt;code&gt;parseltongue pt08-http-code-query-server&lt;/code&gt; on default port 7777. The architecture includes several specific implementation details:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Graph algorithms run in Rust rather than in CozoDB natively.&lt;/li&gt;
+&lt;li&gt;Search operates as an O(n) full-scan without secondary indices for reverse lookups.&lt;/li&gt;
+&lt;li&gt;Unresolved import references are mixed with production code.&lt;/li&gt;
+&lt;li&gt;The schema includes temporal fields that are currently underutilized.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The HTTP API returns responses in the format &lt;code&gt;{&amp;quot;success&amp;quot;: bool, &amp;quot;endpoint&amp;quot;: str, &amp;quot;data&amp;quot;: {…}, &amp;quot;tokens&amp;quot;: int}&lt;/code&gt;. Entity keys follow the pattern &lt;code&gt;language:type:name:file_path:line_range&lt;/code&gt; (e.g., &lt;code&gt;rust:fn:main:src_main_rs:1-50&lt;/code&gt;). All query endpoints accept an optional &lt;code&gt;?scope=L1||L2&lt;/code&gt; parameter to filter by folder.&lt;/p&gt;
+&lt;p&gt;Key available endpoints include:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Endpoint&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/codebase-statistics-overview-summary&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Entity count, edge count, languages&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/code-entities-list-all&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Lists all entities with total count and data array&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/blast-radius-impact-analysis&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Transitive impact analysis (default 2 hops)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/circular-dependency-detection-scan&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Identifies circular dependency cycles&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/complexity-hotspots-ranking-view&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Ranks most coupled entities (default top 10)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/strongly-connected-components-analysis&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tarjan SCC cycle detection&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/technical-debt-sqale-scoring&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;ISO 25010 SQALE debt scores&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/centrality-measures-entity-ranking&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Entity importance via pagerank or betweenness&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/leiden-community-detection-clusters&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Leiden community detection&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/smart-context-token-budget&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Optimal code context within a token budget&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;/incremental-reindex-file-update&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Reindex a single file (POST)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The latest stable binary v1.7.2 is available for download. V2.0 development is scheduled to begin in May 2026. Users can copy a system prompt block into their LLM agent that contains every endpoint with exact parameter names.&lt;/p&gt;
+&lt;p&gt;#Parseltongue #CodeAnalysis #DependencyGraph #TreeSitter #HTTPAPI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/that-in-rust/parseltongue-rust-LLM-companion" target="_blank" rel="noopener"
+&gt;that-in-rust/parseltongue-rust-LLM-companion&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

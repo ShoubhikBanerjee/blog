@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWSNeuron on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/awsneuron/</link><description>Recent content in AWSNeuron on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/awsneuron/index.xml" rel="self" type="application/rss+xml"/><item><title>Exa Optimizes Web Embedding Pipeline on AWS Neuron Hardware</title><link>https://shoubhikbanerjee.github.io/blog/p/exa-optimizes-web-embedding-pipeline-on-aws-neuron-hardware/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/exa-optimizes-web-embedding-pipeline-on-aws-neuron-hardware/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-featured-image-1.png" alt="Featured image of post Exa Optimizes Web Embedding Pipeline on AWS Neuron Hardware" /&gt;&lt;h1 id="exa-optimizes-web-embedding-pipeline-on-aws-neuron-hardware"&gt;Exa Optimizes Web Embedding Pipeline on AWS Neuron Hardware
+&lt;/h1&gt;&lt;p&gt;Exa is updating its web‑index embedding infrastructure to run more cheaply and flexibly on AWS Inferentia2 and Trainium2 hardware.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Exa builds one of the few true web indexes by aggregating knowledge from public, private and synthetic sources.&lt;/li&gt;
+&lt;li&gt;Multi‑tower semantic machine‑learning models embed web data and query data into the same vector space, allowing natural‑language and keyword queries.&lt;/li&gt;
+&lt;li&gt;An in‑house vector database is the keystone technology for serving this embedded knowledge.&lt;/li&gt;
+&lt;li&gt;Every structured web document that ranks as high enough quality must be embedded before it can be served.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-optimization-details"&gt;⚙️ Optimization Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Moving to a superior document model required re‑embedding 30 billion high‑priority documents, temporarily doubling the embedding load and prompting a hardware re‑evaluation.&lt;/li&gt;
+&lt;li&gt;Selected AWS Neuron hardware (Inferentia2 xlarge instance with one chip and two NeuronCores); the workload runs on a single NeuronCore, and Kubernetes pods pack onto larger instances to avoid idle cores.&lt;/li&gt;
+&lt;li&gt;Initial Inferentia2 implementation used straightforward data‑parallel FP16 representation of the model.&lt;/li&gt;
+&lt;li&gt;A progressive series of optimizations delivered roughly a &lt;strong&gt;1.5×&lt;/strong&gt; throughput improvement:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Weight layout optimization&lt;/strong&gt; aligned weight layout with model scheduling, eliminating unnecessary transposes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Autocast&lt;/strong&gt; allowed the compiler to down‑cast matrix multiplications to lower precision while preserving dynamic range; the down‑cast outputs met a 0.999 cosine‑similarity correctness gate.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;Neuron Kernel Interface (NKI) library&lt;/strong&gt; supplied optimized kernels for common layers; using these pre‑built kernels gave immediate gains.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;drop‑in attention kernel&lt;/strong&gt; added the next performance bump.&lt;/li&gt;
+&lt;li&gt;Profiling with Neuron Explorer revealed large HBM spill/reload; a custom &lt;strong&gt;weight‑stationary fused SwiGLU MLP kernel&lt;/strong&gt; eliminated those stalls.&lt;/li&gt;
+&lt;li&gt;Most kernel logic was written in the higher‑level NKI language for readability and easier debugging; lower‑level NKI ISA was used only for specific tensor operations.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;attention kernel&lt;/strong&gt; was rewritten to match the exact shapes of Exa’s model, cutting FLOPs spent on padding and further improving performance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment-model"&gt;🚀 Deployment Model
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Inference runs on an asynchronous pipeline that must be high‑volume and fast to serve recent data quickly and shrink the time between discovery and serving.&lt;/li&gt;
+&lt;li&gt;Pods are scheduled to keep all NeuronCores busy, providing container homogeneity across the embedding fleet.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Faster, cheaper embedding enables more up‑to‑date web documents to be available in Exa’s index.&lt;/li&gt;
+&lt;li&gt;All optimizations preserve model accuracy (≥ 0.999 cosine similarity) while reducing hardware cost and improving utilization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/13/ML-22138-3-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Exa #AWSNeuron #EmbeddingOptimization #VectorDB&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/exa-boosts-embedding-throughput-by-50-to-index-billions-of-documents-on-aws-ai-chips/" target="_blank" rel="noopener"
+&gt;Exa boosts embedding throughput by 50% to index billions of documents on AWS AI chips | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GreenContexts on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/greencontexts/</link><description>Recent content in GreenContexts on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 06 Oct 2026 22:08:14 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/greencontexts/index.xml" rel="self" type="application/rss+xml"/><item><title>CUDA Runtime Gains Green Context Support for Explicit GPU Resource Partitioning</title><link>https://shoubhikbanerjee.github.io/blog/p/cuda-runtime-gains-green-context-support-for-explicit-gpu-resource-partitioning/</link><pubDate>Tue, 06 Oct 2026 22:08:14 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/cuda-runtime-gains-green-context-support-for-explicit-gpu-resource-partitioning/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/image1-3-660x370.png" alt="Featured image of post CUDA Runtime Gains Green Context Support for Explicit GPU Resource Partitioning" /&gt;&lt;h1 id="cuda-runtime-gains-green-context-support-for-explicit-gpu-resource-partitioning"&gt;CUDA Runtime Gains Green Context Support for Explicit GPU Resource Partitioning
+&lt;/h1&gt;&lt;p&gt;Multiple independent components – latency‑sensitive kernels, background throughput work, data‑preprocessing, or workflow stages – now often share a single GPU process. Controlling how GPU resources are shared between them remains difficult; components can interfere unpredictably and existing tools offer limited ability to partition resources.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Green contexts let applications explicitly select a subset of GPU execution resources and target work to those resources directly. This addresses the shortcomings of traditional CUDA contexts, which are heavyweight, incur hardware context‑switch overhead, and were designed for a era when a single dominant workload typically occupied the GPU.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SM partitioning&lt;/strong&gt; – Assign a specific subset of Streaming Multiprocessors (SMs) to a green context; work submitted through that context runs only on those SMs, enabling concurrent workloads without competing for the same compute units.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work‑queue provisioning&lt;/strong&gt; – Explicitly allocate workqueues to a green context, avoiding unintended serialization when independent stream‑ordered workloads would otherwise map to the same underlying workqueues.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lightweight creation&lt;/strong&gt; – Green contexts are cheap to create and destroy and do not implicitly synchronize unrelated GPU work.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Explicit programming model&lt;/strong&gt; – Applications target work to a chosen green context rather than relying on implicit/current device state.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Availability (Driver API)&lt;/td&gt;
+&lt;td&gt;Green contexts have been available since NVIDIA CUDA 12.4.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Availability (Runtime API)&lt;/td&gt;
+&lt;td&gt;Starting with CUDA 13.1, they are accessible through the Runtime API.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Runtime type&lt;/td&gt;
+&lt;td&gt;Represented by &lt;code&gt;cudaExecutionContext_t&lt;/code&gt;, a Runtime abstraction for CUDA contexts.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Creation API&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;cudaGreenCtxCreate()&lt;/code&gt; returns a handle that can be passed to &lt;code&gt;cudaExecutionCtxStreamCreate()&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stream creation&lt;/td&gt;
+&lt;td&gt;Streams are created from the green context; work submitted to those streams uses the context’s resources.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Full‑device fallback&lt;/td&gt;
+&lt;td&gt;Applications can still use the traditional Runtime model or obtain the device‑wide context with &lt;code&gt;cudaDeviceGetExecutionCtx()&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Minimal code impact&lt;/td&gt;
+&lt;td&gt;Code changes are minimal; the mental model becomes clearer by explicitly choosing a green context.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Driver API&lt;/strong&gt; – green contexts have been supported since CUDA 12.4.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Runtime API&lt;/strong&gt; – support added in CUDA 13.1, enabling applications to define resource partitions without leaving the Runtime layer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;GPU workloads often need a small, latency‑sensitive kernel to coexist with a larger, throughput‑oriented worker (e.g., communication/GEMM overlap in distributed training, or latency‑sensitive operators in AI sensor platforms like NVIDIA Holoscan). While CUDA stream priority is a standard tool for prioritizing such critical work, green contexts provide a more robust mechanism: by partitioning SMs and provisioning dedicated workqueues, applications can reduce interference, express expected concurrency, and keep latency‑sensitive kernels from being delayed by background work.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2024/04/gpu-occupancy-workloads-featured-960x540.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2020/12/CUDA_3x2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/image4-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#CUDA #GPU #GreenContexts #ParallelComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/control-how-your-gpu-shares-work-with-green-contexts/" target="_blank" rel="noopener"
+&gt;Control How Your GPU Shares Work with Green Contexts | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

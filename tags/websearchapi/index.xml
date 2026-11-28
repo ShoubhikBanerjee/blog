@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>WebSearchAPI on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/websearchapi/</link><description>Recent content in WebSearchAPI on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 12 Nov 2026 22:08:51 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/websearchapi/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock AgentCore adds Web Search API</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-web-search-api/</link><pubDate>Thu, 12 Nov 2026 22:08:51 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-adds-web-search-api/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/11/ML-22165-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore adds Web Search API" /&gt;&lt;h1 id="amazon-bedrock-agentcore-adds-web-search-api"&gt;Amazon Bedrock AgentCore adds Web Search API
+&lt;/h1&gt;&lt;p&gt;Amazon announced a new Web Search API on Bedrock AgentCore that lets developers retrieve ranked web results with a single API call.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Web Search API returns ranked results from an Amazon‑operated web index.&lt;/li&gt;
+&lt;li&gt;Each result includes a text extract and, when available, the page title, URL, and publication time.&lt;/li&gt;
+&lt;li&gt;The API can be invoked via AWS SDKs or the AWS Command Line Interface (AWS CLI).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The API is exposed as the &lt;strong&gt;InvokeWebSearch&lt;/strong&gt; operation on the &lt;strong&gt;bedrock-agentcore&lt;/strong&gt; data plane.&lt;/li&gt;
+&lt;li&gt;It runs on the same search infrastructure that powers Alexa+, Kiro, Quick, and other Amazon products.&lt;/li&gt;
+&lt;li&gt;Calls are signed with AWS Signature Version 4 (SigV4) using standard IAM credentials; no separate API key is required.&lt;/li&gt;
+&lt;li&gt;The recommended integration point for most agentic workloads is the AgentCore Gateway, which provides a single Model Context Protocol (MCP) endpoint that combines web search with other tools.&lt;/li&gt;
+&lt;li&gt;When executed from a VPC, the call can travel through an interface VPC endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Result limits&lt;/strong&gt;: Request between 1 and 25 results per query; if &lt;code&gt;maxResults&lt;/code&gt; is omitted, up to 25 results are returned.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Result content&lt;/strong&gt;: Each result contains a text extract and, when available, title, URL, and publication time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Search query&lt;/strong&gt;: &lt;code&gt;searchQuery&lt;/code&gt; may be up to 200 characters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Domain filtering&lt;/strong&gt;: Include or exclude up to 100 domain names; a root domain also matches its subdomains.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Publication‑time filtering&lt;/strong&gt;: Use &lt;code&gt;publishedAfter&lt;/code&gt; and &lt;code&gt;publishedBefore&lt;/code&gt; (RFC 3339 UTC) to restrict results; both bounds are inclusive.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Permissions&lt;/strong&gt;: The caller must have the IAM permission &lt;code&gt;bedrock-agentcore:InvokeWebSearch&lt;/code&gt; on the managed web search tool. One IAM policy covers both the gateway and direct API routes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution context&lt;/strong&gt;: If code runs on AWS Lambda, Amazon ECS, Amazon EC2, or Amazon EKS, the execution role supplies credentials automatically.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Operation&lt;/td&gt;
+&lt;td&gt;InvokeWebSearch on the bedrock-agentcore data plane&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Endpoint&lt;/td&gt;
+&lt;td&gt;AgentCore Gateway MCP endpoint (recommended)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Permission&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;bedrock-agentcore:InvokeWebSearch&lt;/code&gt; IAM permission&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The API can be called from any environment that can use the AWS SDKs or AWS CLI.&lt;/li&gt;
+&lt;li&gt;Calls are signed with the same IAM credentials used for other AWS services.&lt;/li&gt;
+&lt;li&gt;When run inside a VPC, an interface VPC endpoint can be used for private connectivity.&lt;/li&gt;
+&lt;li&gt;Execution roles for Lambda, ECS, EC2, and EKS automatically provide the necessary credentials.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a direct, compliant web‑search capability for agents without managing external API keys.&lt;/li&gt;
+&lt;li&gt;Leverages Amazon’s own high‑quality search infrastructure, ensuring consistent quality and compliance.&lt;/li&gt;
+&lt;li&gt;Integrates seamlessly with other AgentCore tools such as AgentCore Browser through the same endpoint.&lt;/li&gt;
+&lt;li&gt;Enables developers to scope searches to trusted domains and recent publications, improving relevance for AI‑driven applications.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonWebServices #Bedrock #WebSearchAPI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-the-web-search-api-on-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;Introducing the Web Search API on Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

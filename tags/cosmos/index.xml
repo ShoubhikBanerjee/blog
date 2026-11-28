@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cosmos on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/cosmos/</link><description>Recent content in Cosmos on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Nov 2026 22:10:10 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/cosmos/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Cosmos 3 Nano Enables Video Generation on 12GB GPUs Through System RAM Offloading</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-cosmos-3-nano-enables-video-generation-on-12gb-gpus-through-system-ram-offloading/</link><pubDate>Wed, 25 Nov 2026 22:10:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-cosmos-3-nano-enables-video-generation-on-12gb-gpus-through-system-ram-offloading/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/ai-model-660x370.jpg" alt="Featured image of post NVIDIA Cosmos 3 Nano Enables Video Generation on 12GB GPUs Through System RAM Offloading" /&gt;&lt;h1 id="nvidia-cosmos-3-nano-enables-video-generation-on-12gb-gpus-through-system-ram-offloading"&gt;NVIDIA Cosmos 3 Nano Enables Video Generation on 12GB GPUs Through System RAM Offloading
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released Cosmos 3 Nano, a world foundation model that generates videos from text, images, and other inputs to support physical AI development. The model can run on consumer GPUs with as little as 12 GB of VRAM by storing most model weights in system RAM and transferring them to the GPU as needed, making advanced video generation accessible on more modest hardware configurations.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The central approach stores model weights in system RAM and uses the GPU for computation. Checkpoint weights that are not currently needed remain in system RAM, in BF16 or the checkpoint&amp;rsquo;s FP8 representation. When required, the next transformer block is transferred to the GPU. Every matrix multiplication and attention operation runs on CUDA. The adapter manages memory for denoising, the variational autoencoder (VAE) that encodes and decodes video, and safety checking.&lt;/p&gt;
+&lt;p&gt;During generation, system RAM serves as the backing store for weights not currently on the GPU. A 35-step request runs denoising steps 1 through 35, with each step traversing 36 transformer blocks indexed 0 through 35. Classifier-free guidance (CFG) in Hugging Face combines predictions with and without prompt conditioning at each denoising step, and the adapter reuses each streamed block across these predictions.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Requires Linux environment with Python 3.12 and CUDA-enabled PyTorch build&lt;/li&gt;
+&lt;li&gt;Tested consumer GPUs need approximately 128 GB system RAM (not a measured minimum)&lt;/li&gt;
+&lt;li&gt;Uses Hugging Face Diffusers for video generation&lt;/li&gt;
+&lt;li&gt;Supports BF16 and FP8 checkpoints to reduce memory requirements&lt;/li&gt;
+&lt;li&gt;Generates 189 frames at 720p; can reduce to 480x848 or 240x432 for faster iteration&lt;/li&gt;
+&lt;li&gt;Safety checking enabled by default&lt;/li&gt;
+&lt;li&gt;First load downloads checkpoint; subsequent loads reuse cached files&lt;/li&gt;
+&lt;li&gt;The tradeoff involves increased system RAM use and PCIe transfers for smaller GPU-memory requirement&lt;/li&gt;
+&lt;li&gt;Approach does not provide interactive latency or stream weights directly from disk during inference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;To use Cosmos 3 Nano:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Clone the Cosmos-Framework repository: &lt;code&gt;git clone https://github.com/NVIDIA/cosmos-framework.git&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Install the standalone offloading package: &lt;code&gt;cd cosmos-framework/packages/diffusers-cpu-offloading &amp;amp;&amp;amp; uv pip install '.[benchmarks]'&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pass the Hugging Face repository ID directly to &lt;code&gt;build_pipeline&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Set video options including negative prompt, frame count, dimensions, FPS, inference steps, and guidance scale&lt;/li&gt;
+&lt;li&gt;Generate and save the video using the pipeline and export function&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The framework enables running demanding 720p generation on 12 GB GPUs through automatic lower-memory execution mode while keeping model computation on CUDA.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/cosmos-weight-streaming.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/ai-model-1024x576-jpg.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AI #video-generation #Cosmos #PyTorch #HuggingFace&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/how-to-run-nvidia-cosmos-3-on-local-ai-devices-using-hugging-face-diffusers/" target="_blank" rel="noopener"
+&gt;How to Run NVIDIA Cosmos 3 on Local AI Devices Using Hugging Face Diffusers | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Releases Cosmos3-Edge and Cosmos Data Factory for Physical AI Development</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cosmos3-edge-and-cosmos-data-factory-for-physical-ai-development/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cosmos3-edge-and-cosmos-data-factory-for-physical-ai-development/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/cosmos-gif.gif" alt="Featured image of post NVIDIA Releases Cosmos3-Edge and Cosmos Data Factory for Physical AI Development" /&gt;&lt;h1 id="nvidia-releases-cosmos3-edge-and-cosmos-data-factory-for-physical-ai-development"&gt;NVIDIA Releases Cosmos3-Edge and Cosmos Data Factory for Physical AI Development
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released Cosmos3-Edge, a 4B parameter model tier optimized for on-device, real-time deployment on Jetson AGX Orin, Thor, and RTX Pro 6000. This follows the release of Cosmos 3, an open platform of world models, datasets, frameworks, and tools designed to enable physical AI applications across robotics, autonomous vehicles, smart infrastructure, manufacturing, healthcare, and agriculture.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;NVIDIA Cosmos is an open platform developed to provide physical AI developers with better data, a better environment, a better starting point, and better tooling. The underlying Cosmos 3 model family is built on a unified Mixture-of-Transformers architecture. These omnimodal world models are capable of seeing, reasoning, simulating, and acting, allowing them to render physical momentum, perform forward dynamics, and reason in complex real-world scenarios.&lt;/p&gt;
+&lt;h2 id="-cosmos-data-factory-blueprints"&gt;🛠️ Cosmos Data Factory Blueprints
+&lt;/h2&gt;&lt;p&gt;As part of this platform, NVIDIA Cosmos Data Factory (CDF) provides five cloud-native blueprints and six composable skills to accelerate data curation, processing, and synthetic data generation (SDG). AI agents can orchestrate these blueprints for prompt-to-data workflows without human steering.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Blueprint&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Key Components Used&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Autonomous Vehicle Dataset Generation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Searches databases of driving scenarios and generates novel datasets for model training and validation.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Cosmos Curator, Dataset Search, Cosmos3-Super-Image2Video, Cosmos Evaluator&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Image Attribute Augmentation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Generates variations of person-crops with controlled changes to attributes like clothing, accessories, and color.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;LLM, Cosmos Evaluator&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Video Data Augmentation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Transforms existing footage across weather, lighting, and environmental conditions while preserving scene structure.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;VLM, Cosmos3-Nano, Cosmos Evaluator&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Event Video Generation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses a source image to create videos of rare events like fires, falls, or shoplifting.&lt;/td&gt;
+&lt;td style="text-align: left"&gt;VLM, Cosmos3-Super-Image2Video, Cosmos Evaluator&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The workflows and blueprints within Cosmos Data Factory are powered by several core tools and skills:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CDF Orchestration Core Skill&lt;/strong&gt;: Coordinates workflow steps, deploys required services, and manages execution on your cluster.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Preflight and Setup&lt;/strong&gt;: Preflight checks the cluster environment without making changes to flag missing components, while setup configures the environment to run the blueprints.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NVIDIA Cosmos Curator&lt;/strong&gt;: Extracts metadata for video dataset inputs, and works with Cosmos Dataset Search to locate relevant videos through embeddings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cosmos Evaluator&lt;/strong&gt;: Reviews generated content to verify the requested attributes or conditions appear, and evaluates whether motion is physically plausible without artifacts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cosmos Framework&lt;/strong&gt;: Provides training infrastructure supporting supervised fine-tuning (SFT), LoRA, reinforcement learning (RL), and distillation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cosmos 3&lt;/strong&gt;: Released in May 2026, comprising the unified Mixture-of-Transformers model family.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cosmos3-Edge&lt;/strong&gt;: Released in July 2026, offering a 4B parameter tier for on-device, real-time deployment on Jetson AGX Orin, Thor, and RTX Pro 6000 hardware platforms.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/cosmos-av-dataset-workflow.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image-attribute-augmentation-reference-blueprint.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/video-data-augmentation-reference-blueprint.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Cosmos #PhysicalAI #SyntheticData #Robotics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/build-training-ready-physical-ai-datasets-with-two-prompts-in-nvidia-cosmos/" target="_blank" rel="noopener"
+&gt;Build Training-Ready Physical AI Datasets with Two Prompts in NVIDIA Cosmos | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://github.com/NVIDIA/cosmos" target="_blank" rel="noopener"
+&gt;NVIDIA/cosmos&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Cosmos Framework Expands Model Support and Introduces Cosmos 3 Nano Simulation Recipes</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-cosmos-framework-expands-model-support-and-introduces-cosmos-3-nano-simulation-recipes/</link><pubDate>Tue, 03 Nov 2026 22:02:32 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-cosmos-framework-expands-model-support-and-introduces-cosmos-3-nano-simulation-recipes/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/cosmos-framework-tech-blog-600x338-5784057.webp" alt="Featured image of post NVIDIA Cosmos Framework Expands Model Support and Introduces Cosmos 3 Nano Simulation Recipes" /&gt;&lt;h1 id="nvidia-cosmos-framework-expands-model-support-and-introduces-cosmos3nano-simulation-recipes"&gt;NVIDIA Cosmos Framework Expands Model Support and Introduces Cosmos 3 Nano Simulation Recipes
+&lt;/h1&gt;&lt;p&gt;NVIDIA has updated its Cosmos platform, adding broader model compatibility, new training and inference skills, and Cosmos 3 Nano simulation recipes for robotics and autonomous‑driving scenarios.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Cosmos is a platform of world foundation models and development tools for physical AI.&lt;/li&gt;
+&lt;li&gt;Cosmos Framework provides agent skills and recipes for world model training, multimodal data processing, optimization and inference.&lt;/li&gt;
+&lt;li&gt;The framework is open, fully modular, and supports the complete model development lifecycle.&lt;/li&gt;
+&lt;li&gt;Cosmos NIM microservices enables GPU‑accelerated serving through application APIs.&lt;/li&gt;
+&lt;li&gt;Support has been expanded beyond Cosmos 3 to include NVIDIA Alpamayo, GR00T, Qwen, pi0.5, and other compatible Hugging Face models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-core-features"&gt;⚙️ Core Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Train on text, images, video, audio, and actions using new agent skills.&lt;/li&gt;
+&lt;li&gt;Adapt models with LoRA (parameter‑efficient) or full supervised fine‑tuning (SFT).&lt;/li&gt;
+&lt;li&gt;Load data via JSONL, WebDataset, LeRobot, or custom adapters; train across GPUs and resume from checkpoints.&lt;/li&gt;
+&lt;li&gt;Post‑training skills can be pointed to by agents for acceleration and automation.&lt;/li&gt;
+&lt;li&gt;Both online and offline reinforcement‑learning (RL) paths are now covered.&lt;/li&gt;
+&lt;li&gt;Rollout, reward, and training roles can run on shared GPUs or separate pools.&lt;/li&gt;
+&lt;li&gt;Distillation reduces model size or generation steps; quantization reduces memory usage.&lt;/li&gt;
+&lt;li&gt;Evaluation includes quality, accuracy, and GPU usage to maximize compute utilization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-model--runtime-compatibility"&gt;📦 Model &amp;amp; Runtime Compatibility
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Compatibility&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NVIDIA Alpamayo&lt;/td&gt;
+&lt;td&gt;Cosmos Framework&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GR00T&lt;/td&gt;
+&lt;td&gt;Cosmos Framework&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen&lt;/td&gt;
+&lt;td&gt;Cosmos Framework&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;pi0.5&lt;/td&gt;
+&lt;td&gt;Cosmos Framework&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Other Hugging Face models&lt;/td&gt;
+&lt;td&gt;Cosmos Framework&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Runtime&lt;/th&gt;
+&lt;th&gt;Checkpoint Support&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Hugging Face Diffusers&lt;/td&gt;
+&lt;td&gt;Compatible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PyTorch&lt;/td&gt;
+&lt;td&gt;Compatible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SGLang&lt;/td&gt;
+&lt;td&gt;Compatible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;vLLM‑Omni&lt;/td&gt;
+&lt;td&gt;Compatible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;vLLM&lt;/td&gt;
+&lt;td&gt;Compatible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TRT‑LLM&lt;/td&gt;
+&lt;td&gt;Compatible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TRT‑Edge‑LLM&lt;/td&gt;
+&lt;td&gt;Compatible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NVIDIA NIM&lt;/td&gt;
+&lt;td&gt;Compatible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-simulation--robotics-recipes"&gt;🤖 Simulation &amp;amp; Robotics Recipes
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Post‑training and inference recipes are provided for robot simulation, realistic scene generation, multi‑camera driving simulation, and surgical policy evaluation.&lt;/li&gt;
+&lt;li&gt;New Cosmos 3 Nano simulation recipes and example checkpoints let developers evaluate checkpoints and adapt Cosmos 3 Nano to custom sensors, action spaces, and data domains.&lt;/li&gt;
+&lt;li&gt;Checkpoints support PyTorch and vLLM‑Omni and have been tested on NVIDIA Hopper and Blackwell GPUs.&lt;/li&gt;
+&lt;li&gt;Recipes allow selection of GPU count, memory configuration, and inference settings.&lt;/li&gt;
+&lt;li&gt;Autonomous‑vehicle (AV) checkpoints accept a prompt and a World Scenario Map (WSM) that defines lanes, objects, road markings, traffic signs, and road boundaries.&lt;/li&gt;
+&lt;li&gt;Joint RGB‑LiDAR generation uses HD‑map rangemap controls and can include initial LiDAR observations.&lt;/li&gt;
+&lt;li&gt;Prompts specify weather, lighting, time of day, and road conditions, with prefixes that give camera‑rig and field‑of‑view context.&lt;/li&gt;
+&lt;li&gt;Cosmos3‑Nano‑Transfer‑Auto uses bidirectional generation to denoise an entire multi‑view clip at once for offline synthetic data generation.&lt;/li&gt;
+&lt;li&gt;Supports 30 fps input and output video, up to 400 frames at 480p or 720p; longer sequences can be generated through autoregressive chunking.&lt;/li&gt;
+&lt;li&gt;Changing the prompt can transform a daytime drive into a rainy night while preserving road layout and vehicle trajectories.&lt;/li&gt;
+&lt;li&gt;These variations enable training and evaluation of perception and driving models across diverse weather and lighting conditions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-deployment-options"&gt;🚀 Deployment Options
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Cosmos NIM microservices provides GPU‑accelerated serving via application APIs.&lt;/li&gt;
+&lt;li&gt;Rollout, reward, and training workloads can be distributed on shared GPUs or isolated GPU pools.&lt;/li&gt;
+&lt;li&gt;Users can select GPU count, memory allocation, and inference parameters through provided recipes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2025/03/Cosmos-Data-Reasoning.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2025/06/cosmos-robot-arm-composite-gif.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/robotics-press-nurec-devpage-kv-1600x900-1-660x370-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Cosmos #AI #Simulation #Robotics #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/build-world-models-for-interactive-simulation-with-nvidia-cosmos/" target="_blank" rel="noopener"
+&gt;Build World Models for Interactive Simulation with NVIDIA Cosmos | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

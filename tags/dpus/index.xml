@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DPUs on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/dpus/</link><description>Recent content in DPUs on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 21 Oct 2026 22:03:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/dpus/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Sentry adds hardware‑isolated security for AI agents in OpenShell</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-sentry-adds-hardwareisolated-security-for-ai-agents-in-openshell/</link><pubDate>Wed, 21 Oct 2026 22:03:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-sentry-adds-hardwareisolated-security-for-ai-agents-in-openshell/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/bluefield-nvidia-sentry-featured-660x370.jpg" alt="Featured image of post NVIDIA Sentry adds hardware‑isolated security for AI agents in OpenShell" /&gt;&lt;h1 id="nvidia-sentry-adds-hardwareisolated-security-for-ai-agents-in-openshell"&gt;NVIDIA Sentry adds hardware‑isolated security for AI agents in OpenShell
+&lt;/h1&gt;&lt;p&gt;NVIDIA announced &lt;strong&gt;Sentry&lt;/strong&gt;, a security software framework that monitors AI agents and enforces policies governing their access to models, tools, and data. Sentry is part of the NVIDIA OpenShell reference architecture unveiled at GTC Berlin and runs on NVIDIA BlueField‑4 DPUs.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Sentry validates that an agent operates according to its designed intent and stays within defined operational boundaries.&lt;/li&gt;
+&lt;li&gt;It provides host‑isolated runtime protection, controlling the agent’s only path to the model and offering tamper‑evident traceability of agent activity.&lt;/li&gt;
+&lt;li&gt;The framework works even when host resources cannot be trusted, establishing a strict security boundary in a separate hardware trust domain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Built on NVIDIA &lt;strong&gt;DOCA&lt;/strong&gt; and deployed on &lt;strong&gt;BlueField‑4 DPUs&lt;/strong&gt;, Sentry sits on the node’s sole path to the model and to the outside world.&lt;/li&gt;
+&lt;li&gt;Agent‑to‑model communications are inspected out‑of‑band; Sentry does not rely on the agent to report its own behavior.&lt;/li&gt;
+&lt;li&gt;Real‑time situational awareness is achieved through out‑of‑band observability, continuously evaluating runtime security and behavior.&lt;/li&gt;
+&lt;li&gt;Memory introspection adds context about the agent’s execution environment (e.g., container or microVM) to detect external threats and misbehavior.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-components"&gt;⚙️ Key components
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;BlueField‑4 DPU&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Executes Sentry in an isolated trust domain, intercepting all agent traffic before it reaches the host or model.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;DOCA Flow&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Implements a layer‑4 firewall for each agent, accelerated in silicon, blocking unauthorized destinations.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;DOCA Tower&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Transparent proxy built on Envoy; performs layer‑7 inspection, authorization, and TLS termination with in‑silicon acceleration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Open Policy Agent (OPA)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Evaluates access requests against defined policies using the Rego language; runs locally in memory with sub‑millisecond latency.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;DOCA Argus&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Provides live memory introspection of the host, mapping containers, microVMs, processes, threads, and resource relationships to give Sentry contextual evidence.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-network-protection"&gt;📡 Network protection
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Layer‑4 firewall&lt;/strong&gt; (DOCA Flow) blocks connections to unauthorized destinations.&lt;/li&gt;
+&lt;li&gt;Permitted traffic is forwarded to &lt;strong&gt;DOCA Tower&lt;/strong&gt; for layer‑7 inspection and additional security checks.&lt;/li&gt;
+&lt;li&gt;DOCA Tower terminates TLS using built‑in silicon acceleration, ensuring encrypted traffic is inspected safely.&lt;/li&gt;
+&lt;li&gt;All network traffic reaches BlueField‑4 via a direct I/O path that bypasses host OS and hypervisor packet processing.&lt;/li&gt;
+&lt;li&gt;Policy evaluation is performed by &lt;strong&gt;OPA&lt;/strong&gt;, which can decide on requests in under a millisecond.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-runtime-monitoring"&gt;📈 Runtime monitoring
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Out‑of‑band observability continuously evaluates agent behavior for security and integrity.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory introspection&lt;/strong&gt; supplies context about containers, microVMs, and other execution environments.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DOCA Argus&lt;/strong&gt; runs independently of the host, analyzing volatile host memory on BlueField‑4 and remaining beyond the reach of compromised host software.&lt;/li&gt;
+&lt;li&gt;Argus maps relationships between processes, threads, file access, network connections, loaded libraries, CPUs, GPUs, and memory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enforces access policies &lt;strong&gt;independently of host software&lt;/strong&gt;, preventing a compromised host or agent from altering restrictions.&lt;/li&gt;
+&lt;li&gt;Provides &lt;strong&gt;tamper‑evident traceability&lt;/strong&gt; of every agent action, helping detect policy violations.&lt;/li&gt;
+&lt;li&gt;Operates in a &lt;strong&gt;separate hardware trust domain&lt;/strong&gt;, keeping security controls out of the agent’s reach.&lt;/li&gt;
+&lt;li&gt;Supports &lt;strong&gt;granular, silicon‑level controls&lt;/strong&gt; on model and tool access, reducing the attack surface for long‑running autonomous agents.&lt;/li&gt;
+&lt;li&gt;Extends OpenShell’s governance model with hardware‑level safeguards, aligning runtime enforcement with infrastructure security.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/bluefield-nvidia-sentry-featured-1024x576-jpg.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/OpenShellKVcroppped-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AIsecurity #OpenShell #DPUs&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/inside-nvidia-sentry-secure-ai-agents-at-runtime/" target="_blank" rel="noopener"
+&gt;Inside NVIDIA Sentry: Secure AI Agents at Runtime | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/how-nvidia-openshell-reference-architecture-secures-and-governs-ai-agent-workloads-at-scale/" target="_blank" rel="noopener"
+&gt;How NVIDIA OpenShell Reference Architecture Secures and Governs AI Agent Workloads at Scale | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

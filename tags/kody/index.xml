@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kody on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/kody/</link><description>Recent content in Kody on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 17 Nov 2026 22:09:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/kody/index.xml" rel="self" type="application/rss+xml"/><item><title>Kody Updates Portable Cloud Platform for AI Agent Memory and Automations</title><link>https://shoubhikbanerjee.github.io/blog/p/kody-updates-portable-cloud-platform-for-ai-agent-memory-and-automations/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/kody-updates-portable-cloud-platform-for-ai-agent-memory-and-automations/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/344017445?v=4" alt="Featured image of post Kody Updates Portable Cloud Platform for AI Agent Memory and Automations" /&gt;&lt;h1 id="kody-updates-portable-cloud-platform-for-ai-agent-memory-and-automations"&gt;Kody Updates Portable Cloud Platform for AI Agent Memory and Automations
+&lt;/h1&gt;&lt;p&gt;Kody has introduced new updates to its portable agents&amp;rsquo; cloud, designed to manage the memory, keys, code, and automations of AI agents across Model Context Protocol (MCP) hosts. Built on Cloudflare Workers, this source-available platform supports both individuals and teams by providing account isolation and a flexible development environment.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Kody provides an MCP-first architecture intended to work across compatible AI agent hosts, with ChatGPT serving as a likely primary host target. Rather than functioning as a general-purpose agent harness, Kody focuses on enabling portability for an agent&amp;rsquo;s critical assets. Each account on the platform represents an isolated environment holding its own packages, jobs, credentials, memories, and related state. To maintain security, no account is given privileged status at runtime.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Instead of managing a large, static tool catalog, Kody prioritizes a compact MCP surface area designed around powerful flows. Key behaviors and request flows include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Flow Preferences&lt;/strong&gt;: The platform favors powerful &lt;code&gt;search&lt;/code&gt; and Code Mode &lt;code&gt;execute&lt;/code&gt; flows.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Request Ordering&lt;/strong&gt;: OAuth requests are processed first, followed by MCP requests, and finally static assets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Webhook Processing&lt;/strong&gt;: Webhook ingress, including GET subscription challenges, is handled in the Worker &lt;code&gt;fetch&lt;/code&gt; path before being routed to TanStack Start.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Web Application&lt;/strong&gt;: The remaining website requests are routed through TanStack Start at &lt;code&gt;packages/worker/start/http-entry.ts&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Client Assets&lt;/strong&gt;: Assets are bundled into &lt;code&gt;packages/worker/public/&lt;/code&gt; and served via the &lt;code&gt;ASSETS&lt;/code&gt; binding.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The project utilizes an Nx monorepo structure following several epicflare starter conventions. Shared modules and worker roles are organized as follows:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Module / Package Path&lt;/th&gt;
+&lt;th&gt;Description / Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;packages/shared&lt;/code&gt; (&lt;code&gt;@kody-internal/shared&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;Shared modules used across the repository&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;packages/worker&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;The origin app worker, with its entrypoint at &lt;code&gt;packages/worker/src/index.ts&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;packages/platform-worker&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Sibling worker managing platform services&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;packages/runtime-worker&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Sibling worker managing runtime tasks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;packages/jobs-worker&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Sibling worker managing automated jobs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;packages/mock-servers/*&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Mock Workers for local testing and simulation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;For contributors getting started with development, the local dev server runs on &lt;code&gt;localhost:3742&lt;/code&gt; by default. The command-line interface automatically selects the next free port if that one is occupied, and Wrangler manages both the local Cloudflare Workers runtime and the D1 database automatically. Developers and agents can refer to &lt;code&gt;AGENTS.md&lt;/code&gt; for repository-specific guidelines, while &lt;code&gt;docs/contributing/project-intent.md&lt;/code&gt; explains the core intent of the repository.&lt;/p&gt;
+&lt;p&gt;#Kody #ModelContextProtocol #CloudflareWorkers #AIAgents #Monorepo&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/kody-hq/kody" target="_blank" rel="noopener"
+&gt;kody-hq/kody&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

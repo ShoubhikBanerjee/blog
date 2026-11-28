@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>WhisperLiveKit on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/whisperlivekit/</link><description>Recent content in WhisperLiveKit on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 22 Nov 2026 22:08:30 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/whisperlivekit/index.xml" rel="self" type="application/rss+xml"/><item><title>WhisperLiveKit: Self-Hosted, Real-Time Speech-to-Text Pipeline</title><link>https://shoubhikbanerjee.github.io/blog/p/whisperlivekit-self-hosted-real-time-speech-to-text-pipeline/</link><pubDate>Sun, 22 Nov 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/whisperlivekit-self-hosted-real-time-speech-to-text-pipeline/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/38427957?v=4" alt="Featured image of post WhisperLiveKit: Self-Hosted, Real-Time Speech-to-Text Pipeline" /&gt;&lt;h1 id="whisperlivekit-self-hosted-real-time-speech-to-text-pipeline"&gt;WhisperLiveKit: Self-Hosted, Real-Time Speech-to-Text Pipeline
+&lt;/h1&gt;&lt;p&gt;WhisperLiveKit is a self-hosted, ultra-low-latency speech-to-text pipeline that provides real-time transcription, speaker diarization, and translation. It is designed to handle streaming audio efficiently while offering API compatibility with major platforms.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The system supports real-time, local speech-to-text with streaming Automatic Speech Recognition (ASR), speaker diarization, and translation. It is built to process audio as it is being spoken rather than waiting for complete utterances.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;WhisperLiveKit utilizes state-of-the-art simultaneous speech research for intelligent buffering and incremental processing. Simple Whisper models are not ideal for this use case because they are designed for complete utterances; processing small segments loses context and cuts off words mid-syllable, resulting in poor transcription.&lt;/p&gt;
+&lt;p&gt;The pipeline integrates several advanced components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Simul-Whisper/Streaming&lt;/strong&gt;: SOTA 2025 ultra-low latency transcription using the AlignAtt policy.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;WhisperStreaming&lt;/strong&gt;: Low latency transcription using the LocalAgreement policy (SOTA 2023).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Streaming Sortformer&lt;/strong&gt;: Advanced real-time speaker diarization (SOTA 2025).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NLLW&lt;/strong&gt;: Simultaneous translation from and to 200 languages based on distilled NLLB models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Qwen3-ASR-causal&lt;/strong&gt;: Causal streaming audio encoder where each audio block is encoded exactly once with constant compute per audio second.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AlignAtt4LLM&lt;/strong&gt;: Simultaneous translation with decoder-only LLMs featuring attention-gated commits and append-only output.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Architecture&lt;/strong&gt;: The backend supports multiple concurrent users and includes Voice Activity Detection to reduce overhead when no voice is detected.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;APIs&lt;/strong&gt;: Provides OpenAI-compatible REST APIs and Deepgram-compatible WebSocket interfaces.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Streaming&lt;/strong&gt;: Native WebSocket support is available for real-time streaming.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Language Support&lt;/strong&gt;: Check the specific tokenizer documentation for the list of all available languages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Troubleshooting&lt;/strong&gt;: A troubleshooting guide is available for step-by-step fixes collected from recent GPU issues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;WhisperLiveKit is available for installation and local execution via command-line tools.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Installation&lt;/strong&gt;: &lt;code&gt;pip install whisperlivekit&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Server Execution&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;wlk --model base --language en&lt;/code&gt; (Starts server at http://localhost:8000)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wlk run whisper:tiny&lt;/code&gt; (Auto-pulls model and starts server)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;File Transcription&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;wlk transcribe meeting.wav&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wlk transcribe --format srt podcast.mp3 -o podcast.srt&lt;/code&gt; (Generates subtitles)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Management&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;wlk models&lt;/code&gt; (View installed models)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wlk pull large-v3&lt;/code&gt; (Download a model)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wlk rm large-v3&lt;/code&gt; (Delete a model)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benchmarking&lt;/strong&gt;: &lt;code&gt;wlk bench&lt;/code&gt; (Test speed and accuracy)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API Access&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;REST: &lt;code&gt;curl http://localhost:8000/v1/audio/transcriptions -F file=@audio.wav&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;SDK: Compatible with OpenAI Python SDK (&lt;code&gt;client = OpenAI(base_url=&amp;quot;http://localhost:8000/v1&amp;quot;, api_key=&amp;quot;unused&amp;quot;)&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;WebSocket: &lt;code&gt;ws://localhost:8000/asr&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#WhisperLiveKit #SpeechToText #RealTimeAI #SelfHosted #Translation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/QuentinFuxa/WhisperLiveKit" target="_blank" rel="noopener"
+&gt;QuentinFuxa/WhisperLiveKit&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

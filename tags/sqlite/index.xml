@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SQLite on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/sqlite/</link><description>Recent content in SQLite on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Nov 2026 22:08:01 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/sqlite/index.xml" rel="self" type="application/rss+xml"/><item><title>sqlite3_rsync Enables Remote SQLite Database Copies Over SSH</title><link>https://shoubhikbanerjee.github.io/blog/p/sqlite3-rsync-enables-remote-sqlite-database-copies-over-ssh/</link><pubDate>Thu, 26 Nov 2026 22:08:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sqlite3-rsync-enables-remote-sqlite-database-copies-over-ssh/</guid><description>&lt;h1 id="sqlite3_rsync-enables-remote-sqlite-database-copies-over-ssh"&gt;sqlite3_rsync Enables Remote SQLite Database Copies Over SSH
+&lt;/h1&gt;&lt;p&gt;sqlite3_rsync is a database remote-copy tool for SQLite that was added as experimental in SQLite 3.47.0 in October 2024 and later enhanced in SQLite 3.50.0 in May 2025. This tool allows copying a snapshot of a SQLite database over an SSH connection without first creating a full local copy, making it useful for systems with limited disk space.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Normally, grabbing a snapshot copy of a SQLite database requires either the backup API or VACUUM INTO, both of which need enough disk space for a duplicate copy. If you&amp;rsquo;re on a small instance using more than half the available disk, these methods fail. sqlite3_rsync avoids this limitation by transferring data directly over SSH.&lt;/p&gt;
+&lt;p&gt;It also supports synchronizing an existing database replica without re-transmitting the entire content, reducing network usage.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The protocol relies on cryptographic hashes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The replica sends hashes for pages or groups of pages to the origin.&lt;/li&gt;
+&lt;li&gt;The origin responds with differing page content or requests finer-grained hashes if needed.&lt;/li&gt;
+&lt;li&gt;If the databases differ significantly, network bandwidth may temporarily exceed the database size due to hash exchange overhead — typically only a few percent more.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Added as experimental in SQLite 3.47.0 (October 2024)&lt;/li&gt;
+&lt;li&gt;Enhanced in SQLite 3.50.0 (May 2025)&lt;/li&gt;
+&lt;li&gt;Works over SSH&lt;/li&gt;
+&lt;li&gt;Avoids local copy requirement&lt;/li&gt;
+&lt;li&gt;Efficient for resynchronization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Available in:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Version&lt;/th&gt;
+&lt;th&gt;Date&lt;/th&gt;
+&lt;th&gt;Status&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;SQLite 3.47.0&lt;/td&gt;
+&lt;td&gt;October 2024&lt;/td&gt;
+&lt;td&gt;Experimental&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SQLite 3.50.0&lt;/td&gt;
+&lt;td&gt;May 2025&lt;/td&gt;
+&lt;td&gt;Enhanced&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;For developers working with constrained environments, sqlite3_rsync offers a practical way to back up or sync SQLite databases without exhausting local storage or bandwidth unnecessarily. While initial hash exchanges can add minor overhead, the benefits become clear when managing large or frequently updated databases remotely.&lt;/p&gt;
+&lt;p&gt;#SQLite #Database #rsync #SSH #Backup&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/26/sqlite3-rsync/" target="_blank" rel="noopener"
+&gt;sqlite3_rsync: Database Remote-Copy Tool For SQLite&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Datasette Lite: Browser-Based SQLite Database Explorer</title><link>https://shoubhikbanerjee.github.io/blog/p/datasette-lite-browser-based-sqlite-database-explorer/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/datasette-lite-browser-based-sqlite-database-explorer/</guid><description>&lt;img src="https://static.simonwillison.net/static/2026/datasette-lite-diag.webp" alt="Featured image of post Datasette Lite: Browser-Based SQLite Database Explorer" /&gt;&lt;h1 id="datasette-lite-browser-based-sqlite-database-explorer"&gt;Datasette Lite: Browser-Based SQLite Database Explorer
+&lt;/h1&gt;&lt;p&gt;Datasette Lite is a port of the Datasette Python application to run directly in the browser using WebAssembly and Pyodide. It allows users to browse SQLite databases, JSON files, CSV files, or SQL scripts without needing a full web server.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Datasette Lite enables browsing of SQLite databases, JSON files, CSV files, or SQL scripts directly in the browser.&lt;/li&gt;
+&lt;li&gt;Users can load specific versions of Datasette from PyPI or specific commits, tags, or branches from the Datasette GitHub repository.&lt;/li&gt;
+&lt;li&gt;Over 100 versions of SQLite are available for use with Datasette.&lt;/li&gt;
+&lt;li&gt;Additional Datasette plugins can be installed from PyPI or URLs to wheel files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Datasette Lite uses service workers to intercept HTTP requests and serve them from client-side code.&lt;/li&gt;
+&lt;li&gt;Each tab has a unique session ID to ensure that requests are routed to the correct Datasette instance.&lt;/li&gt;
+&lt;li&gt;A web worker runs a dedicated Datasette instance for each session.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Datasette Lite can load specific Datasette references, plugins, and SQLite versions.&lt;/li&gt;
+&lt;li&gt;Users can install additional plugins using the &lt;code&gt;?install=&lt;/code&gt; parameter.&lt;/li&gt;
+&lt;li&gt;SQLite databases, JSON files, CSV files, or SQL scripts can be loaded using the &lt;code&gt;&amp;amp;url=&lt;/code&gt; parameter.&lt;/li&gt;
+&lt;li&gt;Metadata files can be loaded using the &lt;code&gt;&amp;amp;metadata=&lt;/code&gt; parameter.&lt;/li&gt;
+&lt;li&gt;Fragment hashes can be used to navigate to specific locations within Datasette.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Datasette Lite is available at &lt;a class="link" href="https://lite.datasette.io/" target="_blank" rel="noopener"
+&gt;lite.datasette.io&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Datasette Lite is a powerful tool for linking to demos of work-in-progress features or bug reproductions.&lt;/li&gt;
+&lt;li&gt;It simplifies the process of demonstrating and fixing bugs by allowing users to share URLs with specific configurations.&lt;/li&gt;
+&lt;li&gt;Datasette Lite is already being used as part of the Datasette development process.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-example"&gt;📊 Example
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Example URL: &lt;a class="link" href="https://lite.datasette.io/?install=datasette-maplibre&amp;amp;url=https://simonw.github.io/datasette-maplibre/demo.db&amp;amp;metadata=https://simonw.github.io/datasette-maplibre/metadata.yml#/demo/capitals_and_countries%23map=0/4.2/180&amp;amp;color=continent" target="_blank" rel="noopener"
+&gt;https://lite.datasette.io/?install=datasette-maplibre&amp;amp;url=https://simonw.github.io/datasette-maplibre/demo.db&amp;amp;metadata=https://simonw.github.io/datasette-maplibre/metadata.yml#/demo/capitals_and_countries%23map=0/4.2/180&amp;amp;color=continent&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://static.simonwillison.net/static/cors-allow/2026/datasette-maplibre.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.simonwillison.net/static/2026/compare-sqlite.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Datasette #SQLite #WebAssembly #Pyodide #BrowserBased&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/17/datasette-lite/" target="_blank" rel="noopener"
+&gt;Running the full server-side Datasette Python app in the browser with service workers and Pyodide&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Datasette Lite runs full Python web app in browser via WebAssembly</title><link>https://shoubhikbanerjee.github.io/blog/p/datasette-lite-runs-full-python-web-app-in-browser-via-webassembly/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/datasette-lite-runs-full-python-web-app-in-browser-via-webassembly/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/9599?v=4" alt="Featured image of post Datasette Lite runs full Python web app in browser via WebAssembly" /&gt;&lt;h1 id="datasette-lite-runs-full-python-web-app-in-browser-via-webassembly"&gt;Datasette Lite runs full Python web app in browser via WebAssembly
+&lt;/h1&gt;&lt;p&gt;Datasette Lite allows the full server-side Datasette Python web application to run directly inside a user&amp;rsquo;s browser using WebAssembly and Pyodide.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;When the demo is launched, the browser downloads and executes a full Python interpreter, installs the &lt;code&gt;datasette&lt;/code&gt; package and its dependencies, and starts the application in a Web Worker.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Datasette pages are displayed in a full-window &lt;code&gt;&amp;lt;iframe&amp;gt;&lt;/code&gt; pointing to URLs under &lt;code&gt;/app/&amp;lt;session&amp;gt;/&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;A service worker (&lt;code&gt;sw.js&lt;/code&gt;) intercepts requests (link clicks, form submissions, fetch calls, static assets) and relays them to the Datasette ASGI application running in Pyodide.&lt;/li&gt;
+&lt;li&gt;This architecture supports Datasette&amp;rsquo;s own JavaScript, plugin assets, POST forms, CSRF protection, sign-in cookies, and file uploads/downloads.&lt;/li&gt;
+&lt;li&gt;Streaming responses, such as server-sent events or CSV exports, are processed as they are produced.&lt;/li&gt;
+&lt;li&gt;If a client disconnects or aborts a fetch, the Datasette application is notified that the client has disconnected.&lt;/li&gt;
+&lt;li&gt;Cookies are stored in a cookie jar inside the Python ASGI bridge, lasting until the tab is closed or reloaded.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Browser Requirements&lt;/strong&gt;: Requires a browser with service worker support. Private browsing modes that disable service workers are not compatible.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Web Worker Support&lt;/strong&gt;: Requires module workers (Chrome 80, Safari 15, Firefox 114 or later).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Python Version&lt;/strong&gt;: Uses Python 3.14 from Pyodide 314.0.8.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error Handling&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;503&lt;/code&gt; returned if the tab has already been closed or reloaded.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;504&lt;/code&gt; returned if the tab stops answering partway through a request (after four minutes).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;500&lt;/code&gt; returned if the Pyodide worker itself fails.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;409&lt;/code&gt; returned if a tab was opened before an incompatible update.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Session Management&lt;/strong&gt;: Each tab receives a random session identifier, allowing multiple instances with different data to run simultaneously.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Navigation&lt;/strong&gt;: The page mirrors the iframe&amp;rsquo;s location into its fragment to ensure the back button works and URLs are bookmarkable.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt;: Links to external sites open in a new window with &lt;code&gt;noopener&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability-and-versioning"&gt;🚀 Availability and Versioning
+&lt;/h2&gt;&lt;p&gt;Datasette Lite uses the most recent Datasette release from PyPI by default, including alpha and beta previews.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Stable Release&lt;/strong&gt;: Append &lt;code&gt;?ref=stable&lt;/code&gt; to the URL.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Specific Release&lt;/strong&gt;: Pass a version number as &lt;code&gt;?ref=&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Preview Release&lt;/strong&gt;: &lt;code&gt;?ref=pre&lt;/code&gt; is equivalent to leaving &lt;code&gt;?ref&lt;/code&gt; out.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Source Code&lt;/strong&gt;: Other &lt;code&gt;?ref&lt;/code&gt; values are treated as branches, tags, or commits in the &lt;code&gt;simonw/datasette&lt;/code&gt; GitHub repository.
+&lt;ul&gt;
+&lt;li&gt;Example: &lt;code&gt;https://lite.datasette.io/?ref=main&lt;/code&gt; runs the latest development code.&lt;/li&gt;
+&lt;li&gt;Short SHAs made up only of digits are read as version numbers; full 40-character SHAs are required for specific commits.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;?ref&lt;/code&gt; values that look like version numbers are always installed from PyPI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Plugin Installation&lt;/strong&gt;: &lt;code&gt;?install=&lt;/code&gt; works for plugins, requiring a commit with a &lt;code&gt;pyproject.toml&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CORS Handling&lt;/strong&gt;: GitHub source zip files are downloaded through a Cloudflare Worker to add necessary CORS headers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Datasette #WebAssembly #Pyodide #SQLite #Python&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/simonw/datasette-lite" target="_blank" rel="noopener"
+&gt;simonw/datasette-lite&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Claude Opus 5.5 Optimizes SQLite C Extension Performance Beyond Rust Implementation</title><link>https://shoubhikbanerjee.github.io/blog/p/claude-opus-5-5-optimizes-sqlite-c-extension-performance-beyond-rust-implementation/</link><pubDate>Mon, 09 Nov 2026 22:03:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/claude-opus-5-5-optimizes-sqlite-c-extension-performance-beyond-rust-implementation/</guid><description>&lt;h1 id="claude-opus-55-optimizes-sqlite-c-extension-performance-beyond-rust-implementation"&gt;Claude Opus 5.5 Optimizes SQLite C Extension Performance Beyond Rust Implementation
+&lt;/h1&gt;&lt;p&gt;On November 8th, 2026, an investigation using the Claude Opus 5.5 model demonstrated the creation and optimization of a custom SQLite extension. The project focused on developing a &lt;code&gt;parse_number()&lt;/code&gt; function to convert strings—such as currency and percentages—into numeric values that can be summed and sorted.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The &lt;code&gt;parse_number(value)&lt;/code&gt; function was designed with specific parsing capabilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Strips symbols including &amp;lsquo;,&amp;rsquo;, &amp;lsquo;$&amp;rsquo;, &amp;lsquo;£&amp;rsquo;, and &amp;lsquo;%&amp;rsquo;.&lt;/li&gt;
+&lt;li&gt;Handles leading &amp;lsquo;-&amp;rsquo; characters.&lt;/li&gt;
+&lt;li&gt;Returns &amp;lsquo;NULL&amp;rsquo; for any values it cannot successfully parse.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The development process compared building the extension in C versus Rust, revealing significant differences in file size and execution speed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;File Size:&lt;/strong&gt; The C extension resulted in a 14 KB file, while Rust implementations were significantly larger at 321 KB (using Rusqlite) and 298 KB (using sqlite-loadable-rs).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance Optimization:&lt;/strong&gt; Although the Rust version was initially faster due to its &lt;code&gt;strtod&lt;/code&gt; equivalent being twice as fast as C&amp;rsquo;s, a custom C function written by the AI achieved superior speeds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-results"&gt;📊 Performance results
+&lt;/h2&gt;&lt;p&gt;The following table displays the net cost per row measured over 2 million rows. Lower values indicate better performance.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Data Type&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Original C&lt;/th&gt;
+&lt;th style="text-align: left"&gt;New C&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Rusqlite (Rust)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;sqlite-loadable (Rust)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Mixed data&lt;/td&gt;
+&lt;td style="text-align: left"&gt;67 ns&lt;/td&gt;
+&lt;td style="text-align: left"&gt;19 ns&lt;/td&gt;
+&lt;td style="text-align: left"&gt;46 ns&lt;/td&gt;
+&lt;td style="text-align: left"&gt;41 ns&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Integers only&lt;/td&gt;
+&lt;td style="text-align: left"&gt;25 ns&lt;/td&gt;
+&lt;td style="text-align: left"&gt;16 ns&lt;/td&gt;
+&lt;td style="text-align: left"&gt;36 ns&lt;/td&gt;
+&lt;td style="text-align: left"&gt;32 ns&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Decimals only&lt;/td&gt;
+&lt;td style="text-align: left"&gt;106 ns&lt;/td&gt;
+&lt;td style="text-align: left"&gt;18 ns&lt;/td&gt;
+&lt;td style="text-align: left"&gt;55 ns&lt;/td&gt;
+&lt;td style="text-align: left"&gt;47 ns&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The final prototype was formatted as a research report for the &lt;code&gt;simonw/research&lt;/code&gt; GitHub repository. The model provided the investigation as a downloadable zip file containing the necessary folder structure for the repository.&lt;/p&gt;
+&lt;p&gt;#SQLite #ClaudeAI #Programming #Rust #C&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/8/sqlite-parse-number-c-vs-rust/" target="_blank" rel="noopener"
+&gt;Research: parse_number() as a SQLite extension: C vs Rust&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

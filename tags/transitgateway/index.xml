@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TransitGateway on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/transitgateway/</link><description>Recent content in TransitGateway on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Nov 2026 22:10:10 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/transitgateway/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Network Firewall Adds Context-Aware Rules and Next Generation Policies</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-network-firewall-adds-context-aware-rules-and-next-generation-policies/</link><pubDate>Wed, 25 Nov 2026 22:10:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-network-firewall-adds-context-aware-rules-and-next-generation-policies/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/25/4026.main_.jpg" alt="Featured image of post AWS Network Firewall Adds Context-Aware Rules and Next Generation Policies" /&gt;&lt;h1 id="aws-network-firewall-adds-context-aware-rules-and-next-generation-policies"&gt;AWS Network Firewall Adds Context-Aware Rules and Next Generation Policies
+&lt;/h1&gt;&lt;p&gt;AWS Network Firewall has updated its capabilities to support context-aware rules, allowing you to match traffic based on the AWS resources that send and receive it rather than by their IP addresses. Alongside this, AWS has introduced Next Generation policies, which separate access control and threat protection into independent engines to help simplify firewall management and policy scaling.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Rules that match on IP addresses must keep up with every workload that scales out, is replaced, or moves. Short-lived workloads are the hardest to keep up with; for example, a VPC-attached AWS Lambda function can scale out and start sending traffic before an updated IP list reaches the firewall. Context-aware rules solve this issue by allowing you to filter a function&amp;rsquo;s traffic by the security group attached to it, or by naming a virtual private cloud (VPC), a subnet, or a transit gateway attachment.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Context-aware rules require transit gateway-attached firewalls and function by combining a control path and a data path:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;The Control Path&lt;/strong&gt;: A context store—which is a catalog of the AWS resources that can send and receive traffic through a transit gateway—tells the firewall which resources exist. You create this in AWS Network Manager and associate it with the transit gateway that your firewall uses.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The Data Path&lt;/strong&gt;: The transit gateway adds the context of the sender (including its VPC, subnet, transit gateway attachment, and security groups) to each packet.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The Firewall Engine&lt;/strong&gt;: The firewall receives these two paths, reads the context on each packet, and matches it against your configured rules. Source context works with every protocol, while destination context requires TCP-based rules because the firewall learns the receiving resource from return traffic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here is how context rules apply to specific AWS resources:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Resource Type&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Rule Application&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Subnet or VPC&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Applies to each new resource that you launch in it.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Security Group&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Applies to each new resource whose network interface has that security group attached.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Transit Gateway Attachment&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Applies to traffic that enters through that attachment.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-next-generation-policies"&gt;⚙️ Next Generation Policies
+&lt;/h2&gt;&lt;p&gt;In a Classic policy, your access rules and threat rules run together in a single stateful engine and share one rule capacity. With Next Generation policies, access control and threat protection each get their own stateful engine in the same firewall, executed in sequence:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Firewall Engine&lt;/strong&gt;: This engine handles access control and is drop by default. Built on Suricata 8 firewall mode, it follows each connection through its entire flow (including the TCP handshake and TLS client hello) and evaluates rules along the way up to the application layer.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IPS Engine&lt;/strong&gt;: This engine manages threat protection and is pass by default. Traffic allowed by the firewall engine moves here, where the IPS engine checks it using AWS managed rule groups or custom rules that you write.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Because each engine has its own rule capacity, adding access rules does not take capacity away from threat protection. This design allows networking and security teams to work independently on their own configurations without risk of overwriting each other&amp;rsquo;s rules.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/25/4026-figure-1-full.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/25/4026-figure-2-full.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/25/4026-figure-3-full.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #NetworkFirewall #CloudSecurity #VPC #TransitGateway&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/introducing-context-aware-rules-for-aws-network-firewall/" target="_blank" rel="noopener"
+&gt;Introducing context-aware rules for AWS Network Firewall | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/introducing-aws-network-firewall-next-generation-policy/" target="_blank" rel="noopener"
+&gt;Introducing AWS Network Firewall Next Generation policy | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

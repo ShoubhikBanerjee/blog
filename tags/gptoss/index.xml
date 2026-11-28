@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPTOSS on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/gptoss/</link><description>Recent content in GPTOSS on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 21 Oct 2026 22:03:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/gptoss/index.xml" rel="self" type="application/rss+xml"/><item><title>Fine-tuning GPT-OSS-20B for Multilingual Reasoning with SFT and GRPO</title><link>https://shoubhikbanerjee.github.io/blog/p/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-with-sft-and-grpo/</link><pubDate>Wed, 21 Oct 2026 22:03:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-with-sft-and-grpo/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21403-featured-image.png" alt="Featured image of post Fine-tuning GPT-OSS-20B for Multilingual Reasoning with SFT and GRPO" /&gt;&lt;h1 id="fine-tuning-gpt-oss-20b-for-multilingual-reasoning-with-sft-and-grpo"&gt;Fine-tuning GPT-OSS-20B for Multilingual Reasoning with SFT and GRPO
+&lt;/h1&gt;&lt;p&gt;We fine‑tuned the open‑weight reasoning model &lt;strong&gt;GPT‑OSS‑20B&lt;/strong&gt; to produce chain‑of‑thought and final answers in French, German, Spanish, and Italian rather than defaulting to English.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;GPT‑OSS‑20B thinks in English out of the box.&lt;/li&gt;
+&lt;li&gt;When prompted to reason in another language, it acknowledges the instruction but continues the chain‑of‑thought in English.&lt;/li&gt;
+&lt;li&gt;In a 50‑example multilingual test, the base model produced the reasoning language correctly only &lt;strong&gt;22 %&lt;/strong&gt; of the time, almost entirely on English examples (English 100 %, French 0 %, German 10 %, Spanish 0 %, Italian 0 %).&lt;/li&gt;
+&lt;li&gt;Users expect both the reasoning process and the final answer to appear in the requested language.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supervised Fine‑Tuning (SFT)&lt;/strong&gt; teaches a behavior the model does not have (e.g., multilingual chain‑of‑thought).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Group Relative Policy Optimization (GRPO)&lt;/strong&gt; refines a behavior the model can already produce occasionally by sampling a group of responses per prompt and pushing the policy toward the above‑average ones.&lt;/li&gt;
+&lt;li&gt;If the desired behavior has zero probability in the base distribution, GRPO has little to reinforce, which explains many of the observed results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-training-setup"&gt;⚙️ Training Setup
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dataset&lt;/strong&gt;: &lt;code&gt;HuggingFaceH4/Multilingual-Thinking&lt;/code&gt; – chain‑of‑thought reasoning translated into EN/FR/DE/ES/IT, ~949 training examples and 50 validation examples.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation&lt;/strong&gt;: 50 test cases (10 math/logic problems × 5 languages). Metrics: &lt;em&gt;Reasoning‑language correct&lt;/em&gt; (chain‑of‑thought in target language) and &lt;em&gt;Answer‑language correct&lt;/em&gt; (final answer in target language).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fine‑tuning method&lt;/strong&gt;: Low‑Rank Adaptation (LoRA) for both SFT and GRPO.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compute&lt;/strong&gt;: Amazon SageMaker HyperPod with Amazon EKS orchestration; PyTorch TRL library for GPT‑OSS‑20B runs; veRL trainer with Ray, KubeRay, and vLLM for the Qwen2.5‑7B control experiment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Storage &amp;amp; networking&lt;/strong&gt;: Model checkpoints and data on Amazon FSx for Lustre; inter‑node communication via Elastic Fabric Adapter (EFA).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Workflow&lt;/strong&gt;: User submission lands on the EKS control plane, which schedules a Ray head pod and worker pods that mount FSx for Lustre and run the trainer and rollout workers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SFT alone&lt;/strong&gt; was sufficient to teach multilingual reasoning where the base model had zero probability (e.g., French, Spanish, Italian).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GRPO added measurable value&lt;/strong&gt; only when the base model already produced the behavior some of the time (e.g., German, where baseline was 10 %).&lt;/li&gt;
+&lt;li&gt;A parallel experiment with Qwen2.5‑7B across two tasks confirmed that &lt;em&gt;SFT does most of the work, GRPO refines when there is headroom&lt;/em&gt;, and matching the technique to the capability gap determines the outcome.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-takeaways"&gt;💡 Takeaways
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Closing the multilingual reasoning gap is primarily a supervised fine‑tuning problem.&lt;/li&gt;
+&lt;li&gt;Reinforcement learning with GRPO is useful only when the model’s base distribution assigns non‑zero probability to the desired behavior.&lt;/li&gt;
+&lt;li&gt;Parameter‑efficient LoRA fine‑tuning works well on large open‑weight models within the SageMaker HyperPod ecosystem.&lt;/li&gt;
+&lt;li&gt;Selecting the right technique based on the specific capability gap yields the most efficient improvements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21403-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21403-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/08/ML-21403-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#GPTOSS #MultilingualAI #FineTuning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/fine-tuning-gpt-oss-20b-for-multilingual-reasoning-on-amazon-sagemaker-hyperpod/" target="_blank" rel="noopener"
+&gt;Fine-tuning GPT-OSS-20B for multilingual reasoning on Amazon SageMaker HyperPod | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

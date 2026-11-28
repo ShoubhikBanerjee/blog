@@ -1,0 +1,1022 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud Security on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/cloud-security/</link><description>Recent content in Cloud Security on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Nov 2026 22:08:01 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/cloud-security/index.xml" rel="self" type="application/rss+xml"/><item><title>Migrating AWS CloudHSM Workloads to AWS KMS</title><link>https://shoubhikbanerjee.github.io/blog/p/migrating-aws-cloudhsm-workloads-to-aws-kms/</link><pubDate>Thu, 26 Nov 2026 22:08:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/migrating-aws-cloudhsm-workloads-to-aws-kms/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/storage.jpeg" alt="Featured image of post Migrating AWS CloudHSM Workloads to AWS KMS" /&gt;&lt;h1 id="migrating-aws-cloudhsm-workloads-to-aws-kms"&gt;Migrating AWS CloudHSM Workloads to AWS KMS
+&lt;/h1&gt;&lt;p&gt;AWS Key Management Service (AWS KMS) now supports the security certifications, algorithms, and performance required by most AWS CloudHSM workloads, enabling organizations to migrate and significantly reduce costs while eliminating hardware security module (HSM) provisioning, patching, and high-availability management.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Most AWS CloudHSM workloads can migrate to AWS KMS. Organizations are advised to review their compliance documentation for explicit single-tenant language, as many organizations find that it is assumed rather than mandated. While AWS KMS embeds cryptographic best practices in a managed service, some payment systems still rely on older cryptography such as TDES. For these cases, AWS Payment Cryptography supports payment use cases, including TDES-based algorithms such as CVV2, ARQC, and PIN validation, and provides low-level algorithms like AES-CBC that third-party systems might require for interoperability.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Migration consists of three parts: updating application code to call KMS APIs, rotating or importing cryptographic keys, and transitioning existing data.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Application Refactoring:&lt;/strong&gt; This is the bulk of the effort. The interfaces involved are a communication pattern, not an architectural constraint. Organizations are encouraged to contact their AWS account team to assess the effort needed to use modern RESTful interfaces and to evaluate whether dependencies on older systems can be retired as part of security modernization.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Key Management:&lt;/strong&gt; If AWS CloudHSM allows you to export (wrap) a copy of your private key, you can import it directly into AWS KMS to maintain continuity. If the key is non-exportable, you must create a new key pair in AWS KMS. During the transition, the AWS CloudHSM private key continues to sign existing workloads, while a new asymmetric KMS key (or the imported key) signs new data flowing to AWS KMS.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Transition:&lt;/strong&gt; You re-encrypt previously encrypted data under KMS keys. Existing signatures remain verifiable without AWS CloudHSM. You can complete each part of the migration gradually with zero downtime. For organizations that created a new key pair, export the CloudHSM public key before decommissioning and use it to verify existing signatures locally with libraries such as AWS-LC or OpenSSL.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The following points outline specific considerations and capabilities for the migration:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AWS KMS does not support importing public keys.&lt;/li&gt;
+&lt;li&gt;Traffic can be shifted from AWS CloudHSM to AWS KMS at your own pace.&lt;/li&gt;
+&lt;li&gt;Per-operation pricing is only one of several factors affecting cost; organizations should also consider saved staff time, patching, and high-availability management.&lt;/li&gt;
+&lt;li&gt;With envelope encryption, optional data key caching can further reduce API call volume.&lt;/li&gt;
+&lt;li&gt;Because application code is being refactored, this migration provides an opportunity to adopt post-quantum cryptography (PQC) algorithms when creating new signing keys.&lt;/li&gt;
+&lt;li&gt;AI-assisted code transformation tools can reduce the workload associated with application refactoring.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Migrating from AWS CloudHSM to AWS KMS allows organizations to eliminate the operational overhead of managing HSMs while retaining the security features required for their workloads. The process supports a gradual transition with zero downtime and opens the door to modernizing cryptographic dependencies, including the adoption of post-quantum algorithms.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Figure-1-Digital-signature-migration.png"
+loading="lazy"
+alt="Figure 1: Digital signature migration"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Figure-2-Encryption-migration-with-AWS-KMS-API.png"
+loading="lazy"
+alt="Figure 2: Encryption migration with AWS KMS API"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Figure-1-Digital-signature-migration.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Figure-2-Encryption-migration-with-AWS-KMS-API.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWSKMS #AWSCloudHSM #SecurityMigration #Cryptography #PostQuantum&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/reduce-operational-overhead-by-migrating-from-aws-cloudhsm-to-aws-kms/" target="_blank" rel="noopener"
+&gt;Reduce operational overhead by migrating from AWS CloudHSM to AWS KMS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Cognito adds OAuth 2.0 token exchange for AI agents</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-cognito-adds-oauth-2-0-token-exchange-for-ai-agents/</link><pubDate>Wed, 25 Nov 2026 22:10:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-cognito-adds-oauth-2-0-token-exchange-for-ai-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Token-Exchange-Image.jpg" alt="Featured image of post Amazon Cognito adds OAuth 2.0 token exchange for AI agents" /&gt;&lt;h1 id="amazon-cognito-adds-oauth-20-token-exchange-for-ai-agents"&gt;Amazon Cognito adds OAuth 2.0 token exchange for AI agents
+&lt;/h1&gt;&lt;p&gt;Amazon Cognito introduces a new OAuth token exchange feature that enables services and AI agents to call APIs on behalf of users. This functionality aligns with OAuth 2.0 Token Exchange standards defined in RFC 8693, facilitating secure delegation where AI agents select tools at runtime, such as Model Context Protocol (MCP) servers, to perform actions like reserving tables or sending invitations.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AI agents increasingly interact with various APIs on behalf of users, requiring a mechanism to handle the &amp;ldquo;second hop&amp;rdquo; where an intermediate service (like an MCP server) needs to access a downstream resource (like an email API). Without proper token exchange, forwarding the user&amp;rsquo;s original access token is insufficient because it does not clearly identify which service acted on the user&amp;rsquo;s behalf. This new feature allows Cognito to act as the authorization server, issuing new tokens for the calling service while maintaining strict scope controls.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Every token exchange begins with a &lt;strong&gt;subject token&lt;/strong&gt; that represents the user, which in Amazon Cognito can be an access token or ID token issued by a user pool. The calling service, such as an MCP server, sends this subject token to Cognito.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Request Flow:&lt;/strong&gt; The client calls the downstream service with the user&amp;rsquo;s access token. The service then calls the Cognito &lt;code&gt;/oauth2/token&lt;/code&gt; endpoint, authenticating with its own app client credentials.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validation:&lt;/strong&gt; Cognito validates the request and returns an &lt;strong&gt;issued token&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access:&lt;/strong&gt; The service uses this issued token to call the resource server (e.g., an email API).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Claim Structure:&lt;/strong&gt; The issued token identifies the user and names the calling service via an &lt;strong&gt;act claim&lt;/strong&gt;. It carries the same scopes or fewer than the original token, ensuring the downstream API sees exactly which service acted for the user.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The feature distinguishes between two authorization patterns:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Pattern&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Use Case&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Characteristics&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Impersonation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Backend for Frontend (BFF) relaying requests&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The calling service relays the user&amp;rsquo;s request without making its own decisions. The record shows the user but not the agent acting.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Delegation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;AI agents acting with autonomy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The agent makes decisions and uses its own tools. The record shows both the user and the agent, which is critical for proper authorization and audit trails.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;For AI agents, delegation is the primary pattern. If an agent used a token of its own without delegation, the audit record would show the agent called the resource server but not &lt;em&gt;for whom&lt;/em&gt;. Conversely, impersonation hides the agent. Delegation ensures that the &lt;strong&gt;act claim&lt;/strong&gt; logs who authorized the action (the user) and who carried it out (the service/agent).&lt;/p&gt;
+&lt;p&gt;Developers can initiate token exchange in two ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;HTTP Endpoint:&lt;/strong&gt; Requesting a token exchange at the &lt;code&gt;/oauth2/token&lt;/code&gt; endpoint on the user pool’s domain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS SDK:&lt;/strong&gt; Calling the &lt;code&gt;GetDerivedToken&lt;/code&gt; API, which does not require a user pool domain.
+Both methods accept the same subject token, actor token, audience, and scopes, returning an issued token with identical claims.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;As AI agents become more capable of picking tools at runtime, such as MCP servers that send invitations or manage reservations, the need for granular, auditable access control grows. Token exchange ensures that each hop in the chain receives only the scopes it needs. By identifying the acting service through the act claim, organizations can maintain clear audit trails, ensuring that when an AI agent performs an action like reserving a table or inviting friends, the record clearly associates that action with both the end user and the specific agent or service that executed it.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-1-second-hop.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/cognito-token-exchange-flow-figure-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-5-invitations-mcp-server.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonCognito #OAuth2.0 #AIAgents #TokenExchange #Security&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/delegate-user-access-to-ai-agents-with-amazon-cognito-token-exchange/" target="_blank" rel="noopener"
+&gt;Delegate user access to AI agents with Amazon Cognito token exchange | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Exposed API Leads to Customer Credential Exposure at Radware</title><link>https://shoubhikbanerjee.github.io/blog/p/exposed-api-leads-to-customer-credential-exposure-at-radware/</link><pubDate>Wed, 25 Nov 2026 22:10:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/exposed-api-leads-to-customer-credential-exposure-at-radware/</guid><description>&lt;img src="https://www.bleepstatic.com/content/hl-images/2026/11/24/Radware.jpg" alt="Featured image of post Exposed API Leads to Customer Credential Exposure at Radware" /&gt;&lt;h1 id="exposed-api-leads-to-customer-credential-exposure-at-radware"&gt;Exposed API Leads to Customer Credential Exposure at Radware
+&lt;/h1&gt;&lt;p&gt;Cybersecurity company Radware experienced a data breach after an unauthorized party accessed an unauthenticated internal Cloud WAF management API left reachable from the public internet on November 19, 2026.&lt;/p&gt;
+&lt;h2 id="-incident-overview"&gt;🔍 Incident Overview
+&lt;/h2&gt;&lt;p&gt;Radware detected the unauthorized access on a Thursday, ten hours after the initial intrusion. Upon detection, the company took several immediate response actions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Blocked the originating IP address and disabled public access to the internal management API.&lt;/li&gt;
+&lt;li&gt;Revoked and replaced all internal account credentials.&lt;/li&gt;
+&lt;li&gt;Initiated a root cause analysis report, which was later shared by an anonymous source with BleepingComputer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Founded in 1996 and headquartered in Tel Aviv, Radware provides application delivery and DDoS protection services to more than 12,500 enterprise and telecom carrier customers worldwide.&lt;/p&gt;
+&lt;h2 id="-impacted-systems-and-data"&gt;⚙️ Impacted Systems and Data
+&lt;/h2&gt;&lt;p&gt;The exposure was limited to specific account management details and log export configurations, while core traffic inspection remained unaffected.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;System / Data Category&lt;/th&gt;
+&lt;th&gt;Status According to Radware&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Customer contact details&lt;/td&gt;
+&lt;td&gt;Potentially accessed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Log export credentials (AWS S3, Azure Blob Storage, SFTP)&lt;/td&gt;
+&lt;td&gt;Potentially accessed for a subset of customers&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;WAF traffic inspection and certificates&lt;/td&gt;
+&lt;td&gt;Not exposed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;End-users&amp;rsquo; data and customer application traffic&lt;/td&gt;
+&lt;td&gt;Not exposed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Cloud DDoS services and data&lt;/td&gt;
+&lt;td&gt;Not exposed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Radware stated that WAF traffic inspection and protection have continued without interruption, with no evidence found of policy changes or access to customer application traffic.&lt;/p&gt;
+&lt;h2 id="-customer-action-advised"&gt;💡 Customer Action Advised
+&lt;/h2&gt;&lt;p&gt;Radware strongly advised affected AppSec (WAF, BOT) customers to take immediate remedial steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Rotate exposed Cloud WAF log export credentials, including Azure Blob Storage keys or SAS tokens, AWS S3 access keys, or SFTP credentials, as soon as possible.&lt;/li&gt;
+&lt;li&gt;Review access logs on cloud storage accounts for unexpected access dating back to at least November 19.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The company noted it has already received reports from customers regarding AWS alerts for an unfamiliar IP address attempting to access their log-export buckets.&lt;/p&gt;
+&lt;h2 id="-investigation-and-public-response"&gt;📊 Investigation and Public Response
+&lt;/h2&gt;&lt;p&gt;Radware is continuing to investigate the incident to determine whether any exposed API keys or customer information were used without authorization. As of the report, Radware has not issued a public statement, filed a breach report with the US Securities and Exchange Commission, or provided an immediate response to inquiries from BleepingComputer.&lt;/p&gt;
+&lt;p&gt;#Cybersecurity #DataBreach #Radware #CloudSecurity #APISecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.bleepingcomputer.com/news/security/radware-discloses-breach-exposing-customer-cloud-access-keys/" target="_blank" rel="noopener"
+&gt;Radware discloses breach exposing customer cloud access keys&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS extends Trusted Identity Propagation to IAM Federation and Roles Anywhere</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-extends-trusted-identity-propagation-to-iam-federation-and-roles-anywhere/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-extends-trusted-identity-propagation-to-iam-federation-and-roles-anywhere/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/05/13/AdobeStock_1376596821-1260x630.jpeg" alt="Featured image of post AWS extends Trusted Identity Propagation to IAM Federation and Roles Anywhere" /&gt;&lt;h1 id="aws-extends-trusted-identity-propagation-to-iam-federation-and-roles-anywhere"&gt;AWS extends Trusted Identity Propagation to IAM Federation and Roles Anywhere
+&lt;/h1&gt;&lt;p&gt;AWS has extended Trusted Identity Propagation (TIP) to support IAM federation and AWS IAM Roles Anywhere, enabling customers to grant access and audit activity based on the specific user or workload behind an IAM role.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Trusted Identity Propagation (TIP) carries the identity of a user or workload with each AWS request. This allows users to grant permissions to that specific user or workload and trace its actions in AWS CloudTrail. Previously, TIP was available only for users accessing AWS through AWS IAM Identity Center. The new extension makes TIP work for users and workloads that federate directly into IAM roles or use X.509 certificates to obtain AWS credentials, while also simplifying TIP usage with IAM Identity Center.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;TIP addresses the gap where access control decisions apply to the role rather than the user, and CloudTrail attributes each action to the role session. By attaching identity context from a trusted source to the role session at credential issuance, TIP provides a stable reference for the user or workload behind each request. This context is immutable for the lifetime of the session and can include optional claims, such as a risk score or a CI/CD workflow name.&lt;/p&gt;
+&lt;p&gt;The identity context propagates through supported downstream requests:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Role Assumption:&lt;/strong&gt; When a TIP session assumes another role, AWS Security Token Service (AWS STS) carries the context into the new role session.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Forward Access Sessions (FAS):&lt;/strong&gt; When an AWS service makes a downstream request on your behalf, FAS credentials carry the identity context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Outbound Federation:&lt;/strong&gt; With IAM outbound identity federation, the session can request a signed JSON Web Token (JWT) that carries identity context to an external service.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;AWS validates the source and attaches identity context through three primary paths:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Path&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Source of Identity Context&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Trusted Source Type&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;IAM Federation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;SAML assertion or OIDC token&lt;/td&gt;
+&lt;td style="text-align: left"&gt;External SAML or OIDC Identity Providers (IdP)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;IAM Identity Center&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Username received from identity source&lt;/td&gt;
+&lt;td style="text-align: left"&gt;IAM Identity Center&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;IAM Roles Anywhere&lt;/td&gt;
+&lt;td style="text-align: left"&gt;X.509 certificate&lt;/td&gt;
+&lt;td style="text-align: left"&gt;X.509 certificates&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;TIP context propagates to a new role session only under specific boundary conditions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The target role is in the account where the identity provider is configured.&lt;/li&gt;
+&lt;li&gt;The target role is in another account within the same AWS organization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;IAM policies evaluate this identity context to authorize requests, and AWS CloudTrail records it for auditing. For example, Amazon S3 bucket policies and AWS Lambda can utilize this context for access control and audit logging. The identity context is represented through context keys, including the &lt;code&gt;aws:OriginIdentity/*&lt;/code&gt; namespace, which serves as the common namespace for identity information across all three paths.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-1-identity-context-flow-v12-3600x1820-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-2-github-actions-audit-v2-3200x1800-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-3-runtime-risk-access-v4-3200x1800-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #IAM #CloudSecurity #IdentityManagement #CloudTrail #DevSecOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/know-the-identity-behind-the-role-authorize-and-audit-with-trusted-identity-propagation/" target="_blank" rel="noopener"
+&gt;Know the identity behind the role: Authorize and audit with trusted identity propagation | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS Simplifies WAF Pricing with Three-Dimensional Model</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-simplifies-waf-pricing-with-three-dimensional-model/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-simplifies-waf-pricing-with-three-dimensional-model/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/23/WAF-pricing-hero-image-v2-1260x630.jpg" alt="Featured image of post AWS Simplifies WAF Pricing with Three-Dimensional Model" /&gt;&lt;h1 id="aws-simplifies-waf-pricing-with-three-dimensional-model"&gt;AWS Simplifies WAF Pricing with Three-Dimensional Model
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;📊 Overview
+&lt;/h2&gt;&lt;p&gt;Starting today, AWS WAF pricing is easier to predict. Your bill is now based on three dimensions: the resources you protect, the traffic AWS WAF inspects, and the level of protection you apply to that traffic. For new or smaller workloads, the Free plan of CloudFront flat-rate pricing plans is another way to start. If your application serves fewer than 1 million requests per month, the Free plan costs $0 per month for each CloudFront distribution. It includes AWS WAF protection against common web threats, DDoS protection, and the CloudFront CDN, with no overage charges.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Adding a protection (such as a rule, Bot Control, or Anti-DDoS rule group) no longer adds a subscription or a separate per-request charge. Those requests bill at the base request rate.&lt;/li&gt;
+&lt;li&gt;Capacity no longer affects your rate. Each protection pack (web ACL) now includes up to 2,500 web ACL capacity units (WCUs), up from 1,500, and going past your included capacity does not raise what you pay per request.&lt;/li&gt;
+&lt;li&gt;The premium request fee applies only to the traffic you choose to send through advanced protections.&lt;/li&gt;
+&lt;li&gt;You can estimate costs before writing a first rule, and those estimates hold even as your rules change.&lt;/li&gt;
+&lt;li&gt;Security rules change often. Adding, reordering, or removing rules does not change your rate.&lt;/li&gt;
+&lt;li&gt;For AWS Shield Advanced subscribers, nothing changes. Your Shield Advanced subscription, its price, and your included AWS WAF entitlement stay the same.&lt;/li&gt;
+&lt;li&gt;Customers on a CloudFront flat-rate pricing plan also see no change.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-costs-are-calculated"&gt;💰 How Costs Are Calculated
+&lt;/h2&gt;&lt;p&gt;AWS WAF bills three fees:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Fee Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Resource Fee&lt;/td&gt;
+&lt;td&gt;Hourly charge for each resource associated with a protection pack (e.g., CloudFront distributions, Application Load Balancers, Amazon API Gateway APIs).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Base Request Fee&lt;/td&gt;
+&lt;td&gt;Applies to each request AWS WAF inspects.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Premium Request Fee&lt;/td&gt;
+&lt;td&gt;Applies on top of the base request fee, to requests evaluated by advanced protections like Bot Control, Fraud Control, API Security, and AI Security.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Both API Security and AI Security use the same premium request fee, with no separate subscription or rate. Requests evaluated by one or more advanced protections are billed $5.60 per million: the $0.60 base request fee plus the $5.00 premium request fee. AWS WAF charges the premium request fee once per request, however many advanced protections evaluate it. A request blocked before reaching an advanced protection pays only the base request fee.&lt;/p&gt;
+&lt;h2 id="-availability-and-transition"&gt;🚀 Availability and Transition
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Existing AWS WAF customers move to the new pricing on February 1, 2027. Until then, they keep their current pricing and don’t need to do anything at launch.&lt;/li&gt;
+&lt;li&gt;If you hold an AWS WAF private pricing agreement, it stays in force until it expires.&lt;/li&gt;
+&lt;li&gt;The new pricing includes the Security analytics dashboard, which shows full traffic metrics for your protected applications over a rolling 21-day window at no additional cost.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-example-cost-estimation"&gt;💡 Example: Cost Estimation
+&lt;/h2&gt;&lt;p&gt;Here’s a worked example from the AWS WAF pricing page:&lt;/p&gt;
+&lt;p&gt;Example 1: One protected resource (Application Load Balancer) serving 20 million requests per month.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Resource fee: 1 resource × $0.01 per hour × 730 hours = $7.30&lt;/li&gt;
+&lt;li&gt;Base request fee: 20 million × $0.60 per million = $12.00&lt;/li&gt;
+&lt;li&gt;Total: $19.30 per month&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For more pricing details and examples, visit the AWS WAF pricing page. If you have questions about how the new pricing applies to your account, contact your AWS account team or open a Support case.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/19/waf-pricing-scenarios-Figure-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/19/waf-old-vs-new-pricing-flow-Figure-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #WAF #CloudSecurity #Pricing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/introducing-aws-waf-simplified-pricing/" target="_blank" rel="noopener"
+&gt;Introducing AWS WAF simplified pricing | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Microsoft: Azure API Management vulnerability used to steal credentials</title><link>https://shoubhikbanerjee.github.io/blog/p/microsoft-azure-api-management-vulnerability-used-to-steal-credentials/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/microsoft-azure-api-management-vulnerability-used-to-steal-credentials/</guid><description>&lt;img src="https://www.bleepstatic.com/content/hl-images/2026/08/21/Microsoft.jpg" alt="Featured image of post Microsoft: Azure API Management vulnerability used to steal credentials" /&gt;&lt;h1 id="microsoft-azure-api-management-vulnerability-used-to-steal-credentials"&gt;Microsoft: Azure API Management vulnerability used to steal credentials
+&lt;/h1&gt;&lt;p&gt;Microsoft has issued a security advisory warning that a vulnerability in Azure API Management (APIM) Classic tiers was exploited to steal stored API credentials, with Norwegian authorities linking the flaw to cyberattacks against energy companies. The issue affects a cloud service that allows organizations to publish, secure, monitor, and manage APIs connecting applications, services, and data.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;In a security advisory with Tracking ID MZK9-GH0, Microsoft stated it identified the vulnerability on November 18, 2026, and deployed a mitigation the following day. The company confirmed that customers were exposed and that an unauthorized party could have accessed secrets stored in Azure API Management Classic instances before the issue was identified.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Affected Tiers:&lt;/strong&gt; The vulnerability specifically affects Azure API Management Classic tiers; Microsoft stated that APIM v2 tiers are not impacted.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access Mechanism:&lt;/strong&gt; The flaw allowed unauthorized access to certain management functionality when APIM Classic instances were not configured according to recommended security best practices.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Potential Impact:&lt;/strong&gt; This access could allow attackers to perform administrative operations, including accessing secrets, which could potentially grant access to additional applications, services, or backend systems depending on permissions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Remediation:&lt;/strong&gt; Microsoft closed the unauthorized access path on November 19 and rotated Microsoft-controlled keys and credentials where appropriate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Limitation:&lt;/strong&gt; The remediation does not automatically invalidate customer credentials that may have been accessed before the fix was deployed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-reported-exploitation"&gt;🏛️ Reported Exploitation
+&lt;/h2&gt;&lt;p&gt;Norway&amp;rsquo;s National Security Authority (NSM) linked the vulnerability to attacks affecting Norwegian organizations, including energy companies Equinor and Skagerak Energi.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NSM Advisory:&lt;/strong&gt; The agency stated that an unknown threat actor targeted access tokens, secrets, and named values stored in Azure API Management.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Discovery:&lt;/strong&gt; NSM reported that Norway&amp;rsquo;s energy sector first discovered the vulnerability, noting that organizations in other countries and industries were also affected.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Equinor:&lt;/strong&gt; The company disclosed an ongoing cyberattack on November 17, the day before Microsoft identified the vulnerability. Equinor later announced it had stopped the attack and found no indication that data had been stolen or altered.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Skagerak Energi:&lt;/strong&gt; The company reported an attempted cyberattack but stated it had no impact on operations and no evidence that information was compromised.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Additionally, a Reddit post from an administrator alleged their organization detected unauthorized access to Azure Key Vault using a valid administrator token. The administrator claimed attackers exploited a zero-day authentication bypass in a deprecated legacy API to gain access to a privileged system account on APIM instances. They alleged the legacy API did not generate logs for customers to detect this access and that Microsoft initially attributed the activity to leaked customer credentials. BleepingComputer has not independently verified these allegations.&lt;/p&gt;
+&lt;h2 id="-recommendations"&gt;💡 Recommendations
+&lt;/h2&gt;&lt;p&gt;Microsoft urged affected customers to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Immediately rotate potentially exposed credentials.&lt;/li&gt;
+&lt;li&gt;Investigate suspicious activity in systems accessible through those credentials.&lt;/li&gt;
+&lt;li&gt;Review available logs for signs of unauthorized access.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;NSM warned organizations to verify that their APIM instances have received the security update, noting that instances running below specific runtime versions remain vulnerable. The agency advised customers to contact their service provider if they have not received the update. Cloud security researcher Anders Kristiansen has shared threat-hunting queries to help organizations investigate potential exploitation and identify stored credentials.&lt;/p&gt;
+&lt;p&gt;#Azure #Cybersecurity #APIManagement #Vulnerability #Microsoft&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.bleepingcomputer.com/news/security/microsoft-azure-flaw-exploited-to-steal-customers-api-credentials/" target="_blank" rel="noopener"
+&gt;Microsoft Azure flaw exploited to steal customers&amp;rsquo; API credentials&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Shared Responsibility for AI Agents Remains Undefined Across Major Vendors</title><link>https://shoubhikbanerjee.github.io/blog/p/shared-responsibility-for-ai-agents-remains-undefined-across-major-vendors/</link><pubDate>Mon, 23 Nov 2026 22:18:20 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/shared-responsibility-for-ai-agents-remains-undefined-across-major-vendors/</guid><description>&lt;img src="https://www.bleepstatic.com/content/posts/2026/11/20/ai-shared-responsibility-gap.jpg" alt="Featured image of post Shared Responsibility for AI Agents Remains Undefined Across Major Vendors" /&gt;&lt;h1 id="shared-responsibility-for-ai-agents-remains-undefined-across-major-vendors"&gt;Shared Responsibility for AI Agents Remains Undefined Across Major Vendors
+&lt;/h1&gt;&lt;p&gt;Five organizations have published guidance on responsibility for AI agents, but no consensus has emerged on who is ultimately responsible for agent behavior. While traditional cloud security has clear separation of duties between vendors and customers, AI agents act as non-deterministic intermediaries, making the separation of responsibilities less clean. The available guidance approaches the issue from different angles, ranging from specific task assignments to descriptions of broader security layers. To address this, organizations need to determine who owns each agent, what permissions it holds, and how it operates across systems.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;In cloud security, models like the AWS Shared Responsibility Model establish a clear division: vendors handle infrastructure security, while customers are responsible for the data and the actions taken. For example, if data is copied from AWS to SFDC, each vendor secures their infrastructure, but the customer owns the action.&lt;/p&gt;
+&lt;p&gt;AI agents complicate this framework. They send authenticated, authorized requests that can be compromised or rogue. A rogue agent has either misunderstood its instructions or acted inappropriately—a type of error that is not necessarily a mistake in the human sense. Because agents act as intermediaries between the user and the request, and they are not deterministic by nature, the line between vendor and customer responsibility becomes blurred.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Five specific organizations have published guidance on this topic:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Microsoft&lt;/strong&gt;: Published an AI agent shared responsibility model featuring a matrix for IaaS, PaaS, and SaaS deployments.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CSA and CoSAI&lt;/strong&gt;: Published shared responsibility models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS&lt;/strong&gt;: Provided security guidance for AgentCore, applying its general shared responsibility model without a specific agent-specific model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Anthropic&lt;/strong&gt;: Published guidance titled &amp;ldquo;Trustworthy agents in practice.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Only two of these organizations assign ownership of an agent&amp;rsquo;s identity, and they split that ownership differently. No publication agrees on who is responsible for the agent&amp;rsquo;s behavior. Approaches vary: some assign specific tasks to providers and customers, while others describe security layers or broader stakeholder roles.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Frontier AI labs are clear about their immediate responsibilities: making models more robust, better guarded, and harder to hijack. They are equally clear about their limitations: they cannot understand the specific business context of an action. For instance, an agent deleting files from Google Drive could be acting maliciously or performing a normal task; the system cannot distinguish between the two. Consequently, builders bear final responsibility for the behavior and permissions of the systems they assemble. While tools like Claude Code include checks such as automated classifiers to block actions driven by hostile content, and vendors like OpenAI, Cursor, and GitHub offer approval prompts and sandboxes, these capabilities do not automatically resolve the question of accountability. As new protocols like MCP are introduced, they may conceptually denote expanded responsibility for those who built them, but the lack of unified ownership remains a critical gap for organizations deploying agents.&lt;/p&gt;
+&lt;p&gt;#AIAgents #CloudSecurity #Microsoft #AWS #Anthropic #SharedResponsibility&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.bleepingcomputer.com/news/security/ai-agents-are-creating-a-shared-responsibility-gap/" target="_blank" rel="noopener"
+&gt;AI Agents Are Creating a Shared Responsibility Gap&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS Introduces GetScopedCredentials API to Safely Scope Down Temporary Security Credentials</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-introduces-getscopedcredentials-api-to-safely-scope-down-temporary-security-credentials/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-introduces-getscopedcredentials-api-to-safely-scope-down-temporary-security-credentials/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/10/21/Lock-data.jpeg" alt="Featured image of post AWS Introduces GetScopedCredentials API to Safely Scope Down Temporary Security Credentials" /&gt;&lt;h1 id="aws-introduces-getscopedcredentials-api-to-safely-scope-down-temporary-security-credentials"&gt;AWS Introduces GetScopedCredentials API to Safely Scope Down Temporary Security Credentials
+&lt;/h1&gt;&lt;p&gt;AWS has launched GetScopedCredentials, a new AWS Security Token Service (AWS STS) API that enables you to scope down the permissions of existing temporary security credentials. This feature is designed to help secure workloads, such as AI agents, by ensuring they only have the minimum permissions needed to perform their tasks rather than the full permissions of the calling session.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;GetScopedCredentials provides a programmatic way to generate narrower security credentials from those you already possess. You can assign each agent, sub-agent, or process its own credentials that carry reduced permissions, a shorter session duration, or both, while keeping the original caller’s AWS Identity and Access Management (IAM) identity.&lt;/p&gt;
+&lt;p&gt;Because GetScopedCredentials works by narrowing the credentials you already have, it acts as a building block that you can integrate directly into:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Agent frameworks&lt;/li&gt;
+&lt;li&gt;Continuous integration and deployment (CI/CD) pipelines&lt;/li&gt;
+&lt;li&gt;Services that issue credentials to other components&lt;/li&gt;
+&lt;li&gt;Custom applications&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To call the API, you must have valid temporary security credentials and the necessary permissions to call GetScopedCredentials. You can make the call using the latest version of the AWS Command Line Interface (AWS CLI) or the AWS SDK for your programming language.&lt;/p&gt;
+&lt;p&gt;The technical specifications of the API include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Input Credentials:&lt;/strong&gt; You can call the API with the temporary credentials you already use, including those from aws login, an Amazon Elastic Compute Cloud (Amazon EC2) instance profile, or an AWS Lambda function.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scope Down Policy:&lt;/strong&gt; In each call, you pass a scope down policy (an inline policy representing the maximum permissions) of up to 2,048 characters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Intersection of Permissions:&lt;/strong&gt; The resulting permissions are the intersection of the session&amp;rsquo;s effective permissions and the scope down policy. This ensures that permissions can only be reduced, never expanded.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Session Duration:&lt;/strong&gt; You can request a shorter session duration, which cannot exceed the remaining duration of the calling session.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Chaining Calls:&lt;/strong&gt; You can call GetScopedCredentials again using the resulting scoped-down credentials to restrict permissions or reduce duration even further. This allows an orchestrating agent to give sub-agents narrower access than its own.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-common-use-cases"&gt;💡 Common Use Cases
+&lt;/h2&gt;&lt;p&gt;GetScopedCredentials can be applied whenever a workload requires narrower access than the session that initiates it. Notable use cases include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Limiting AI Agent Actions:&lt;/strong&gt; AI agents decide on actions at runtime based on prompts or tool output. By using GetScopedCredentials, you can restrict their actions to only what is required—such as read access to a single Amazon Simple Storage Service (Amazon S3) bucket—or explicitly strip away risky actions like deleting resources. Run your agents in sandbox environments, such as AWS Strands Box, to ensure they only access these restricted credentials.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scoping Down Based on Runtime Context:&lt;/strong&gt; Some workloads run under a single IAM role but require different permissions based on authenticated requests. For example, a multi-tenant application with a single IAM role that serves files from different prefixes in one S3 bucket can use a trusted credential broker to call GetScopedCredentials. The broker obtains credentials restricted to only the specific tenant&amp;rsquo;s prefix and passes them to the worker.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Just-in-Time Access:&lt;/strong&gt; Securing tasks based on runtime data learned only after the workload begins.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AWS #Security #IAM #AIAgents #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/scope-down-permissions-of-existing-sessions-using-aws-sts-getscopedcredentials/" target="_blank" rel="noopener"
+&gt;Scope down permissions of existing sessions using AWS STS GetScopedCredentials | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS re:Invent 2026 to Showcase AWS Continuum and Security for AI Agents</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-re-invent-2026-to-showcase-aws-continuum-and-security-for-ai-agents/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-re-invent-2026-to-showcase-aws-continuum-and-security-for-ai-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/19/Security-Identity-Governance-guide-Figure-1.jpg" alt="Featured image of post AWS re:Invent 2026 to Showcase AWS Continuum and Security for AI Agents" /&gt;&lt;h1 id="aws-reinvent-2026-to-showcase-aws-continuum-and-security-for-ai-agents"&gt;AWS re:Invent 2026 to Showcase AWS Continuum and Security for AI Agents
+&lt;/h1&gt;&lt;p&gt;The AWS Security, Identity, and Governance team has announced the security session lineup for AWS re:Invent in Las Vegas, running from November 30 to December 4, 2026. The event will showcase new developments in AWS Continuum, a service designed to automate security workflows, alongside sessions on governance and authentication for autonomous AI agents.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AWS re:Invent 2026 features nearly 120 security sessions across breakouts, chalk talks, workshops, code talks, builders&amp;rsquo; sessions, and lightning talks. Security sessions begin Monday morning and run through Friday, with Tuesday and Wednesday sessions distributed across the Wynn, MGM Grand, and Caesars Palace. On Thursday, December 3, the Wynn venue hosts a full day of advanced security sessions with 78 sessions from 8:00 AM to 5:30 PM, the majority of which are at the 300 level or above. This includes 12 workshops, 11 builders&amp;rsquo; sessions, and 22 chalk talks.&lt;/p&gt;
+&lt;h2 id="-key-sessions-for-aws-continuum-and-security"&gt;⚙️ Key Sessions for AWS Continuum and Security
+&lt;/h2&gt;&lt;p&gt;The event includes dedicated sessions detailing the capabilities of AWS Continuum and secure architectures for AI workloads:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Session&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Day &amp;amp; Time&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Format&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC388&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Monday 10:00 AM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Breakout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;National Institutes of Health shares how it manages identity lifecycle across clouds.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC302&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Monday 10:00 AM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Breakout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Building a governance foundation for AI workloads that grows with autonomous agents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC427&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Monday 12:00 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Code Talk&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Threat models an agentic development workflow from user story to deployment with AWS Continuum.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC424&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tuesday 2:30 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Chalk Talk&lt;/td&gt;
+&lt;td style="text-align: left"&gt;How IAM evaluates policies on every request.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC312&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tuesday 3:30 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Workshop&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Run an on-demand penetration test against a live application with AWS Continuum.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC323&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tuesday 3:30 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Workshop&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Recover from a simulated ransomware event and prove the restore is clean.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC362&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 8:00 AM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Workshop&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Build authentication, authorization, and audit for AI agents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC349&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 8:30 AM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Workshop&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Build a layered controls stack for a fleet of agents.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC419&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 11:30 AM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Chalk Talk&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OAuth delegation patterns for agents with Amazon Bedrock AgentCore Identity.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC405&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 12:00 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Builders&amp;rsquo; Session&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Take a vulnerable application from discovery to fix with Amazon Inspector, AWS Continuum, and Amazon GuardDuty.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC501&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 1:00 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Breakout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Goes inside the research behind the GuardDuty detection engine.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC311&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 1:00 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Builders&amp;rsquo; Session&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Wires AWS frontier agents into an automated find-and-fix security loop.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC384&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 2:30 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Breakout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;How AWS Continuum discovers, validates, and fixes code vulnerabilities in one workflow.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;SEC390&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thursday 4:00 PM&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Breakout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Woodside handed SOC monitoring to AWS Security Incident Response to focus on threat hunting.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-keynotes-and-featured-speakers"&gt;🎤 Keynotes and Featured Speakers
+&lt;/h2&gt;&lt;p&gt;Several key leadership presentations are scheduled for the event:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Chet Kapoor&lt;/strong&gt; (AWS VP of Security, Search, and Observability) presents &amp;ldquo;The Future of Security&amp;rdquo; at 11:00 AM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Amy Herzog&lt;/strong&gt; (AWS Chief Information Security Officer) presents &amp;ldquo;The Old Security Playbook Is Dead&amp;rdquo; at 1:00 PM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Eric Brandwine&lt;/strong&gt; (VP/Distinguished Engineer, AWS Security) presents &amp;ldquo;Operationalizing security for the future with best practices today&amp;rdquo; at 3:00 PM.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The Thursday keynote runs from 8:30 to 10:00 AM at The Venetian and is also streamed online.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/19/Security-Identity-Governance-guide-Figure-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #reInvent #CloudSecurity #AWSContinuum #AIAgents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/your-aws-security-identity-and-governance-guide-to-reinvent-2026/" target="_blank" rel="noopener"
+&gt;Your AWS Security, Identity, and Governance guide to re:Invent 2026 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AWS WAF Introduces New Security Analytics Dashboard</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-waf-introduces-new-security-analytics-dashboard/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-waf-introduces-new-security-analytics-dashboard/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/05/05/aws_logo.jpg" alt="Featured image of post AWS WAF Introduces New Security Analytics Dashboard" /&gt;&lt;h1 id="aws-waf-introduces-new-security-analytics-dashboard"&gt;AWS WAF Introduces New Security Analytics Dashboard
+&lt;/h1&gt;&lt;p&gt;AWS has introduced a new security analytics dashboard for AWS WAF, providing a single global page to investigate traffic across all protection packs (web ACLs), Regional resources, and Amazon CloudFront distributions. This update builds on the 2024 traffic overview dashboard by offering a consolidated view that helps users act on findings faster.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The new dashboard is designed to help users investigate and contain threats faster while reducing false positives that block real customers. Key aspects of the update include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A single global page for investigating traffic across all protection packs (web ACLs).&lt;/li&gt;
+&lt;li&gt;Coverage of Regional resources and Amazon CloudFront distributions.&lt;/li&gt;
+&lt;li&gt;No need to build or maintain a custom log analytics pipeline.&lt;/li&gt;
+&lt;li&gt;Built on full-fidelity request data rather than samples.&lt;/li&gt;
+&lt;li&gt;Two primary use cases demonstrated: investigating a traffic spike and tuning rules to reduce false positives.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;p&gt;To access the dashboard, users navigate to the AWS WAF console and select &amp;ldquo;Security analytics&amp;rdquo; in the navigation pane. The interface allows users to narrow the view to specific protection packs and set time ranges.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Global View&lt;/strong&gt;: The dashboard displays request data across all protection packs in the account. Selecting &amp;ldquo;All protection packs&amp;rdquo; shows a comprehensive view.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Traffic Breakdown&lt;/strong&gt;: The top of the page shows total requests split by action: Allow, Block, CAPTCHA, and Challenge.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Charts and Widgets&lt;/strong&gt;: The &amp;ldquo;Requests chart&amp;rdquo; visualizes traffic changes over time, while widgets below display top values for specific dimensions. Users can split the Requests chart by dimensions such as Host, Rule triggered, Country, or JA4.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Host Grouping&lt;/strong&gt;: Grouping or filtering by Host identifies which domains are under attack or experiencing spikes, even when a single protection pack protects multiple domains or a domain spans several protection packs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Labels and Detections&lt;/strong&gt;: AWS Managed Rules add labels (e.g., Bot Control categories, verification status, and signals like &lt;code&gt;non_browser_user_agent&lt;/code&gt;). Users can also create custom labels. Because labels are recorded even when a rule is set to count-only, filtering by a label shows what a rule detected across all protection packs without changing how traffic is handled.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Filters and Actions&lt;/strong&gt;: Filters apply to the entire dashboard, updating the action split, Requests chart, widgets, and request list. Users can select any value in a widget to focus on it, remove it, or block it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Request Details&lt;/strong&gt;: For individual requests, the dashboard displays HTTP fields such as host, path, headers, user agent, and JA4 fingerprint. It also shows which detections and labels matched and whether each action was enforced or only counted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;Previously, accessing this level of detail required working from a limited sample of requests or setting up and querying custom AWS WAF logs. The new dashboard makes this data available directly. Additionally, the current dashboard view is saved in the user&amp;rsquo;s browser.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;This tool allows security teams to move from reactive log analysis to proactive investigation and containment. By providing full-fidelity data without the overhead of maintaining custom pipelines, organizations can more effectively tune their rules to minimize false positives and protect their infrastructure.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/Figure2-RequestsGroupedbyRuleTriggered.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/Figure5-Reqestdetails.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #WAF #WebSecurity #CloudSecurity #DataAnalytics&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/introducing-the-new-aws-waf-security-analytics-dashboard/" target="_blank" rel="noopener"
+&gt;Introducing the new AWS WAF security analytics dashboard | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Databricks Mitigates and Patches Java4Shell OpenJDK Vulnerability</title><link>https://shoubhikbanerjee.github.io/blog/p/databricks-mitigates-and-patches-java4shell-openjdk-vulnerability/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/databricks-mitigates-and-patches-java4shell-openjdk-vulnerability/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/2026-11-Blog-SIRT-2058-Placeholder-Blog-OG-1200x628-2x.png" alt="Featured image of post Databricks Mitigates and Patches Java4Shell OpenJDK Vulnerability" /&gt;&lt;h1 id="databricks-mitigates-and-patches-java4shell-openjdk-vulnerability"&gt;Databricks Mitigates and Patches Java4Shell OpenJDK Vulnerability
+&lt;/h1&gt;&lt;p&gt;Databricks has addressed the industry-wide OpenJDK vulnerability tracked as CVE-2026-114938 (Java4Shell) before its public disclosure. The company is protecting its platform and customers through a two-phase response: immediate mitigation and subsequent patching.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Prior to Java4Shell’s public disclosure, Databricks was already addressing the vulnerability. The company is protecting customers in two phases: quick mitigation to disable use of the vulnerable code, and then patching to replace the vulnerable code.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Databricks has applied the mitigation to its platform, disabling use of vulnerable code for all supported versions of Databricks Runtime.&lt;/li&gt;
+&lt;li&gt;The mitigation is not expected to have a meaningful performance impact on customers.&lt;/li&gt;
+&lt;li&gt;To apply the mitigation as quickly as possible, Databricks took the rare step of proactively restarting affected clusters.&lt;/li&gt;
+&lt;li&gt;While the mitigation blocks the attack, in an abundance of caution, Databricks will provide patched versions of supported Databricks Runtimes.&lt;/li&gt;
+&lt;li&gt;Databricks has no evidence to indicate any unauthorized access to its products, services, or customers&amp;rsquo; data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Customer Type&lt;/th&gt;
+&lt;th&gt;Patch Delivery Method&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Serverless platform customers&lt;/td&gt;
+&lt;td&gt;Patches will be applied automatically&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Classic cluster customers&lt;/td&gt;
+&lt;td&gt;Customers need to restart their clusters&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Customers running custom images&lt;/td&gt;
+&lt;td&gt;Databricks is reaching out to them&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Databricks has stated it has no evidence to indicate any unauthorized access to Databricks products, services, or customers&amp;rsquo; data. The proactive mitigation and planned patching demonstrate the company&amp;rsquo;s response to the vulnerability.&lt;/p&gt;
+&lt;p&gt;#Databricks #Java4Shell #OpenJDK #Security #Vulnerability #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/java4shell-vulnerability-cve-2026-114938-assessment" target="_blank" rel="noopener"
+&gt;Java4Shell vulnerability (CVE-2026-114938) assessment&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>How AWS Security Incident Response triages threat findings from GuardDuty</title><link>https://shoubhikbanerjee.github.io/blog/p/how-aws-security-incident-response-triages-threat-findings-from-guardduty/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/how-aws-security-incident-response-triages-threat-findings-from-guardduty/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/automated-triage-hero-1260x630.jpg" alt="Featured image of post How AWS Security Incident Response triages threat findings from GuardDuty" /&gt;&lt;h1 id="how-aws-security-incident-response-triages-threat-findings-from-guardduty"&gt;How AWS Security Incident Response triages threat findings from GuardDuty
+&lt;/h1&gt;&lt;p&gt;AWS Security Incident Response continuously triages threat findings from Amazon GuardDuty and AWS Security Hub CSPM, a process where most work never surfaces as a customer-facing case. The service ingests these findings through Amazon EventBridge rules automatically deployed during onboarding, ensuring that active threats are evaluated while posture and compliance issues remain in existing remediation processes.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The automated triage process evaluates each finding payload against several data sources to determine if an activity is benign or requires action.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data sources:&lt;/strong&gt; The service assesses the finding payload, related AWS activity from AWS CloudTrail and Amazon VPC Flow Logs, AWS threat intelligence, and user-provided environment context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benchmarking:&lt;/strong&gt; Findings are mapped against a profile of known-good activity specific to the customer&amp;rsquo;s environment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Third-party integration:&lt;/strong&gt; Findings from tools like CrowdStrike, Trend Micro, or Lacework sent to Security Hub CSPM are also ingested, provided they carry complete payload information including resource ID, account ID, timestamp, and threat details. GuardDuty findings are ingested directly to prevent duplication.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Outcomes of the triage process vary depending on the nature of the finding. Posture and compliance findings, such as misconfigurations or failed benchmark checks, are not triaged as they reflect environment state rather than active threats. They remain current without archiving and do not generate cases.&lt;/p&gt;
+&lt;p&gt;For active threat findings, such as compromised credentials, cryptomining, or data exfiltration, the service determines one of three dispositions:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Disposition&lt;/th&gt;
+&lt;th&gt;Trigger Condition&lt;/th&gt;
+&lt;th&gt;Action Taken&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Archived, no action needed&lt;/td&gt;
+&lt;td&gt;Automated triage or engineer confirms activity is benign or expected&lt;/td&gt;
+&lt;td&gt;Finding is archived in GuardDuty; no case is created and no customer contact is made&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Proactive case opened&lt;/td&gt;
+&lt;td&gt;Triage cannot confirm activity is benign&lt;/td&gt;
+&lt;td&gt;Case is opened as &amp;ldquo;Unconfirmed Activity&amp;rdquo; or &amp;ldquo;Inappropriate/Unintended Activity&amp;rdquo;; incident response team is engaged; finding stays Current until resolved&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retained for review&lt;/td&gt;
+&lt;td&gt;Posture-related findings (e.g., overly permissive policies)&lt;/td&gt;
+&lt;td&gt;No case is created; finding remains Current without archiving&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;When a proactive case is opened, customers respond via the AWS Management Console under the Cases section, allowing direct communication, context sharing, and case resolution. For third-party findings ingested through Security Hub CSPM, the disposition logic mirrors GuardDuty, but the status changes from NEW to NOTIFIED when triage begins, moving to SUPPRESSED if cleared as benign.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The service builds a profile of what is normal in your environment to distinguish between expected behavior and genuine threats. For example, if GuardDuty flags an &amp;ldquo;UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS&amp;rdquo; finding, the service checks if the external IP belongs to a known corporate VPN range. If the pattern is recognized, the finding is archived. If the IP is from a hosting provider with no prior association and the IAM role has never called from outside AWS, a proactive case is created for investigation. Across customers, less than 1 percent of ingested findings result in a customer-facing escalation.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/aws-security-incident-response-triage-b-hybrid-Figure-1.png"
+loading="lazy"
+alt="AWS Security Incident Response Triage"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/aws-security-incident-response-triage-b-hybrid-Figure-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #Security #GuardDuty #IncidentResponse #ThreatDetection&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/how-aws-security-incident-response-triages-your-security-findings/" target="_blank" rel="noopener"
+&gt;How AWS Security Incident Response triages your security findings | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Bedrock AgentCore Integrates with Okta Cross App Access for Secure Agent Governance</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-integrates-with-okta-cross-app-access-for-secure-agent-governance/</link><pubDate>Sat, 07 Nov 2026 22:01:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-agentcore-integrates-with-okta-cross-app-access-for-secure-agent-governance/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-featured-image.png" alt="Featured image of post Amazon Bedrock AgentCore Integrates with Okta Cross App Access for Secure Agent Governance" /&gt;&lt;h1 id="amazon-bedrock-agentcore-integrates-with-okta-cross-app-access-for-secure-agent-governance"&gt;Amazon Bedrock AgentCore Integrates with Okta Cross App Access for Secure Agent Governance
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock AgentCore is a platform to build, connect, and optimize agents at scale using any framework or model. A new integration with Okta Cross App Access (XAA) allows organizations to manage agent identity and governance directly within their identity provider (IdP).&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;This solution establishes a clear separation between governance and execution. Okta serves as the governance plane, deciding which agent may act for which user against specific resources. Amazon Bedrock AgentCore serves as the execution plane, managing credentials and turning governance decisions into valid access tokens.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Okta&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Governance plane: decides which agent acts for which user against which resource.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore Identity&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Execution plane: holds credentials and redeems grants for tokens in a vault.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Amazon Bedrock AgentCore runtime&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Validates Okta’s grant.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The identity flow ensures that agent actions are always tied to a verified user session:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;User Sign-in:&lt;/strong&gt; Users access a backend for frontend (BFF) using OpenID Connect via the agent’s linked Okta app.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Token Exchange:&lt;/strong&gt; For each request, the BFF performs an RFC 8693 token exchange, trading the user&amp;rsquo;s ID token for an Identity Assertion JWT Authorization Grant (ID-JAG) at Okta’s authorization server.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Okta Verification:&lt;/strong&gt; Okta checks that the agent is active, the user is assigned to it, and an administrator has approved the applications and scopes the agent might reach.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution:&lt;/strong&gt; The BFF invokes the agent on the AgentCore runtime using the ID-JAG. AgentCore Identity then redeems the ID-JAG for a short-lived access token accepted by the resource.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The system utilizes three distinct tokens to record different decisions throughout the request lifecycle:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ID Token:&lt;/strong&gt; Identifies the user.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Identity Assertion JWT Authorization Grant (ID-JAG):&lt;/strong&gt; Represents Okta’s decision; single-use and expires in 5 minutes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access Token:&lt;/strong&gt; Issued by Okta’s custom authorization server, naming both the user and the agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In testing, the governance process proved highly responsive. When an administrator removed a user’s assignment, Okta refused new agent requests for that user within approximately 1 second. Existing tokens expired within 5 minutes. Performance testing showed that AgentCore Identity added roughly 0.6 seconds of latency to a request taking 30 seconds end to end.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock AgentCore charges based on usage. A technical walkthrough for building a task agent with this governance model takes about 1 hour. The associated sample code is provided for non-production use, and organizations should consult with security and legal teams before deployment.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/29/ML-21547-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #AmazonBedrock #Okta #AIagents #Cybersecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/govern-ai-agent-access-with-okta-cross-app-access-and-amazon-bedrock-agentcore-part-1/" target="_blank" rel="noopener"
+&gt;Govern AI agent access with Okta Cross App Access and Amazon Bedrock AgentCore – Part 1 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Orca Security Deploys Discovery AI on AWS Bedrock to Simplify Cloud Queries</title><link>https://shoubhikbanerjee.github.io/blog/p/orca-security-deploys-discovery-ai-on-aws-bedrock-to-simplify-cloud-queries/</link><pubDate>Tue, 13 Oct 2026 22:07:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/orca-security-deploys-discovery-ai-on-aws-bedrock-to-simplify-cloud-queries/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-21130-featured-image.png" alt="Featured image of post Orca Security Deploys Discovery AI on AWS Bedrock to Simplify Cloud Queries" /&gt;&lt;h1 id="orca-security-deploys-discovery-ai-on-aws-bedrock-to-simplify-cloud-queries"&gt;Orca Security Deploys Discovery AI on AWS Bedrock to Simplify Cloud Queries
+&lt;/h1&gt;&lt;p&gt;Orca Security has released an update to its Discovery AI service, a natural‑language query agent built on Amazon Bedrock that translates plain‑English questions into Sonar queries for its cloud‑security data graph.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Security analysts need fast answers about their cloud infrastructure without deep familiarity with domain‑specific query languages.&lt;/li&gt;
+&lt;li&gt;Orca Security’s Sonar system tracks more than 900 cloud resource models (e.g., Amazon EC2 instances, Amazon S3 buckets) and requires JSON queries that specify exact model names, select from 18 operators, and navigate parent‑child hierarchies.&lt;/li&gt;
+&lt;li&gt;The original proof‑of‑concept loaded the full Sonar schema (over 900 model definitions) into a single prompt, yielding strong output but high token consumption (~2 million input tokens per workload), high latency (~60 seconds), and limited accuracy on complex multi‑model queries.&lt;/li&gt;
+&lt;li&gt;To address these issues, Orca partnered with AWS to build Discovery AI, a hybrid Retrieval‑Augmented Generation (RAG) solution on Amazon Bedrock that converts natural language into validated Discovery filters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;p&gt;Discovery AI follows a nine‑step pipeline, matching each stage to the most suitable Bedrock model:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Request Entry and Context Setup&lt;/strong&gt; – Combines the user’s question with organization, connected cloud providers, and request metadata.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quick Deterministic Matcher&lt;/strong&gt; – Uses regex and rule‑based matching to detect high‑confidence patterns such as IP addresses, CVEs, ARNs, file hashes, AMI IDs, Oracle Cloud identifiers, EC2 IDs, URLs, and alert IDs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fast‑Path Return&lt;/strong&gt; – When a deterministic match is found, a predefined Discovery filter is returned without invoking an LLM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;(Subsequent stages)&lt;/strong&gt; – For unmatched requests, the pipeline proceeds through retrieval, schema‑aware construction, and LLM inference stages to produce a Sonar‑compatible JSON query.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Key design choices:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Amazon Bedrock provides access to multiple foundation models through a single API, allowing the team to allocate different models to each pipeline stage without separate integrations.&lt;/li&gt;
+&lt;li&gt;Bedrock inherits AWS governance controls (IAM, VPC endpoints, CloudTrail), satisfying Orca’s security requirements.&lt;/li&gt;
+&lt;li&gt;The model‑agnostic architecture enables swapping newer model versions without re‑architecting the pipeline.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-results"&gt;⚙️ Key Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Query costs reduced by &lt;strong&gt;90 %&lt;/strong&gt; compared with the baseline.&lt;/li&gt;
+&lt;li&gt;Input token usage reduced by &lt;strong&gt;93 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;End‑to‑end latency reduced by &lt;strong&gt;75 %&lt;/strong&gt;, achieving ~15‑second response times (down from ~60 seconds).&lt;/li&gt;
+&lt;li&gt;The system now handles thousands of queries per day.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Analysts can obtain answers without knowing Sonar’s exact schema or the 18‑operator query language.&lt;/li&gt;
+&lt;li&gt;Lower costs and faster responses make continuous cloud‑security monitoring more practical.&lt;/li&gt;
+&lt;li&gt;The hybrid RAG approach demonstrates how Retrieval‑Augmented Generation can be combined with domain‑specific schemas to improve accuracy on complex multi‑model queries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-21130-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-21130-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/05/ML-21130-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#OrcaSecurity #AmazonBedrock #DiscoveryAI #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/natural-language-security-queries-at-orca-security-using-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Natural language security queries at Orca Security using Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Bridgecrew launches Checkov for IaC and Open‑Source Package Security Scanning</title><link>https://shoubhikbanerjee.github.io/blog/p/bridgecrew-launches-checkov-for-iac-and-opensource-package-security-scanning/</link><pubDate>Sun, 11 Oct 2026 22:04:07 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/bridgecrew-launches-checkov-for-iac-and-opensource-package-security-scanning/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/48174253?v=4" alt="Featured image of post Bridgecrew launches Checkov for IaC and Open‑Source Package Security Scanning" /&gt;&lt;h1 id="bridgecrew-launches-checkov-for-iac-and-opensource-package-security-scanning"&gt;Bridgecrew launches Checkov for IaC and Open‑Source Package Security Scanning
+&lt;/h1&gt;&lt;p&gt;Bridgecrew introduced Checkov, a static code analysis tool for infrastructure‑as‑code (IaC) that also performs software composition analysis (SCA) on container images and open‑source packages, helping developers prevent cloud misconfigurations and discover vulnerabilities early in the build process.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Checkov scans cloud infrastructure provisioned with Terraform, Terraform plan, CloudFormation, AWS SAM, Kubernetes, Helm charts, Kustomize, Dockerfile, Serverless, Bicep, OpenAPI, ARM Templates, or OpenTofu.&lt;/li&gt;
+&lt;li&gt;It also scans open‑source packages and images for Common Vulnerabilities and Exposures (CVEs).&lt;/li&gt;
+&lt;li&gt;The tool powers Prisma Cloud Application Security, the developer‑first platform that codifies and streamlines cloud security throughout the development lifecycle.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Uses graph‑based scanning to provide context‑awareness policies.&lt;/li&gt;
+&lt;li&gt;Supports Python format for attribute policies and YAML format for both attribute and composite policies.&lt;/li&gt;
+&lt;li&gt;Detects AWS credentials in EC2 Userdata, Lambda environment variables, and Terraform providers.&lt;/li&gt;
+&lt;li&gt;Identifies secrets using regular expressions, keywords, and entropy‑based detection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-supported-platforms"&gt;⚙️ Supported platforms
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Category&lt;/th&gt;
+&lt;th&gt;Supported Types&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;IaC templates&lt;/td&gt;
+&lt;td&gt;Terraform, Terraform plan, Terraform JSON, CloudFormation, AWS SAM, Kubernetes, Helm, Kustomize, Dockerfile, Serverless framework, Ansible, Bicep, ARM, OpenTofu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CI pipelines&lt;/td&gt;
+&lt;td&gt;Argo Workflows, Azure Pipelines, BitBucket Pipelines, Circle CI Pipelines, GitHub Actions, GitLab CI workflow files&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-features"&gt;📋 Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Over 1 000 built‑in policies covering security and compliance best practices for AWS, Azure, and Google Cloud.&lt;/li&gt;
+&lt;li&gt;Scans both IaC files and CI workflow definitions.&lt;/li&gt;
+&lt;li&gt;Performs Software Composition Analysis (SCA) for images and open‑source packages.&lt;/li&gt;
+&lt;li&gt;Provides context‑aware, graph‑based detection.&lt;/li&gt;
+&lt;li&gt;Enables policy authoring in Python and YAML.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-detection-capabilities"&gt;🔐 Detection capabilities
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Finds misconfigurations in IaC and cloud resources.&lt;/li&gt;
+&lt;li&gt;Detects AWS credentials in various locations.&lt;/li&gt;
+&lt;li&gt;Identifies secrets using regex, keywords, and entropy detection.&lt;/li&gt;
+&lt;li&gt;Scans container images and open‑source packages for CVEs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Checkov is integrated into Prisma Cloud Application Security, delivering continuous security for cloud resources and IaC throughout the development lifecycle.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Checkov #IaC #SCA #CloudSecurity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/bridgecrewio/checkov" target="_blank" rel="noopener"
+&gt;bridgecrewio/checkov&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Prowler Brings AI to Open Source Cloud Security Platform</title><link>https://shoubhikbanerjee.github.io/blog/p/prowler-brings-ai-to-open-source-cloud-security-platform/</link><pubDate>Sun, 04 Oct 2026 22:04:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/prowler-brings-ai-to-open-source-cloud-security-platform/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/97106991?v=4" alt="Featured image of post Prowler Brings AI to Open Source Cloud Security Platform" /&gt;&lt;h1 id="prowler-brings-ai-to-open-source-cloud-security-platform"&gt;Prowler Brings AI to Open Source Cloud Security Platform
+&lt;/h1&gt;&lt;p&gt;Prowler, the world’s most widely used open-source cloud security platform, now includes AI-driven capabilities to automate security and compliance across any cloud environment. This update positions Prowler as a platform that can &amp;ldquo;Secure ANY Cloud at AI Speed,&amp;rdquo; offering thousands of ready-to-use security checks and compliance frameworks.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Prowler is the Open Cloud Security Platform trusted by thousands to automate security and compliance in any cloud environment. With thousands of ready-to-use checks and compliance frameworks, Prowler delivers real-time, customizable monitoring and seamless integrations, making cloud security simple, scalable, and cost-effective for organizations of any size.&lt;/p&gt;
+&lt;h2 id="-key-capabilities"&gt;⚙️ Key Capabilities
+&lt;/h2&gt;&lt;p&gt;Prowler now delivers &lt;strong&gt;AI-driven&lt;/strong&gt;, &lt;strong&gt;customizable&lt;/strong&gt;, and &lt;strong&gt;easy-to-use&lt;/strong&gt; assessments, dashboards, reports, and integrations, making cloud security &lt;strong&gt;simple&lt;/strong&gt;, &lt;strong&gt;scalable&lt;/strong&gt;, and &lt;strong&gt;cost-effective&lt;/strong&gt; for organizations of any size. Key features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Thousands of ready-to-use security checks, remediation guidance, and compliance frameworks&lt;/li&gt;
+&lt;li&gt;Prowler ThreatScore: Weighted risk prioritization scoring that helps you focus on the most critical security findings first&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-supported-compliance-frameworks"&gt;🏆 Supported Compliance Frameworks
+&lt;/h2&gt;&lt;p&gt;Prowler includes hundreds of built-in controls to ensure compliance with a wide range of standards and frameworks:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Category&lt;/th&gt;
+&lt;th&gt;Frameworks&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Industry Standards&lt;/td&gt;
+&lt;td&gt;CIS, NIST 800, NIST CSF, CISA, and MITRE ATT&amp;amp;CK&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Regulatory Compliance and Governance&lt;/td&gt;
+&lt;td&gt;RBI, FedRAMP, PCI-DSS, and NIS2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Frameworks for Sensitive Data and Privacy&lt;/td&gt;
+&lt;td&gt;GDPR, HIPAA, and FFIEC&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Organizational Governance and Quality Control&lt;/td&gt;
+&lt;td&gt;SOC2, GXP, and ISO 27001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Cloud-Specific Frameworks&lt;/td&gt;
+&lt;td&gt;AWS Foundational Technical Review (FTR), AWS Well-Architected Framework, and BSI C5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;National Security Standards&lt;/td&gt;
+&lt;td&gt;ENS (Spanish National Security Scheme) and KISA ISMS-P (Korean)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Custom Security Frameworks&lt;/td&gt;
+&lt;td&gt;Tailored to your needs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Prowler is available in two web application formats that simplify running Prowler across your cloud provider accounts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prowler Cloud&lt;/strong&gt;: A hosted web application&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prowler Local Server&lt;/strong&gt;: A self-hosted open-source version&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Both provide a user-friendly interface to visualize the results and streamline your security assessments. For more details, refer to the Prowler Local Server documentation and try Prowler Cloud.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;By integrating AI-driven assessments and threat prioritization into an open-source platform with thousands of built-in checks and extensive compliance framework support, Prowler makes cloud security more accessible and efficient for organizations of any size. The community is invited to join the Prowler community.&lt;/p&gt;
+&lt;p&gt;#OpenSource #CloudSecurity #AI #Compliance #DevSecOps #Prowler&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/prowler-cloud/prowler" target="_blank" rel="noopener"
+&gt;prowler-cloud/prowler&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Wiz Hires Support Engineer with AI-Driven Automation Focus</title><link>https://shoubhikbanerjee.github.io/blog/p/wiz-hires-support-engineer-with-ai-driven-automation-focus/</link><pubDate>Fri, 02 Oct 2026 22:04:29 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/wiz-hires-support-engineer-with-ai-driven-automation-focus/</guid><description>&lt;img src="https://www.google.com/s2/favicons?domain=wiz.com&amp;sz=64" alt="Featured image of post Wiz Hires Support Engineer with AI-Driven Automation Focus" /&gt;&lt;h1 id="wiz-hires-support-engineer-with-ai-driven-automation-focus"&gt;Wiz Hires Support Engineer with AI-Driven Automation Focus
+&lt;/h1&gt;&lt;p&gt;Wiz, a cloud security company, published a job advertisement for a Remote Solutions Support Engineer based in Ireland, indicating a new role that combines deep technical troubleshooting with a growing emphasis on AI-driven automation to scale support operations.&lt;/p&gt;
+&lt;h2 id="-role-overview"&gt;🔍 Role Overview
+&lt;/h2&gt;&lt;p&gt;The Remote Solutions Support Engineer will be part of a global team delivering expert-level technical support across the Wiz cloud-native security platform. The role involves investigating complex, multi-domain issues spanning cloud infrastructure, workload protection, vulnerability management, and runtime defense across AWS, Azure, and GCP environments.&lt;/p&gt;
+&lt;h2 id="-key-requirements"&gt;⚙️ Key Requirements
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;5+ years of relevant customer-facing technical experience.&lt;/li&gt;
+&lt;li&gt;2+ years working with cloud platforms (AWS, Azure, GCP) including IAM, networking, and core compute/storage services.&lt;/li&gt;
+&lt;li&gt;1+ years of hands-on experience deploying, managing, and troubleshooting production Kubernetes clusters and containerized applications.&lt;/li&gt;
+&lt;li&gt;Experience reading and debugging code in Python, Shell, JavaScript/JSON, Java, Go, or Terraform/HCL.&lt;/li&gt;
+&lt;li&gt;Proficiency with command-line tools and Linux operating system environments.&lt;/li&gt;
+&lt;li&gt;Familiarity with the current AI landscape, including LLM architectures and the integration of AI-driven tooling into technical workflows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Wiz states it is redefining security for the AI era and is &amp;ldquo;powered by Google,&amp;rdquo; offering an AI-powered platform that harnesses Google’s Threat Intelligence and Security Operations. The job description emphasizes a growing emphasis on AI-driven automation to scale support operations and improve resolution quality, with preferred qualifications including experience building or supporting agentic workflows, RAG architectures, or AI-powered automation.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Visa sponsorship is not offered for this role. The position includes an after-hours, holiday, and weekend on-call rotation.&lt;/p&gt;
+&lt;p&gt;#Wiz #CloudSecurity #AIAutomation #Kubernetes #SupportEngineer&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://wfh.team/job/27073-solutions-support-engineer-wiz-inc" target="_blank" rel="noopener"
+&gt;Remote Solutions Support Engineer at Wiz, Inc.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Benchling Secures AI-Generated Scientific Code Using Amazon Bedrock AgentCore</title><link>https://shoubhikbanerjee.github.io/blog/p/benchling-secures-ai-generated-scientific-code-using-amazon-bedrock-agentcore/</link><pubDate>Mon, 21 Sep 2026 22:03:11 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/benchling-secures-ai-generated-scientific-code-using-amazon-bedrock-agentcore/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/26/ML-21025-featured-image.png" alt="Featured image of post Benchling Secures AI-Generated Scientific Code Using Amazon Bedrock AgentCore" /&gt;&lt;h1 id="benchling-secures-ai-generated-scientific-code-using-amazon-bedrock-agentcore"&gt;Benchling Secures AI-Generated Scientific Code Using Amazon Bedrock AgentCore
+&lt;/h1&gt;&lt;p&gt;Benchling has implemented AgentCore Code Interpreter, a capability of Amazon Bedrock AgentCore, to securely execute AI-generated scientific code for researchers across thousands of tenants.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock AgentCore is a platform designed to build, connect, and optimize agents at scale using any framework or model. Benchling utilizes this platform in Amazon Virtual Private Cloud (VPC) mode to handle several primary use cases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AI agent-generated scientific code&lt;/li&gt;
+&lt;li&gt;Simple calculations&lt;/li&gt;
+&lt;li&gt;Code-generation sandboxes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To prevent data exfiltration and ensure tenant isolation, Benchling employs an architecture that separates production environments from code execution:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Production Account&lt;/strong&gt;: Contains the Benchling Stack, IAM Roles, AWS STS, and customer data in Amazon S3.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Untrusted Code Account&lt;/strong&gt;: A separate AWS account hosting the ACCI VPC and a container-based execution environment using gVisor for kernel-level isolation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Tasks are dispatched from the production account to the untrusted account. Because the solution cannot use one IAM role per tenant to avoid unsustainable role sprawl, per-job credentials are injected into each session via AWS Security Token Service (AWS STS) to scope data access dynamically.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Security is enforced through multiple layers of network and access controls:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Control Mechanism&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;VPC Configuration&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;No internet gateway and no NAT gateway; restricts outbound paths to the public internet.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Security Group&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Restricts the Code Interpreter to port 443.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Route 53 Resolver DNS Firewall&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Applies a three-priority policy: blocks malicious domains (Priority 10), allows explicitly listed endpoints (Priority 100), and blocks all others (Priority 200).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;VPC Endpoints&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides the only permitted network paths via S3 Gateway and Interface endpoints.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Network Controls&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Block HTTP, restrict egress ports, and limit outbound connections.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This architecture ensures that each session accesses only that specific tenant&amp;rsquo;s data with no cross-tenant visibility. A Continuous Validation suite runs integration tests to simulate exfiltration attempts against the configuration. Currently, this architecture processes more than 600 code execution sessions per day across more than 250 tenants per week with zero security incidents.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/31/Benchling-agentcore-ci-revised.drawio.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #AIagents #Cybersecurity #CloudComputing #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/how-benchling-secured-multi-tenant-ai-agents-with-amazon-bedrock-agentcore/" target="_blank" rel="noopener"
+&gt;How Benchling secured multi-tenant AI agents with Amazon Bedrock AgentCore | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Implementing Multi-Gate Authorization for MCP Tools on Amazon Quick</title><link>https://shoubhikbanerjee.github.io/blog/p/implementing-multi-gate-authorization-for-mcp-tools-on-amazon-quick/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/implementing-multi-gate-authorization-for-mcp-tools-on-amazon-quick/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/15/ML-21168-featured-image.png" alt="Featured image of post Implementing Multi-Gate Authorization for MCP Tools on Amazon Quick" /&gt;&lt;h1 id="implementing-multi-gate-authorization-for-mcp-tools-on-amazon-quick"&gt;Implementing Multi-Gate Authorization for MCP Tools on Amazon Quick
+&lt;/h1&gt;&lt;p&gt;Amazon Quick now supports a multi-gate authorization pattern for Model Context Protocol (MCP) tool invocations, utilizing an interceptor to evaluate OpenID Connect (OIDC) JSON Web Token (JWT) claims in sequence.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Model Context Protocol (MCP) is an open protocol that connects applications to internal tools, databases, and APIs to reduce the need for custom integrations. In this implementation, Amazon Quick connects to an Amazon Bedrock AgentCore Gateway—a capability of Amazon Bedrock AgentCore—which provides the JWT validation layer and HTTP endpoint between clients and MCP tools.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Authorization is managed through a single AWS Lambda REQUEST interceptor attached to the Amazon Bedrock AgentCore Gateway. This interceptor processes JWT claims through four independent gates in a fixed sequence:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Gate&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Name&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Enforcement/Claim&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Requirement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;1&lt;/td&gt;
+&lt;td style="text-align: left"&gt;MFA verification&lt;/td&gt;
+&lt;td style="text-align: left"&gt;IdP / Conditional Access Policy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Require MFA before token issuance&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Conditional&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;2&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Country geo-fence&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;ctry&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Restrict access to approved countries&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Conditional (&lt;code&gt;REQUIRE_COUNTRY=true&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;3&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Group RBAC&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;groups&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Map group membership to reader, author, or admin policies&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Always (core gate)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;4&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tool permission&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Policy allowlists&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Verify the requested tool exists in the matched policy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Always (core gate)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Identity Provider:&lt;/strong&gt; Microsoft Entra ID serves as the IdP. It enforces the Conditional Access Policy for MFA before issuing a token.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configuration:&lt;/strong&gt; Gates are configured via environment variables. While Gates 3 and 4 are always active, Gates 1 and 2 can be disabled by omitting the environment variables or setting them to false.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MFA Validation:&lt;/strong&gt; Setting &lt;code&gt;REQUIRE_MFA&lt;/code&gt; enables an additional check of the &lt;code&gt;amr&lt;/code&gt; claim inside the interceptor for IdPs that record MFA evidence in the token.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access Control:&lt;/strong&gt; Role-based permissions establish a read/write boundary where readers can query risks but cannot create, update, or delete them, while administrators can bypass conditional gates.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compliance:&lt;/strong&gt; Every mutation must produce an immutable audit record for forensic and compliance requirements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This pattern is demonstrated using a fictional example involving AnyCompany Global Services, which uses MCP tools on Amazon Quick to access a multi-tenant risk register hosted on Amazon DynamoDB.&lt;/p&gt;
+&lt;p&gt;#AmazonQuick #AmazonBedrock #MCP #Authorization #AWSLambda&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/implementing-defense-in-depth-authorization-for-mcp-tools-on-amazon-quick/" target="_blank" rel="noopener"
+&gt;Implementing defense-in-depth authorization for MCP tools on Amazon Quick | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Automating Custom Permissions Assignment in Quick</title><link>https://shoubhikbanerjee.github.io/blog/p/automating-custom-permissions-assignment-in-quick/</link><pubDate>Wed, 09 Sep 2026 22:05:26 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/automating-custom-permissions-assignment-in-quick/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/02/ML-21102-featured-image.png" alt="Featured image of post Automating Custom Permissions Assignment in Quick" /&gt;&lt;h1 id="automating-custom-permissions-assignment-in-quick"&gt;Automating Custom Permissions Assignment in Quick
+&lt;/h1&gt;&lt;p&gt;Quick has introduced architectural patterns to automate the assignment of custom permissions, allowing organizations to enforce fine-grained access control across the user lifecycle.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Custom permissions enable administrators to toggle specific features on or off for individual users. This allows for precise control, such as enabling financial analysts to author reports without exporting raw data, or allowing external partners to view dashboards without accessing sharing controls.&lt;/p&gt;
+&lt;p&gt;Permissions follow a three-level hierarchy where settings are applied as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;User-level&lt;/strong&gt;: Overrides role-level settings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Role-level&lt;/strong&gt;: Overrides account-level settings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Account-level&lt;/strong&gt;: The base level of the hierarchy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Organizations can use four architectural patterns to automate permissions based on their specific needs:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Method&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Application Scenario&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;RegisterUser&lt;/code&gt; API&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Applies permissions during user creation via the &lt;code&gt;--custom-permissions-name&lt;/code&gt; parameter; common for SaaS companies restricting features like GenBI and paginated reports based on pricing tiers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;UpdateAccountCustomPermission&lt;/code&gt; API&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Sets a fallback profile for any user without an explicit assignment, including those created via Just-In-Time provisioning.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;UpdateRoleCustomPermission&lt;/code&gt; API&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Sets a default custom permission profile per Quick role (READER, AUTHOR, ADMIN, and PRO roles).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Event-Driven Automation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses Amazon EventBridge and AWS Lambda to detect new group memberships (native Quick groups or AWS IAM Identity Center groups) and apply permissions dynamically.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Conditional Logic&lt;/strong&gt;: For requirements beyond native defaults—such as applying different profiles based on group membership—event-driven automation is used. This is necessary because there is no native API for assigning custom permissions directly to a Group.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complementary Strategies&lt;/strong&gt;: Role and account-level defaults (Scenario 2) and group-based automation (Scenario 3) are complementary rather than alternatives.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Provisioning Gaps&lt;/strong&gt;: Because Just-In-Time federation creates a window between account creation and group assignment, Scenario 3 only triggers upon the group membership event.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enterprise Scale&lt;/strong&gt;: Account-level defaults allow large enterprises to instantly block new features, such as GenBI or connectors, for all users during security reviews without per-user automation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Quick #AWS #AccessControl #Automation #IAM&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/automate-user-level-custom-permissions-for-amazon-quick/" target="_blank" rel="noopener"
+&gt;Automate user-level custom permissions for Amazon Quick | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

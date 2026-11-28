@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Infrastructure Engineering on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/infrastructure-engineering/</link><description>Recent content in Infrastructure Engineering on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 18 Nov 2026 22:09:17 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/infrastructure-engineering/index.xml" rel="self" type="application/rss+xml"/><item><title>Databricks adopts adaptive concurrency limits for cluster creation</title><link>https://shoubhikbanerjee.github.io/blog/p/databricks-adopts-adaptive-concurrency-limits-for-cluster-creation/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/databricks-adopts-adaptive-concurrency-limits-for-cluster-creation/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/blog-og-how-we-raised-databricks-cluster-rate-limits-by-7.5x.png" alt="Featured image of post Databricks adopts adaptive concurrency limits for cluster creation" /&gt;&lt;h1 id="databricks-adopts-adaptive-concurrency-limits-for-cluster-creation"&gt;Databricks adopts adaptive concurrency limits for cluster creation
+&lt;/h1&gt;&lt;p&gt;Databricks&amp;rsquo; Compute Platform team applied adaptive concurrency limits to cluster creation to address the shortcomings of fixed request‑rate limits for long‑running operations.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;We turn cloud infrastructure into clusters ready to run customer workloads. Our day‑to‑day work includes provisioning virtual machines and coordinating cluster creation across AWS, Azure, and Google Cloud.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A request‑rate limiter at the API entry point caps requests per time window.&lt;/li&gt;
+&lt;li&gt;For cluster creation, the handler validates the request, records a work item, and returns.&lt;/li&gt;
+&lt;li&gt;A background workflow coordinates services, updates state, and provisions resources such as cloud virtual machines.&lt;/li&gt;
+&lt;li&gt;These operations complete asynchronously, and their duration depends on the health and capacity of their dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Conservative limits turned away customer requests despite spare capacity, yet kept accepting requests when our services or dependencies, such as cloud providers, slowed down.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Engineers manually lowered limits to shed load during incidents and raised them again after recovery.&lt;/li&gt;
+&lt;li&gt;Adaptive concurrency limits account for both unfinished work and changing system health.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;For long‑running operations, a fixed request rate is a poor model of capacity.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Limiting active workflows helps contain pressure and gives unfinished work a chance to drain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-definitions"&gt;📊 Definitions
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Limit type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Request-rate limit&lt;/td&gt;
+&lt;td&gt;A cap on requests accepted per unit time, such as 10 requests per second, with a possible burst allowance.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Concurrency limit&lt;/td&gt;
+&lt;td&gt;A cap on active operations, such as 100 at once.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The goal is to let customers run at full throttle when capacity allows, then ease off enough to keep useful work moving during degradation.&lt;/li&gt;
+&lt;li&gt;Fixed limits can reject work even when capacity exists, while adaptive limits adjust to system health.&lt;/li&gt;
+&lt;li&gt;A retry storm can sustain overload after traffic normalizes because internal retries bypass the request‑rate limiter.&lt;/li&gt;
+&lt;li&gt;Adaptive limits provide a final safety guardrail via a fixed API request‑rate ceiling while dynamically managing active workflow count.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/blog_images/how-we-raised-databricks-cluster-rate-limits-blog-img-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/blog_images/how-we-raised-databricks-cluster-rate-limits-blog-img-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/blog_images/how-we-raised-databricks-cluster-rate-limits-blog-img-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Databricks #ConcurrencyLimits #ClusterCreation #CloudInfrastructure&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/how-we-raised-databricks-cluster-rate-limits-75" target="_blank" rel="noopener"
+&gt;How we raised Databricks cluster rate limits by 7.5×&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

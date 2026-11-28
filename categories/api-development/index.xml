@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>API Development on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/api-development/</link><description>Recent content in API Development on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Nov 2026 22:10:10 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/api-development/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Cognito adds OAuth 2.0 token exchange for AI agents</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-cognito-adds-oauth-2-0-token-exchange-for-ai-agents/</link><pubDate>Wed, 25 Nov 2026 22:10:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-cognito-adds-oauth-2-0-token-exchange-for-ai-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Token-Exchange-Image.jpg" alt="Featured image of post Amazon Cognito adds OAuth 2.0 token exchange for AI agents" /&gt;&lt;h1 id="amazon-cognito-adds-oauth-20-token-exchange-for-ai-agents"&gt;Amazon Cognito adds OAuth 2.0 token exchange for AI agents
+&lt;/h1&gt;&lt;p&gt;Amazon Cognito introduces a new OAuth token exchange feature that enables services and AI agents to call APIs on behalf of users. This functionality aligns with OAuth 2.0 Token Exchange standards defined in RFC 8693, facilitating secure delegation where AI agents select tools at runtime, such as Model Context Protocol (MCP) servers, to perform actions like reserving tables or sending invitations.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AI agents increasingly interact with various APIs on behalf of users, requiring a mechanism to handle the &amp;ldquo;second hop&amp;rdquo; where an intermediate service (like an MCP server) needs to access a downstream resource (like an email API). Without proper token exchange, forwarding the user&amp;rsquo;s original access token is insufficient because it does not clearly identify which service acted on the user&amp;rsquo;s behalf. This new feature allows Cognito to act as the authorization server, issuing new tokens for the calling service while maintaining strict scope controls.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Every token exchange begins with a &lt;strong&gt;subject token&lt;/strong&gt; that represents the user, which in Amazon Cognito can be an access token or ID token issued by a user pool. The calling service, such as an MCP server, sends this subject token to Cognito.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Request Flow:&lt;/strong&gt; The client calls the downstream service with the user&amp;rsquo;s access token. The service then calls the Cognito &lt;code&gt;/oauth2/token&lt;/code&gt; endpoint, authenticating with its own app client credentials.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validation:&lt;/strong&gt; Cognito validates the request and returns an &lt;strong&gt;issued token&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access:&lt;/strong&gt; The service uses this issued token to call the resource server (e.g., an email API).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Claim Structure:&lt;/strong&gt; The issued token identifies the user and names the calling service via an &lt;strong&gt;act claim&lt;/strong&gt;. It carries the same scopes or fewer than the original token, ensuring the downstream API sees exactly which service acted for the user.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The feature distinguishes between two authorization patterns:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Pattern&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Use Case&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Characteristics&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Impersonation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Backend for Frontend (BFF) relaying requests&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The calling service relays the user&amp;rsquo;s request without making its own decisions. The record shows the user but not the agent acting.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Delegation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;AI agents acting with autonomy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The agent makes decisions and uses its own tools. The record shows both the user and the agent, which is critical for proper authorization and audit trails.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;For AI agents, delegation is the primary pattern. If an agent used a token of its own without delegation, the audit record would show the agent called the resource server but not &lt;em&gt;for whom&lt;/em&gt;. Conversely, impersonation hides the agent. Delegation ensures that the &lt;strong&gt;act claim&lt;/strong&gt; logs who authorized the action (the user) and who carried it out (the service/agent).&lt;/p&gt;
+&lt;p&gt;Developers can initiate token exchange in two ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;HTTP Endpoint:&lt;/strong&gt; Requesting a token exchange at the &lt;code&gt;/oauth2/token&lt;/code&gt; endpoint on the user pool’s domain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS SDK:&lt;/strong&gt; Calling the &lt;code&gt;GetDerivedToken&lt;/code&gt; API, which does not require a user pool domain.
+Both methods accept the same subject token, actor token, audience, and scopes, returning an issued token with identical claims.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;As AI agents become more capable of picking tools at runtime, such as MCP servers that send invitations or manage reservations, the need for granular, auditable access control grows. Token exchange ensures that each hop in the chain receives only the scopes it needs. By identifying the acting service through the act claim, organizations can maintain clear audit trails, ensuring that when an AI agent performs an action like reserving a table or inviting friends, the record clearly associates that action with both the end user and the specific agent or service that executed it.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-1-second-hop.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/cognito-token-exchange-flow-figure-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-5-invitations-mcp-server.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonCognito #OAuth2.0 #AIAgents #TokenExchange #Security&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/delegate-user-access-to-ai-agents-with-amazon-cognito-token-exchange/" target="_blank" rel="noopener"
+&gt;Delegate user access to AI agents with Amazon Cognito token exchange | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Obsidian Gains Local REST API with MCP Server for Secure Vault Access</title><link>https://shoubhikbanerjee.github.io/blog/p/obsidian-gains-local-rest-api-with-mcp-server-for-secure-vault-access/</link><pubDate>Mon, 23 Nov 2026 22:18:20 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/obsidian-gains-local-rest-api-with-mcp-server-for-secure-vault-access/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/527661?v=4" alt="Featured image of post Obsidian Gains Local REST API with MCP Server for Secure Vault Access" /&gt;&lt;h1 id="obsidian-gains-local-rest-api-with-mcp-server-for-secure-vault-access"&gt;Obsidian Gains Local REST API with MCP Server for Secure Vault Access
+&lt;/h1&gt;&lt;p&gt;A new plugin provides a secure REST API and Model Context Protocol (MCP) server for Obsidian vaults, enabling scripts, browser extensions, and AI agents to interact directly with vault contents.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The plugin exposes a secure, authenticated REST API alongside an MCP server, both serving the same core capabilities. All requests are served over HTTPS with a locally generated certificate and gated behind API key authentication.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The MCP server runs at https://127.0.0.1:27124/mcp/ and requires a bearer token in the Authorization header. A plain HTTP endpoint is also available at http://127.0.0.1:27123/mcp/ if enabled.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Authentication&lt;/strong&gt;: HTTPS with locally generated certificate, API key authentication, bearer token for MCP clients&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Certificate&lt;/strong&gt;: CA is name-constrained to localhost, 127.0.0.1, and configured hostnames; HTTP endpoint available for easier setup&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Download CA&lt;/strong&gt;: Certificate authority available at https://127.0.0.1:27134/obsidian-local-rest-api.crt&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vault operations&lt;/strong&gt;: Full CRUD on any file including binary files, surgically patch specific sections (headings, blocks, frontmatter), search with full-text or JsonLogic queries, follow vault events via Server-Sent Events&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Active file&lt;/strong&gt;: Read or write the currently open note in Obsidian&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Commands&lt;/strong&gt;: List and execute any Obsidian command, query tags with usage counts, open specific files in UI&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extensibility&lt;/strong&gt;: Other plugins can register their own routes via an API extension interface&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;After installing and enabling the plugin, users can find their API key and certificate in Settings → Local REST API.&lt;/p&gt;
+&lt;p&gt;#Obsidian #RESTAPI #MCP #Vault #Plugin&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/coddingtonbear/obsidian-local-rest-api" target="_blank" rel="noopener"
+&gt;coddingtonbear/obsidian-local-rest-api&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

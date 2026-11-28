@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI Inference on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/ai-inference/</link><description>Recent content in AI Inference on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/ai-inference/index.xml" rel="self" type="application/rss+xml"/><item><title>Faster-Whisper Implements Whisper with CTranslate2 for Speed and Memory Efficiency</title><link>https://shoubhikbanerjee.github.io/blog/p/faster-whisper-implements-whisper-with-ctranslate2-for-speed-and-memory-efficiency/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/faster-whisper-implements-whisper-with-ctranslate2-for-speed-and-memory-efficiency/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/1520500?v=4" alt="Featured image of post Faster-Whisper Implements Whisper with CTranslate2 for Speed and Memory Efficiency" /&gt;&lt;h1 id="faster-whisper-implements-whisper-with-ctranslate2-for-speed-and-memory-efficiency"&gt;Faster-Whisper Implements Whisper with CTranslate2 for Speed and Memory Efficiency
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;faster-whisper is a reimplementation of OpenAI&amp;rsquo;s Whisper model using CTranslate2, a fast inference engine for Transformer models. It delivers up to 4 times faster transcription than openai/whisper for the same accuracy while using less memory.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;p&gt;The implementation supports multiple precision formats and batch sizes, with significant performance gains. For example, transcribing 13 minutes of audio:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Implementation&lt;/th&gt;
+&lt;th&gt;Precision&lt;/th&gt;
+&lt;th&gt;Batch Size&lt;/th&gt;
+&lt;th&gt;Time&lt;/th&gt;
+&lt;th&gt;Memory&lt;/th&gt;
+&lt;th&gt;Notes&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;openai/whisper&lt;/td&gt;
+&lt;td&gt;fp16&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;2m23s&lt;/td&gt;
+&lt;td&gt;4708MB&lt;/td&gt;
+&lt;td&gt;Baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;whisper.cpp (Flash Attention)&lt;/td&gt;
+&lt;td&gt;fp16&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;1m05s&lt;/td&gt;
+&lt;td&gt;4127MB&lt;/td&gt;
+&lt;td&gt;Faster than baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;transformers (SDPA)&lt;/td&gt;
+&lt;td&gt;fp16&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;1m52s&lt;/td&gt;
+&lt;td&gt;4960MB&lt;/td&gt;
+&lt;td&gt;Slower than baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;faster-whisper&lt;/td&gt;
+&lt;td&gt;fp16&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;1m03s&lt;/td&gt;
+&lt;td&gt;4525MB&lt;/td&gt;
+&lt;td&gt;Faster and lower memory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;faster-whisper (&lt;code&gt;batch_size=8&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;fp16&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;17s&lt;/td&gt;
+&lt;td&gt;6090MB&lt;/td&gt;
+&lt;td&gt;With batching&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;faster-whisper&lt;/td&gt;
+&lt;td&gt;int8&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;59s&lt;/td&gt;
+&lt;td&gt;2926MB&lt;/td&gt;
+&lt;td&gt;8-bit quantization&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;faster-whisper (&lt;code&gt;batch_size=8&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;int8&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;16s&lt;/td&gt;
+&lt;td&gt;4500MB&lt;/td&gt;
+&lt;td&gt;With batching and quantization&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;transformers (SDPA) (&lt;code&gt;batch_size=16&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;fp16&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;46m12s&lt;/td&gt;
+&lt;td&gt;14.801GB&lt;/td&gt;
+&lt;td&gt;Slower with larger batch&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;faster-whisper (&lt;code&gt;batch_size=16&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;fp16&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;25m50s&lt;/td&gt;
+&lt;td&gt;13.527GB&lt;/td&gt;
+&lt;td&gt;Better with larger batch&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;openai/whisper&lt;/td&gt;
+&lt;td&gt;fp32&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;6m58s&lt;/td&gt;
+&lt;td&gt;2335MB&lt;/td&gt;
+&lt;td&gt;Full precision&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;whisper.cpp&lt;/td&gt;
+&lt;td&gt;fp32&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;2m05s&lt;/td&gt;
+&lt;td&gt;1049MB&lt;/td&gt;
+&lt;td&gt;Faster than baseline&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;whisper.cpp (OpenVINO)&lt;/td&gt;
+&lt;td&gt;fp32&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;1m45s&lt;/td&gt;
+&lt;td&gt;1642MB&lt;/td&gt;
+&lt;td&gt;Optimized inference&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;faster-whisper&lt;/td&gt;
+&lt;td&gt;fp32&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;2m37s&lt;/td&gt;
+&lt;td&gt;2257MB&lt;/td&gt;
+&lt;td&gt;Moderate speedup&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;faster-whisper (&lt;code&gt;batch_size=8&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;fp32&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;1m06s&lt;/td&gt;
+&lt;td&gt;4230MB&lt;/td&gt;
+&lt;td&gt;With batching&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;faster-whisper&lt;/td&gt;
+&lt;td&gt;int8&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;1m42s&lt;/td&gt;
+&lt;td&gt;1477MB&lt;/td&gt;
+&lt;td&gt;Lower memory usage&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The efficiency can be further improved with 8-bit quantization on both CPU and GPU.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The module can be installed from PyPI: &lt;code&gt;pip install faster-whisper&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;GPU execution requires the following NVIDIA libraries to be installed: cuBLAS for CUDA 12, cuDNN 9 for CUDA 12&lt;/li&gt;
+&lt;li&gt;The latest versions of ctranslate2 only support CUDA 12 and cuDNN 9&lt;/li&gt;
+&lt;li&gt;For CUDA 11 and cuDNN 8, the current workaround is downgrading to the 3.24.0 version of ctranslate2, for CUDA 12 and cuDNN 8, downgrade to the 4.4.0 version of ctranslate2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Unlike openai-whisper, FFmpeg does not need to be installed on the system. The audio is decoded with the Python library PyAV which bundles the FFmpeg libraries in its package.&lt;/p&gt;
+&lt;p&gt;#whisper #ctranslate2 #speech-to-text #ai-inference #quantization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/SYSTRAN/faster-whisper" target="_blank" rel="noopener"
+&gt;SYSTRAN/faster-whisper&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA DAQIRI Enhances High-Speed Data Acquisition and Processing</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-daqiri-enhances-high-speed-data-acquisition-and-processing/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-daqiri-enhances-high-speed-data-acquisition-and-processing/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/electron-energy-loss-spectroscopy-660x370.jpg" alt="Featured image of post NVIDIA DAQIRI Enhances High-Speed Data Acquisition and Processing" /&gt;&lt;h1 id="nvidia-daqiri-enhances-high-speed-data-acquisition-and-processing"&gt;NVIDIA DAQIRI Enhances High-Speed Data Acquisition and Processing
+&lt;/h1&gt;&lt;p&gt;NVIDIA DAQIRI, a software-defined data acquisition library, enables real-time processing of high-bandwidth instrument and sensor data directly into GPU memory, eliminating the need to first write data to disk. This advancement is illustrated by a high-dynamic-range electron microscopy camera developed at Lawrence Berkeley National Laboratory&amp;rsquo;s Molecular Foundry, which captures strong and faint signals together, generating over 500 gigabits of data per second.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;NVIDIA DAQIRI is a Holoscan platform library that bridges sensors with programmable GPU platforms for scientific analysis, AI inference, and feedback applications.&lt;/li&gt;
+&lt;li&gt;It enables processing measurements during acquisition without first writing them to disk.&lt;/li&gt;
+&lt;li&gt;The latest DAQIRI release includes hardware packet reordering, performance and throughput improvements, and a low-latency NIC polling mode for time-sensitive packet processing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;DAQIRI can offload packet reordering tasks to supported NVIDIA ConnectX-7 or newer NICs, preserving CPU and GPU resources for analysis.&lt;/li&gt;
+&lt;li&gt;For compatible sequence formats, the NIC parses sequence fields and places each payload directly into its ordered position in memory.&lt;/li&gt;
+&lt;li&gt;The application receives the assembled, ordered data without requiring a separate software reorder copy step.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;DAQIRI enables real-time inspection and adjustment of data during measurement, processing high bandwidth data incoming at more than 500 Gbps.&lt;/li&gt;
+&lt;li&gt;The collaboration between Berkeley Lab and NVIDIA brings together the camera, DAQIRI, and GPU-accelerated processing.&lt;/li&gt;
+&lt;li&gt;FPGA readout electronics transmit detector data over Ethernet, DAQIRI receives the packets directly into GPU memory, and GPU processing assembles and corrects detector frames before reducing them to energy-loss spectra.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;DAQIRI simplifies experimental setups and microscope optics by capturing strong and faint signals together.&lt;/li&gt;
+&lt;li&gt;It enhances the raw detector information available for further processing and analysis.&lt;/li&gt;
+&lt;li&gt;The advancement enables submicron spatial resolution from sensor pixels measuring 5 micrometers across.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;DAQIRI is part of the NVIDIA Holoscan platform library.&lt;/li&gt;
+&lt;li&gt;The latest release includes hardware packet reordering, an optimized library backend for improved throughput, and direct polling for low-latency packet transmission and reception.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/electron-microscope-gpu-accelerated-eels-workflow.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/eels-workflow-gpu-native-acquisition-scientific-processing.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #DAQIRI #DataAcquisition #GPUProcessing #HighSpeedData&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/enabling-real-time-ai-for-scientific-instruments-with-gpu-native-data-acquisition/" target="_blank" rel="noopener"
+&gt;Enabling Real-Time AI for Scientific Instruments with GPU-Native Data Acquisition | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>llama.cpp v0.4.0 Released with 18 Backends and 1-Bit Quantization</title><link>https://shoubhikbanerjee.github.io/blog/p/llama-cpp-v0-4-0-released-with-18-backends-and-1-bit-quantization/</link><pubDate>Sun, 04 Oct 2026 22:04:46 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/llama-cpp-v0-4-0-released-with-18-backends-and-1-bit-quantization/</guid><description>&lt;img src="https://wakii-site.vercel.app/blog/heroes/deep-dive-ggml-org-llama-cpp.png" alt="Featured image of post llama.cpp v0.4.0 Released with 18 Backends and 1-Bit Quantization" /&gt;&lt;h1 id="llamacpp-v040-released-with-18-backends-and-1-bit-quantization"&gt;llama.cpp v0.4.0 Released with 18 Backends and 1-Bit Quantization
+&lt;/h1&gt;&lt;p&gt;The llama.cpp project, a pure C/C++ LLM inference engine, has released stable version v0.4.0 on 2026-09-04, alongside a rapid cadence of 12 nightly builds in approximately 27.5 hours. The release extends the engine&amp;rsquo;s reach with 18 backend directories and introduces experimental 1-bit quantization, furthering its goal of &amp;ldquo;minimal setup and state-of-the-art performance on a wide range of hardware.&amp;rdquo;&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;llama.cpp is an inference engine built on the ggml library. Its README states the goal up front: LLM (and VLM) inference &amp;ldquo;with minimal setup and state-of-the-art performance on a wide range of hardware.&amp;rdquo; The latest stable release, v0.4.0 on 2026-09-04, is the only numbered release among the last 100; everything else is b108xx nightly builds pouring out with merges. Public since 2023-03-10, the cadence has held for over three years.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The engine uses a modular backend system. The &lt;code&gt;ggml/src/&lt;/code&gt; directory holds 18 matching backend directories. A registry in &lt;code&gt;ggml/src/&lt;/code&gt; scans, loads libraries, and picks the highest-scoring backend — each backend advertises its own capability in the same header, and the dispatcher trusts only that number.&lt;/p&gt;
+&lt;p&gt;For models larger than total VRAM, the README describes a hybrid mode: part runs on GPU, the rest falls back to CPU.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="quantization-support"&gt;Quantization support
+&lt;/h3&gt;&lt;p&gt;The README lists the range — 1.5-bit, 2-bit, 3-bit, 4-bit, 5-bit, 6-bit, and 8-bit integer quantization &amp;ldquo;for faster inference and reduced memory use.&amp;rdquo; Most striking is IQ1_S/IQ1_M — super-block 1-bit quantization: each weight keeps roughly one bit of information, and the model still generates tokens.&lt;/p&gt;
+&lt;p&gt;The enum in &lt;code&gt;ggml.h&lt;/code&gt; spans 1-bit (IQ1_S/M), 4-bit (Q4_K, MXFP4) to 8-bit (Q8_0) — 56 type definitions in one header.&lt;/p&gt;
+&lt;p&gt;All compression kernels live in &lt;code&gt;ggml-quants.c&lt;/code&gt; — 5,667 lines of C.&lt;/p&gt;
+&lt;h3 id="supported-backends"&gt;Supported backends
+&lt;/h3&gt;&lt;p&gt;The &amp;ldquo;Supported backends&amp;rdquo; table in the README lists 17 backends — from CUDA, Metal, Vulkan, and HIP to Hexagon for Snapdragon, WebGPU for browsers, and even IBM zDNN.&lt;/p&gt;
+&lt;h3 id="model-format"&gt;Model format
+&lt;/h3&gt;&lt;p&gt;The models doc says it plainly: &amp;ldquo;requires the model to be stored in the GGUF file format&amp;rdquo; — other formats must be converted with the Python scripts shipped in the repo. The key-value structure is so lean the API is declared in just 211 lines of &lt;code&gt;gguf.h&lt;/code&gt; — a spec you can read in one sitting.&lt;/p&gt;
+&lt;h3 id="contribution-policy"&gt;Contribution policy
+&lt;/h3&gt;&lt;p&gt;The repo governs AI contributions with a &amp;ldquo;100% responsible for every line&amp;rdquo; policy and ships its own contribution-guidance skill in-tree. The first principle: &amp;ldquo;AI-generated code is allowed. What is not allowed is submitting code you do not understand.&amp;rdquo; Contributors own 100% of every line, whoever typed it — because every merged line is maintained indefinitely by a small maintainer team across a vast platform-backend matrix.&lt;/p&gt;
+&lt;h3 id="measurement-tools"&gt;Measurement tools
+&lt;/h3&gt;&lt;p&gt;Alongside sit the measurement tools: &lt;code&gt;tools/quantize&lt;/code&gt; to compress, &lt;code&gt;tools/imatrix&lt;/code&gt; to measure an importance matrix before compressing, &lt;code&gt;tools/perplexity&lt;/code&gt; and &lt;code&gt;tools/llama-bench&lt;/code&gt; to verify quality after — compress, then measure; never compress and trust.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Stable release v0.4.0 on 2026-09-04, yet 12 nightly b108xx builds landed in ~27 hours (per GitHub API on 2026-09-08). The repo&amp;rsquo;s pushed_at falls in the same window — 11:36:37 UTC on 2026-09-08.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;llama.cpp aims for performance across a &amp;ldquo;wide range of hardware&amp;rdquo; — x86, Apple Silicon, down to phone NPUs. With 18 backends and quantization as low as 1-bit, it enables running LLMs on devices that lack dedicated GPUs, while the hybrid GPU/CPU mode handles models larger than total VRAM. Inference configs for local LLMs are provided, including ready-to-run settings for Ollama Modelfile, vLLM command, and llama.cpp itself.&lt;/p&gt;
+&lt;p&gt;#llama.cpp #localAI #quantization #opensource #AIinference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://wakii.xyz/blog/deep-dive-ggml-org-llama-cpp/" target="_blank" rel="noopener"
+&gt;llama.cpp: efficient LLM inference from CPU to the edge — wakii&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://contextetech.com/en/inference" target="_blank" rel="noopener"
+&gt;Ollama, vLLM and llama.cpp configs for local LLMs · Contexte Tech&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

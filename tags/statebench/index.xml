@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>StateBench on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/statebench/</link><description>Recent content in StateBench on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 04 Nov 2026 22:02:53 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/statebench/index.xml" rel="self" type="application/rss+xml"/><item><title>StateBench benchmark evaluates long‑context state tracking in language models</title><link>https://shoubhikbanerjee.github.io/blog/p/statebench-benchmark-evaluates-longcontext-state-tracking-in-language-models/</link><pubDate>Wed, 04 Nov 2026 22:02:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/statebench-benchmark-evaluates-longcontext-state-tracking-in-language-models/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/5g9HfQLFFaQE0fslWrxh0.png" alt="Featured image of post StateBench benchmark evaluates long‑context state tracking in language models" /&gt;&lt;h1 id="statebench-benchmark-evaluates-longcontext-state-tracking-in-language-models"&gt;StateBench benchmark evaluates long‑context state tracking in language models
+&lt;/h1&gt;&lt;p&gt;A new benchmark called StateBench has been introduced to measure how well language models keep track of information about entities in long documents as those entities evolve.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;State tracking is needed for tasks such as reading code (variables are assigned and reassigned) and following a story where characters move and objects change hands.&lt;/li&gt;
+&lt;li&gt;Example: a mystery novel states “John gave Mary the knife” right before a murder; the model must know that the state of each character has changed.&lt;/li&gt;
+&lt;li&gt;Some state‑tracking problems only require finding the latest update; harder ones require following a chain of changes where missing a single step can alter the final answer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;StateBench captures state‑tracking problems of four increasing difficulty levels:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Difficulty level&lt;/th&gt;
+&lt;th&gt;Update type&lt;/th&gt;
+&lt;th&gt;Concrete example&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;R‑trivial&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Immutable assignment – a variable’s value never changes.&lt;/td&gt;
+&lt;td&gt;Code: &lt;code&gt;let x = 4;&lt;/code&gt; Everyday: a birth date that stays fixed.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Aperiodic&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Reassignment by value – the model only needs the most recent value.&lt;/td&gt;
+&lt;td&gt;Code: &lt;code&gt;x = 4&lt;/code&gt; later &lt;code&gt;x = 2&lt;/code&gt;; Everyday: a thermostat where the latest setting determines temperature.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Soluble&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Self‑referential updates – each update builds on the current value.&lt;/td&gt;
+&lt;td&gt;Code: &lt;code&gt;x = x + 5&lt;/code&gt;; Everyday: a game score where each point adds to the running total.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;General finite&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Assignment by reference – one variable can take another variable’s current value, creating cross‑update dependencies.&lt;/td&gt;
+&lt;td&gt;Code: &lt;code&gt;x = y&lt;/code&gt; or swapping two variables; Everyday: a magician swapping a ball under five cups (the S₅ state‑tracking problem).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-evaluation"&gt;⚙️ Evaluation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Researchers tested a range of open pretrained models on the &lt;strong&gt;r‑trivial&lt;/strong&gt;, &lt;strong&gt;aperiodic&lt;/strong&gt;, and &lt;strong&gt;general finite&lt;/strong&gt; levels of StateBench.&lt;/li&gt;
+&lt;li&gt;Findings:
+&lt;ul&gt;
+&lt;li&gt;Recurrent and hybrid models (e.g., Gated DeltaNet) can generalize much farther than transformers when trained directly on these tasks.&lt;/li&gt;
+&lt;li&gt;Frontier models—including &lt;strong&gt;Gemini 3.8 Flash&lt;/strong&gt;, &lt;strong&gt;Claude Opus 5.5&lt;/strong&gt;, and &lt;strong&gt;GPT‑6 Sol&lt;/strong&gt; and &lt;strong&gt;Luna&lt;/strong&gt;—still break down on harder forms of state tracking as inputs grow longer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Theoretical expectations:
+&lt;ul&gt;
+&lt;li&gt;Under standard assumptions, transformers handle r‑trivial robustly and can manage soluble and aperiodic to some degree, but are predicted to fail on general problems.&lt;/li&gt;
+&lt;li&gt;Gated DeltaNet, with a flexible memory update, can in principle handle all four levels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Accurate state tracking underlies practical applications such as code analysis and narrative comprehension.&lt;/li&gt;
+&lt;li&gt;Existing tests focus on the hardest cases, but as recurrent and hybrid designs become more common, researchers need benchmarks that reveal which kinds of state tracking each architecture can handle.&lt;/li&gt;
+&lt;li&gt;StateBench provides this granularity, helping the community assess and improve long‑context reasoning capabilities across model families.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.datocms-assets.com/64837/1792006215-statebench-draft-blog-google-docs-image-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.datocms-assets.com/64837/1792006353-statebench-draft-blog-google-docs-image-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.datocms-assets.com/64837/1792006435-statebench-draft-blog-google-docs-image-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#StateBench #LongContext #AIbenchmarks&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/allenai/statebench" target="_blank" rel="noopener"
+&gt;StateBench: Testing how language models track state changes over long documents&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

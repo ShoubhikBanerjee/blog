@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MaskedDiffusion on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/maskeddiffusion/</link><description>Recent content in MaskedDiffusion on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 18 Nov 2026 22:09:17 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/maskeddiffusion/index.xml" rel="self" type="application/rss+xml"/><item><title>Optimizing Masked Diffusion Language Models for Faster Decoding</title><link>https://shoubhikbanerjee.github.io/blog/p/optimizing-masked-diffusion-language-models-for-faster-decoding/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/optimizing-masked-diffusion-language-models-for-faster-decoding/</guid><description>&lt;h1 id="optimizing-masked-diffusion-language-models-for-faster-decoding"&gt;Optimizing Masked Diffusion Language Models for Faster Decoding
+&lt;/h1&gt;&lt;p&gt;A new approach to optimizing masked diffusion language models (dLLMs) has been developed, focusing on reducing the time-consuming logits pipeline. This innovation is particularly beneficial for Mixture-of-Experts (MoE) models, where the backbone becomes cheap after quantization.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Masked diffusion language models decode by iteratively denoising a full canvas of tokens.&lt;/li&gt;
+&lt;li&gt;The logits pipeline, not the expert GEMMs, is the single largest consumer of decode time in a 26B-parameter diffusion MoE model.&lt;/li&gt;
+&lt;li&gt;Unlike autoregressive decoding, diffusion decoding processes S times as many logit entries per output token, where S is the number of denoising steps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The logits pipeline is largely redundant or fusable and can be removed in two lossless tiers.&lt;/li&gt;
+&lt;li&gt;A bit-exact tier whose output is byte-identical to the reference decoder.&lt;/li&gt;
+&lt;li&gt;An accuracy-parity tier using a fused single-pass entropy kernel and Gumbel-max sampling.&lt;/li&gt;
+&lt;li&gt;Combined with a W4A16 expert kernel, the full stack reaches 2.4-2.7 times end-to-end speedup over bf16 at unchanged benchmark accuracy on GSM8K, HumanEval, and MATH, on a single 273 GB/s device.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The cost is specific to MoE diffusion, where quantization makes the backbone cheap.&lt;/li&gt;
+&lt;li&gt;The finding is confirmed on a second, independently built diffusion MoE (LLaDA2.0-mini: pipeline 28.8% of decode, fused W4A16 3.3 times at accuracy parity).&lt;/li&gt;
+&lt;li&gt;The issue disappears on a dense diffusion model (3.6%).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Code and quantized weights are released.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;This optimization is crucial for improving the efficiency of masked diffusion language models, particularly in resource-constrained environments.&lt;/li&gt;
+&lt;li&gt;The findings provide insights into the specific challenges and solutions for MoE diffusion models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#MaskedDiffusion #LanguageModels #AI #Quantization #MoE&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.21852v1" target="_blank" rel="noopener"
+&gt;The Hidden Cost of MoE Diffusion Decoding: Profiling and Fixing the Sampler&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.21669v1" target="_blank" rel="noopener"
+&gt;Token Commitment as a Control Surface for Steering Masked Diffusion Generation&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.22191v1" target="_blank" rel="noopener"
+&gt;RISA: Recoverable Sparse Attention for Block-Diffusion Language Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

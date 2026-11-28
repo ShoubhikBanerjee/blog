@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OAuth20 on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/oauth20/</link><description>Recent content in OAuth20 on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Nov 2026 22:10:10 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/oauth20/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Cognito adds OAuth 2.0 token exchange for AI agents</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-cognito-adds-oauth-2-0-token-exchange-for-ai-agents/</link><pubDate>Wed, 25 Nov 2026 22:10:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-cognito-adds-oauth-2-0-token-exchange-for-ai-agents/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/Token-Exchange-Image.jpg" alt="Featured image of post Amazon Cognito adds OAuth 2.0 token exchange for AI agents" /&gt;&lt;h1 id="amazon-cognito-adds-oauth-20-token-exchange-for-ai-agents"&gt;Amazon Cognito adds OAuth 2.0 token exchange for AI agents
+&lt;/h1&gt;&lt;p&gt;Amazon Cognito introduces a new OAuth token exchange feature that enables services and AI agents to call APIs on behalf of users. This functionality aligns with OAuth 2.0 Token Exchange standards defined in RFC 8693, facilitating secure delegation where AI agents select tools at runtime, such as Model Context Protocol (MCP) servers, to perform actions like reserving tables or sending invitations.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;AI agents increasingly interact with various APIs on behalf of users, requiring a mechanism to handle the &amp;ldquo;second hop&amp;rdquo; where an intermediate service (like an MCP server) needs to access a downstream resource (like an email API). Without proper token exchange, forwarding the user&amp;rsquo;s original access token is insufficient because it does not clearly identify which service acted on the user&amp;rsquo;s behalf. This new feature allows Cognito to act as the authorization server, issuing new tokens for the calling service while maintaining strict scope controls.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Every token exchange begins with a &lt;strong&gt;subject token&lt;/strong&gt; that represents the user, which in Amazon Cognito can be an access token or ID token issued by a user pool. The calling service, such as an MCP server, sends this subject token to Cognito.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Request Flow:&lt;/strong&gt; The client calls the downstream service with the user&amp;rsquo;s access token. The service then calls the Cognito &lt;code&gt;/oauth2/token&lt;/code&gt; endpoint, authenticating with its own app client credentials.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validation:&lt;/strong&gt; Cognito validates the request and returns an &lt;strong&gt;issued token&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access:&lt;/strong&gt; The service uses this issued token to call the resource server (e.g., an email API).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Claim Structure:&lt;/strong&gt; The issued token identifies the user and names the calling service via an &lt;strong&gt;act claim&lt;/strong&gt;. It carries the same scopes or fewer than the original token, ensuring the downstream API sees exactly which service acted for the user.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The feature distinguishes between two authorization patterns:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Pattern&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Use Case&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Characteristics&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Impersonation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Backend for Frontend (BFF) relaying requests&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The calling service relays the user&amp;rsquo;s request without making its own decisions. The record shows the user but not the agent acting.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Delegation&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;AI agents acting with autonomy&lt;/td&gt;
+&lt;td style="text-align: left"&gt;The agent makes decisions and uses its own tools. The record shows both the user and the agent, which is critical for proper authorization and audit trails.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;For AI agents, delegation is the primary pattern. If an agent used a token of its own without delegation, the audit record would show the agent called the resource server but not &lt;em&gt;for whom&lt;/em&gt;. Conversely, impersonation hides the agent. Delegation ensures that the &lt;strong&gt;act claim&lt;/strong&gt; logs who authorized the action (the user) and who carried it out (the service/agent).&lt;/p&gt;
+&lt;p&gt;Developers can initiate token exchange in two ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;HTTP Endpoint:&lt;/strong&gt; Requesting a token exchange at the &lt;code&gt;/oauth2/token&lt;/code&gt; endpoint on the user pool’s domain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS SDK:&lt;/strong&gt; Calling the &lt;code&gt;GetDerivedToken&lt;/code&gt; API, which does not require a user pool domain.
+Both methods accept the same subject token, actor token, audience, and scopes, returning an issued token with identical claims.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;As AI agents become more capable of picking tools at runtime, such as MCP servers that send invitations or manage reservations, the need for granular, auditable access control grows. Token exchange ensures that each hop in the chain receives only the scopes it needs. By identifying the acting service through the act claim, organizations can maintain clear audit trails, ensuring that when an AI agent performs an action like reserving a table or inviting friends, the record clearly associates that action with both the end user and the specific agent or service that executed it.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-1-second-hop.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/cognito-token-exchange-flow-figure-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-5-invitations-mcp-server.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonCognito #OAuth2.0 #AIAgents #TokenExchange #Security&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/delegate-user-access-to-ai-agents-with-amazon-cognito-token-exchange/" target="_blank" rel="noopener"
+&gt;Delegate user access to AI agents with Amazon Cognito token exchange | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

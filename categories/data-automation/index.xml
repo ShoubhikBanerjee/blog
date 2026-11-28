@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Data Automation on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/data-automation/</link><description>Recent content in Data Automation on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 22 Sep 2026 22:03:42 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/data-automation/index.xml" rel="self" type="application/rss+xml"/><item><title>Integrating Amazon Bedrock Data Automation with Salesforce Agentforce via MCP</title><link>https://shoubhikbanerjee.github.io/blog/p/integrating-amazon-bedrock-data-automation-with-salesforce-agentforce-via-mcp/</link><pubDate>Tue, 22 Sep 2026 22:03:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/integrating-amazon-bedrock-data-automation-with-salesforce-agentforce-via-mcp/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-20933-featured-image.png" alt="Featured image of post Integrating Amazon Bedrock Data Automation with Salesforce Agentforce via MCP" /&gt;&lt;h1 id="integrating-amazon-bedrock-data-automation-with-salesforce-agentforce-via-mcp"&gt;Integrating Amazon Bedrock Data Automation with Salesforce Agentforce via MCP
+&lt;/h1&gt;&lt;p&gt;An updated implementation demonstrates how to combine Amazon Bedrock Data Automation with the Model Context Protocol (MCP) to transform unstructured data into structured insights accessible through Salesforce Agentforce.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;This solution allows Salesforce users to upload files, ask questions, and receive AI-powered insights directly within the Salesforce console without managing AWS resources or switching systems. An example implementation utilizes the External Storage of Files with Amazon S3 integration from Agentforce Public Sector (formerly Public Sector Solutions).&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The process follows a two-part flow involving data processing and insight retrieval:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Data Processing Flow&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Unstructured media files and documents are moved into Amazon S3 via the External Storage of Files with Amazon S3 for Public Sector connector.&lt;/li&gt;
+&lt;li&gt;An S3 event notification invokes an AWS Lambda function, which generates a document ID, stores it with metadata in Amazon DynamoDB, and starts an Amazon Bedrock Data Automation job.&lt;/li&gt;
+&lt;li&gt;Amazon Bedrock Data Automation extracts structured insights based on the media type.&lt;/li&gt;
+&lt;li&gt;Upon completion, an Amazon EventBridge rule triggers a second Lambda function to save results to a dedicated Amazon S3 output bucket.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Insight Retrieval Flow&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A user chat in Agentforce triggers an action that calls AWS over MCP.&lt;/li&gt;
+&lt;li&gt;The request routes through Amazon Bedrock AgentCore Gateway—a platform for building, connecting, and optimizing agents—which authenticates the request and invokes an MCP server on AWS Lambda.&lt;/li&gt;
+&lt;li&gt;The Lambda function queries DynamoDB to locate results and retrieves them from Amazon S3.&lt;/li&gt;
+&lt;li&gt;The data returns through AgentCore Gateway to Agentforce, where it is loaded into the agent&amp;rsquo;s context for a natural language response.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock Data Automation applies different extraction capabilities based on the file type, which can be customized in the Amazon Bedrock Data Automation console:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Media Type&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Extraction Capabilities&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Documents&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Extracts text, identifies key fields, and generates structured summaries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Images&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Produces descriptions and identifies objects or text within the frame&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Video and Audio&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Generates transcriptions and scene-level summaries&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The serverless infrastructure consists of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Amazon EventBridge rules&lt;/li&gt;
+&lt;li&gt;Amazon Bedrock Data Automation configuration&lt;/li&gt;
+&lt;li&gt;AWS Lambda functions&lt;/li&gt;
+&lt;li&gt;Amazon DynamoDB tables&lt;/li&gt;
+&lt;li&gt;Amazon Bedrock AgentCore Gateway&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Registering external MCP servers is available for the following Salesforce editions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Developer&lt;/li&gt;
+&lt;li&gt;Enterprise&lt;/li&gt;
+&lt;li&gt;Performance&lt;/li&gt;
+&lt;li&gt;Unlimited&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Users must confirm their Salesforce org supports registering and calling external MCP servers through the Agentforce Registry.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/15/Solution_Overview.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/15/Solution_OverviewMCP.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #Salesforce #Agentforce #MCP #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/extending-public-sector-intelligence-with-agentforce-and-aws/" target="_blank" rel="noopener"
+&gt;Extending public sector intelligence with Agentforce and AWS | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

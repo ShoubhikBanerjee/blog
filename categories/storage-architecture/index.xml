@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Storage Architecture on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/storage-architecture/</link><description>Recent content in Storage Architecture on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 17 Nov 2026 22:09:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/storage-architecture/index.xml" rel="self" type="application/rss+xml"/><item><title>Lakebase Postgres minimizes object‑storage reads using tiered caching</title><link>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/reads-served-from-cache-cover.png" alt="Featured image of post Lakebase Postgres minimizes object‑storage reads using tiered caching" /&gt;&lt;h1 id="lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching"&gt;Lakebase Postgres minimizes object‑storage reads using tiered caching
+&lt;/h1&gt;&lt;p&gt;Lakebase Postgres builds on object storage for durability while keeping reads off of it through a multi‑tier cache hierarchy.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Object storage provides the foundation: durable, bottomless storage, instant branches and restores, and a single copy of data for transactions and analytics (LTAP).&lt;/li&gt;
+&lt;li&gt;The system is designed so that object storage never sits in front of a query; reads travel through faster tiers first.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🧩 Architecture
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tier&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Compute node&lt;/td&gt;
+&lt;td&gt;Runs standard Postgres, holds no durable state, serves ~99.46% of page accesses from its local cache (memory or micro‑second latency).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pageserver&lt;/td&gt;
+&lt;td&gt;Owns local NVMe, serves ~0.54% of reads, builds an LSM tree, persists materialized history to object storage asynchronously.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Object storage&lt;/td&gt;
+&lt;td&gt;Holds immutable, long‑term history, backs pageservers, is accessed for only ~1 in 28 million page accesses.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-read-path-details"&gt;⚙️ Read Path Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;On a compute‑node cache miss, the request is sent over the network to a pageserver, which serves the page from its own NVMe.&lt;/li&gt;
+&lt;li&gt;Only if the pageserver also misses does the request reach object storage.&lt;/li&gt;
+&lt;li&gt;Production statistics:
+&lt;ul&gt;
+&lt;li&gt;Compute cache: ~1.1 billion page accesses / s (99.46% of total).&lt;/li&gt;
+&lt;li&gt;Pageserver NVMe: ~6 million reads / s (0.54% of total).&lt;/li&gt;
+&lt;li&gt;Object storage: ~39 requests / s (≈1 in 28 million accesses).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Reads that do reach object storage are rare one‑offs—old branches, restores, or databases that have been idle for weeks. Once cached, subsequent reads return to the faster tiers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability--durability"&gt;🚀 Availability &amp;amp; Durability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Transactions are committed after a quorum of safekeepers acknowledges the record.&lt;/li&gt;
+&lt;li&gt;A Paxos‑based protocol handles leader election and failover.&lt;/li&gt;
+&lt;li&gt;Because the compute layer holds no durable state, it can start, stop, scale, or fail without risking data.&lt;/li&gt;
+&lt;li&gt;The storage layer owns correctness, durability, and history.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By keeping the hot path in memory or NVMe, Lakebase Postgres achieves micro‑second latency comparable to a traditional warm‑cache Postgres instance.&lt;/li&gt;
+&lt;li&gt;Object storage provides virtually unlimited capacity and durability without becoming a performance bottleneck.&lt;/li&gt;
+&lt;li&gt;The tiered design ensures that even as data grows, the vast majority of reads stay on the fastest tier, making the system both scalable and responsive.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/read-paths-lakebase.gif?v=1794924287"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/build-page-at-LSN.gif?v=1794924287"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Lakebase #Postgres #ObjectStorage #DatabaseArchitecture&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/built-object-storage-served-cache" target="_blank" rel="noopener"
+&gt;Built on object storage, served from cache&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

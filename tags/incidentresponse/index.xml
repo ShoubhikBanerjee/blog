@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>IncidentResponse on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/incidentresponse/</link><description>Recent content in IncidentResponse on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 27 Nov 2026 22:09:22 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/incidentresponse/index.xml" rel="self" type="application/rss+xml"/><item><title>Spotify outage caused by conflicting deployment changes</title><link>https://shoubhikbanerjee.github.io/blog/p/spotify-outage-caused-by-conflicting-deployment-changes/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/spotify-outage-caused-by-conflicting-deployment-changes/</guid><description>&lt;img src="https://images.ctfassets.net/p762jor363g1/5Pj1XJpttH7jTwoNtzp0JK/6fe349c743b3f334580c783ee71b7804/tools-orange-c-cream.png" alt="Featured image of post Spotify outage caused by conflicting deployment changes" /&gt;&lt;h1 id="spotify-outage-caused-by-conflicting-deployment-changes"&gt;Spotify outage caused by conflicting deployment changes
+&lt;/h1&gt;&lt;p&gt;On September 29, Spotify experienced an outage that disrupted users’ access to the platform. The disruption was triggered by a series of changes to the deployment platforms that resulted in conflicts impacting the main authentication system, preventing apps from loading content or playing music.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The outage began with errors increasing at 13:45 UTC.&lt;/li&gt;
+&lt;li&gt;A login system &amp;ldquo;panic mode alert&amp;rdquo; paged the owning team at 13:57 UTC.&lt;/li&gt;
+&lt;li&gt;Responders identified the specific login service impacted at 14:04 UTC.&lt;/li&gt;
+&lt;li&gt;Most regions recovered by 16:30 UTC, though one European region experienced further overwhelm due to returning traffic.&lt;/li&gt;
+&lt;li&gt;The incident was declared &amp;ldquo;all-clear&amp;rdquo; at 19:34 UTC.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-root-cause-analysis"&gt;🧩 Root Cause Analysis
+&lt;/h2&gt;&lt;p&gt;The issue stemmed from two independently tested changes to the deployment system that conflicted when combined:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Change 1&lt;/strong&gt;: Altered how test environments are configured, including running fewer instances and omitting some automated health checks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Change 2&lt;/strong&gt;: Changed how the system computes the difference between the current state and a desired new state for deployment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The conflict occurred because one rollout changed the type of deployed workloads (from Kubernetes Deployment to Argo Rollout), while the second changed which configuration parameters are excluded from the automated diff. Consequently, the system accidentally included the &lt;code&gt;minReplicas&lt;/code&gt; field in the diff. While the correct behavior is for the Kubernetes autoscaler to manage replica numbers, the deployment system instead set the replicas field to the minimum number on every sync.&lt;/p&gt;
+&lt;h2 id="-impact-and-recovery"&gt;⚙️ Impact and Recovery
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Token Backlog&lt;/strong&gt;: The re-issuing of tokens after downtime caused significant load increases, overwhelming remaining instances even with client backoffs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reconciliation Loop&lt;/strong&gt;: An erroneous reconciliation loop lowered the number of instances, preventing automatic scaling and recovery.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Traffic Surge&lt;/strong&gt;: The login system handled 200 times more traffic than usual during the start of recovery to process the backlog of missing tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Manual Intervention&lt;/strong&gt;: The first attempt to manually scale up did not sufficiently account for the traffic increase. By 17:25 UTC, the login system was set to 3x normal CPU/memory resources to prevent a &amp;ldquo;thundering herd&amp;rdquo; effect.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-incident-timeline"&gt;📊 Incident Timeline
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Time (UTC)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Event&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;13:45&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Errors begin increasing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;13:57&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Login system &amp;ldquo;panic mode alert&amp;rdquo; pages owning team&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;14:04&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Responders identify the impacted login service&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;16:30&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Login starts to recover; deployments remain frozen&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;17:25&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Login set to 3x normal CPU/memory resources&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;19:34&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Incident declared &amp;ldquo;all-clear&amp;rdquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/p762jor363g1/3AiqgaI6uFPcF6zc7lYX5t/bbed1b145db94423441163d9f149a02e/incident_report.png"
+loading="lazy"
+alt="Spotify Incident Report"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/p762jor363g1/3AiqgaI6uFPcF6zc7lYX5t/bbed1b145db94423441163d9f149a02e/incident_report.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Spotify #DevOps #Kubernetes #ArgoCD #IncidentResponse&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://engineering.atspotify.com/2026/11/september-29-outage-incident-report-what-we-learnt/" target="_blank" rel="noopener"
+&gt;September 29 Outage Incident Report: What we learnt | Spotify Engineering&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>How AWS Security Incident Response triages threat findings from GuardDuty</title><link>https://shoubhikbanerjee.github.io/blog/p/how-aws-security-incident-response-triages-threat-findings-from-guardduty/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/how-aws-security-incident-response-triages-threat-findings-from-guardduty/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/automated-triage-hero-1260x630.jpg" alt="Featured image of post How AWS Security Incident Response triages threat findings from GuardDuty" /&gt;&lt;h1 id="how-aws-security-incident-response-triages-threat-findings-from-guardduty"&gt;How AWS Security Incident Response triages threat findings from GuardDuty
+&lt;/h1&gt;&lt;p&gt;AWS Security Incident Response continuously triages threat findings from Amazon GuardDuty and AWS Security Hub CSPM, a process where most work never surfaces as a customer-facing case. The service ingests these findings through Amazon EventBridge rules automatically deployed during onboarding, ensuring that active threats are evaluated while posture and compliance issues remain in existing remediation processes.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The automated triage process evaluates each finding payload against several data sources to determine if an activity is benign or requires action.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data sources:&lt;/strong&gt; The service assesses the finding payload, related AWS activity from AWS CloudTrail and Amazon VPC Flow Logs, AWS threat intelligence, and user-provided environment context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benchmarking:&lt;/strong&gt; Findings are mapped against a profile of known-good activity specific to the customer&amp;rsquo;s environment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Third-party integration:&lt;/strong&gt; Findings from tools like CrowdStrike, Trend Micro, or Lacework sent to Security Hub CSPM are also ingested, provided they carry complete payload information including resource ID, account ID, timestamp, and threat details. GuardDuty findings are ingested directly to prevent duplication.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Outcomes of the triage process vary depending on the nature of the finding. Posture and compliance findings, such as misconfigurations or failed benchmark checks, are not triaged as they reflect environment state rather than active threats. They remain current without archiving and do not generate cases.&lt;/p&gt;
+&lt;p&gt;For active threat findings, such as compromised credentials, cryptomining, or data exfiltration, the service determines one of three dispositions:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Disposition&lt;/th&gt;
+&lt;th&gt;Trigger Condition&lt;/th&gt;
+&lt;th&gt;Action Taken&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Archived, no action needed&lt;/td&gt;
+&lt;td&gt;Automated triage or engineer confirms activity is benign or expected&lt;/td&gt;
+&lt;td&gt;Finding is archived in GuardDuty; no case is created and no customer contact is made&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Proactive case opened&lt;/td&gt;
+&lt;td&gt;Triage cannot confirm activity is benign&lt;/td&gt;
+&lt;td&gt;Case is opened as &amp;ldquo;Unconfirmed Activity&amp;rdquo; or &amp;ldquo;Inappropriate/Unintended Activity&amp;rdquo;; incident response team is engaged; finding stays Current until resolved&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retained for review&lt;/td&gt;
+&lt;td&gt;Posture-related findings (e.g., overly permissive policies)&lt;/td&gt;
+&lt;td&gt;No case is created; finding remains Current without archiving&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;When a proactive case is opened, customers respond via the AWS Management Console under the Cases section, allowing direct communication, context sharing, and case resolution. For third-party findings ingested through Security Hub CSPM, the disposition logic mirrors GuardDuty, but the status changes from NEW to NOTIFIED when triage begins, moving to SUPPRESSED if cleared as benign.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The service builds a profile of what is normal in your environment to distinguish between expected behavior and genuine threats. For example, if GuardDuty flags an &amp;ldquo;UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS&amp;rdquo; finding, the service checks if the external IP belongs to a known corporate VPN range. If the pattern is recognized, the finding is archived. If the IP is from a hosting provider with no prior association and the IAM role has never called from outside AWS, a proactive case is created for investigation. Across customers, less than 1 percent of ingested findings result in a customer-facing escalation.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/aws-security-incident-response-triage-b-hybrid-Figure-1.png"
+loading="lazy"
+alt="AWS Security Incident Response Triage"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/18/aws-security-incident-response-triage-b-hybrid-Figure-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #Security #GuardDuty #IncidentResponse #ThreatDetection&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/how-aws-security-incident-response-triages-your-security-findings/" target="_blank" rel="noopener"
+&gt;How AWS Security Incident Response triages your security findings | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

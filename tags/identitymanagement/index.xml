@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>IdentityManagement on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/identitymanagement/</link><description>Recent content in IdentityManagement on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/identitymanagement/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS extends Trusted Identity Propagation to IAM Federation and Roles Anywhere</title><link>https://shoubhikbanerjee.github.io/blog/p/aws-extends-trusted-identity-propagation-to-iam-federation-and-roles-anywhere/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/aws-extends-trusted-identity-propagation-to-iam-federation-and-roles-anywhere/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/05/13/AdobeStock_1376596821-1260x630.jpeg" alt="Featured image of post AWS extends Trusted Identity Propagation to IAM Federation and Roles Anywhere" /&gt;&lt;h1 id="aws-extends-trusted-identity-propagation-to-iam-federation-and-roles-anywhere"&gt;AWS extends Trusted Identity Propagation to IAM Federation and Roles Anywhere
+&lt;/h1&gt;&lt;p&gt;AWS has extended Trusted Identity Propagation (TIP) to support IAM federation and AWS IAM Roles Anywhere, enabling customers to grant access and audit activity based on the specific user or workload behind an IAM role.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Trusted Identity Propagation (TIP) carries the identity of a user or workload with each AWS request. This allows users to grant permissions to that specific user or workload and trace its actions in AWS CloudTrail. Previously, TIP was available only for users accessing AWS through AWS IAM Identity Center. The new extension makes TIP work for users and workloads that federate directly into IAM roles or use X.509 certificates to obtain AWS credentials, while also simplifying TIP usage with IAM Identity Center.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;TIP addresses the gap where access control decisions apply to the role rather than the user, and CloudTrail attributes each action to the role session. By attaching identity context from a trusted source to the role session at credential issuance, TIP provides a stable reference for the user or workload behind each request. This context is immutable for the lifetime of the session and can include optional claims, such as a risk score or a CI/CD workflow name.&lt;/p&gt;
+&lt;p&gt;The identity context propagates through supported downstream requests:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Role Assumption:&lt;/strong&gt; When a TIP session assumes another role, AWS Security Token Service (AWS STS) carries the context into the new role session.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Forward Access Sessions (FAS):&lt;/strong&gt; When an AWS service makes a downstream request on your behalf, FAS credentials carry the identity context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Outbound Federation:&lt;/strong&gt; With IAM outbound identity federation, the session can request a signed JSON Web Token (JWT) that carries identity context to an external service.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;AWS validates the source and attaches identity context through three primary paths:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Path&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Source of Identity Context&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Trusted Source Type&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;IAM Federation&lt;/td&gt;
+&lt;td style="text-align: left"&gt;SAML assertion or OIDC token&lt;/td&gt;
+&lt;td style="text-align: left"&gt;External SAML or OIDC Identity Providers (IdP)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;IAM Identity Center&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Username received from identity source&lt;/td&gt;
+&lt;td style="text-align: left"&gt;IAM Identity Center&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;IAM Roles Anywhere&lt;/td&gt;
+&lt;td style="text-align: left"&gt;X.509 certificate&lt;/td&gt;
+&lt;td style="text-align: left"&gt;X.509 certificates&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;TIP context propagates to a new role session only under specific boundary conditions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The target role is in the account where the identity provider is configured.&lt;/li&gt;
+&lt;li&gt;The target role is in another account within the same AWS organization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;IAM policies evaluate this identity context to authorize requests, and AWS CloudTrail records it for auditing. For example, Amazon S3 bucket policies and AWS Lambda can utilize this context for access control and audit logging. The identity context is represented through context keys, including the &lt;code&gt;aws:OriginIdentity/*&lt;/code&gt; namespace, which serves as the common namespace for identity information across all three paths.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-1-identity-context-flow-v12-3600x1820-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-2-github-actions-audit-v2-3200x1800-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/22d200f8670dbdb3e253a90eee5098477c95c23d/2026/11/24/figure-3-runtime-risk-access-v4-3200x1800-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AWS #IAM #CloudSecurity #IdentityManagement #CloudTrail #DevSecOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/security/know-the-identity-behind-the-role-authorize-and-audit-with-trusted-identity-propagation/" target="_blank" rel="noopener"
+&gt;Know the identity behind the role: Authorize and audit with trusted identity propagation | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Overview of Apereo CAS Enterprise Identity and Authentication Platform</title><link>https://shoubhikbanerjee.github.io/blog/p/overview-of-apereo-cas-enterprise-identity-and-authentication-platform/</link><pubDate>Sun, 20 Sep 2026 22:01:28 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/overview-of-apereo-cas-enterprise-identity-and-authentication-platform/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/4679233?v=4" alt="Featured image of post Overview of Apereo CAS Enterprise Identity and Authentication Platform" /&gt;&lt;h1 id="overview-of-apereo-cas-enterprise-identity-and-authentication-platform"&gt;Overview of Apereo CAS Enterprise Identity and Authentication Platform
+&lt;/h1&gt;&lt;p&gt;Apereo CAS is an enterprise-grade, multilingual identity provider and single sign-on solution designed to meet comprehensive authentication and authorization needs. Built on Spring Boot and Spring Cloud, it is offered as free, open-source software under the Apache v2 license.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;CAS serves as an open and well-documented authentication protocol. The primary implementation is an open-source Java server component that supports a wide range of protocols and features, including multi-factor authentication (MFA), SAML2, and OpenID Connect.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;CAS functions as a central platform for managing user authentication and authorization across enterprise environments. It supports deployment via Apache Tomcat or Jetty, including containerized options such as Docker, with a recommended deployment strategy of using the WAR Overlay method.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;CAS provides extensive compatibility with various systems and protocols:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Capability Type&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Supported Protocols/Sources&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Authentication Protocols&lt;/td&gt;
+&lt;td style="text-align: left"&gt;CAS v1-v3, SAML v1-v2, OAuth v2, OpenID Connect, WS-Federation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Authentication Methods&lt;/td&gt;
+&lt;td style="text-align: left"&gt;JAAS, LDAP, RDBMS, X.509, Radius, SPNEGO, JWT, Apache Cassandra, MongoDB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Authorization Engines&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Heimdall, OpenFGA, OPA, ABAC, REST, Grouper&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Multifactor Authentication&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Duo Security, YubiKey, RSA, Google Authenticator, WebAuthn FIDO2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Notifications&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Twilio, Mailgun, SendGrid, Amazon SES&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Apereo manages the CAS software, providing community access to all releases at no cost. Administrative UIs are included to manage logging, monitoring, statistics, and client registration. The system also supports high-availability clustered deployments using tools such as Hazelcast, Redis, DynamoDb, and Apache Ignite.&lt;/p&gt;
+&lt;p&gt;#CAS #IdentityManagement #OpenSource #Authentication #SSO&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/apereo/cas" target="_blank" rel="noopener"
+&gt;apereo/cas&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Megatron on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/megatron/</link><description>Recent content in Megatron on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Nov 2026 22:10:10 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/megatron/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Megatron Core Supports Market Forecasting via Patch Embeddings</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-megatron-core-supports-market-forecasting-via-patch-embeddings/</link><pubDate>Wed, 25 Nov 2026 22:10:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-megatron-core-supports-market-forecasting-via-patch-embeddings/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/megatron-market-forecasting-e1795123732504-660x370.webp" alt="Featured image of post NVIDIA Megatron Core Supports Market Forecasting via Patch Embeddings" /&gt;&lt;h1 id="nvidia-megatron-core-supports-market-forecasting-via-patch-embeddings"&gt;NVIDIA Megatron Core Supports Market Forecasting via Patch Embeddings
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released a workflow for applying Megatron Core, its open-source library for training transformer models at scale, to financial market forecasting. The approach processes stream data—trades and quotes timestamped to the microsecond—into model-ready tensors to predict returns and trading volume.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The core task involves aggregating high-frequency market data into bars, where each row represents one instrument per time unit with price, volume, and other statistics. A preprocessing script converts these intraday market bars into tensors for the Megatron distributed training loop. Unlike methods that tokenize market values into text, this pipeline uses learned patch embeddings to turn groups of observations into model inputs.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The preprocessing pipeline groups consecutive bars for a single instrument on a specific trading day into patches, which serve as the model&amp;rsquo;s tokens. Fixed-length context windows are then slid over these patches.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Patching:&lt;/strong&gt; Eight bars per patch and 32 patches per window create a sequence of 32 model positions containing 256 observations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inputs:&lt;/strong&gt; The model receives patches with shape (B, L, P, F), instrument IDs (inst_id), and patch times of day (patch_tod).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Targets:&lt;/strong&gt; Each window includes future targets for every context position, allowing one forward pass to produce forecasts throughout the context rather than just at the end.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Loss Function:&lt;/strong&gt; The loss expects a dictionary containing return and volume share tensors of shape (B, L, H), representing one forecast per context position and horizon.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data Format:&lt;/strong&gt; Input is a directory of Parquet files with columns for Symbol, Date, Timestamp, Close, and Volume, plus optional numeric feature columns.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Feature Engineering:&lt;/strong&gt; The script derives within-day log returns and log volumes, ensuring the overnight gap never enters the inputs. Price and volume remain continuous features.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Instrument Specificity:&lt;/strong&gt; Each training window includes the instrument identifier, allowing the model to learn instrument-specific behavior within shared parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metadata:&lt;/strong&gt; Preprocessing records patch size, context length, and forecast horizons in saved metadata, making data configuration an explicit part of each experiment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This implementation demonstrates that standard transformer training infrastructure can be adapted for continuous financial time series by treating bars as patches rather than discrete tokens. The flexibility of the &lt;code&gt;forward_step&lt;/code&gt; interface allows any MegatronModule taking the specified inputs and returning the target dictionary to be used in the training loop.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/megatron-market-forecasting-e1795123732504-1024x576.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/figure-1-8.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Megatron #Transformer #TimeSeries #FinancialAI #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/prepare-market-data-for-forecasting-with-nvidia-megatron-core/" target="_blank" rel="noopener"
+&gt;Prepare Market Data for Forecasting with NVIDIA Megatron Core | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

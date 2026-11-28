@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Database on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/database/</link><description>Recent content in Database on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Nov 2026 22:08:01 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/database/index.xml" rel="self" type="application/rss+xml"/><item><title>Lakebase Postgres Introduces Read Replicas with Decoupled Compute and Storage</title><link>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-introduces-read-replicas-with-decoupled-compute-and-storage/</link><pubDate>Thu, 26 Nov 2026 22:08:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-introduces-read-replicas-with-decoupled-compute-and-storage/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/read-replicas-lakebase.png" alt="Featured image of post Lakebase Postgres Introduces Read Replicas with Decoupled Compute and Storage" /&gt;&lt;h1 id="lakebase-postgres-introduces-read-replicas-with-decoupled-compute-and-storage"&gt;Lakebase Postgres Introduces Read Replicas with Decoupled Compute and Storage
+&lt;/h1&gt;&lt;p&gt;Lakebase Postgres has introduced a new approach to read replicas that decouples compute from storage, enabling faster scaling and lower costs compared to traditional managed PostgreSQL services like Amazon RDS.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The traditional read replica model faces significant challenges when scaling reads on demand. In managed Postgres services, a replica is a physical clone of the primary: its own instance, storage volume, and full copy of every page. This makes replicas impractical for elastic scaling because they take minutes to hours to create, each adds a full data copy to billing, and they run continuously even after traffic spikes subside.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;p&gt;Lakebase Postgres separates compute from storage. In traditional systems, Postgres runs on a single machine owning both execution and durable state. Lakebase splits these responsibilities: since compute owns nothing durable, multiple compute instances can attach to the same storage. A read replica is simply an independent, read-only compute that reads from the shared storage. Creating one requires no data copy, no replication work on the primary (which continues streaming WAL to safekeepers), and no dependency on database size—resulting in seconds-long creation times regardless of scale.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;In traditional setups, N replicas mean N+1 copies of the database (one on primary, one per replica volume)&lt;/li&gt;
+&lt;li&gt;In Lakebase Postgres, N replicas still mean one storage copy&lt;/li&gt;
+&lt;li&gt;Replicas maintain only local caches (shared buffers and NVMe), not durable data&lt;/li&gt;
+&lt;li&gt;Storage is billed solely for the data in the storage layer; replicas add compute, not storage&lt;/li&gt;
+&lt;li&gt;Replica costs follow the reads they serve, not database size or hourly instance billing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;The monolithic implementation of replicas in systems like Amazon RDS creates the opposite of their intended purpose. Instead of elastic scaling, you get static, overprovisioned infrastructure. Lakebase’s decoupled architecture fixes both creation time and cost inefficiencies by treating replicas as lightweight compute instances rather than full database clones.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Untitled-design-11.gif?v=1795701905"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Untitled-design-13.gif?v=1795701905"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Untitled-design-15.gif?v=1795701905"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PostgreSQL #Database #Scalability #Lakebase #ComputeStorageDecoupling&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/rethinking-read-replicas-lakebase-architecture" target="_blank" rel="noopener"
+&gt;Rethinking read replicas for the lakebase architecture&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>sqlite3_rsync Enables Remote SQLite Database Copies Over SSH</title><link>https://shoubhikbanerjee.github.io/blog/p/sqlite3-rsync-enables-remote-sqlite-database-copies-over-ssh/</link><pubDate>Thu, 26 Nov 2026 22:08:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sqlite3-rsync-enables-remote-sqlite-database-copies-over-ssh/</guid><description>&lt;h1 id="sqlite3_rsync-enables-remote-sqlite-database-copies-over-ssh"&gt;sqlite3_rsync Enables Remote SQLite Database Copies Over SSH
+&lt;/h1&gt;&lt;p&gt;sqlite3_rsync is a database remote-copy tool for SQLite that was added as experimental in SQLite 3.47.0 in October 2024 and later enhanced in SQLite 3.50.0 in May 2025. This tool allows copying a snapshot of a SQLite database over an SSH connection without first creating a full local copy, making it useful for systems with limited disk space.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Normally, grabbing a snapshot copy of a SQLite database requires either the backup API or VACUUM INTO, both of which need enough disk space for a duplicate copy. If you&amp;rsquo;re on a small instance using more than half the available disk, these methods fail. sqlite3_rsync avoids this limitation by transferring data directly over SSH.&lt;/p&gt;
+&lt;p&gt;It also supports synchronizing an existing database replica without re-transmitting the entire content, reducing network usage.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The protocol relies on cryptographic hashes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The replica sends hashes for pages or groups of pages to the origin.&lt;/li&gt;
+&lt;li&gt;The origin responds with differing page content or requests finer-grained hashes if needed.&lt;/li&gt;
+&lt;li&gt;If the databases differ significantly, network bandwidth may temporarily exceed the database size due to hash exchange overhead — typically only a few percent more.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Added as experimental in SQLite 3.47.0 (October 2024)&lt;/li&gt;
+&lt;li&gt;Enhanced in SQLite 3.50.0 (May 2025)&lt;/li&gt;
+&lt;li&gt;Works over SSH&lt;/li&gt;
+&lt;li&gt;Avoids local copy requirement&lt;/li&gt;
+&lt;li&gt;Efficient for resynchronization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Available in:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Version&lt;/th&gt;
+&lt;th&gt;Date&lt;/th&gt;
+&lt;th&gt;Status&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;SQLite 3.47.0&lt;/td&gt;
+&lt;td&gt;October 2024&lt;/td&gt;
+&lt;td&gt;Experimental&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SQLite 3.50.0&lt;/td&gt;
+&lt;td&gt;May 2025&lt;/td&gt;
+&lt;td&gt;Enhanced&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;For developers working with constrained environments, sqlite3_rsync offers a practical way to back up or sync SQLite databases without exhausting local storage or bandwidth unnecessarily. While initial hash exchanges can add minor overhead, the benefits become clear when managing large or frequently updated databases remotely.&lt;/p&gt;
+&lt;p&gt;#SQLite #Database #rsync #SSH #Backup&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/26/sqlite3-rsync/" target="_blank" rel="noopener"
+&gt;sqlite3_rsync: Database Remote-Copy Tool For SQLite&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Goose database migration tool supports Go functions and out-of-order changes</title><link>https://shoubhikbanerjee.github.io/blog/p/goose-database-migration-tool-supports-go-functions-and-out-of-order-changes/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/goose-database-migration-tool-supports-go-functions-and-out-of-order-changes/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/18835?v=4" alt="Featured image of post Goose database migration tool supports Go functions and out-of-order changes" /&gt;&lt;h1 id="goose-database-migration-tool-supports-go-functions-and-out-of-order-changes"&gt;Goose database migration tool supports Go functions and out-of-order changes
+&lt;/h1&gt;&lt;p&gt;Goose is a database migration tool available as both a CLI and a library. It allows developers to manage database schemas by creating incremental SQL changes or Go functions.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The tool supports migrations for multiple database systems. It works against Postgres, MySQL, MariaDB, Spanner, SQLite, YDB, ClickHouse, MSSQL, and Vertica.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Goose supports specific migration formats and operational features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Go migrations written as plain functions.&lt;/li&gt;
+&lt;li&gt;Embedded migrations.&lt;/li&gt;
+&lt;li&gt;Out-of-order migrations.&lt;/li&gt;
+&lt;li&gt;Seeding data.&lt;/li&gt;
+&lt;li&gt;Environment variable substitution in SQL migrations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The CLI includes flags for configuring migration behavior. The following table details specific flags and their functions:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Flag&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-allow-missing&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Applies missing (out-of-order) migrations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-certfile&lt;/td&gt;
+&lt;td style="text-align: left"&gt;File path to root CA&amp;rsquo;s certificates in pem format (only supported on MySQL)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-dir&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Directory with migration files (default &amp;ldquo;.&amp;rdquo;, can be set via GOOSE_MIGRATION_DIR)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-env&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Load environment variables from file (default .env)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-no-color&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Disable color output (NO_COLOR env variable supported)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-no-versioning&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Apply migration commands with no versioning, in file order&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-s&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use sequential numbering for new migrations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-ssl-cert&lt;/td&gt;
+&lt;td style="text-align: left"&gt;File path to SSL certificates in pem format (only supported on MySQL)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-ssl-key&lt;/td&gt;
+&lt;td style="text-align: left"&gt;File path to SSL key in pem format (only supported on MySQL)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-table&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Migrations table name (default &amp;ldquo;goose_db_version&amp;rdquo;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;-timeout&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Maximum allowed duration for queries to run&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Goose is available via several installation methods:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Go Install:&lt;/strong&gt; &lt;code&gt;go install github.com/pressly/goose/v3/cmd/goose@latest&lt;/code&gt; installs the binary to your &lt;code&gt;$GOPATH/bin&lt;/code&gt; directory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Homebrew:&lt;/strong&gt; Available for macOS users.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Docker:&lt;/strong&gt; A container image is available for &lt;code&gt;linux/amd64&lt;/code&gt; and &lt;code&gt;linux/arm64&lt;/code&gt;.
+&lt;ul&gt;
+&lt;li&gt;The container image has no shell and supports &lt;code&gt;.sql&lt;/code&gt; migrations only.&lt;/li&gt;
+&lt;li&gt;The working directory is &lt;code&gt;/migrations&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Tags include &lt;code&gt;vX.Y.Z&lt;/code&gt;, &lt;code&gt;vX.Y&lt;/code&gt;, &lt;code&gt;vX&lt;/code&gt;, and &lt;code&gt;latest&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Dockerfiles can copy the binary using: &lt;code&gt;COPY --from=ghcr.io/pressly/goose:v3.30.1 /usr/local/bin/goose /usr/local/bin/goose&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Goose #Database #Go #CLI #Migrations&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/pressly/goose" target="_blank" rel="noopener"
+&gt;pressly/goose&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>PostgreSQL 19 reaches GA and is available on Lakebase</title><link>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-reaches-ga-and-is-available-on-lakebase/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-reaches-ga-and-is-available-on-lakebase/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/PG-19-cover.png" alt="Featured image of post PostgreSQL 19 reaches GA and is available on Lakebase" /&gt;&lt;h1 id="postgresql-19-reaches-ga-and-is-available-on-lakebase"&gt;PostgreSQL 19 reaches GA and is available on Lakebase
+&lt;/h1&gt;&lt;p&gt;PostgreSQL 19 reached general availability today and is already available on Lakebase. Several engineers on the Lakebase team are PostgreSQL committers and contributors who worked on this release directly, from query plan advice to shared memory, locale handling, and release management. New major versions often take weeks to reach other managed PostgreSQL services.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;PostgreSQL 19 is a practical release with no single headline feature that changes what PostgreSQL is. Instead, version 19 goes after operational problems that database teams know well:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bloated tables&lt;/li&gt;
+&lt;li&gt;Unstable query plans&lt;/li&gt;
+&lt;li&gt;Replica lag&lt;/li&gt;
+&lt;li&gt;Incomplete statistics&lt;/li&gt;
+&lt;li&gt;Maintenance work that is hard to run safely in production&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-features"&gt;🧩 Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;REPACK&lt;/strong&gt; — reclaims space while normal reads and writes continue during most of the operation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pg_plan_advice&lt;/strong&gt; — describes planner decisions as advice, applies supplied advice, and reports whether it was followed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pg_stash_advice&lt;/strong&gt; — stores advice by query ID and applies it automatically when a matching query is planned&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-repack-works"&gt;⚙️ How REPACK Works
+&lt;/h2&gt;&lt;p&gt;PostgreSQL uses multiversion concurrency control, so an UPDATE creates a new row version and a DELETE leaves a dead tuple behind. Routine vacuuming makes that space reusable, but it doesn&amp;rsquo;t necessarily return space to the operating system or restore a useful physical row order. The usual fixes — VACUUM FULL, CLUSTER, or external tools such as pg_repack — take an ACCESS EXCLUSIVE lock for the whole operation, blocking normal access to the table.&lt;/p&gt;
+&lt;p&gt;REPACK reclaims space like VACUUM FULL; with &lt;code&gt;USING INDEX&lt;/code&gt;, it also physically orders rows like CLUSTER. With &lt;code&gt;CONCURRENTLY&lt;/code&gt;, PostgreSQL rebuilds the table while normal reads and writes continue, capturing ongoing changes through logical decoding. It then takes an ACCESS EXCLUSIVE lock to apply any remaining captured changes and swap the new table and index files into place.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;pg_plan_advice&lt;/td&gt;
+&lt;td&gt;Describes planner decisions as advice, applies supplied advice, reports whether it was followed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;pg_stash_advice&lt;/td&gt;
+&lt;td&gt;Stores advice by query ID and applies it automatically when a matching query is planned&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;These components do not add cross-table statistics or replace the planner. Instead, they let you intervene when an inaccurate estimate produces a poor plan. Unlike inline optimizer hints, plan advice lives outside the application&amp;rsquo;s query text. You can inspect the current plan, test focused advice, and then stash it by query ID.&lt;/p&gt;
+&lt;h2 id="-repack-limitations"&gt;⚠️ REPACK Limitations
+&lt;/h2&gt;&lt;p&gt;Concurrent repacking creates an additional replication slot for the duration of the operation, so it needs free capacity under &lt;code&gt;max_repack_replication_slots&lt;/code&gt; and a table with either a non-deferrable primary key or a suitable index-based replica identity. It also needs temporary disk space for a copy of the table and all its indexes, potentially plus a sort file up to the size of the table.&lt;/p&gt;
+&lt;p&gt;Tables with heavy update and delete traffic face an additional limit: the current upstream PostgreSQL 19 implementation fails if more than about 104 million tuples in the target table are updated or deleted while REPACK (CONCURRENTLY) is running. This counts changes made during the repack, not rows already in the table.&lt;/p&gt;
+&lt;p&gt;Concurrent repacking is also not MVCC-safe: after it commits, transactions using snapshots taken before the repack began can see the table as empty. Physical clustering also degrades as later writes arrive. REPACK CONCURRENTLY still needs planning, but it brings into core a job that previously required more downtime or an extension.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;To try it, create a new Lakebase project and select PostgreSQL 19 as the version.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Untitled-design-7_0.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/2023-08/databricks-default.png?v=1712162038"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PostgreSQL #Lakebase #Database #GARelease #REPACK #QueryPlanning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/postgresql-19-available-lakebase" target="_blank" rel="noopener"
+&gt;PostgreSQL 19 is available on Lakebase&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>PostgreSQL 19 Released with New Read-Your-Writes Consistency Feature</title><link>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-released-with-new-read-your-writes-consistency-feature/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-released-with-new-read-your-writes-consistency-feature/</guid><description>&lt;h1 id="postgresql-19-released-with-new-read-your-writes-consistency-feature"&gt;PostgreSQL 19 Released with New Read-Your-Writes Consistency Feature
+&lt;/h1&gt;&lt;p&gt;PostgreSQL 19 has been released, arriving two months later than the typical September schedule due to a flurry of issues related to AI-reported vulnerabilities.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The release was delayed from September by two months.&lt;/li&gt;
+&lt;li&gt;The delay was attributed to addressing ongoing AI-reported vulnerability issues.&lt;/li&gt;
+&lt;li&gt;The author considers the release &amp;ldquo;definitely worth the wait.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The release introduces a &amp;ldquo;read-your-writes&amp;rdquo; consistency feature for applications sending reads to standbys using the new &lt;code&gt;WAIT FOR LSN&lt;/code&gt; command. This allows a session on a standby to wait until it has replayed the write-ahead log (WAL) up to a specific log sequence number (LSN) before running a query. This ensures the application can read data it just wrote on the primary.&lt;/p&gt;
+&lt;h3 id="example-workflow"&gt;Example Workflow
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Update a record on the primary: &lt;code&gt;UPDATE movie SET genre = 'Dramatic' WHERE genre = 'Drama';&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Get the current LSN: &lt;code&gt;SELECT pg_current_wal_insert_lsn();&lt;/code&gt; (returns a value like &lt;code&gt;0/0306EE20&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Store the LSN value (e.g., in a signed cookie).&lt;/li&gt;
+&lt;li&gt;On a subsequent request, use the stored LSN on a standby: &lt;code&gt;WAIT FOR LSN '0/0306EE20' WITH (TIMEOUT '0.1s');&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Run the query: &lt;code&gt;SELECT * FROM movie WHERE genre = 'Drama';&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The timeout parameter is optional. If provided, the system returns an error if the replica does not catch up within the specified time.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This pattern ensures users see events in chronological order and maintain a consistent view across subsequent requests. Similar patterns have previously been implemented in hand-rolled solutions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Wikipedia/MediaWiki&lt;/strong&gt;: Uses a hand-rolled version against MySQL replication, saving the primary binlog position in the session and waiting for replicas to catch up before reads. MediaWiki now uses MySQL&amp;rsquo;s &lt;code&gt;WAIT_FOR_EXECUTED_GTID_SET()&lt;/code&gt; function and falls back to &lt;code&gt;SOURCE_POS_WAIT()&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#PostgreSQL #Database #SQL #DataConsistency #WaitForLSN&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/19/postgresql-19/" target="_blank" rel="noopener"
+&gt;PostgreSQL 19 Released&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Milvus Backup: Command-Line Tool for Milvus Data Management</title><link>https://shoubhikbanerjee.github.io/blog/p/milvus-backup-command-line-tool-for-milvus-data-management/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/milvus-backup-command-line-tool-for-milvus-data-management/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/18416694?v=4" alt="Featured image of post Milvus Backup: Command-Line Tool for Milvus Data Management" /&gt;&lt;h1 id="milvus-backup-command-line-tool-for-milvus-data-management"&gt;Milvus Backup: Command-Line Tool for Milvus Data Management
+&lt;/h1&gt;&lt;p&gt;Milvus Backup is a command-line tool and API service for backing up and restoring Milvus data. It allows backup and restore operations to run while the Milvus cluster remains available.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Milvus Backup is a command-line tool and API service for backing up and restoring Milvus data.&lt;/li&gt;
+&lt;li&gt;Backup and restore operations run while the Milvus cluster remains available.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Download a binary from the &lt;a class="link" href="https://github.com/zilliztech/milvus-backup/releases" target="_blank" rel="noopener"
+&gt;release page&lt;/a&gt;, or install it with Homebrew on macOS:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;brew install zilliztech/tap/milvus-backup&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;To build from source instead, run &lt;code&gt;make all&lt;/code&gt;; the executable is written to &lt;code&gt;./milvus-backup&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Milvus Backup reads its connection settings from a configuration file.&lt;/li&gt;
+&lt;li&gt;Copy the example and update it for your deployment — &lt;a class="link" href="#configuration" &gt;Configuration&lt;/a&gt; explains what to change:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cp configs/backup.yaml backup.yaml&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Then validate the setup and run your first backup and restore:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;milvus-backup check&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;milvus-backup create -n my_backup&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;milvus-backup list&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;milvus-backup restore -n my_backup&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The latest version supports backups from Milvus 2.2 and later, and restores to Milvus 2.5 and later.&lt;/li&gt;
+&lt;li&gt;A backup can be restored only to the same or a newer Milvus version.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Milvus Backup allows for the management of Milvus data with ease, ensuring data availability and integrity.&lt;/li&gt;
+&lt;li&gt;It supports various commands for different operations, making it a versatile tool for Milvus data management.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Milvus #Backup #DataManagement #AI #Database&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/zilliztech/milvus-backup" target="_blank" rel="noopener"
+&gt;zilliztech/milvus-backup&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>LanceDB Provides Open Source and Enterprise Vector Search Options</title><link>https://shoubhikbanerjee.github.io/blog/p/lancedb-provides-open-source-and-enterprise-vector-search-options/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lancedb-provides-open-source-and-enterprise-vector-search-options/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/108903835?v=4" alt="Featured image of post LanceDB Provides Open Source and Enterprise Vector Search Options" /&gt;&lt;h1 id="lancedb-provides-open-source-and-enterprise-vector-search-options"&gt;LanceDB Provides Open Source and Enterprise Vector Search Options
+&lt;/h1&gt;&lt;p&gt;LanceDB has launched as a database designed for fast, scalable, and production-ready vector search. The system is built on the Lance columnar format, serving as a central location for developers to build, train, and analyze AI workloads while storing and indexing petabytes of multimodal data.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;LanceDB supports comprehensive search capabilities, including vector similarity search, full-text search, and SQL. It allows users to store, query, and filter vectors, metadata, and multimodal data such as text, images, videos, and point clouds. The platform is engineered to search billions of vectors in milliseconds using state-of-the-art indexing.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The database is built on the Lance columnar format, which provides efficient storage and analytics. Advanced features include zero-copy operations and automatic versioning, allowing users to manage data versions without requiring extra infrastructure. The system also supports GPU usage in the process of building vector indexes.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;LanceDB is available in two primary configurations:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Version&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LanceDB Embedded (open source)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Runs in the application&amp;rsquo;s process; data resides on local disk or in object storage; 100% open source with no vendor lock-in.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LanceDB Enterprise&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Offers production-scale distributed search, indexing, and maintenance, plus complete data sovereignty and security.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Developers can integrate LanceDB through Python, Node.js, Rust, and REST APIs. Native support is provided for Python and JavaScript/TypeScript, with API and SDK support available for Python, TypeScript, and Rust.&lt;/p&gt;
+&lt;p&gt;#LanceDB #VectorSearch #Database #MultimodalAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/lancedb/lancedb" target="_blank" rel="noopener"
+&gt;lancedb/lancedb&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Security Update Resolves Unauthorized Access in Database Registration Routing</title><link>https://shoubhikbanerjee.github.io/blog/p/security-update-resolves-unauthorized-access-in-database-registration-routing/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/security-update-resolves-unauthorized-access-in-database-registration-routing/</guid><description>&lt;h1 id="security-update-resolves-unauthorized-access-in-database-registration-routing"&gt;Security Update Resolves Unauthorized Access in Database Registration Routing
+&lt;/h1&gt;&lt;p&gt;A minor security fix has been backported from version 1.0a43 to address a vulnerability that allowed unauthorized database downloads. This update resolves a security issue occurring when database routes and names do not match.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Affected Registration&lt;/strong&gt;: The issue involves databases registered using &lt;code&gt;add_database(db, name=..., route=...)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vulnerability Condition&lt;/strong&gt;: The security flaw occurred when a database was registered with a &lt;code&gt;route&lt;/code&gt; that differed from its &lt;code&gt;name&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access Restriction Bypass&lt;/strong&gt;: In these instances, actors who were denied access to the database could still download it from the &lt;code&gt;/&amp;lt;route&amp;gt;.db&lt;/code&gt; endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The security fix was backported from version 1.0a43.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Cybersecurity #Database #SoftwarePatch&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/15/datasette-2/" target="_blank" rel="noopener"
+&gt;Release: datasette 0.65.6&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>A Decade of Database Innovation: The Amazon Aurora Story</title><link>https://shoubhikbanerjee.github.io/blog/p/a-decade-of-database-innovation-the-amazon-aurora-story/</link><pubDate>Tue, 28 Oct 2025 01:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/a-decade-of-database-innovation-the-amazon-aurora-story/</guid><description>&lt;img src="https://assets.amazon.science/dims4/default/16f2f5c/2147483647/strip/true/crop/2206x694+0+0/resize/1200x378!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fscience%2Fee%2F98%2Fda80d68b4f2d853d23cacd76e592%2Fscreenshot-2025-08-20-at-12-10-55-pm.png" alt="Featured image of post A Decade of Database Innovation: The Amazon Aurora Story" /&gt;&lt;h1 id="-a-decade-of-database-innovation-the-amazon-aurora-story"&gt;🚀 A Decade of Database Innovation: The Amazon Aurora Story
+&lt;/h1&gt;&lt;p&gt;![Amazon Aurora Architecture](&lt;a class="link" href="https://assets.amazon.science/dims4/default/16f2f5c/2147483647/strip/true/crop/220" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/16f2f5c/2147483647/strip/true/crop/220&lt;/a&gt;
+6x694+0+0/resize/1200x378!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.co
+m%2Fscience%2Fee%2F98%2Fda80d68b4f2d853d23cacd76e592%2Fscreenshot-2025-08-20-at-12-10-55-pm.png)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Original screenshots of Aurora from Jeff Barr&amp;rsquo;s blog post&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-introduction-reimagining-databases-for-the-cloud-era"&gt;☁️ Introduction: Reimagining Databases for the Cloud Era
+&lt;/h2&gt;&lt;p&gt;When Andy Jassy announced Amazon Aurora in 2014, the promise was revolutionary yet practical: a
+relational database built specifically for the cloud that would combine MySQL&amp;rsquo;s
+cost-effectiveness with the performance of high-end commercial databases. The ambitious goal was
+&lt;strong&gt;five times the throughput of MySQL at one-tenth the price&lt;/strong&gt; of traditional commercial
+solutions.&lt;/p&gt;
+&lt;h2 id="-the-architecture-revolution-decoupling-storage-from-comput"&gt;🏗️ The Architecture Revolution: Decoupling Storage from Comput
+&lt;/h2&gt;&lt;p&gt;Aurora&amp;rsquo;s launch in 2015 marked a fundamental shift in database architecture. Unlike traditional
+databases where computation and storage are tightly coupled, Aurora &lt;strong&gt;decoupled these
+components&lt;/strong&gt;, enabling:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Independent scaling&lt;/strong&gt; of computational tasks and storage&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated backups and replication&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enhanced reliability&lt;/strong&gt; without performance sacrifice&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Easy adaptation&lt;/strong&gt; to variable workloads&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![Aurora Architecture
+Paper](&lt;a class="link" href="https://assets.amazon.science/dims4/default/0f3c103/2147483647/strip/true/crop/1402x1246&amp;#43;" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/0f3c103/2147483647/strip/true/crop/1402x1246+&lt;/a&gt;
+0+0/resize/1200x1066!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fs
+cience%2F68%2Fab%2F14d45f7840aea08c042889e0b38d%2Fscreenshot-2025-08-20-at-12-17-43-pm.png)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Amazon researchers describe Aurora&amp;rsquo;s innovative architecture in their 2017 SIGMOD paper&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-key-innovation-moving-beyond-network-constraints"&gt;💡 Key Innovation: Moving Beyond Network Constraints
+&lt;/h2&gt;&lt;p&gt;As Werner Vogels, Amazon&amp;rsquo;s CTO, explained in 2019:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;To start addressing the limitations of relational databases, we reconceptualized the stack by
+decomposing the system into its fundamental building blocks. We recognized that the caching and
+logging layers were ripe for innovation.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The team addressed the central constraint in high-throughput data processing: &lt;strong&gt;the network
+bottleneck&lt;/strong&gt;. Aurora&amp;rsquo;s novel service-oriented architecture provided:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Independent fault-tolerant storage&lt;/strong&gt; across multiple data centers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Self-healing capabilities&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Protection from performance variance&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Resilience against transient or permanent failures&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-unprecedented-growth-and-adoption"&gt;📈 Unprecedented Growth and Adoption
+&lt;/h2&gt;&lt;p&gt;Within just two years, Aurora became &lt;strong&gt;the fastest-growing service in AWS history&lt;/strong&gt;. The diverse
+customer base included:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Financial services companies&lt;/li&gt;
+&lt;li&gt;Gaming companies&lt;/li&gt;
+&lt;li&gt;Healthcare providers&lt;/li&gt;
+&lt;li&gt;Educational institutions&lt;/li&gt;
+&lt;li&gt;Startups of all sizes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-the-serverless-evolution"&gt;🔄 The Serverless Evolution
+&lt;/h2&gt;&lt;h3 id="aurora-serverless-2018"&gt;Aurora Serverless (2018)
+&lt;/h3&gt;&lt;p&gt;The introduction of Aurora Serverless marked another leap forward, providing:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;On-demand autoscaling configuration&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automatic capacity adjustment&lt;/strong&gt; based on workload&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pay-per-use pricing model&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Elimination of explicit capacity management&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![Aurora Serverless
+Paper](&lt;a class="link" href="https://assets.amazon.science/dims4/default/0fe5486/2147483647/strip/true/crop/1338x1242&amp;#43;" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/0fe5486/2147483647/strip/true/crop/1338x1242+&lt;/a&gt;
+0+0/resize/1200x1114!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fs
+cience%2Fc0%2F29%2Faa542fe14dee9fa07bb7d383f60e%2Fscreenshot-2025-08-20-at-12-21-00-pm.png)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The 2024 VLDB paper describes Aurora Serverless as a fully managed, autoscaling solution&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="complete-serverless-transformation-2025"&gt;Complete Serverless Transformation (2025)
+&lt;/h3&gt;&lt;p&gt;As of May 2025, &lt;strong&gt;all Aurora offerings are now serverless&lt;/strong&gt;, eliminating the need for customers
+to worry about:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Server type or size selection&lt;/li&gt;
+&lt;li&gt;Underlying hardware management&lt;/li&gt;
+&lt;li&gt;Operating system maintenance&lt;/li&gt;
+&lt;li&gt;Backup management&lt;/li&gt;
+&lt;li&gt;System patching&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-real-world-impact-arizona-state-university-case-study"&gt;🎓 Real-World Impact: Arizona State University Case Study
+&lt;/h2&gt;&lt;p&gt;John Rome, Deputy CIO at Arizona State University, exemplifies Aurora&amp;rsquo;s value proposition:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;We see Amazon Aurora Serverless as a next step in our cloud maturity to help us improve
+development agility while reducing costs on infrequently used systems.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ASU&amp;rsquo;s Challenge:&lt;/strong&gt; Managing data needs for 73,000+ students across multiple campuses with
+dramatic seasonal variations.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Aurora&amp;rsquo;s Solution:&lt;/strong&gt; Elastic scaling that allows ASU to pay only for resources used while
+maintaining performance during peak periods.&lt;/p&gt;
+&lt;h2 id="-measurable-business-value"&gt;📊 Measurable Business Value
+&lt;/h2&gt;&lt;p&gt;According to International Data Corporation (IDC) research, organizations using Aurora achieve:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;Improvement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;3-Year ROI&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;434%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Operational Cost Reduction&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;42%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Performance vs. MySQL&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;5x throughput&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Cost vs. Commercial DBs&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;90% reduction&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-future-innovations-on-the-horizon"&gt;🔮 Future Innovations on the Horizon
+&lt;/h2&gt;&lt;p&gt;The 2024 research paper outlined several exciting future directions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Predictive live migration techniques&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Statistical multiplexing for complementary resource needs&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advanced ML/RL-based workload prediction&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enhanced decision-making algorithms&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;![AWS Team at re:Invent
+2024](&lt;a class="link" href="https://assets.amazon.science/dims4/default/f4d5553/2147483647/strip/true/crop/4032x3024&amp;#43;0" target="_blank" rel="noopener"
+&gt;https://assets.amazon.science/dims4/default/f4d5553/2147483647/strip/true/crop/4032x3024+0&lt;/a&gt;
++0/resize/1200x900!/quality/90/?url=http%3A%2F%2Famazon-topics-brightspot.s3.amazonaws.com%2Fsci
+ence%2Ffe%2F63%2F7fb0eb7046ab97f2985054d545af%2Fswami-at-kiosk-aurora-10-year-tshirts.jpg)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Swami Sivasubramanian (center), VP of AWS Agentic AI, and the AWS databases team celebrating
+Aurora&amp;rsquo;s 10th anniversary at re:Invent 2024&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at:
+&lt;a class="link" href="https://www.amazon.science/blog/a-decade-of-database-innovation-the-amazon-aurora-story" target="_blank" rel="noopener"
+&gt;https://www.amazon.science/blog/a-decade-of-database-innovation-the-amazon-aurora-story&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;Aurora&amp;rsquo;s decade-long journey represents more than just technological evolution—it demonstrates
+how reimagining fundamental architectural constraints can create transformative solutions. From
+its initial promise of combining MySQL&amp;rsquo;s simplicity with enterprise-grade performance to its
+current fully serverless incarnation, Aurora has consistently pushed the boundaries of what&amp;rsquo;s
+possible in cloud-native database technology.&lt;/p&gt;
+&lt;p&gt;The transition from traditional coupled architectures to Aurora&amp;rsquo;s decoupled, service-oriented
+approach has not only delivered on its original performance and cost promises but has also
+enabled entirely new paradigms like serverless computing. As organizations continue their
+digital transformation journeys, Aurora&amp;rsquo;s evolution from a revolutionary idea to an
+industry-standard solution illustrates the power of customer-obsessed innovation in the cloud
+era.&lt;/p&gt;
+&lt;p&gt;Looking ahead, with advances in machine learning, predictive analytics, and automated resource
+management, Aurora is positioned to continue leading database innovation for the next decade and
+beyond.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#AWS #AURORA #DATABASE #CLOUDCOMPUTING #SERVERLESS #MYSQL #POSTGRESQL #INNOVATION
+#MACHINELEARNING&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

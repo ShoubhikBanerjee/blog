@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI Training on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/ai-training/</link><description>Recent content in AI Training on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 01:03:19 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/ai-training/index.xml" rel="self" type="application/rss+xml"/><item><title>From GRPO to DAPO and GSPO: Advancing Reinforcement Learning for Large Language Models</title><link>https://shoubhikbanerjee.github.io/blog/p/from-grpo-to-dapo-and-gspo-advancing-reinforcement-learning-for-large-language-models/</link><pubDate>Tue, 28 Oct 2025 01:03:19 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/from-grpo-to-dapo-and-gspo-advancing-reinforcement-learning-for-large-language-models/</guid><description>&lt;img src="https://shoubhikbanerjee.github.io/blog/NA" alt="Featured image of post From GRPO to DAPO and GSPO: Advancing Reinforcement Learning for Large Language Models" /&gt;&lt;h1 id="-from-grpo-to-dapo-and-gspo-advancing-reinforcement-learning-for-large-language-models"&gt;🚀 From GRPO to DAPO and GSPO: Advancing Reinforcement Learning for Large Language Models
+&lt;/h1&gt;&lt;p&gt;In the reinforcement learning stage of large language models, PPO was once the mainstream
+approach. However, its reliance on the value model reveals limitations when handling long text
+outputs and complex tasks. GRPO removes the dependency on the value model, significantly
+improving scalability, but still leaves room for optimization in efficiency and stability. This
+motivated DAPO, which refines details such as sampling, clipping, and gradient calculation. Yet,
+in MoE architectures with dynamically activated experts, token-level optimization under the
+GRPO framework still struggles to converge stably. GSPO takes this a step further by shifting
+the optimization granularity to the sequence level, fundamentally reducing high variance and structural noise.&lt;/p&gt;
+&lt;p&gt;In this comprehensive analysis, you&amp;rsquo;ll discover:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Why GRPO breaks free from PPO&amp;rsquo;s dependency on the value model, yet can still &amp;ldquo;collapse&amp;rdquo; in certain scenarios&lt;/li&gt;
+&lt;li&gt;How Clip-Higher fixes the hidden problem of good tokens being capped too early&lt;/li&gt;
+&lt;li&gt;How Dynamic Sampling prevents massive computation waste from ineffective samples&lt;/li&gt;
+&lt;li&gt;How Token-Level Gradient Loss ensures long responses no longer dilute valuable gradient signals&lt;/li&gt;
+&lt;li&gt;Why GRPO&amp;rsquo;s per-token importance sampling creates huge variance in MoE architectures&lt;/li&gt;
+&lt;li&gt;How GSPO replaces token-level optimization with sequence-level optimization to fundamentally
+improve stability and efficiency&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-a-recap-on-grpo"&gt;📊 A Recap on GRPO
+&lt;/h2&gt;&lt;p&gt;The training objective of GRPO is:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;J_GRPO(θ) = E_{q ~ P(Q), {o_i}_{i=1}^G ~ π_{θ_old}(O|q)} [ 1/G ∑_{i=1}^G 1/|o_i| ∑_{t=1}^{|o_i|} (
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; min(r_{i,t}(θ)A_i, clip(r_{i,t}(θ), 1-ε, 1+ε)A_i) - β D_KL(π_θ || π_ref) )
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;where:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;r_{i,t}(θ) = π_θ(o_{i,t}|q,o_{i,&amp;lt;t}) / π_{θ_old}(o_{i,t}|q,o_{i,&amp;lt;t})
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;A_i = (r_i - mean({r_1, r_2, ..., r_G})) / std({r_1, r_2, ..., r_G})
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-what-role-does-the-importance-ratio-play"&gt;⚙️ What role does the Importance Ratio play?
+&lt;/h3&gt;&lt;p&gt;The essence of importance sampling is that we want to compute expectations under a new
+distribution, but our data is drawn from an old distribution. We therefore use the probability
+ratio of the same action under the new and old policies as a correction weight:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;E_{p_new}[f(x)] = E_{p_old}[p_new(x)/p_old(x) f(x)]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;This allows us to evaluate the expected value under the new policy using offline data from the
+old policy, avoiding the need to resample after each update (thus lowering cost). However, if
+the gap between the new and old policies is too large, the variance of the weights can become
+very high, leading to unstable training.&lt;/p&gt;
+&lt;h3 id="-how-do-the-signs-of-a_t-and-r_t-affect-training"&gt;🔄 How do the signs of A_t and r_t affect training?
+&lt;/h3&gt;&lt;p&gt;Let&amp;rsquo;s analyze the scenarios. Suppose A_t &amp;gt; 0 (the action is better than expected); we want to
+increase the probability of this action. If we set ε = 0.2 in clipping, then when r_t &amp;gt; 1.2, the
+&lt;code&gt;min&lt;/code&gt; and &lt;code&gt;clip&lt;/code&gt; operations will cap it at 1.2. When r_t &amp;lt; 0.8, no clipping occurs due to the
+&lt;code&gt;min&lt;/code&gt; operation, so positive advantages have their upward change limited.&lt;/p&gt;
+&lt;p&gt;Conversely, when A_t &amp;lt; 0 (the action is worse than expected), we should reduce the probability
+of this action. If r_t &amp;lt; 0.8, the &lt;code&gt;min&lt;/code&gt; operation limits it further, capping at 0.8A_t; but when
+r_t &amp;gt; 1.2, the &lt;code&gt;min&lt;/code&gt; operation imposes no restriction.&lt;/p&gt;
+&lt;h3 id="-impact-of-clipping-on-gradients-and-token-efficiency"&gt;📉 Impact of clipping on gradients and token efficiency
+&lt;/h3&gt;&lt;p&gt;For A_t &amp;gt; 0, when r_t &amp;gt; 1 + ε, i.e., the increase hits the cap, we apply clipping, and the
+gradient becomes zero. This effectively nullifies the token&amp;rsquo;s contribution to training.
+Similarly, for A_t &amp;lt; 0, if r_t &amp;lt; 1 - ε, i.e., the decrease exceeds the cap, the clipping also
+sets the gradient to zero.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-from-grpo-to-dapo"&gt;🎯 From GRPO to DAPO
+&lt;/h2&gt;&lt;p&gt;DAPO starts from a straightforward motivation: in practical training, GRPO often wastes a large
+amount of learning signal due to issues such as an unreasonable clip range, redundant sampling,
+and gradient dilution in long sequences. DAPO addresses these problems with four targeted
+improvements.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;J_DAPO(θ) = E_{(q,a) ~ P(Q), {o_i}_{i=1}^G ~ π_{θ_old}(O|q)} [
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 1/∑_{i=1}^G |o_i| ∑_{i=1}^G ∑_{t=1}^{|o_i|} min(
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; r_{i,t}(θ)A_i, clip(r_{i,t}(θ), 1-ε_low, 1+ε_high)A_i
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; )
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;subject to: &lt;code&gt;0 &amp;lt; |{o_i | is_equivalent(a, o_i)}| &amp;lt; G&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="-why-does-dapo-raise-the-upper-bound-1ε_high-while-keeping-1-ε_low-fixed"&gt;📈 Why does DAPO raise the upper bound 1+ε_high while keeping 1-ε_low fixed?
+&lt;/h3&gt;&lt;p&gt;The authors observed that choosing a small ε as the clip upper bound can lead to the following
+problem: if the old policy assigns a very low probability to a sampled token, yet its advantage
+is positive (meaning the old model sampled something very good), the current policy is given
+little room to increase its probability, even though increasing it is exactly what we want.&lt;/p&gt;
+&lt;p&gt;For example, if the old policy&amp;rsquo;s probability is 0.9 and ε=0.2, the upper bound is 0.9 × 1.2 =
+1.08, which already exceeds the maximum probability of 1.0, so it will never be clipped. But if
+the old policy&amp;rsquo;s probability is 0.2, the upper bound becomes 0.24. In this case, even if the
+current policy raises the probability to 0.4 (a good improvement), the overly small ε causes it
+to be clipped, effectively discarding that token.&lt;/p&gt;
+&lt;p&gt;This is essentially what we call the &lt;strong&gt;&amp;ldquo;Matthew Effect&amp;rdquo;&lt;/strong&gt;: &lt;em&gt;the rich get richer, the poor
+struggle to improve&lt;/em&gt;. If the old policy barely manages to sample a crucial token with very low
+probability, but the current model significantly increases that probability, it can still be
+clipped away, depriving the model of its chance to &amp;ldquo;turn the tables.&amp;rdquo;&lt;/p&gt;
+&lt;h3 id="-dapo---dynamic-sampling"&gt;🎲 DAPO - Dynamic Sampling
+&lt;/h3&gt;&lt;p&gt;The second innovation in DAPO is &lt;strong&gt;Dynamic Sampling&lt;/strong&gt;. The motivation is as follows: suppose for
+a given query we sample 10 responses, and all 10 are either very good or very bad, consistently
+receiving max reward or zero reward. Due to GRPO&amp;rsquo;s computation method, all 10 samples will have
+an advantage of zero, and thus contribute zero gradient.&lt;/p&gt;
+&lt;p&gt;To counter this, DAPO enforces an additional sampling rule: for each query, the set of sampled
+responses must not all have rewards of 0 or 1. If all samples are 0 or all are 1, additional
+samples are drawn until this condition is violated.&lt;/p&gt;
+&lt;h3 id="-dapo---token-level-gradient-loss"&gt;🔗 DAPO - Token-Level Gradient Loss
+&lt;/h3&gt;&lt;p&gt;The third innovation in DAPO fixes the problem that, in GRPO, the gradient weight for each token
+decreases as the sampled response length increases.&lt;/p&gt;
+&lt;p&gt;Why does this happen? Suppose we sample twice: one response has 200 tokens, the other has 10
+tokens. In GRPO&amp;rsquo;s formula, we first average the gradients within each sample, then average
+across the batch. This gives each token in the first response a weight of (1/200) × (1/2), while
+each token in the second response gets (1/10) × (1/2). The shorter response&amp;rsquo;s tokens therefore
+have a much larger impact.&lt;/p&gt;
+&lt;p&gt;DAPO&amp;rsquo;s solution: average over the total number of tokens generated across all samples when
+computing gradients. In our example, both the long and short responses give each token a weight
+of 1/(200+10).&lt;/p&gt;
+&lt;p&gt;This corresponds to changing the loss aggregation from GRPO&amp;rsquo;s:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1/G ∑_{i=1}^G 1/|o_i| ∑_{t=1}^{|o_i|}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;to DAPO&amp;rsquo;s:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1/∑_{i=1}^G |o_i| ∑_{i=1}^G ∑_{t=1}^{|o_i|}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-dapo---overlong-reward-shaping"&gt;📏 DAPO - Overlong Reward Shaping
+&lt;/h3&gt;&lt;p&gt;DAPO&amp;rsquo;s fourth improvement adjusts rewards for overly long responses using a &lt;strong&gt;soft punishment&lt;/strong&gt;
+mechanism. Specifically, it penalizes tokens once the generated sequence exceeds a predefined
+first length threshold, with the penalty increasing linearly as length grows.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-gspo-addressing-grpo-instability-in-moe-trainin"&gt;🏗️ GSPO: Addressing GRPO Instability in MoE Trainin
+&lt;/h2&gt;&lt;p&gt;If DAPO can be seen as a &amp;ldquo;fine-tuning and refinement&amp;rdquo; within the GRPO framework, GSPO takes a
+more fundamental step: it changes the optimization granularity from token-level to sequence-level.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Traditional algorithms such as PPO and GRPO typically optimize each token in the
+model&amp;rsquo;s output individually, giving some tokens higher weights and others lower. While this aims
+for fine-grained optimization, in long-text, large-model scenarios it can instead introduce
+noise and reward bias, causing the model to lose direction, or even collapse suddenly. GSPO
+aligns the reward and the optimization target by switching from per-token scoring to sequence-level optimization.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="-what-role-does-the-importance-ratio-play-and-why-is-it-problematic-in-grpo"&gt;🎯 What role does the importance ratio play, and why is it problematic in GRPO?
+&lt;/h3&gt;&lt;p&gt;Importance sampling allows us to estimate expectations under a target distribution when we only
+have samples from a behavior distribution. However, this correction assumes multiple samples -
+if there is only one sample, it cannot effectively adjust for the distribution shift.&lt;/p&gt;
+&lt;p&gt;The problem in large-model training is that importance sampling is performed &lt;strong&gt;per-token&lt;/strong&gt;, and
+a single token&amp;rsquo;s ratio cannot meaningfully perform distribution correction. Instead, it
+introduces high-variance noise, especially in the unstable MoE setting.&lt;/p&gt;
+&lt;h3 id="-why-does-grpo-struggle-to-converge-in-moe-architectures"&gt;🧩 Why does GRPO struggle to converge in MoE architectures?
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Expert activation volatility:&lt;/strong&gt; New and old policies may activate different experts,
+introducing structural bias and noise. When π_{θ_old} is updated, the router may also change, so
+the two policies could activate completely different sets of experts, even if only one training
+step has passed. This causes large fluctuations in output probabilities, triggering clipping abnormally often.&lt;/p&gt;
+&lt;h3 id="-routing-replay-before-gspo"&gt;🔄 Routing Replay before GSPO
+&lt;/h3&gt;&lt;p&gt;Routing Replay records the expert activations during sampling from π_{θ_old} and forces π_θ to
+use the same routing path during training. The downside: high engineering and infrastructure
+cost, and inefficiency - π_θ might have found a better routing path but is forced to follow the old one.&lt;/p&gt;
+&lt;h3 id="-gspo-loss-design"&gt;🎯 GSPO loss design
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;J_GSPO(θ) = E_{q ~ P(Q), {o_i}_{i=1}^G ~ π_{θ_old}(O|q)} [ 1/G ∑_{i=1}^G 1/|o_i| ∑_{t=1}^{|o_i|} (
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; min(s_i(θ)A_i, clip(s_i(θ), 1-ε, 1+ε)A_i) )
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;where:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;s_i(θ) = (π_θ(o_i|q) / π_{θ_old}(o_i|q))^{1/|o_i|} =
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;exp(1/|o_i| ∑_{t=1}^{|o_i|} log(π_θ(o_{i,t}|q,o_{i,&amp;lt;t}) / π_{θ_old}(o_{i,t}|q,o_{i,&amp;lt;t})))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Key Insight:&lt;/strong&gt; If the reward is sequence-level, the importance ratio should also be sequence-level.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;GSPO replaces GRPO&amp;rsquo;s per-token ratio r_{i,t}(θ) with a sequence-level ratio s_i(θ), which is no
+longer tied to the step index t. Sequence-level ratios are &lt;strong&gt;length-normalized&lt;/strong&gt; to reduce
+variance and keep values on a consistent scale.&lt;/p&gt;
+&lt;h3 id="-theoretical-gradient-analysis-gspo-vs-grpo"&gt;📊 Theoretical gradient analysis: GSPO vs. GRPO
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;GSPO&amp;rsquo;s gradient:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;∇_θ J_GSPO(θ) = E[1/G ∑_{i=1}^G s_i(θ) A_i · 1/|o_i| ∑_{t=1}^{|o_i|} ∇_θ log π_θ(o_{i,t}|q,o_{i,&amp;lt;t})]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;GRPO&amp;rsquo;s gradient:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;∇_θ J_GRPO(θ) = E[1/G ∑_{i=1}^G Â_i/|o_i| ∑_{t=1}^{|o_i|} r_{i,t}(θ) ∇_θ log π_θ(o_{i,t}|q,o_{i,&amp;lt;t})]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;In GSPO, all tokens in a response share the same weight s_i(θ)A_i/|o_i|, ensuring intra-sequence
+gradient consistency. In GRPO, weights r_{i,t}(θ)A_i/|o_i| vary by token position and context,
+leading to higher variance.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/NormalUhr/grpo-to-dapo-and-gspo" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/NormalUhr/grpo-to-dapo-and-gspo&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-final-thoughts"&gt;✅ Final Thoughts
+&lt;/h2&gt;&lt;p&gt;GSPO achieves consistent intra-sequence gradient weights, reduces variance between tokens, and
+is especially suited for stable training in long-sequence and MoE scenarios. Its introduction
+marks a shift from PPO → GRPO → GSPO, moving away from token-level optimization reliant on the
+value model toward sequence-level optimization aligned with the nature of the task.&lt;/p&gt;
+&lt;p&gt;The evolution from GRPO to DAPO and GSPO demonstrates how RL optimization objectives for LLMs
+should align closely with the nature of the task, while keeping the training logic simple,
+scalable, and deployable. Progress is often driven not by complex tricks, but by insights into the core problem.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;#REINFORCEMENTLEARNING #LLM #GRPO #DAPO #GSPO #MOE #MACHINELEARNING #AI&lt;/em&gt;&lt;/p&gt;</description></item><item><title>QVAC Genesis I: Revolutionizing Educational AI with the World's Largest Synthetic Dataset</title><link>https://shoubhikbanerjee.github.io/blog/p/qvac-genesis-i-revolutionizing-educational-ai-with-the-worlds-largest-synthetic-dataset/</link><pubDate>Tue, 28 Oct 2025 01:00:25 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/qvac-genesis-i-revolutionizing-educational-ai-with-the-worlds-largest-synthetic-dataset/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/66ad47f5a45133da70d1c40b/uk29N93JRmV2j5MrQojXV.png" alt="Featured image of post QVAC Genesis I: Revolutionizing Educational AI with the World's Largest Synthetic Dataset" /&gt;&lt;h1 id="-qvac-genesis-i-revolutionizing-educational-ai-with-the-worlds-largest-synthetic-dataset"&gt;🚀 QVAC Genesis I: Revolutionizing Educational AI with the World&amp;rsquo;s Largest Synthetic Dataset
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/66ad47f5a45133da70d1c40b/uk29N93JRmV2j5MrQojXV.png"
+loading="lazy"
+alt="Pipeline Diagram"
+&gt;
+&lt;em&gt;Figure 1: The innovative &amp;ldquo;Learning From Failures&amp;rdquo; pipeline that powers QVAC Genesis I dataset
+generation&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-overview"&gt;📚 Overview
+&lt;/h2&gt;&lt;p&gt;Recent advances in large language model (LLM) pretraining have shifted focus toward curating
+high-quality web-scale datasets. While Microsoft&amp;rsquo;s Phi model and HuggingFace&amp;rsquo;s Cosmopedia
+demonstrated the value of synthetic data, existing datasets remain insufficiently refined for
+training state-of-the-art LLMs that can compete with leading closed-source models.&lt;/p&gt;
+&lt;p&gt;Tether Data&amp;rsquo;s AI research division addresses this challenge by releasing &lt;strong&gt;QVAC Genesis I&lt;/strong&gt; -
+the largest synthetic dataset ever created for pre-training Large Language Models, specifically
+designed for educational content across multiple STEM domains.&lt;/p&gt;
+&lt;h2 id="-key-highlights"&gt;🎯 Key Highlights
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🏆 Largest synthetic dataset&lt;/strong&gt;: 41 billion tokens purpose-built for educational AI training&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;📖 Multi-domain coverage&lt;/strong&gt;: Comprehensive content across Mathematics, Physics, Biology, and
+Medicine&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🎓 Educational alignment&lt;/strong&gt;: Curriculum-aligned topics spanning high school to professional
+levels&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;✅ Rigorously validated&lt;/strong&gt;: Consistently outperforms existing synthetic datasets on
+educational benchmarks&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🌍 Open source contribution&lt;/strong&gt;: First public release democratizing access to high-quality
+educational AI data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-motivation-for-large-scale-synthetic-data"&gt;💡 Motivation for Large-Scale Synthetic Data
+&lt;/h2&gt;&lt;p&gt;Creating high-quality pre-training synthetic datasets is resource-intensive and expensive,
+limiting participation to well-funded corporations and major research institutions. This creates
+barriers for academic institutions, small research labs, and public organizations seeking to innovate in AI research.&lt;/p&gt;
+&lt;p&gt;QVAC Genesis I addresses these challenges by providing publicly available, large-scale synthetic
+datasets that can be tailored to cover critical educational and scientific domains, supporting
+specialized training aligned with real-world learning objectives.&lt;/p&gt;
+&lt;h2 id="-methodology"&gt;🔧 Methodology
+&lt;/h2&gt;&lt;h3 id="the-learning-from-failures-pipeline"&gt;The Learning From Failures Pipeline
+&lt;/h3&gt;&lt;p&gt;The methodology consists of a sophisticated four-stage pipeline designed to generate
+high-quality synthetic educational content through systematic error analysis and correction:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/66ad47f5a45133da70d1c40b/6eUCqbSUiBmV1rP-A5JP4.png"
+loading="lazy"
+alt="Evaluation Pipeline"
+&gt;
+&lt;em&gt;Figure 2: The comprehensive evaluation pipeline using LLM-as-a-Judge methodology&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-seed-data-acquisition"&gt;🌱 Seed Data Acquisition
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Web-Based Source Selection:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Primary corpus&lt;/strong&gt;: FineFineWeb, built on FineWeb&amp;rsquo;s 60+ curated categories&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Domain targeting&lt;/strong&gt;: Exclusive focus on STEM subdomains (Biology, Medicine, Physics,
+Mathematics)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quality filtering&lt;/strong&gt;: Ultra-FineWeb-classifier for high-quality content verification&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Domain Coverage:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;College Biology, High School Biology&lt;/li&gt;
+&lt;li&gt;College Medicine, Professional Medicine&lt;/li&gt;
+&lt;li&gt;College Mathematics, High School Mathematics&lt;/li&gt;
+&lt;li&gt;College Physics, High School Physics, Conceptual Physics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-prompt-engineering-strategy"&gt;⚙️ Prompt Engineering Strategy
+&lt;/h3&gt;&lt;p&gt;The approach focuses on generating multiple-choice questions from domain-specific seed passages,
+with dynamic adjustment for different complexity levels:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Scaling QA methodology&lt;/strong&gt;: Large-capacity language models generate QA pairs from scientific
+text&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Complexity control&lt;/strong&gt;: High school fundamentals to college-level analytical reasoning&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Answer generation&lt;/strong&gt;: State-of-the-art models provide responses for systematic failure
+analysis&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Failure analysis&lt;/strong&gt;: Comprehensive educational content generation in four distinct styles&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-four-style-content-generation"&gt;🎨 Four-Style Content Generation
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;📚 Educational Textbook Style&lt;/strong&gt;: Formal, comprehensive explanations with error analysis&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;❓ Question-Answer Format&lt;/strong&gt;: Structured Q&amp;amp;A addressing specific failure patterns&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🌐 Web Articles Style&lt;/strong&gt;: Accessible, engaging content explaining complex concepts&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;💬 Conversational Dialogue Style&lt;/strong&gt;: Natural tutoring sessions guiding through error analysis&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-pre-training-setu"&gt;🖥️ Pre-training Setu
+&lt;/h2&gt;&lt;h3 id="model-architecture"&gt;Model Architecture
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Parameters&lt;/strong&gt;: 1.7B-parameter transformer (Qwen3 family)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Precision&lt;/strong&gt;: BF16 mixed precision&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Context length&lt;/strong&gt;: 4,096 tokens&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Training data&lt;/strong&gt;: 41B tokens traversed for 1 epoch&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="multi-node-gpu-infrastructure"&gt;Multi-node GPU Infrastructure
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Scale&lt;/strong&gt;: 60 nodes with 8× NVIDIA H100 80GB per node (480 GPUs total)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Networking&lt;/strong&gt;: NCCL over InfiniBand with UCX transports&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Throughput&lt;/strong&gt;: 1.5 seconds per step&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reliability&lt;/strong&gt;: W&amp;amp;B monitoring with structured logging&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-evaluation-and-results"&gt;📊 Evaluation and Results
+&lt;/h2&gt;&lt;h3 id="dataset-statistics"&gt;Dataset Statistics
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Domain&lt;/th&gt;
+&lt;th&gt;Number of Samples&lt;/th&gt;
+&lt;th&gt;Tokens (Billions)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;High school biology&lt;/td&gt;
+&lt;td&gt;3,818,070&lt;/td&gt;
+&lt;td&gt;4.511&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;College biology&lt;/td&gt;
+&lt;td&gt;3,286,648&lt;/td&gt;
+&lt;td&gt;3.927&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Professional medicine&lt;/td&gt;
+&lt;td&gt;1,552,474&lt;/td&gt;
+&lt;td&gt;1.884&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;College medicine&lt;/td&gt;
+&lt;td&gt;5,164,247&lt;/td&gt;
+&lt;td&gt;6.218&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;High school mathematics&lt;/td&gt;
+&lt;td&gt;3,244,240&lt;/td&gt;
+&lt;td&gt;4.277&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;College mathematics&lt;/td&gt;
+&lt;td&gt;5,895,052&lt;/td&gt;
+&lt;td&gt;8.243&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;High school physics&lt;/td&gt;
+&lt;td&gt;2,277,880&lt;/td&gt;
+&lt;td&gt;3.061&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;College physics&lt;/td&gt;
+&lt;td&gt;4,281,062&lt;/td&gt;
+&lt;td&gt;5.814&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Conceptual physics&lt;/td&gt;
+&lt;td&gt;2,354,184&lt;/td&gt;
+&lt;td&gt;2.973&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Total&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;31,873,857&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;40.906&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="-performance-results"&gt;🏅 Performance Results
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/66ad47f5a45133da70d1c40b/XqouAwHnvIgjVhq_KlO2d.png"
+loading="lazy"
+alt="Performance Comparison"
+&gt;
+&lt;em&gt;Figure 3: QVAC Genesis I consistently outperforms Cosmopedia across educational domains&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;LLM-as-a-Judge Evaluation:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Superior performance across multiple educational benchmarks&lt;/li&gt;
+&lt;li&gt;Comprehensive evaluation using OpenCompass framework&lt;/li&gt;
+&lt;li&gt;Advanced answer extraction handling various response patterns&lt;/li&gt;
+&lt;li&gt;Outperforms existing synthetic datasets in reasoning and knowledge tasks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Key Advantages:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Captures complete reasoning processes vs. next-token predictions&lt;/li&gt;
+&lt;li&gt;Handles edge cases with proper categorization&lt;/li&gt;
+&lt;li&gt;Provides fair comparison across different model architectures&lt;/li&gt;
+&lt;li&gt;Enables better understanding of model capabilities and limitations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;QVAC Genesis I represents a breakthrough in synthetic dataset creation, delivering:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📈 Key Achievements:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Largest scale&lt;/strong&gt;: 41 billion tokens across 10 critical educational domains&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Superior quality&lt;/strong&gt;: Demonstrated SOTA performance over Cosmopedia v2&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comprehensive coverage&lt;/strong&gt;: Multi-domain educational content validation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Open access&lt;/strong&gt;: Democratizing high-quality AI training data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🚀 Future Impact:&lt;/strong&gt;
+The public availability of QVAC Genesis I empowers researchers, academics, and institutions to
+build state-of-the-art base models, establishing strong foundations for both pre-training and
+post-training applications across the global AI community.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔮 Next Steps:&lt;/strong&gt;
+Expansion to comprehensive coverage of all STEM domains from FineFineWeb, continuing the mission
+to democratize access to foundational AI capabilities.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/qvac/genesis-i" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/qvac/genesis-i&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#MACHINELEARNING #SYNTHETICDATA #EDUCATION #AI #STEM #HUGGINGFACE #OPENSOURCE #DATASET #LLM
+#PRETRAINING&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

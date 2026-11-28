@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Distillation on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/distillation/</link><description>Recent content in Distillation on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 22 Oct 2026 22:11:45 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/distillation/index.xml" rel="self" type="application/rss+xml"/><item><title>New Techniques Boost Efficiency of Speculative Decoding via Target Distribution Reranking</title><link>https://shoubhikbanerjee.github.io/blog/p/new-techniques-boost-efficiency-of-speculative-decoding-via-target-distribution-reranking/</link><pubDate>Thu, 22 Oct 2026 22:11:45 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-techniques-boost-efficiency-of-speculative-decoding-via-target-distribution-reranking/</guid><description>&lt;h1 id="new-techniques-boost-efficiency-of-speculative-decoding-via-target-distribution-reranking"&gt;New Techniques Boost Efficiency of Speculative Decoding via Target Distribution Reranking
+&lt;/h1&gt;&lt;p&gt;Speculative decoding, which verifies drafted tokens in parallel, has been updated with two key improvements: using target‑model probability distributions to guide tree selection, and applying gated distillation during training. These changes increase acceptance rates and speed while revealing consistent shrinkage effects across many settings.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Speculative decoding accelerates large language models by verifying drafted tokens in parallel.&lt;/li&gt;
+&lt;li&gt;The method now leverages a target model’s next‑token distribution &lt;strong&gt;before&lt;/strong&gt; allocating a draft tree.&lt;/li&gt;
+&lt;li&gt;Experiments span six target models and include both vision‑language and text‑only corpora.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How It Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Tree verification:&lt;/strong&gt; The target model checks a tree of draft tokens in parallel.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Distribution‑guided selection:&lt;/strong&gt; A separately computed distribution at the current context is used to rerank first‑token branches or to draw the first token before tree allocation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Training objectives:&lt;/strong&gt; Three objectives are trained on four corpus versions:
+&lt;ol&gt;
+&lt;li&gt;Cross‑entropy on corpus tokens.&lt;/li&gt;
+&lt;li&gt;Token‑level distillation from the target.&lt;/li&gt;
+&lt;li&gt;Distillation gated to positions that would survive verification.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-findings"&gt;⚙️ Key Findings
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Reranking first‑token branches with the current‑context distribution improves expected acceptance over standard draft ranking, especially with small tree budgets.&lt;/li&gt;
+&lt;li&gt;Drawing the first token from this distribution before allocating the tree further improves expected acceptance, even when mean tree size is unchanged.&lt;/li&gt;
+&lt;li&gt;Both selection rules decode faster than draft ranking when the separate target pass overlaps standalone drafting.&lt;/li&gt;
+&lt;li&gt;Distillation and the verification gate provide &lt;strong&gt;large gains on external responses&lt;/strong&gt;, but after greedy regeneration their impact diminishes (distillation adds a smaller gain; the gate adds little or none).&lt;/li&gt;
+&lt;li&gt;The observed “shrinkage” of gains persists across data orders, position weights, verifiers, decoding temperatures, and, for distillation, across initializations and learning rates.&lt;/li&gt;
+&lt;li&gt;Most of the shrinkage remains at the matched supervised length and at each objective’s best measured training length.&lt;/li&gt;
+&lt;li&gt;A second vision corpus and a text‑only replication reproduce the shrinkage, including with an autoregressive drafter.&lt;/li&gt;
+&lt;li&gt;Objective gains should be measured against a target‑regenerated baseline and across training lengths.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-objective-effects"&gt;📊 Objective Effects
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Objective&lt;/th&gt;
+&lt;th&gt;Observed Effect&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Cross‑entropy on corpus tokens&lt;/td&gt;
+&lt;td&gt;Baseline training objective&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Token‑level distillation from the target&lt;/td&gt;
+&lt;td&gt;Large gains on external responses; smaller gain after greedy regeneration&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Distillation gated to verification‑surviving positions&lt;/td&gt;
+&lt;td&gt;Large gains on external responses; little or no gain after greedy regeneration; shrinkage persists across conditions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Making target probabilities available &lt;strong&gt;before&lt;/strong&gt; tree allocation improves the efficiency of speculative decoding, yielding faster generation without sacrificing quality.&lt;/li&gt;
+&lt;li&gt;Understanding when and why gains shrink helps researchers set appropriate baselines and evaluate improvements across different training lengths and settings.&lt;/li&gt;
+&lt;li&gt;The findings apply to both vision‑language models and pure‑text models, indicating broad relevance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#SpeculativeDecoding #Distillation #LanguageModels #ModelOptimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.29013v1" target="_blank" rel="noopener"
+&gt;Target Regeneration Shrinks the Gains of Draft-Training Objectives in Speculative Decoding&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.29210v1" target="_blank" rel="noopener"
+&gt;Understanding Target Probability Reuse in Speculative Decoding&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Anthropic Cuts Distillation Attacks by Up to 99% with New Anti‑Distillation Defenses</title><link>https://shoubhikbanerjee.github.io/blog/p/anthropic-cuts-distillation-attacks-by-up-to-99-with-new-antidistillation-defenses/</link><pubDate>Tue, 13 Oct 2026 22:07:53 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/anthropic-cuts-distillation-attacks-by-up-to-99-with-new-antidistillation-defenses/</guid><description>&lt;img src="https://news.lavx.hu/api/media/file/anthropic-cuts-distillation-attacks-by-up-to-99-with-new-defenses-1_1791866669420-1200x630.jpg" alt="Featured image of post Anthropic Cuts Distillation Attacks by Up to 99% with New Anti‑Distillation Defenses" /&gt;&lt;h1 id="anthropic-cuts-distillation-attacks-by-up-to-99-with-new-antidistillation-defenses"&gt;Anthropic Cuts Distillation Attacks by Up to 99% with New Anti‑Distillation Defenses
+&lt;/h1&gt;&lt;p&gt;Anthropic announced that its new anti‑distillation defenses have lowered the amount of reasoning tokens that can be harvested from its Claude models by a factor of 10 to 100, while also reducing the overall effectiveness of distillation attacks by 90‑99%.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;New measures reduce reasoning‑token extraction by &lt;strong&gt;10‑100×&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Effectiveness of distillation attacks on Claude models lowered by &lt;strong&gt;90‑99%&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The company notes there are &lt;strong&gt;trade‑offs for legitimate users&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-distillation-attacks-work"&gt;🧩 How Distillation Attacks Work
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Distillation attacks operate at &lt;strong&gt;industrial scale&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Attackers build &lt;strong&gt;networks of fraudulent accounts&lt;/strong&gt; to harvest millions of model responses, especially &lt;strong&gt;reasoning transcripts&lt;/strong&gt; that reveal how a model reaches its answers.&lt;/li&gt;
+&lt;li&gt;Harvested data is used to train &lt;strong&gt;smaller models&lt;/strong&gt; that mimic the larger model at a fraction of development cost.&lt;/li&gt;
+&lt;li&gt;Example: &lt;strong&gt;Zhipu&amp;rsquo;s GLM‑5.3&lt;/strong&gt; distilled cyber capabilities from leading U.S. models, including Claude, and was judged the &lt;strong&gt;most cyber‑capable open‑weights model&lt;/strong&gt; released to date.&lt;/li&gt;
+&lt;li&gt;Anthropic found its safeguards previously &lt;strong&gt;easily bypassed&lt;/strong&gt;, with models able to develop security exploits end‑to‑end.&lt;/li&gt;
+&lt;li&gt;A reported case involved &lt;strong&gt;Moonshot&amp;rsquo;s Kimi&lt;/strong&gt; requests being secretly forwarded to Claude for distillation, including a request from a user believed to be linked to &lt;strong&gt;China&amp;rsquo;s People&amp;rsquo;s Liberation Army&lt;/strong&gt; analyzing CCTV footage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-new-antidistillation-measures"&gt;⚙️ New Anti‑Distillation Measures
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Preserved thinking&lt;/strong&gt; introduced with &lt;strong&gt;Claude Fable 5.1&lt;/strong&gt; and &lt;strong&gt;Claude Opus 5.5&lt;/strong&gt; prevents new API accounts from editing Claude&amp;rsquo;s prior context, blocking proxy networks from repeatedly extracting protected reasoning.&lt;/li&gt;
+&lt;li&gt;The measure also stops weaker earlier models from reading the reasoning and limits transcript access to the &lt;strong&gt;originating organization&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;A classifier running on &lt;strong&gt;Claude Sonnet 5.5, Claude Opus 5 &amp;amp; 5.5, Claude Fable 5 &amp;amp; 5.1&lt;/strong&gt; provides robustness comparable to bioweapon‑prevention safeguards, with a &lt;strong&gt;false‑positive rate below 0.1%&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Persistent distillation attempts trigger &lt;strong&gt;account bans&lt;/strong&gt;, typically within &lt;strong&gt;two hours&lt;/strong&gt; of campaign initiation.&lt;/li&gt;
+&lt;li&gt;Since &lt;strong&gt;September 24&lt;/strong&gt;, Anthropic has &lt;strong&gt;resumed charging&lt;/strong&gt; for requests blocked by safeguards in the sub‑0.1% false‑positive regime.&lt;/li&gt;
+&lt;li&gt;The company has &lt;strong&gt;banned tens of thousands of accounts&lt;/strong&gt; linked to distillation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Developers&lt;/strong&gt; needed to &lt;strong&gt;update integrations&lt;/strong&gt; to accommodate preserved thinking.&lt;/li&gt;
+&lt;li&gt;The classifier misidentifies benign requests in &lt;strong&gt;fewer than 0.1%&lt;/strong&gt; of cases.&lt;/li&gt;
+&lt;li&gt;Users now pay for blocked requests in protected categories.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Sonnet 5.5&lt;/td&gt;
+&lt;td&gt;Runs anti‑distillation classifier&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Opus 5&lt;/td&gt;
+&lt;td&gt;Runs anti‑distillation classifier&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Opus 5.5&lt;/td&gt;
+&lt;td&gt;Runs anti‑distillation classifier&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Fable 5&lt;/td&gt;
+&lt;td&gt;Runs anti‑distillation classifier&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Fable 5.1&lt;/td&gt;
+&lt;td&gt;Runs anti‑distillation classifier&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-impact"&gt;📉 Impact
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;After full implementation, &lt;strong&gt;reasoning tokens extracted&lt;/strong&gt; by distillers fell by a factor of &lt;strong&gt;10‑100&lt;/strong&gt;; on some days the volume was too low to measure.&lt;/li&gt;
+&lt;li&gt;Anthropic states it has &lt;strong&gt;turned away meaningful revenue and trillions of tokens&lt;/strong&gt; of paying traffic from distillers.&lt;/li&gt;
+&lt;li&gt;The defenses achieve a &lt;strong&gt;false‑positive rate below 0.1%&lt;/strong&gt;, matching the robustness of the strongest existing safeguards.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-outlook"&gt;🚀 Outlook
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Anthropic writes: &lt;em&gt;&amp;ldquo;We expect that distillation will remain a cat‑and‑mouse game.&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The company adds: &lt;em&gt;&amp;ldquo;We&amp;rsquo;ll need to continue iterating on our defenses over time.&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Platforms can further &lt;strong&gt;slow distillation&lt;/strong&gt; by quickly detecting abuse and &lt;strong&gt;off‑boarding fraudulent accounts&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Related Anthropic research includes experiments suggesting small AI models may be months away from self‑replicating on commercial IoT devices, and a report on unintended model actions observed during evaluations.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://news.lavx.hu/api/media/file/anthropic-cuts-distillation-attacks-by-up-to-99-with-new-defenses-1_1791866669420.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://news.lavx.hu/api/media/file/anthropic-cuts-distillation-attacks-by-up-to-99-with-new-defenses-2_1791866677979.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://news.lavx.hu/api/media/file/anthropic-cuts-distillation-attacks-by-up-to-99-with-new-defenses-3_1791866684670.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Anthropic #AISafety #Distillation #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://news.lavx.hu/article/anthropic-cuts-distillation-attacks-by-up-to-99-with-new-defenses" target="_blank" rel="noopener"
+&gt;Anthropic cuts distillation attacks by up to 99% with new defenses&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

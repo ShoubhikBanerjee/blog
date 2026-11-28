@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>VisionTransformer on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/visiontransformer/</link><description>Recent content in VisionTransformer on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Nov 2026 22:10:10 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/visiontransformer/index.xml" rel="self" type="application/rss+xml"/><item><title>Vision Transformer Implementation and Recent Architectural Simplifications</title><link>https://shoubhikbanerjee.github.io/blog/p/vision-transformer-implementation-and-recent-architectural-simplifications/</link><pubDate>Wed, 25 Nov 2026 22:10:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/vision-transformer-implementation-and-recent-architectural-simplifications/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/108653?v=4" alt="Featured image of post Vision Transformer Implementation and Recent Architectural Simplifications" /&gt;&lt;h1 id="vision-transformer-implementation-and-recent-architectural-simplifications"&gt;Vision Transformer Implementation and Recent Architectural Simplifications
+&lt;/h1&gt;&lt;p&gt;A PyTorch implementation of the Vision Transformer (ViT) demonstrates a simple method for achieving state-of-the-art vision classification using only a single transformer encoder. The significance of the architecture is detailed further in a video by Yannic Kilcher.&lt;/p&gt;
+&lt;h2 id="-requirements-and-configuration"&gt;🧩 Requirements and Configuration
+&lt;/h2&gt;&lt;p&gt;When configuring the Vision Transformer, specific rules for input dimensions and model parameters must be met:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Image Sizing:&lt;/strong&gt; For rectangular images, set the image size to the maximum of the width and height.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Patch Requirements:&lt;/strong&gt; The &lt;code&gt;image_size&lt;/code&gt; must be divisible by &lt;code&gt;patch_size&lt;/code&gt;. The resulting number of patches, calculated as &lt;code&gt;n = (image_size // patch_size) ** 2&lt;/code&gt;, must be greater than 16.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configurable Parameters:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Number of image channels&lt;/li&gt;
+&lt;li&gt;Number of classes to classify&lt;/li&gt;
+&lt;li&gt;Last dimension of output tensor after linear transformation (&lt;code&gt;nn.Linear(..., dim)&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Number of Transformer blocks&lt;/li&gt;
+&lt;li&gt;Number of heads in the Multi-head Attention layer&lt;/li&gt;
+&lt;li&gt;Dimension of the MLP (FeedForward) layer&lt;/li&gt;
+&lt;li&gt;Dropout rate and embedding dropout rate&lt;/li&gt;
+&lt;li&gt;Pooling method (&lt;code&gt;pool&lt;/code&gt; set to either &lt;code&gt;cls&lt;/code&gt; token pooling or &lt;code&gt;mean&lt;/code&gt; pooling)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-training-optimizations-and-simplifications"&gt;⚡ Training Optimizations and Simplifications
+&lt;/h2&gt;&lt;p&gt;An update from several of the original paper&amp;rsquo;s authors introduces simplifications enabling ViT to train faster and better. Key modifications include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2D sinusoidal positional embeddings&lt;/li&gt;
+&lt;li&gt;Global average pooling without a CLS token&lt;/li&gt;
+&lt;li&gt;Complete removal of dropout&lt;/li&gt;
+&lt;li&gt;Reduced batch sizes of 1024 instead of 4096&lt;/li&gt;
+&lt;li&gt;Integration of RandAugment and MixUp augmentations&lt;/li&gt;
+&lt;li&gt;A simple linear layer at the end, which performs not significantly worse than the original MLP head&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A separate paper proposes leveraging attention and masking flexibility for variable-lengthed sequences to pack images of multiple resolutions into a single batch. This approach achieves faster training and improved accuracy, with the tradeoff of increased architecture and dataloading complexity. It incorporates:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Factorized 2D positional encodings&lt;/li&gt;
+&lt;li&gt;Token dropping&lt;/li&gt;
+&lt;li&gt;Query-key normalization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-framework-availability"&gt;🚀 Framework Availability
+&lt;/h2&gt;&lt;p&gt;The Vision Transformer is available across multiple frameworks and repositories:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Repository / Translation&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Official Jax Repository&lt;/td&gt;
+&lt;td&gt;Official Jax implementation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PyTorch Pretrained Repository&lt;/td&gt;
+&lt;td&gt;Maintained by Ross Wightman&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TensorFlow 2 Translation&lt;/td&gt;
+&lt;td&gt;Created by research scientist Junho Kim&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Flax Translation&lt;/td&gt;
+&lt;td&gt;Created by Enrico Shippole&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#VisionTransformer #PyTorch #ComputerVision #MachineLearning #DeepLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/lucidrains/vit-pytorch" target="_blank" rel="noopener"
+&gt;lucidrains/vit-pytorch&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

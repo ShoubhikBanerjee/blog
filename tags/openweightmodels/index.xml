@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenWeightModels on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/openweightmodels/</link><description>Recent content in OpenWeightModels on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 16 Nov 2026 22:14:27 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/openweightmodels/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon Bedrock Open-Weight Models Support Explicit Prompt Caching</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-open-weight-models-support-explicit-prompt-caching/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-open-weight-models-support-explicit-prompt-caching/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22160-featured-image.png" alt="Featured image of post Amazon Bedrock Open-Weight Models Support Explicit Prompt Caching" /&gt;&lt;h1 id="amazon-bedrock-open-weight-models-support-explicit-prompt-caching"&gt;Amazon Bedrock Open-Weight Models Support Explicit Prompt Caching
+&lt;/h1&gt;&lt;p&gt;Open-weight models on Amazon Bedrock now support explicit prompt caching. This update allows developers to reuse computed prompt prefixes across requests, reducing input costs and response latency by reading repeated context from cache instead of processing it again.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Prompt caching reuses the computed state of a matching prompt prefix. When a request starts with the same content as an earlier one, Amazon Bedrock reads that prefix from the cache and processes only the remainder. Cache reads are billed at a lower rate than standard input, meaning savings grow each time a prefix is reused. Depending on the model, cache writes can be billed at a higher rate than standard input, but Amazon Bedrock manages the cache automatically.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Developers can use implicit caching, which works automatically on a best-effort basis, or explicit caching, where specific reusable prefixes are marked.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Implicit Caching:&lt;/strong&gt; Amazon Bedrock reuses eligible prefixes automatically. In a conversation, each request resends the full context, so the previous request becomes the cached prefix for the next one. As recommended by the prompt caching guide, static content should be placed first and dynamic content last to keep the start of the prompt stable. If an early part changes, the cache is rebuilt from that point.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Explicit Caching:&lt;/strong&gt; Users mark the end of each reusable prefix with a cache breakpoint. Content up to each breakpoint is written to cache once and read on later requests, while content after the last breakpoint is processed on every request. Users can add several breakpoints, up to the model&amp;rsquo;s maximum, to cache layers that change at different rates. This method limits cache writes to the shared prefix, preventing higher write-rate billing for content that is never read back on models that charge for cache writes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On the Chat Completions API, explicit caching is configured using &lt;code&gt;prompt_cache_options&lt;/code&gt; with the mode set to &lt;code&gt;explicit&lt;/code&gt;, plus one or more &lt;code&gt;prompt_cache_breakpoint&lt;/code&gt; markers.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Caching Modes&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Implicit (automatic) and Explicit (user-marked)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Data Privacy&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Prompts and outputs are not shared with the model provider or used to train models&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Configuration&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Use &lt;code&gt;prompt_cache_breakpoint&lt;/code&gt; markers on the Chat Completions API&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;TTL&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Time to live resets with each cache hit; specific durations vary by model&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Minimums&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Minimum token count and maximum breakpoints vary by model; check the model card&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Amazon Bedrock checks the prompt cache for a matching prefix, reads a matching prefix from cache, and writes new cacheable content to cache.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Amazon Bedrock manages the cache for you. Model availability and prompt caching support vary by AWS Region. An AWS account with access to the selected model on Amazon Bedrock is required. Developers should check the model card for the Regions that the model supports, as well as specific caching modes, minimum prefix lengths, and entry retention times.&lt;/p&gt;
+&lt;p&gt;Requests are sent to the Amazon Bedrock Runtime endpoint in your selected Region, authenticated with a short-term Amazon Bedrock API key.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22160-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/04/ML-22160-4.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonBedrock #PromptCaching #AWS #OpenWeightModels #LLM&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/use-prompt-caching-with-open-weight-models-on-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Use prompt caching with open-weight models on Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

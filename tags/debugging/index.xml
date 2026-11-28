@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Debugging on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/debugging/</link><description>Recent content in Debugging on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 22 Nov 2026 22:08:30 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/debugging/index.xml" rel="self" type="application/rss+xml"/><item><title>x64dbg-MCP Server enables AI control of debuggers via Zig</title><link>https://shoubhikbanerjee.github.io/blog/p/x64dbg-mcp-server-enables-ai-control-of-debuggers-via-zig/</link><pubDate>Sun, 22 Nov 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/x64dbg-mcp-server-enables-ai-control-of-debuggers-via-zig/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/3162883?v=4" alt="Featured image of post x64dbg-MCP Server enables AI control of debuggers via Zig" /&gt;&lt;h1 id="x64dbg-mcp-server-enables-ai-control-of-debuggers-via-zig"&gt;x64dbg-MCP Server enables AI control of debuggers via Zig
+&lt;/h1&gt;&lt;p&gt;The x64dbg-MCP Server, a native MCP (Model Context Protocol) plugin for x64dbg, has been released, allowing MCP-compatible AI assistants to control the debugger programmatically over HTTP. Built with the Zig programming language, the solution is designed to be dependency-free, requiring only a single binary drop-in deployment without the need for .NET, Python, or other runtimes.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The server exposes the full functionality of x64dbg through standard protocols, enabling AI agents to perform complex debugging tasks. It supports both Streamable HTTP and SSE (Server-Sent Events) transports using JSON-RPC 2.0, ensuring compatibility with both new and legacy MCP clients.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Transport Protocols&lt;/strong&gt;: Uses Streamable HTTP + SSE for dual-transport compatibility.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Authentication&lt;/strong&gt;: Implements mandatory Bearer token authentication; the token is auto-generated on the first run and required for every request to prevent unauthorized access.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution&lt;/strong&gt;: The plugin is a pure native application with zero dependencies, cross-compiling to both x32 and x64 architectures from a single codebase.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The MCP server provides extensive control over the debugging environment, covering a wide range of operations from code analysis to memory management.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MCP Tools&lt;/strong&gt;: The evidence cites 84 MCP tools for full debugger control, including disassembly, stepping, breakpoints, memory allocation, registers, modules, threads, call stack, pattern scanning, string extraction, xrefs, symbols, bookmarks, PE analysis, OEP detection, module dumping, PEB/SEH inspection, and tracing. &lt;em&gt;(Note: One quote also references 72 MCP tools covering the workflow).&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Event Callbacks&lt;/strong&gt;: Includes 22 event callbacks covering init, stop, breakpoint, exception, step, attach/detach, DLL load/unload, and thread events.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configuration&lt;/strong&gt;: Users can change IP, port, and token settings via a dialog in the Plugins menu, which auto-restarts the server upon saving.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Auto-Start&lt;/strong&gt;: The MCP server initiates automatically when x64dbg launches.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Default Port (x64)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.0.0.0:9094&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Default Port (x32)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.0.0.0:9095&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Language&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Zig&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Dependencies&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;None (No .NET, Python, or runtimes)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Architectures&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;x32 and x64&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Deployment is designed to be straightforward, allowing users to build and deploy the plugin across different operating systems.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Copy the contents of the &lt;code&gt;dist/&lt;/code&gt; directory into the x64dbg root folder to deploy both x32 and x64 versions.&lt;/li&gt;
+&lt;li&gt;Launch x64dbg; the MCP server starts automatically.&lt;/li&gt;
+&lt;li&gt;For connections from WSL or remote machines, set the bind address to &lt;code&gt;0.0.0.0&lt;/code&gt; in the config dialog and use the host&amp;rsquo;s IP address.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The tool supports cross-compiling Windows plugins from Linux, macOS, or WSL environments from a single command.&lt;/p&gt;
+&lt;p&gt;#x64dbg #MCP #Zig #AIAssistants #Debugging&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/duty1g/x64dbg-mcp-server" target="_blank" rel="noopener"
+&gt;duty1g/x64dbg-mcp-server&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Sentry Provides Developer-First Platform for Error Tracking and Performance Monitoring</title><link>https://shoubhikbanerjee.github.io/blog/p/sentry-provides-developer-first-platform-for-error-tracking-and-performance-monitoring/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sentry-provides-developer-first-platform-for-error-tracking-and-performance-monitoring/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/1396951?v=4" alt="Featured image of post Sentry Provides Developer-First Platform for Error Tracking and Performance Monitoring" /&gt;&lt;h1 id="sentry-provides-developer-first-platform-for-error-tracking-and-performance-monitoring"&gt;Sentry Provides Developer-First Platform for Error Tracking and Performance Monitoring
+&lt;/h1&gt;&lt;p&gt;Sentry provides a developer-first platform for error tracking and performance monitoring. The system is designed to assist every developer in detecting, tracing, and fixing issues to ensure code is repaired faster.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Sentry functions as a debugging platform for developers. It is built to address instances where code breaks, offering tools to streamline the identification and resolution of software problems.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The platform helps developers move from identifying symptoms to finding solutions by providing answers where logs only provide clues.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Source&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Users and logs&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provide clues&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Sentry&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides answers&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Developer-first error tracking&lt;/li&gt;
+&lt;li&gt;Performance monitoring&lt;/li&gt;
+&lt;li&gt;Issue detection, tracing, and fixing&lt;/li&gt;
+&lt;li&gt;Tools to fix broken code faster&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Sentry #Debugging #ErrorTracking #PerformanceMonitoring&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/getsentry/sentry" target="_blank" rel="noopener"
+&gt;getsentry/sentry&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Dunetrace introduces deterministic runtime monitoring for AI agents</title><link>https://shoubhikbanerjee.github.io/blog/p/dunetrace-introduces-deterministic-runtime-monitoring-for-ai-agents/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/dunetrace-introduces-deterministic-runtime-monitoring-for-ai-agents/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/262652096?v=4" alt="Featured image of post Dunetrace introduces deterministic runtime monitoring for AI agents" /&gt;&lt;h1 id="dunetrace-introduces-deterministic-runtime-monitoring-for-ai-agents"&gt;Dunetrace introduces deterministic runtime monitoring for AI agents
+&lt;/h1&gt;&lt;p&gt;Dunetrace has introduced a runtime reliability layer designed specifically for AI agents. The tool addresses the issue of silent failures in agent systems, where APIs may return status code 200 and latency metrics appear normal, yet the underlying logic is broken. Unlike traditional tracers that answer &amp;ldquo;what happened?&amp;rdquo; after a failure is already known, Dunetrace answers &amp;ldquo;is something breaking right now?&amp;rdquo; using deterministic checks in the request path.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Dunetrace operates on the runtime path of AI agents, enabling it to block actions before they execute. It provides the following core capabilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Structural and semantic detection&lt;/strong&gt;: Identifying issues through code structure and meaning.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Runtime prevention&lt;/strong&gt;: Stopping problematic actions before they complete.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Native root cause identification&lt;/strong&gt;: Determining the origin of failures.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;One-click fixes&lt;/strong&gt;: Providing immediate resolutions for detected issues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The system uses zero-LLM checks on every run, meaning it does not rely on language model calls for its monitoring logic. This ensures deterministic behavior. The tool tracks LLM calls, including streaming, and outbound HTTP calls without requiring changes at the call site.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Dunetrace distinguishes between &amp;ldquo;exact runs&amp;rdquo; and &amp;ldquo;implicit runs&amp;rdquo; based on how the agent is integrated:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Exact runs&lt;/strong&gt;: Supported out-of-the-box for FastAPI, Flask requests, LangGraph &lt;code&gt;invoke&lt;/code&gt;, CrewAI &lt;code&gt;kickoff&lt;/code&gt;, and Vercel AI SDK wrappers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Implicit runs&lt;/strong&gt;: If specific entry points are not wrapped, Dunetrace records LLM calls as implicit runs. However, these runs remain in &amp;ldquo;shadow&amp;rdquo; mode, meaning their signals are held but no alerts are generated because the boundaries of the run are guessed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The primary data structure consists of Sessions &amp;amp; Events, which log every run, tool call, and LLM exchange. This raw data serves as the foundation for all other monitoring features.&lt;/p&gt;
+&lt;h2 id="-availability-and-setup"&gt;🚀 Availability and Setup
+&lt;/h2&gt;&lt;p&gt;Dunetrace is available for local development and deployment with the following requirements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;System Requirements&lt;/strong&gt;: Docker, plus either Python 3.11+ or Node.js 22+.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Local Startup&lt;/strong&gt;: The service runs on localhost with authentication disabled by default. The &lt;code&gt;curl -s localhost:8001/ready&lt;/code&gt; command should return &lt;code&gt;{&amp;quot;status&amp;quot;:&amp;quot;ok&amp;quot;}&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integration&lt;/strong&gt;: Users can start Dunetrace, observe it catching failures without API keys or LLM calls, and then add it to their own agent code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Remote Setup&lt;/strong&gt;: If the SDK runs on a different machine or container, users must set the &lt;code&gt;DUNETRACE_ENDPOINT&lt;/code&gt; environment variable to the ingest URL.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The primary value proposition of Dunetrace is shifting failure detection from post-mortem analysis to real-time prevention. By operating in the request path, it allows policies to block actions before execution, addressing the problem of silent failures that standard observability tools often miss because they only record what has already happened.&lt;/p&gt;
+&lt;p&gt;#AIagents #RuntimeMonitoring #DevTools #LLMOps #Debugging&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/dunetrace/dunetrace" target="_blank" rel="noopener"
+&gt;dunetrace/dunetrace&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New benchmark automates failure attribution in LLM‑based multi‑agent systems</title><link>https://shoubhikbanerjee.github.io/blog/p/new-benchmark-automates-failure-attribution-in-llmbased-multiagent-systems/</link><pubDate>Sat, 31 Oct 2026 22:01:44 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-benchmark-automates-failure-attribution-in-llmbased-multiagent-systems/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/188122941?v=4" alt="Featured image of post New benchmark automates failure attribution in LLM‑based multi‑agent systems" /&gt;&lt;h1 id="new-benchmark-automates-failure-attribution-in-llmbased-multiagent-systems"&gt;New benchmark automates failure attribution in LLM‑based multi‑agent systems
+&lt;/h1&gt;&lt;p&gt;A benchmark for automated failure attributions in agentic systems was presented as the ICML 2025 Spotlight paper &lt;em&gt;Which Agent Causes Task Failures and When?&lt;/em&gt;.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;The first and the best benchmark debugging failures from agentic trajectories.&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Introduces the task of automated failure attribution in LLM‑based multi‑agent systems.&lt;/li&gt;
+&lt;li&gt;Given a failed task, the goal failure attribution is to automatically identify the agent and step responsible for the failure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The repository implements three failure‑attribution methods. Choose one with the &lt;code&gt;--method&lt;/code&gt; flag:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Method name&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;all_at_once&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;All-at-Once judging&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;step_by_step&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Step‑Step judging&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;binary_search&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Binary Search judging&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Example command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python inference.py --method step_by_step --model gpt-4o --is_handcrafted False --directory_path ../Who&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;When/Algorithm-Generated
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;184&lt;/strong&gt; annotated failure tasks collected from:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Algorithm‑generated agentic systems&lt;/strong&gt; built using &lt;a class="link" href="https://docs.ag2.ai/latest/docs/use-cases/notebooks/notebooks/agentchat_captainagent/" target="_blank" rel="noopener"
+&gt;CaptainAgent&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hand‑crafted systems&lt;/strong&gt; such as &lt;a class="link" href="https://www.microsoft.com/en-us/research/articles/magentic-one-a-generalist-multi-agent-system-for-solving-complex-tasks/" target="_blank" rel="noopener"
+&gt;Magnetic‑One&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The dataset covers a wide range of realistic multi‑agent scenarios based on queries from &lt;a class="link" href="https://huggingface.co/gaia-benchmark" target="_blank" rel="noopener"
+&gt;GAIA&lt;/a&gt; and &lt;a class="link" href="https://assistantbench.github.io/" target="_blank" rel="noopener"
+&gt;AssistantBench&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Access the dataset on &lt;a class="link" href="https://huggingface.co/datasets/Kevin355/Who_and_When" target="_blank" rel="noopener"
+&gt;Hugging Face 🤗&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Evaluation example:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python evaluate.py --data_path ../Who&lt;span class="se"&gt;\&amp;amp;&lt;/span&gt;When/Algorithm-Generated --eval_file outputs/step_by_step_gpt-4o_alg_generated.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Results are stored in the &lt;code&gt;outputs&lt;/code&gt; directory by default; more results are reported in the paper.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Code repository provides the implementation of the ICML 2025 spotlight paper.&lt;/li&gt;
+&lt;li&gt;Dataset is publicly downloadable from Hugging Face.&lt;/li&gt;
+&lt;li&gt;Users must specify the &lt;code&gt;AutoFA&lt;/code&gt; method (&lt;code&gt;--method&lt;/code&gt;) and the dataset type (&lt;code&gt;--is_handcrafted&lt;/code&gt;) before running inference.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Reduces manual debugging effort:&lt;/strong&gt; Automates the labor‑intensive process of inspecting failure logs and tracing errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Accelerates system development:&lt;/strong&gt; Speeds up the iteration cycle by quickly identifying faulty agents and critical mistakes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enables intermediate feedback for agent self‑improvement:&lt;/strong&gt; Pinpointing decisive errors provides actionable signals for agentic systems&amp;rsquo; self‑correction or can serve as rewards in reinforcement learning.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you find it useful, please consider citing the work.&lt;/p&gt;
+&lt;p&gt;#AIAgents #LLM #Benchmark #Debugging&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/ag2ai/Agents_Failure_Attribution" target="_blank" rel="noopener"
+&gt;ag2ai/Agents_Failure_Attribution&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Updated llm-echo Debug Plugin Simulates Token Usage for Tool Calls and System Prompts</title><link>https://shoubhikbanerjee.github.io/blog/p/updated-llm-echo-debug-plugin-simulates-token-usage-for-tool-calls-and-system-prompts/</link><pubDate>Mon, 19 Oct 2026 22:04:08 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/updated-llm-echo-debug-plugin-simulates-token-usage-for-tool-calls-and-system-prompts/</guid><description>&lt;h1 id="updated-llm-echo-debug-plugin-simulates-token-usage-for-tool-calls-and-system-prompts"&gt;Updated llm-echo Debug Plugin Simulates Token Usage for Tool Calls and System Prompts
+&lt;/h1&gt;&lt;p&gt;A developer has enhanced the llm-echo debug plugin to simulate token usage tracking for additional components in LLM interactions. The update enables more accurate cost and performance testing during development.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The llm-echo plugin acts as a non-LLM &amp;ldquo;model&amp;rdquo; that repeats input prompts verbatim. It serves as a testing tool for validating prompt structures and token accounting without invoking actual language models.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Now tracks tokens for: &lt;strong&gt;tool calls&lt;/strong&gt;, &lt;strong&gt;system prompts&lt;/strong&gt;, and &lt;strong&gt;reasoning steps&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Provides simulated input/output token counts in usage reports&lt;/li&gt;
+&lt;li&gt;Maintains existing functionality for echoing prompts and context&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-example-usage"&gt;🧩 Example usage
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uvx --with llm-echo llm -m &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;hi there&amp;#39;&lt;/span&gt; -o thinking &lt;span class="m"&gt;1&lt;/span&gt; --usage
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Output&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;First I consider the prompt, then I decide what to say.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;prompt&amp;#34;: &amp;#34;hi there&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;system&amp;#34;: &amp;#34;&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;attachments&amp;#34;: [],
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;stream&amp;#34;: true,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;previous&amp;#34;: []
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Token usage: 2 input, 24 output
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This update allows developers to debug token consumption across more interaction elements, improving cost estimation and prompt optimization before deploying to real models.&lt;/p&gt;
+&lt;p&gt;#AIDevelopment #LLMTools #Debugging #TokenUsage&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Oct/18/llm-echo/" target="_blank" rel="noopener"
+&gt;Release: llm-echo 0.5&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MicroVM on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/microvm/</link><description>Recent content in MicroVM on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 27 Nov 2026 22:09:22 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/microvm/index.xml" rel="self" type="application/rss+xml"/><item><title>Gondolin introduces secure, isolated micro-VMs for AI agents running generated code</title><link>https://shoubhikbanerjee.github.io/blog/p/gondolin-introduces-secure-isolated-micro-vms-for-ai-agents-running-generated-code/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/gondolin-introduces-secure-isolated-micro-vms-for-ai-agents-running-generated-code/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/207902832?v=4" alt="Featured image of post Gondolin introduces secure, isolated micro-VMs for AI agents running generated code" /&gt;&lt;h1 id="gondolin-introduces-secure-isolated-micro-vms-for-ai-agents-running-generated-code"&gt;Gondolin introduces secure, isolated micro-VMs for AI agents running generated code
+&lt;/h1&gt;&lt;p&gt;Gondolin is a new agent sandbox that runs AI-generated code inside local Linux micro-VMs, providing programmable network and filesystem control. It addresses security risks from autonomous code execution by isolating agents while maintaining controlled access to network resources and credentials.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The system uses a TypeScript Control Plane with Linux microvm setup. Generated code is executed inside a fast local Linux micro-VM (using &lt;code&gt;libkrun&lt;/code&gt; when available, with QEMU fallback) that keeps network and filesystem access under host-side policy control.&lt;/p&gt;
+&lt;h2 id="-architecture"&gt;🔍 Architecture
+&lt;/h2&gt;&lt;p&gt;A key security feature is that the guest VM only sees placeholder tokens, while the real secret is injected by the host only for allowed destinations, including &lt;code&gt;Authorization: Basic ...&lt;/code&gt; flows.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="platform-support"&gt;Platform Support
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Node.js 22.19 or newer required&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;npm install @earendil-works/gondolin&lt;/code&gt; installs the Gondolin daemon (&lt;code&gt;gondolind&lt;/code&gt;) and platform packages&lt;/li&gt;
+&lt;li&gt;Works on macOS and Linux on arm64 and x64&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="execution-backend"&gt;Execution Backend
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Uses &lt;code&gt;libkrun&lt;/code&gt; on Apple silicon and Linux x86_64 with read/write &lt;code&gt;/dev/kvm&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Falls back to QEMU on other hosts or when &lt;code&gt;qemu&lt;/code&gt; backend is selected&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="policy-control"&gt;Policy Control
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Programmable HTTP/TLS egress policy with allowlists and request/response hooks&lt;/li&gt;
+&lt;li&gt;Daemon-side policies via self-contained JavaScript (&lt;code&gt;createDjsHooks()&lt;/code&gt;, &lt;code&gt;--hooks-script&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Configurable DNS behavior, rootfs modes, and runtime sizing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="session-management"&gt;Session Management
+&lt;/h3&gt;&lt;p&gt;Useful session commands include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;List running sessions&lt;/li&gt;
+&lt;li&gt;Attach to an existing session&lt;/li&gt;
+&lt;li&gt;Snapshot a running session (stops it)&lt;/li&gt;
+&lt;li&gt;Resume from snapshot id/path&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="guest-images-and-storage"&gt;Guest Images and Storage
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Default guest image: &lt;code&gt;alpine-base:latest&lt;/code&gt; (downloaded from built-in registry on first use)&lt;/li&gt;
+&lt;li&gt;Images cached locally (~200MB+)&lt;/li&gt;
+&lt;li&gt;Disk checkpoints (snapshots) with resume support&lt;/li&gt;
+&lt;li&gt;Custom image builds via Alpine-based pipeline with optional OCI rootfs source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="file-system-and-network-features"&gt;File System and Network Features
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Programmable VFS mounts allowing custom file system behavior in JavaScript&lt;/li&gt;
+&lt;li&gt;Ingress gateway to expose guest HTTP services on host (&lt;code&gt;--listen&lt;/code&gt;, &lt;code&gt;vm.enableIngress()&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;SSH support: host -&amp;gt; guest access (&lt;code&gt;vm.enableSsh()&lt;/code&gt;) and optional guest -&amp;gt; upstream allowlisted SSH egress (proxied, exec-oriented)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="daemon-architecture"&gt;Daemon Architecture
+&lt;/h3&gt;&lt;p&gt;The VM runs under a static Rust daemon (&lt;code&gt;gondolind&lt;/code&gt;) that can operate on another machine without Node.js, while policy, hooks, and credentials remain local.&lt;/p&gt;
+&lt;p&gt;#AIagents #Security #Virtualization #MicroVM #TypeScript #Rust&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/earendil-works/gondolin" target="_blank" rel="noopener"
+&gt;earendil-works/gondolin&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

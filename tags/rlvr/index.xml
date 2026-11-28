@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RLVR on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/rlvr/</link><description>Recent content in RLVR on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 15 Sep 2026 22:08:30 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/rlvr/index.xml" rel="self" type="application/rss+xml"/><item><title>Customizing Qwen3-8B with Serverless SFT and RLVR on Amazon SageMaker</title><link>https://shoubhikbanerjee.github.io/blog/p/customizing-qwen3-8b-with-serverless-sft-and-rlvr-on-amazon-sagemaker/</link><pubDate>Tue, 15 Sep 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/customizing-qwen3-8b-with-serverless-sft-and-rlvr-on-amazon-sagemaker/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/11/ML-20331-featured-image.png" alt="Featured image of post Customizing Qwen3-8B with Serverless SFT and RLVR on Amazon SageMaker" /&gt;&lt;h1 id="customizing-qwen3-8b-with-serverless-sft-and-rlvr-on-amazon-sagemaker"&gt;Customizing Qwen3-8B with Serverless SFT and RLVR on Amazon SageMaker
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker now supports a workflow for customizing the Qwen3-8B model using supervised fine-tuning (SFT) and reinforcement learning with verifiable rewards (RLVR) via Group Relative Policy Optimization (GRPO).&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The workflow is divided into three primary concerns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data Preparation&lt;/strong&gt;: The process begins with the Amazon Sales Dataset from Kaggle, containing over 1,000 product records with fields such as product_id, product_name, category, about_product, pricing, ratings, reviews, and product links. This is run as an Amazon SageMaker Processing job to normalize text, remove unusable rows, map information into a nine-category tagging target, and split data into training and validation JSONL files. These are stored in Amazon S3 and registered as versioned datasets in the Amazon SageMaker AI Registry.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Serverless Model Customization&lt;/strong&gt;: SFT is used to teach the model the tagging schema, followed by RLVR to optimize behavior against a deterministic reward. This phase uses the Amazon SageMaker Python SDK v3 serverless customization trainers (&lt;code&gt;SFTTrainer&lt;/code&gt; and &lt;code&gt;RLVRTrainer&lt;/code&gt;). In this context, &amp;ldquo;serverless&amp;rdquo; refers to the training path, where Amazon SageMaker selects and releases training capacity when no compute configuration is supplied.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference&lt;/strong&gt;: The optimized model is deployed to Amazon SageMaker Asynchronous Inference for batch-oriented catalog enrichment, utilizing a provisioned &lt;code&gt;ml.g6.2xlarge&lt;/code&gt; instance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Requirement / Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Local Tools&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Python 3.11+, AWS CLI v2, pandas, Amazon SageMaker Python SDK v3, and Docker (if building vLLM image)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Hosting Quota&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;ml.g6.2xlarge&lt;/code&gt; and specific endpoint count for asynchronous endpoint&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;S3 Access&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Read/write source catalog, training data, model artifacts, and asynchronous inference requests/outputs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;ECR Access&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Required only if building and hosting the vLLM inference image&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Training Images&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Serverless SFT and RLVR do not require a custom training image&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-permissions"&gt;🔍 Permissions
+&lt;/h2&gt;&lt;p&gt;Amazon SageMaker AI permissions are required to manage:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Serverless customization jobs&lt;/li&gt;
+&lt;li&gt;AI Registry datasets and evaluators&lt;/li&gt;
+&lt;li&gt;Model package groups, models, and endpoints&lt;/li&gt;
+&lt;li&gt;Asynchronous inference&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iam:PassRole&lt;/code&gt; where required&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonSageMaker #Qwen3 #FineTuning #RLVR #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/build-an-ai-powered-product-tagging-system-with-amazon-sagemaker-serverless-model-customization/" target="_blank" rel="noopener"
+&gt;Build an AI-powered product tagging system with Amazon SageMaker serverless model customization | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

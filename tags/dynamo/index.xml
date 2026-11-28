@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dynamo on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/dynamo/</link><description>Recent content in Dynamo on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 20 Nov 2026 22:08:48 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/dynamo/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Dynamo Optimizes RL Training via Routing and Weight Updates</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-optimizes-rl-training-via-routing-and-weight-updates/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-optimizes-rl-training-via-routing-and-weight-updates/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-17-660x370.png" alt="Featured image of post NVIDIA Dynamo Optimizes RL Training via Routing and Weight Updates" /&gt;&lt;h1 id="nvidia-dynamo-optimizes-rl-training-via-routing-and-weight-updates"&gt;NVIDIA Dynamo Optimizes RL Training via Routing and Weight Updates
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced Dynamo as a serving layer designed to address constraints in reinforcement learning (RL) training, helping teams generate more accepted training samples and complete training iterations faster. By addressing bottlenecks in rollouts, weight updates, and worker recovery, the framework aims to prevent GPU capacity waste and training delays as RL workloads scale.&lt;/p&gt;
+&lt;h2 id="-how-rl-training-scales"&gt;🧩 How RL Training Scales
+&lt;/h2&gt;&lt;p&gt;Reinforcement learning uses rewards to train models to solve problems and complete tasks. The training process relies on several key components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Workers&lt;/strong&gt; generate rollouts, which are sequences of model outputs, actions, and environment interactions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RL Frameworks&lt;/strong&gt; score the results, update model weights, and send those weights back to the workers for the next round.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamo&lt;/strong&gt; sits between rollout orchestration and inference workers, routing generation requests from the RL framework to eligible inference capacity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details-addressing-training-bottlenecks"&gt;⚙️ Key Details: Addressing Training Bottlenecks
+&lt;/h2&gt;&lt;p&gt;As RL training scales, redundant compute, slow rollouts, and worker failures can delay progress. Dynamo addresses these issues through specific mechanisms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Routing and Cache Reuse&lt;/strong&gt;: Multiple RL attempts often begin with identical instructions or contexts. Dynamo’s router balances KV cache reuse and worker load, sending requests to workers that have already cached the prompt to avoid repeated processing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ModelExpress Weight Updates&lt;/strong&gt;: Sending full model checkpoints to every worker is time-consuming and can interrupt generation. ModelExpress uses delta weight transfer, sending a compressed representation of what changed rather than the full model. Compatible workers can also copy weights directly from another GPU over NIXL.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recovery and Resilience&lt;/strong&gt;: When a worker fails, Dynamo detects the loss and directs new requests toward eligible healthy workers. It adds replacement workers to the routing pool once they have loaded a checkpoint and applied subsequent deltas to catch up.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-real-world-applications"&gt;📊 Real-World Applications
+&lt;/h2&gt;&lt;p&gt;Several organizations have utilized NVIDIA Dynamo and ModelExpress to optimize their RL workloads:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Organization&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Application&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Microsoft AI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used Dynamo to support RL rollout inference during post-training.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CoreWeave&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses Dynamo and ModelExpress to accelerate model weight updates by up to 15×.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cognition&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used Dynamo to manage inference workers and route rollouts during the post-training of SWE-1.7.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Prime Intellect&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses Dynamo for distributed inference orchestration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;H Company&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used Dynamo and ModelExpress to reduce average training-step time by up to 20% and GPU-hours by up to 5%.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Addressing rollout bottlenecks allows teams to complete more training iterations within a fixed compute budget. By ensuring that GPU capacity is not wasted on redundant prefix processing or slow weight transfers, Dynamo helps maintain the momentum of the training run, even as model weights are updated and infrastructure fails.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image1-14.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-16.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image2-14.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #ReinforcementLearning #Dynamo #GPUTechnology #LLMTraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/reducing-rollout-bottlenecks-in-reinforcement-learning-with-nvidia-dynamo/" target="_blank" rel="noopener"
+&gt;Reducing Rollout Bottlenecks in Reinforcement Learning with NVIDIA Dynamo | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SageMaker HyperPod Inference Adds NVIDIA Dynamo Support for Distributed AI</title><link>https://shoubhikbanerjee.github.io/blog/p/sagemaker-hyperpod-inference-adds-nvidia-dynamo-support-for-distributed-ai/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/sagemaker-hyperpod-inference-adds-nvidia-dynamo-support-for-distributed-ai/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/14/ML-22230-featured-image.png" alt="Featured image of post SageMaker HyperPod Inference Adds NVIDIA Dynamo Support for Distributed AI" /&gt;&lt;h1 id="sagemaker-hyperpod-inference-adds-nvidia-dynamo-support-for-distributed-ai"&gt;SageMaker HyperPod Inference Adds NVIDIA Dynamo Support for Distributed AI
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker HyperPod Inference now supports NVIDIA Dynamo, combining Dynamo’s distributed inference capabilities with the infrastructure management of HyperPod to address challenges such as GLM-5.3’s FP8 weights exceeding the 640 GB of GPU memory on a single ml.p5.48xlarge instance before accounting for KV cache and runtime overhead.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Dynamo is an open source distributed inference framework that supports multi-node deployment, disaggregated prefill and decode, and KV-aware routing with engines such as vLLM, SGLang, and TensorRT-LLM. HyperPod supports these deployments with high-performance Elastic Fabric Adapter (EFA) networking, coordinated GPU scheduling, and node health monitoring and recovery.&lt;/p&gt;
+&lt;p&gt;The HyperPod Inference add-on installs the Dynamo custom resource definitions and these serving and scheduling components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;HyperPod Inference Operator&lt;/strong&gt;: Manages endpoint deployment through an InferenceEndpointConfig (IEC) custom resource, using its dynamoSpec section to supply the Dynamo configuration.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamo Operator&lt;/strong&gt;: Manages resources defined in a DynamoGraphDeployment (DGD), including the frontend, model workers, replica counts, and resource requirements.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grove&lt;/strong&gt;: Coordinates related groups of pods, including multi-node workers, and their scaling relationships.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kubernetes AI (KAI) Scheduler&lt;/strong&gt;: Places pods on GPU resources, using gang scheduling to schedule the pods required for a multi-node worker together.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS Deep Learning Containers (DLCs)&lt;/strong&gt;: Provide the Dynamo runtime, while the add-on manages integrated component versions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The Dynamo frontend routes requests to prefill workers, which process prompts, and decode workers, which generate tokens. These separate pools allow independent scaling and tuning. Both pools load the full model weights, and KV cache transfers between them over EFA. Dynamo also supports aggregated serving, where prefill and decode run in the same worker. In either topology, workers can run on one instance or span multiple instances using tensor and pipeline parallelism. Dynamo’s KV-aware router considers reusable prefix KV cache and active worker load in both topologies; prefix reuse can reduce prompt recomputation and improve time to first token, while load awareness helps avoid overloading workers.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Deployment Paths&lt;/strong&gt;: Deployments configured through InferenceEndpointConfig with dynamoSpec support invocation through SageMaker endpoints. Bring-your-own DynamoGraphDeployment (DGD) lets existing Dynamo users continue using upstream documentation, recipes, and manifests, with the Dynamo operator managing the deployment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference Engines&lt;/strong&gt;: You can choose vLLM, SGLang, or TensorRT-LLM, with vLLM used by default. The operator also supplies defaults for KV-aware routing and replica counts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configuration&lt;/strong&gt;: Both paths support single-instance and multi-node deployments. Dynamo-specific settings belong under spec.dynamoSpec. For example, a configuration might run one model-worker replica across two instances (16 GPUs) with two frontend replicas for request handling. Setting dynamoSpec.frontend.routingMode to kv-aware turns on KV-aware routing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Health Management&lt;/strong&gt;: HyperPod provides node, GPU, and EFA health monitoring and manages node replacement, while the orchestration components recreate affected workers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;For teams building specialized models, the hardest part is often finding enough task-specific data. Splunk, a Cisco company, faced exactly this when building evaluation models for its Agent Observability product. “For Splunk Agent Observability, our ability to train robust GenAI Eval models relies on access to high-quality, diverse datasets which are hard to curate for very specific tasks. Amazon SageMaker AI data preparation capabilities for synthetic data generation is meaningfully helping us scale these capabilities. We’ve been able to generate statistically representative synthetic datasets reliably and fast, while preserving the underlying patterns our models depend on. The seamless integration with the rest of our SageMaker workflow means our data scientists and customers spend less time wrangling data and more time building models that drive real enterprise value through Splunk.” — Yash Sheth, Director of Engineering, Splunk Agent Observability&lt;/p&gt;
+&lt;p&gt;Today, we’re expanding Amazon SageMaker AI with new AI data preparation capabilities for model development workflows. You can generate synthetic examples, assess and improve existing datasets, and bring expert feedback into the process through Python SDK APIs and the AWS AI-ML agent skill. With AI Data Preparation capabilities, you don’t need to stitch together labeling tools, generation scripts, and validation jobs. Each capability is a standalone building block that you can use on its own or chain together.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Auto-labeling&lt;/strong&gt;: Label data at scale from an unlabeled dataset, a small labeled seed set, or no labels at all. Built-in task types include classification, named entity recognition, extractive question answering, ordinal rating, and summarization, and you can define custom tasks. For tasks with a fixed set of possible answers, a jury of several models labels each row, and their level of agreement becomes that row’s confidence score.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Human Review&lt;/strong&gt;: Rows below your confidence threshold go to a review queue in Amazon SageMaker Studio, which uses the open-source Label Studio Community Edition. Reviewer corrections feed back into auto-labeling, and you can generate consensus metrics and labeling reports.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Synthetic Data Generation&lt;/strong&gt;: Generate training, evaluation, and test data from a specification. You can ground the output in your own seed data and documents, and the service generates a code-based data generation pipeline that you can review, modify, reuse, and scale.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Quality Evaluation&lt;/strong&gt;: Check datasets against your own business rules, built-in metrics, and LLM-as-a-judge metrics. Find duplicates and near-duplicates, and surface issues you didn’t think to check for, such as label noise or answer leakage.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Transformation&lt;/strong&gt;: Clean and reshape data for your target training technique. Describe the change in plain language and have the code generated for you, use built-in operations such as dedupe, merge, split, and filter, or run your own Python at scale.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/14/ML-22230-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/14/ML-22230-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#SageMaker #NVIDIA #Dynamo #Inference #DataPreparation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/managed-nvidia-dynamo-on-amazon-sagemaker-hyperpod-inference/" target="_blank" rel="noopener"
+&gt;Managed NVIDIA Dynamo on Amazon SageMaker HyperPod Inference | Amazon Web Services&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/announcing-ai-data-preparation-capabilities-in-amazon-sagemaker-build-high-quality-datasets-for-model-development-workflows/" target="_blank" rel="noopener"
+&gt;Announcing AI data preparation capabilities in Amazon SageMaker: Build high-quality datasets for model development workflows | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA launches Dynamo as open-source datacenter-scale inference orchestration layer</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-launches-dynamo-as-open-source-datacenter-scale-inference-orchestration-layer/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-launches-dynamo-as-open-source-datacenter-scale-inference-orchestration-layer/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/201626793?v=4" alt="Featured image of post NVIDIA launches Dynamo as open-source datacenter-scale inference orchestration layer" /&gt;&lt;h1 id="nvidia-launches-dynamo-as-open-source-datacenter-scale-inference-orchestration-layer"&gt;NVIDIA launches Dynamo as open-source datacenter-scale inference orchestration layer
+&lt;/h1&gt;&lt;p&gt;NVIDIA has announced Dynamo, an open-source, datacenter-scale inference stack built in Rust and Python that serves as an orchestration layer above existing inference engines. Dynamo does not replace SGLang, TensorRT-LLM, or vLLM; instead, it turns them into a coordinated multi-node inference system.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Dynamo integrates several key capabilities to optimize performance across diverse workloads:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Disaggregated serving for efficient resource allocation&lt;/li&gt;
+&lt;li&gt;Intelligent routing to direct requests optimally&lt;/li&gt;
+&lt;li&gt;Multi-tier KV caching to reduce latency&lt;/li&gt;
+&lt;li&gt;Automatic scaling to adapt to workload demand&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These features work together to maximize throughput and minimize latency for LLM, reasoning, multimodal, and video generation workloads.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The platform is designed for extensibility and performance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Core language stack: Rust for performance, Python for extensibility&lt;/li&gt;
+&lt;li&gt;Open-source under Apache-2.0 license&lt;/li&gt;
+&lt;li&gt;Community-focused with 160+ contributors&lt;/li&gt;
+&lt;li&gt;Active SIG meetings including SIG Router and SIG Frontend (biweekly sync)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Dynamo is freely available through multiple channels:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub repository: &lt;a class="link" href="https://github.com/ai-dynamo/dynamo" target="_blank" rel="noopener"
+&gt;ai-dynamo/dynamo&lt;/a&gt; with latest releases&lt;/li&gt;
+&lt;li&gt;PyPI package: &lt;a class="link" href="https://pypi.org/project/ai-dynamo/" target="_blank" rel="noopener"
+&gt;ai-dynamo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Documentation: &lt;a class="link" href="https://docs.nvidia.com/dynamo/" target="_blank" rel="noopener"
+&gt;NVIDIA Dynamo docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Community Slack workspace: &lt;a class="link" href="https://ai-dynamo.org/slack" target="_blank" rel="noopener"
+&gt;Join ai-dynamo workspace&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;DeepWiki: &lt;a class="link" href="https://deepwiki.com/ai-dynamo/dynamo" target="_blank" rel="noopener"
+&gt;Ask DeepWiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Dynamo addresses the growing complexity of AI inference by providing a unified coordination layer that enables organizations to deploy and scale large language model workloads efficiently across distributed infrastructure, while preserving compatibility with existing inference engine investments.&lt;/p&gt;
+&lt;p&gt;#NVIDIA #AI #inference #Dynamo #LLM #open-source&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/ai-dynamo/dynamo" target="_blank" rel="noopener"
+&gt;ai-dynamo/dynamo&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA releases Dynamo 1.4.2 with AICR‑packaged recipes for Kubernetes inference</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-dynamo-1-4-2-with-aicrpackaged-recipes-for-kubernetes-inference/</link><pubDate>Sat, 31 Oct 2026 22:01:44 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-dynamo-1-4-2-with-aicrpackaged-recipes-for-kubernetes-inference/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/inline-image-1-1-660x370.png" alt="Featured image of post NVIDIA releases Dynamo 1.4.2 with AICR‑packaged recipes for Kubernetes inference" /&gt;&lt;h1 id="nvidia-releases-dynamo-142-with-aicrpackaged-recipes-for-kubernetes-inference"&gt;NVIDIA releases Dynamo 1.4.2 with AICR‑packaged recipes for Kubernetes inference
+&lt;/h1&gt;&lt;p&gt;NVIDIA has updated its Dynamo distributed inference framework to version 1.4.2 and delivered it through the NVIDIA AI Cluster Runtime (AICR) as validated recipes that simplify deployment on Kubernetes.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Dynamo is a distributed inference framework that coordinates model serving across GPU workers.&lt;/li&gt;
+&lt;li&gt;It is part of the NVIDIA DSX AI Factory Platform, which helps the ecosystem design, build, and operate more efficient AI factories.&lt;/li&gt;
+&lt;li&gt;AICR (AI Cluster Runtime) packages Dynamo and its supporting infrastructure into reproducible recipes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Running a model with Dynamo on Kubernetes begins with a &lt;strong&gt;DynamoGraphDeployment&lt;/strong&gt; custom resource that specifies how &lt;strong&gt;vLLM&lt;/strong&gt;, &lt;strong&gt;SGLang&lt;/strong&gt;, or &lt;strong&gt;NVIDIA TensorRT LLM&lt;/strong&gt; should run in pods.&lt;/li&gt;
+&lt;li&gt;Frontends, workers, and optional &lt;strong&gt;Gateway API Inference Extension (GAIE) / Endpoint Picker Plugin (EPP)&lt;/strong&gt; components discover each other through Kubernetes resources.&lt;/li&gt;
+&lt;li&gt;Dynamo routes requests to workers that already hold the relevant KV‑cache blocks via its frontend router or through GAIE/EPP integration at the Gateway API layer.&lt;/li&gt;
+&lt;li&gt;The framework can separate prompt processing (prefill) from token generation (decode), a pattern called &lt;strong&gt;disaggregated serving&lt;/strong&gt;. On KV‑cache misses the prefill pool reprocesses the prompt, after which decode workers generate tokens token‑by‑token.&lt;/li&gt;
+&lt;li&gt;In Dynamo 1.4.2 the default AICR Kubernetes path uses &lt;strong&gt;TCP&lt;/strong&gt; for the request plane and &lt;strong&gt;ZMQ&lt;/strong&gt; for KV‑cache events. Each vLLM worker emits raw KV‑cache events through a local ZMQ publisher.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AICR ships version &lt;strong&gt;1.4.2&lt;/strong&gt; of the &lt;strong&gt;dynamo‑platform chart&lt;/strong&gt;, which includes the Dynamo operator, runtime images, and the &lt;code&gt;nvidia.com/v1beta1&lt;/code&gt; &lt;strong&gt;DynamoGraphDeployment&lt;/strong&gt; CRD (replacing the former &lt;code&gt;v1alpha1&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;The AICR Dynamo recipe &lt;strong&gt;pins component versions&lt;/strong&gt; and records configuration values, node selectors, tolerations, checksums, and validation expectations to make deployment reproducible.&lt;/li&gt;
+&lt;li&gt;The default path no longer installs &lt;strong&gt;NATS&lt;/strong&gt;; it remains available as an opt‑in for deployments that need it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role / Note&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;DynamoGraphDeployment CRD (v1beta1)&lt;/td&gt;
+&lt;td&gt;Defines deployment of vLLM, SGLang, or TensorRT LLM pods&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;dynamo‑platform chart 1.4.2&lt;/td&gt;
+&lt;td&gt;Packages Dynamo operator, runtime images, and related resources&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AICR Dynamo recipe&lt;/td&gt;
+&lt;td&gt;Pins versions, records config, node selectors, tolerations, checksums, validation expectations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GAIE / EPP (optional)&lt;/td&gt;
+&lt;td&gt;Provides Gateway API routing integration&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NATS (optional)&lt;/td&gt;
+&lt;td&gt;Message bus that is not installed by default&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The AICR distribution includes the &lt;strong&gt;1.4.2&lt;/strong&gt; chart and the associated validated recipe.&lt;/li&gt;
+&lt;li&gt;Support for &lt;strong&gt;vLLM&lt;/strong&gt;, &lt;strong&gt;SGLang&lt;/strong&gt;, and &lt;strong&gt;NVIDIA TensorRT LLM&lt;/strong&gt; is built into the DynamoGraphDeployment specification.&lt;/li&gt;
+&lt;li&gt;Operators can choose between the default TCP + ZMQ transport or opt‑in to NATS if required.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AICR gives platform teams a repeatable way to deploy and validate the runtime, providing developers with a consistent foundation for serving models and testing applications.&lt;/li&gt;
+&lt;li&gt;Disaggregated serving lets operators &lt;strong&gt;scale and tune prefill and decode capacity independently&lt;/strong&gt;, accommodating different request mixes such as long‑running agentic sessions versus one‑off chat requests.&lt;/li&gt;
+&lt;li&gt;By routing requests to workers that already hold the needed KV‑cache blocks, Dynamo reduces the need to reprocess intermediate tokens on cache misses.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/03/inference-press-dynamo-gtc26-4960950-1920x1080-1-660x370.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-1-12.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/figure-2-11.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Dynamo #Kubernetes #AIInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/build-a-validated-kubernetes-runtime-for-nvidia-dynamo/" target="_blank" rel="noopener"
+&gt;Build a Validated Kubernetes Runtime for NVIDIA Dynamo | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Dynamo Supports Encode-Prefill-Decode Disaggregation for Multimodal Model Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-supports-encode-prefill-decode-disaggregation-for-multimodal-model-inference/</link><pubDate>Thu, 10 Sep 2026 22:04:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-supports-encode-prefill-decode-disaggregation-for-multimodal-model-inference/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/multimodal-dynamo-660x370.jpg" alt="Featured image of post NVIDIA Dynamo Supports Encode-Prefill-Decode Disaggregation for Multimodal Model Inference" /&gt;&lt;h1 id="nvidia-dynamo-supports-encode-prefill-decode-disaggregation-for-multimodal-model-inference"&gt;NVIDIA Dynamo Supports Encode-Prefill-Decode Disaggregation for Multimodal Model Inference
+&lt;/h1&gt;&lt;p&gt;NVIDIA Dynamo, an open source inference framework for distributed environments, now supports Encode-Prefill-Decode (EPD) disaggregation. This optimization technique improves multimodal model performance by separating the vision encoder stage from the prefill and decode stages.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Dynamo implements EPD serving by separating encoder and PD (prefill-decode) worker roles. Instead of running these phases with tightly coupled scheduling, they are treated as independently scalable stages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Encoder Workers&lt;/strong&gt;: Produce vision embeddings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PD Workers&lt;/strong&gt;: Consume those embeddings and run the LLM.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Transfer&lt;/strong&gt;: The NVIDIA Inference Transfer Library (NIXL) is used to pass embeddings from encoder workers to PD workers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;There are three primary placement options for these workers:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Placement Option&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Aggregated&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Each GPU runs a single worker managing encoding, prefill, and decode for the entire request lifecycle.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Colocated Encoder&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Each GPU runs one or more encoder workers alongside one PD worker; generally the better fit for homogeneous clusters.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Disaggregated Encoder&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Encoder workers are placed on a lower-cost GPU tier while the primary GPU tier hosts PD workers.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In a test environment, two NVIDIA RTX 6000D GPUs were used for encoder workers, while four NVIDIA GB200 GPUs handled the PD workers. This configuration reserves the GB200 GPUs for the more memory- and compute-intensive LLM workload.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;EPD disaggregation isolates encoder work, which allows text requests to skip waiting for the encoder. This leads to improvements in batching, memory efficiency, and overall throughput.&lt;/p&gt;
+&lt;p&gt;Performance gains include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Up to 5x faster time to first token (TTFT).&lt;/li&gt;
+&lt;li&gt;Up to 7x faster end-to-end response time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The technique is most effective under the following conditions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Image-heavy prompts.&lt;/li&gt;
+&lt;li&gt;Short-to-medium outputs.&lt;/li&gt;
+&lt;li&gt;Quantized mixture-of-experts (MoE) and lower-precision models (e.g., Qwen3.5 122B A10B NVFP4).&lt;/li&gt;
+&lt;li&gt;Scenarios where vision encoding accounts for a significant share of processing time or limits throughput.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Large dense models see less gain from this optimization.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/how-nvidia-dynamo-handles-multimodal-request-aggregated-versus-epd.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/09/three-multimodal-encode-placement-options.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #Dynamo #LLM #MultimodalAI #Inference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/when-to-use-encode-prefill-decode-disaggregation-to-accelerate-multimodal-model-serving/" target="_blank" rel="noopener"
+&gt;When to Use Encode-Prefill-Decode Disaggregation to Accelerate Multimodal Model Serving | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

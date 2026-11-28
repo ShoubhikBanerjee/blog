@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OlmoCore3 on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/olmocore3/</link><description>Recent content in OlmoCore3 on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 01 Oct 2026 22:03:23 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/olmocore3/index.xml" rel="self" type="application/rss+xml"/><item><title>Olmo‑core 3 released with scalable open Mixture‑of‑Experts training</title><link>https://shoubhikbanerjee.github.io/blog/p/olmocore-3-released-with-scalable-open-mixtureofexperts-training/</link><pubDate>Thu, 01 Oct 2026 22:03:23 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/olmocore-3-released-with-scalable-open-mixtureofexperts-training/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/uKnK93gjkKbmJmSx94WO2.png" alt="Featured image of post Olmo‑core 3 released with scalable open Mixture‑of‑Experts training" /&gt;&lt;h1 id="olmocore3-released-with-scalable-open-mixtureofexperts-training"&gt;Olmo‑core 3 released with scalable open Mixture‑of‑Experts training
+&lt;/h1&gt;&lt;p&gt;Olmo‑core 3 is now available – a major upgrade to the open‑source framework for building large language models that uses a redesigned Mixture‑of‑Experts (MoE) training system.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Olmo‑core 3 is built to scale MoE training into the trillion‑parameter range while keeping computational efficiency. It powers the next generation of Olmo models and continues the effort to open the tools and training infrastructure behind each new model.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The new stack combines several parallelism techniques to distribute massive MoE models across GPU clusters:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Expert parallelism&lt;/strong&gt; – spreads experts across GPUs so each device stores only a part of the full expert pool.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pipeline parallelism&lt;/strong&gt; – splits model layers across groups of GPUs, reducing per‑GPU memory requirements.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Distributed optimizer&lt;/strong&gt; – shares optimizer state across GPUs instead of keeping a full copy on every GPU.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rowwise expert parallelism&lt;/strong&gt; – places routed data directly into expert input buffers, minimizing extra data movement.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU‑resident routing&lt;/strong&gt; – keeps routing metadata on the GPUs, allowing the CPU to queue work without waiting for copies.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grouped GEMM&lt;/strong&gt; – batches many small expert computations so GPUs execute them more efficiently.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MXFP8 support&lt;/strong&gt; – a lower‑precision number format that reduces memory usage and raises throughput.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-technical-details"&gt;⚙️ Key technical details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Previous Olmo‑core MoE used Fully Sharded Data Parallelism (FSDP); Olmo‑core 3 switches to Distributed Data Parallelism (DDP) and keeps experts resident on GPUs, avoiding repeated weight gathering.&lt;/li&gt;
+&lt;li&gt;The redesign improves throughput compared with the earlier FSDP implementation.&lt;/li&gt;
+&lt;li&gt;MXFP8 yields about &lt;strong&gt;21 % higher training throughput&lt;/strong&gt; than the BF16 baseline while lowering peak active memory from &lt;strong&gt;103 GiB to 95 GiB&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance-benchmarks"&gt;🚀 Performance benchmarks
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Configuration&lt;/th&gt;
+&lt;th&gt;Active parameters per token&lt;/th&gt;
+&lt;th&gt;Total parameters&lt;/th&gt;
+&lt;th&gt;Throughput impact&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Expert pool 8 → 128 (4 experts per token)&lt;/td&gt;
+&lt;td&gt;~3.2 B&lt;/td&gt;
+&lt;td&gt;4.6 B → 47 B&lt;/td&gt;
+&lt;td&gt;&amp;lt; 5 % drop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;47 B‑parameter MoE on 8 NVIDIA B300 GPUs&lt;/td&gt;
+&lt;td&gt;~3.2 B (approx.)&lt;/td&gt;
+&lt;td&gt;47 B&lt;/td&gt;
+&lt;td&gt;2.7× faster (52 k vs 19.4 k tokens / s per GPU)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MXFP8 on 4 NVIDIA B300 GPUs&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;td&gt;–&lt;/td&gt;
+&lt;td&gt;+21 % throughput, memory 103 GiB → 95 GiB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The same infrastructure has also been benchmarked at &lt;strong&gt;over one trillion total parameters&lt;/strong&gt;, and a 1.2‑trillion‑parameter model (58.36 B active parameters per token) has been run across 512 GPUs.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;📦 Availability
+&lt;/h2&gt;&lt;p&gt;Olmo‑core 3 is released today as the open‑source framework for developing large language models with scalable MoE training.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.datocms-assets.com/64837/1790799330-olmo-core-3-blog-draft-google-docs-image-2.png?fit=max&amp;amp;h=810&amp;amp;w=1550"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.datocms-assets.com/64837/1790799917-olmo-core-3-blog-draft-google-docs-image-3.png?fit=max&amp;amp;h=810&amp;amp;w=1550"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/638e39b249de7ae552d977b5/c_Rnu4DRj6Djxk1IT0gKu.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#OlmoCore3 #MixtureOfExperts #DistributedTraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/allenai/olmocore3" target="_blank" rel="noopener"
+&gt;Introducing Olmo-core 3: Open, scalable training infrastructure for large MoEs&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

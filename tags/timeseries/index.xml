@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TimeSeries on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/timeseries/</link><description>Recent content in TimeSeries on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Nov 2026 22:10:10 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/timeseries/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Megatron Core Supports Market Forecasting via Patch Embeddings</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-megatron-core-supports-market-forecasting-via-patch-embeddings/</link><pubDate>Wed, 25 Nov 2026 22:10:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-megatron-core-supports-market-forecasting-via-patch-embeddings/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/megatron-market-forecasting-e1795123732504-660x370.webp" alt="Featured image of post NVIDIA Megatron Core Supports Market Forecasting via Patch Embeddings" /&gt;&lt;h1 id="nvidia-megatron-core-supports-market-forecasting-via-patch-embeddings"&gt;NVIDIA Megatron Core Supports Market Forecasting via Patch Embeddings
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released a workflow for applying Megatron Core, its open-source library for training transformer models at scale, to financial market forecasting. The approach processes stream data—trades and quotes timestamped to the microsecond—into model-ready tensors to predict returns and trading volume.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The core task involves aggregating high-frequency market data into bars, where each row represents one instrument per time unit with price, volume, and other statistics. A preprocessing script converts these intraday market bars into tensors for the Megatron distributed training loop. Unlike methods that tokenize market values into text, this pipeline uses learned patch embeddings to turn groups of observations into model inputs.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The preprocessing pipeline groups consecutive bars for a single instrument on a specific trading day into patches, which serve as the model&amp;rsquo;s tokens. Fixed-length context windows are then slid over these patches.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Patching:&lt;/strong&gt; Eight bars per patch and 32 patches per window create a sequence of 32 model positions containing 256 observations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inputs:&lt;/strong&gt; The model receives patches with shape (B, L, P, F), instrument IDs (inst_id), and patch times of day (patch_tod).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Targets:&lt;/strong&gt; Each window includes future targets for every context position, allowing one forward pass to produce forecasts throughout the context rather than just at the end.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Loss Function:&lt;/strong&gt; The loss expects a dictionary containing return and volume share tensors of shape (B, L, H), representing one forecast per context position and horizon.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data Format:&lt;/strong&gt; Input is a directory of Parquet files with columns for Symbol, Date, Timestamp, Close, and Volume, plus optional numeric feature columns.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Feature Engineering:&lt;/strong&gt; The script derives within-day log returns and log volumes, ensuring the overnight gap never enters the inputs. Price and volume remain continuous features.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Instrument Specificity:&lt;/strong&gt; Each training window includes the instrument identifier, allowing the model to learn instrument-specific behavior within shared parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metadata:&lt;/strong&gt; Preprocessing records patch size, context length, and forecast horizons in saved metadata, making data configuration an explicit part of each experiment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This implementation demonstrates that standard transformer training infrastructure can be adapted for continuous financial time series by treating bars as patches rather than discrete tokens. The flexibility of the &lt;code&gt;forward_step&lt;/code&gt; interface allows any MegatronModule taking the specified inputs and returning the target dictionary to be used in the training loop.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/megatron-market-forecasting-e1795123732504-1024x576.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/figure-1-8.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Megatron #Transformer #TimeSeries #FinancialAI #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/prepare-market-data-for-forecasting-with-nvidia-megatron-core/" target="_blank" rel="noopener"
+&gt;Prepare Market Data for Forecasting with NVIDIA Megatron Core | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>DeepEcho Pre-Alpha Library Generates Synthetic Time Series Data</title><link>https://shoubhikbanerjee.github.io/blog/p/deepecho-pre-alpha-library-generates-synthetic-time-series-data/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/deepecho-pre-alpha-library-generates-synthetic-time-series-data/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/59050321?v=4" alt="Featured image of post DeepEcho Pre-Alpha Library Generates Synthetic Time Series Data" /&gt;&lt;h1 id="deepecho-pre-alpha-library-generates-synthetic-time-series-data"&gt;DeepEcho Pre-Alpha Library Generates Synthetic Time Series Data
+&lt;/h1&gt;&lt;p&gt;DataCebo&amp;rsquo;s Synthetic Data Vault Project has released DeepEcho, a Python library for generating synthetic mixed-type multivariate time series data. The library is currently in Pre-Alpha stage and available both as part of the SDV ecosystem and as a standalone package.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;DeepEcho is a Synthetic Data Generation Python library for mixed-type, multivariate time series&lt;/li&gt;
+&lt;li&gt;Part of The Synthetic Data Vault Project from DataCebo&lt;/li&gt;
+&lt;li&gt;Automatically installed alongside SDV, but can also be used independently&lt;/li&gt;
+&lt;li&gt;Software is in its Pre-Alpha stage&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-features"&gt;🧩 Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Multiple models based on classical statistical modeling and the latest Deep Learning techniques&lt;/li&gt;
+&lt;li&gt;Robust benchmarking framework for evaluating methods on multiple datasets with multiple metrics&lt;/li&gt;
+&lt;li&gt;API for Machine Learning researchers to submit new methods following the model and sample interface&lt;/li&gt;
+&lt;li&gt;Regular publishing of useful content about Synthetic Data Generation&lt;/li&gt;
+&lt;li&gt;Documentation includes Quickstarts, User and Development Guides, and API Reference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-installation-options"&gt;⚙️ Installation Options
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Via SDV (recommended)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;DeepEcho is part of the SDV project and automatically installed alongside it&lt;/li&gt;
+&lt;li&gt;Provides additional functionalities not available in standalone version&lt;/li&gt;
+&lt;li&gt;See SDV Installation Guide for details&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Standalone Installation&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pip install deepecho&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;conda install -c pytorch -c conda-forge deepecho&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-usage-example"&gt;🚀 Usage Example
+&lt;/h2&gt;&lt;p&gt;The quickstart demonstrates learning a mixed-type multivariate time series dataset:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PARModel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cuda&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Or with custom settings&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PARModel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;epochs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1024&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cuda&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Note: For smaller datasets, CUDA usage introduces more overhead than gains from parallelization, making the process more efficient without CUDA.&lt;/p&gt;
+&lt;p&gt;Workflow:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Load data and prepare model instance&lt;/li&gt;
+&lt;li&gt;Define data types for all columns&lt;/li&gt;
+&lt;li&gt;Learn a model from the data&lt;/li&gt;
+&lt;li&gt;Generate new synthetic data that resembles it&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-community--resources"&gt;💡 Community &amp;amp; Resources
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;SDV Website for project information&lt;/li&gt;
+&lt;li&gt;GitHub Repository available&lt;/li&gt;
+&lt;li&gt;Slack Workspace for announcements and discussions&lt;/li&gt;
+&lt;li&gt;SDV Tutorials runnable in Binder environment&lt;/li&gt;
+&lt;li&gt;User Guide for DeepEcho within SDV&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#SyntheticData #TimeSeries #Python #DataGeneration #DataCebo #SDV&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/sdv-dev/DeepEcho" target="_blank" rel="noopener"
+&gt;sdv-dev/DeepEcho&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>TRESS forecasting model retains timestamped recent events for efficient predictions</title><link>https://shoubhikbanerjee.github.io/blog/p/tress-forecasting-model-retains-timestamped-recent-events-for-efficient-predictions/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/tress-forecasting-model-retains-timestamped-recent-events-for-efficient-predictions/</guid><description>&lt;h1 id="tress-forecasting-model-retains-timestamped-recent-events-for-efficient-predictions"&gt;TRESS forecasting model retains timestamped recent events for efficient predictions
+&lt;/h1&gt;&lt;p&gt;A new forecasting model called TRESS (Timestamped Recent Events and Statistical Summaries) addresses the challenge that a fixed number of recent observations may span minutes for one variable and days for another, while earlier measurements can still reveal whether the latest value is unusual for that variable.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The proposed model retains the latest observations at their original times and summarises the full history of each variable. For a given set of variables and event budget, this representation stays the same size as the record grows.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A query-conditioned event lifting module weights deviations from the latest value according to the age of each observation and the forecast horizon.&lt;/li&gt;
+&lt;li&gt;A channel-specific decoder combines the resulting features with historical statistics and a summary shared across variables to predict a correction to the latest value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;TRESS retains 8 to 16 observations per variable.&lt;/li&gt;
+&lt;li&gt;On all four benchmarks compared, TRESS records the lowest mean test MSE and MAE among the methods tested.&lt;/li&gt;
+&lt;li&gt;Serving 32 successive query times from one encoded history reduces CPU inference time by a factor of 2.12 to 2.60 across the four datasets.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The code for the model is available at the URL provided in the source material.&lt;/p&gt;
+&lt;p&gt;#Forecasting #MachineLearning #TimeSeries #DeepLearning #Efficiency&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.24257v1" target="_blank" rel="noopener"
+&gt;TRESS: A Fixed-Size History Representation for Irregular Time Series Forecasting&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>IBM Time-Series Foundation Models Now Run Natively on Confluent</title><link>https://shoubhikbanerjee.github.io/blog/p/ibm-time-series-foundation-models-now-run-natively-on-confluent/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ibm-time-series-foundation-models-now-run-natively-on-confluent/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64e8143f6de557454220921e/yf6E9vJHIkGHG_toGSasb.gif" alt="Featured image of post IBM Time-Series Foundation Models Now Run Natively on Confluent" /&gt;&lt;h1 id="ibm-time-series-foundation-models-now-run-natively-on-confluent"&gt;IBM Time-Series Foundation Models Now Run Natively on Confluent
+&lt;/h1&gt;&lt;p&gt;IBM and Confluent have made time-series foundation models available natively on Confluent, enabling real-time forecasting, anomaly detection, and optimization for streaming data. These models, which have accumulated more than 50 million downloads, now run on CPUs in both cloud and on-premises environments.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Every business generates a continuous record of change, such as machine readings, payments, or inventory changes. These observations form time series that carry signals for anticipating future events. A forecast delivered after an event is too late to influence the outcome, so IBM and Confluent are bringing these models closer to the data as it flows.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Streaming Integration:&lt;/strong&gt; Using Apache Flink, teams can apply forecasting, anomaly detection, and semantic intelligence to streaming data using SQL.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Capabilities:&lt;/strong&gt; Time-series foundation models learn general patterns from diverse historical data and apply that knowledge to new series and tasks. This provides a starting point without requiring teams to train a separate model for every series.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flexibility:&lt;/strong&gt; Depending on the task, teams can fine-tune a model or combine its outputs with other data and business logic.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Architecture:&lt;/strong&gt; Confluent’s Data Streaming Platform brings together connect, stream, process, govern, and query capabilities. Apache Flink transforms and enriches data as it flows, while Lightning Tables provide low-latency access to the current state. Time-series models add predictive power to this architecture by preparing data, invoking forecasts, and making results available alongside the events that produced them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The time-series foundation models run natively inside Confluent as built-in functions.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Deployment:&lt;/strong&gt; In Confluent Cloud, the service is fully managed with nothing to deploy. On premises, the models run within your own infrastructure using Confluent Platform for Apache Flink.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hardware:&lt;/strong&gt; The models run on standard CPUs, without requiring GPUs. This reduces the need for dedicated GPU infrastructure and simplifies deployment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data Input:&lt;/strong&gt; Forecasts can incorporate recent observations as part of a streaming workflow, subject to the model’s requirements and the pipeline’s configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;These building blocks can be applied across manufacturing, retail, banking, and airlines, bringing insights closer to where decisions are made. They support mission-critical use cases such as keeping production lines in spec, detecting unusual store activity, improving product-level planning, assessing card payments, and forecasting trading volume.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Manufacturing Example:&lt;/strong&gt; An ice cream line’s quality depends on &amp;ldquo;overrun&amp;rdquo;—the amount of air whipped into the mix. A pretrained model reads SCADA telemetry and QA measurements every 10 minutes. It forecasts the share of tubs expected to be in spec four hours ahead, along with a likely range.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Operational Impact:&lt;/strong&gt; Forecasts and anomalies can be routed to operational applications sooner, allowing teams to combine them with business context, rules, and human judgment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#TimeSeries #IBM #Confluent #StreamProcessing #ApacheFlink&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/ibm-research/time-series-powered-streamhouse" target="_blank" rel="noopener"
+&gt;Time-Series Models in the Streamhouse: A New Frontier and Use Cases&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>TabPFN-TS Brings Zero-Shot Forecasting to Tabular Foundation Models</title><link>https://shoubhikbanerjee.github.io/blog/p/tabpfn-ts-brings-zero-shot-forecasting-to-tabular-foundation-models/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/tabpfn-ts-brings-zero-shot-forecasting-to-tabular-foundation-models/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/144344393?v=4" alt="Featured image of post TabPFN-TS Brings Zero-Shot Forecasting to Tabular Foundation Models" /&gt;&lt;h1 id="tabpfn-ts-brings-zero-shot-forecasting-to-tabular-foundation-models"&gt;TabPFN-TS Brings Zero-Shot Forecasting to Tabular Foundation Models
+&lt;/h1&gt;&lt;p&gt;TabPFN-TS frames univariate time-series forecasting as tabular regression, using TabPFN and lightweight feature engineering to produce point and probabilistic forecasts. Its paper was accepted to the NeurIPS 2024 TRL and TSALM workshops, and the package’s v1.3.0 release uses TabPFN-3.5 by default.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The method transforms a time series into a table, adds engineered features, runs regression with TabPFN, and uses the regression results as forecasts. Multivariate targets are handled as N independent univariate forecasts.&lt;/p&gt;
+&lt;p&gt;The work reports performance on par with top-tier models across both GIFT-EVAL metrics, and TabPFN-TS is ranked first on the GIFT-EVAL benchmark. The paper is available in a newer version, and the project released v1.0.0 with AutoSeasonalFeatures and improved CalendarFeatures.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;TabPFN-TS treats forecasting as univariate regression using target history and known-future covariates. It supports zero-shot forecasting without training, as well as point and probabilistic forecasts.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Input or feature&lt;/th&gt;
+&lt;th&gt;How TabPFN-TS handles it&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Known dynamic covariates, such as holidays&lt;/td&gt;
+&lt;td&gt;Supported when future values are supplied in &lt;code&gt;future_df&lt;/code&gt;. Numeric and boolean covariates also receive lag and trailing-mean features.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Past dynamic covariates, such as weather observations&lt;/td&gt;
+&lt;td&gt;Dropped because future values are unavailable.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Static covariates, such as item ID or store size&lt;/td&gt;
+&lt;td&gt;Currently dropped.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Engineered temporal features, such as calendar and sin/cos features&lt;/td&gt;
+&lt;td&gt;Automatically generated by &lt;code&gt;TABPFN_TS_DEFAULT_FEATURES&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;code&gt;KnownCovariateLagFeature&lt;/code&gt;, the first feature in &lt;code&gt;TABPFN_TS_DEFAULT_FEATURES&lt;/code&gt;, adds three columns for each numeric or boolean known covariate: lag 1, lag at the season length, and a trailing mean over one season. Season length comes from the timestamp frequency. Features are computed per series over the context and horizon, and horizon rows use covariate values rather than the target.&lt;/p&gt;
+&lt;p&gt;On 25 fev-bench tasks with numeric known covariates, this feature lowers SQL by 4.5% on the default v3.5 model: 21 of 25 tasks improved, while the worst task increased by 1.5%. The largest gains were on temperature-driven load forecasting.&lt;/p&gt;
+&lt;h2 id="-models-and-availability"&gt;⚙️ Models and availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;As of v1.3.0, TabPFN-3.5 is the default in both &lt;code&gt;LOCAL&lt;/code&gt; and &lt;code&gt;CLIENT&lt;/code&gt; mode. This model is pretrained purely on synthetic data. The defaults require &lt;code&gt;tabpfn&amp;gt;=9.0.0&lt;/code&gt; and &lt;code&gt;tabpfn-client&amp;gt;=0.5.3&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The finetuned TabPFN-TS-3 checkpoint from the TabPFN-3 report remains available. Earlier defaults shipped this checkpoint and required &lt;code&gt;tabpfn&amp;gt;=8.0.0&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tabpfn-client&lt;/code&gt; is included as the default engine, allowing fast inference without requiring a user’s own GPU.&lt;/li&gt;
+&lt;li&gt;Install the package with &lt;code&gt;pip install tabpfn-time-series&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#TimeSeries #TabPFN #Forecasting #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/PriorLabs/tabpfn-time-series" target="_blank" rel="noopener"
+&gt;PriorLabs/tabpfn-time-series&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Granite Timeseries Ensemble provides a zero‑training default forecast recipe</title><link>https://shoubhikbanerjee.github.io/blog/p/granite-timeseries-ensemble-provides-a-zerotraining-default-forecast-recipe/</link><pubDate>Thu, 22 Oct 2026 22:11:45 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/granite-timeseries-ensemble-provides-a-zerotraining-default-forecast-recipe/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6806091ee92bd22fd8ce9719/P6P8ZzHR8yL7GOOO4hQOg.png" alt="Featured image of post Granite Timeseries Ensemble provides a zero‑training default forecast recipe" /&gt;&lt;h1 id="granite-timeseries-ensemble-provides-a-zerotraining-default-forecast-recipe"&gt;Granite Timeseries Ensemble provides a zero‑training default forecast recipe
+&lt;/h1&gt;&lt;p&gt;Granite Timeseries Ensemble (Granite TSFM) introduces a default, zero‑training forecast recipe that combines four pre‑trained models.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Pre‑trained time‑series models can forecast without training on your dataset, but you still have to choose one.&lt;/li&gt;
+&lt;li&gt;Granite Timeseries Ensemble reduces that choice to a sensible default.&lt;/li&gt;
+&lt;li&gt;The default recipe combines four pre‑trained Granite models with different architectures, each capturing trends, seasonality, and local variation in different ways.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Two main ensemble recipes are provided:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Probabilistic Ensemble&lt;/strong&gt; (uniform probability pooling)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IQR Ensemble&lt;/strong&gt; (weights based on forecast spread)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Both recipes work with each member’s quantile forecasts (default 0.1 – 0.9) and produce a median and quantile forecasts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Probabilistic Ensemble&lt;/strong&gt; gives each member equal influence, pools quantile forecasts in probability space, and extracts the requested quantiles. No fitting step and no weighting hyperparameters are required.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IQR Ensemble&lt;/strong&gt; approximates each member’s inter‑quartile range from the nearest 25th and 75th percentiles, then weights members inversely to their interval width. Weights vary by sample, target, and horizon step; isotonic regression keeps combined quantiles from crossing. A temperature setting and optional cap let users move weights toward uniform or limit any single member’s influence.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Each member returns:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;result.prediction_outputs&lt;/code&gt; – the point forecast.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;result.quantile_outputs&lt;/code&gt; – quantile predictions ranging from 0.1 to 0.9.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The 0.1 and 0.9 quantiles define a central forecast interval with nominal 80 % coverage.&lt;/li&gt;
+&lt;li&gt;No retraining and no fitted ensemble weights; simple equal‑weight combinations have historically performed well in point forecasting.&lt;/li&gt;
+&lt;li&gt;The ensemble recipe stores the configuration rather than merged model weights; member checkpoints are downloaded at runtime, so allow extra time for the first run.&lt;/li&gt;
+&lt;li&gt;The recipe and its default Granite members are permissively licensed.&lt;/li&gt;
+&lt;li&gt;Both recipes were evaluated on 97 GIFT‑Eval dataset configurations (see the model card for full details, member checkpoints, evaluation, and limitations).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Install the package with:
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install &amp;#34;granite-tsfm&amp;gt;=0.3.11&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Load the recommended four‑model recipe directly from Hugging Face.&lt;/li&gt;
+&lt;li&gt;The model card provides the full configuration, member checkpoints, evaluation details, and known limitations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Provides a ready‑to‑use, zero‑training forecast solution for a wide range of series, from smooth industrial signals to noisy retail demand.&lt;/li&gt;
+&lt;li&gt;Reduces the risk of selecting a poor single model by combining diverse architectures; a 50‑year review of forecast combinations notes that such ensembles can lower error risk when members are high‑quality and diverse.&lt;/li&gt;
+&lt;li&gt;Enables applications to use the median as a central prediction and selected quantiles to express forecast uncertainty without any hyperparameter tuning.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/buckets/rry003/blogcomponents/resolve/gift_eval_ranks_granite.png?download=true"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#TimeSeries #Forecasting #Ensemble #Granite&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/ibm-research/granite-timeseries-ensemble-r1" target="_blank" rel="noopener"
+&gt;Ensemble forecasting with IBM Granite time-series models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Releases Kumo Forecast for Multi-Variate Time-Series Forecasting</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-kumo-forecast-for-multi-variate-time-series-forecasting/</link><pubDate>Wed, 21 Oct 2026 22:03:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-kumo-forecast-for-multi-variate-time-series-forecasting/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/660f5683b710b57b115a5483/pFl0vhvFrc-oZjk5qE8_0.png" alt="Featured image of post NVIDIA Releases Kumo Forecast for Multi-Variate Time-Series Forecasting" /&gt;&lt;h1 id="nvidia-releases-kumo-forecast-for-multi-variate-time-series-forecasting"&gt;NVIDIA Releases Kumo Forecast for Multi-Variate Time-Series Forecasting
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced Kumo Forecast (formerly known as NV-Tesseract Forecasting), a multi-variate time-series forecasting model that integrates a pretrained Transformer backbone with a context-enhanced retrieval mode.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Kumo-Forecast combines four main components to generate predictions by drawing on representations learned during pretraining and historical observations available for the current application:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Pretrained Temporal Encoder&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses the MOMENT-1-large Transformer encoder as the backbone.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Trainable Forecasting Head&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Maps representations to future values for the requested horizon.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Historical-Pattern Retrieval&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses a nearest-neighbor approach to retrieve related patterns from historical data.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Interpretability Framework&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Produces model-agnostic explanations without modifying the forecaster.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Architecture:&lt;/strong&gt; The model uses a MOMENT-1-large backbone consisting of an approximately 340-million-parameter base encoder. During training of the forecasting head, the encoder and embedder weights remain frozen.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Forecasting Modes:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Direct Forecasting:&lt;/strong&gt; Uses the MOMENT-based Transformer and forecasting head to predict future values, with support for autoregressive extension for horizons beyond native capability.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Domain-Aware Representation and Retrieval (DARR):&lt;/strong&gt; Augments direct forecasts by retrieving patterns from a separate historical DataFrame (&lt;code&gt;context_df&lt;/code&gt;). Developers can configure the strength of reliance on each pathway.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Input Specifications:&lt;/strong&gt; Supports input sequence lengths of 256, 512, 1024, and 2048 observations. Inputs must include a timestamp column and one or more numeric value columns via CSV, JSON, or pandas DataFrame.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interpretability:&lt;/strong&gt; When enabled, the framework provides an explanation bundle including trajectory-stability diagnostics, semantic-flow diagnostics, lag and feature attributions per horizon, and optional embedding Integrated Gradients.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;License:&lt;/strong&gt; Available under the Apache 2.0 license.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API:&lt;/strong&gt; Provides a DataFrame-first API with configurable forecast horizons.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integration:&lt;/strong&gt; The Predictive Maintenance module within the Factory Operations (FOX) Blueprint leverages Kumo Forecast and Kumo Anomaly to predict future anomalies from real-time data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Developer Resources:&lt;/strong&gt; The Kumo-TS repository includes examples for fine-tuning the model on user-supplied CSVs, supporting both pretrained inference and adaptation workflows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/nvidia/Kumo-Forecast/resolve/main/images/image-gtc-2026.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #TimeSeries #Forecasting #MachineLearning #Transformer&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/nvidia/kumo-forecast" target="_blank" rel="noopener"
+&gt;NVIDIA Kumo Forecast Combines Pretrained Time-Series Representations with Historical Pattern Retrieval and Interpretability&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AliO improves output alignment in long‑term time series forecasting</title><link>https://shoubhikbanerjee.github.io/blog/p/alio-improves-output-alignment-in-longterm-time-series-forecasting/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/alio-improves-output-alignment-in-longterm-time-series-forecasting/</guid><description>&lt;h1 id="alio-improves-output-alignment-in-longterm-time-series-forecasting"&gt;AliO improves output alignment in long‑term time series forecasting
+&lt;/h1&gt;&lt;p&gt;Long‑term Time Series Forecasting (LTSF) models often produce inconsistent predictions for the same timestamps across lagged input sequences, limiting their reliability in applications such as weather forecasting and electricity consumption planning.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;LTSF tasks use the current data sequence to predict future sequences.&lt;/li&gt;
+&lt;li&gt;State‑of‑the‑art LTSF models exhibit &lt;strong&gt;low output alignment&lt;/strong&gt;, meaning predictions for identical timestamps can fluctuate.&lt;/li&gt;
+&lt;li&gt;This fluctuation undermines model reliability.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AliO (Align Outputs)&lt;/strong&gt; is introduced to improve output alignment.&lt;/li&gt;
+&lt;li&gt;The approach reduces discrepancies between prediction outputs for the same timestamps &lt;strong&gt;in both the time and frequency domains&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-new-metric"&gt;📏 New Metric
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Metric&lt;/th&gt;
+&lt;th&gt;What it measures&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;TAM (Time Alignment Metric)&lt;/td&gt;
+&lt;td&gt;Alignment between prediction outputs for the same timestamps&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MSE (Mean Squared Error)&lt;/td&gt;
+&lt;td&gt;Distance between prediction outputs and ground truths&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;TAM quantifies alignment, a dimension not captured by traditional metrics like MSE.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📈 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;AliO raises output alignment by &lt;strong&gt;up to 58.2 %&lt;/strong&gt; according to TAM.&lt;/li&gt;
+&lt;li&gt;Forecasting performance is &lt;strong&gt;maintained or enhanced by up to 27.5 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Improved alignment makes LTSF models &lt;strong&gt;more reliable&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Greater reliability expands their usefulness in real‑world scenarios that depend on consistent forecasts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#TimeSeries #Forecasting #AI #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.11213v1" target="_blank" rel="noopener"
+&gt;AliO: Output Alignment Matters in Long-Term Time Series Forecasing&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>TimeEvo Improves Time Series Agents Through Automated Tool Synthesis</title><link>https://shoubhikbanerjee.github.io/blog/p/timeevo-improves-time-series-agents-through-automated-tool-synthesis/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/timeevo-improves-time-series-agents-through-automated-tool-synthesis/</guid><description>&lt;h1 id="timeevo-improves-time-series-agents-through-automated-tool-synthesis"&gt;TimeEvo Improves Time Series Agents Through Automated Tool Synthesis
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced TimeEvo, a new approach to developing tools for time series agents to address misalignment and failures in analytical question answering.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Existing time series agents rely on tools selected by humans before the agent runs, which can lead to several issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Human-Agent Tool Misalignment&lt;/strong&gt;: A library of 21 expert-curated tools was found to help on some tasks but hurt others, reducing anomaly accuracy across every tested backbone.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Silent Harm&lt;/strong&gt;: Generic self-revision can be counterproductive; in one instance, a single round of revision changed 147 answers and broke 56 of them, while the final score moved by less than one point.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;TimeEvo manages the tool library through the following process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Clusters diagnosed agent failures into capability gaps.&lt;/li&gt;
+&lt;li&gt;Plans a measurement for each identified gap.&lt;/li&gt;
+&lt;li&gt;Synthesizes evidence-only tools to fill those gaps.&lt;/li&gt;
+&lt;li&gt;Utilizes a paired admission gate to determine if a candidate library is admitted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Experiments involving three backbones and ten time series QA tasks demonstrated the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TimeEvo improves accuracy on every task and every backbone when starting from an empty library.&lt;/li&gt;
+&lt;li&gt;A library grown on a cheap model still provides gains when installed into stronger models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#TimeEvo #TimeSeries #AIAgents #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.27277v1" target="_blank" rel="noopener"
+&gt;TimeEvo: Failure-Driven Self-Evolution of a Time Series Agent&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>CoRe Introduced as Model-Agnostic Learning Objective for Multivariate Forecasting</title><link>https://shoubhikbanerjee.github.io/blog/p/core-introduced-as-model-agnostic-learning-objective-for-multivariate-forecasting/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/core-introduced-as-model-agnostic-learning-objective-for-multivariate-forecasting/</guid><description>&lt;h1 id="core-introduced-as-model-agnostic-learning-objective-for-multivariate-forecasting"&gt;CoRe Introduced as Model-Agnostic Learning Objective for Multivariate Forecasting
+&lt;/h1&gt;&lt;p&gt;Researchers have proposed CoRe, a model-agnostic learning objective designed for direct multivariate time-series forecasting.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Direct forecasting is a standard paradigm for multivariate time-series forecasting because it predicts the full future horizon in a single pass. While common, its training objective is often still decomposed into pointwise errors such as MSE.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;CoRe replaces pointwise supervision with two output-space constraints:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Constraint&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Frequency coherence loss&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Aligns predicted and target spectra&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Low-rank relational graph loss&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Matches sampled pairwise differences in a target-derived PCA subspace&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The objective introduces no trainable parameters.&lt;/li&gt;
+&lt;li&gt;It can be applied to existing forecasting backbones by changing only the loss.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Experiments on standard benchmarks indicate that CoRe:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Improves strong baselines.&lt;/li&gt;
+&lt;li&gt;Compares favorably with recent forecasting objectives.&lt;/li&gt;
+&lt;li&gt;Remains effective across different backbones, datasets, and hyperparameter settings overall consistently.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#TimeSeries #Forecasting #MachineLearning #CoRe&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.19670v1" target="_blank" rel="noopener"
+&gt;CoRe: Coherence and Relational Alignment for Multivariate Time Series Forecasting&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>IBM Releases Granite Time Series PatchTST-FM-r2 Foundation Model</title><link>https://shoubhikbanerjee.github.io/blog/p/ibm-releases-granite-time-series-patchtst-fm-r2-foundation-model/</link><pubDate>Wed, 09 Sep 2026 22:05:26 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ibm-releases-granite-time-series-patchtst-fm-r2-foundation-model/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/69d3d41eef229c09afea5d83/KYse3pX6t3l8FnI-1pKsi.png" alt="Featured image of post IBM Releases Granite Time Series PatchTST-FM-r2 Foundation Model" /&gt;&lt;h1 id="ibm-releases-granite-time-series-patchtst-fm-r2-foundation-model"&gt;IBM Releases Granite Time Series PatchTST-FM-r2 Foundation Model
+&lt;/h1&gt;&lt;p&gt;IBM has released Granite Time Series PatchTST-FM-r2, the latest iteration in the Granite TSFM family. This model enables users to perform zero-shot forecasting across diverse datasets, such as demand, prices, energy loads, and telemetry, without the need to train or maintain separate models for every dataset.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;As of September 8, 2026, PatchTST-FM-r2 is the top-performing model in the replicable, zero-shot category among those released under a permissive, commercial-friendly open-source license (Apache 2.0 and OpenMDW 1.0). It ranks second overall in the zero-shot, replicable category of the GIFT-Eval benchmark, trailing only TimesFM-3.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;PatchTST-FM-r2 utilizes a redesigned architecture that replaces standard transformer layers with conformer blocks. These blocks combine multi-head self-attention with temporal convolution to capture both long- and short-range temporal structures. This design allows the model to model long-range relationships between patches while using convolution to provide an inductive bias toward local temporal structure.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Parameters: Approximately 385M.&lt;/li&gt;
+&lt;li&gt;Context Length: Up to 8,192 tokens.&lt;/li&gt;
+&lt;li&gt;Forecasting: Supports probabilistic forecasting via a 99-quantile prediction head.&lt;/li&gt;
+&lt;li&gt;Capabilities: Includes support for imputation of missing values.&lt;/li&gt;
+&lt;li&gt;Benchmarking: Achieves a geometric-mean CRPS of 0.467 and a geometric-mean MASE of 0.6846.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The model weights, architecture, inference pipeline, and code required to reproduce benchmark results are publicly available. The model is dual-licensed under Apache-2.0 and OpenMDW-1.0, allowing users to select either license. The Granite Time Series family is also designed for integration into streaming production applications using Confluent.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64b01b5252349201f972ba17/EHyv5DrZggfNQPIZzZ-Lk.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64b01b5252349201f972ba17/5zG7qXwRtBp-ceZ_0UnAY.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64b01b5252349201f972ba17/5nFJSV8NMdjQUGsRIKW2l.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#IBM #TimeSeries #MachineLearning #OpenSource #Forecasting&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/ibm-research/ibm-releases-sota-granite-time-series" target="_blank" rel="noopener"
+&gt;IBM releases SOTA Granite Time Series PatchTST-FM-r2 model with commercial-friendly license&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>IBM and Confluent launch stream-native time series foundation models</title><link>https://shoubhikbanerjee.github.io/blog/p/ibm-and-confluent-launch-stream-native-time-series-foundation-models/</link><pubDate>Wed, 02 Sep 2026 22:08:32 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ibm-and-confluent-launch-stream-native-time-series-foundation-models/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64e8143f6de557454220921e/1oB5vm47VNu42diDOsp0p.png" alt="Featured image of post IBM and Confluent launch stream-native time series foundation models" /&gt;&lt;h1 id="ibm-and-confluent-launch-stream-native-time-series-foundation-models"&gt;IBM and Confluent launch stream-native time series foundation models
+&lt;/h1&gt;&lt;p&gt;IBM and Confluent have introduced stream-native time series foundation models (TSFM) for real-time forecasting, anomaly detection, and optimization, integrated with Confluent’s data streaming platform.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Until now, time series forecasting and decision-making relied on bespoke models built one at a time, requiring months of expert work. Teams often covered gaps with safety margins, extra inventory, or post-facto adjustments, incurring recurring costs for decisions that couldn’t be forecasted.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;A time series foundation model generalizes across vast, varied signals. Given a window of measurements, it can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Forecast what comes next&lt;/li&gt;
+&lt;li&gt;Detect how far behavior sits from normal&lt;/li&gt;
+&lt;li&gt;Identify similar historical patterns&lt;/li&gt;
+&lt;li&gt;Recommend optimal settings for a target&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These models are designed to be used by domain experts—such as demand planners, fraud analysts, or process engineers—without requiring a data science team. IBM has built functions around the models to shift work left, delivering capabilities like forecasting, anomaly detection, optimization, and semantic intelligence as callable services rather than custom projects.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Capability&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Forecasting&lt;/td&gt;
+&lt;td&gt;Predicts future values in a time series (e.g., a tempering line’s output through a shift)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Anomaly detection&lt;/td&gt;
+&lt;td&gt;Scores current behavior against historical norms (e.g., detecting a slow drift in a chocolate line before defects occur)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Similarity search&lt;/td&gt;
+&lt;td&gt;Finds the closest historical match to current conditions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Optimization&lt;/td&gt;
+&lt;td&gt;Conditions on controllable settings and fine-tunes for accuracy&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The models run stream-native, hosted in Confluent Cloud and called from Apache Flink. Flink manages stateful operations (e.g., forecasting and detection) with fault tolerance, ensuring each model receives the necessary history without separate data stores or database calls per invocation.&lt;/p&gt;
+&lt;p&gt;Confluent’s platform continuously streams, connects, governs, and processes real-time data, enabling IBM Granite Time Series models to perform forecasting, anomaly detection, similarity search, classification, gap-filling, and optimization on live business signals.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Access to the models opens on Confluent Cloud on AWS. Confluent Platform will follow, bringing the same models and capabilities to on-premises and hybrid environments.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Every point of accuracy in forecasting or detection can be worth millions, with productivity gains reported at 5 to 10×. Work that previously required specialists can now be handled by domain experts. The integration of IBM Granite Time Series models with Confluent’s platform reduces the time and complexity of deploying models into production, unifying data and ML workflows for real-time processing.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64e8143f6de557454220921e/V5JlP6rnQZG8psqofXSf6.jpeg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/64e8143f6de557454220921e/wlsMI5mra9TvaO7wA53CF.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AI #TimeSeries #Confluent #IBM #Streaming #FoundationModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/ibm-research/real-time-intelligence" target="_blank" rel="noopener"
+&gt;Real-Time Intelligence with IBM Time Series Models on Confluent&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

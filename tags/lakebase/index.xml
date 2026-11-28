@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Lakebase on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/lakebase/</link><description>Recent content in Lakebase on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Nov 2026 22:08:01 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/lakebase/index.xml" rel="self" type="application/rss+xml"/><item><title>Lakebase Postgres Introduces Read Replicas with Decoupled Compute and Storage</title><link>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-introduces-read-replicas-with-decoupled-compute-and-storage/</link><pubDate>Thu, 26 Nov 2026 22:08:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-introduces-read-replicas-with-decoupled-compute-and-storage/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/read-replicas-lakebase.png" alt="Featured image of post Lakebase Postgres Introduces Read Replicas with Decoupled Compute and Storage" /&gt;&lt;h1 id="lakebase-postgres-introduces-read-replicas-with-decoupled-compute-and-storage"&gt;Lakebase Postgres Introduces Read Replicas with Decoupled Compute and Storage
+&lt;/h1&gt;&lt;p&gt;Lakebase Postgres has introduced a new approach to read replicas that decouples compute from storage, enabling faster scaling and lower costs compared to traditional managed PostgreSQL services like Amazon RDS.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The traditional read replica model faces significant challenges when scaling reads on demand. In managed Postgres services, a replica is a physical clone of the primary: its own instance, storage volume, and full copy of every page. This makes replicas impractical for elastic scaling because they take minutes to hours to create, each adds a full data copy to billing, and they run continuously even after traffic spikes subside.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;p&gt;Lakebase Postgres separates compute from storage. In traditional systems, Postgres runs on a single machine owning both execution and durable state. Lakebase splits these responsibilities: since compute owns nothing durable, multiple compute instances can attach to the same storage. A read replica is simply an independent, read-only compute that reads from the shared storage. Creating one requires no data copy, no replication work on the primary (which continues streaming WAL to safekeepers), and no dependency on database size—resulting in seconds-long creation times regardless of scale.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;In traditional setups, N replicas mean N+1 copies of the database (one on primary, one per replica volume)&lt;/li&gt;
+&lt;li&gt;In Lakebase Postgres, N replicas still mean one storage copy&lt;/li&gt;
+&lt;li&gt;Replicas maintain only local caches (shared buffers and NVMe), not durable data&lt;/li&gt;
+&lt;li&gt;Storage is billed solely for the data in the storage layer; replicas add compute, not storage&lt;/li&gt;
+&lt;li&gt;Replica costs follow the reads they serve, not database size or hourly instance billing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;The monolithic implementation of replicas in systems like Amazon RDS creates the opposite of their intended purpose. Instead of elastic scaling, you get static, overprovisioned infrastructure. Lakebase’s decoupled architecture fixes both creation time and cost inefficiencies by treating replicas as lightweight compute instances rather than full database clones.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Untitled-design-11.gif?v=1795701905"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Untitled-design-13.gif?v=1795701905"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Untitled-design-15.gif?v=1795701905"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PostgreSQL #Database #Scalability #Lakebase #ComputeStorageDecoupling&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/rethinking-read-replicas-lakebase-architecture" target="_blank" rel="noopener"
+&gt;Rethinking read replicas for the lakebase architecture&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Databricks Launches Native Lakebase Sink for Apache Spark Structured Streaming</title><link>https://shoubhikbanerjee.github.io/blog/p/databricks-launches-native-lakebase-sink-for-apache-spark-structured-streaming/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/databricks-launches-native-lakebase-sink-for-apache-spark-structured-streaming/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/lakebase-sink-optB-pipeline-2400x1256.png" alt="Featured image of post Databricks Launches Native Lakebase Sink for Apache Spark Structured Streaming" /&gt;&lt;h1 id="databricks-launches-native-lakebase-sink-for-apache-spark-structured-streaming"&gt;Databricks Launches Native Lakebase Sink for Apache Spark Structured Streaming
+&lt;/h1&gt;&lt;p&gt;Databricks has announced the general availability of a native Lakebase sink for Apache Spark™ Structured Streaming, simplifying real-time data ingestion into its serverless PostgreSQL offering. The connector eliminates the need for custom foreach writers, reducing complexity in building low-latency feature pipelines for use cases like fraud detection and recommendation systems.&lt;/p&gt;
+&lt;h2 id="-what-happened"&gt;📣 What Happened
+&lt;/h2&gt;&lt;p&gt;Today, Databricks is releasing the native Lakebase sink for Apache Spark™ Structured Streaming. This connector writes computed results directly to Lakebase and handles batching, retries, and upserts automatically, removing the burden of building and maintaining custom infrastructure.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;🔍 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Low-latency use cases such as fraud detection, live personalization, and real-time feature computation require results in a serving-ready OLTP store. Lakebase Postgres is a fully managed, serverless PostgreSQL database with autoscaling, branching, native Unity Catalog integration, and sub-10ms reads. Previously, writing to Lakebase from a streaming pipeline required developers to build custom foreach writers to manage batching, retries, and upserts — a complex task that was difficult to scale and maintain.&lt;/p&gt;
+&lt;p&gt;The new native sink handles these concerns internally. You can wire up a Lakebase write in minutes with a single &lt;code&gt;writeStream&lt;/code&gt; call, without needing to manage performance, tuning, or maintenance.&lt;/p&gt;
+&lt;h2 id="-key-features"&gt;⚙️ Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Fully managed, serverless PostgreSQL database with autoscaling and native Unity Catalog integration&lt;/li&gt;
+&lt;li&gt;Sub-10ms read latency&lt;/li&gt;
+&lt;li&gt;Native Lakebase sink for Apache Spark™ Structured Streaming&lt;/li&gt;
+&lt;li&gt;Supports both micro-batch and Real-Time Mode&lt;/li&gt;
+&lt;li&gt;Automatic upsert handling with &lt;code&gt;upsertKey&lt;/code&gt; — maintains one row per key&lt;/li&gt;
+&lt;li&gt;Built-in connection pooling, batching, and retries&lt;/li&gt;
+&lt;li&gt;Seamless credentials management via running user or service principal&lt;/li&gt;
+&lt;li&gt;Table creation if it does not exist&lt;/li&gt;
+&lt;li&gt;Real-time data ingestion using &lt;code&gt;.toTable()&lt;/code&gt; for Unity Catalog-registered tables&lt;/li&gt;
+&lt;li&gt;Direct write using &lt;code&gt;format(&amp;quot;postgresql&amp;quot;)&lt;/code&gt; for non-Unity Catalog tables or external PostgreSQL databases&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-use-case-example-real-time-recommendation-features"&gt;🧩 Use Case Example: Real-Time Recommendation Features
+&lt;/h2&gt;&lt;p&gt;A video streaming platform wants to recommend videos by leveraging users&amp;rsquo; recent activity. The pipeline ingests WATCH and LIKE events from Kafka, computes the last 6 videos watched and the last 3 liked per user, and upserts one feature row per user into Lakebase in hundreds of milliseconds. At inference time, a recommendation model looks up each user’s feature row by &lt;code&gt;user_id&lt;/code&gt; to rank what to show next.&lt;/p&gt;
+&lt;p&gt;The pipeline uses &lt;code&gt;transformWithState&lt;/code&gt; to maintain per-user state and emit one feature row per user, with writing to Lakebase handled by a single &lt;code&gt;writeStream&lt;/code&gt; and &lt;code&gt;.toTable()&lt;/code&gt; call.&lt;/p&gt;
+&lt;h2 id="-availability-and-benchmarks"&gt;🚀 Availability and Benchmarks
+&lt;/h2&gt;&lt;p&gt;The native sink is now generally available. In testing, the pipeline processed ~20K events per second against 5 million active users using a 40-core classic compute (DBR 18 LTS) writing to an 8-CU Lakebase project with 5-minute RTM checkpoint intervals. End-to-end latency from Kafka input timestamp to row landing in Lakebase was 100–200 milliseconds, with query latency in single digits via Lakebase.&lt;/p&gt;
+&lt;h2 id="-customer-feedback"&gt;💬 Customer Feedback
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;We stream real-time data into Lakebase so our risk agent can pull a user&amp;rsquo;s recent activity when it investigates an alert. We initially built that path with a custom ForeachWriter, which meant building and maintaining the write infrastructure ourselves. As part of our development work, we found that the native sink reduces the custom work required for connection pooling, batching, and retries.&amp;rdquo; — Maria Marinova, Sr. Lead Software Engineer, DraftKings&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Testing real-time data flows into Lakebase is an important part of validating how our risk agent can quickly access the freshest available user data when making decisions. As we evaluated the native sink, we found that its built-in connection pooling, batching, and retries reduce the custom infrastructure we need to build and maintain.&amp;rdquo; — Georgi Stoychev, Sr. Software Automation Engineer, DraftKings&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-technical-details"&gt;📊 Technical Details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Upsert Key&lt;/td&gt;
+&lt;td&gt;Sink maintains one row per key&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Connection Pooling&lt;/td&gt;
+&lt;td&gt;Built-in, managed automatically&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Batching&lt;/td&gt;
+&lt;td&gt;Automatically handled for throughput&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retries&lt;/td&gt;
+&lt;td&gt;Transient failure handling with backoff&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Credentials&lt;/td&gt;
+&lt;td&gt;Managed as running user or service principal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Table Creation&lt;/td&gt;
+&lt;td&gt;Automatically created if not present&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Latency&lt;/td&gt;
+&lt;td&gt;End-to-end 100–200ms; query latency single-digit milliseconds&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-getting-started"&gt;🔗 Getting Started
+&lt;/h2&gt;&lt;p&gt;For a deeper look at the implementation, see the companion repo — a self-serve example you can run end-to-end.&lt;/p&gt;
+&lt;p&gt;Image: &lt;a class="link" href="https://www.databricks.com/sites/default/files/2023-08/databricks-default.png?v=1712162038" target="_blank" rel="noopener"
+&gt;https://www.databricks.com/sites/default/files/2023-08/databricks-default.png?v=1712162038&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/2023-08/databricks-default.png?v=1712162038"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Databricks #Lakebase #ApacheSpark #Real-TimeStreaming #FeatureEngineering&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/announcing-general-availability-native-lakebase-postgres-sink-spark-structured-streaming" target="_blank" rel="noopener"
+&gt;Announcing General Availability of native Lakebase Postgres sink for Spark Structured Streaming&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>PostgreSQL 19 reaches GA and is available on Lakebase</title><link>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-reaches-ga-and-is-available-on-lakebase/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-reaches-ga-and-is-available-on-lakebase/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/PG-19-cover.png" alt="Featured image of post PostgreSQL 19 reaches GA and is available on Lakebase" /&gt;&lt;h1 id="postgresql-19-reaches-ga-and-is-available-on-lakebase"&gt;PostgreSQL 19 reaches GA and is available on Lakebase
+&lt;/h1&gt;&lt;p&gt;PostgreSQL 19 reached general availability today and is already available on Lakebase. Several engineers on the Lakebase team are PostgreSQL committers and contributors who worked on this release directly, from query plan advice to shared memory, locale handling, and release management. New major versions often take weeks to reach other managed PostgreSQL services.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;PostgreSQL 19 is a practical release with no single headline feature that changes what PostgreSQL is. Instead, version 19 goes after operational problems that database teams know well:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bloated tables&lt;/li&gt;
+&lt;li&gt;Unstable query plans&lt;/li&gt;
+&lt;li&gt;Replica lag&lt;/li&gt;
+&lt;li&gt;Incomplete statistics&lt;/li&gt;
+&lt;li&gt;Maintenance work that is hard to run safely in production&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-features"&gt;🧩 Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;REPACK&lt;/strong&gt; — reclaims space while normal reads and writes continue during most of the operation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pg_plan_advice&lt;/strong&gt; — describes planner decisions as advice, applies supplied advice, and reports whether it was followed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pg_stash_advice&lt;/strong&gt; — stores advice by query ID and applies it automatically when a matching query is planned&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-repack-works"&gt;⚙️ How REPACK Works
+&lt;/h2&gt;&lt;p&gt;PostgreSQL uses multiversion concurrency control, so an UPDATE creates a new row version and a DELETE leaves a dead tuple behind. Routine vacuuming makes that space reusable, but it doesn&amp;rsquo;t necessarily return space to the operating system or restore a useful physical row order. The usual fixes — VACUUM FULL, CLUSTER, or external tools such as pg_repack — take an ACCESS EXCLUSIVE lock for the whole operation, blocking normal access to the table.&lt;/p&gt;
+&lt;p&gt;REPACK reclaims space like VACUUM FULL; with &lt;code&gt;USING INDEX&lt;/code&gt;, it also physically orders rows like CLUSTER. With &lt;code&gt;CONCURRENTLY&lt;/code&gt;, PostgreSQL rebuilds the table while normal reads and writes continue, capturing ongoing changes through logical decoding. It then takes an ACCESS EXCLUSIVE lock to apply any remaining captured changes and swap the new table and index files into place.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;pg_plan_advice&lt;/td&gt;
+&lt;td&gt;Describes planner decisions as advice, applies supplied advice, reports whether it was followed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;pg_stash_advice&lt;/td&gt;
+&lt;td&gt;Stores advice by query ID and applies it automatically when a matching query is planned&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;These components do not add cross-table statistics or replace the planner. Instead, they let you intervene when an inaccurate estimate produces a poor plan. Unlike inline optimizer hints, plan advice lives outside the application&amp;rsquo;s query text. You can inspect the current plan, test focused advice, and then stash it by query ID.&lt;/p&gt;
+&lt;h2 id="-repack-limitations"&gt;⚠️ REPACK Limitations
+&lt;/h2&gt;&lt;p&gt;Concurrent repacking creates an additional replication slot for the duration of the operation, so it needs free capacity under &lt;code&gt;max_repack_replication_slots&lt;/code&gt; and a table with either a non-deferrable primary key or a suitable index-based replica identity. It also needs temporary disk space for a copy of the table and all its indexes, potentially plus a sort file up to the size of the table.&lt;/p&gt;
+&lt;p&gt;Tables with heavy update and delete traffic face an additional limit: the current upstream PostgreSQL 19 implementation fails if more than about 104 million tuples in the target table are updated or deleted while REPACK (CONCURRENTLY) is running. This counts changes made during the repack, not rows already in the table.&lt;/p&gt;
+&lt;p&gt;Concurrent repacking is also not MVCC-safe: after it commits, transactions using snapshots taken before the repack began can see the table as empty. Physical clustering also degrades as later writes arrive. REPACK CONCURRENTLY still needs planning, but it brings into core a job that previously required more downtime or an extension.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;To try it, create a new Lakebase project and select PostgreSQL 19 as the version.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Untitled-design-7_0.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/2023-08/databricks-default.png?v=1712162038"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PostgreSQL #Lakebase #Database #GARelease #REPACK #QueryPlanning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/postgresql-19-available-lakebase" target="_blank" rel="noopener"
+&gt;PostgreSQL 19 is available on Lakebase&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Lakebase: Managed Postgres for AI and Development</title><link>https://shoubhikbanerjee.github.io/blog/p/lakebase-managed-postgres-for-ai-and-development/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lakebase-managed-postgres-for-ai-and-development/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/blog_images/branch-sync-serve-what-our-lakebase-hackathon-blog-img-og.png" alt="Featured image of post Lakebase: Managed Postgres for AI and Development" /&gt;&lt;h1 id="lakebase-managed-postgres-for-ai-and-development"&gt;Lakebase: Managed Postgres for AI and Development
+&lt;/h1&gt;&lt;p&gt;Lakebase, a fully managed Postgres solution, enables developers to build applications with ease, as it allows any developer familiar with SQL or ORMs to start immediately. Storage is separated from compute, and the database resides alongside lakehouse data under Unity Catalog governance.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Lakebase is a fully managed Postgres solution.&lt;/li&gt;
+&lt;li&gt;It allows developers familiar with SQL or ORMs to build applications immediately.&lt;/li&gt;
+&lt;li&gt;Storage is separated from compute, and the database lives next to lakehouse data under Unity Catalog governance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Every Lakebase project starts with a production branch.&lt;/li&gt;
+&lt;li&gt;Child branches can be created from the production branch for development, testing, or experiments.&lt;/li&gt;
+&lt;li&gt;Branches use copy-on-write, making a branch of a large database ready in seconds and only changes taking up new storage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Lakebase is used in various projects like Jevons Search, Branchflight, and BranchCut.&lt;/li&gt;
+&lt;li&gt;Jevons Search uses Lakebase branches to work on support tickets.&lt;/li&gt;
+&lt;li&gt;Branchflight provides preview environments for pull requests.&lt;/li&gt;
+&lt;li&gt;BranchCut brings Git-style branching and merging to creative work.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Lakebase enables fast and efficient branching for development, testing, and experiments.&lt;/li&gt;
+&lt;li&gt;It provides a secure and scalable solution for managing data and applications.&lt;/li&gt;
+&lt;li&gt;Lakebase is used in various projects to improve efficiency and productivity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/1.1_lyft_jevons_search_0.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/1.2_cibc_branchflight.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Lakebase #Postgres #AI #Development #Branching&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/branch-sync-serve-what-our-lakebase-hackathon-taught-us-about-building-lakebase" target="_blank" rel="noopener"
+&gt;Branch, sync, serve: What our Lakebase Hackathon taught us about building on Lakebase&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Lakebase Postgres minimizes object‑storage reads using tiered caching</title><link>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/reads-served-from-cache-cover.png" alt="Featured image of post Lakebase Postgres minimizes object‑storage reads using tiered caching" /&gt;&lt;h1 id="lakebase-postgres-minimizes-objectstorage-reads-using-tiered-caching"&gt;Lakebase Postgres minimizes object‑storage reads using tiered caching
+&lt;/h1&gt;&lt;p&gt;Lakebase Postgres builds on object storage for durability while keeping reads off of it through a multi‑tier cache hierarchy.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Object storage provides the foundation: durable, bottomless storage, instant branches and restores, and a single copy of data for transactions and analytics (LTAP).&lt;/li&gt;
+&lt;li&gt;The system is designed so that object storage never sits in front of a query; reads travel through faster tiers first.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🧩 Architecture
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tier&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Compute node&lt;/td&gt;
+&lt;td&gt;Runs standard Postgres, holds no durable state, serves ~99.46% of page accesses from its local cache (memory or micro‑second latency).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Pageserver&lt;/td&gt;
+&lt;td&gt;Owns local NVMe, serves ~0.54% of reads, builds an LSM tree, persists materialized history to object storage asynchronously.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Object storage&lt;/td&gt;
+&lt;td&gt;Holds immutable, long‑term history, backs pageservers, is accessed for only ~1 in 28 million page accesses.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-read-path-details"&gt;⚙️ Read Path Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;On a compute‑node cache miss, the request is sent over the network to a pageserver, which serves the page from its own NVMe.&lt;/li&gt;
+&lt;li&gt;Only if the pageserver also misses does the request reach object storage.&lt;/li&gt;
+&lt;li&gt;Production statistics:
+&lt;ul&gt;
+&lt;li&gt;Compute cache: ~1.1 billion page accesses / s (99.46% of total).&lt;/li&gt;
+&lt;li&gt;Pageserver NVMe: ~6 million reads / s (0.54% of total).&lt;/li&gt;
+&lt;li&gt;Object storage: ~39 requests / s (≈1 in 28 million accesses).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Reads that do reach object storage are rare one‑offs—old branches, restores, or databases that have been idle for weeks. Once cached, subsequent reads return to the faster tiers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability--durability"&gt;🚀 Availability &amp;amp; Durability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Transactions are committed after a quorum of safekeepers acknowledges the record.&lt;/li&gt;
+&lt;li&gt;A Paxos‑based protocol handles leader election and failover.&lt;/li&gt;
+&lt;li&gt;Because the compute layer holds no durable state, it can start, stop, scale, or fail without risking data.&lt;/li&gt;
+&lt;li&gt;The storage layer owns correctness, durability, and history.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;By keeping the hot path in memory or NVMe, Lakebase Postgres achieves micro‑second latency comparable to a traditional warm‑cache Postgres instance.&lt;/li&gt;
+&lt;li&gt;Object storage provides virtually unlimited capacity and durability without becoming a performance bottleneck.&lt;/li&gt;
+&lt;li&gt;The tiered design ensures that even as data grows, the vast majority of reads stay on the fastest tier, making the system both scalable and responsive.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/read-paths-lakebase.gif?v=1794924287"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/build-page-at-LSN.gif?v=1794924287"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Lakebase #Postgres #ObjectStorage #DatabaseArchitecture&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/built-object-storage-served-cache" target="_blank" rel="noopener"
+&gt;Built on object storage, served from cache&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

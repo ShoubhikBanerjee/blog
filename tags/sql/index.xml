@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SQL on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/sql/</link><description>Recent content in SQL on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/sql/index.xml" rel="self" type="application/rss+xml"/><item><title>New Datasette Charts Plugin Visualizes All Data Rows with AI Assistance</title><link>https://shoubhikbanerjee.github.io/blog/p/new-datasette-charts-plugin-visualizes-all-data-rows-with-ai-assistance/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-datasette-charts-plugin-visualizes-all-data-rows-with-ai-assistance/</guid><description>&lt;img src="https://static.simonwillison.net/static/2026/datasette-charts-0.1a0.webp" alt="Featured image of post New Datasette Charts Plugin Visualizes All Data Rows with AI Assistance" /&gt;&lt;h1 id="new-datasette-charts-plugin-visualizes-all-data-rows-with-ai-assistance"&gt;New Datasette Charts Plugin Visualizes All Data Rows with AI Assistance
+&lt;/h1&gt;&lt;p&gt;I&amp;rsquo;ve been thinking about this problem for over a year now, but on Sunday I finally fired up Claude Fable 5.2 to build an initial prototype. The prototype went so well that this is now a full plugin. The new charts plugin works against any table or arbitrary SQL query in Datasette. It defines several different chart types (using vendored D3, Observable Plot, and topojson-client), each with a set of heuristics for identifying when they might be a good match for a specific set of rows. Those suggestion thumbnails at the top are actual visualizations driven by the data, and selecting one pulls up the full chart along with tools for modifying it. You can also manually construct a chart from scratch. As with other Datasette visualization plugins, the current state of your chart is persisted in a #fragment in the URL - so you can bookmark charts or share them with others. The most important feature is that the charts take all rows into account. Previous charting plugins like datasette-vega would only show charts for the current page of results, generally up to 100 rows. The new plugin compiles each chart to a SQL query that aggregates across the entire result set (potentially millions of rows) using GROUP BY, time bucketing, and window functions. Each query returns a result capped at 5,000 rows, suitable for display on the chart. The plugin uses sampling to help suggest charts for larger tables without evaluating the full result set. I&amp;rsquo;m really happy with this initial release of the plugin. It&amp;rsquo;s still very much an alpha, but it&amp;rsquo;s the closest I&amp;rsquo;ve got to the dream of Datasette helping visualize data with as little required direction from the user as possible.&lt;/p&gt;
+&lt;p&gt;#Datasette #AI #DataVisualization #SQL #Claude #AlphaRelease&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/23/datasette-charts/" target="_blank" rel="noopener"
+&gt;Release: datasette-charts 0.1a0&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>PostgreSQL 19 Released with New Read-Your-Writes Consistency Feature</title><link>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-released-with-new-read-your-writes-consistency-feature/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-released-with-new-read-your-writes-consistency-feature/</guid><description>&lt;h1 id="postgresql-19-released-with-new-read-your-writes-consistency-feature"&gt;PostgreSQL 19 Released with New Read-Your-Writes Consistency Feature
+&lt;/h1&gt;&lt;p&gt;PostgreSQL 19 has been released, arriving two months later than the typical September schedule due to a flurry of issues related to AI-reported vulnerabilities.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The release was delayed from September by two months.&lt;/li&gt;
+&lt;li&gt;The delay was attributed to addressing ongoing AI-reported vulnerability issues.&lt;/li&gt;
+&lt;li&gt;The author considers the release &amp;ldquo;definitely worth the wait.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The release introduces a &amp;ldquo;read-your-writes&amp;rdquo; consistency feature for applications sending reads to standbys using the new &lt;code&gt;WAIT FOR LSN&lt;/code&gt; command. This allows a session on a standby to wait until it has replayed the write-ahead log (WAL) up to a specific log sequence number (LSN) before running a query. This ensures the application can read data it just wrote on the primary.&lt;/p&gt;
+&lt;h3 id="example-workflow"&gt;Example Workflow
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;Update a record on the primary: &lt;code&gt;UPDATE movie SET genre = 'Dramatic' WHERE genre = 'Drama';&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Get the current LSN: &lt;code&gt;SELECT pg_current_wal_insert_lsn();&lt;/code&gt; (returns a value like &lt;code&gt;0/0306EE20&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Store the LSN value (e.g., in a signed cookie).&lt;/li&gt;
+&lt;li&gt;On a subsequent request, use the stored LSN on a standby: &lt;code&gt;WAIT FOR LSN '0/0306EE20' WITH (TIMEOUT '0.1s');&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Run the query: &lt;code&gt;SELECT * FROM movie WHERE genre = 'Drama';&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The timeout parameter is optional. If provided, the system returns an error if the replica does not catch up within the specified time.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This pattern ensures users see events in chronological order and maintain a consistent view across subsequent requests. Similar patterns have previously been implemented in hand-rolled solutions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Wikipedia/MediaWiki&lt;/strong&gt;: Uses a hand-rolled version against MySQL replication, saving the primary binlog position in the session and waiting for replicas to catch up before reads. MediaWiki now uses MySQL&amp;rsquo;s &lt;code&gt;WAIT_FOR_EXECUTED_GTID_SET()&lt;/code&gt; function and falls back to &lt;code&gt;SOURCE_POS_WAIT()&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#PostgreSQL #Database #SQL #DataConsistency #WaitForLSN&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Nov/19/postgresql-19/" target="_blank" rel="noopener"
+&gt;PostgreSQL 19 Released&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>AI plugin updates execute_sql output format</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-plugin-updates-execute_sql-output-format/</link><pubDate>Wed, 02 Sep 2026 22:08:32 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-plugin-updates-execute_sql-output-format/</guid><description>&lt;h1 id="ai-plugin-updates-execute_sql-output-format"&gt;AI plugin updates execute_sql output format
+&lt;/h1&gt;&lt;p&gt;A new version of the plugin has been released, changing the output format of &lt;code&gt;execute_sql&lt;/code&gt; from an array of arrays to an array of objects. This is the first non-alpha release.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The plugin now returns rows from &lt;code&gt;execute_sql&lt;/code&gt; as an array of objects, improving clarity for weaker models by eliminating ambiguity in positional array elements.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Output format: array of objects (previously array of arrays)&lt;/li&gt;
+&lt;li&gt;Dependency: requires &lt;code&gt;mcp&amp;gt;=2.1.1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Release status: first non-alpha version&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The update is ready for use, as confirmed by the developer&amp;rsquo;s own extensive testing.&lt;/p&gt;
+&lt;p&gt;#AI #plugin #SQL #outputformat #mcp&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/1/datasette-mcp/" target="_blank" rel="noopener"
+&gt;Release: datasette-mcp 0.2&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

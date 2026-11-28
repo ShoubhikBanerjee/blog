@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Metal on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/metal/</link><description>Recent content in Metal on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 20 Oct 2026 22:03:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/metal/index.xml" rel="self" type="application/rss+xml"/><item><title>PyTorch 2.15 Enhancements for Metal Performance Shaders on Mac</title><link>https://shoubhikbanerjee.github.io/blog/p/pytorch-2-15-enhancements-for-metal-performance-shaders-on-mac/</link><pubDate>Tue, 20 Oct 2026 22:03:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/pytorch-2-15-enhancements-for-metal-performance-shaders-on-mac/</guid><description>&lt;img src="https://huggingface.co/blog/assets/mps-pytorch-2-15/thumbnail.png" alt="Featured image of post PyTorch 2.15 Enhancements for Metal Performance Shaders on Mac" /&gt;&lt;h1 id="pytorch-215-enhancements-for-metal-performance-shaders-on-mac"&gt;PyTorch 2.15 Enhancements for Metal Performance Shaders on Mac
+&lt;/h1&gt;&lt;p&gt;PyTorch 2.15 introduces significant performance and memory optimizations for Apple silicon Macs via Metal Performance Shaders (MPS), specifically targeting Large Language Model (LLM) decoding, Mixture-of-Experts (MoE) models, and video processing.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Performance gains are most evident in MoE models, which decode 5–6.5× faster than in version 2.14. For example, on an M3 Ultra using &lt;code&gt;torch.compile&lt;/code&gt;:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model&lt;/th&gt;
+&lt;th style="text-align: left"&gt;2.14 Speed&lt;/th&gt;
+&lt;th style="text-align: left"&gt;PyTorch 2.15 Speed&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3.6-35B-A3B&lt;/td&gt;
+&lt;td style="text-align: left"&gt;9.4 tokens/s&lt;/td&gt;
+&lt;td style="text-align: left"&gt;61.3 tokens/s&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LFM2.5-8B-A1B&lt;/td&gt;
+&lt;td style="text-align: left"&gt;23.6 tokens/s&lt;/td&gt;
+&lt;td style="text-align: left"&gt;123.6 tokens/s&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;FP8 Support&lt;/strong&gt;: PyTorch 2.15 adds &lt;code&gt;torch.float8_e4m3fn&lt;/code&gt; tensors on MPS. These use one byte per value, requiring half the storage of BF16 or FP16. Tensors can be multiplied directly on the GPU using &lt;code&gt;F.scaled_mm&lt;/code&gt;, which supports rowwise and tensorwise scaling.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MoE Optimizations&lt;/strong&gt;: New Metal kernels read group offsets directly on the GPU using Metal Performance Primitives or a separate Metal path, replacing the 2.14 method of copying offsets to the CPU. A dedicated decoding path and specialized kernels for small groups further reduce GPU-CPU syncs and improve top-k routing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Linear Layer Improvements&lt;/strong&gt;: &lt;code&gt;F.linear&lt;/code&gt; now connects to GEMV kernels for common [1, 1, hidden_size] decoding inputs with fused bias additions. This resulted in a 1.23× geometric-mean speedup across 96 BF16 layer shapes from real models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;General GPU Acceleration&lt;/strong&gt;: Softmax over the vocabulary is approximately 8× faster, and there is increased GPU support for complex LU and triangular solves, QR decomposition, and small-matrix inverses.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Video and Audio&lt;/strong&gt;: Faster paths are available for reductions, interpolation backward, dropout, padding, convolutions, and audio/video training.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Memory Efficiency&lt;/strong&gt;: Wan2.2&amp;rsquo;s tiled VAE video decode memory peak has been reduced from 270 GiB to approximately 8 GiB.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bug Fixes&lt;/strong&gt;: A padding change fixes an issue where the Qwen-Image-2.1 VAE encoder corrupted images on MPS. Encode-decode round trips now match CPU at 29.95 dB PSNR, up from 10.06 dB.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Python Control&lt;/strong&gt;: Users now have access to public MPS streams and more reliable event timing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;System Requirements&lt;/strong&gt;: Apple silicon Mac running macOS 15 or later.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Software Requirements&lt;/strong&gt;: PyTorch 2.15 requires Python 3.11 or later.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Diagnostics&lt;/strong&gt;: The MPS availability check now specifies the reason if the OS is too old or no Metal GPU is available.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-looking-ahead"&gt;🔍 Looking Ahead
+&lt;/h2&gt;&lt;p&gt;PyTorch 2.16 is expected to bring faster LLM decoding, more MPSGraph-to-Metal migrations, and attention fully implemented on Metal.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/mps-pytorch-2-15/moe-decode-throughput.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/mps-pytorch-2-15/softmax-sampling.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/mps-pytorch-2-15/wan-vae-memory.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PyTorch #AppleSilicon #Metal #LLM #MachineLearning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/mps-pytorch-2-15" target="_blank" rel="noopener"
+&gt;MPS in PyTorch 2.15&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

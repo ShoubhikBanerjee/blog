@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Materials Science on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/materials-science/</link><description>Recent content in Materials Science on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 19 Nov 2026 22:12:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/materials-science/index.xml" rel="self" type="application/rss+xml"/><item><title>AI pipeline digitizes PXRD figures for COF research</title><link>https://shoubhikbanerjee.github.io/blog/p/ai-pipeline-digitizes-pxrd-figures-for-cof-research/</link><pubDate>Thu, 19 Nov 2026 22:12:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/ai-pipeline-digitizes-pxrd-figures-for-cof-research/</guid><description>&lt;h1 id="ai-pipeline-digitizes-pxrd-figures-for-cof-research"&gt;AI pipeline digitizes PXRD figures for COF research
+&lt;/h1&gt;&lt;p&gt;A new pipeline combines vision LLMs and classical CV to digitize powder X-ray diffraction figures from COF articles, enabling reusable experimental data.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Powder X-ray diffraction (PXRD) is the primary structural evidence for covalent organic frameworks (COFs) and many other materials.&lt;/li&gt;
+&lt;li&gt;Yet decades of measured patterns exist only as images in published figures.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The pipeline uses a vision LLM to interpret the layout of each figure, locating the diffraction plot and its curves.&lt;/li&gt;
+&lt;li&gt;Classical computer vision (CV) then refines every trace to pixel-level accuracy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Applied to 3,954 COF articles, the pipeline produces 11,445 calibrated diffraction curves.&lt;/li&gt;
+&lt;li&gt;Compared with a hand digitization of 60 panels, extracted peak positions differ by a median of only 0.07 degrees.&lt;/li&gt;
+&lt;li&gt;The digitized curves enable tracking how peak prominence, a possible marker of crystallinity, changes with synthesis conditions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The digitized curves are released in the open database COF-PEAK.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Vision LLMs and classical CV can turn such figures into reusable experimental data.&lt;/li&gt;
+&lt;li&gt;This work presents a solution to the challenge of automatic recovery of PXRD figures, which vary widely in format.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AI #ComputerVision #MaterialsScience #COFs #PXRD&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.23680v1" target="_blank" rel="noopener"
+&gt;Structured Extraction of Diffraction Data from Covalent Organic Frameworks&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Introduces Daviator and Mixed Precision for DFT GPU Acceleration</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-daviator-and-mixed-precision-for-dft-gpu-acceleration/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-introduces-daviator-and-mixed-precision-for-dft-gpu-acceleration/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image4-10-660x370.png" alt="Featured image of post NVIDIA Introduces Daviator and Mixed Precision for DFT GPU Acceleration" /&gt;&lt;h1 id="nvidia-introduces-daviator-and-mixed-precision-for-dft-gpu-acceleration"&gt;NVIDIA Introduces Daviator and Mixed Precision for DFT GPU Acceleration
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced two new capabilities to address performance bottlenecks in generating ground-truth data for machine learning interatomic potentials (MLIPs): a library called Daviator for batched GPU kernels and a new mixed-precision execution layer. These updates target the high volume of density functional theory (DFT) calculations required to train next-generation models, offering up to 22x faster time-to-solution and up to 75% lower cost compared to CPU execution.&lt;/p&gt;
+&lt;h2 id="-the-problem-with-current-gpu-dft"&gt;🔍 The Problem with Current GPU DFT
+&lt;/h2&gt;&lt;p&gt;Training MLIPs requires tens to hundreds of millions of DFT calculations. Plane-wave DFT, primarily implemented via VASP, is the standard for this task. While VASP’s OpenACC implementation speeds up large-system calculations, it struggles with the small unit cells and dense k-point grids common in MLIP data generation.&lt;/p&gt;
+&lt;p&gt;In periodic systems with small unit cells, hundreds to thousands of k-points are required. Currently, VASP processes these k-points sequentially on the GPU. For small systems, this results in significant kernel launch overhead that dominates compute time. A single-atom iron system with 752 k-points, for instance, ran 8x slower on GPU hardware than on CPU. Additionally, modern NVIDIA GPUs are increasingly optimized for lower-precision data types (FP32), while traditional DFT runs in FP64, creating a gap in available throughput.&lt;/p&gt;
+&lt;h2 id="-how-daviator-and-mixed-precision-work"&gt;🧩 How Daviator and Mixed Precision Work
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Daviator&lt;/strong&gt; is a library of GPU kernels that replaces sequential per-k-point processing with batched operations. Its core is a batched Davidson eigensolver that swaps sequential loops for batched FFTs, GEMMs, and custom kernels. This approach reduces GPU kernel launches, allowing Streaming Multiprocessor (SM) occupancy to reach near saturation. Data remains resident in GPU memory, while VASP retains ownership of the self-consistent field (SCF) loop, mixing, symmetry, and I/O.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;mixed-precision execution layer&lt;/strong&gt; enables further performance gains by leveraging GPUs with a high FP32:FP64 throughput ratio. This is particularly effective on inference-class and workstation GPUs, such as the RTX PRO 6000, which features a 64:1 FP32:FP64 ratio.&lt;/p&gt;
+&lt;h2 id="-key-details-and-benchmarks"&gt;⚙️ Key Details and Benchmarks
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Integration:&lt;/strong&gt; Daviator is accessible through the NVIDIA ALCHEMI VASP microservice by setting &lt;code&gt;LDAVIATOR=True&lt;/code&gt; in the &lt;code&gt;INCAR&lt;/code&gt; file. Existing VASP inputs work without modification.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; On a projected reference dataset workload, the combination of these features shows up to 22x faster time-to-solution and up to 75% lower cost compared to CPU execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Speed-ups:&lt;/strong&gt; Daviator overcomes OpenACC limitations, achieving over 2x speed-ups relative to the CPU baseline for a single iron atom.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configuration:&lt;/strong&gt; Users must set specific environment variables to ensure efficient kernel caching:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;export CUDA_CACHE_PATH=/tmp/cudacache&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;export CUDA_CACHE_DISABLE=0&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability-and-limitations"&gt;🚀 Availability and Limitations
+&lt;/h2&gt;&lt;p&gt;Daviator is currently available for single-node execution. Multi-node support, coverage for systems with non-collinear spins (&lt;code&gt;vasp_ncl&lt;/code&gt;), and explicit gamma-only runs (&lt;code&gt;vasp_gam&lt;/code&gt;) are expected in a later stage. Some GPU kernels may trigger compilation on first use depending on the batch size.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why It Matters
+&lt;/h2&gt;&lt;p&gt;As AI workloads drive GPU hardware development toward lower-precision data types, the stagnation of FP64-only code performance threatens the scalability of DFT data generation. By addressing small-system GPU inefficiency and leveraging mixed precision, these capabilities allow researchers to generate the massive datasets required for MLIP training more efficiently and at a lower cost.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/10/mlip-tensor-core-featured-660x370-jpg.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image4-10-1024x576-png.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image11.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#DFT #VASP #GPUComputing #HPC #MLIP #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/tackling-gpu-bottlenecks-in-plane-wave-dft-with-k-point-batching-and-mixed-precision/" target="_blank" rel="noopener"
+&gt;Tackling GPU Bottlenecks in Plane-Wave DFT with K-Point Batching and Mixed Precision | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA cuPotential Accelerates Molecular Dynamics Simulations</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-cupotential-accelerates-molecular-dynamics-simulations/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-cupotential-accelerates-molecular-dynamics-simulations/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/healthcare-cupotential-660x370.jpg" alt="Featured image of post NVIDIA cuPotential Accelerates Molecular Dynamics Simulations" /&gt;&lt;h1 id="nvidia-cupotential-accelerates-molecular-dynamics-simulations"&gt;NVIDIA cuPotential Accelerates Molecular Dynamics Simulations
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Molecular dynamics (MD) is an indispensable tool across physics, chemistry, biology, and materials science.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Owing to its arithmetic structure, particularly the parallel evaluation of many atom-pair interactions, MD codes were among the first to be ported to run on GPUs.&lt;/p&gt;
+&lt;p&gt;However, as GPUs evolve, optimizing kernels and ensuring compatibility across heterogeneous hardware have become more difficult than ever for many MD engine developers.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;NVIDIA cuPotential is a focused library designed for molecular dynamics, addressing these challenges.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Building the cuPotential runtime and plugin for OpenMM requires:&lt;/p&gt;
+&lt;p&gt;• Linux x86-64 with a supported NVIDIA GPU&lt;/p&gt;
+&lt;p&gt;• An installed NVIDIA driver compatible with CUDA 13.1&lt;/p&gt;
+&lt;p&gt;• Conda or Micromamba installed and initialized for your shell&lt;/p&gt;
+&lt;p&gt;• A clone of the cuPotential repository from the NVIDIA/cuPotential GitHub repo&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The cuPotential OpenMM plugin provides replacements for the OpenMM nonbonded force, Langevin integrator, and Monte Carlo barostat, enabling seamless drop-in replacements with minimal changes to the user’s code.&lt;/p&gt;
+&lt;h2 id="-using-cupotential-with-openmm"&gt;💻 Using cuPotential with OpenMM
+&lt;/h2&gt;&lt;p&gt;The cuPotential OpenMM plugin provides replacements for the OpenMM nonbonded force, Langevin integrator, and Monte Carlo barostat.&lt;/p&gt;
+&lt;h2 id="-performance"&gt;📊 Performance
+&lt;/h2&gt;&lt;p&gt;The cuPotential arm uses its own force and integrator, plus its barostat for NPT, resulting in a reported speedup.&lt;/p&gt;
+&lt;h2 id="-key-features"&gt;📊 Key Features
+&lt;/h2&gt;&lt;p&gt;• Modular primitives with a C API&lt;/p&gt;
+&lt;p&gt;• Direct space and reciprocal space utilities&lt;/p&gt;
+&lt;p&gt;• Cutoff-based interaction evaluators and charge spreading functions&lt;/p&gt;
+&lt;h2 id="-model-variants"&gt;📊 Model Variants
+&lt;/h2&gt;&lt;p&gt;• cuPotential provides a plugin specifically for OpenMM&lt;/p&gt;
+&lt;h2 id="-capabilities"&gt;📊 Capabilities
+&lt;/h2&gt;&lt;p&gt;• Acceleration of workloads on heterogeneous hardware&lt;/p&gt;
+&lt;p&gt;• Seamless drop-in replacements with minimal changes to the user’s code&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/healthcare-cupotential-1024x576-jpg.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/cupotential-primitives.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/cupotential-openmm-speedup-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AI #MachineLearning #GPUAcceleration&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/accelerate-molecular-dynamics-simulations-with-accurate-flexible-primitives-using-nvidia-cupotential/" target="_blank" rel="noopener"
+&gt;Accelerate Molecular Dynamics Simulations with Accurate, Flexible Primitives Using NVIDIA cuPotential | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Lubrizol Uses AI, Cloud and Data Fusion Teams to Accelerate Sustainable Material Development</title><link>https://shoubhikbanerjee.github.io/blog/p/lubrizol-uses-ai-cloud-and-data-fusion-teams-to-accelerate-sustainable-material-development/</link><pubDate>Mon, 09 Nov 2026 22:03:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lubrizol-uses-ai-cloud-and-data-fusion-teams-to-accelerate-sustainable-material-development/</guid><description>&lt;img src="https://wp.technologyreview.com/wp-content/uploads/2026/11/MITTRInfoysLubrizol-open-card-v3.png?resize=1200,600" alt="Featured image of post Lubrizol Uses AI, Cloud and Data Fusion Teams to Accelerate Sustainable Material Development" /&gt;&lt;h1 id="lubrizol-uses-ai-cloud-and-data-fusion-teams-to-accelerate-sustainable-material-development"&gt;Lubrizol Uses AI, Cloud and Data Fusion Teams to Accelerate Sustainable Material Development
+&lt;/h1&gt;&lt;p&gt;Lubrizol is accelerating the development of sustainable materials by linking AI, advanced modeling, and cloud‑based data platforms with its scientists’ expertise.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Connected data, AI, and advanced modeling are helping scientists accelerate research and develop more sustainable materials. The primary challenge for companies is connecting new technologies to reliable data, scientific expertise, and the practical realities of bringing products to market.&lt;/p&gt;
+&lt;h2 id="-digital-foundation"&gt;🏭 Digital Foundation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Girish Rao, vice president of information technology at Lubrizol, says the company is building a digital foundation that connects business processes, modern data platforms, and cloud infrastructure to support its R&amp;amp;D teams.&lt;/li&gt;
+&lt;li&gt;The goal is to combine decades of accumulated technical data with the deep expertise of chemists and engineers who understand customer needs and physical constraints.&lt;/li&gt;
+&lt;li&gt;Cloud infrastructure gives the company flexibility to access computing resources and modern tools without making the substantial investments required to build and maintain its own data centers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-fusion-teams"&gt;🤝 Fusion Teams
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Scientists, data scientists, and IT teams approach problems from different perspectives, prioritizing experimental validity, model performance, and platform security and scalability, respectively.&lt;/li&gt;
+&lt;li&gt;By bringing these groups together in “fusion teams,” Lubrizol aligns them around shared objectives, starting with small pilots to build trust.&lt;/li&gt;
+&lt;li&gt;“Once the trust is built between the team members and they know what value they&amp;rsquo;re about to create,&amp;quot; Rao says, &amp;ldquo;things go a lot better.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-modeling--sustainability"&gt;📊 Modeling &amp;amp; Sustainability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Data scientists can help identify patterns, test new hypotheses, and model possibilities before researchers conduct physical experiments.&lt;/li&gt;
+&lt;li&gt;Digital modeling can help researchers evaluate more formulations, explore materials such as starch and corn‑based alternatives, and assess trade‑offs across a product&amp;rsquo;s life cycle.&lt;/li&gt;
+&lt;li&gt;Scaling production while meeting performance expectations, regulatory requirements, and financial constraints is a tightrope walk, but AI&amp;rsquo;s ability to model multiple variables could help teams navigate those competing demands.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-future-outlook"&gt;🚀 Future Outlook
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Rao expects AI, automation, advanced modeling, digital twins, and connected data to converge as laboratories become more intelligent and manufacturing plants more efficient.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;It&amp;rsquo;s not just a single technology. I think it&amp;rsquo;s the combination of all of these, and it&amp;rsquo;ll be the ability to connect all these processes that are going to generate tremendous amounts of data,&amp;rdquo; he notes.&lt;/li&gt;
+&lt;li&gt;The opportunity lies in bringing these capabilities together responsibly and at scale.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Team&lt;/th&gt;
+&lt;th&gt;Primary Priority&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Scientists&lt;/td&gt;
+&lt;td&gt;Experimental validity&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Data Scientists&lt;/td&gt;
+&lt;td&gt;Model performance&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;IT Teams&lt;/td&gt;
+&lt;td&gt;Platform security and scalability&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#AI #SustainableMaterials #DigitalTransformation #CloudComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.technologyreview.com/2026/11/09/1147654/innovating-with-ai-in-the-special-chemicals-industry/" target="_blank" rel="noopener"
+&gt;Innovating with AI in the special chemicals industry&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Syensqo Uses AI Agents to Develop Advanced Materials for AI Infrastructure</title><link>https://shoubhikbanerjee.github.io/blog/p/syensqo-uses-ai-agents-to-develop-advanced-materials-for-ai-infrastructure/</link><pubDate>Thu, 17 Sep 2026 00:50:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/syensqo-uses-ai-agents-to-develop-advanced-materials-for-ai-infrastructure/</guid><description>&lt;img src="https://wp.technologyreview.com/wp-content/uploads/2026/09/Mike-Finelli-business-lab.png?resize=1200,600" alt="Featured image of post Syensqo Uses AI Agents to Develop Advanced Materials for AI Infrastructure" /&gt;&lt;h1 id="syensqo-uses-ai-agents-to-develop-advanced-materials-for-ai-infrastructure"&gt;Syensqo Uses AI Agents to Develop Advanced Materials for AI Infrastructure
+&lt;/h1&gt;&lt;p&gt;Syensqo, a global leader in specialty materials, is employing AI agents to accelerate the discovery and development of materials designed to support semiconductor and data center infrastructure.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;According to Mike Finelli, chief technology and innovation officer and chief North America officer at Syensqo, the AI boom is becoming a materials challenge. He states that AI is pushing semiconductors and data centers toward physical limits regarding:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Performance&lt;/li&gt;
+&lt;li&gt;Thermal management&lt;/li&gt;
+&lt;li&gt;Electrical efficiency&lt;/li&gt;
+&lt;li&gt;Reliability&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Syensqo uses AI agents to navigate the &amp;ldquo;enormous universe of possible molecules&amp;rdquo; through the following process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Digitally synthesizing millions of potential molecular combinations.&lt;/li&gt;
+&lt;li&gt;Predicting the sustainability and performance characteristics of these combinations.&lt;/li&gt;
+&lt;li&gt;Narrowing the results to a smaller group for laboratory testing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Syensqo is developing various solutions to meet accumulating requirements for purity, chemical resistance, plasma resistance, high temperature, electrical performance, and long-term stability. These include:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Material Application&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose/Source&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;High-voltage data center architectures&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Specialized materials development&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Semiconductor manufacturing&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Advanced sealing materials&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Direct immersion cooling&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Thermal-management fluids&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Data center energy-density/voltage&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Materials developed for electric vehicles&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Finelli suggests a reinforcing cycle where AI helps develop materials that improve AI infrastructure, which then enables better AI to further accelerate materials discovery. This approach allows scientists to go &amp;ldquo;broader, deeper, and faster&amp;rdquo; while spending more time on complex engineering problems.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://wp.technologyreview.com/wp-content/uploads/2026/09/Mike-Finelli-business-lab.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Syensqo #AIagents #Semiconductors #MaterialsScience #DataCenters&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.technologyreview.com/2026/09/16/1144014/building-the-materials-foundation-for-ai/" target="_blank" rel="noopener"
+&gt;Building the materials foundation for AI&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Distributed Computing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/distributed-computing/</link><description>Recent content in Distributed Computing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 07 Nov 2026 22:01:49 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/distributed-computing/index.xml" rel="self" type="application/rss+xml"/><item><title>Reshard Collective Enables Efficient Weight Refit for Large‑Scale RL Training</title><link>https://shoubhikbanerjee.github.io/blog/p/reshard-collective-enables-efficient-weight-refit-for-largescale-rl-training/</link><pubDate>Sat, 07 Nov 2026 22:01:49 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/reshard-collective-enables-efficient-weight-refit-for-largescale-rl-training/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/green-cube.webp" alt="Featured image of post Reshard Collective Enables Efficient Weight Refit for Large‑Scale RL Training" /&gt;&lt;h1 id="reshard-collective-enables-efficient-weight-refit-for-largescale-rl-training"&gt;Reshard Collective Enables Efficient Weight Refit for Large‑Scale RL Training
+&lt;/h1&gt;&lt;p&gt;During reinforcement learning (RL) post‑training, training trajectories are generated on the fly by running inference with the current policy model. In large‑scale setups inference and training run on separate GPU resources in a disaggregated configuration, and the system periodically refreshes inference‑GPU weights with the latest parameters from the training GPUs; this transfer is called &lt;strong&gt;refit&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;RL post‑training generates trajectories on the fly via inference with the current policy model.&lt;/li&gt;
+&lt;li&gt;Inference and training run in parallel on separate GPU resources in a disaggregated setup.&lt;/li&gt;
+&lt;li&gt;Periodic weight refresh on inference GPUs is termed &lt;strong&gt;refit&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-refit-is-challenging"&gt;⚙️ Why refit is challenging
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Inference and training use different parallelism mappings (data, context, tensor, expert, pipeline), so weight shards are laid out differently.&lt;/li&gt;
+&lt;li&gt;Refit must move all model weights, making the communication payload comparable to the total model size.&lt;/li&gt;
+&lt;li&gt;Frontier models already require ~10 TB of data per refit (e.g., Kimi K3 ≈5.6 TB, Qwen 3.8 2.4T A95B ≈4.8 TB), and the payload grows with model scale.&lt;/li&gt;
+&lt;li&gt;Existing implementations use a gather‑and‑broadcast pattern:
+&lt;ul&gt;
+&lt;li&gt;Training GPUs all‑gather local shards into a complete tensor.&lt;/li&gt;
+&lt;li&gt;The complete tensor is broadcast to inference GPUs, each keeping only its needed shard.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;This sends the full tensor to every inference GPU, creating redundant communication in both phases.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-the-reshard-collective-solution"&gt;🧩 The Reshard collective solution
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The Reshard collective is a new type of collective communication designed to accelerate RL weight refit.&lt;/li&gt;
+&lt;li&gt;Implemented as &lt;strong&gt;NCCL M2N Reshard&lt;/strong&gt;, an open‑source reference in the NVIDIA/nccl‑extensions GitHub repository.&lt;/li&gt;
+&lt;li&gt;Builds on PyTorch’s Distributed Tensor (DTensor) abstraction, which describes a tensor’s global shape, device mesh, and placements (shard or replicate).&lt;/li&gt;
+&lt;li&gt;Refit is reformulated as a DTensor‑to‑DTensor &lt;strong&gt;resharding&lt;/strong&gt; operation: converting the training layout to the inference layout directly, without constructing a full intermediate tensor.&lt;/li&gt;
+&lt;li&gt;This transfers only the theoretical minimum amount of data, respecting arbitrary shard boundaries and replication patterns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-model-size-examples"&gt;📊 Model size examples
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Parameters (trillion)&lt;/th&gt;
+&lt;th&gt;Approx. BF16 weight size (TB)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Kimi K3&lt;/td&gt;
+&lt;td&gt;2.8&lt;/td&gt;
+&lt;td&gt;5.6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Qwen 3.8 2.4T A95B&lt;/td&gt;
+&lt;td&gt;2.4&lt;/td&gt;
+&lt;td&gt;4.8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;NCCL M2N Reshard source code is publicly available via the NVIDIA/nccl‑extensions GitHub repo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/direct-shard-to-shard-transfer-dtensor.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/reshard-operation-example.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/tp4-to-tp2dp2-example.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#RL #WeightRefit #Reshard #NCCL&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/accelerating-reinforcement-learning-weight-refit-with-the-reshard-collective/" target="_blank" rel="noopener"
+&gt;Accelerating Reinforcement Learning Weight Refit with the Reshard Collective | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>FedAbA Enables Basis-Consistent Federated LoRA for Heterogeneous Ranks</title><link>https://shoubhikbanerjee.github.io/blog/p/fedaba-enables-basis-consistent-federated-lora-for-heterogeneous-ranks/</link><pubDate>Fri, 06 Nov 2026 22:02:31 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/fedaba-enables-basis-consistent-federated-lora-for-heterogeneous-ranks/</guid><description>&lt;h1 id="fedaba-enables-basis-consistent-federated-lora-for-heterogeneous-ranks"&gt;FedAbA Enables Basis-Consistent Federated LoRA for Heterogeneous Ranks
+&lt;/h1&gt;&lt;p&gt;A new arXiv preprint titled &lt;strong&gt;&amp;ldquo;Align Before Aggregation: Basis-Consistent Federated LoRA under Heterogeneous Ranks&amp;rdquo;&lt;/strong&gt; (submitted 5 Nov 2026) proposes a novel aggregation framework—FedAbA—that addresses basis inconsistency when federating low‑rank adaptations of large language models across clients with different capacity limits.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;📖 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Federated fine‑tuning of LLMs is increasingly important for environments where client devices have heterogeneous computational resources.&lt;/li&gt;
+&lt;li&gt;Low‑rank adaptation (LoRA) with heterogeneous ranks makes such federated fine‑tuning practical, but existing server‑side aggregators operate on matrix updates that may be generated from client‑specific local bases.&lt;/li&gt;
+&lt;li&gt;Basis inconsistency can destabilize the rank‑prefix dispatched to lower‑rank clients after server‑side refactorization.&lt;/li&gt;
+&lt;li&gt;FedAbA is introduced as a &lt;strong&gt;basis‑consistent&lt;/strong&gt; aggregation framework designed for heterogeneous ranks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Extract local basis&lt;/strong&gt; – Each client’s LoRA factors are used to recover its local basis.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Align to global basis&lt;/strong&gt; – The local basis is aligned with the corresponding prefix of a global reference basis.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reconstruction&lt;/strong&gt; – A basis‑consistent reconstruction of each client’s matrix update \(\Delta W_i\) is built before aggregation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Weighted aggregation&lt;/strong&gt; – Reconstructions are aggregated with weights that combine client data size and a consistency score.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Exact coefficient‑space SVD&lt;/strong&gt; – After aggregation, an exact SVD refactorization and gauge fixing are performed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rank‑prefix dispatch&lt;/strong&gt; – The final, consistent low‑rank factors are dispatched back to clients.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The method operates in the weight space \(\mathbb{R}^{m\times n}\) where updates can be averaged, but the crucial step is ensuring the underlying bases match before averaging.&lt;/li&gt;
+&lt;li&gt;Theoretical analysis clarifies why basis consistency matters and validates the consistency‑aware aggregation mechanism.&lt;/li&gt;
+&lt;li&gt;FedAbA integrates both data‑size weighting and a &lt;em&gt;consistency score&lt;/em&gt; to balance contributions from heterogeneous clients.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Extensive experiments demonstrate that FedAbA &lt;strong&gt;outperforms representative federated LoRA baselines&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;largest gains&lt;/strong&gt; are observed under the &lt;strong&gt;strongest rank heterogeneity&lt;/strong&gt;, confirming the method’s effectiveness when client capacities differ markedly.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enables stable and accurate federated fine‑tuning of LLMs across a diverse set of devices, broadening the applicability of privacy‑preserving AI.&lt;/li&gt;
+&lt;li&gt;Provides a systematic way to reconcile heterogeneous low‑rank representations, a common obstacle in real‑world federated deployments.&lt;/li&gt;
+&lt;li&gt;The approach can be adopted in existing federated learning pipelines that already use LoRA, requiring only the additional basis‑alignment steps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#FederatedLearning #LoRA #LLM #RankHeterogeneity&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.07598v1" target="_blank" rel="noopener"
+&gt;Align Before Aggregation: Basis-Consistent Federated LoRA under Heterogeneous Ranks&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Introduction of ZO-COSMO for Distributed Estimation and Masked Consensus</title><link>https://shoubhikbanerjee.github.io/blog/p/introduction-of-zo-cosmo-for-distributed-estimation-and-masked-consensus/</link><pubDate>Thu, 24 Sep 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introduction-of-zo-cosmo-for-distributed-estimation-and-masked-consensus/</guid><description>&lt;h1 id="introduction-of-zo-cosmo-for-distributed-estimation-and-masked-consensus"&gt;Introduction of ZO-COSMO for Distributed Estimation and Masked Consensus
+&lt;/h1&gt;&lt;p&gt;Researchers have developed ZO-COSMO, a new method that couples two-query estimation with average-preserving masked consensus using $q$ values per active link.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mechanism&lt;/strong&gt;: The system utilizes global supports for all-neighbor mixing, while matching updates only require agreement within each pair.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Analytical Foundations&lt;/strong&gt;: The developers derived convergence guarantees for sparse-momentum and core updates, as well as a sharp contraction-per-scalar bound within the matching class.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error Management&lt;/strong&gt;: At fixed matching, exact moment identities characterize how estimation error and disagreement are redistributed and how shared directions preserve gradient-heterogeneity cancellation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Experiments were conducted across several configurations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Test Environments&lt;/strong&gt;: Trials included noise, unequal curvatures, sparse momentum, 64 synthetic agents, and eight logical Qwen LoRA workers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Controls&lt;/strong&gt;: Seed-aware and same-matching controls were used to distinguish query correlation, scheduling, and encoding.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Performance tests on Qwen2-7B QNLI demonstrated the following gains at matched payload budgets:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Explicit-index Rand-$k$&lt;/strong&gt;: 3.65 accuracy points&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;All-neighbor mixing (complete graph)&lt;/strong&gt;: 3.42 accuracy points&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;All-neighbor mixing (ring graph)&lt;/strong&gt;: 2.53 accuracy points&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Additionally, a matched-first-step ablation resulted in a 3.92-point momentum benefit.&lt;/p&gt;
+&lt;p&gt;#ZO-COSMO #Qwen2 #DistributedLearning #Optimization&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.27199v1" target="_blank" rel="noopener"
+&gt;ZO-COSMO: Index-Free One-Hop Mixing for Decentralized Zeroth-Order Optimization&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>FedFIbOS Introduces Fisher Information for Heterogeneous Federated Learning Submodelling</title><link>https://shoubhikbanerjee.github.io/blog/p/fedfibos-introduces-fisher-information-for-heterogeneous-federated-learning-submodelling/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/fedfibos-introduces-fisher-information-for-heterogeneous-federated-learning-submodelling/</guid><description>&lt;h1 id="fedfibos-introduces-fisher-information-for-heterogeneous-federated-learning-submodelling"&gt;FedFIbOS Introduces Fisher Information for Heterogeneous Federated Learning Submodelling
+&lt;/h1&gt;&lt;p&gt;Researchers have proposed FedFIbOS (Fisher Importance-based Optimal Submodelling), a new method for heterogeneous federated learning that uses Fisher Information to select submodel parameters for clients with diverse computational capacities.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;In heterogeneous federated learning, clients train capacity-constrained submodels to collaboratively train a global model. FedFIbOS addresses a fundamental gap in existing methods, which often rely on heuristic importance measures like parameter magnitude that lack theoretical justification for supporting convergence.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;FedFIbOS implements a principled criterion derived from minimizing submodel masking error:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Theoretical Formulation&lt;/strong&gt;: Submodel selection is formulated through a Fisher-weighted quadratic masking surrogate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Selection Rule&lt;/strong&gt;: The method uses a raw Fisher top-$k$ rule, which solves the surrogate under a Fisher-dominant ranking condition.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Convergence&lt;/strong&gt;: The approach retains the convergence structure of the underlying masked federated optimization bound.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Estimation&lt;/strong&gt;: Fisher scores are efficiently estimated using squared gradients from empirical diagonal Fisher information.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Efficiency&lt;/strong&gt;: The process enables adaptive and stable parameter selection without additional optimization overhead.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: In experiments using CIFAR-10, CIFAR-100, and AGNews under Dirichlet non-IID and pathological settings, FedFIbOS achieved approximately 10% higher accuracy than the state of the art.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Heterogeneity&lt;/strong&gt;: Improvements became more pronounced as heterogeneity increased.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#FederatedLearning #FisherInformation #MachineLearning #Submodelling&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.19559v1" target="_blank" rel="noopener"
+&gt;FedFIbOS: Fisher Importance based Optimal Submodelling for Heterogeneous Federated Learning&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

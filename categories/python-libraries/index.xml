@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python Libraries on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/python-libraries/</link><description>Recent content in Python Libraries on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 28 Nov 2026 22:07:57 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/python-libraries/index.xml" rel="self" type="application/rss+xml"/><item><title>Misata Introduces Declarative Synthetic Data Generation with Verification</title><link>https://shoubhikbanerjee.github.io/blog/p/misata-introduces-declarative-synthetic-data-generation-with-verification/</link><pubDate>Sat, 28 Nov 2026 22:07:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/misata-introduces-declarative-synthetic-data-generation-with-verification/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/112371697?v=4" alt="Featured image of post Misata Introduces Declarative Synthetic Data Generation with Verification" /&gt;&lt;h1 id="misata-introduces-declarative-synthetic-data-generation-with-verification"&gt;Misata Introduces Declarative Synthetic Data Generation with Verification
+&lt;/h1&gt;&lt;p&gt;Misata is a new declarative synthetic data generator for Python. It allows developers to write down the facts a dataset must satisfy, and the engine builds multi-table data that satisfies all of them simultaneously.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Users define invariants in a &lt;code&gt;misata.yaml&lt;/code&gt; file, such as monthly revenue curves, balanced ledgers, or foreign key constraints. The system generates rows derived from these specifications.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Specification as Ground Truth:&lt;/strong&gt; The specification is the ground truth, and the rows are derived from it. For example, if the specification states &amp;ldquo;January revenue is 180,000,&amp;rdquo; this is true before a single row exists.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DuckDB Integration:&lt;/strong&gt; Once data is generated, DuckDB checks the files on disk and writes a certificate that anyone can re-run.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Independent Verification:&lt;/strong&gt; The &lt;code&gt;verify.py&lt;/code&gt; script uses only the standard library and &lt;code&gt;duckdb&lt;/code&gt;. It shares no code with the generator.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The tool addresses the &amp;ldquo;oracle problem&amp;rdquo; in testing, where verifying data pipelines requires both input data and an independently known answer. Traditional methods have limitations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Copying Production:&lt;/strong&gt; Provides data without a known answer.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hand-written Fixtures:&lt;/strong&gt; Provide an answer that rots.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Random Generators:&lt;/strong&gt; Provide data whose answer must be computed by the code under test.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In a documented example, Misata generated data satisfying 69 invariants, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Twelve monthly revenue totals (e.g., 180,000.00 in January, 240,000.00 in June).&lt;/li&gt;
+&lt;li&gt;Channel splits inside each month.&lt;/li&gt;
+&lt;li&gt;Planned row counts per month.&lt;/li&gt;
+&lt;li&gt;Zero orphaned &lt;code&gt;customer_id&lt;/code&gt;s and unique keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The verification process can detect specific failures, such as a mismatched SHA256 hash or a precision error where an observed value of 180000.01 does not match the expected 180000.00.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Misata is available for Python. It can be installed and used as follows:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Installation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install &lt;span class="s2"&gt;&amp;#34;misata[duckdb]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Data Generation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;misata generate -c misata.yaml -o data --attest
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Verification&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python data/verify.py
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;A successful verification outputs a certificate indicating that files match their attested SHA256 hashes and all invariants hold.&lt;/p&gt;
+&lt;p&gt;#SyntheticData #Python #DataEngineering #Testing #DuckDB&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/rasinmuhammed/misata" target="_blank" rel="noopener"
+&gt;rasinmuhammed/misata&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New drf-haystack library integrates Haystack with Django REST Framework</title><link>https://shoubhikbanerjee.github.io/blog/p/new-drf-haystack-library-integrates-haystack-with-django-rest-framework/</link><pubDate>Thu, 26 Nov 2026 22:08:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-drf-haystack-library-integrates-haystack-with-django-rest-framework/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/161911044?v=4" alt="Featured image of post New drf-haystack library integrates Haystack with Django REST Framework" /&gt;&lt;h1 id="new-drf-haystack-library-integrates-haystack-with-django-rest-framework"&gt;New drf-haystack library integrates Haystack with Django REST Framework
+&lt;/h1&gt;&lt;p&gt;A new Python library, drf-haystack, has been released to simplify the integration of Haystack with Django REST Framework.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The library is implemented as a small package that bridges Haystack and Django REST Framework, enabling developers to more easily create API endpoints that leverage Haystack&amp;rsquo;s search capabilities.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The project has specific version requirements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Python &amp;gt;=3.11, &amp;lt;3.15&lt;/li&gt;
+&lt;li&gt;Django &amp;gt;=5.2, &amp;lt;6.2&lt;/li&gt;
+&lt;li&gt;Haystack &amp;gt;=3.3.0, &amp;lt;4&lt;/li&gt;
+&lt;li&gt;Django REST Framework &amp;gt;=3.16&lt;/li&gt;
+&lt;li&gt;Elasticsearch &amp;gt;=7.0.0, &amp;lt;8&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The package can be installed via pip:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install drf-haystack
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The library is designed to work with Elasticsearch versions 7.x.&lt;/p&gt;
+&lt;h2 id="-features"&gt;💡 Features
+&lt;/h2&gt;&lt;p&gt;The library supports several search features including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Autocomplete&lt;/li&gt;
+&lt;li&gt;Boost (Experimental)&lt;/li&gt;
+&lt;li&gt;Faceting&lt;/li&gt;
+&lt;li&gt;Geo Spatial Search&lt;/li&gt;
+&lt;li&gt;Highlighting&lt;/li&gt;
+&lt;li&gt;More Like This&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Django #REST #Haystack #Elasticsearch #Python&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/django-commons/drf-haystack" target="_blank" rel="noopener"
+&gt;django-commons/drf-haystack&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LargeLanguageModels on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/largelanguagemodels/</link><description>Recent content in LargeLanguageModels on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 27 Nov 2026 22:09:22 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/largelanguagemodels/index.xml" rel="self" type="application/rss+xml"/><item><title>Laminar Enables Scalable Asynchronous RL Post-Training for LLMs</title><link>https://shoubhikbanerjee.github.io/blog/p/laminar-enables-scalable-asynchronous-rl-post-training-for-llms/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/laminar-enables-scalable-asynchronous-rl-post-training-for-llms/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/212961691?v=4" alt="Featured image of post Laminar Enables Scalable Asynchronous RL Post-Training for LLMs" /&gt;&lt;h1 id="laminar-enables-scalable-asynchronous-rl-post-training-for-llms"&gt;Laminar Enables Scalable Asynchronous RL Post-Training for LLMs
+&lt;/h1&gt;&lt;p&gt;Laminar is a scalable reinforcement learning post‑training framework that enables large language models and long‑horizon agents to be fine‑tuned at scale.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Built on &lt;strong&gt;verl&lt;/strong&gt; and &lt;strong&gt;Uni-Agent&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Open‑source implementation of &lt;em&gt;Laminar: A Scalable Asynchronous RL Post‑Training Framework&lt;/em&gt; (EuroSys ’26).&lt;/li&gt;
+&lt;li&gt;Decoupled, asynchronous, and fault‑tolerant design for large‑cluster scaling.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Fully decoupled training and rollout&lt;/strong&gt;: independent loops via data and weight planes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data plane (&lt;code&gt;ExperienceBuffer&lt;/code&gt;)&lt;/strong&gt; buffers completed trajectories for &lt;code&gt;AsyncRLTrainer&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Weight plane (&lt;code&gt;Relay&lt;/code&gt;)&lt;/strong&gt; stages published weights for inference replicas to pull on demand.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trajectory‑level asynchrony&lt;/strong&gt;: generates and consumes individual trajectories independently.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version‑mixed partial rollout&lt;/strong&gt;: interrupts in‑flight generations on weight sync and continues with newer weights.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version‑consistent rollout&lt;/strong&gt;: keeps each trajectory on a single model version.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamic repack&lt;/strong&gt;: consolidates long‑tail trajectories onto fewer replicas, freeing drained replicas to pull the latest weights.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Concurrent multi‑checkpoint evaluation (&lt;code&gt;laminar.eval&lt;/code&gt;)&lt;/strong&gt;: version‑pinned routing and tail repacking for bubble‑free offline batch and online streaming evaluation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fault‑tolerant execution&lt;/strong&gt;: prevents single‑replica failures from stalling cluster‑wide progress.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference engines&lt;/strong&gt; recover failed replicas from &lt;code&gt;Relay&lt;/code&gt; or checkpoint storage while preserving in‑flight trajectory prefixes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trainer engine&lt;/strong&gt; resumes from the latest checkpoint (asynchronous per‑step checkpoint in progress).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Extras&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--extra vllm vLLM rollout and evaluation backend
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--extra megatron Megatron‑LM training backend
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--extra fsdp FSDP2 training backend
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--extra ucx UCX transport for Relay (recommended)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Open‑source on GitHub (built on verl and Uni-Agent).&lt;/li&gt;
+&lt;li&gt;Manages Python, CUDA, wheel indexes, and pinned Git dependencies with &lt;code&gt;uv&lt;/code&gt; (see &lt;code&gt;pyproject.toml&lt;/code&gt; and &lt;code&gt;uv.lock&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;In SWE agent training (Qwen3‑Coder‑30B‑A3B‑Instruct on SWE‑rebench, evaluated on SWE‑bench Verified on 64×H800) it improved resolve rate from &lt;strong&gt;46.6 %&lt;/strong&gt; to &lt;strong&gt;52.2 %&lt;/strong&gt;, surpassing the baseline peak of &lt;strong&gt;51.4 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Uses &lt;strong&gt;33 % fewer&lt;/strong&gt; trained samples and &lt;strong&gt;64 % fewer&lt;/strong&gt; GPU‑hours to exceed the baseline peak.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Laminar #ReinforcementLearning #LargeLanguageModels #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/verl-project/laminar" target="_blank" rel="noopener"
+&gt;verl-project/laminar&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>LLM Chess Benchmark Evaluates AI Reasoning Through Multi-Turn Games</title><link>https://shoubhikbanerjee.github.io/blog/p/llm-chess-benchmark-evaluates-ai-reasoning-through-multi-turn-games/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/llm-chess-benchmark-evaluates-ai-reasoning-through-multi-turn-games/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/7947027?v=4" alt="Featured image of post LLM Chess Benchmark Evaluates AI Reasoning Through Multi-Turn Games" /&gt;&lt;h1 id="llm-chess-benchmark-evaluates-ai-reasoning-through-multi-turn-games"&gt;LLM Chess Benchmark Evaluates AI Reasoning Through Multi-Turn Games
+&lt;/h1&gt;&lt;p&gt;LLM Chess is a new benchmark that evaluates Large Language Models (LLMs) on their reasoning and instruction-following abilities in an agentic setting. The benchmark engages LLMs in multi-turn dialogs to play chess against opponents like a Random Player or the Komodo Dragon chess engine.&lt;/p&gt;
+&lt;h2 id="-evaluation-landscape"&gt;📊 Evaluation Landscape
+&lt;/h2&gt;&lt;h3 id="early-challenges-2024"&gt;Early Challenges (2024)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Early models struggled with basic instruction following&lt;/li&gt;
+&lt;li&gt;Common issues included hallucinating illegal moves&lt;/li&gt;
+&lt;li&gt;Dialog failures were frequent during gameplay&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2025-advancements"&gt;2025 Advancements
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Advanced reasoning models (o1, o3, o4-mini) saturated random-based evaluations&lt;/li&gt;
+&lt;li&gt;Dragon opponent added for Elo anchoring with stronger challenge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-metrics"&gt;⚙️ Key Metrics
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Chess Skill&lt;/strong&gt;: Win/Loss outcomes and Elo ratings&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Durability&lt;/strong&gt;: Game duration reveals capability trade-offs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability-and-setup"&gt;🚀 Availability and Setup
+&lt;/h2&gt;&lt;h3 id="repository-access"&gt;Repository Access
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Clone the repository: &lt;code&gt;git clone https://github.com/maxim-saplin/llm_chess.git&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Create a virtual environment (recommended): &lt;code&gt;uv sync&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="configuration-steps"&gt;Configuration Steps
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Configure LLMs: Copy &lt;code&gt;.env.sample&lt;/code&gt; to &lt;code&gt;.env&lt;/code&gt; and add your API keys&lt;/li&gt;
+&lt;li&gt;Supports multiple providers: Azure OpenAI, OpenAI, Anthropic, Google, Groq, and local models via Autogen&lt;/li&gt;
+&lt;li&gt;For local models, ensure Ollama or LM Studio is running&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="chess-engine-setup"&gt;Chess Engine Setup
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Installation&lt;/th&gt;
+&lt;th&gt;Configuration&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Dragon&lt;/td&gt;
+&lt;td&gt;Download binaries from &lt;a class="link" href="https://komodochess.com/installation.htm" target="_blank" rel="noopener"
+&gt;https://komodochess.com/installation.htm&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Place in &lt;code&gt;dragon/&lt;/code&gt; directory, set &lt;code&gt;llm_chess.dragon_path&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stockfish&lt;/td&gt;
+&lt;td&gt;Install via &lt;code&gt;brew install stockfish&lt;/code&gt; (macOS) or equivalent&lt;/td&gt;
+&lt;td&gt;Set &lt;code&gt;llm_chess.stockfish_path&lt;/code&gt; (default: &lt;code&gt;/opt/homebrew/bin/stockfish&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="running-simulations"&gt;Running Simulations
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Run a single simulation: &lt;code&gt;uv run llm-chess&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Default: Random Player (white) vs. LLM (black)&lt;/li&gt;
+&lt;li&gt;Logs saved to &lt;code&gt;_logs/&lt;/code&gt; with JSON details&lt;/li&gt;
+&lt;li&gt;Run multiple simulations: &lt;code&gt;uv run python run_multiple_games.py&lt;/code&gt; (default: 42 games)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="game-rules-and-outcomes"&gt;Game Rules and Outcomes
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Max 200 moves (100 per player)&lt;/li&gt;
+&lt;li&gt;Max 10 turns per LLM move&lt;/li&gt;
+&lt;li&gt;Max 3 mistakes per dialog (exceeding → LLM loss)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="results-interpretation"&gt;Results Interpretation
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Win/Loss&lt;/strong&gt;: Checkmate or opponent errors/timeouts&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Draw&lt;/strong&gt;: Max moves reached, stalemate, insufficient material, repetition, or 75-move rule&lt;/li&gt;
+&lt;li&gt;Moves use UCI notation with Unicode board visualization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="provider-configuration"&gt;Provider Configuration
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Provider choice from &lt;code&gt;MODEL_KIND_W&lt;/code&gt; / &lt;code&gt;MODEL_KIND_B&lt;/code&gt; in &lt;code&gt;.env&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;azure&lt;/code&gt; for classic Azure chat-completions deployments&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;azure_responses&lt;/code&gt; for Azure deployments requiring the Responses API&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="dragon-difficulty-levels"&gt;Dragon Difficulty Levels
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Level&lt;/th&gt;
+&lt;th&gt;Elo Rating&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;250&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;375&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;500&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;625&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;750&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;875&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;1000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#LLMBenchmark #ChessAI #LargeLanguageModels #AIReasoning #MultiTurnDialog&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/maxim-saplin/llm_chess" target="_blank" rel="noopener"
+&gt;maxim-saplin/llm_chess&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New MVA Course on Language Models and Transformers Launches in Fall 2026</title><link>https://shoubhikbanerjee.github.io/blog/p/new-mva-course-on-language-models-and-transformers-launches-in-fall-2026/</link><pubDate>Thu, 26 Nov 2026 22:08:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-mva-course-on-language-models-and-transformers-launches-in-fall-2026/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/7555483?v=4" alt="Featured image of post New MVA Course on Language Models and Transformers Launches in Fall 2026" /&gt;&lt;h1 id="new-mva-course-on-language-models-and-transformers-launches-in-fall-2026"&gt;New MVA Course on Language Models and Transformers Launches in Fall 2026
+&lt;/h1&gt;&lt;p&gt;The Master Vision Apprentissage (MVA) program is introducing a new course focused on language models and transformers during the first semester of the academic year 2026–2027. Taught in English, the course is open to all students enrolled in the MVA program and is structured around eight sessions held between October and December 2026.&lt;/p&gt;
+&lt;p&gt;David Louapre and Nathanaël Fijalkow lead the first four sessions, covering foundational topics in language modeling, transformer architectures, pre-training dynamics, and post-training alignment. Each session provides educational materials including slides in PDF or HTML format, lecture notes, and interactive Jupyter notebooks. Additional sessions in November and December are scheduled, with further details on content and resources to be released.&lt;/p&gt;
+&lt;p&gt;A companion course is offered in the second semester by Marc Lelarge and Guillaume Baudart, titled Large Language Models for Code and Proof.&lt;/p&gt;
+&lt;h2 id="-course-structure"&gt;📚 Course Structure
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Session&lt;/th&gt;
+&lt;th&gt;Date&lt;/th&gt;
+&lt;th&gt;Instructor&lt;/th&gt;
+&lt;th&gt;Topic&lt;/th&gt;
+&lt;th&gt;Resources&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;October 1&lt;/td&gt;
+&lt;td&gt;David Louapre&lt;/td&gt;
+&lt;td&gt;Language models&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="david/lecture01.pdf" &gt;Slides (PDF)&lt;/a&gt;, &lt;a class="link" href="https://huggingface.co/spaces/dlouapre/nlp-before-llms" target="_blank" rel="noopener"
+&gt;Hugging Face Space&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;October 29&lt;/td&gt;
+&lt;td&gt;Nathanaël Fijalkow&lt;/td&gt;
+&lt;td&gt;Transformers&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="slides/01_transformers_101.html" &gt;Slides (HTML)&lt;/a&gt;, &lt;a class="link" href="notes/01_transformers_101.html" &gt;Lecture notes&lt;/a&gt;, &lt;a class="link" href="notebooks/01_transformers_101.ipynb" &gt;Notebook&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;November 5&lt;/td&gt;
+&lt;td&gt;David Louapre&lt;/td&gt;
+&lt;td&gt;Pre-training and scaling laws&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="david/lecture03_part1.pdf" &gt;Slides (PDF)&lt;/a&gt;, &lt;a class="link" href="david/lecture03_part2.pdf" &gt;Slides (PDF)&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;November 12&lt;/td&gt;
+&lt;td&gt;Nathanaël Fijalkow&lt;/td&gt;
+&lt;td&gt;Post-training and alignment&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="slides/05_post_training.html" &gt;Slides (HTML)&lt;/a&gt;, &lt;a class="link" href="notes/05_post_training.html" &gt;Lecture notes&lt;/a&gt;, &lt;a class="link" href="notebooks/05_post_training.ipynb" &gt;Notebook&lt;/a&gt;, &lt;a class="link" href="https://u-bordeaux-fr.zoom.us/rec/share/agRYane6iPKXA_tI-lM_APGbIR0ylmINIZIhQIYxUcrbloPv9AWdYwaLlba59Al6.2g4tdldzsOtG6h1B" target="_blank" rel="noopener"
+&gt;Recording&lt;/a&gt; (passcode: &lt;code&gt;=S3^kc2U&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;November 19&lt;/td&gt;
+&lt;td&gt;David Louapre&lt;/td&gt;
+&lt;td&gt;Decoding and inference optimization&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="david/lecture05_inference.pdf" &gt;Slides (PDF)&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;November 26&lt;/td&gt;
+&lt;td&gt;Nathanaël Fijalkow&lt;/td&gt;
+&lt;td&gt;Advanced architectures&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="slides/02_advanced_architectures.html" &gt;Slides (HTML)&lt;/a&gt;, &lt;a class="link" href="notes/02_advanced_architectures.html" &gt;Lecture notes&lt;/a&gt;, &lt;a class="link" href="notebooks/02_advanced_architectures.ipynb" &gt;Notebook&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-resource-format-and-tools"&gt;🛠️ Resource Format and Tools
+&lt;/h2&gt;&lt;p&gt;All lecture materials are built from source files using Quarto, a markdown-based publishing system. The course repository includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Source files in &lt;code&gt;src/&lt;/code&gt; folder, with each lecture defined in a &lt;code&gt;.qmd&lt;/code&gt; file that generates slides, notes, and notebooks.&lt;/li&gt;
+&lt;li&gt;Supporting assets in &lt;code&gt;figs/&lt;/code&gt; and &lt;code&gt;anim/&lt;/code&gt; directories.&lt;/li&gt;
+&lt;li&gt;A &lt;code&gt;render.py&lt;/code&gt; script to compile individual or multiple lectures. Run with &lt;code&gt;python3 render.py 01 06&lt;/code&gt; to build lectures 1 and 6.&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;python3 render.py 01 --slides&lt;/code&gt; to generate only the slides for lecture 1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The notebooks are executable and designed to run the lab component of each lecture. Execution is cached and only re-runs when code cells change, which may take several minutes.&lt;/p&gt;
+&lt;h2 id="-timeline"&gt;🗓️ Timeline
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Course runs during the first semester of the MVA academic year 2026–2027 (October–January 2027).&lt;/li&gt;
+&lt;li&gt;Sessions are held weekly from October through December 2026.&lt;/li&gt;
+&lt;li&gt;A second course, Large Language Models for Code and Proof, begins in the second semester of 2026–2027.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💬 Why It Matters
+&lt;/h2&gt;&lt;p&gt;The course introduces students to core concepts in modern language modeling, including the evolution from early NLP to large language models (LLMs), the mechanics of transformers, and practical aspects of model training and deployment. Emphasis is placed on hands-on learning through notebooks and real-world tools like Hugging Face Spaces.&lt;/p&gt;
+&lt;p&gt;Students will also explore advanced topics such as agent design and alignment techniques, preparing them for current developments in AI systems.&lt;/p&gt;
+&lt;p&gt;#MLCourse #Transformers #LargeLanguageModels #AIAlignment #MVA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/nathanael-fijalkow/LLM-Course" target="_blank" rel="noopener"
+&gt;nathanael-fijalkow/LLM-Course&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Stable Sampling and Head-Specific Fixes Improve Long-Form AI Performance</title><link>https://shoubhikbanerjee.github.io/blog/p/stable-sampling-and-head-specific-fixes-improve-long-form-ai-performance/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/stable-sampling-and-head-specific-fixes-improve-long-form-ai-performance/</guid><description>&lt;h1 id="stable-sampling-and-head-specific-fixes-improve-long-form-ai-performance"&gt;Stable Sampling and Head-Specific Fixes Improve Long-Form AI Performance
+&lt;/h1&gt;&lt;p&gt;Recent findings indicate that the performance of open-weight language models during long generation depends heavily on the sampling method used, while specific attention heads in sparse models often cause long-context retrieval failures.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Open-weight models frequently degrade in quality as generation length increases.&lt;/li&gt;
+&lt;li&gt;Standard attempts to fix this often involve additional training.&lt;/li&gt;
+&lt;li&gt;At high temperature, the sampler— the rule selecting the next token— determines whether long and agentic generation succeeds.&lt;/li&gt;
+&lt;li&gt;Sparse attention models that read limited key blocks can lose significant long-context retrieval accuracy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;h3 id="sampling-stability"&gt;Sampling Stability
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Top-nsigma&lt;/strong&gt;: Keeps the pool of candidate tokens small and steady as temperature rises, maintaining accuracy without letting in low-probability tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Top-p / Top-k&lt;/strong&gt;: Pool sizes grow significantly with temperature. For example, in Llama-3.1-8B, top-p&amp;rsquo;s pool grew from 4 tokens at temperature 1 to 51,845 at temperature 2.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mechanism&lt;/strong&gt;: Counting how many tokens a sampler lets through explains performance differences. Top-nsigma stops collapsing when the pool is picked at temperature 1 and temperature is applied afterwards.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="attention-head-calibration"&gt;Attention Head Calibration
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Diagnosis&lt;/strong&gt;: A calibration probe identifies &amp;ldquo;blind&amp;rdquo; attention heads that miss the needle in retrieval tasks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Metrics&lt;/strong&gt;: The probe reads two quantities in every head: the forfeited needle attention and the share of the answer&amp;rsquo;s log-probability restored by fixing the selection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Root Cause&lt;/strong&gt;: These heads attend to the needle, but a mean-pooled key summary dilutes the single decisive token.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Applying full attention in specific identified heads or using a 4-bit scorer recovers accuracy without retraining the model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Benchmark / Model&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Condition&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3.5 (Coding Agents)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Temp 2, top-p/top-k/Top-H&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0/100 GitHub issues resolved&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3.5 (Coding Agents)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Temp 2, top-nsigma&lt;/td&gt;
+&lt;td style="text-align: left"&gt;46 to 62 issues resolved&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;All Benchmarks (Median)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Top-nsigma vs Top-p&lt;/td&gt;
+&lt;td style="text-align: left"&gt;100% vs 26% of temp-1 score retained&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;MiniCPM4.1-8B (64K)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Multi-key Retrieval&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Accuracy increased from 54.1% to 97.5%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3-8B (SeerAttention-R)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Multi-key Retrieval&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Accuracy increased from 29.8% to 97.7%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Correlation&lt;/strong&gt;: Typical pool size predicts judged quality with a Spearman correlation of -0.77 across 133 sampler/temperature combinations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Latency Trade-off&lt;/strong&gt;: In production serving, full attention in fixed heads keeps 84 to 89% of the time to first token (TTFT) saved by sparse attention at 32K to 128K contexts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Consistency&lt;/strong&gt;: Four checkpoints of the InfLLM-V2 family and NOSA-8B lose multi-key retrieval in the same three blind heads.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Top-nsigma and similar stable samplers prevent the degradation seen in long-form writing, structured outputs, and coding agents at high temperatures.&lt;/li&gt;
+&lt;li&gt;Identifying and fixing specific attention heads allows sparse attention models to achieve near-full attention retrieval accuracy while maintaining high inference speeds.&lt;/li&gt;
+&lt;li&gt;The findings suggest that sampler behavior and targeted attention head modifications are more effective for long-context stability than additional training.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;All code and data related to the sampler tests are released to the public.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#LargeLanguageModels #Inference #AttentionMechanism #OpenWeights #LongContext&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.22148v1" target="_blank" rel="noopener"
+&gt;Long-Context Generation Is a Sampling Problem (When You Turn Up the Heat)&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.21917v1" target="_blank" rel="noopener"
+&gt;Lost in a Few Heads: Diagnosing and Repairing Block Selection in Sparse Attention&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Multimodal Reasoning Repository Expands Coverage of 2026 Papers</title><link>https://shoubhikbanerjee.github.io/blog/p/multimodal-reasoning-repository-expands-coverage-of-2026-papers/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/multimodal-reasoning-repository-expands-coverage-of-2026-papers/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/115147700?v=4" alt="Featured image of post Multimodal Reasoning Repository Expands Coverage of 2026 Papers" /&gt;&lt;h1 id="multimodal-reasoning-repository-expands-coverage-of-2026-papers"&gt;Multimodal Reasoning Repository Expands Coverage of 2026 Papers
+&lt;/h1&gt;&lt;p&gt;A GitHub repository dedicated to organizing papers on Multimodal Reasoning in Multimodal Large Language Models (MLLMs) has been updated with a new volume of research. This development reflects the growing intersection of visual (and audio) capabilities with reinforcement learning (RL) powered reasoning, an area where researchers hold high hopes for the future of MLLMs, LVLMs, and LSLMs.&lt;/p&gt;
+&lt;h2 id="-repository-scope"&gt;📚 Repository Scope
+&lt;/h2&gt;&lt;p&gt;The repository is designed to support research surveys by aiming for comprehensive coverage rather than limited curation. The maintainers state that covering all possibly relevant papers is more valuable to researchers than providing a curated list of only the best papers. Recent additions demonstrate this focus on breadth across multiple modalities and reasoning techniques.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Multimodal Generation:&lt;/strong&gt; Includes papers on visual generation (image and video) using RL and Chain-of-Thought (CoT).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reasoning Techniques:&lt;/strong&gt; Covers advancements in multimodal reasoning, including RL-based reasoning and alignment with human preferences.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Modalities:&lt;/strong&gt; Spans image, video, and audio reasoning in foundation models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-recent-paper-additions"&gt;📅 Recent Paper Additions
+&lt;/h2&gt;&lt;p&gt;The update includes a significant number of papers published in late 2025 and throughout 2026, focusing on agentic frameworks, evaluation methods, and specific application domains.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Date&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Paper Title&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;06 Jun 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Test-Time Scaling in Multimodal Foundation Models: A Comprehensive Survey of Generation and Reasoning&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;01 Jun 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;TechRAG: Evidence-Gated Multimodal Agentic RAG for Technical Literature Reasoning&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;20 May 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A Survey of Audio Reasoning in Multimodal Foundation Models&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;05 May 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Material Database Agent: A Multimodal Agentic Framework for Scientific Literature Mining&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;25 Apr 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;GAZE: Grounded Agentic Zero-shot Evaluation with Viewer-Level Tools and Literature Retrieval on Rare Brain MRI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;8 May 2025&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Perception, Reason, Think, and Plan: A Survey on Large Multimodal Reasoning Models&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;30 Apr 2025&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Reinforced MLLM: A Survey on RL-Based Reasoning in Multimodal Large Language Models&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;4 Apr 2025&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Why Reasoning Matters? A Survey of Advancements in Multimodal Reasoning&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;18 Mar 2025&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Aligning Multimodal LLM with Human Preference: A Survey&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;16 Mar 2025&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Multimodal Chain-of-Thought Reasoning: A Comprehensive Survey&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-featured-research-topics"&gt;🧩 Featured Research Topics
+&lt;/h2&gt;&lt;p&gt;The recent additions highlight several specific technical approaches and applications within the multimodal reasoning landscape:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Image Generation and Reasoning:&lt;/strong&gt; New work such as &amp;ldquo;Reasoning with Image Generation&amp;rdquo; explores the link between generative tasks and logical processes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Adaptation:&lt;/strong&gt; &amp;ldquo;On-Policy Distillation for Vision-Language Model Adaptation&amp;rdquo; addresses adaptation on low-quality multimodal data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;In-Context Learning:&lt;/strong&gt; &amp;ldquo;Beyond Surface Imitation&amp;rdquo; introduces contrastive modeling for reasoning path alignment in multimodal in-context learning.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Change Detection:&lt;/strong&gt; &amp;ldquo;From Pixels to Hierarchical Sequences&amp;rdquo; proposes quadtree mask encoding for vision-language binary change detection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Autonomous Driving:&lt;/strong&gt; &amp;ldquo;Drive by Hindsight and Foresight&amp;rdquo; utilizes tool-grounded synergistic reasoning over hierarchical memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Image Quality Assessment:&lt;/strong&gt; &amp;ldquo;From Glance to Scrutiny&amp;rdquo; presents progressive distortion reasoning for fine-grained assessment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Segmentation:&lt;/strong&gt; &amp;ldquo;SeGDeP&amp;rdquo; offers semantic- and geometric-aware decoupled prompts for reasoning segmentation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;3D Reasoning:&lt;/strong&gt; &amp;ldquo;CoVeR&amp;rdquo; implements coverage-based token pruning for multi-view 3D reasoning in VLMs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stability in Reasoning:&lt;/strong&gt; &amp;ldquo;Stable-MM-R1&amp;rdquo; anchors multimodal reasoning dynamics via entropy-guided stratification.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Text Spotting:&lt;/strong&gt; &amp;ldquo;SupGRPO&amp;rdquo; enhances GRPO with matching-based online SFT.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Spatial Reasoning:&lt;/strong&gt; &amp;ldquo;MV-STRIDE&amp;rdquo; enables MLLMs to master multi-view spatial reasoning via hierarchical capability modeling.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Evaluation and Calibration:&lt;/strong&gt; Recent papers include &amp;ldquo;Counterfactual Tests for Measuring Chain-of-Thought Faithfulness&amp;rdquo; and &amp;ldquo;Separating Capability from Confidence&amp;rdquo; for grounded dual-state calibration in medical vision-language models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#MultimodalAI #LargeLanguageModels #ReinforcementLearning #ComputerVision #Reasoning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/The-Martyr/Awesome-Multimodal-Reasoning" target="_blank" rel="noopener"
+&gt;The-Martyr/Awesome-Multimodal-Reasoning&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Study Finds Filtering Old SEC News Boosts LLM‑Based Portfolio Returns</title><link>https://shoubhikbanerjee.github.io/blog/p/study-finds-filtering-old-sec-news-boosts-llmbased-portfolio-returns/</link><pubDate>Fri, 23 Oct 2026 22:04:00 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/study-finds-filtering-old-sec-news-boosts-llmbased-portfolio-returns/</guid><description>&lt;h1 id="study-finds-filtering-old-sec-news-boosts-llmbased-portfolio-returns"&gt;Study Finds Filtering Old SEC News Boosts LLM‑Based Portfolio Returns
+&lt;/h1&gt;&lt;p&gt;Financial news continues to affect investment decisions even after it is published. A new analysis compares how reinforcement‑learning (RL) policies and a large language model (LLM) handle aging news when building portfolios.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Financial news can influence decisions long after publication.&lt;/li&gt;
+&lt;li&gt;Timely news may reach investors before prices fully adjust; older news may already be reflected in prices.&lt;/li&gt;
+&lt;li&gt;The study evaluates two approaches to aging signals: keep the signals and give timing information to a portfolio policy, or filter the signals out before selection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;A fixed LLM extracts signals from public SEC disclosures.&lt;/li&gt;
+&lt;li&gt;These signals are fed either to RL policies or directly to the LLM, which then chooses portfolios.&lt;/li&gt;
+&lt;li&gt;Historical tests covering 2023‑2025 include trading‑cost adjustments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;📊 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;RL policies&lt;/strong&gt;: In a controlled test, RL choices responded to timing information, but historical returns showed no consistent benefit from adding timing data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LLM‑based selection&lt;/strong&gt;: Filtering out old news produced the highest average net return, &lt;strong&gt;18.43 % per year&lt;/strong&gt; when news delivery was delayed by four weeks.&lt;/li&gt;
+&lt;li&gt;The LLM’s filtered‑news return exceeded the returns of all RL strategies that used news.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;📈 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Filtering aging news can improve net returns for LLM‑driven portfolio allocation.&lt;/li&gt;
+&lt;li&gt;The result suggests that, for this data set, older news may add noise rather than value when included in RL‑based strategies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#FinanceAI #ReinforcementLearning #LargeLanguageModels #PortfolioManagement&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.30564v1" target="_blank" rel="noopener"
+&gt;When News Gets Old: Portfolio Allocation with Reinforcement Learning and Large Language Models&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>SnapJudge Image‑Based Detector Improves AI‑Generated Math Content Detection</title><link>https://shoubhikbanerjee.github.io/blog/p/snapjudge-imagebased-detector-improves-aigenerated-math-content-detection/</link><pubDate>Fri, 16 Oct 2026 22:06:38 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/snapjudge-imagebased-detector-improves-aigenerated-math-content-detection/</guid><description>&lt;h1 id="snapjudge-imagebased-detector-improves-aigenerated-math-content-detection"&gt;SnapJudge Image‑Based Detector Improves AI‑Generated Math Content Detection
+&lt;/h1&gt;&lt;p&gt;As large language models become increasingly capable of generating and assisting with scientific writing, a new image‑based detector called &lt;strong&gt;SnapJudge&lt;/strong&gt; has been introduced to improve the identification of AI‑generated math‑heavy content.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Transparency and disclosure are needed around AI use in research.&lt;/li&gt;
+&lt;li&gt;A subfield and commercial services aim to automatically flag AI‑generated content.&lt;/li&gt;
+&lt;li&gt;Existing detectors that rely only on text extracted from PDFs miss the rich visual information in mathematical formatting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Human‑written proof and prose passages were taken from pre‑2022 arXiv LaTeX sources.&lt;/li&gt;
+&lt;li&gt;The passages were re‑generated using 15 modern LLMs within the same paper context.&lt;/li&gt;
+&lt;li&gt;This produced paired human and AI outputs in three formats: LaTeX source, a rendered PDF image, and extracted text.&lt;/li&gt;
+&lt;li&gt;Detectors were fine‑tuned on these representations:
+&lt;ul&gt;
+&lt;li&gt;A Qwen‑3.5‑27B‑based detector trained on LaTeX inputs performed significantly better than text‑only versions because LaTeX preserves formatting.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SnapJudge&lt;/strong&gt; was trained to operate on screenshots of both prose and proofs, addressing the scarcity of LaTeX sources in practice.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;📊 Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;State‑of‑the‑art &lt;strong&gt;Pangram 4&lt;/strong&gt; accuracy drops markedly as mathematical content increases, especially on text‑only input.&lt;/li&gt;
+&lt;li&gt;Fine‑tuning Qwen‑3.5‑27B recovers this gap; LaTeX inputs give higher accuracy than plain text.&lt;/li&gt;
+&lt;li&gt;At a 0.1 % false‑positive rate, SnapJudge achieves:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;92 % detection rate on proofs&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;93 % detection rate on prose&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Substantially outperforms both Pangram 4 and the text‑based detector.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The authors release the data, models, and code at the provided &amp;ldquo;https URL&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Better detection of AI‑generated scientific text helps maintain integrity in scholarly communication, especially for math‑heavy papers where visual formatting is critical.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AIDetection #ScientificWriting #LargeLanguageModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.21062v1" target="_blank" rel="noopener"
+&gt;Multimodal AI Detection for Math-Heavy Scientific Text&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Underdog Saluki 27B 1.0 Quantized Model Beats Original on Tool-Calling Test</title><link>https://shoubhikbanerjee.github.io/blog/p/underdog-saluki-27b-1-0-quantized-model-beats-original-on-tool-calling-test/</link><pubDate>Sat, 10 Oct 2026 22:05:31 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/underdog-saluki-27b-1-0-quantized-model-beats-original-on-tool-calling-test/</guid><description>&lt;h1 id="underdog-saluki-27b-10-quantized-model-beats-original-on-tool-calling-test"&gt;Underdog Saluki 27B 1.0 Quantized Model Beats Original on Tool-Calling Test
+&lt;/h1&gt;&lt;p&gt;A new 2‑bit quantized version of the Qwen3.8‑27B model, Underdog Saluki 27B 1.0, has been released. At 7.89 GB it outperforms the 54 GB original on a 120‑task tool‑calling benchmark, though its math capabilities are considerably weaker.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Model name: &lt;strong&gt;Underdog Saluki 27B 1.0&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Base model: Qwen3.8‑27B&lt;/li&gt;
+&lt;li&gt;Quantization format: 2‑bit GGUF&lt;/li&gt;
+&lt;li&gt;File size: 7.89 GB&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Uses a 2‑bit GGUF representation to compress the 27 billion‑parameter model.&lt;/li&gt;
+&lt;li&gt;No changes to the underlying architecture; only the weight representation is reduced.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Size reduction&lt;/strong&gt;: from the original 54 GB to 7.89 GB (≈ 85 % smaller).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Task suite&lt;/strong&gt;: evaluated on a 120‑task tool‑calling benchmark.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Math performance&lt;/strong&gt;: reported as “loses badly on math” compared with the original.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-performance"&gt;📊 Performance
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Tool‑calling&lt;/strong&gt;: beats the 54 GB original on the 120‑task test.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mathematical reasoning&lt;/strong&gt;: underperforms the original model significantly.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Shows that aggressive quantization can retain or improve performance on specific downstream tasks (tool‑calling) while sacrificing others (math).&lt;/li&gt;
+&lt;li&gt;Provides a lightweight alternative for developers needing a smaller model footprint for tool‑calling applications.&lt;/li&gt;
+&lt;li&gt;Highlights the importance of task‑specific evaluation when deploying highly compressed models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Quantization #LargeLanguageModels #ToolCalling #ModelCompression&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.explainx.ai/catch-up-on-ai/2026-10-10" target="_blank" rel="noopener"
+&gt;AI News: Saturday, October 10, 2026&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>DRQ Framework Refines Weight-Only Post-Training Quantization for Large Language Models</title><link>https://shoubhikbanerjee.github.io/blog/p/drq-framework-refines-weight-only-post-training-quantization-for-large-language-models/</link><pubDate>Fri, 09 Oct 2026 22:05:01 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/drq-framework-refines-weight-only-post-training-quantization-for-large-language-models/</guid><description>&lt;h1 id="drq-framework-refines-weight-only-post-training-quantization-for-large-language-models"&gt;DRQ Framework Refines Weight-Only Post-Training Quantization for Large Language Models
+&lt;/h1&gt;&lt;p&gt;Researchers have developed Distributionally Robust Quantization (DRQ), a post-hoc refinement process that addresses critical limitations in standard weight-only post-training quantization (PTQ).&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Weight-only PTQ traditionally relies heavily on minimizing reconstruction loss to preserve model quality at low precision. However, new analysis reveals significant flaws in this assumption:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Weights favored by minimizing reconstruction loss do not necessarily yield better model performance on new tasks.&lt;/li&gt;
+&lt;li&gt;Lower reconstruction loss can even degrade model performance on the same calibration data.&lt;/li&gt;
+&lt;li&gt;Weights with lower reconstruction loss on calibration data can experience higher loss than other weights when the distribution of input activations changes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To address these limitations, DRQ introduces a robust mathematical refinement process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Worst-Case Optimization:&lt;/strong&gt; DRQ minimizes worst-case reconstruction loss over a constrained set of input activation distributions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grid Preservation:&lt;/strong&gt; It refines the integer codes representing quantized weights within the existing quantization grid.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Zero Architecture Changes:&lt;/strong&gt; It keeps both quantization parameters and inference operators completely unchanged.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;DRQ serves as a general post-hoc refinement framework. Extensive experiments demonstrate its compatibility with various existing methods and architectures:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Compatible PTQ Methods:&lt;/strong&gt; DRQ improves models quantized by six representative PTQ methods, including:
+&lt;ul&gt;
+&lt;li&gt;AWQ&lt;/li&gt;
+&lt;li&gt;GPTQ&lt;/li&gt;
+&lt;li&gt;ParoQuant&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compatible Model Architectures:&lt;/strong&gt; DRQ delivers gains across both dense and mixture-of-experts large language models.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;By establishing a general post-hoc refinement framework for weight-only PTQ, DRQ allows developers to achieve better downstream performance without adding any inference overhead.&lt;/p&gt;
+&lt;p&gt;#MachineLearning #ModelQuantization #LargeLanguageModels #AIResearch&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2610.11226v1" target="_blank" rel="noopener"
+&gt;When Lower Reconstruction Loss Hurts: Distributionally Robust Refinement for Low-Bit LLM Quantization&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>GPT-6 Sol and Luna Generally Available on Amazon Bedrock</title><link>https://shoubhikbanerjee.github.io/blog/p/gpt-6-sol-and-luna-generally-available-on-amazon-bedrock/</link><pubDate>Wed, 23 Sep 2026 22:05:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/gpt-6-sol-and-luna-generally-available-on-amazon-bedrock/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21956-featured-image.png" alt="Featured image of post GPT-6 Sol and Luna Generally Available on Amazon Bedrock" /&gt;&lt;h1 id="gpt-6-sol-and-luna-generally-available-on-amazon-bedrock"&gt;GPT-6 Sol and Luna Generally Available on Amazon Bedrock
+&lt;/h1&gt;&lt;p&gt;GPT-6 Sol and GPT-6 Luna are now generally available on Amazon Bedrock, giving developers two new model options tuned for different workload patterns.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Both models are offered on Amazon Bedrock with a high‑performance inference engine.&lt;/li&gt;
+&lt;li&gt;Pricing is significantly lower than the GPT‑5.6 predecessors.&lt;/li&gt;
+&lt;li&gt;The GPT‑6 family also includes GPT‑6 Astra for the highest‑quality, cost‑less‑concern projects.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-model-variants"&gt;🛠️ Model Variants
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Model&lt;/th&gt;
+&lt;th&gt;Primary focus&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GPT‑6 Sol&lt;/td&gt;
+&lt;td&gt;Strong reasoning and coding for regular, complex tasks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPT‑6 Luna&lt;/td&gt;
+&lt;td&gt;High‑volume, repeatable tasks with low latency and cost&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPT‑6 Astra&lt;/td&gt;
+&lt;td&gt;Upper‑end quality for ambitious projects where cost is secondary&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-capabilities"&gt;⚙️ Capabilities
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GPT‑6 Sol&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Implements features, debugs, refactors, and reviews code.&lt;/li&gt;
+&lt;li&gt;Analyzes data and runs multistep processes across tools and applications.&lt;/li&gt;
+&lt;li&gt;Improves coding and computer‑use ability over GPT‑5.6 Sol.&lt;/li&gt;
+&lt;li&gt;Makes roughly half as many factual mistakes as GPT‑5.6 Sol in internal tests.&lt;/li&gt;
+&lt;li&gt;Communicates results more clearly, helping teams spot gaps early.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPT‑6 Luna&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Extracts information from large document collections.&lt;/li&gt;
+&lt;li&gt;Summarizes incoming material and classifies inputs.&lt;/li&gt;
+&lt;li&gt;Answers focused questions at scale for many users or applications.&lt;/li&gt;
+&lt;li&gt;Shows better factual reliability and clearer result communication than GPT‑5.6 Luna.&lt;/li&gt;
+&lt;li&gt;Allows per‑request reasoning effort adjustment to balance quality, responsiveness, and cost.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Both models support explicit prompt caching on Bedrock, letting repeated calls reuse instructions, tool definitions, policies, and reference material.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-pricing--reliability"&gt;💰 Pricing &amp;amp; Reliability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;API pricing is notably lower than that of GPT‑5.6 models.&lt;/li&gt;
+&lt;li&gt;Internal evaluations report halved factual errors for Sol and improved factual reliability for Luna.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-security--governance"&gt;🔐 Security &amp;amp; Governance
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Access can be controlled with AWS IAM policies and audited via AWS CloudTrail.&lt;/li&gt;
+&lt;li&gt;VPC endpoints powered by AWS PrivateLink keep traffic within network boundaries.&lt;/li&gt;
+&lt;li&gt;Inference runs on hardware‑isolated infrastructure with zero‑operator access; AWS staff cannot view prompts or completions.&lt;/li&gt;
+&lt;li&gt;Inference data is not used for model training, and no opt‑in to share data with OpenAI is required.&lt;/li&gt;
+&lt;li&gt;Classifier‑flagged traffic is retained up to 30 days for abuse detection; zero‑retention can be requested.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;GPT‑6 Sol and GPT‑6 Luna are generally available on Amazon Bedrock today.&lt;/li&gt;
+&lt;li&gt;They run on an inference engine built for high performance, security, and reliability at scale.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/22/ML-21636-6.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21956-2.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/03/ML-21849-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#OpenAI #AmazonBedrock #GPT6 #LargeLanguageModels #AIInference&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/bring-more-intelligence-to-everyday-work-with-gpt-6-sol-and-gpt-6-luna-on-amazon-bedrock/" target="_blank" rel="noopener"
+&gt;Bring more intelligence to everyday work with GPT-6 Sol and GPT-6 Luna on Amazon Bedrock | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Independent Study Reproduces Large Language Model Chain-of-Thought Entropy Trajectory Findings</title><link>https://shoubhikbanerjee.github.io/blog/p/independent-study-reproduces-large-language-model-chain-of-thought-entropy-trajectory-findings/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/independent-study-reproduces-large-language-model-chain-of-thought-entropy-trajectory-findings/</guid><description>&lt;h1 id="independent-study-reproduces-large-language-model-chain-of-thought-entropy-trajectory-findings"&gt;Independent Study Reproduces Large Language Model Chain-of-Thought Entropy Trajectory Findings
+&lt;/h1&gt;&lt;p&gt;An independent empirical study has reproduced the dissociation reported by Zhao in 2026 regarding large language model chain-of-thought entropy trajectories. The study, registered at OSF prior to any confirmatory run, evaluates how the shape of an LLM&amp;rsquo;s entropy trajectory and the magnitude of its total entropy drop predict final answer correctness.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;According to the original findings, the shape of a large language model&amp;rsquo;s chain-of-thought entropy trajectory predicts whether the final answer is correct, whereas the magnitude of its total entropy drop does not. This independent reproduction confirms that the shape signal replicates, while the magnitude signal&amp;rsquo;s performance divides by setting.&lt;/p&gt;
+&lt;p&gt;To perform the replication, researchers evaluated the complete GSM8K and MATH-500 benchmark test sets across four open-weight models, including one reasoning-distilled model that was not part of the original study&amp;rsquo;s testing.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The study revealed notable performance differences across models and benchmarks. On the anchor model, the findings for the shape and magnitude signals are detailed below:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Metric&lt;/th&gt;
+&lt;th style="text-align: left"&gt;GSM8K&lt;/th&gt;
+&lt;th style="text-align: left"&gt;MATH-500&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Accuracy gap between monotone and non-monotone chains&lt;/td&gt;
+&lt;td style="text-align: left"&gt;+9.6 percentage points&lt;/td&gt;
+&lt;td style="text-align: left"&gt;+27.5 percentage points&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Rank correlation of total entropy drop with correctness&lt;/td&gt;
+&lt;td style="text-align: left"&gt;-0.018&lt;/td&gt;
+&lt;td style="text-align: left"&gt;+0.414&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Additional findings from the evaluation include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Scope of Original vs. Replication:&lt;/strong&gt; The original magnitude analysis rested on a single 300-problem run using one model at one seed. In contrast, the shape signal was originally reported at full scale on both benchmarks and on a second model family.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reasoning-Distilled Model:&lt;/strong&gt; On the reasoning-distilled model, the binary form of the shape signal fires on approximately one chain in a hundred, which is too few to estimate the registered contrast. However, the graded violation count remains predictive on this model.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Final-Step Entropy:&lt;/strong&gt; In exploratory comparisons, the final-step entropy alone outperforms the binary shape flag by ROC area in all eight model-by-benchmark cells. It also outperforms the binary shape flag in six or seven cells by the risk-coverage area reported in the original paper, depending on an integration range the original did not state.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This independent study provides several key contributions to the understanding of chain-of-thought entropy trajectories:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A reproduction of the shape signal at full test-set scale under seven documented protocol differences.&lt;/li&gt;
+&lt;li&gt;A detailed map outlining the specific settings where the magnitude signal holds and where it fails.&lt;/li&gt;
+&lt;li&gt;Measurements of four protocol dependencies that were not reported in the original study.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#MachineLearning #LargeLanguageModels #ModelEvaluation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.19606v1" target="_blank" rel="noopener"
+&gt;Chain-of-Thought Entropy as a Reliability Signal: A Preregistered Reproduction&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Database of Extracted AI System Prompts Reveals Hidden Rules for Major Chatbots</title><link>https://shoubhikbanerjee.github.io/blog/p/database-of-extracted-ai-system-prompts-reveals-hidden-rules-for-major-chatbots/</link><pubDate>Mon, 14 Sep 2026 22:04:39 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/database-of-extracted-ai-system-prompts-reveals-hidden-rules-for-major-chatbots/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/27446620?v=4" alt="Featured image of post Database of Extracted AI System Prompts Reveals Hidden Rules for Major Chatbots" /&gt;&lt;h1 id="database-of-extracted-ai-system-prompts-reveals-hidden-rules-for-major-chatbots"&gt;Database of Extracted AI System Prompts Reveals Hidden Rules for Major Chatbots
+&lt;/h1&gt;&lt;p&gt;A repository of extracted system prompts from prominent AI developers has documented the verbatim instructions and rules that chatbots receive before interacting with users. This collection includes prompts for models from Anthropic, OpenAI, Google, xAI, Meta, and others, providing insights into the pre-configured parameters governing these systems.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The repository contains leaked and extracted system prompts that reveal the &amp;ldquo;hidden rules behind AI.&amp;rdquo; These files have been utilized by external organizations to analyze AI behavior. For example, The Washington Post built an interactive story based on these prompts, and CEPS&amp;rsquo; AI World developed a live data dashboard using the repository&amp;rsquo;s files to illustrate the instructions chatbots receive before a user&amp;rsquo;s first message.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The collection spans several major AI platforms and specific model variants:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Anthropic:&lt;/strong&gt; Includes Claude Fable 5.1, Opus 5, Claude Science, and Claude Design. The Claude Design prompt is noted for including 53 tools, 22 skills, and 10 starter components.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;OpenAI:&lt;/strong&gt; Features ChatGPT GPT-6-Astra, Codex, and GPT-5.6 (Sol variant) prompts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google:&lt;/strong&gt; Contains prompts for Gemini 3.8 Flash, 3.7 Flash, 3.1 Pro, and Antigravity.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;xAI:&lt;/strong&gt; Documents Grok 4.6, 4.5, and Grok Bot.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Specialized Tools:&lt;/strong&gt; Includes coding-specific prompts such as Meta&amp;rsquo;s Muse Code CLI, Claude Code, and Perplexity Deep Research.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The following table summarizes recent additions to the repository of captured system prompts:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Date Captured&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Provider&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;ChatGPT Work Codex (local)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;September 13, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OpenAI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Gemini 3.8 Flash&lt;/td&gt;
+&lt;td style="text-align: left"&gt;September 13, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Google&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Claude Code headless (Fable 5.1)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;September 5, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Anthropic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Codex GPT-6-Astra&lt;/td&gt;
+&lt;td style="text-align: left"&gt;September 4, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OpenAI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Claude Fable 5.1&lt;/td&gt;
+&lt;td style="text-align: left"&gt;September 1, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Anthropic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Grok 4.6&lt;/td&gt;
+&lt;td style="text-align: left"&gt;August 29, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;xAI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Gemini 3.7 Flash&lt;/td&gt;
+&lt;td style="text-align: left"&gt;August 18, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Google&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Muse Code (Meta&amp;rsquo;s coding CLI)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;August 17, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Meta&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Claude Cowork&lt;/td&gt;
+&lt;td style="text-align: left"&gt;August 17, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Anthropic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Claude Science&lt;/td&gt;
+&lt;td style="text-align: left"&gt;August 14, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Anthropic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Codex GPT-5.6 (Sol variant)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;July 26, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OpenAI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Grok 4.5&lt;/td&gt;
+&lt;td style="text-align: left"&gt;July 26, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;xAI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Claude Opus 5&lt;/td&gt;
+&lt;td style="text-align: left"&gt;July 24, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Anthropic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Claude Design&lt;/td&gt;
+&lt;td style="text-align: left"&gt;July 23, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Anthropic&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Perplexity Deep Research&lt;/td&gt;
+&lt;td style="text-align: left"&gt;July 14, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Perplexity&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Kimi K2.6&lt;/td&gt;
+&lt;td style="text-align: left"&gt;July 14, 2026&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Kimi&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;These system prompts represent the foundation of the chat experience, establishing the identity and operational boundaries for each AI. By documenting these verbatim, the repository allows for a comparison of how different companies like Google, Anthropic, and OpenAI instruct their models to behave, handle tools, and process user requests.&lt;/p&gt;
+&lt;p&gt;#AISystemPrompts #LargeLanguageModels #AIGovernance&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/asgeirtj/system_prompts_leaks" target="_blank" rel="noopener"
+&gt;asgeirtj/system_prompts_leaks&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Recent frontier AI model releases and API launches through late 2026</title><link>https://shoubhikbanerjee.github.io/blog/p/recent-frontier-ai-model-releases-and-api-launches-through-late-2026/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/recent-frontier-ai-model-releases-and-api-launches-through-late-2026/</guid><description>&lt;img src="https://promptzone.com/og-default.png" alt="Featured image of post Recent frontier AI model releases and API launches through late 2026" /&gt;&lt;h1 id="recent-frontier-ai-model-releases-and-api-launches-through-late-2026"&gt;Recent frontier AI model releases and API launches through late 2026
+&lt;/h1&gt;&lt;p&gt;Several major AI model families, including OpenAI&amp;rsquo;s GPT-6 Astra, Anthropic&amp;rsquo;s Claude Fable 5.1, and Google&amp;rsquo;s Gemini 3.8 Flash, have launched on public APIs. This updated timeline follows first public API availability as recorded through September 10, 2026, including details on context windows and pricing across multiple providers.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The 2025 and 2026 release timeline tracks a variety of model types, including large language models (LLMs), reasoning models, open-weights families, and image or video generators. Launch data is compiled automatically from model APIs, where public availability often precedes official marketing announcements.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Recent releases demonstrate a shift toward million-token context windows, with specific pricing structures for both standard and batch processing.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Model Name&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Provider&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Context Window&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Input Price (1M)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Output Price (1M)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GLM 5.3 Flash&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Z.ai&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,310,720 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.08&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.25&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GPT-6 Astra / Pro&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OpenAI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,050,000 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$10.00&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$50.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GPT-6 Astra / Pro (batch)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OpenAI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,050,000 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$5.00&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$25.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Gemini 3.8 Flash&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Google&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,048,576 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.75&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$3.75&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Gemini 3.8 Flash (batch)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Google&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,048,576 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.38&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$1.88&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Hy4 preview&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Tencent&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,048,576 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.83&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$2.50&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Claude Fable 5.1&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Anthropic&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,000,000 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$10.00&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$50.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Claude Fable 5.1 (batch)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Anthropic&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,000,000 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$5.00&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$25.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3.8 Max (0902)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Qwen&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,000,000 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$2.00&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$6.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Qwen3.8 Flash&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Qwen&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,000,000 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.15&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.47&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Mercury 2.5&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Inception&lt;/td&gt;
+&lt;td style="text-align: left"&gt;260,000 tokens&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.04&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$0.15&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;These models are now appearing on the OpenRouter API alongside over 300 others, including releases from Hugging Face.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Frontier-adjacent tiers:&lt;/strong&gt; As of late July 2026, the cheapest options in this category include OpenAI gpt-5.6-luna ($0.50/$3.00), Google gemini-3.5-flash-lite ($0.30/$2.50), and Anthropic claude-haiku-4.5 ($1.00/$5.00).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;High-volume work:&lt;/strong&gt; For classification tasks, the older gpt-5-nano model remains significantly more cost-effective than any 2026 release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The availability of these models via API provides machine-readable release data including names, kinds, and official announcement summaries. High-volume users can leverage batch pricing to reduce costs by 50% for flagship models like GPT-6 Astra and Claude Fable 5.1.&lt;/p&gt;
+&lt;p&gt;#OpenAI #Anthropic #LargeLanguageModels&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.promptzone.com/ai-model-releases" target="_blank" rel="noopener"
+&gt;AI Model Releases Timeline: Latest Launches with Dates — PromptZone - AI Prompts, Guides and Tools for Builders&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>State-Path Tool Menus Improve Online Agent Success on ToolBench</title><link>https://shoubhikbanerjee.github.io/blog/p/state-path-tool-menus-improve-online-agent-success-on-toolbench/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/state-path-tool-menus-improve-online-agent-success-on-toolbench/</guid><description>&lt;h1 id="state-path-tool-menus-improve-online-agent-success-on-toolbench"&gt;State-Path Tool Menus Improve Online Agent Success on ToolBench
+&lt;/h1&gt;&lt;p&gt;Researchers have introduced the State-Path Tool Menu, a framework designed to improve how online agents interact with large tool libraries by providing a short, ordered subset of tools prior to execution.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Practical agents often face libraries containing thousands of interfaces. Current constructors typically rank tools by request relevance, which may surface a final action while omitting or delaying the necessary producer tools required to create its inputs. The State-Path Tool Menu addresses this by treating the menu as an execution prior over routes from the observable request state to the desired outcome.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The framework utilizes three primary components to organize the tool menu:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Encoder&lt;/strong&gt;: Represents which tools can run from the current state, how outputs satisfy later inputs, and which orders recur in training paths.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Retriever&lt;/strong&gt;: Covers an executable entry, the final action, and the missing-input producers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reranker&lt;/strong&gt;: Ensures producers are placed before consumers in the menu.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Testing on ToolBench demonstrated the following results:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Success Rate&lt;/strong&gt;: Online success increased from 0.737 to 0.898.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Efficiency&lt;/strong&gt;: The State-Path menu covered more complete chains with 32 tools than the official list covered with 128.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compatibility&lt;/strong&gt;: Success gains persisted across executor families with different model capacities.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: The system outperformed baselines involving routing, generation, reranking, and retrieval without requiring changes to the agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AIagents #ToolBench #LargeLanguageModels #SoftwareEngineering&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.09395v1" target="_blank" rel="noopener"
+&gt;The Menu Is an Execution Prior: State-Path Tool Menus for Online Agents&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.09646v1" target="_blank" rel="noopener"
+&gt;RobustSGPO: Search-Space Control for Agent Harness Evolution&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.10922v1" target="_blank" rel="noopener"
+&gt;Auto-RecSys: Harnessing Autonomous Research Agents for Industry-Scale Recommender System&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2609.11117v1" target="_blank" rel="noopener"
+&gt;Overview of the NLPCC 2026 Shared Task 11: Agent-Based Experiment Reproduction from Scientific Papers&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

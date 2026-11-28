@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ComfyNodes on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/comfynodes/</link><description>Recent content in ComfyNodes on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2026 22:09:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/comfynodes/index.xml" rel="self" type="application/rss+xml"/><item><title>MiniMax H3 Director: New ComfyUI Node for Multi-Clip Video Generation</title><link>https://shoubhikbanerjee.github.io/blog/p/minimax-h3-director-new-comfyui-node-for-multi-clip-video-generation/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/minimax-h3-director-new-comfyui-node-for-multi-clip-video-generation/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/149470765?v=4" alt="Featured image of post MiniMax H3 Director: New ComfyUI Node for Multi-Clip Video Generation" /&gt;&lt;h1 id="minimax-h3-director-new-comfyui-node-for-multi-clip-video-generation"&gt;MiniMax H3 Director: New ComfyUI Node for Multi-Clip Video Generation
+&lt;/h1&gt;&lt;p&gt;MiniMax H3 Director is a new ComfyUI node designed for long video and multi-segment generation. It integrates segment planning, conditional encoding, sampling, decoding, and export into a single interface, utilizing the official MiniMax H3 Image-to-Video and Reference-to-Video models alongside KSampler and AV separation decoding pipelines. The node natively outputs stereo audio.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The node manages a visual timeline for video generation, supporting several task types and advanced control over segmentation and transitions.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Segmentation and Editing&lt;/strong&gt;: Users can upload video within the node to split, equally divide, or intelligently segment scenes using PySceneDetect. Split points are selectable and deletable, with a visual timeline previewing each segment&amp;rsquo;s range and thumbnail.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grouped Keyframes&lt;/strong&gt;: An independent first-last frame timeline allows multiple keyframe groups. Users can either write prompts for text-to-video or upload first/last frames (officially supporting last-frame-only uploads).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inter-Segment Guidance&lt;/strong&gt;: When enabled, empty groups use the last N frames of the previous segment for motion and audio continuity. Users can adjust duration via dragging and select specific groups to run.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prompt Syntax&lt;/strong&gt;: Prompts utilize &lt;code&gt;&amp;lt;Picture N&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;Video K&amp;gt;&lt;/code&gt;, or &lt;code&gt;&amp;lt;Audio J&amp;gt;&lt;/code&gt; tags (or &lt;code&gt;@&lt;/code&gt; references). The timeline preview and selection states remain synchronized with the prompts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reference Binding&lt;/strong&gt;: For style-source video timelines, each segment’s source frame is automatically bound to &lt;code&gt;&amp;lt;Video 1&amp;gt;&lt;/code&gt;. For reference-to-video tasks, additional reference images (up to 9) and audio (up to 3) can be attached per group.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Selective Sampling&lt;/strong&gt;: When enabled, only checked segments or material groups are sampled. Unchecked segments can be filled with cache or source frames during export.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Audio Integration&lt;/strong&gt;: Audio is generated in the same sampling pass as the visuals. For video-to-video and reference-video tasks, users can choose to generate sound, use original audio, or remain silent.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reference Audio Slots&lt;/strong&gt;: Users can select existing videos or local audio/video files. Selected videos immediately extract the first audio track as FLAC, saved directly to the &lt;code&gt;input/&lt;/code&gt; directory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The node supports various task types and integrates external modules to refine the generation pipeline. A semantic bridge and self-lift module can be attached to specific ports; if unconnected, the system behaves as a standard single-stage one-sampling process. When connected, the self-lift module transforms the process into a low-resolution prefix, 3D lift, and high-resolution finish, using Euler sampling at the director canvas resolution.&lt;/p&gt;
+&lt;h3 id="external-modules-and-refinement"&gt;External Modules and Refinement
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Module/Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Functionality&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Semantic Bridge&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses a student MLP to rewrite official conditional tokens. Weights are not distributed with the plugin and must be placed in &lt;code&gt;models/semantic_bridge/&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Self-Lift&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Connects to the &lt;code&gt;selflift&lt;/code&gt; port. Enables a multi-stage sampling process (low-res prefix + 3D lift + high-res finish).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Refine&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Connects to the &lt;code&gt;refine&lt;/code&gt; port. Offers three modes: &lt;code&gt;refine&lt;/code&gt; (same-resolution refinement), &lt;code&gt;upscale&lt;/code&gt; (upscale to target canvas then re-sample according to SIGMAS), and &lt;code&gt;latent_upscale&lt;/code&gt; (upscale H3 latent only, no re-sampling).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Report Output&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Outputs the segment plan and per-segment task summary via the &lt;code&gt;report&lt;/code&gt; port.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="model-and-configuration-requirements"&gt;Model and Configuration Requirements
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CLIP Loader&lt;/strong&gt;: The &lt;code&gt;type&lt;/code&gt; must be set to &lt;code&gt;minimax&lt;/code&gt; (Qwen3-VL).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UNET Selection&lt;/strong&gt;: &lt;code&gt;t2v&lt;/code&gt;, &lt;code&gt;i2v&lt;/code&gt;, and &lt;code&gt;fl2v&lt;/code&gt; tasks use the &lt;code&gt;fl2va&lt;/code&gt; UNET. &lt;code&gt;r2v&lt;/code&gt;, &lt;code&gt;v2v&lt;/code&gt;, and &lt;code&gt;rv2v&lt;/code&gt; tasks use the &lt;code&gt;ref2va&lt;/code&gt; UNET.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Distillation&lt;/strong&gt;: The model is distilled from FL2VA. Note that &lt;code&gt;r2v&lt;/code&gt;, &lt;code&gt;v2v&lt;/code&gt;, and &lt;code&gt;rv2v&lt;/code&gt; are forced compatibility modes, and caution is advised when using them.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ComfyUI Version&lt;/strong&gt;: Users must upgrade ComfyUI to version 0.30.0 or higher.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Source Images&lt;/strong&gt;: Outputting the original film to &lt;code&gt;source_images&lt;/code&gt; fills the independent &lt;code&gt;source_images&lt;/code&gt; output without altering the main &lt;code&gt;images&lt;/code&gt; output.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The complete resource package, including MiniMax H3 model weights and example JSON workflows, is available via Comfyit Stirring Station · Article 506: &amp;ldquo;MiniMax H3 Models and Workflows.&amp;rdquo; After downloading, users must merge the &lt;code&gt;models/&lt;/code&gt; directory into &lt;code&gt;ComfyUI/models/&lt;/code&gt;. The JSON workflow can be dragged directly into ComfyUI to begin use. The toolbar also supports importing and exporting director packages, which save timeline JSON and reference materials in a zip file.&lt;/p&gt;
+&lt;p&gt;#MiniMaxH3 #ComfyUI #VideoGeneration #AIVideo #ComfyNodes&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/AIMixer/ComfyUI_MiniMaxH3_Director" target="_blank" rel="noopener"
+&gt;AIMixer/ComfyUI_MiniMaxH3_Director&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

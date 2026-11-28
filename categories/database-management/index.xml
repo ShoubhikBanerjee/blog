@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Database Management on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/database-management/</link><description>Recent content in Database Management on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 20 Nov 2026 22:08:48 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/database-management/index.xml" rel="self" type="application/rss+xml"/><item><title>PostgreSQL 19 reaches GA and is available on Lakebase</title><link>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-reaches-ga-and-is-available-on-lakebase/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/postgresql-19-reaches-ga-and-is-available-on-lakebase/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/PG-19-cover.png" alt="Featured image of post PostgreSQL 19 reaches GA and is available on Lakebase" /&gt;&lt;h1 id="postgresql-19-reaches-ga-and-is-available-on-lakebase"&gt;PostgreSQL 19 reaches GA and is available on Lakebase
+&lt;/h1&gt;&lt;p&gt;PostgreSQL 19 reached general availability today and is already available on Lakebase. Several engineers on the Lakebase team are PostgreSQL committers and contributors who worked on this release directly, from query plan advice to shared memory, locale handling, and release management. New major versions often take weeks to reach other managed PostgreSQL services.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;PostgreSQL 19 is a practical release with no single headline feature that changes what PostgreSQL is. Instead, version 19 goes after operational problems that database teams know well:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bloated tables&lt;/li&gt;
+&lt;li&gt;Unstable query plans&lt;/li&gt;
+&lt;li&gt;Replica lag&lt;/li&gt;
+&lt;li&gt;Incomplete statistics&lt;/li&gt;
+&lt;li&gt;Maintenance work that is hard to run safely in production&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-features"&gt;🧩 Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;REPACK&lt;/strong&gt; — reclaims space while normal reads and writes continue during most of the operation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pg_plan_advice&lt;/strong&gt; — describes planner decisions as advice, applies supplied advice, and reports whether it was followed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pg_stash_advice&lt;/strong&gt; — stores advice by query ID and applies it automatically when a matching query is planned&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-repack-works"&gt;⚙️ How REPACK Works
+&lt;/h2&gt;&lt;p&gt;PostgreSQL uses multiversion concurrency control, so an UPDATE creates a new row version and a DELETE leaves a dead tuple behind. Routine vacuuming makes that space reusable, but it doesn&amp;rsquo;t necessarily return space to the operating system or restore a useful physical row order. The usual fixes — VACUUM FULL, CLUSTER, or external tools such as pg_repack — take an ACCESS EXCLUSIVE lock for the whole operation, blocking normal access to the table.&lt;/p&gt;
+&lt;p&gt;REPACK reclaims space like VACUUM FULL; with &lt;code&gt;USING INDEX&lt;/code&gt;, it also physically orders rows like CLUSTER. With &lt;code&gt;CONCURRENTLY&lt;/code&gt;, PostgreSQL rebuilds the table while normal reads and writes continue, capturing ongoing changes through logical decoding. It then takes an ACCESS EXCLUSIVE lock to apply any remaining captured changes and swap the new table and index files into place.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;pg_plan_advice&lt;/td&gt;
+&lt;td&gt;Describes planner decisions as advice, applies supplied advice, reports whether it was followed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;pg_stash_advice&lt;/td&gt;
+&lt;td&gt;Stores advice by query ID and applies it automatically when a matching query is planned&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;These components do not add cross-table statistics or replace the planner. Instead, they let you intervene when an inaccurate estimate produces a poor plan. Unlike inline optimizer hints, plan advice lives outside the application&amp;rsquo;s query text. You can inspect the current plan, test focused advice, and then stash it by query ID.&lt;/p&gt;
+&lt;h2 id="-repack-limitations"&gt;⚠️ REPACK Limitations
+&lt;/h2&gt;&lt;p&gt;Concurrent repacking creates an additional replication slot for the duration of the operation, so it needs free capacity under &lt;code&gt;max_repack_replication_slots&lt;/code&gt; and a table with either a non-deferrable primary key or a suitable index-based replica identity. It also needs temporary disk space for a copy of the table and all its indexes, potentially plus a sort file up to the size of the table.&lt;/p&gt;
+&lt;p&gt;Tables with heavy update and delete traffic face an additional limit: the current upstream PostgreSQL 19 implementation fails if more than about 104 million tuples in the target table are updated or deleted while REPACK (CONCURRENTLY) is running. This counts changes made during the repack, not rows already in the table.&lt;/p&gt;
+&lt;p&gt;Concurrent repacking is also not MVCC-safe: after it commits, transactions using snapshots taken before the repack began can see the table as empty. Physical clustering also degrades as later writes arrive. REPACK CONCURRENTLY still needs planning, but it brings into core a job that previously required more downtime or an extension.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;To try it, create a new Lakebase project and select PostgreSQL 19 as the version.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/Untitled-design-7_0.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/2023-08/databricks-default.png?v=1712162038"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PostgreSQL #Lakebase #Database #GARelease #REPACK #QueryPlanning&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/postgresql-19-available-lakebase" target="_blank" rel="noopener"
+&gt;PostgreSQL 19 is available on Lakebase&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Lakebase: Managed Postgres for AI and Development</title><link>https://shoubhikbanerjee.github.io/blog/p/lakebase-managed-postgres-for-ai-and-development/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/lakebase-managed-postgres-for-ai-and-development/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/blog_images/branch-sync-serve-what-our-lakebase-hackathon-blog-img-og.png" alt="Featured image of post Lakebase: Managed Postgres for AI and Development" /&gt;&lt;h1 id="lakebase-managed-postgres-for-ai-and-development"&gt;Lakebase: Managed Postgres for AI and Development
+&lt;/h1&gt;&lt;p&gt;Lakebase, a fully managed Postgres solution, enables developers to build applications with ease, as it allows any developer familiar with SQL or ORMs to start immediately. Storage is separated from compute, and the database resides alongside lakehouse data under Unity Catalog governance.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Lakebase is a fully managed Postgres solution.&lt;/li&gt;
+&lt;li&gt;It allows developers familiar with SQL or ORMs to build applications immediately.&lt;/li&gt;
+&lt;li&gt;Storage is separated from compute, and the database lives next to lakehouse data under Unity Catalog governance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Every Lakebase project starts with a production branch.&lt;/li&gt;
+&lt;li&gt;Child branches can be created from the production branch for development, testing, or experiments.&lt;/li&gt;
+&lt;li&gt;Branches use copy-on-write, making a branch of a large database ready in seconds and only changes taking up new storage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Lakebase is used in various projects like Jevons Search, Branchflight, and BranchCut.&lt;/li&gt;
+&lt;li&gt;Jevons Search uses Lakebase branches to work on support tickets.&lt;/li&gt;
+&lt;li&gt;Branchflight provides preview environments for pull requests.&lt;/li&gt;
+&lt;li&gt;BranchCut brings Git-style branching and merging to creative work.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Lakebase enables fast and efficient branching for development, testing, and experiments.&lt;/li&gt;
+&lt;li&gt;It provides a secure and scalable solution for managing data and applications.&lt;/li&gt;
+&lt;li&gt;Lakebase is used in various projects to improve efficiency and productivity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/1.1_lyft_jevons_search_0.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/inline-images/1.2_cibc_branchflight.gif"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Lakebase #Postgres #AI #Development #Branching&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/branch-sync-serve-what-our-lakebase-hackathon-taught-us-about-building-lakebase" target="_blank" rel="noopener"
+&gt;Branch, sync, serve: What our Lakebase Hackathon taught us about building on Lakebase&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Attu 3.0 Expands AI-Native Management for Milvus Vector Databases</title><link>https://shoubhikbanerjee.github.io/blog/p/attu-3-0-expands-ai-native-management-for-milvus-vector-databases/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/attu-3-0-expands-ai-native-management-for-milvus-vector-databases/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/18416694?v=4" alt="Featured image of post Attu 3.0 Expands AI-Native Management for Milvus Vector Databases" /&gt;&lt;h1 id="attu-30-expands-ai-native-management-for-milvus-vector-databases"&gt;Attu 3.0 Expands AI-Native Management for Milvus Vector Databases
+&lt;/h1&gt;&lt;p&gt;Attu 3.0, an AI-native management tool for Milvus vector databases, has been released, expanding the visual experience for Milvus 3.0 while retaining compatibility with Milvus 2.6.0+ and Zilliz Cloud.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Attu is an AI-native management tool for Milvus vector databases.&lt;/li&gt;
+&lt;li&gt;Connect to multiple Milvus clusters from a single instance, browse collections, run vector searches, manage backups, monitor health, and chat with an AI agent that understands your data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Available as a web app (Docker, Kubernetes, or a standalone server package) or desktop app (macOS, Linux, Windows).&lt;/li&gt;
+&lt;li&gt;Attu v3.0 supports Zilliz Cloud and open-source Milvus 2.6.0+ and 3.x.&lt;/li&gt;
+&lt;li&gt;Milvus 2.5.x and earlier are not supported.&lt;/li&gt;
+&lt;li&gt;The v3.0.0 release includes a non-Docker, non-Electron server package for Linux x64.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Explore Parquet and Iceberg data without copying it into Milvus, refresh external schemas and data, and browse or restore Collection Snapshots.&lt;/li&gt;
+&lt;li&gt;Work with Milvus &lt;code&gt;TEXT&lt;/code&gt; fields, add or remove supported fields, edit descriptions, and manage Function Fields from the Schema page.&lt;/li&gt;
+&lt;li&gt;Run Query and Search aggregations, group and order results, paginate large result sets, and apply Function Score reranking.&lt;/li&gt;
+&lt;li&gt;Configure MinHash Function Fields and &lt;code&gt;MINHASH_LSH&lt;/code&gt; indexes to find near-duplicate documents from raw text.&lt;/li&gt;
+&lt;li&gt;Register reusable dictionaries, stop-word lists, synonym lists, and tokenizer resources.&lt;/li&gt;
+&lt;li&gt;Load or release individual partitions, configure entity-level TTL, export complete Collections, and import large files in chunks.&lt;/li&gt;
+&lt;li&gt;The Docker image stores its SQLite database at &lt;code&gt;/data/attu.db&lt;/code&gt; by default.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;-v attu-data:/data&lt;/code&gt; volume persists your saved connections, agent conversations, and preferences across container restarts.&lt;/li&gt;
+&lt;li&gt;The image runs as the non-root &lt;code&gt;node&lt;/code&gt; user (&lt;code&gt;uid=1000&lt;/code&gt;, &lt;code&gt;gid=1000&lt;/code&gt;), so named volumes are recommended.&lt;/li&gt;
+&lt;li&gt;On SELinux-enabled hosts, also add the &lt;code&gt;:Z&lt;/code&gt; mount option: &lt;code&gt;./attu-data:/data:Z&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The non-Docker server package requires Node.js 24.x and includes the Attu server bundle and &lt;code&gt;bin/milvus-backup&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The launcher defaults to &lt;code&gt;0.0.0.0:3080&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Set &lt;code&gt;HOST&lt;/code&gt;, &lt;code&gt;PORT&lt;/code&gt;, &lt;code&gt;ATTU_DATA_DIR&lt;/code&gt;, or &lt;code&gt;ATTU_DB_PATH&lt;/code&gt; to customize the runtime paths and listener.&lt;/li&gt;
+&lt;li&gt;Connect to multiple Milvus instances from a single Attu deployment.&lt;/li&gt;
+&lt;li&gt;Add, edit, and switch between connections in the sidebar.&lt;/li&gt;
+&lt;li&gt;Each cluster has its own dedicated workspace with independent monitoring, agent sessions, and preferences, ideal for managing dev, staging, and production environments side by side.&lt;/li&gt;
+&lt;li&gt;Browse databases and collections, view and edit data inline, import/export in CSV, JSON, and Parquet formats.&lt;/li&gt;
+&lt;li&gt;Interactive vector similarity search with configurable embedding providers (OpenAI, Cohere, Jina, VoyageAI, and more).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Milvus #VectorDatabases #AIManagement #Attu #DataScience&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/zilliztech/attu" target="_blank" rel="noopener"
+&gt;zilliztech/attu&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Milvus Backup: Command-Line Tool for Milvus Data Management</title><link>https://shoubhikbanerjee.github.io/blog/p/milvus-backup-command-line-tool-for-milvus-data-management/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/milvus-backup-command-line-tool-for-milvus-data-management/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/18416694?v=4" alt="Featured image of post Milvus Backup: Command-Line Tool for Milvus Data Management" /&gt;&lt;h1 id="milvus-backup-command-line-tool-for-milvus-data-management"&gt;Milvus Backup: Command-Line Tool for Milvus Data Management
+&lt;/h1&gt;&lt;p&gt;Milvus Backup is a command-line tool and API service for backing up and restoring Milvus data. It allows backup and restore operations to run while the Milvus cluster remains available.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Milvus Backup is a command-line tool and API service for backing up and restoring Milvus data.&lt;/li&gt;
+&lt;li&gt;Backup and restore operations run while the Milvus cluster remains available.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Download a binary from the &lt;a class="link" href="https://github.com/zilliztech/milvus-backup/releases" target="_blank" rel="noopener"
+&gt;release page&lt;/a&gt;, or install it with Homebrew on macOS:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;brew install zilliztech/tap/milvus-backup&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;To build from source instead, run &lt;code&gt;make all&lt;/code&gt;; the executable is written to &lt;code&gt;./milvus-backup&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Milvus Backup reads its connection settings from a configuration file.&lt;/li&gt;
+&lt;li&gt;Copy the example and update it for your deployment — &lt;a class="link" href="#configuration" &gt;Configuration&lt;/a&gt; explains what to change:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cp configs/backup.yaml backup.yaml&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Then validate the setup and run your first backup and restore:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;milvus-backup check&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;milvus-backup create -n my_backup&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;milvus-backup list&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;milvus-backup restore -n my_backup&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The latest version supports backups from Milvus 2.2 and later, and restores to Milvus 2.5 and later.&lt;/li&gt;
+&lt;li&gt;A backup can be restored only to the same or a newer Milvus version.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Milvus Backup allows for the management of Milvus data with ease, ensuring data availability and integrity.&lt;/li&gt;
+&lt;li&gt;It supports various commands for different operations, making it a versatile tool for Milvus data management.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Milvus #Backup #DataManagement #AI #Database&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/zilliztech/milvus-backup" target="_blank" rel="noopener"
+&gt;zilliztech/milvus-backup&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon Bedrock Knowledge Bases Vector Store Backend Options</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-knowledge-bases-vector-store-backend-options/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-bedrock-knowledge-bases-vector-store-backend-options/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/09/ML-19758-featured-image.png" alt="Featured image of post Amazon Bedrock Knowledge Bases Vector Store Backend Options" /&gt;&lt;h1 id="amazon-bedrock-knowledge-bases-vector-store-backend-options"&gt;Amazon Bedrock Knowledge Bases Vector Store Backend Options
+&lt;/h1&gt;&lt;p&gt;Amazon Bedrock Knowledge Bases has updated its customer-managed configuration to support three distinct vector store backends for RAG use cases.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Vector Store Backend&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Key Features and Capabilities&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Amazon OpenSearch Service&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides high-speed results from in-memory data; supports k-NN and hybrid search (lexical and vector); available in managed cluster and serverless deployments.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Amazon Aurora PostgreSQL with pgvector&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Combines relational database capabilities with vector similarity search; supports IVFFlat and HNSW indexing, various distance metrics (L2, cosine, inner product), and vectors up to 2,000 dimensions.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Amazon S3 Vectors&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Native vector support within AWS cloud object storage; designed for cost-effective scaling with sub-second query performance.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Different backends serve specific RAG requirements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Ecommerce and Product Catalogs:&lt;/strong&gt; Amazon OpenSearch Serverless is well suited for these use cases due to low millisecond query latency and hybrid search capabilities that combine semantic understanding with keyword matching. It also supports complex filtering and aggregations for faceted navigation (such as brand, color, or price).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost Efficiency:&lt;/strong&gt; Amazon S3 Vectors can reduce vector storage costs by up to 90 percent compared to traditional vector databases.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Precision Tuning:&lt;/strong&gt; Users can utilize multiple distance metrics, such as Euclidean distance or cosine similarity, to fine-tune product similarity calculations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Amazon OpenSearch Serverless:&lt;/strong&gt; Supports both Classic and NextGen collections.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compatibility Note:&lt;/strong&gt; Amazon OpenSearch Serverless NextGen collections (generally available May 2026) are not yet compatible with the Amazon Bedrock Knowledge Bases Retrieve API.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#AmazonBedrock #RAG #VectorDatabase #AWS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/selecting-a-vector-store-for-amazon-bedrock-knowledge-bases/" target="_blank" rel="noopener"
+&gt;Selecting a vector store for Amazon Bedrock Knowledge Bases | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

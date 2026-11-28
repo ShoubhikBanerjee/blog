@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Zig on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/zig/</link><description>Recent content in Zig on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 22 Nov 2026 22:08:30 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/zig/index.xml" rel="self" type="application/rss+xml"/><item><title>x64dbg-MCP Server enables AI control of debuggers via Zig</title><link>https://shoubhikbanerjee.github.io/blog/p/x64dbg-mcp-server-enables-ai-control-of-debuggers-via-zig/</link><pubDate>Sun, 22 Nov 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/x64dbg-mcp-server-enables-ai-control-of-debuggers-via-zig/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/3162883?v=4" alt="Featured image of post x64dbg-MCP Server enables AI control of debuggers via Zig" /&gt;&lt;h1 id="x64dbg-mcp-server-enables-ai-control-of-debuggers-via-zig"&gt;x64dbg-MCP Server enables AI control of debuggers via Zig
+&lt;/h1&gt;&lt;p&gt;The x64dbg-MCP Server, a native MCP (Model Context Protocol) plugin for x64dbg, has been released, allowing MCP-compatible AI assistants to control the debugger programmatically over HTTP. Built with the Zig programming language, the solution is designed to be dependency-free, requiring only a single binary drop-in deployment without the need for .NET, Python, or other runtimes.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The server exposes the full functionality of x64dbg through standard protocols, enabling AI agents to perform complex debugging tasks. It supports both Streamable HTTP and SSE (Server-Sent Events) transports using JSON-RPC 2.0, ensuring compatibility with both new and legacy MCP clients.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Transport Protocols&lt;/strong&gt;: Uses Streamable HTTP + SSE for dual-transport compatibility.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Authentication&lt;/strong&gt;: Implements mandatory Bearer token authentication; the token is auto-generated on the first run and required for every request to prevent unauthorized access.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution&lt;/strong&gt;: The plugin is a pure native application with zero dependencies, cross-compiling to both x32 and x64 architectures from a single codebase.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The MCP server provides extensive control over the debugging environment, covering a wide range of operations from code analysis to memory management.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MCP Tools&lt;/strong&gt;: The evidence cites 84 MCP tools for full debugger control, including disassembly, stepping, breakpoints, memory allocation, registers, modules, threads, call stack, pattern scanning, string extraction, xrefs, symbols, bookmarks, PE analysis, OEP detection, module dumping, PEB/SEH inspection, and tracing. &lt;em&gt;(Note: One quote also references 72 MCP tools covering the workflow).&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Event Callbacks&lt;/strong&gt;: Includes 22 event callbacks covering init, stop, breakpoint, exception, step, attach/detach, DLL load/unload, and thread events.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Configuration&lt;/strong&gt;: Users can change IP, port, and token settings via a dialog in the Plugins menu, which auto-restarts the server upon saving.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Auto-Start&lt;/strong&gt;: The MCP server initiates automatically when x64dbg launches.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Default Port (x64)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.0.0.0:9094&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Default Port (x32)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;0.0.0.0:9095&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Language&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Zig&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Dependencies&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;None (No .NET, Python, or runtimes)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Architectures&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;x32 and x64&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Deployment is designed to be straightforward, allowing users to build and deploy the plugin across different operating systems.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Copy the contents of the &lt;code&gt;dist/&lt;/code&gt; directory into the x64dbg root folder to deploy both x32 and x64 versions.&lt;/li&gt;
+&lt;li&gt;Launch x64dbg; the MCP server starts automatically.&lt;/li&gt;
+&lt;li&gt;For connections from WSL or remote machines, set the bind address to &lt;code&gt;0.0.0.0&lt;/code&gt; in the config dialog and use the host&amp;rsquo;s IP address.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The tool supports cross-compiling Windows plugins from Linux, macOS, or WSL environments from a single command.&lt;/p&gt;
+&lt;p&gt;#x64dbg #MCP #Zig #AIAssistants #Debugging&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/duty1g/x64dbg-mcp-server" target="_blank" rel="noopener"
+&gt;duty1g/x64dbg-mcp-server&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Vercel Labs Ships fx, a Lightweight Embedded Coding Agent Written in Zig</title><link>https://shoubhikbanerjee.github.io/blog/p/vercel-labs-ships-fx-a-lightweight-embedded-coding-agent-written-in-zig/</link><pubDate>Sat, 03 Oct 2026 22:03:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/vercel-labs-ships-fx-a-lightweight-embedded-coding-agent-written-in-zig/</guid><description>&lt;img src="https://mager.co/blog-placeholder-1.jpg" alt="Featured image of post Vercel Labs Ships fx, a Lightweight Embedded Coding Agent Written in Zig" /&gt;&lt;h1 id="vercel-labs-ships-fx-a-lightweight-embedded-coding-agent-written-in-zig"&gt;Vercel Labs Ships fx, a Lightweight Embedded Coding Agent Written in Zig
+&lt;/h1&gt;&lt;p&gt;Vercel Labs has shipped fx, a new embedded coding agent runtime designed for high-performance integration.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Unlike traditional tools, fx is not a hosted service. Instead, it is a highly compact runtime designed to be embedded directly.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The fx agent includes the following technical specifications and features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Language and Size:&lt;/strong&gt; Written in Zig, with a footprint of approximately 6MB.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt; Features rapid execution with cold-starts in 10µs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Capabilities:&lt;/strong&gt; Speaks ACP, mounts MCP servers, and prints JSON.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Vercel #Zig #AIagents&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://mager.co/blog/" target="_blank" rel="noopener"
+&gt;Blog - mager.co&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

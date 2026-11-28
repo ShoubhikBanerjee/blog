@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Attention-Mechanism on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/attention-mechanism/</link><description>Recent content in Attention-Mechanism on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 28 Oct 2025 01:56:39 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/attention-mechanism/index.xml" rel="self" type="application/rss+xml"/><item><title>KV Caching Explained: Optimizing Transformer Inference Efficiency</title><link>https://shoubhikbanerjee.github.io/blog/p/kv-caching-explained-optimizing-transformer-inference-efficiency/</link><pubDate>Tue, 28 Oct 2025 01:56:39 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/kv-caching-explained-optimizing-transformer-inference-efficiency/</guid><description>&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6527e89a8808d80ccff88b7a/ZiRajz9XfXiPT3NIM05FS.png" alt="Featured image of post KV Caching Explained: Optimizing Transformer Inference Efficiency" /&gt;&lt;h1 id="-kv-caching-explained-optimizing-transformer-inference-efficiency"&gt;🧠 KV Caching Explained: Optimizing Transformer Inference Efficiency
+&lt;/h1&gt;&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6527e89a8808d80ccff88b7a/ZiRajz9XfXiPT3NIM05FS.png"
+loading="lazy"
+alt="KV Caching Overview"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Visual representation of KV caching optimization in transformer models&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-introduction"&gt;📖 Introduction
+&lt;/h2&gt;&lt;p&gt;When AI models generate text, they often repeat many of the same calculations, which can slow
+things down. &lt;strong&gt;Key-Value caching&lt;/strong&gt; is a technique that helps speed up this process by
+remembering important information from previous steps. Instead of recomputing everything from
+scratch, the model reuses what it has already calculated, making text generation much faster and more efficient.&lt;/p&gt;
+&lt;p&gt;In this blogpost, we&amp;rsquo;ll break down KV caching in an easy-to-understand way, explain why it&amp;rsquo;s
+useful, and show how it helps AI models work faster.&lt;/p&gt;
+&lt;h2 id="-prerequisites"&gt;📋 Prerequisites
+&lt;/h2&gt;&lt;p&gt;To fully grasp the content, readers should be familiar with:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Transformer Architecture&lt;/strong&gt;: Familiarity with components such as the attention mechanism.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Autoregressive Modeling&lt;/strong&gt;: Understanding of how models like GPT generate sequences.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Linear Algebra Basics&lt;/strong&gt;: Concepts like matrix multiplication and transposition, which are
+essential for understanding attention computations.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="-essential-takeaways"&gt;💡 Essential Takeaways
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Attention weight has a shape of [batch, h, Seq_len, Seq_len]&lt;/li&gt;
+&lt;li&gt;Masked multi-head attention allows each token to be represented by itself and all the previous
+tokens&lt;/li&gt;
+&lt;li&gt;To generate a new token the model needs to look at all the previous tokens and their
+representations by their preceding tokens&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6527e89a8808d80ccff88b7a/9n4ttDGvMkcZKF8puUBz0.png"
+loading="lazy"
+alt="Attention Mechanism"
+&gt; ![Token Representation](&lt;a class="link" href="https://cdn-uploads.huggingface.co/prod" target="_blank" rel="noopener"
+&gt;https://cdn-uploads.huggingface.co/prod&lt;/a&gt;
+uction/uploads/6527e89a8808d80ccff88b7a/zPsMCUsd_ohKun4r2axV0.png)&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Visual examples of attention mechanisms and token representations&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-standard-inference-and-the-rise-of-kv-caching"&gt;⚡ Standard Inference and the Rise of KV Caching
+&lt;/h2&gt;&lt;p&gt;When a model generates text, it &lt;strong&gt;looks at all the previous tokens&lt;/strong&gt; to predict the next one.
+Normally, it would &lt;em&gt;repeat the same calculations&lt;/em&gt; for every new token, which can slow things down.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;KV caching solves compute overlap by &lt;strong&gt;remembering these calculations&lt;/strong&gt; from previous steps,
+this can be achieved by storing the intermediate states of attention layers during inference.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="-how-does-kv-caching-work"&gt;🔧 How Does KV Caching Work?
+&lt;/h2&gt;&lt;h3 id="-step-by-step-process"&gt;📝 Step-by-Step Process
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;First Generation&lt;/strong&gt;: When the model sees the first input, it calculates and stores its keys
+and values in the cache. ⇓&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Next Words&lt;/strong&gt;: For each new word, the model retrieves the stored keys and values and adds
+the new ones instead of starting over.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Efficient Attention Computation&lt;/strong&gt;: calculate attention using the cached K and V along with
+the new Q (query) to compute the output.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Update Input&lt;/strong&gt;: add the newly generated token to the input and go back to step 2 until we finish generating.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://cdn-uploads.huggingface.co/production/uploads/6527e89a8808d80ccff88b7a/DbL2RbXFRoMWA5CrOaGB8.png"
+loading="lazy"
+alt="KV Caching Process"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Step-by-step illustration of the KV caching process&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The process is illustrated below:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Token 1: [K1, V1] ➔ Cache: [K1, V1] Token 2: [K2, V2] ➔ Cache: [K1, K2], [V1, V2]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Token n: [Kn, Vn] ➔ Cache: [K1, K2, ..., Kn], [V1, V2, ..., Vn]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;KV Caching&lt;/th&gt;
+&lt;th&gt;Standard Inference&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Reuses cached calculations&lt;/td&gt;
+&lt;td&gt;Recalculates everything each time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Faster processing&lt;/td&gt;
+&lt;td&gt;Slower, repetitive processing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In the table above we used a d_k = 5 for better visuals, note that this number can be
+significantly bigger than what we have presented.&lt;/p&gt;
+&lt;h2 id="-comparison-kv-caching-vs-standard-inference"&gt;⚖️ Comparison: KV Caching vs. Standard Inference
+&lt;/h2&gt;&lt;p&gt;Here&amp;rsquo;s how KV caching compares to the regular generations:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;strong&gt;Feature&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Standard Inference&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;KV Caching&lt;/strong&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Computation per Word&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;The model repeats the same calculations for every word.&lt;/td&gt;
+&lt;td&gt;The model&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;reuses past calculations for faster results.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Memory Usage&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Uses less memory at each step, but memory grows with longer texts.&lt;/td&gt;
+&lt;td&gt;Uses&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;extra memory to store past information, but keeps things efficient.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Speed&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Gets slower as the text gets longer because it repeats work.&lt;/td&gt;
+&lt;td&gt;Stays fast even&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;with longer texts by avoiding repeated work.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Efficiency&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;High computational cost and slower response times.&lt;/td&gt;
+&lt;td&gt;Faster and more&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;efficient since the model remembers past work.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Handling Long Texts&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Struggles with long texts due to repeated calculations.&lt;/td&gt;
+&lt;td&gt;Perfect&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;for long texts as it remembers past steps.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;KV caching makes a big difference in &lt;strong&gt;speed&lt;/strong&gt; and &lt;strong&gt;efficiency&lt;/strong&gt;, especially for long texts. By
+saving and reusing past calculations, it avoids the need to start over each time, making it
+much faster than the regular way of generating text.&lt;/p&gt;
+&lt;h2 id="-practical-implementatio"&gt;🛠️ Practical Implementatio
+&lt;/h2&gt;&lt;p&gt;This is a simplified example of implementing KV caching in PyTorch:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Pseudocode for KV Caching in PyTorch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;KVCache&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;key&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;key&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;key&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;key&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cat&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;key&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;dim&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;torch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cat&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;dim&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_cache&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;When using the transformers library this behavior is enabled by default through the &lt;code&gt;use_cache&lt;/code&gt;
+parameter, you can also access multiple caching methods through the &lt;code&gt;cache_implementation&lt;/code&gt;
+parameter, here&amp;rsquo;s a minimalistic code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;transformers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;AutoModelForCausalLM&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AutoTokenizer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;tokenizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoTokenizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;HuggingFaceTB/SmolLM2-1.7B&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AutoModelForCausalLM&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_pretrained&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;HuggingFaceTB/SmolLM2-1.7B&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cuda&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;The red cat was&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;return_tensors&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;pt&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cuda&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;tokens&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;max_new_tokens&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;use_cache&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt; &lt;span class="c1"&gt;# by default is set to True&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;output_text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tokenizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;batch_decode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;skip_special_tokens&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;We benchmarked the code above with/without kv caching on a T4 GPU we got the following results:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;with KV Caching&lt;/th&gt;
+&lt;th&gt;Standard Inference&lt;/th&gt;
+&lt;th&gt;Speedup&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;11.7 s&lt;/td&gt;
+&lt;td&gt;1min 1s&lt;/td&gt;
+&lt;td&gt;~5.21x times faster&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-credits"&gt;🙌 Credits
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Originally posted at: &lt;a class="link" href="https://huggingface.co/blog/not-lain/kv-caching" target="_blank" rel="noopener"
+&gt;https://huggingface.co/blog/not-lain/kv-caching&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="-conclusion"&gt;🏁 Conclusion
+&lt;/h2&gt;&lt;p&gt;KV caching is a simple but powerful technique that helps AI models generate text faster and more
+efficiently. By remembering past calculations instead of repeating them, it reduces the time
+and effort needed to predict new words. While it does require extra memory, this method is
+especially useful for long conversations ensuring fast and efficient generation.&lt;/p&gt;
+&lt;p&gt;Understanding KV caching can help developers and AI enthusiasts build faster, smarter, and more
+scalable language models for real-world applications.&lt;/p&gt;
+&lt;h2 id="-references--further-reading"&gt;📚 References &amp;amp; Further Reading
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a class="link" href="https://example.com" target="_blank" rel="noopener"
+&gt;Transformers KV Caching Explained&lt;/a&gt;2. &lt;a class="link" href="https://example.com" target="_blank" rel="noopener"
+&gt;Transformers Key-Value Caching Explained&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://example.com" target="_blank" rel="noopener"
+&gt;Mastering LLM Techniques: Inference Optimization&lt;/a&gt;4. &lt;a class="link" href="https://example.com" target="_blank" rel="noopener"
+&gt;Hugging Face Documentation - KV Caching in Transformers&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;#TRANSFORMERS #KVCACHING #MACHINELEARNING #AI #DEEPLEARNING #INFERENCE #OPTIMIZATION
+#HUGGINGFACE #NLP #PYTORCH&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

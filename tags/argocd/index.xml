@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ArgoCD on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/argocd/</link><description>Recent content in ArgoCD on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 27 Nov 2026 22:09:22 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/argocd/index.xml" rel="self" type="application/rss+xml"/><item><title>Spotify outage caused by conflicting deployment changes</title><link>https://shoubhikbanerjee.github.io/blog/p/spotify-outage-caused-by-conflicting-deployment-changes/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/spotify-outage-caused-by-conflicting-deployment-changes/</guid><description>&lt;img src="https://images.ctfassets.net/p762jor363g1/5Pj1XJpttH7jTwoNtzp0JK/6fe349c743b3f334580c783ee71b7804/tools-orange-c-cream.png" alt="Featured image of post Spotify outage caused by conflicting deployment changes" /&gt;&lt;h1 id="spotify-outage-caused-by-conflicting-deployment-changes"&gt;Spotify outage caused by conflicting deployment changes
+&lt;/h1&gt;&lt;p&gt;On September 29, Spotify experienced an outage that disrupted users’ access to the platform. The disruption was triggered by a series of changes to the deployment platforms that resulted in conflicts impacting the main authentication system, preventing apps from loading content or playing music.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The outage began with errors increasing at 13:45 UTC.&lt;/li&gt;
+&lt;li&gt;A login system &amp;ldquo;panic mode alert&amp;rdquo; paged the owning team at 13:57 UTC.&lt;/li&gt;
+&lt;li&gt;Responders identified the specific login service impacted at 14:04 UTC.&lt;/li&gt;
+&lt;li&gt;Most regions recovered by 16:30 UTC, though one European region experienced further overwhelm due to returning traffic.&lt;/li&gt;
+&lt;li&gt;The incident was declared &amp;ldquo;all-clear&amp;rdquo; at 19:34 UTC.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-root-cause-analysis"&gt;🧩 Root Cause Analysis
+&lt;/h2&gt;&lt;p&gt;The issue stemmed from two independently tested changes to the deployment system that conflicted when combined:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Change 1&lt;/strong&gt;: Altered how test environments are configured, including running fewer instances and omitting some automated health checks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Change 2&lt;/strong&gt;: Changed how the system computes the difference between the current state and a desired new state for deployment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The conflict occurred because one rollout changed the type of deployed workloads (from Kubernetes Deployment to Argo Rollout), while the second changed which configuration parameters are excluded from the automated diff. Consequently, the system accidentally included the &lt;code&gt;minReplicas&lt;/code&gt; field in the diff. While the correct behavior is for the Kubernetes autoscaler to manage replica numbers, the deployment system instead set the replicas field to the minimum number on every sync.&lt;/p&gt;
+&lt;h2 id="-impact-and-recovery"&gt;⚙️ Impact and Recovery
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Token Backlog&lt;/strong&gt;: The re-issuing of tokens after downtime caused significant load increases, overwhelming remaining instances even with client backoffs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reconciliation Loop&lt;/strong&gt;: An erroneous reconciliation loop lowered the number of instances, preventing automatic scaling and recovery.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Traffic Surge&lt;/strong&gt;: The login system handled 200 times more traffic than usual during the start of recovery to process the backlog of missing tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Manual Intervention&lt;/strong&gt;: The first attempt to manually scale up did not sufficiently account for the traffic increase. By 17:25 UTC, the login system was set to 3x normal CPU/memory resources to prevent a &amp;ldquo;thundering herd&amp;rdquo; effect.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-incident-timeline"&gt;📊 Incident Timeline
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Time (UTC)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Event&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;13:45&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Errors begin increasing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;13:57&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Login system &amp;ldquo;panic mode alert&amp;rdquo; pages owning team&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;14:04&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Responders identify the impacted login service&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;16:30&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Login starts to recover; deployments remain frozen&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;17:25&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Login set to 3x normal CPU/memory resources&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;19:34&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Incident declared &amp;ldquo;all-clear&amp;rdquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/p762jor363g1/3AiqgaI6uFPcF6zc7lYX5t/bbed1b145db94423441163d9f149a02e/incident_report.png"
+loading="lazy"
+alt="Spotify Incident Report"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/p762jor363g1/3AiqgaI6uFPcF6zc7lYX5t/bbed1b145db94423441163d9f149a02e/incident_report.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Spotify #DevOps #Kubernetes #ArgoCD #IncidentResponse&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://engineering.atspotify.com/2026/11/september-29-outage-incident-report-what-we-learnt/" target="_blank" rel="noopener"
+&gt;September 29 Outage Incident Report: What we learnt | Spotify Engineering&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

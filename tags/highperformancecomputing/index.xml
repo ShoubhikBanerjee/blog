@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HighPerformanceComputing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/highperformancecomputing/</link><description>Recent content in HighPerformanceComputing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/highperformancecomputing/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Releases cuDSS 1.0 and DuckDB Sirius Extension</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cudss-1-0-and-duckdb-sirius-extension/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cudss-1-0-and-duckdb-sirius-extension/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2024/06/DatacenterKV-2-660x370.png" alt="Featured image of post NVIDIA Releases cuDSS 1.0 and DuckDB Sirius Extension" /&gt;&lt;h1 id="nvidia-releases-cudss-10-and-duckdb-sirius-extension"&gt;NVIDIA Releases cuDSS 1.0 and DuckDB Sirius Extension
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released version 1.0 of its cuDSS library for sparse linear systems and collaborated with DuckLabs to release Sirius, a GPU-accelerated extension for DuckDB, enabling high-performance analytical queries on NVIDIA hardware.&lt;/p&gt;
+&lt;h2 id="-how-cudss-works"&gt;🧩 How cuDSS Works
+&lt;/h2&gt;&lt;p&gt;The cuDSS library is designed to solve large sparse linear systems for engineering and scientific simulations. It targets numerically challenging sparse systems, particularly symmetric indefinite ones, by offering symmetry-preserving matching and scaling as well as Bunch-Kaufman pivoting.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Matching and Scaling&lt;/strong&gt;: Uses the HSL MC64 algorithm from the HSL collection of Fortran codes. This feature preserves symmetry and is enabled by default in cuDSS 1.0, improving accuracy and reducing memory and performance penalties associated with previous nonsymmetric matching.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bunch-Kaufman Pivoting&lt;/strong&gt;: Allows 2×2 pivots to maintain factorization stability while preserving symmetry. The algorithm applies a local test to each column to choose between 1×1 pivots, interchanged 1×1 pivots, or 2×2 blocks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Default Configuration&lt;/strong&gt;: cuDSS 1.0 defaults to using matching and scaling with &lt;code&gt;CUDSS_MATCHING_ALG_MAX_DIAG_PRODUCT&lt;/code&gt; and Bunch-Kaufman pivoting with &lt;code&gt;CUDSS_PIVOT_BUNCH_KAUFMAN&lt;/code&gt;. Users can restore previous behavior using &lt;code&gt;CUDSS_CONFIG_FORCE_NONSYMMETRIC_MATCHING&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-cudss-performance"&gt;📊 cuDSS Performance
+&lt;/h2&gt;&lt;p&gt;Benchmark matrices for cuDSS were selected from semiconductor design, manufacturing, and computer-aided engineering workflows, including circuit simulation, TCAD, thermal, structural, electromagnetic, and fluid dynamics. Performance was benchmarked against Intel MKL version 2026.1.0 using an NVIDIA B200 GPU and an Intel Xeon Platinum 8570 CPU.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Phase&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Geometric-Mean Speedup&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Analysis&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.5x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Numerical Factorization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;5.9x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Triangular Solve&lt;/td&gt;
+&lt;td style="text-align: left"&gt;151x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;cuDSS performance has improved over previous releases, with optimizations for superpanels in factorization, multithreaded analysis, and tuned solve-phase kernels. Developers can access these gains by upgrading without changing application code.&lt;/p&gt;
+&lt;h2 id="-sirius-for-duckdb"&gt;🐝 Sirius for DuckDB
+&lt;/h2&gt;&lt;p&gt;Sirius is an open-source, GPU-native SQL engine developed through a collaboration between the University of Wisconsin–Madison and NVIDIA, released as a DuckDB core extension in partnership with DuckLabs.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Integration&lt;/strong&gt;: Developers can install and load Sirius using two SQL commands (&lt;code&gt;INSTALL sirius;&lt;/code&gt; and &lt;code&gt;LOAD sirius;&lt;/code&gt;). It requires DuckDB 2.0 and an NVIDIA GPU with a compatible driver.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Architecture&lt;/strong&gt;: DuckDB handles SQL parsing and optimization, while Sirius executes the resulting query plans on the GPU using a CUDA backend.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: In TPC-H benchmarks with data stored in Amazon S3, Sirius delivered significant speedups over CPU-based DuckDB.
+&lt;ul&gt;
+&lt;li&gt;At Scale Factor 1,000 (1 TB), total query runtime fell from 347.3 seconds to 63.2 seconds.&lt;/li&gt;
+&lt;li&gt;At Scale Factor 3,000 (3 TB), runtime dropped from 752.4 seconds to 160.6 seconds, a 4.69x speedup.&lt;/li&gt;
+&lt;li&gt;With tuned settings, a two-GPU AWS instance configuration achieved 3.25x to 5.50x speedups over the best CPU-based configurations, reducing query-time compute cost by up to approximately 79%.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The general availability of cuDSS marks it as a production-ready library for commercial applications. Sirius is available as a DuckDB core extension, with a download size of approximately 700 MB.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/analysis-phase-speedup-cudss-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/factorization-phase-speedup-cudss-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/solve-phase-speedup-cudss-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #cuDSS #DuckDB #GPU #HighPerformanceComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/accelerating-direct-sparse-solvers-for-computational-engineering-with-nvidia-cudss-1-0/" target="_blank" rel="noopener"
+&gt;Accelerating Direct Sparse Solvers for Computational Engineering with NVIDIA cuDSS 1.0 | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/get-started-with-gpu-accelerated-duckdb-analytics-using-the-sirius-core-extension/" target="_blank" rel="noopener"
+&gt;Get Started with GPU-Accelerated DuckDB Analytics Using the Sirius Core Extension | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

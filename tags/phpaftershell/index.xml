@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>PhpAfterShell on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/phpaftershell/</link><description>Recent content in PhpAfterShell on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2026 22:09:40 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/phpaftershell/index.xml" rel="self" type="application/rss+xml"/><item><title>Critical phpAfterShell Vulnerability Disclosed in PHP Session Handler</title><link>https://shoubhikbanerjee.github.io/blog/p/critical-phpaftershell-vulnerability-disclosed-in-php-session-handler/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/critical-phpaftershell-vulnerability-disclosed-in-php-session-handler/</guid><description>&lt;img src="https://blog.cloudflare.com/_emdash/api/media/file/01M7X76FEMSF7NE7RCCQQBHCVN.png" alt="Featured image of post Critical phpAfterShell Vulnerability Disclosed in PHP Session Handler" /&gt;&lt;h1 id="critical-phpaftershell-vulnerability-disclosed-in-php-session-handler"&gt;Critical phpAfterShell Vulnerability Disclosed in PHP Session Handler
+&lt;/h1&gt;&lt;p&gt;On November 19, 2026, the security research company depthfirst disclosed phpAfterShell (CVE-2026-126714), a critical vulnerability in PHP&amp;rsquo;s default file-based session handler that can lead to remote code execution. PHP released official patches to resolve this and 16 other security vulnerabilities on the same day. There is currently no indication that these vulnerabilities have been exploited in the wild.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Under the Common Vulnerability Scoring System (CVSS) 4.0, phpAfterShell scores a 9.2 out of 10 (Critical). The PHP project addressed the flaw in versions 8.2.36, 8.3.37, 8.4.28, 8.5.13, and 8.6.0. These releases also resolve 16 other security vulnerabilities, six of which are similarly rated as critical.&lt;/p&gt;
+&lt;p&gt;As of November 19, 2026, none of the 17 vulnerabilities are listed in CISA&amp;rsquo;s Known Exploited Vulnerabilities catalog, and no reviewed sources report active exploitation.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;PHP stores session data in files by default. The phpAfterShell vulnerability involves the session write and deserialization processes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Session read&lt;/strong&gt;: When an application calls &lt;code&gt;session_start()&lt;/code&gt;, PHP reads the session file and deserializes its content into the &lt;code&gt;$_SESSION&lt;/code&gt; array.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Session write&lt;/strong&gt;: When the request ends, PHP writes the updated session back to the same file.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interruption&lt;/strong&gt;: phpAfterShell is triggered when this write operation is interrupted. Following an interruption, the session file can hold the beginning of the new session data followed by the leftover end of the old session data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deserialization&lt;/strong&gt;: On the next request, &lt;code&gt;session_start()&lt;/code&gt; deserializes this mixed content. If an attacker managed to shape the old session data, PHP can deserialize objects of the attacker&amp;rsquo;s choosing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;An attacker can shape the stored session data by using PHP&amp;rsquo;s session upload progress feature (which writes file upload progress into the session) or by targeting applications that store large user-controlled strings in the session. Although PHP notes that code execution requires a write interruption at a useful point and a suitable deserialization gadget chain in the application, depthfirst reports reaching code execution without any application gadget. They achieved this by chaining phpAfterShell with a second, undisclosed memory-corruption bug in a PHP-native class. It is unestablished whether this second bug is fixed in the November 19 releases.&lt;/p&gt;
+&lt;h2 id="-mitigation-and-protection"&gt;⚙️ Mitigation and Protection
+&lt;/h2&gt;&lt;p&gt;To mitigate the vulnerability, Cloudflare has updated its Web Application Firewall (WAF) to block known phpAfterShell attack patterns. These updates build on a PHP remote code execution rule first deployed in October 2026 for the php2shell vulnerabilities, which has now been updated to cover phpAfterShell.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Rule Name / Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Target Vulnerability&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Managed Ruleset&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Default Action&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;phpAfterShell Rule&lt;/td&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-126714&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Free and Paid (Enabled by default)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Block&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;PHP-FPM Request Smuggling Rule&lt;/td&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-129289&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Paid Plans (Enabled by default)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Log&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;PHP SOAP Extension Rules&lt;/td&gt;
+&lt;td style="text-align: left"&gt;CVE-2026-15353, CVE-2026-129506&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Paid Plans (Enabled by default)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Log&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The request smuggling and SOAP rules use the &amp;ldquo;Log&amp;rdquo; action by default because the traffic patterns they target can occasionally occur in legitimate traffic. Paid plan customers can review matching requests in Security Events and change the action to &amp;ldquo;Block&amp;rdquo; once they verify that legitimate traffic is unaffected.&lt;/p&gt;
+&lt;p&gt;Cloudflare emphasizes that the WAF serves as an additional layer of defense rather than a complete replacement for patching. Because several of the critical flaws depend on server configuration or bypass pathways visible to the WAF, the only complete fix is to upgrade PHP and restart all worker processes.&lt;/p&gt;
+&lt;p&gt;#PHP #phpAfterShell #Cybersecurity #Cloudflare #Vulnerability&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://blog.cloudflare.com/phpaftershell-waf-protection/" target="_blank" rel="noopener"
+&gt;How Cloudflare WAF helps protect against phpAfterShell and other critical PHP flaws&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Runtime on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/runtime/</link><description>Recent content in Runtime on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/runtime/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA's OpenShell runtime adds policy enforcement for autonomous AI agents</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-s-openshell-runtime-adds-policy-enforcement-for-autonomous-ai-agents/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-s-openshell-runtime-adds-policy-enforcement-for-autonomous-ai-agents/</guid><description>&lt;img src="https://res.cloudinary.com/snyk/image/upload/v1689708917/blog-feature-ai-blue.jpg" alt="Featured image of post NVIDIA's OpenShell runtime adds policy enforcement for autonomous AI agents" /&gt;&lt;h1 id="nvidias-openshell-runtime-adds-policy-enforcement-for-autonomous-ai-agents"&gt;NVIDIA&amp;rsquo;s OpenShell runtime adds policy enforcement for autonomous AI agents
+&lt;/h1&gt;&lt;p&gt;NVIDIA has contributed OpenShell, an open source runtime for autonomous AI agents, to the Cloud Native Computing Foundation (CNCF), where it is now a Sandbox project. The Apache 2.0 licensed tool focuses on enforcing security policies across agent interactions, ensuring that agents only access resources explicitly permitted by predefined rules.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;OpenShell acts as a runtime layer that monitors and restricts the behavior of autonomous AI agents. It enforces declared policies on every file access, system call, and network connection. A key feature of the runtime is its ability to verify which specific binary initiates a network connection, preventing agents from exploiting trusted applications to send data to unauthorized destinations.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The enforcement mechanism operates at multiple levels of the stack:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Network Policy:&lt;/strong&gt; Rules can specify that only certain binaries may reach specific endpoints. For example, a policy can restrict the Snyk binary to only access &lt;code&gt;api.snyk.io&lt;/code&gt;, preventing the agent from using Snyk&amp;rsquo;s access to exfiltrate data elsewhere.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Credential Handling:&lt;/strong&gt; OpenShell holds API keys and injects them only into requests bound for approved endpoints. In a test build involving Claude Code, Anthropic keys never entered the sandbox environment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Default Denial:&lt;/strong&gt; New sandboxes start with no network access. When an agent attempts to reach a new host, OpenShell blocks the request and generates a draft rule for human approval.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MCP Server Governance:&lt;/strong&gt; Enforcement runs through the agent&amp;rsquo;s hooks at tool-call time. This covers local Model Context Protocol (MCP) servers that do not touch the network. If an agent calls a tool on an unapproved server, the governance system stops the call and identifies the responsible policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;A reference build combines OpenShell with specific security controls to demonstrate the architecture:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Base Image&lt;/td&gt;
+&lt;td style="text-align: left"&gt;NVIDIA&amp;rsquo;s own Ubuntu base image&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Integrated Tools&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Claude Code and four Snyk controls&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Startup Scanning&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Agent supply chain security scans the sandbox, flagging potential prompt injection and insecure credential handling with specific line numbers&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Code Security&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Snyk Studio&amp;rsquo;s &amp;ldquo;Secure at Inception&amp;rdquo; hook scans agent output, flagging issues like SQL injection and holding the turn until fixes are applied&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Inventory&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Each sandbox appears in Evo as a distinct machine alongside developer laptops and Docker Sandboxes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The architecture relies on binaries being fixed at build time and checksum-verified. Because OpenShell only permits program execution from system folders such as &lt;code&gt;/usr&lt;/code&gt;, tools like Snyk are built directly into the image rather than installed at runtime.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;OpenShell is available as an open source project under the Apache 2.0 license. The tested version was OpenShell 0.1.6. A single &lt;code&gt;run.sh&lt;/code&gt; command can build the reference image, store credentials in OpenShell, and start the sandbox with a pre-approved network policy.&lt;/p&gt;
+&lt;p&gt;#NVIDIA #OpenShell #AIAgents #Security #CNCF&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://snyk.io/blog/secure-ai-coding-agents-nvidia-openshell/" target="_blank" rel="noopener"
+&gt;How to Secure AI Coding Agents in NVIDIA OpenShell with Evo | Snyk&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

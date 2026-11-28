@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud Native on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/cloud-native/</link><description>Recent content in Cloud Native on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/cloud-native/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes v1.38 introduces breaking changes to WebSockets, cgroup drivers, and kubeconfig APIs</title><link>https://shoubhikbanerjee.github.io/blog/p/kubernetes-v1-38-introduces-breaking-changes-to-websockets-cgroup-drivers-and-kubeconfig-apis/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/kubernetes-v1-38-introduces-breaking-changes-to-websockets-cgroup-drivers-and-kubeconfig-apis/</guid><description>&lt;h1 id="kubernetes-v138-introduces-breaking-changes-to-websockets-cgroup-drivers-and-kubeconfig-apis"&gt;Kubernetes v1.38 introduces breaking changes to WebSockets, cgroup drivers, and kubeconfig APIs
+&lt;/h1&gt;&lt;p&gt;As the Kubernetes community approaches the v1.38 release, several deprecated features are being removed or deprecated to improve the project&amp;rsquo;s long-term health and maintainability. These changes affect kubectl behavior, cgroup configuration, and API stability, requiring cluster administrators to update their configurations and scripts.&lt;/p&gt;
+&lt;h2 id="-kubectl-websockets-transition"&gt;📡 Kubectl WebSockets Transition
+&lt;/h2&gt;&lt;p&gt;Kubernetes has progressively moved kubectl from SPDY to WebSockets for exec, attach, and port-forward operations:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Version&lt;/th&gt;
+&lt;th&gt;WebSocket Support&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;v1.30&lt;/td&gt;
+&lt;td&gt;Default for exec, attach, cp operations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;v1.31&lt;/td&gt;
+&lt;td&gt;Default for port-forward operations&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The environment variables &lt;code&gt;KUBECTL_REMOTE_COMMAND_WEBSOCKETS&lt;/code&gt; and &lt;code&gt;KUBECTL_PORT_FORWARD_WEBSOCKETS&lt;/code&gt; were introduced to disable WebSocket usage. In v1.38, these variables will be removed. kubectl will always prefer WebSockets and fall back to SPDY when necessary. Scripts or CI environments that set these variables can remove them as they will no longer have any effect.&lt;/p&gt;
+&lt;h2 id="-kubeconfig-api-changes"&gt;⚙️ Kubeconfig API Changes
+&lt;/h2&gt;&lt;p&gt;The kuberc file manages kubectl user preferences and credential plugin allowlists. In the beta &lt;code&gt;kubectl.config.k8s.io/v1beta1&lt;/code&gt; API, the &lt;code&gt;name&lt;/code&gt; field served as an alias for &lt;code&gt;command&lt;/code&gt;. The &lt;code&gt;name&lt;/code&gt; field was deprecated in v1.36. With kuberc graduating to stable in v1.38, the new &lt;code&gt;kubectl.config.k8s.io/v1&lt;/code&gt; API will not include &lt;code&gt;name&lt;/code&gt;. Users with allowlist entries using &lt;code&gt;name&lt;/code&gt; should update them to use &lt;code&gt;command&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="-container-runtime-and-cgroup-driver-updates"&gt;🔧 Container Runtime and cgroup Driver Updates
+&lt;/h2&gt;&lt;p&gt;Support for cgroup v1 is being phased out. Since v1.35, kubelet fails to start on cgroup v1 nodes unless &lt;code&gt;failCgroupV1: false&lt;/code&gt; is set in the kubelet configuration. This option remains in v1.38 but should be treated as a short-term workaround. Users are encouraged to migrate to cgroup v2.&lt;/p&gt;
+&lt;p&gt;Additionally, the legacy cgroup driver configuration mechanism is being deprecated. The kubelet will default to not allowing this mechanism in v1.38 and will require the container runtime to be running to query the recommended cgroup driver via CRI RuntimeConfig RPC. If the kubelet cannot retrieve the cgroup driver from the runtime after retrying, it will exit with an error before registering the node. The &lt;code&gt;cgroupDriver&lt;/code&gt; field in the kubelet configuration file will be deprecated, and specifying it will be rejected unless the &lt;code&gt;LegacyCgroupDriverFallback&lt;/code&gt; feature gate is enabled.&lt;/p&gt;
+&lt;p&gt;kubeadm will no longer default &lt;code&gt;cgroupDriver&lt;/code&gt; to systemd and will report an error during preflight checks if the runtime doesn&amp;rsquo;t support the RPC.&lt;/p&gt;
+&lt;h2 id="-admission-webhook-behavior-changes"&gt;🌐 Admission Webhook Behavior Changes
+&lt;/h2&gt;&lt;p&gt;Since v1.37, the &lt;code&gt;ExcludeAdmissionWebhookVirtualResources&lt;/code&gt; feature gate is enabled by default. With this gate active, validating and mutating admission webhooks no longer receive requests for virtual resources like TokenReview, SelfSubjectReview, SubjectAccessReview, SelfSubjectAccessReview, and LocalSubjectAccessReview. Creating or updating a webhook configuration targeting these resources triggers a deprecation warning. Users relying on webhooks for these requests can disable the gate temporarily, but it is planned to be locked on when the feature graduates to stable.&lt;/p&gt;
+&lt;h2 id="-resource-limit-enforcement-for-cgroup-v2"&gt;💾 Resource Limit Enforcement for cgroup v2
+&lt;/h2&gt;&lt;p&gt;On Linux nodes using cgroup v2 and configured with LimitedSwap, v1.38&amp;rsquo;s kubelet will begin applying swap limits based on the Pod&amp;rsquo;s memory settings.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;These changes are planned for the Kubernetes v1.38 release. The information reflects the current status and may change before the actual release date.&lt;/p&gt;
+&lt;p&gt;#Kubernetes #Containers #cgroups #Kubectl&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://kubernetes.io/blog/2026/11/23/kubernetes-v1-38-sneak-peek/" target="_blank" rel="noopener"
+&gt;Kubernetes v1.38 Sneak Peek&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA's OpenShell runtime adds policy enforcement for autonomous AI agents</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-s-openshell-runtime-adds-policy-enforcement-for-autonomous-ai-agents/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-s-openshell-runtime-adds-policy-enforcement-for-autonomous-ai-agents/</guid><description>&lt;img src="https://res.cloudinary.com/snyk/image/upload/v1689708917/blog-feature-ai-blue.jpg" alt="Featured image of post NVIDIA's OpenShell runtime adds policy enforcement for autonomous AI agents" /&gt;&lt;h1 id="nvidias-openshell-runtime-adds-policy-enforcement-for-autonomous-ai-agents"&gt;NVIDIA&amp;rsquo;s OpenShell runtime adds policy enforcement for autonomous AI agents
+&lt;/h1&gt;&lt;p&gt;NVIDIA has contributed OpenShell, an open source runtime for autonomous AI agents, to the Cloud Native Computing Foundation (CNCF), where it is now a Sandbox project. The Apache 2.0 licensed tool focuses on enforcing security policies across agent interactions, ensuring that agents only access resources explicitly permitted by predefined rules.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;OpenShell acts as a runtime layer that monitors and restricts the behavior of autonomous AI agents. It enforces declared policies on every file access, system call, and network connection. A key feature of the runtime is its ability to verify which specific binary initiates a network connection, preventing agents from exploiting trusted applications to send data to unauthorized destinations.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The enforcement mechanism operates at multiple levels of the stack:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Network Policy:&lt;/strong&gt; Rules can specify that only certain binaries may reach specific endpoints. For example, a policy can restrict the Snyk binary to only access &lt;code&gt;api.snyk.io&lt;/code&gt;, preventing the agent from using Snyk&amp;rsquo;s access to exfiltrate data elsewhere.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Credential Handling:&lt;/strong&gt; OpenShell holds API keys and injects them only into requests bound for approved endpoints. In a test build involving Claude Code, Anthropic keys never entered the sandbox environment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Default Denial:&lt;/strong&gt; New sandboxes start with no network access. When an agent attempts to reach a new host, OpenShell blocks the request and generates a draft rule for human approval.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MCP Server Governance:&lt;/strong&gt; Enforcement runs through the agent&amp;rsquo;s hooks at tool-call time. This covers local Model Context Protocol (MCP) servers that do not touch the network. If an agent calls a tool on an unapproved server, the governance system stops the call and identifies the responsible policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;A reference build combines OpenShell with specific security controls to demonstrate the architecture:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Component&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Base Image&lt;/td&gt;
+&lt;td style="text-align: left"&gt;NVIDIA&amp;rsquo;s own Ubuntu base image&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Integrated Tools&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Claude Code and four Snyk controls&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Startup Scanning&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Agent supply chain security scans the sandbox, flagging potential prompt injection and insecure credential handling with specific line numbers&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Code Security&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Snyk Studio&amp;rsquo;s &amp;ldquo;Secure at Inception&amp;rdquo; hook scans agent output, flagging issues like SQL injection and holding the turn until fixes are applied&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Inventory&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Each sandbox appears in Evo as a distinct machine alongside developer laptops and Docker Sandboxes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The architecture relies on binaries being fixed at build time and checksum-verified. Because OpenShell only permits program execution from system folders such as &lt;code&gt;/usr&lt;/code&gt;, tools like Snyk are built directly into the image rather than installed at runtime.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;OpenShell is available as an open source project under the Apache 2.0 license. The tested version was OpenShell 0.1.6. A single &lt;code&gt;run.sh&lt;/code&gt; command can build the reference image, store credentials in OpenShell, and start the sandbox with a pre-approved network policy.&lt;/p&gt;
+&lt;p&gt;#NVIDIA #OpenShell #AIAgents #Security #CNCF&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://snyk.io/blog/secure-ai-coding-agents-nvidia-openshell/" target="_blank" rel="noopener"
+&gt;How to Secure AI Coding Agents in NVIDIA OpenShell with Evo | Snyk&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

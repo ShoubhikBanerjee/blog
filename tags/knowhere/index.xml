@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Knowhere on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/knowhere/</link><description>Recent content in Knowhere on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 17 Nov 2026 22:09:21 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/knowhere/index.xml" rel="self" type="application/rss+xml"/><item><title>Knowhere Provides Milvus’s C++ Vector Search Core</title><link>https://shoubhikbanerjee.github.io/blog/p/knowhere-provides-milvuss-c-vector-search-core/</link><pubDate>Tue, 17 Nov 2026 22:09:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/knowhere-provides-milvuss-c-vector-search-core/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/18416694?v=4" alt="Featured image of post Knowhere Provides Milvus’s C++ Vector Search Core" /&gt;&lt;h1 id="knowhere-provides-milvuss-c-vector-search-core"&gt;Knowhere Provides Milvus’s C++ Vector Search Core
+&lt;/h1&gt;&lt;p&gt;Knowhere is an independent C++ project that serves as Milvus’s internal core for vector search, integrating FAISS, HNSW and DiskANN. It can be built as part of Milvus or developed as a library, with CPU and GPU build options.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Knowhere acts as Milvus’s internal vector search engine. For users who want to use it within Milvus without modifying Knowhere’s source code, the project recommends building Milvus directly; Knowhere is then built implicitly.&lt;/p&gt;
+&lt;h2 id="-platforms-and-dependencies"&gt;⚙️ Platforms and dependencies
+&lt;/h2&gt;&lt;p&gt;All Linux distributions are available for Knowhere development. Most contributors work on Ubuntu or CentOS, with a smaller group using Mac systems on x86_64 or Apple Silicon.&lt;/p&gt;
+&lt;p&gt;The project lists these verified operating systems for building and running Knowhere:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Operating system&lt;/th&gt;
+&lt;th&gt;Details&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Ubuntu 22.04&lt;/td&gt;
+&lt;td&gt;x86_64 and Aarch64&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ubuntu 20.04&lt;/td&gt;
+&lt;td&gt;x86_64 and Aarch64; kept for legacy reasons, with EOL by April 2025&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;macOS&lt;/td&gt;
+&lt;td&gt;x86_64 and Apple Silicon&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The &lt;code&gt;scripts/install_deps.sh&lt;/code&gt; script installs dependencies for building, testing and shipping the Knowhere library.&lt;/p&gt;
+&lt;h2 id="-build-options"&gt;🖥️ Build options
+&lt;/h2&gt;&lt;p&gt;GPU support is disabled by default. Setting &lt;code&gt;WITH_GPU=True&lt;/code&gt; enables Cardinal GPU support when building with Cardinal, or cuVS otherwise. &lt;code&gt;WITH_CUVS=True&lt;/code&gt; explicitly enables cuVS, including alongside Cardinal, independently of &lt;code&gt;WITH_GPU&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;GPU builds use CUDA 13.2 for both cuVS and Cardinal. CMake prepares the toolkit before enabling CUDA, including when Knowhere is built through &lt;code&gt;add_subdirectory&lt;/code&gt;. An existing toolkit at &lt;code&gt;/usr/local/cuda-13.2&lt;/code&gt; is reused. If it is absent, &lt;code&gt;scripts/install_cuda.sh&lt;/code&gt; installs it on Ubuntu 22.04 or 24.04, on x86_64 or Aarch64, and requires root access or passwordless sudo. Other systems must prepare the toolkit at that path beforehand. A GPU device or driver is not needed to compile, and the build must be reconfigured when switching CUDA versions. CPU builds do not invoke the CUDA installer.&lt;/p&gt;
+&lt;p&gt;Common build commands include:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Build&lt;/th&gt;
+&lt;th&gt;Command&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;CPU release (default)&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;make&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPU release with cuVS&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;make WITH_GPU=True&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPU release with Cardinal&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;make WITH_CARDINAL=True WITH_GPU=True&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CPU with unit tests&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;make WITH_UT=True&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CPU unit tests with AddressSanitizer&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;make WITH_UT=True WITH_ASAN=True&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GPU with unit tests&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;make WITH_GPU=True WITH_UT=True&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Debug build&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;make WITH_DEBUG=True&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;C ABI and Java JNI bindings with C tests&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;make WITH_JNI=True WITH_C_API_TESTS=True&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Custom compiler through a Conan profile&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;make CONAN_PROFILE=clang14&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Building a Python wheel requires &lt;code&gt;swig&lt;/code&gt; and Python development headers, such as &lt;code&gt;python3-dev&lt;/code&gt; on Ubuntu. A portable manylinux wheel can be built with &lt;code&gt;make wheel&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="-bindings-and-contributions"&gt;🔌 Bindings and contributions
+&lt;/h2&gt;&lt;p&gt;Optional C ABI and Java 11 JNI bindings expose indexes, brute-force search and named index blobs without a framework dependency. The Java bindings are documented in &lt;code&gt;java/README.md&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Before submitting a pull request, contributors can install and enable pre-commit hooks with &lt;code&gt;pip3 install pre-commit&lt;/code&gt; and &lt;code&gt;pre-commit install --hook-type pre-commit --hook-type pre-push&lt;/code&gt;. They can run all hooks with &lt;code&gt;make pre-commit&lt;/code&gt;, or run formatting and linting separately with &lt;code&gt;make format&lt;/code&gt; and &lt;code&gt;make lint&lt;/code&gt;. The lint command uses clang-tidy and requires a prior build. If clang-format and clang-tidy are not installed, the project provides installation instructions for Linux and Mac.&lt;/p&gt;
+&lt;p&gt;#Knowhere #Milvus #VectorSearch #C++ #CUDA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/zilliztech/knowhere" target="_blank" rel="noopener"
+&gt;zilliztech/knowhere&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Redaction on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/redaction/</link><description>Recent content in Redaction on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 06 Nov 2026 22:02:31 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/redaction/index.xml" rel="self" type="application/rss+xml"/><item><title>Speed and Accuracy of PII Redaction Methods for LLM Pipelines</title><link>https://shoubhikbanerjee.github.io/blog/p/speed-and-accuracy-of-pii-redaction-methods-for-llm-pipelines/</link><pubDate>Fri, 06 Nov 2026 22:02:31 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/speed-and-accuracy-of-pii-redaction-methods-for-llm-pipelines/</guid><description>&lt;h1 id="speed-and-accuracy-of-pii-redaction-methods-for-llm-pipelines"&gt;Speed and Accuracy of PII Redaction Methods for LLM Pipelines
+&lt;/h1&gt;&lt;p&gt;Enterprises are increasingly sending free‑text inputs that contain personally identifiable information (PII) – names, phone numbers, email addresses, home addresses and dates of birth – to large language models (LLMs). Once a prompt is sent, the raw text is copied into provider systems, application logs and observability traces. Redacting PII before the call is an obvious control, but teams have lacked concrete numbers on latency impact and coverage.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enterprise projects often include PII in free‑text prompts to LLMs.&lt;/li&gt;
+&lt;li&gt;Unredacted prompts are stored in provider systems, logs, and observability traces.&lt;/li&gt;
+&lt;li&gt;The new paper provides the first quantitative comparison of redaction approaches for LLM pipelines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-redaction-designs-compared"&gt;⚙️ Redaction Designs Compared
+&lt;/h2&gt;&lt;p&gt;The study evaluates four designs that can be dropped into any LLM pipeline:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Pure regular‑expression (regex) redactor&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Microsoft Presidio&lt;/strong&gt; running on a spaCy model&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hybrid&lt;/strong&gt; – Presidio finds person names, regex handles structured identifiers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fast hybrid&lt;/strong&gt; – calls spaCy’s named‑entity component directly&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;All designs share a &lt;em&gt;known‑entity&lt;/em&gt; rule that removes the person already being handled and use a consistent placeholder scheme so the LLM can still distinguish individuals after redaction.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Design&lt;/th&gt;
+&lt;th&gt;PII coverage&lt;/th&gt;
+&lt;th&gt;Business terms retained&lt;/th&gt;
+&lt;th&gt;Median latency (ms)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Regex&lt;/td&gt;
+&lt;td&gt;88.9%&lt;/td&gt;
+&lt;td&gt;N/A&lt;/td&gt;
+&lt;td&gt;0.20&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Presidio&lt;/td&gt;
+&lt;td&gt;100%&lt;/td&gt;
+&lt;td&gt;100%&lt;/td&gt;
+&lt;td&gt;37.59&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hybrid&lt;/td&gt;
+&lt;td&gt;100%&lt;/td&gt;
+&lt;td&gt;100%&lt;/td&gt;
+&lt;td&gt;30.23&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Fast hybrid&lt;/td&gt;
+&lt;td&gt;100%&lt;/td&gt;
+&lt;td&gt;100%&lt;/td&gt;
+&lt;td&gt;13.48&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-evaluation-setup"&gt;📊 Evaluation Setup
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Workflow:&lt;/strong&gt; ProfileAssist, which converts resumes into structured profiles.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data:&lt;/strong&gt; 100 synthetic resumes (average 523 characters) containing &lt;strong&gt;900 PII values&lt;/strong&gt; and &lt;strong&gt;600 business terms&lt;/strong&gt; that must survive redaction.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Baseline:&lt;/strong&gt; Median LLM call latency of &lt;strong&gt;9,120 ms&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-results"&gt;🚀 Results
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Regex is fastest (0.20 ms) but misses 11.1 % of PII because it cannot discover unknown names.&lt;/li&gt;
+&lt;li&gt;Presidio, hybrid, and fast hybrid achieve &lt;strong&gt;100 % PII removal&lt;/strong&gt; while preserving &lt;strong&gt;100 % of business terms&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Their latencies range from &lt;strong&gt;13.48 ms&lt;/strong&gt; (fast hybrid) to &lt;strong&gt;37.59 ms&lt;/strong&gt; (Presidio).&lt;/li&gt;
+&lt;li&gt;Compared with the 9,120 ms LLM request, even the slowest option adds only &lt;strong&gt;0.41 %&lt;/strong&gt; overhead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-recommendation"&gt;💡 Recommendation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Adopt the &lt;strong&gt;fast hybrid&lt;/strong&gt; design as the default redaction layer for LLM pipelines handling personal data.&lt;/li&gt;
+&lt;li&gt;Keep a pure regex redactor as a &lt;strong&gt;safety net&lt;/strong&gt;, not as the sole control.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Submitted on 5 Nov 2026.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;#PII #LLM #Redaction #Privacy&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://arxiv.org/abs/2611.07633v1" target="_blank" rel="noopener"
+&gt;Redacting Personal Data: A Speed and Accuracy Comparison of Regex, Presidio and Hybrid Designs&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

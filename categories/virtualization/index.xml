@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Virtualization on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/virtualization/</link><description>Recent content in Virtualization on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 27 Nov 2026 22:09:22 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/virtualization/index.xml" rel="self" type="application/rss+xml"/><item><title>Gondolin introduces secure, isolated micro-VMs for AI agents running generated code</title><link>https://shoubhikbanerjee.github.io/blog/p/gondolin-introduces-secure-isolated-micro-vms-for-ai-agents-running-generated-code/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/gondolin-introduces-secure-isolated-micro-vms-for-ai-agents-running-generated-code/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/207902832?v=4" alt="Featured image of post Gondolin introduces secure, isolated micro-VMs for AI agents running generated code" /&gt;&lt;h1 id="gondolin-introduces-secure-isolated-micro-vms-for-ai-agents-running-generated-code"&gt;Gondolin introduces secure, isolated micro-VMs for AI agents running generated code
+&lt;/h1&gt;&lt;p&gt;Gondolin is a new agent sandbox that runs AI-generated code inside local Linux micro-VMs, providing programmable network and filesystem control. It addresses security risks from autonomous code execution by isolating agents while maintaining controlled access to network resources and credentials.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The system uses a TypeScript Control Plane with Linux microvm setup. Generated code is executed inside a fast local Linux micro-VM (using &lt;code&gt;libkrun&lt;/code&gt; when available, with QEMU fallback) that keeps network and filesystem access under host-side policy control.&lt;/p&gt;
+&lt;h2 id="-architecture"&gt;🔍 Architecture
+&lt;/h2&gt;&lt;p&gt;A key security feature is that the guest VM only sees placeholder tokens, while the real secret is injected by the host only for allowed destinations, including &lt;code&gt;Authorization: Basic ...&lt;/code&gt; flows.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="platform-support"&gt;Platform Support
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Node.js 22.19 or newer required&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;npm install @earendil-works/gondolin&lt;/code&gt; installs the Gondolin daemon (&lt;code&gt;gondolind&lt;/code&gt;) and platform packages&lt;/li&gt;
+&lt;li&gt;Works on macOS and Linux on arm64 and x64&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="execution-backend"&gt;Execution Backend
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Uses &lt;code&gt;libkrun&lt;/code&gt; on Apple silicon and Linux x86_64 with read/write &lt;code&gt;/dev/kvm&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Falls back to QEMU on other hosts or when &lt;code&gt;qemu&lt;/code&gt; backend is selected&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="policy-control"&gt;Policy Control
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Programmable HTTP/TLS egress policy with allowlists and request/response hooks&lt;/li&gt;
+&lt;li&gt;Daemon-side policies via self-contained JavaScript (&lt;code&gt;createDjsHooks()&lt;/code&gt;, &lt;code&gt;--hooks-script&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Configurable DNS behavior, rootfs modes, and runtime sizing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="session-management"&gt;Session Management
+&lt;/h3&gt;&lt;p&gt;Useful session commands include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;List running sessions&lt;/li&gt;
+&lt;li&gt;Attach to an existing session&lt;/li&gt;
+&lt;li&gt;Snapshot a running session (stops it)&lt;/li&gt;
+&lt;li&gt;Resume from snapshot id/path&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="guest-images-and-storage"&gt;Guest Images and Storage
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Default guest image: &lt;code&gt;alpine-base:latest&lt;/code&gt; (downloaded from built-in registry on first use)&lt;/li&gt;
+&lt;li&gt;Images cached locally (~200MB+)&lt;/li&gt;
+&lt;li&gt;Disk checkpoints (snapshots) with resume support&lt;/li&gt;
+&lt;li&gt;Custom image builds via Alpine-based pipeline with optional OCI rootfs source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="file-system-and-network-features"&gt;File System and Network Features
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Programmable VFS mounts allowing custom file system behavior in JavaScript&lt;/li&gt;
+&lt;li&gt;Ingress gateway to expose guest HTTP services on host (&lt;code&gt;--listen&lt;/code&gt;, &lt;code&gt;vm.enableIngress()&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;SSH support: host -&amp;gt; guest access (&lt;code&gt;vm.enableSsh()&lt;/code&gt;) and optional guest -&amp;gt; upstream allowlisted SSH egress (proxied, exec-oriented)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="daemon-architecture"&gt;Daemon Architecture
+&lt;/h3&gt;&lt;p&gt;The VM runs under a static Rust daemon (&lt;code&gt;gondolind&lt;/code&gt;) that can operate on another machine without Node.js, while policy, hooks, and credentials remain local.&lt;/p&gt;
+&lt;p&gt;#AIagents #Security #Virtualization #MicroVM #TypeScript #Rust&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/earendil-works/gondolin" target="_blank" rel="noopener"
+&gt;earendil-works/gondolin&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Security risks in fragmented VM lifecycle management</title><link>https://shoubhikbanerjee.github.io/blog/p/security-risks-in-fragmented-vm-lifecycle-management/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/security-risks-in-fragmented-vm-lifecycle-management/</guid><description>&lt;img src="https://www.bleepstatic.com/content/posts/2026/11/23/ispsystem-vm.jpg" alt="Featured image of post Security risks in fragmented VM lifecycle management" /&gt;&lt;h1 id="security-risks-in-fragmented-vm-lifecycle-management"&gt;Security risks in fragmented VM lifecycle management
+&lt;/h1&gt;&lt;p&gt;With Broadcom&amp;rsquo;s change in licensing policy driving companies away from VMware, organizations are facing a critical shift: migrating virtualization platforms requires a total redesign of infrastructure management. The transition presents a risk of losing unified security policies, as replacing a single whole with fragmented components can lead to significant information security vulnerabilities.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;IT infrastructure is constantly changing, with hundreds of systems running on shared resources. In modern environments, dozens of services are created, scaled, and deleted daily. Traditional security focuses on firewalls and EDR, but lacks a core foundation: the transparency of resource management throughout the entire lifecycle.&lt;/p&gt;
+&lt;p&gt;Without clear management:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Every virtual machine, server, and IP address must have an owner, a lifetime, and a controlled path for creation and deletion.&lt;/li&gt;
+&lt;li&gt;Deploying a new VM without recording its owner leaves &amp;ldquo;forgotten&amp;rdquo; VMs that fall out of monitoring.&lt;/li&gt;
+&lt;li&gt;Unupgraded, unaccounted VMs and &amp;ldquo;abandoned&amp;rdquo; IP addresses become easy entry points for attackers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Effective security and manageability require a platform that handles control across multiple layers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lifecycle Control:&lt;/strong&gt; Linking capacity allocation to billing and quotas, ensuring timely deletion of resources to prevent outdated accounts from remaining in the network.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Isolation:&lt;/strong&gt; Separating resources of different customers at hosting providers, or internal/external systems in corporate IT. A violation of isolation in the test environment can affect business-critical services.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Physical Layer Accounting:&lt;/strong&gt; Accurate tracking of the appearance, decommissioning, and movement of servers. Inaccurate accounting generates unaccounted servers and a loss of control over security configurations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Access Control:&lt;/strong&gt; Delineating rights and recording all operations to prevent the accumulation of excessive rights, which facilitates lateral movement by attackers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The choice of software architecture dictates security outcomes.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Platform/Solution&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Functionality / Constraint&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;VMware (Historical)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Perceived as a single whole covering virtualization, resource management, access, automation, and accounting.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Proxmox / OpenStack&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Solves virtualization tasks natively, but lacks coverage for operational processes and control over other environment layers without additional software.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;Fragmented Integration&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Requires independent integration of equipment management, resource accounting, and access control, making it harder to maintain unified security policies.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;When management processes are opaque, the infrastructure itself becomes a source of risk. Security tools are forced to operate over unknown environments and merely contain consequences rather than prevent them.&lt;/p&gt;
+&lt;p&gt;The risk of migration is not just the change of the hypervisor, but the revision of the entire management model. If centralized control, automation, and lifecycle management are postponed, they become a source of new risks, such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Loss of a unified role-based access control (RBAC).&lt;/li&gt;
+&lt;li&gt;Loss of end-to-end inventory and action auditing.&lt;/li&gt;
+&lt;li&gt;The compromise of the entire environment due to a loss of administrative control.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://www.bleepstatic.com/images/site/login/twitter.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#VMware #Virtualization #ITSecurity #Proxmox #DevOps&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.bleepingcomputer.com/news/security/your-firewall-isnt-enough-the-hidden-risk-of-unmanaged-vms/" target="_blank" rel="noopener"
+&gt;Your Firewall Isn&amp;rsquo;t Enough: The Hidden Risk of Unmanaged VMs&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Pullrun Unifies Container and VM Execution with Single OCI Image Support</title><link>https://shoubhikbanerjee.github.io/blog/p/pullrun-unifies-container-and-vm-execution-with-single-oci-image-support/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/pullrun-unifies-container-and-vm-execution-with-single-oci-image-support/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/292470255?v=4" alt="Featured image of post Pullrun Unifies Container and VM Execution with Single OCI Image Support" /&gt;&lt;h1 id="pullrun-unifies-container-and-vm-execution-with-single-oci-image-support"&gt;Pullrun Unifies Container and VM Execution with Single OCI Image Support
+&lt;/h1&gt;&lt;p&gt;Pullrun is a new AI development that collapses multiple execution engines into a single runtime, enabling the same OCI image to run as a container, Firecracker microVM, Apple Silicon VM, Kubernetes workload, or AI agent task. Modern infrastructure relies on disparate tools—Docker for development, containerd for production, Firecracker for isolation, and MCP agents for AI—each with separate image formats and storage models. Pullrun eliminates this fragmentation with a unified approach.&lt;/p&gt;
+&lt;p&gt;#containers #virtualization #oci #AIagents #firecracker #kubernetes&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/pullrun/pullrun" target="_blank" rel="noopener"
+&gt;pullrun/pullrun&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Introduction of Docker-Android for Android Development and Testing</title><link>https://shoubhikbanerjee.github.io/blog/p/introduction-of-docker-android-for-android-development-and-testing/</link><pubDate>Thu, 17 Sep 2026 22:02:13 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/introduction-of-docker-android-for-android-development-and-testing/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/22218312?v=4" alt="Featured image of post Introduction of Docker-Android for Android Development and Testing" /&gt;&lt;h1 id="introduction-of-docker-android-for-android-development-and-testing"&gt;Introduction of Docker-Android for Android Development and Testing
+&lt;/h1&gt;&lt;p&gt;Docker-Android is a docker image designed to support all aspects of Android development and testing, including native, web, and hybrid-app projects.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Docker-Android provides the following capabilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ability to build Android projects.&lt;/li&gt;
+&lt;li&gt;Execution of unit and UI-Tests using frameworks such as Espresso and Appium.&lt;/li&gt;
+&lt;li&gt;VNC support to view the inside of the docker container.&lt;/li&gt;
+&lt;li&gt;Log sharing feature via a web-UI.&lt;/li&gt;
+&lt;li&gt;External control of the emulator using adb connect.&lt;/li&gt;
+&lt;li&gt;Integration with cloud solutions, including Genymotion Cloud.&lt;/li&gt;
+&lt;li&gt;Support for mcp server (beta-version).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Various image tags are available:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;budtmo/docker-android:emulator_9.0&lt;/li&gt;
+&lt;li&gt;budtmo/docker-android:emulator_10.0&lt;/li&gt;
+&lt;li&gt;budtmo/docker-android:emulator_11.0&lt;/li&gt;
+&lt;li&gt;budtmo/docker-android:emulator_12.0&lt;/li&gt;
+&lt;li&gt;budtmo/docker-android:emulator_13.0&lt;/li&gt;
+&lt;li&gt;budtmo/docker-android:emulator_14.0&lt;/li&gt;
+&lt;li&gt;budtmo/docker-android:genymotion&lt;/li&gt;
+&lt;li&gt;budtmo/docker-android:mcp&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-device-profiles"&gt;📱 Device Profiles
+&lt;/h2&gt;&lt;p&gt;The emulator supports various device profiles and skins:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Device Type&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Model&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Phone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Samsung Galaxy S10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Phone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Samsung Galaxy S9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Phone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Samsung Galaxy S8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Phone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Samsung Galaxy S7 Edge&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Phone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Samsung Galaxy S7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Phone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Samsung Galaxy S6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Phone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Nexus 4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Phone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Nexus 5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Phone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Nexus One&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Phone&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Nexus S&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Tablet&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Nexus 7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Tablet&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Pixel C&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;#Android #Docker #AppDevelopment #SoftwareTesting&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/budtmo/docker-android" target="_blank" rel="noopener"
+&gt;budtmo/docker-android&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Trynix Provides Browser-Based x86_64 Linux VMs via WebAssembly</title><link>https://shoubhikbanerjee.github.io/blog/p/trynix-provides-browser-based-x86-64-linux-vms-via-webassembly/</link><pubDate>Fri, 11 Sep 2026 22:04:55 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/trynix-provides-browser-based-x86-64-linux-vms-via-webassembly/</guid><description>&lt;h1 id="trynix-provides-browser-based-x86_64-linux-vms-via-webassembly"&gt;Trynix Provides Browser-Based x86_64 Linux VMs via WebAssembly
+&lt;/h1&gt;&lt;p&gt;trynix.dev has launched a service that allows users to run an x86_64 Linux virtual machine entirely within a web browser using WebAssembly.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The service is powered by qemu-wasm.&lt;/li&gt;
+&lt;li&gt;The virtual machines are URL addressable, allowing users to navigate to specific package links.&lt;/li&gt;
+&lt;li&gt;There are no servers involved; the process runs only in browsers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Users can boot the VM with any Nix package from the past 13 years.&lt;/li&gt;
+&lt;li&gt;An interactive shell can be accessed by selecting a package (such as Python 3.6.2 from 2017) and clicking &amp;ldquo;Load&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The service is available at trynix.dev.&lt;/li&gt;
+&lt;li&gt;It introduces trynix-preview, a GitHub action that comments a link on a pull request, enabling users to boot the build of that PR in the browser via trynix.dev.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#WebAssembly #Linux #Nix #VirtualMachine #GitHubActions&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Sep/10/trynix/" target="_blank" rel="noopener"
+&gt;Any Nix package, live in your browser&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

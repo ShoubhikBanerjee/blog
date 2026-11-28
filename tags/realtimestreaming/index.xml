@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RealTimeStreaming on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/realtimestreaming/</link><description>Recent content in RealTimeStreaming on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/realtimestreaming/index.xml" rel="self" type="application/rss+xml"/><item><title>Databricks Launches Native Lakebase Sink for Apache Spark Structured Streaming</title><link>https://shoubhikbanerjee.github.io/blog/p/databricks-launches-native-lakebase-sink-for-apache-spark-structured-streaming/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/databricks-launches-native-lakebase-sink-for-apache-spark-structured-streaming/</guid><description>&lt;img src="https://www.databricks.com/sites/default/files/2026-11/lakebase-sink-optB-pipeline-2400x1256.png" alt="Featured image of post Databricks Launches Native Lakebase Sink for Apache Spark Structured Streaming" /&gt;&lt;h1 id="databricks-launches-native-lakebase-sink-for-apache-spark-structured-streaming"&gt;Databricks Launches Native Lakebase Sink for Apache Spark Structured Streaming
+&lt;/h1&gt;&lt;p&gt;Databricks has announced the general availability of a native Lakebase sink for Apache Spark™ Structured Streaming, simplifying real-time data ingestion into its serverless PostgreSQL offering. The connector eliminates the need for custom foreach writers, reducing complexity in building low-latency feature pipelines for use cases like fraud detection and recommendation systems.&lt;/p&gt;
+&lt;h2 id="-what-happened"&gt;📣 What Happened
+&lt;/h2&gt;&lt;p&gt;Today, Databricks is releasing the native Lakebase sink for Apache Spark™ Structured Streaming. This connector writes computed results directly to Lakebase and handles batching, retries, and upserts automatically, removing the burden of building and maintaining custom infrastructure.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;🔍 Why It Matters
+&lt;/h2&gt;&lt;p&gt;Low-latency use cases such as fraud detection, live personalization, and real-time feature computation require results in a serving-ready OLTP store. Lakebase Postgres is a fully managed, serverless PostgreSQL database with autoscaling, branching, native Unity Catalog integration, and sub-10ms reads. Previously, writing to Lakebase from a streaming pipeline required developers to build custom foreach writers to manage batching, retries, and upserts — a complex task that was difficult to scale and maintain.&lt;/p&gt;
+&lt;p&gt;The new native sink handles these concerns internally. You can wire up a Lakebase write in minutes with a single &lt;code&gt;writeStream&lt;/code&gt; call, without needing to manage performance, tuning, or maintenance.&lt;/p&gt;
+&lt;h2 id="-key-features"&gt;⚙️ Key Features
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Fully managed, serverless PostgreSQL database with autoscaling and native Unity Catalog integration&lt;/li&gt;
+&lt;li&gt;Sub-10ms read latency&lt;/li&gt;
+&lt;li&gt;Native Lakebase sink for Apache Spark™ Structured Streaming&lt;/li&gt;
+&lt;li&gt;Supports both micro-batch and Real-Time Mode&lt;/li&gt;
+&lt;li&gt;Automatic upsert handling with &lt;code&gt;upsertKey&lt;/code&gt; — maintains one row per key&lt;/li&gt;
+&lt;li&gt;Built-in connection pooling, batching, and retries&lt;/li&gt;
+&lt;li&gt;Seamless credentials management via running user or service principal&lt;/li&gt;
+&lt;li&gt;Table creation if it does not exist&lt;/li&gt;
+&lt;li&gt;Real-time data ingestion using &lt;code&gt;.toTable()&lt;/code&gt; for Unity Catalog-registered tables&lt;/li&gt;
+&lt;li&gt;Direct write using &lt;code&gt;format(&amp;quot;postgresql&amp;quot;)&lt;/code&gt; for non-Unity Catalog tables or external PostgreSQL databases&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-use-case-example-real-time-recommendation-features"&gt;🧩 Use Case Example: Real-Time Recommendation Features
+&lt;/h2&gt;&lt;p&gt;A video streaming platform wants to recommend videos by leveraging users&amp;rsquo; recent activity. The pipeline ingests WATCH and LIKE events from Kafka, computes the last 6 videos watched and the last 3 liked per user, and upserts one feature row per user into Lakebase in hundreds of milliseconds. At inference time, a recommendation model looks up each user’s feature row by &lt;code&gt;user_id&lt;/code&gt; to rank what to show next.&lt;/p&gt;
+&lt;p&gt;The pipeline uses &lt;code&gt;transformWithState&lt;/code&gt; to maintain per-user state and emit one feature row per user, with writing to Lakebase handled by a single &lt;code&gt;writeStream&lt;/code&gt; and &lt;code&gt;.toTable()&lt;/code&gt; call.&lt;/p&gt;
+&lt;h2 id="-availability-and-benchmarks"&gt;🚀 Availability and Benchmarks
+&lt;/h2&gt;&lt;p&gt;The native sink is now generally available. In testing, the pipeline processed ~20K events per second against 5 million active users using a 40-core classic compute (DBR 18 LTS) writing to an 8-CU Lakebase project with 5-minute RTM checkpoint intervals. End-to-end latency from Kafka input timestamp to row landing in Lakebase was 100–200 milliseconds, with query latency in single digits via Lakebase.&lt;/p&gt;
+&lt;h2 id="-customer-feedback"&gt;💬 Customer Feedback
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;We stream real-time data into Lakebase so our risk agent can pull a user&amp;rsquo;s recent activity when it investigates an alert. We initially built that path with a custom ForeachWriter, which meant building and maintaining the write infrastructure ourselves. As part of our development work, we found that the native sink reduces the custom work required for connection pooling, batching, and retries.&amp;rdquo; — Maria Marinova, Sr. Lead Software Engineer, DraftKings&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Testing real-time data flows into Lakebase is an important part of validating how our risk agent can quickly access the freshest available user data when making decisions. As we evaluated the native sink, we found that its built-in connection pooling, batching, and retries reduce the custom infrastructure we need to build and maintain.&amp;rdquo; — Georgi Stoychev, Sr. Software Automation Engineer, DraftKings&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-technical-details"&gt;📊 Technical Details
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Upsert Key&lt;/td&gt;
+&lt;td&gt;Sink maintains one row per key&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Connection Pooling&lt;/td&gt;
+&lt;td&gt;Built-in, managed automatically&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Batching&lt;/td&gt;
+&lt;td&gt;Automatically handled for throughput&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retries&lt;/td&gt;
+&lt;td&gt;Transient failure handling with backoff&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Credentials&lt;/td&gt;
+&lt;td&gt;Managed as running user or service principal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Table Creation&lt;/td&gt;
+&lt;td&gt;Automatically created if not present&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Latency&lt;/td&gt;
+&lt;td&gt;End-to-end 100–200ms; query latency single-digit milliseconds&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-getting-started"&gt;🔗 Getting Started
+&lt;/h2&gt;&lt;p&gt;For a deeper look at the implementation, see the companion repo — a self-serve example you can run end-to-end.&lt;/p&gt;
+&lt;p&gt;Image: &lt;a class="link" href="https://www.databricks.com/sites/default/files/2023-08/databricks-default.png?v=1712162038" target="_blank" rel="noopener"
+&gt;https://www.databricks.com/sites/default/files/2023-08/databricks-default.png?v=1712162038&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://www.databricks.com/sites/default/files/2023-08/databricks-default.png?v=1712162038"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Databricks #Lakebase #ApacheSpark #Real-TimeStreaming #FeatureEngineering&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.databricks.com/blog/announcing-general-availability-native-lakebase-postgres-sink-spark-structured-streaming" target="_blank" rel="noopener"
+&gt;Announcing General Availability of native Lakebase Postgres sink for Spark Structured Streaming&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

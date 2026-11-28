@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Seoul on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/seoul/</link><description>Recent content in Seoul on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 23 Nov 2026 22:18:20 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/seoul/index.xml" rel="self" type="application/rss+xml"/><item><title>Seoul World Model Enables Real-City Video Generation from Street-View Data</title><link>https://shoubhikbanerjee.github.io/blog/p/seoul-world-model-enables-real-city-video-generation-from-street-view-data/</link><pubDate>Mon, 23 Nov 2026 22:18:20 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/seoul-world-model-enables-real-city-video-generation-from-street-view-data/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73585370?v=4" alt="Featured image of post Seoul World Model Enables Real-City Video Generation from Street-View Data" /&gt;&lt;h1 id="seoul-world-model-enables-real-city-video-generation-from-street-view-data"&gt;Seoul World Model Enables Real-City Video Generation from Street-View Data
+&lt;/h1&gt;&lt;p&gt;Researchers have released the Seoul World Model (SWM), a city-scale autoregressive world model that renders videos of the real city of Seoul rather than imagined places. The model fine-tunes a pretrained video world model on 440k Seoul street-view images, real-world driving videos, and synthetic urban data. At generation time, given coordinates, camera actions, and a text prompt, it retrieves nearby street-view images from a reference database and conditions on their geometric and appearance cues—a retrieval-augmented (RAG) recipe that renders faithful videos spanning kilometers of real cityscape. The checkpoint and sample data are provided for non-commercial use under CC BY-NC 4.0, and the checkpoint is a derivative of NVIDIA Cosmos-Predict2.5 subject to the NVIDIA Open Model License. The VAE and text encoder used are publicly available, and every generation runs NVIDIA Cosmos-Guardrail1 for safety checks and face pixelation. Sample data includes everything needed to reproduce the teaser video, though GPU non-determinism means results may differ slightly.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Fine-tuned on 440k Seoul street-view images, real driving videos, and synthetic urban data&lt;/li&gt;
+&lt;li&gt;Uses a retrieval-augmented approach combining street-view images with geometric and appearance cues&lt;/li&gt;
+&lt;li&gt;Takes coordinates, camera actions, and text prompts as input to generate cityscape videos&lt;/li&gt;
+&lt;li&gt;Sample data specifies camera paths requiring landscape RGB photos (16:9 or narrower) taken every few meters along a street&lt;/li&gt;
+&lt;li&gt;Depth estimation via Depth-Anything-3 provides metric depth and camera poses for each captured image&lt;/li&gt;
+&lt;li&gt;Photos must be named to align with a preset trajectory that starts from the first photo by name, covering approximately 45 meters with default settings&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;h3 id="model-components"&gt;Model Components
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Checkpoint&lt;/td&gt;
+&lt;td&gt;Derivative of NVIDIA Cosmos-Predict2.5, available under CC BY-NC 4.0 and NVIDIA Open Model License&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VAE&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://huggingface.co/Wan-AI/Wan2.1-T2V-1.3B" target="_blank" rel="noopener"
+&gt;&lt;code&gt;Wan-AI/Wan2.1-T2V-1.3B&lt;/code&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Text Encoder&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://huggingface.co/nvidia/Cosmos-Reason1-7B" target="_blank" rel="noopener"
+&gt;&lt;code&gt;nvidia/Cosmos-Reason1-7B&lt;/code&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Guardrail&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://huggingface.co/nvidia/Cosmos-Guardrail1" target="_blank" rel="noopener"
+&gt;&lt;code&gt;Cosmos-Guardrail1&lt;/code&gt;&lt;/a&gt; used for prompt validation, unsafe content detection, and face pixelation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="infrastructure"&gt;Infrastructure
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;All features tested on NVIDIA H100 GPUs&lt;/li&gt;
+&lt;li&gt;Generates videos spanning kilometers of real cityscape using retrieval-augmented generation&lt;/li&gt;
+&lt;li&gt;GPU non-determinism causes generated results to differ from the original teaser video&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Repository includes official code for training and generating&lt;/li&gt;
+&lt;li&gt;Sample data located in &lt;code&gt;data/swr_sample/teaser.json&lt;/code&gt; containing camera path, reference images, and prompt used for teaser video&lt;/li&gt;
+&lt;li&gt;First run should set &lt;code&gt;HF_HUB_OFFLINE=0&lt;/code&gt; to allow download via &lt;code&gt;generate.sh&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Cosmos-Guardrail1 requires Hugging Face login with accepted license before use&lt;/li&gt;
+&lt;li&gt;Depth-Anything-3 installation recommended in separate environment due to numpy version conflicts (SWM requires &lt;code&gt;numpy&amp;gt;=2&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#WorldModel #NVIDIA #Seoul #VideoGeneration #RetrievalAugmentedGeneration&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/naver-ai/seoul-world-model" target="_blank" rel="noopener"
+&gt;naver-ai/seoul-world-model&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

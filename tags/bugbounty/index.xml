@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>BugBounty on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/bugbounty/</link><description>Recent content in BugBounty on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 01 Nov 2026 22:01:19 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/bugbounty/index.xml" rel="self" type="application/rss+xml"/><item><title>Parameter Labs uncovers account takeover exploit in ChatGPT HTML preview sandbox</title><link>https://shoubhikbanerjee.github.io/blog/p/parameter-labs-uncovers-account-takeover-exploit-in-chatgpt-html-preview-sandbox/</link><pubDate>Sun, 01 Nov 2026 22:01:19 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/parameter-labs-uncovers-account-takeover-exploit-in-chatgpt-html-preview-sandbox/</guid><description>&lt;h1 id="parameter-labs-uncovers-account-takeover-exploit-in-chatgpt-html-preview-sandbox"&gt;Parameter Labs uncovers account takeover exploit in ChatGPT HTML preview sandbox
+&lt;/h1&gt;&lt;p&gt;Parameter Labs reported a previously unknown vulnerability that let an attacker take over a ChatGPT user’s account by abusing the HTML preview sandbox.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The flaw was found in ChatGPT’s implementation of the &lt;em&gt;artifacts&lt;/em&gt; pattern, formerly called &lt;strong&gt;Canvas&lt;/strong&gt; and now referred to as &lt;strong&gt;HTML previews&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Interactive custom HTML apps are displayed inside a sandboxed &lt;code&gt;iframe&lt;/code&gt; to keep untrusted code isolated from OpenAI APIs and private user data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;OpenAI uses the &lt;strong&gt;MathLive&lt;/strong&gt; JavaScript library for graph support; the library includes a virtual keyboard that can be triggered from the sandboxed iframe via &lt;code&gt;postMessage()&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The parent‑page code that receives these messages inserts the supplied content with &lt;code&gt;innerHTML&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Because there is no guard preventing other sandboxed frames (including HTML preview frames) from calling this method, an attacker can inject arbitrary HTML.&lt;/li&gt;
+&lt;li&gt;While &lt;code&gt;innerHTML&lt;/code&gt; does not run &lt;code&gt;&amp;lt;script&amp;gt;&lt;/code&gt; elements directly, it can be used to add a new &lt;code&gt;iframe&lt;/code&gt; that is not sandbox‑restricted.&lt;/li&gt;
+&lt;li&gt;OpenAI’s Content Security Policy (CSP) blocks inline scripts and only permits script loading from a short whitelist of domains; &lt;strong&gt;YouTube&lt;/strong&gt; is on that list.&lt;/li&gt;
+&lt;li&gt;The YouTube oEmbed endpoint can reflect JavaScript back to the page, allowing the injected iframe to execute code.&lt;/li&gt;
+&lt;li&gt;With JavaScript execution inside the ChatGPT UI, an attacker can call OpenAI APIs, fetch private user data, and exfiltrate it through an image reference.&lt;/li&gt;
+&lt;li&gt;The final outcome is a crafted ChatGPT share URL that, when opened by another signed‑in user, can steal that user’s private data or act on their behalf.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The vulnerability relied on a &lt;strong&gt;complex attack chain&lt;/strong&gt; linking the MathLive postMessage, &lt;code&gt;innerHTML&lt;/code&gt; injection, CSP whitelist, and YouTube oEmbed.&lt;/li&gt;
+&lt;li&gt;Exploiting the chain gave &lt;strong&gt;full JavaScript execution&lt;/strong&gt; within the ChatGPT interface.&lt;/li&gt;
+&lt;li&gt;The exploit allowed &lt;strong&gt;account takeover&lt;/strong&gt; via a simple share link.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-mitigation"&gt;🛡️ Mitigation
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;OpenAI patched the issue and closed the hole.&lt;/li&gt;
+&lt;li&gt;A $5,000 bug bounty was paid to the discoverer, which the reporter considered low given the severity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#OpenAI #Security #ChatGPT #BugBounty&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Oct/31/how-we-took-over-chatgpt-accounts/" target="_blank" rel="noopener"
+&gt;How We Took Over ChatGPT Accounts&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Independent Researchers Use Claude Opus to Access OpenAI Employee Accounts</title><link>https://shoubhikbanerjee.github.io/blog/p/independent-researchers-use-claude-opus-to-access-openai-employee-accounts/</link><pubDate>Fri, 18 Sep 2026 22:02:10 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/independent-researchers-use-claude-opus-to-access-openai-employee-accounts/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKS533_AI_AGENTS_HACKING_D.png?quality=90&amp;strip=all&amp;crop=0%2C9.9676601489831%2C100%2C80.064679702034&amp;w=1200" alt="Featured image of post Independent Researchers Use Claude Opus to Access OpenAI Employee Accounts" /&gt;&lt;h1 id="independent-researchers-use-claude-opus-to-access-openai-employee-accounts"&gt;Independent Researchers Use Claude Opus to Access OpenAI Employee Accounts
+&lt;/h1&gt;&lt;p&gt;A team of three independent security researchers from Hacktron gained access to OpenAI employee accounts by leveraging Anthropic’s Claude Opus 4.8 and 5. The researchers exploited a vulnerability in Discourse, a third-party service used for OpenAI&amp;rsquo;s community forums, to gain unauthorized entry.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The researchers exploited a vulnerability in the system Discourse uses to process HEIF images.&lt;/li&gt;
+&lt;li&gt;The team used a corrupted image file combined with forum software to execute the exploit.&lt;/li&gt;
+&lt;li&gt;By achieving Remote Code Execution (RCE) on Discourse Cloud, they were able to pivot into the OpenAI instance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The operation, dubbed the “HEIF Heist,” was successfully adapted to target multiple companies within one or two days.&lt;/li&gt;
+&lt;li&gt;Although the team gained access to an employee’s Codex account and sent a pull request to prove it, they did not access the code within OpenAI’s “Monorepo.”&lt;/li&gt;
+&lt;li&gt;The effort reportedly cost less than $3,000 in AI tokens.&lt;/li&gt;
+&lt;li&gt;Hacktron reported the vulnerabilities to Discourse and OpenAI, both of which have since issued fixes.&lt;/li&gt;
+&lt;li&gt;OpenAI paid Hacktron $6,500 for the bug report.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-affected-organizations"&gt;🚀 Affected organizations
+&lt;/h2&gt;&lt;p&gt;The project was adapted to target the following entities:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Target&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Status&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;OpenAI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Detected/Fixed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Shopify&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Detected&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Slack&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Target&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Meta&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Target&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GitHub Ent&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Target&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Rails&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Target&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Next.js&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Target&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;ImageMagick&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Target&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/STKS533_AI_AGENTS_HACKING_D.png?quality=90&amp;amp;strip=all&amp;amp;crop=0.95588235294118%2C0%2C98.088235294118%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/STKB364_CLAUDE_2_C_96d15c.jpg?quality=90&amp;amp;strip=all&amp;amp;crop=0%2C0%2C100%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#OpenAI #Cybersecurity #Claude #BugBounty&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/ai-artificial-intelligence/997444/openai-hack-claude-heif-heist" target="_blank" rel="noopener"
+&gt;Security researchers used Claude to help them hack into OpenAI&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

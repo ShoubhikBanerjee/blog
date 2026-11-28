@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TLS on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/tls/</link><description>Recent content in TLS on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/tls/index.xml" rel="self" type="application/rss+xml"/><item><title>Qdrant .NET Client Adds gRPC Support and TLS Configuration</title><link>https://shoubhikbanerjee.github.io/blog/p/qdrant-net-client-adds-grpc-support-and-tls-configuration/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/qdrant-net-client-adds-grpc-support-and-tls-configuration/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post Qdrant .NET Client Adds gRPC Support and TLS Configuration" /&gt;&lt;h1 id="qdrant-net-client-adds-grpc-support-and-tls-configuration"&gt;Qdrant .NET Client Adds gRPC Support and TLS Configuration
+&lt;/h1&gt;&lt;p&gt;A new .NET client library for Qdrant has been released, allowing .NET applications to connect to the vector database at &lt;code&gt;http://localhost:6334&lt;/code&gt; using gRPC.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Install the library with &lt;code&gt;dotnet add package Qdrant.Client&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The client connects by default to Qdrant on &lt;code&gt;http://localhost:6334&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Internally, the high‑level client relies on a low‑level gRPC client to communicate with Qdrant.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The client creates a channel via &lt;code&gt;QdrantChannel.ForAddress&lt;/code&gt;, which is used by both &lt;code&gt;QdrantClient(&amp;quot;localhost&amp;quot;)&lt;/code&gt; and the &lt;code&gt;ClientConfiguration&lt;/code&gt; overloads.&lt;/li&gt;
+&lt;li&gt;When the channel is created, the client automatically adds a &lt;code&gt;qdrant-dotnet/&amp;lt;version&amp;gt;&lt;/code&gt; token to the request &lt;code&gt;User-Agent&lt;/code&gt; alongside the gRPC library token.&lt;/li&gt;
+&lt;li&gt;This token enables server‑side tooling to attribute traffic to the .NET client and its version.&lt;/li&gt;
+&lt;li&gt;On .NET Framework, where the underlying channel handler must be configured manually, the token is &lt;strong&gt;not&lt;/strong&gt; added automatically.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-configuration-options"&gt;⚙️ Configuration options
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Additional constructor overloads give developers more control over gRPC client configuration.&lt;/li&gt;
+&lt;li&gt;TLS can be configured, validating the server certificate using its thumbprint, and API‑key authentication can be added.&lt;/li&gt;
+&lt;li&gt;.NET Framework has limited support for gRPC over HTTP/2, but support can be enabled by:
+&lt;ul&gt;
+&lt;li&gt;Referencing &lt;code&gt;System.Net.Http.WinHttpHandler&lt;/code&gt; version 6.0.1 or later.&lt;/li&gt;
+&lt;li&gt;Configuring &lt;code&gt;WinHttpHandler&lt;/code&gt; as the inner handler for &lt;code&gt;GrpcChannelOptions&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-usage-example"&gt;🚀 Usage example
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CreateCollectionAsync&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;my_collection&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;VectorParams&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;Size&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Distance&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Distance&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Cosine&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Query examples (illustrative):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// return the 5 closest points&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// return the 5 closest points where rand_number &amp;gt;= 3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-compatibility-notes"&gt;📡 Compatibility notes
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;On .NET Framework, manual configuration of the channel handler is required, and the automatic &lt;code&gt;User-Agent&lt;/code&gt; token is not added.&lt;/li&gt;
+&lt;li&gt;The client works out‑of‑the‑box on platforms where gRPC over HTTP/2 is supported without additional handlers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Qdrant #dotnet #gRPC #vectorsearch #TLS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/qdrant-dotnet" target="_blank" rel="noopener"
+&gt;qdrant/qdrant-dotnet&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Go client released for Qdrant vector search engine</title><link>https://shoubhikbanerjee.github.io/blog/p/go-client-released-for-qdrant-vector-search-engine/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/go-client-released-for-qdrant-vector-search-engine/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post Go client released for Qdrant vector search engine" /&gt;&lt;h1 id="go-client-released-for-qdrant-vector-search-engine"&gt;Go client released for Qdrant vector search engine
+&lt;/h1&gt;&lt;p&gt;The Go client for the Qdrant vector search engine has been released, making it easier for developers to integrate vector search capabilities into their Go applications. Internally, the high-level client uses a low-level gRPC client to interact with Qdrant, abstracting away the complexity of direct API calls. The client supports secure communication with TLS 1.3 as the minimum required version when UseTLS is enabled.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;📦 Availability
+&lt;/h2&gt;&lt;p&gt;The client can be installed using the Go package manager:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;go get -u github.com/qdrant/go-client&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-security"&gt;🔐 Security
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Uses TLS 1.3 as the minimum security version when &lt;code&gt;UseTLS: true&lt;/code&gt; is set&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🧩 Architecture
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;High-level client provides simplified API for common operations&lt;/li&gt;
+&lt;li&gt;Low-level gRPC client handles direct communication with Qdrant server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This release enables Go developers to leverage Qdrant&amp;rsquo;s vector search capabilities without implementing low-level networking code, accelerating the development of AI and machine learning applications that require semantic search functionality.&lt;/p&gt;
+&lt;p&gt;#Go #Qdrant #VectorSearch #gRPC #TLS #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/go-client" target="_blank" rel="noopener"
+&gt;qdrant/go-client&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

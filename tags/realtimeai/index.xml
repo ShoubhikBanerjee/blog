@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RealTimeAI on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/realtimeai/</link><description>Recent content in RealTimeAI on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 22 Nov 2026 22:08:30 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/realtimeai/index.xml" rel="self" type="application/rss+xml"/><item><title>WhisperLiveKit: Self-Hosted, Real-Time Speech-to-Text Pipeline</title><link>https://shoubhikbanerjee.github.io/blog/p/whisperlivekit-self-hosted-real-time-speech-to-text-pipeline/</link><pubDate>Sun, 22 Nov 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/whisperlivekit-self-hosted-real-time-speech-to-text-pipeline/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/38427957?v=4" alt="Featured image of post WhisperLiveKit: Self-Hosted, Real-Time Speech-to-Text Pipeline" /&gt;&lt;h1 id="whisperlivekit-self-hosted-real-time-speech-to-text-pipeline"&gt;WhisperLiveKit: Self-Hosted, Real-Time Speech-to-Text Pipeline
+&lt;/h1&gt;&lt;p&gt;WhisperLiveKit is a self-hosted, ultra-low-latency speech-to-text pipeline that provides real-time transcription, speaker diarization, and translation. It is designed to handle streaming audio efficiently while offering API compatibility with major platforms.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The system supports real-time, local speech-to-text with streaming Automatic Speech Recognition (ASR), speaker diarization, and translation. It is built to process audio as it is being spoken rather than waiting for complete utterances.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;WhisperLiveKit utilizes state-of-the-art simultaneous speech research for intelligent buffering and incremental processing. Simple Whisper models are not ideal for this use case because they are designed for complete utterances; processing small segments loses context and cuts off words mid-syllable, resulting in poor transcription.&lt;/p&gt;
+&lt;p&gt;The pipeline integrates several advanced components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Simul-Whisper/Streaming&lt;/strong&gt;: SOTA 2025 ultra-low latency transcription using the AlignAtt policy.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;WhisperStreaming&lt;/strong&gt;: Low latency transcription using the LocalAgreement policy (SOTA 2023).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Streaming Sortformer&lt;/strong&gt;: Advanced real-time speaker diarization (SOTA 2025).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NLLW&lt;/strong&gt;: Simultaneous translation from and to 200 languages based on distilled NLLB models.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Qwen3-ASR-causal&lt;/strong&gt;: Causal streaming audio encoder where each audio block is encoded exactly once with constant compute per audio second.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AlignAtt4LLM&lt;/strong&gt;: Simultaneous translation with decoder-only LLMs featuring attention-gated commits and append-only output.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Architecture&lt;/strong&gt;: The backend supports multiple concurrent users and includes Voice Activity Detection to reduce overhead when no voice is detected.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;APIs&lt;/strong&gt;: Provides OpenAI-compatible REST APIs and Deepgram-compatible WebSocket interfaces.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Streaming&lt;/strong&gt;: Native WebSocket support is available for real-time streaming.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Language Support&lt;/strong&gt;: Check the specific tokenizer documentation for the list of all available languages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Troubleshooting&lt;/strong&gt;: A troubleshooting guide is available for step-by-step fixes collected from recent GPU issues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;WhisperLiveKit is available for installation and local execution via command-line tools.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Installation&lt;/strong&gt;: &lt;code&gt;pip install whisperlivekit&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Server Execution&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;wlk --model base --language en&lt;/code&gt; (Starts server at http://localhost:8000)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wlk run whisper:tiny&lt;/code&gt; (Auto-pulls model and starts server)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;File Transcription&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;wlk transcribe meeting.wav&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wlk transcribe --format srt podcast.mp3 -o podcast.srt&lt;/code&gt; (Generates subtitles)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model Management&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;wlk models&lt;/code&gt; (View installed models)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wlk pull large-v3&lt;/code&gt; (Download a model)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wlk rm large-v3&lt;/code&gt; (Delete a model)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Benchmarking&lt;/strong&gt;: &lt;code&gt;wlk bench&lt;/code&gt; (Test speed and accuracy)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API Access&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;REST: &lt;code&gt;curl http://localhost:8000/v1/audio/transcriptions -F file=@audio.wav&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;SDK: Compatible with OpenAI Python SDK (&lt;code&gt;client = OpenAI(base_url=&amp;quot;http://localhost:8000/v1&amp;quot;, api_key=&amp;quot;unused&amp;quot;)&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;WebSocket: &lt;code&gt;ws://localhost:8000/asr&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#WhisperLiveKit #SpeechToText #RealTimeAI #SelfHosted #Translation&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/QuentinFuxa/WhisperLiveKit" target="_blank" rel="noopener"
+&gt;QuentinFuxa/WhisperLiveKit&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>PolyAI Dialog-RSN-1 available on AWS Marketplace and SageMaker JumpStart</title><link>https://shoubhikbanerjee.github.io/blog/p/polyai-dialog-rsn-1-available-on-aws-marketplace-and-sagemaker-jumpstart/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/polyai-dialog-rsn-1-available-on-aws-marketplace-and-sagemaker-jumpstart/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22412-featured-image.png" alt="Featured image of post PolyAI Dialog-RSN-1 available on AWS Marketplace and SageMaker JumpStart" /&gt;&lt;h1 id="polyai-dialog-rsn-1-available-on-aws-marketplace-and-sagemaker-jumpstart"&gt;PolyAI Dialog-RSN-1 available on AWS Marketplace and SageMaker JumpStart
+&lt;/h1&gt;&lt;p&gt;PolyAI has made Dialog-RSN-1, a reasoning model built for real-time complex dialog, available on AWS Marketplace and Amazon SageMaker JumpStart. This update allows developers to deploy the model as a SageMaker endpoint within their own AWS environments, supporting frontier dialog agents that hear live calls, reason about them, and act in real time.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Dialog-RSN-1 is designed to handle customer conversations by perceiving a caller&amp;rsquo;s audio directly, reasoning about their needs, and responding in real time—all in a single pass.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It avoids the traditional tradeoff between speed and understanding by reasoning directly over the caller&amp;rsquo;s audio.&lt;/li&gt;
+&lt;li&gt;The model picks up tone, hesitation, and timing signals that plain transcripts often lose, allowing it to decide the right moment to respond.&lt;/li&gt;
+&lt;li&gt;It catches hesitation and hears frustration before it escalates, similar to how human agents handle calls.&lt;/li&gt;
+&lt;li&gt;Barge-in functionality remains active even during call volume spikes, and responses keep pace with the conversation without lagging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The endpoint speaks the OpenAI Realtime protocol, enabling existing Realtime clients to connect through PolyAI’s bridge by changing their base URL.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Feature&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Specification&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Input Audio&lt;/td&gt;
+&lt;td style="text-align: left"&gt;16-bit PCM mono at 16 or 24 kHz (G.711 or Opus must be transcoded first)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Connection Limit&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Up to 30 minutes per connection&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Language Support&lt;/td&gt;
+&lt;td style="text-align: left"&gt;English only&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Protocol&lt;/td&gt;
+&lt;td style="text-align: left"&gt;OpenAI Realtime&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-availability-and-deployment"&gt;🚀 Availability and Deployment
+&lt;/h2&gt;&lt;p&gt;Dialog-RSN-1 is the first PolyAI model available through AWS Marketplace. It can be deployed in two primary ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS Marketplace Subscription:&lt;/strong&gt; Subscribe via AWS Marketplace and deploy as a SageMaker endpoint inside your own AWS environment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SageMaker JumpStart:&lt;/strong&gt; Deploy directly from Amazon SageMaker Studio using the steps in &amp;ldquo;Deploy and evaluate models with Amazon SageMaker JumpStart.&amp;rdquo; With one-click deployment, SageMaker JumpStart spins up a real-time inference endpoint on a pre-tuned serving stack, eliminating the need for manual container selection or instance type guesswork.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For automated workflows, the same one-click deployment can be executed using a few lines of the SageMaker Python SDK. The Dialog-RSN-1 endpoint runs entirely within the customer&amp;rsquo;s AWS account, deployed in their Virtual Private Cloud (VPC), accessed through IAM roles, and monitored via Amazon CloudWatch logging and metrics. This setup ensures that caller audio and transcripts remain within a controlled boundary, supporting data residency and auditability requirements.&lt;/p&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;By deploying Dialog-RSN-1, customers retain ownership of orchestration, telephony integration, and business logic, while the model handles the complex task of understanding live calls and responding in real time. This approach allows organizations to build dialog agents that hear and handle calls with the nuance of human agents, without the latency penalties associated with separate speech-to-text and reasoning steps.&lt;/p&gt;
+&lt;p&gt;The model is currently handling live calls in production. Developers can discover and evaluate the model in the SageMaker JumpStart catalog, where overview pages and sample notebooks are provided. A sample notebook allows users to stream recorded caller audio to the deployed endpoint to view the model’s turn decisions, replies, and transcripts before committing to infrastructure.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22412-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22412-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/11/19/ML-22412-3.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#PolyAI #AWS #AmazonSageMaker #DialogRSN1 #RealTimeAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/polyai-dialog-rsn-1-is-now-on-amazon-sagemaker-jumpstart/" target="_blank" rel="noopener"
+&gt;PolyAI Dialog-RSN-1 is now on Amazon SageMaker JumpStart | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Amazon SageMaker AI Adds Usage-Based Metering for Bidirectional Streaming Inference</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-usage-based-metering-for-bidirectional-streaming-inference/</link><pubDate>Wed, 11 Nov 2026 22:05:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-adds-usage-based-metering-for-bidirectional-streaming-inference/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/28/ML-21045-featured-image.png" alt="Featured image of post Amazon SageMaker AI Adds Usage-Based Metering for Bidirectional Streaming Inference" /&gt;&lt;h1 id="amazon-sagemaker-ai-adds-usage-based-metering-for-bidirectional-streaming-inference"&gt;Amazon SageMaker AI Adds Usage-Based Metering for Bidirectional Streaming Inference
+&lt;/h1&gt;&lt;p&gt;Amazon has announced usage-based metering for Amazon SageMaker bidirectional (bidi) streaming inference. This update allows model providers to report actual usage for AWS Marketplace software charges, addressing a specific billing challenge for real-time speech AI applications.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;This capability builds on the previously introduced bidirectional streaming for real-time inference on Amazon SageMaker AI. Deepgram, a real-time speech AI company, serves as the launch partner, bringing usage-based Speech-to-Text (STT) and Text-to-Speech (TTS) billing to the AWS Marketplace.&lt;/p&gt;
+&lt;p&gt;Deepgram has also enhanced its support with AWS Identity and Access Management (AWS IAM) temporary delegation to simplify secure authentication and expanded its observability with enhanced metrics.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The solution introduces a dual-connection architecture to separate inference data from billing metadata:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Connection&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Data connection&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Carries inference request and response data through the existing bidirectional stream.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Metadata connection&lt;/td&gt;
+&lt;td style="text-align: left"&gt;A companion WebSocket dedicated specifically to metering data.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In this workflow, a client streams audio and receives transcriptions through the SageMaker AI API using an HTTP/2 event stream. SageMaker AI then connects to the model server over WebSockets. Both connections utilize the same &lt;code&gt;X-Amzn-SageMaker-Request-Id&lt;/code&gt; header, allowing the model server to correlate metering records with active inference sessions.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Providers can align AWS Marketplace software charges with reported usage through several technical specifications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Opt-in Mechanism:&lt;/strong&gt; Model servers opt in by returning the header &lt;code&gt;X-Amzn-SageMaker-Metadata-Stream-Supported: true&lt;/code&gt; during the WebSocket upgrade.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Message Format:&lt;/strong&gt; Metering data is sent as JSON text frames. Each frame must contain exactly one metering record rather than an array.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quotas:&lt;/strong&gt; The metadata stream has a rate quota of one message per second per connection, with a maximum message size of 512 bytes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Billing Dimensions:&lt;/strong&gt; Messages use the &lt;code&gt;inference.count&lt;/code&gt; dimension, while the &lt;code&gt;ConsumedUnits&lt;/code&gt; field supplies the quantity (e.g., reporting 720 seconds for 12 minutes of audio).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reliability:&lt;/strong&gt; The metadata connection runs over TCP for ordered, reliable delivery. The &lt;code&gt;ClientToken&lt;/code&gt; field supports idempotency, and duplicate tokens are dropped silently.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;For organizations deploying models for transcription, contact centers, voice agents, or captioning, this update enables transparent, per-unit billing. Usage-based charges flow directly into the AWS bill, though Amazon SageMaker AI endpoint infrastructure charges still apply independently. Providers can also set &lt;code&gt;X-Amzn-SageMaker-Metadata-Stream-Required&lt;/code&gt; to true to ensure inference stops if the metadata stream becomes unavailable.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/16/ML-21067-6.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2024/09/10/llinx.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/21/Screenshot-2026-07-21-at-11.30.35%E2%80%AFAM.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonSageMaker #AWSMarketplace #Deepgram #RealTimeAI #CloudBilling&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/introducing-usage-based-pricing-for-amazon-sagemaker-ai-bidirectional-streaming/" target="_blank" rel="noopener"
+&gt;Introducing usage-based pricing for Amazon SageMaker AI bidirectional streaming | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

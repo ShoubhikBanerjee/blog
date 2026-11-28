@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Laminar on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/laminar/</link><description>Recent content in Laminar on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 27 Nov 2026 22:09:22 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/laminar/index.xml" rel="self" type="application/rss+xml"/><item><title>Laminar Enables Scalable Asynchronous RL Post-Training for LLMs</title><link>https://shoubhikbanerjee.github.io/blog/p/laminar-enables-scalable-asynchronous-rl-post-training-for-llms/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/laminar-enables-scalable-asynchronous-rl-post-training-for-llms/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/212961691?v=4" alt="Featured image of post Laminar Enables Scalable Asynchronous RL Post-Training for LLMs" /&gt;&lt;h1 id="laminar-enables-scalable-asynchronous-rl-post-training-for-llms"&gt;Laminar Enables Scalable Asynchronous RL Post-Training for LLMs
+&lt;/h1&gt;&lt;p&gt;Laminar is a scalable reinforcement learning post‑training framework that enables large language models and long‑horizon agents to be fine‑tuned at scale.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Built on &lt;strong&gt;verl&lt;/strong&gt; and &lt;strong&gt;Uni-Agent&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Open‑source implementation of &lt;em&gt;Laminar: A Scalable Asynchronous RL Post‑Training Framework&lt;/em&gt; (EuroSys ’26).&lt;/li&gt;
+&lt;li&gt;Decoupled, asynchronous, and fault‑tolerant design for large‑cluster scaling.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it Works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Fully decoupled training and rollout&lt;/strong&gt;: independent loops via data and weight planes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data plane (&lt;code&gt;ExperienceBuffer&lt;/code&gt;)&lt;/strong&gt; buffers completed trajectories for &lt;code&gt;AsyncRLTrainer&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Weight plane (&lt;code&gt;Relay&lt;/code&gt;)&lt;/strong&gt; stages published weights for inference replicas to pull on demand.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trajectory‑level asynchrony&lt;/strong&gt;: generates and consumes individual trajectories independently.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version‑mixed partial rollout&lt;/strong&gt;: interrupts in‑flight generations on weight sync and continues with newer weights.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version‑consistent rollout&lt;/strong&gt;: keeps each trajectory on a single model version.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamic repack&lt;/strong&gt;: consolidates long‑tail trajectories onto fewer replicas, freeing drained replicas to pull the latest weights.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Concurrent multi‑checkpoint evaluation (&lt;code&gt;laminar.eval&lt;/code&gt;)&lt;/strong&gt;: version‑pinned routing and tail repacking for bubble‑free offline batch and online streaming evaluation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fault‑tolerant execution&lt;/strong&gt;: prevents single‑replica failures from stalling cluster‑wide progress.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Inference engines&lt;/strong&gt; recover failed replicas from &lt;code&gt;Relay&lt;/code&gt; or checkpoint storage while preserving in‑flight trajectory prefixes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trainer engine&lt;/strong&gt; resumes from the latest checkpoint (asynchronous per‑step checkpoint in progress).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key Details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Extras&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--extra vllm vLLM rollout and evaluation backend
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--extra megatron Megatron‑LM training backend
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--extra fsdp FSDP2 training backend
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--extra ucx UCX transport for Relay (recommended)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Open‑source on GitHub (built on verl and Uni-Agent).&lt;/li&gt;
+&lt;li&gt;Manages Python, CUDA, wheel indexes, and pinned Git dependencies with &lt;code&gt;uv&lt;/code&gt; (see &lt;code&gt;pyproject.toml&lt;/code&gt; and &lt;code&gt;uv.lock&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it Matters
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;In SWE agent training (Qwen3‑Coder‑30B‑A3B‑Instruct on SWE‑rebench, evaluated on SWE‑bench Verified on 64×H800) it improved resolve rate from &lt;strong&gt;46.6 %&lt;/strong&gt; to &lt;strong&gt;52.2 %&lt;/strong&gt;, surpassing the baseline peak of &lt;strong&gt;51.4 %&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Uses &lt;strong&gt;33 % fewer&lt;/strong&gt; trained samples and &lt;strong&gt;64 % fewer&lt;/strong&gt; GPU‑hours to exceed the baseline peak.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Laminar #ReinforcementLearning #LargeLanguageModels #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/verl-project/laminar" target="_blank" rel="noopener"
+&gt;verl-project/laminar&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

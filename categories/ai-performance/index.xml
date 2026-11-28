@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI Performance on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/categories/ai-performance/</link><description>Recent content in AI Performance on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 22 Sep 2026 22:03:42 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/categories/ai-performance/index.xml" rel="self" type="application/rss+xml"/><item><title>Amazon SageMaker AI Introduces Concurrency Sweeps for Generative AI Endpoints</title><link>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-introduces-concurrency-sweeps-for-generative-ai-endpoints/</link><pubDate>Tue, 22 Sep 2026 22:03:42 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/amazon-sagemaker-ai-introduces-concurrency-sweeps-for-generative-ai-endpoints/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-featured-image.png" alt="Featured image of post Amazon SageMaker AI Introduces Concurrency Sweeps for Generative AI Endpoints" /&gt;&lt;h1 id="amazon-sagemaker-ai-introduces-concurrency-sweeps-for-generative-ai-endpoints"&gt;Amazon SageMaker AI Introduces Concurrency Sweeps for Generative AI Endpoints
+&lt;/h1&gt;&lt;p&gt;Amazon SageMaker AI has updated its Inference Recommendations to include concurrency sweeps, a systematic benchmarking approach used to right-size generative AI endpoints by optimizing price-performance while maintaining acceptable latency.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;A concurrency sweep sends controlled, increasing levels of simultaneous requests to a SageMaker AI endpoint to analyze performance. This feature is built into Amazon SageMaker AI Inference Recommendations, eliminating the need to build or maintain custom load-testing infrastructure.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The concurrency sweep measures two primary metrics at each level of traffic:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Throughput&lt;/strong&gt;: The number of tokens per second produced by the endpoint.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Latency&lt;/strong&gt;: The time taken for each request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The workflow consists of four steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Deploy the model to a SageMaker AI endpoint using the native vLLM container.&lt;/li&gt;
+&lt;li&gt;Configure the workload profile (input and output token counts, streaming mode).&lt;/li&gt;
+&lt;li&gt;Run the concurrency sweep using the &lt;code&gt;CreateAIBenchmarkJob&lt;/code&gt; API.&lt;/li&gt;
+&lt;li&gt;Analyze the results to identify optimal concurrency and right-size the fleet.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;In a deployment scenario using the NVIDIA Nemotron-3 Nano 30B Mixture-of-Experts (MoE) model on an &lt;code&gt;ml.g7e.2xlarge&lt;/code&gt; instance (backed by an NVIDIA Blackwell GPU), the following configurations are applied:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Configuration&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Container&lt;/td&gt;
+&lt;td style="text-align: left"&gt;vLLM Deep Learning Container for SageMaker AI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;SM_VLLM_ENFORCE_EAGER&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Required for Nemotron-3 Nano&amp;rsquo;s Mamba-Transformer hybrid architecture&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;GPU Memory Utilization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Set to 0.85 to provide headroom for KV cache growth&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Prefix Caching&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enabled to reuse cached key-value pairs for repeated system prompts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Workload profiles are defined using &lt;code&gt;CreateAIWorkloadConfig&lt;/code&gt; with the following parameters:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Parameter&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Value&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;prompt_input_tokens_mean&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;1,024&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Average input prompt length&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;output_tokens_mean&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;256&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Average generated response length&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Streaming is enabled to capture time to first token (TTFT) metrics for interactive user experiences. The benchmark engine (AIPerf) runs each concurrency level sequentially within a single job, sending the total number of requests defined under &lt;code&gt;request_count&lt;/code&gt; at each level.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-2.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/17/ML-21905-3.jpg"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonSageMaker #vLLM #GenerativeAI #LLMInference #NVIDIA&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/right-size-generative-ai-endpoints-with-concurrency-sweeps-on-amazon-sagemaker-ai/" target="_blank" rel="noopener"
+&gt;Right-size generative AI endpoints with concurrency sweeps on Amazon SageMaker AI | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

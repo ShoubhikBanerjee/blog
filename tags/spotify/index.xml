@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Spotify on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/spotify/</link><description>Recent content in Spotify on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 27 Nov 2026 22:09:22 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/spotify/index.xml" rel="self" type="application/rss+xml"/><item><title>Spotify outage caused by conflicting deployment changes</title><link>https://shoubhikbanerjee.github.io/blog/p/spotify-outage-caused-by-conflicting-deployment-changes/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/spotify-outage-caused-by-conflicting-deployment-changes/</guid><description>&lt;img src="https://images.ctfassets.net/p762jor363g1/5Pj1XJpttH7jTwoNtzp0JK/6fe349c743b3f334580c783ee71b7804/tools-orange-c-cream.png" alt="Featured image of post Spotify outage caused by conflicting deployment changes" /&gt;&lt;h1 id="spotify-outage-caused-by-conflicting-deployment-changes"&gt;Spotify outage caused by conflicting deployment changes
+&lt;/h1&gt;&lt;p&gt;On September 29, Spotify experienced an outage that disrupted users’ access to the platform. The disruption was triggered by a series of changes to the deployment platforms that resulted in conflicts impacting the main authentication system, preventing apps from loading content or playing music.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The outage began with errors increasing at 13:45 UTC.&lt;/li&gt;
+&lt;li&gt;A login system &amp;ldquo;panic mode alert&amp;rdquo; paged the owning team at 13:57 UTC.&lt;/li&gt;
+&lt;li&gt;Responders identified the specific login service impacted at 14:04 UTC.&lt;/li&gt;
+&lt;li&gt;Most regions recovered by 16:30 UTC, though one European region experienced further overwhelm due to returning traffic.&lt;/li&gt;
+&lt;li&gt;The incident was declared &amp;ldquo;all-clear&amp;rdquo; at 19:34 UTC.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-root-cause-analysis"&gt;🧩 Root Cause Analysis
+&lt;/h2&gt;&lt;p&gt;The issue stemmed from two independently tested changes to the deployment system that conflicted when combined:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Change 1&lt;/strong&gt;: Altered how test environments are configured, including running fewer instances and omitting some automated health checks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Change 2&lt;/strong&gt;: Changed how the system computes the difference between the current state and a desired new state for deployment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The conflict occurred because one rollout changed the type of deployed workloads (from Kubernetes Deployment to Argo Rollout), while the second changed which configuration parameters are excluded from the automated diff. Consequently, the system accidentally included the &lt;code&gt;minReplicas&lt;/code&gt; field in the diff. While the correct behavior is for the Kubernetes autoscaler to manage replica numbers, the deployment system instead set the replicas field to the minimum number on every sync.&lt;/p&gt;
+&lt;h2 id="-impact-and-recovery"&gt;⚙️ Impact and Recovery
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Token Backlog&lt;/strong&gt;: The re-issuing of tokens after downtime caused significant load increases, overwhelming remaining instances even with client backoffs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reconciliation Loop&lt;/strong&gt;: An erroneous reconciliation loop lowered the number of instances, preventing automatic scaling and recovery.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Traffic Surge&lt;/strong&gt;: The login system handled 200 times more traffic than usual during the start of recovery to process the backlog of missing tokens.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Manual Intervention&lt;/strong&gt;: The first attempt to manually scale up did not sufficiently account for the traffic increase. By 17:25 UTC, the login system was set to 3x normal CPU/memory resources to prevent a &amp;ldquo;thundering herd&amp;rdquo; effect.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-incident-timeline"&gt;📊 Incident Timeline
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Time (UTC)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Event&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;13:45&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Errors begin increasing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;13:57&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Login system &amp;ldquo;panic mode alert&amp;rdquo; pages owning team&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;14:04&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Responders identify the impacted login service&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;16:30&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Login starts to recover; deployments remain frozen&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;17:25&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Login set to 3x normal CPU/memory resources&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;19:34&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Incident declared &amp;ldquo;all-clear&amp;rdquo;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/p762jor363g1/3AiqgaI6uFPcF6zc7lYX5t/bbed1b145db94423441163d9f149a02e/incident_report.png"
+loading="lazy"
+alt="Spotify Incident Report"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://images.ctfassets.net/p762jor363g1/3AiqgaI6uFPcF6zc7lYX5t/bbed1b145db94423441163d9f149a02e/incident_report.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Spotify #DevOps #Kubernetes #ArgoCD #IncidentResponse&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://engineering.atspotify.com/2026/11/september-29-outage-incident-report-what-we-learnt/" target="_blank" rel="noopener"
+&gt;September 29 Outage Incident Report: What we learnt | Spotify Engineering&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Spotify Removes 50 Million AI-Generated Tracks From User Recommendations</title><link>https://shoubhikbanerjee.github.io/blog/p/spotify-removes-50-million-ai-generated-tracks-from-user-recommendations/</link><pubDate>Tue, 20 Oct 2026 22:03:21 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/spotify-removes-50-million-ai-generated-tracks-from-user-recommendations/</guid><description>&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/23951391/STK088_VRG_Illo_N_Barclay_4_spotify.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200" alt="Featured image of post Spotify Removes 50 Million AI-Generated Tracks From User Recommendations" /&gt;&lt;h1 id="spotify-removes-50-million-ai-generated-tracks-from-user-recommendations"&gt;Spotify Removes 50 Million AI-Generated Tracks From User Recommendations
+&lt;/h1&gt;&lt;p&gt;Spotify has announced that it removed more than 50 million songs categorized as AI-generated slop or spam from its recommendation system over the past year.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Spotify has implemented changes to its music recommendation system to prioritize songs from human artists. The company reports a &amp;ldquo;marked decrease in listener concerns&amp;rdquo; regarding the appearance of slop or spam in recommendations since these changes were made. This follows previous efforts last year where the company took down more than 75 million songs identified as spam.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;To determine if a track is AI-generated slop, Spotify utilizes a combination of the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Listener engagement and feedback&lt;/li&gt;
+&lt;li&gt;Upload patterns&lt;/li&gt;
+&lt;li&gt;Metadata&lt;/li&gt;
+&lt;li&gt;Third-party AI detection tools&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Additionally, Spotify editors maintain a standard where they do not program content identified as slop or spam.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Spotify has introduced specific policies for AI identities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AI Persona Badge&lt;/strong&gt;: A label for artists using an AI identity who do not represent a real person.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recommendation Policy&lt;/strong&gt;: Music from AI personas will not be recommended.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Spotify&amp;rsquo;s approach differs from other streaming platforms handling AI music:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Platform&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Approach to AI Music&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;YouTube Music&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Labels AI songs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Deezer&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Provides users an option to filter out AI slop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Bandcamp&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Bans AI music entirely&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Despite these restrictions on slop, Spotify is partnering with Believe (an independent music publisher) and Universal Music Group to launch a tool for creating AI music remixes.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/23951391/STK088_VRG_Illo_N_Barclay_4_spotify.jpg?quality=90&amp;amp;strip=all&amp;amp;crop=0%2C0%2C100%2C100&amp;amp;w=2400"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#Spotify #AI #MusicStreaming #GenerativeAI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://www.theverge.com/entertainment/1014284/spotify-ai-slop-spam-songs-removed" target="_blank" rel="noopener"
+&gt;Spotify pulled 50 million AI slop and spam tracks from its recommendations&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

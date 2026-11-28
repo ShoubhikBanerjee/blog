@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DuckDB on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/duckdb/</link><description>Recent content in DuckDB on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 28 Nov 2026 22:07:57 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/duckdb/index.xml" rel="self" type="application/rss+xml"/><item><title>Misata Introduces Declarative Synthetic Data Generation with Verification</title><link>https://shoubhikbanerjee.github.io/blog/p/misata-introduces-declarative-synthetic-data-generation-with-verification/</link><pubDate>Sat, 28 Nov 2026 22:07:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/misata-introduces-declarative-synthetic-data-generation-with-verification/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/112371697?v=4" alt="Featured image of post Misata Introduces Declarative Synthetic Data Generation with Verification" /&gt;&lt;h1 id="misata-introduces-declarative-synthetic-data-generation-with-verification"&gt;Misata Introduces Declarative Synthetic Data Generation with Verification
+&lt;/h1&gt;&lt;p&gt;Misata is a new declarative synthetic data generator for Python. It allows developers to write down the facts a dataset must satisfy, and the engine builds multi-table data that satisfies all of them simultaneously.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Users define invariants in a &lt;code&gt;misata.yaml&lt;/code&gt; file, such as monthly revenue curves, balanced ledgers, or foreign key constraints. The system generates rows derived from these specifications.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Specification as Ground Truth:&lt;/strong&gt; The specification is the ground truth, and the rows are derived from it. For example, if the specification states &amp;ldquo;January revenue is 180,000,&amp;rdquo; this is true before a single row exists.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DuckDB Integration:&lt;/strong&gt; Once data is generated, DuckDB checks the files on disk and writes a certificate that anyone can re-run.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Independent Verification:&lt;/strong&gt; The &lt;code&gt;verify.py&lt;/code&gt; script uses only the standard library and &lt;code&gt;duckdb&lt;/code&gt;. It shares no code with the generator.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The tool addresses the &amp;ldquo;oracle problem&amp;rdquo; in testing, where verifying data pipelines requires both input data and an independently known answer. Traditional methods have limitations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Copying Production:&lt;/strong&gt; Provides data without a known answer.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hand-written Fixtures:&lt;/strong&gt; Provide an answer that rots.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Random Generators:&lt;/strong&gt; Provide data whose answer must be computed by the code under test.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In a documented example, Misata generated data satisfying 69 invariants, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Twelve monthly revenue totals (e.g., 180,000.00 in January, 240,000.00 in June).&lt;/li&gt;
+&lt;li&gt;Channel splits inside each month.&lt;/li&gt;
+&lt;li&gt;Planned row counts per month.&lt;/li&gt;
+&lt;li&gt;Zero orphaned &lt;code&gt;customer_id&lt;/code&gt;s and unique keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The verification process can detect specific failures, such as a mismatched SHA256 hash or a precision error where an observed value of 180000.01 does not match the expected 180000.00.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Misata is available for Python. It can be installed and used as follows:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Installation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install &lt;span class="s2"&gt;&amp;#34;misata[duckdb]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Data Generation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;misata generate -c misata.yaml -o data --attest
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Verification&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python data/verify.py
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;A successful verification outputs a certificate indicating that files match their attested SHA256 hashes and all invariants hold.&lt;/p&gt;
+&lt;p&gt;#SyntheticData #Python #DataEngineering #Testing #DuckDB&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/rasinmuhammed/misata" target="_blank" rel="noopener"
+&gt;rasinmuhammed/misata&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>NVIDIA Releases cuDSS 1.0 and DuckDB Sirius Extension</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cudss-1-0-and-duckdb-sirius-extension/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-releases-cudss-1-0-and-duckdb-sirius-extension/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2024/06/DatacenterKV-2-660x370.png" alt="Featured image of post NVIDIA Releases cuDSS 1.0 and DuckDB Sirius Extension" /&gt;&lt;h1 id="nvidia-releases-cudss-10-and-duckdb-sirius-extension"&gt;NVIDIA Releases cuDSS 1.0 and DuckDB Sirius Extension
+&lt;/h1&gt;&lt;p&gt;NVIDIA has released version 1.0 of its cuDSS library for sparse linear systems and collaborated with DuckLabs to release Sirius, a GPU-accelerated extension for DuckDB, enabling high-performance analytical queries on NVIDIA hardware.&lt;/p&gt;
+&lt;h2 id="-how-cudss-works"&gt;🧩 How cuDSS Works
+&lt;/h2&gt;&lt;p&gt;The cuDSS library is designed to solve large sparse linear systems for engineering and scientific simulations. It targets numerically challenging sparse systems, particularly symmetric indefinite ones, by offering symmetry-preserving matching and scaling as well as Bunch-Kaufman pivoting.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Matching and Scaling&lt;/strong&gt;: Uses the HSL MC64 algorithm from the HSL collection of Fortran codes. This feature preserves symmetry and is enabled by default in cuDSS 1.0, improving accuracy and reducing memory and performance penalties associated with previous nonsymmetric matching.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bunch-Kaufman Pivoting&lt;/strong&gt;: Allows 2×2 pivots to maintain factorization stability while preserving symmetry. The algorithm applies a local test to each column to choose between 1×1 pivots, interchanged 1×1 pivots, or 2×2 blocks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Default Configuration&lt;/strong&gt;: cuDSS 1.0 defaults to using matching and scaling with &lt;code&gt;CUDSS_MATCHING_ALG_MAX_DIAG_PRODUCT&lt;/code&gt; and Bunch-Kaufman pivoting with &lt;code&gt;CUDSS_PIVOT_BUNCH_KAUFMAN&lt;/code&gt;. Users can restore previous behavior using &lt;code&gt;CUDSS_CONFIG_FORCE_NONSYMMETRIC_MATCHING&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-cudss-performance"&gt;📊 cuDSS Performance
+&lt;/h2&gt;&lt;p&gt;Benchmark matrices for cuDSS were selected from semiconductor design, manufacturing, and computer-aided engineering workflows, including circuit simulation, TCAD, thermal, structural, electromagnetic, and fluid dynamics. Performance was benchmarked against Intel MKL version 2026.1.0 using an NVIDIA B200 GPU and an Intel Xeon Platinum 8570 CPU.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Phase&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Geometric-Mean Speedup&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Analysis&lt;/td&gt;
+&lt;td style="text-align: left"&gt;2.5x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Numerical Factorization&lt;/td&gt;
+&lt;td style="text-align: left"&gt;5.9x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Triangular Solve&lt;/td&gt;
+&lt;td style="text-align: left"&gt;151x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;cuDSS performance has improved over previous releases, with optimizations for superpanels in factorization, multithreaded analysis, and tuned solve-phase kernels. Developers can access these gains by upgrading without changing application code.&lt;/p&gt;
+&lt;h2 id="-sirius-for-duckdb"&gt;🐝 Sirius for DuckDB
+&lt;/h2&gt;&lt;p&gt;Sirius is an open-source, GPU-native SQL engine developed through a collaboration between the University of Wisconsin–Madison and NVIDIA, released as a DuckDB core extension in partnership with DuckLabs.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Integration&lt;/strong&gt;: Developers can install and load Sirius using two SQL commands (&lt;code&gt;INSTALL sirius;&lt;/code&gt; and &lt;code&gt;LOAD sirius;&lt;/code&gt;). It requires DuckDB 2.0 and an NVIDIA GPU with a compatible driver.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Architecture&lt;/strong&gt;: DuckDB handles SQL parsing and optimization, while Sirius executes the resulting query plans on the GPU using a CUDA backend.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance&lt;/strong&gt;: In TPC-H benchmarks with data stored in Amazon S3, Sirius delivered significant speedups over CPU-based DuckDB.
+&lt;ul&gt;
+&lt;li&gt;At Scale Factor 1,000 (1 TB), total query runtime fell from 347.3 seconds to 63.2 seconds.&lt;/li&gt;
+&lt;li&gt;At Scale Factor 3,000 (3 TB), runtime dropped from 752.4 seconds to 160.6 seconds, a 4.69x speedup.&lt;/li&gt;
+&lt;li&gt;With tuned settings, a two-GPU AWS instance configuration achieved 3.25x to 5.50x speedups over the best CPU-based configurations, reducing query-time compute cost by up to approximately 79%.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The general availability of cuDSS marks it as a production-ready library for commercial applications. Sirius is available as a DuckDB core extension, with a download size of approximately 700 MB.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/analysis-phase-speedup-cudss-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/factorization-phase-speedup-cudss-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/solve-phase-speedup-cudss-1.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #cuDSS #DuckDB #GPU #HighPerformanceComputing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/accelerating-direct-sparse-solvers-for-computational-engineering-with-nvidia-cudss-1-0/" target="_blank" rel="noopener"
+&gt;Accelerating Direct Sparse Solvers for Computational Engineering with NVIDIA cuDSS 1.0 | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/get-started-with-gpu-accelerated-duckdb-analytics-using-the-sirius-core-extension/" target="_blank" rel="noopener"
+&gt;Get Started with GPU-Accelerated DuckDB Analytics Using the Sirius Core Extension | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

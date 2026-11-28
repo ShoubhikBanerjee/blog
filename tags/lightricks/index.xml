@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Lightricks on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/lightricks/</link><description>Recent content in Lightricks on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 27 Nov 2026 22:09:22 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/lightricks/index.xml" rel="self" type="application/rss+xml"/><item><title>Generating Video on AWS Trainium3 with Lightricks LTX-2.5 via Diffusers</title><link>https://shoubhikbanerjee.github.io/blog/p/generating-video-on-aws-trainium3-with-lightricks-ltx-2-5-via-diffusers/</link><pubDate>Fri, 27 Nov 2026 22:09:22 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/generating-video-on-aws-trainium3-with-lightricks-ltx-2-5-via-diffusers/</guid><description>&lt;img src="https://huggingface.co/blog/assets/video-trainium3/thumbnail.jpg" alt="Featured image of post Generating Video on AWS Trainium3 with Lightricks LTX-2.5 via Diffusers" /&gt;&lt;h1 id="generating-video-on-aws-trainium3-with-lightricks-ltx-25-via-diffusers"&gt;Generating Video on AWS Trainium3 with Lightricks LTX-2.5 via Diffusers
+&lt;/h1&gt;&lt;p&gt;A developer partnered with AWS to access a Trainium3 machine (trn3.48xlarge, 64 NeuronCores) for a month, using it to generate video and sound with Lightricks&amp;rsquo; LTX-2.5 model through the diffusers library.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The project aimed to determine how easy it is to generate videos with diffusers on Trainium3 and to match performance levels found in CUDA or Lightricks&amp;rsquo; own API. The setup achieved generation times for a 10-second clip with sound in 22 to 23 seconds on half of the machine, matching Lightricks&amp;rsquo; online API claim of 23.7 seconds for a 10-second 1080p clip and beating it by about a second at 2048×1024 resolution.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The model required three types of work to run on the NeuronCores: tensor parallelism to make the model run, sequence parallelism to split it over more cores, and host optimizations to keep up with the NeuronCores. Out of the box, the transformer did not fit on one core, and diffusers had no plan to split it. The first attempt took about 5 minutes 20 seconds for a 10-second clip, with NeuronCores computing for only about 45 seconds of that time.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The workflow uses a JSON file acting as a storyboard, where each shot has a name and a long prompt describing style, subject, motion, camera, light, and sound. Shots can link to earlier or later shots using &lt;code&gt;from&lt;/code&gt; and &lt;code&gt;to&lt;/code&gt; keys to maintain continuity of look or motion, and can be trimmed or captioned. Three diffusers pipelines are used:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Pipeline&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LTX2Pipeline&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Generates shots from prompts alone using an 8-step distilled recipe&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LTX2ConditionPipeline&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Generates shots that start or end on frames of another shot&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;LTX2LatentUpsamplePipeline&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Upscales latents ×2 before 3 final steps&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The film assembly logic is approximately 160 lines of Python that reads the JSON, orders shots so keyframes exist before they are needed, cuts frames, trims, captions, evens out sound, and assembles the final video.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The code is available in the &lt;code&gt;dacorvo/video-generation&lt;/code&gt; repository. Sample films, including a seal, a fox, and a goat, are stored in the &lt;code&gt;dacorvo/video-generation&lt;/code&gt; bucket alongside their JSON files.&lt;/p&gt;
+&lt;p&gt;#AWS #Trainium #Lightricks #Diffusers #VideoGeneration&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://huggingface.co/blog/video-trainium3" target="_blank" rel="noopener"
+&gt;Taking Trainium3 to the Track: Generating Videos with LTX-2.5&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

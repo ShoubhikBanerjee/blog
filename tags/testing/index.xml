@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Testing on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/testing/</link><description>Recent content in Testing on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 28 Nov 2026 22:07:57 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/testing/index.xml" rel="self" type="application/rss+xml"/><item><title>Misata Introduces Declarative Synthetic Data Generation with Verification</title><link>https://shoubhikbanerjee.github.io/blog/p/misata-introduces-declarative-synthetic-data-generation-with-verification/</link><pubDate>Sat, 28 Nov 2026 22:07:57 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/misata-introduces-declarative-synthetic-data-generation-with-verification/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/112371697?v=4" alt="Featured image of post Misata Introduces Declarative Synthetic Data Generation with Verification" /&gt;&lt;h1 id="misata-introduces-declarative-synthetic-data-generation-with-verification"&gt;Misata Introduces Declarative Synthetic Data Generation with Verification
+&lt;/h1&gt;&lt;p&gt;Misata is a new declarative synthetic data generator for Python. It allows developers to write down the facts a dataset must satisfy, and the engine builds multi-table data that satisfies all of them simultaneously.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;Users define invariants in a &lt;code&gt;misata.yaml&lt;/code&gt; file, such as monthly revenue curves, balanced ledgers, or foreign key constraints. The system generates rows derived from these specifications.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Specification as Ground Truth:&lt;/strong&gt; The specification is the ground truth, and the rows are derived from it. For example, if the specification states &amp;ldquo;January revenue is 180,000,&amp;rdquo; this is true before a single row exists.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DuckDB Integration:&lt;/strong&gt; Once data is generated, DuckDB checks the files on disk and writes a certificate that anyone can re-run.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Independent Verification:&lt;/strong&gt; The &lt;code&gt;verify.py&lt;/code&gt; script uses only the standard library and &lt;code&gt;duckdb&lt;/code&gt;. It shares no code with the generator.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;The tool addresses the &amp;ldquo;oracle problem&amp;rdquo; in testing, where verifying data pipelines requires both input data and an independently known answer. Traditional methods have limitations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Copying Production:&lt;/strong&gt; Provides data without a known answer.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hand-written Fixtures:&lt;/strong&gt; Provide an answer that rots.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Random Generators:&lt;/strong&gt; Provide data whose answer must be computed by the code under test.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In a documented example, Misata generated data satisfying 69 invariants, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Twelve monthly revenue totals (e.g., 180,000.00 in January, 240,000.00 in June).&lt;/li&gt;
+&lt;li&gt;Channel splits inside each month.&lt;/li&gt;
+&lt;li&gt;Planned row counts per month.&lt;/li&gt;
+&lt;li&gt;Zero orphaned &lt;code&gt;customer_id&lt;/code&gt;s and unique keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The verification process can detect specific failures, such as a mismatched SHA256 hash or a precision error where an observed value of 180000.01 does not match the expected 180000.00.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Misata is available for Python. It can be installed and used as follows:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Installation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pip install &lt;span class="s2"&gt;&amp;#34;misata[duckdb]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Data Generation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;misata generate -c misata.yaml -o data --attest
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Verification&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python data/verify.py
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;A successful verification outputs a certificate indicating that files match their attested SHA256 hashes and all invariants hold.&lt;/p&gt;
+&lt;p&gt;#SyntheticData #Python #DataEngineering #Testing #DuckDB&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/rasinmuhammed/misata" target="_blank" rel="noopener"
+&gt;rasinmuhammed/misata&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Cloudflare Builds DNS Testing Tool Using Flamingo Framework</title><link>https://shoubhikbanerjee.github.io/blog/p/cloudflare-builds-dns-testing-tool-using-flamingo-framework/</link><pubDate>Mon, 23 Nov 2026 22:18:20 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/cloudflare-builds-dns-testing-tool-using-flamingo-framework/</guid><description>&lt;img src="https://blog.cloudflare.com/_emdash/api/media/file/01M7XNS6Z54W4GPXME90VX9S44.png" alt="Featured image of post Cloudflare Builds DNS Testing Tool Using Flamingo Framework" /&gt;&lt;h1 id="cloudflare-builds-dns-testing-tool-using-flamingo-framework"&gt;Cloudflare Builds DNS Testing Tool Using Flamingo Framework
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;After a DNS service rollout, unit tests passed and dashboards showed green, but production suddenly broke. Some record changes sat unpublished for hours due to a scheduling bug, causing slow hostname resolution and certificate issuance delays. DNS failures are hard to catch because they are slow, spread across the network, and only partially impact where they cause problems.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The Cloudflare DNS team extended Flamingo, their end-to-end testing framework, to test DNS the way customers experience it: constantly, from every data center, and against production. Flamingo&amp;rsquo;s modular design lets teams add support for other networking protocols. Originally built around complex multi-step HTTP testing, its capabilities have increased substantially over the years.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Flamingo is built from the ground up with Cloudflare&amp;rsquo;s infrastructure in mind:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Built a control plane and scheduler that let teams target specific environments, data centers, or percentages of metals&lt;/li&gt;
+&lt;li&gt;Integrates with custom reporting, metrics, and analytics tooling&lt;/li&gt;
+&lt;li&gt;Needs predictable performance and runs well on bare-metal servers in resource-constrained environments&lt;/li&gt;
+&lt;li&gt;Uses a custom domain-specific language (DSL) consisting of a simple setup-request-response format&lt;/li&gt;
+&lt;li&gt;Written in Rust due to its consistent performance characteristics and strong type system&lt;/li&gt;
+&lt;li&gt;The type system enables modularity through strongly-typed enumerations for input and output in the action runner&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With just five lines of code, a script can run anywhere on Cloudflare&amp;rsquo;s edge and scale to thousands of requests per minute. The data from millions of data points is turned into a graph defining how the service is actually performing in the real world.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Component&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Control plane and scheduler&lt;/td&gt;
+&lt;td&gt;Let teams target specific environments, data centers, or percentages of metals&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DSL&lt;/td&gt;
+&lt;td&gt;Uses simple setup-request-response format, only 5 lines of code for scalable testing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Rust&lt;/td&gt;
+&lt;td&gt;Provides consistent performance and strong type system for modularity&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Unit testing alone is not enough for complex network pathways with multiple systems. We need to run constant automated testing against real systems and measure outcomes to make informed decisions on service health. Flamingo measures the behavior of production environments to ensure lower-tier code behaves as expected. The DNS measurements now decide whether a release goes ahead or gets rolled back.&lt;/p&gt;
+&lt;p&gt;#DNS #Testing #Infrastructure #Cloudflare&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://blog.cloudflare.com/probing-dns-at-cloudflare/" target="_blank" rel="noopener"
+&gt;Probing DNS at Cloudflare&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Tencent APIJSON demo projects support multiple languages and frameworks</title><link>https://shoubhikbanerjee.github.io/blog/p/tencent-apijson-demo-projects-support-multiple-languages-and-frameworks/</link><pubDate>Mon, 23 Nov 2026 22:18:20 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/tencent-apijson-demo-projects-support-multiple-languages-and-frameworks/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/41146037?v=4" alt="Featured image of post Tencent APIJSON demo projects support multiple languages and frameworks" /&gt;&lt;h1 id="tencent-apijson-demo-projects-support-multiple-languages-and-frameworks"&gt;Tencent APIJSON demo projects support multiple languages and frameworks
+&lt;/h1&gt;&lt;p&gt;Tencent has published demo projects for APIJSON, featuring usage examples, documentation, and test data SQL files for various programming languages, frameworks, and clients.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;The project provides sample code and resources for different environments, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Languages:&lt;/strong&gt; Java, Swift, JavaScript, Python, and others.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Frameworks:&lt;/strong&gt; SpringBoot, JFinal, and others.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Clients:&lt;/strong&gt; Web, Android, iOS, and others.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The demo suite includes automated testing tools such as APIAuto, UnitAuto, SQLAuto, AutoUI, and CVAuto. These tools support simple demo apps for testing APIJSON as well as complex production apps like social media feeds.&lt;/p&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Server Testing:&lt;/strong&gt; Users can test API endpoints by skipping setup and using the APIJSON official server address &lt;code&gt;apijson.cn:8080&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tools:&lt;/strong&gt; Developers can use the APIAuto machine learning HTTP interface tool or download client Apps for testing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Client Libraries:&lt;/strong&gt; Documentation and links are available for Android, iOS, and JavaScript clients.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Support:&lt;/strong&gt; Questions can be submitted as issues on the APIJSON core project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The APIJSON-Demo repository is available on GitHub. The project lists contributors including two Tencent engineers, one ByteDance engineer, one Ping An Technology engineer, and the author of the Solon framework.&lt;/p&gt;
+&lt;p&gt;#APIJSON #Tencent #GitHub #Programming #Testing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/APIJSON/APIJSON-Demo" target="_blank" rel="noopener"
+&gt;APIJSON/APIJSON-Demo&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>QA Studio adds test suites, CLI and health metrics for CI/CD</title><link>https://shoubhikbanerjee.github.io/blog/p/qa-studio-adds-test-suites-cli-and-health-metrics-for-ci-cd/</link><pubDate>Thu, 29 Oct 2026 18:01:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/qa-studio-adds-test-suites-cli-and-health-metrics-for-ci-cd/</guid><description>&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21434-featured-image.png" alt="Featured image of post QA Studio adds test suites, CLI and health metrics for CI/CD" /&gt;&lt;h1 id="qa-studio-adds-test-suites-cli-and-health-metrics-for-cicd"&gt;QA Studio adds test suites, CLI and health metrics for CI/CD
+&lt;/h1&gt;&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;We announced an update to QA Studio – the reference solution built with Amazon Nova Act – that expands the platform with batch regression testing, a command‑line interface, and richer health‑monitoring dashboards.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Applications&lt;/strong&gt; represent the system under test (a website, web app, or service front end). Creating an application requires a name, a base URL, and an optional set of environments such as development, staging, and production.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Use cases&lt;/strong&gt; are the individual natural‑language tests defined in Part 1. They belong to an application and inherit its ownership.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Test suites&lt;/strong&gt; are collections of use cases for regression testing (added in this update). They also belong to an application.&lt;/li&gt;
+&lt;li&gt;Tests are executed through AI‑powered visual navigation that records every run as Amazon CloudWatch custom metrics, dimensioned by application and environment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-new-capabilities-update"&gt;⚙️ New capabilities (Update)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Batch regression testing&lt;/strong&gt; via test suites can be run from a new CLI, making it easy to integrate into continuous integration and continuous delivery (CI/CD) pipelines.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Health dashboard&lt;/strong&gt; shows three top‑level figures for a selected window: pass rate, total executions, and current failure count.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;health score&lt;/strong&gt; (0–100) is computed from the pass rate with a penalty for flaky tests.&lt;/li&gt;
+&lt;li&gt;Teams can select a 7‑day window with hourly granularity or a 30‑day window with daily granularity; the UI charts executions, successes, failures, and average duration.&lt;/li&gt;
+&lt;li&gt;Because metrics carry an environment dimension, views can be filtered to a single environment, allowing comparisons such as staging vs. production for the same tests.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flaky tests view&lt;/strong&gt; ranks use cases by how often they flipped between passing and failing over the last seven days.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recent failures view&lt;/strong&gt; lists the latest failed executions for quick triage, each linking to the Amazon Nova Act trajectory logs and session recordings.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-access-control"&gt;👥 Access control
+&lt;/h2&gt;&lt;p&gt;QA Studio organizes access around teams. An application belongs to exactly one team, and every team member holds one of five cumulative roles:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Role&lt;/th&gt;
+&lt;th&gt;What the role can do&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Administrator&lt;/td&gt;
+&lt;td&gt;Studio‑wide access to every team, application, and user; can create teams and assign applications&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Team Lead&lt;/td&gt;
+&lt;td&gt;Manages their own team members and creates applications for the team&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Editor&lt;/td&gt;
+&lt;td&gt;Creates and edits use cases and test suites within the team’s applications&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Viewer&lt;/td&gt;
+&lt;td&gt;(lowest role; inherits permissions of roles below it)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Access to a use case or test suite follows the application that contains it – if a member can work with the application, they can work with its tests, bounded by their role.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;Users&lt;/strong&gt; page lists every account with its team and role. In the reference deployment, four users span two teams: two Team Leads, one Viewer, and one Studio‑wide Administrator.&lt;/p&gt;
+&lt;h2 id="-observability-details"&gt;📊 Observability details
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Every execution is recorded as a CloudWatch custom metric.&lt;/li&gt;
+&lt;li&gt;The dashboard presents pass rate, execution count, failure count, and a health score.&lt;/li&gt;
+&lt;li&gt;Charts can be filtered by environment, enabling side‑by‑side comparison of staging and production results.&lt;/li&gt;
+&lt;li&gt;Flaky‑test rankings and recent‑failure listings help teams triage unstable or broken tests quickly.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;The new CLI, test suite management, and health‑metric views are now part of the QA Studio reference deployment and can be used in CI/CD pipelines.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21434-1-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21434-2-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/10/27/ML-21434-3-1.png"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#AmazonNovaAct #QAStudio #CICD #Testing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://aws.amazon.com/blogs/machine-learning/accelerating-software-delivery-with-agentic-qa-automation-using-amazon-nova-act-part-3/" target="_blank" rel="noopener"
+&gt;Accelerating software delivery with agentic QA automation using Amazon Nova Act – Part 3 | Amazon Web Services&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Graham Dumpleton releases Wrapture library for Python tracing and testing</title><link>https://shoubhikbanerjee.github.io/blog/p/graham-dumpleton-releases-wrapture-library-for-python-tracing-and-testing/</link><pubDate>Tue, 01 Sep 2026 22:04:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/graham-dumpleton-releases-wrapture-library-for-python-tracing-and-testing/</guid><description>&lt;h1 id="graham-dumpleton-releases-wrapture-library-for-python-tracing-and-testing"&gt;Graham Dumpleton releases Wrapture library for Python tracing and testing
+&lt;/h1&gt;&lt;p&gt;Graham Dumpleton, creator of wrapt and mod_wsgi, has released a new project called Wrapture. The library extends monkeypatching concepts to provide a unified approach for testing and tracing within Python applications.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;p&gt;Wrapture is a tool designed to wrap functions or methods, allowing developers to trace access or override return values. It serves as an alternative to unittest.mock and facilitates tracing in existing projects.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Enables function and method wrapping for tracing and value overriding.&lt;/li&gt;
+&lt;li&gt;Provides support for OpenTelemetry.&lt;/li&gt;
+&lt;li&gt;Includes a configuration-based mechanism for adding tracing to existing Python projects.&lt;/li&gt;
+&lt;li&gt;Supports various testing patterns for complex call chains, such as an OrderService calling a Gateway.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Wrapture represents a shift in development methodology for the creator. It is an agent-driven project where every line of code and documentation was written by an AI assistant under the direction of the author. The author notes that while the AI produced the output, the design was engineered specifically based on his long experience in this area of Python.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;🚀 Availability
+&lt;/h2&gt;&lt;p&gt;Wrapture is a young project, currently a few weeks old.&lt;/p&gt;
+&lt;p&gt;#Python #OpenTelemetry #AI #Testing #Tracing&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://simonwillison.net/2026/Aug/31/introducing-wrapture/" target="_blank" rel="noopener"
+&gt;Introducing wrapture&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

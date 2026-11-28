@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPUTechnology on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/gputechnology/</link><description>Recent content in GPUTechnology on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 20 Nov 2026 22:08:48 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/gputechnology/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA Dynamo Optimizes RL Training via Routing and Weight Updates</title><link>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-optimizes-rl-training-via-routing-and-weight-updates/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/nvidia-dynamo-optimizes-rl-training-via-routing-and-weight-updates/</guid><description>&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-17-660x370.png" alt="Featured image of post NVIDIA Dynamo Optimizes RL Training via Routing and Weight Updates" /&gt;&lt;h1 id="nvidia-dynamo-optimizes-rl-training-via-routing-and-weight-updates"&gt;NVIDIA Dynamo Optimizes RL Training via Routing and Weight Updates
+&lt;/h1&gt;&lt;p&gt;NVIDIA has introduced Dynamo as a serving layer designed to address constraints in reinforcement learning (RL) training, helping teams generate more accepted training samples and complete training iterations faster. By addressing bottlenecks in rollouts, weight updates, and worker recovery, the framework aims to prevent GPU capacity waste and training delays as RL workloads scale.&lt;/p&gt;
+&lt;h2 id="-how-rl-training-scales"&gt;🧩 How RL Training Scales
+&lt;/h2&gt;&lt;p&gt;Reinforcement learning uses rewards to train models to solve problems and complete tasks. The training process relies on several key components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Workers&lt;/strong&gt; generate rollouts, which are sequences of model outputs, actions, and environment interactions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RL Frameworks&lt;/strong&gt; score the results, update model weights, and send those weights back to the workers for the next round.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamo&lt;/strong&gt; sits between rollout orchestration and inference workers, routing generation requests from the RL framework to eligible inference capacity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details-addressing-training-bottlenecks"&gt;⚙️ Key Details: Addressing Training Bottlenecks
+&lt;/h2&gt;&lt;p&gt;As RL training scales, redundant compute, slow rollouts, and worker failures can delay progress. Dynamo addresses these issues through specific mechanisms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Routing and Cache Reuse&lt;/strong&gt;: Multiple RL attempts often begin with identical instructions or contexts. Dynamo’s router balances KV cache reuse and worker load, sending requests to workers that have already cached the prompt to avoid repeated processing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ModelExpress Weight Updates&lt;/strong&gt;: Sending full model checkpoints to every worker is time-consuming and can interrupt generation. ModelExpress uses delta weight transfer, sending a compressed representation of what changed rather than the full model. Compatible workers can also copy weights directly from another GPU over NIXL.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recovery and Resilience&lt;/strong&gt;: When a worker fails, Dynamo detects the loss and directs new requests toward eligible healthy workers. It adds replacement workers to the routing pool once they have loaded a checkpoint and applied subsequent deltas to catch up.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-real-world-applications"&gt;📊 Real-World Applications
+&lt;/h2&gt;&lt;p&gt;Several organizations have utilized NVIDIA Dynamo and ModelExpress to optimize their RL workloads:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Organization&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Application&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Microsoft AI&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used Dynamo to support RL rollout inference during post-training.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;CoreWeave&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses Dynamo and ModelExpress to accelerate model weight updates by up to 15×.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Cognition&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used Dynamo to manage inference workers and route rollouts during the post-training of SWE-1.7.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;Prime Intellect&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Uses Dynamo for distributed inference orchestration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;H Company&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Used Dynamo and ModelExpress to reduce average training-step time by up to 20% and GPU-hours by up to 5%.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;Addressing rollout bottlenecks allows teams to complete more training iterations within a fixed compute budget. By ensuring that GPU capacity is not wasted on redundant prefix processing or slow weight transfers, Dynamo helps maintain the momentum of the training run, even as model weights are updated and infrastructure fails.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image1-14.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image3-16.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://developer-blogs.nvidia.com/wp-content/uploads/2026/11/image2-14.webp"
+loading="lazy"
+alt="figure"
+&gt;&lt;/p&gt;
+&lt;p&gt;#NVIDIA #ReinforcementLearning #Dynamo #GPUTechnology #LLMTraining&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://developer.nvidia.com/blog/reducing-rollout-bottlenecks-in-reinforcement-learning-with-nvidia-dynamo/" target="_blank" rel="noopener"
+&gt;Reducing Rollout Bottlenecks in Reinforcement Learning with NVIDIA Dynamo | NVIDIA Technical Blog&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

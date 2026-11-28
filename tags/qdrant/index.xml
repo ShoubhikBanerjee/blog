@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Qdrant on Tech Insights: AI &amp; Cloud</title><link>https://shoubhikbanerjee.github.io/blog/tags/qdrant/</link><description>Recent content in Qdrant on Tech Insights: AI &amp; Cloud</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2026 22:08:41 +0530</lastBuildDate><atom:link href="https://shoubhikbanerjee.github.io/blog/tags/qdrant/index.xml" rel="self" type="application/rss+xml"/><item><title>Qdrant .NET Client Adds gRPC Support and TLS Configuration</title><link>https://shoubhikbanerjee.github.io/blog/p/qdrant-net-client-adds-grpc-support-and-tls-configuration/</link><pubDate>Tue, 24 Nov 2026 22:08:41 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/qdrant-net-client-adds-grpc-support-and-tls-configuration/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post Qdrant .NET Client Adds gRPC Support and TLS Configuration" /&gt;&lt;h1 id="qdrant-net-client-adds-grpc-support-and-tls-configuration"&gt;Qdrant .NET Client Adds gRPC Support and TLS Configuration
+&lt;/h1&gt;&lt;p&gt;A new .NET client library for Qdrant has been released, allowing .NET applications to connect to the vector database at &lt;code&gt;http://localhost:6334&lt;/code&gt; using gRPC.&lt;/p&gt;
+&lt;h2 id="-overview"&gt;🔍 Overview
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Install the library with &lt;code&gt;dotnet add package Qdrant.Client&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The client connects by default to Qdrant on &lt;code&gt;http://localhost:6334&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Internally, the high‑level client relies on a low‑level gRPC client to communicate with Qdrant.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;The client creates a channel via &lt;code&gt;QdrantChannel.ForAddress&lt;/code&gt;, which is used by both &lt;code&gt;QdrantClient(&amp;quot;localhost&amp;quot;)&lt;/code&gt; and the &lt;code&gt;ClientConfiguration&lt;/code&gt; overloads.&lt;/li&gt;
+&lt;li&gt;When the channel is created, the client automatically adds a &lt;code&gt;qdrant-dotnet/&amp;lt;version&amp;gt;&lt;/code&gt; token to the request &lt;code&gt;User-Agent&lt;/code&gt; alongside the gRPC library token.&lt;/li&gt;
+&lt;li&gt;This token enables server‑side tooling to attribute traffic to the .NET client and its version.&lt;/li&gt;
+&lt;li&gt;On .NET Framework, where the underlying channel handler must be configured manually, the token is &lt;strong&gt;not&lt;/strong&gt; added automatically.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-configuration-options"&gt;⚙️ Configuration options
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Additional constructor overloads give developers more control over gRPC client configuration.&lt;/li&gt;
+&lt;li&gt;TLS can be configured, validating the server certificate using its thumbprint, and API‑key authentication can be added.&lt;/li&gt;
+&lt;li&gt;.NET Framework has limited support for gRPC over HTTP/2, but support can be enabled by:
+&lt;ul&gt;
+&lt;li&gt;Referencing &lt;code&gt;System.Net.Http.WinHttpHandler&lt;/code&gt; version 6.0.1 or later.&lt;/li&gt;
+&lt;li&gt;Configuring &lt;code&gt;WinHttpHandler&lt;/code&gt; as the inner handler for &lt;code&gt;GrpcChannelOptions&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-usage-example"&gt;🚀 Usage example
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-csharp" data-lang="csharp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CreateCollectionAsync&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;my_collection&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;VectorParams&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;Size&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Distance&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Distance&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Cosine&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Query examples (illustrative):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// return the 5 closest points&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// return the 5 closest points where rand_number &amp;gt;= 3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-compatibility-notes"&gt;📡 Compatibility notes
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;On .NET Framework, manual configuration of the channel handler is required, and the automatic &lt;code&gt;User-Agent&lt;/code&gt; token is not added.&lt;/li&gt;
+&lt;li&gt;The client works out‑of‑the‑box on platforms where gRPC over HTTP/2 is supported without additional handlers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Qdrant #dotnet #gRPC #vectorsearch #TLS&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/qdrant-dotnet" target="_blank" rel="noopener"
+&gt;qdrant/qdrant-dotnet&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Connector Enables Qdrant as a Storage Destination in Apache Spark</title><link>https://shoubhikbanerjee.github.io/blog/p/new-connector-enables-qdrant-as-a-storage-destination-in-apache-spark/</link><pubDate>Sun, 22 Nov 2026 22:08:30 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-connector-enables-qdrant-as-a-storage-destination-in-apache-spark/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post New Connector Enables Qdrant as a Storage Destination in Apache Spark" /&gt;&lt;h1 id="new-connector-enables-qdrant-as-a-storage-destination-in-apache-spark"&gt;New Connector Enables Qdrant as a Storage Destination in Apache Spark
+&lt;/h1&gt;&lt;p&gt;A new connector has been released that enables Qdrant to serve as a storage destination in Apache Spark, a distributed computing framework designed for big data processing and analytics.&lt;/p&gt;
+&lt;h2 id="-key-features"&gt;⚙️ Key features
+&lt;/h2&gt;&lt;p&gt;The connector supports several options for handling and structuring data:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Vector Ingestion&lt;/strong&gt;: The connector supports ingesting multiple named or unnamed, dense or sparse vectors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compatibility Options&lt;/strong&gt;: The &lt;code&gt;embedding_field&lt;/code&gt; and &lt;code&gt;vector_name&lt;/code&gt; options are maintained for backward compatibility. It is recommended to use &lt;code&gt;vector_fields&lt;/code&gt; and &lt;code&gt;vector_names&lt;/code&gt; for named vectors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Collection Requirements&lt;/strong&gt;: Before loading data using the connector, a collection must be created in advance with the appropriate vector dimensions and configurations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-setup-and-availability"&gt;🚀 Setup and availability
+&lt;/h2&gt;&lt;p&gt;To integrate the connector into a Spark environment, users must get the JAR file from one of the available sources:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prepackaged JAR&lt;/strong&gt;: The packaged &lt;code&gt;jar&lt;/code&gt; file can be found on GitHub Releases or Maven Central.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Building from Source&lt;/strong&gt;: Users can build the &lt;code&gt;jar&lt;/code&gt; from source. This requires having JDK@8 and Maven installed. Running the build command in the project root writes the JAR file into the &lt;code&gt;target&lt;/code&gt; directory by default.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#Qdrant #ApacheSpark #VectorDatabase #BigData #DataEngineering&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/qdrant-spark" target="_blank" rel="noopener"
+&gt;qdrant/qdrant-spark&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>New Java Library for Qdrant Vector Search Engine Released</title><link>https://shoubhikbanerjee.github.io/blog/p/new-java-library-for-qdrant-vector-search-engine-released/</link><pubDate>Sat, 21 Nov 2026 22:09:40 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/new-java-library-for-qdrant-vector-search-engine-released/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post New Java Library for Qdrant Vector Search Engine Released" /&gt;&lt;h1 id="new-java-library-for-qdrant-vector-search-engine-released"&gt;New Java Library for Qdrant Vector Search Engine Released
+&lt;/h1&gt;&lt;p&gt;A new Java library for the Qdrant vector search engine has been released, providing a high-level client with utility methods for interfacing with Qdrant. The library requires Java 8 or above and uses a low-level gRPC client internally to interact with Qdrant.&lt;/p&gt;
+&lt;h2 id="-installation"&gt;📦 Installation
+&lt;/h2&gt;&lt;p&gt;To install the library, add the following lines to your build config file. Please ensure all necessary dependencies listed in the documentation are included in your project.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🛠️ How It Works
+&lt;/h2&gt;&lt;p&gt;The client provides convenient methods and overloads for common operations, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Creating a new collection&lt;/li&gt;
+&lt;li&gt;Inserting vectors into a collection&lt;/li&gt;
+&lt;li&gt;Searching for similar vectors&lt;/li&gt;
+&lt;li&gt;Searching for similar vectors with filtering conditions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-configuration"&gt;🔐 Configuration
+&lt;/h2&gt;&lt;p&gt;Additional constructor overloads allow fine-grained control over the gRPC client configuration. For example, the following demonstrates how to configure a client to use TLS with certificate validation via the root CA and API key authentication.&lt;/p&gt;
+&lt;h2 id="-lifecycle-management"&gt;🔄 Lifecycle Management
+&lt;/h2&gt;&lt;p&gt;The client implements &lt;code&gt;AutoCloseable&lt;/code&gt;, though it is typically created once and used for the application&amp;rsquo;s lifetime. When constructed by passing a &lt;code&gt;ManagedChannel&lt;/code&gt;, the client does not shut down the channel on close by default. It can be configured to shut down the channel upon closing instead.&lt;/p&gt;
+&lt;h2 id="-asynchronous-operations"&gt;⏱️ Asynchronous Operations
+&lt;/h2&gt;&lt;p&gt;All client methods return &lt;code&gt;ListenableFuture&amp;lt;T&amp;gt;&lt;/code&gt;, enabling asynchronous workflows.&lt;/p&gt;
+&lt;h2 id="-resources"&gt;📚 Resources
+&lt;/h2&gt;&lt;p&gt;Usage examples are available in the Qdrant documentation and API Reference.&lt;/p&gt;
+&lt;p&gt;#Java #Qdrant #VectorSearch #gRPC #ArtificialIntelligence&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/java-client" target="_blank" rel="noopener"
+&gt;qdrant/java-client&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Microsoft publishes open-source Model Context Protocol curriculum and Qdrant memory server</title><link>https://shoubhikbanerjee.github.io/blog/p/microsoft-publishes-open-source-model-context-protocol-curriculum-and-qdrant-memory-server/</link><pubDate>Fri, 20 Nov 2026 22:08:48 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/microsoft-publishes-open-source-model-context-protocol-curriculum-and-qdrant-memory-server/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/6154722?v=4" alt="Featured image of post Microsoft publishes open-source Model Context Protocol curriculum and Qdrant memory server" /&gt;&lt;h1 id="microsoft-publishes-open-source-model-context-protocol-curriculum-and-qdrant-memory-server"&gt;Microsoft publishes open-source Model Context Protocol curriculum and Qdrant memory server
+&lt;/h1&gt;&lt;p&gt;Microsoft has released an open-source curriculum for the Model Context Protocol (MCP) alongside an official MCP server for Qdrant, enabling developers to build modular, secure AI workflows and implement semantic memory layers using specific language examples and vector search integration.&lt;/p&gt;
+&lt;h2 id="-the-mcp-curriculum"&gt;🧩 The MCP Curriculum
+&lt;/h2&gt;&lt;p&gt;The new open-source curriculum introduces the fundamentals of MCP through real-world, cross-language examples. It is designed for developers to learn practical techniques for building modular, scalable, and secure AI workflows, covering everything from session setup to service orchestration.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Languages Covered&lt;/strong&gt;: C#, Java, JavaScript, Rust, Python, and TypeScript.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repository&lt;/strong&gt;: The resources are hosted at &lt;code&gt;https://github.com/microsoft/mcp-for-beginners.git&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Global Accessibility&lt;/strong&gt;: The repository includes more than 50 language translations. Note that these translations significantly increase the download size.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Community Support&lt;/strong&gt;: Developers can join the Microsoft Foundry Discord community using the provided link.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-the-qdrant-mcp-server"&gt;🧠 The Qdrant MCP Server
+&lt;/h2&gt;&lt;p&gt;The release includes an official Model Context Protocol server for keeping and retrieving memories in the Qdrant vector search engine. This server acts as a semantic memory layer on top of the Qdrant database and is based on FastMCP.&lt;/p&gt;
+&lt;h3 id="core-tools"&gt;Core Tools
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;qdrant-store&lt;/code&gt;: Stores information in the Qdrant database.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;qdrant-find&lt;/code&gt;: Retrieves relevant information from the Qdrant database.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="configuration-details"&gt;Configuration Details
+&lt;/h3&gt;&lt;p&gt;Configuration is handled via environment variables, and the only command-line argument is &lt;code&gt;--transport&lt;/code&gt;, which selects the transport protocol. You cannot provide both &lt;code&gt;QDRANT_URL&lt;/code&gt; and &lt;code&gt;QDRANT_LOCAL_PATH&lt;/code&gt; simultaneously.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;Environment Variable&lt;/th&gt;
+&lt;th style="text-align: left"&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;QDRANT_LOCAL_PATH&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Path to the local Qdrant database (alternative to &lt;code&gt;QDRANT_URL&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;EMBEDDING_PROVIDER&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Embedding provider to use (currently only &amp;ldquo;fastembed&amp;rdquo; is supported)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;EMBEDDING_MODEL&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Name of the embedding model to use&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;QDRANT_SEARCH_LIMIT&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Maximum number of results to return from search&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;QDRANT_READ_ONLY&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Enable read-only mode (disables &lt;code&gt;qdrant-store&lt;/code&gt; tool)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;FASTMCP_HOST&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Host address to bind the server to (SSE and HTTP transports)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;FASTMCP_PORT&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Port to run the server on (SSE and HTTP transports)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;FASTMCP_MASK_ERROR_DETAILS&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Hide exception details from tool error messages sent to clients&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="naming-conventions"&gt;Naming Conventions
+&lt;/h3&gt;&lt;p&gt;Before version 0.9.0, settings used the &lt;code&gt;FASTMCP_SERVER_&lt;/code&gt; prefix (e.g., &lt;code&gt;FASTMCP_SERVER_HOST&lt;/code&gt;). The old names &lt;code&gt;FASTMCP_SERVER_HOST&lt;/code&gt;, &lt;code&gt;FASTMCP_SERVER_PORT&lt;/code&gt;, and &lt;code&gt;FASTMCP_SERVER_DEBUG&lt;/code&gt; still work but are deprecated and will be removed in a future release. If both old and new names are set, the new name takes precedence.&lt;/p&gt;
+&lt;h2 id="-availability-and-usage"&gt;🚀 Availability and Usage
+&lt;/h2&gt;&lt;p&gt;The &lt;code&gt;mcp-server-qdrant&lt;/code&gt; can be run directly without specific installation steps by using &lt;code&gt;uvx&lt;/code&gt;. The server supports different transport protocols specified using the &lt;code&gt;--transport&lt;/code&gt; flag.&lt;/p&gt;
+&lt;p&gt;#MCP #Microsoft #Qdrant #AIDevelopment #OpenSource&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/microsoft/mcp-for-beginners" target="_blank" rel="noopener"
+&gt;microsoft/mcp-for-beginners&lt;/a&gt;&lt;/em&gt;
+&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/mcp-server-qdrant" target="_blank" rel="noopener"
+&gt;qdrant/mcp-server-qdrant&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Go client released for Qdrant vector search engine</title><link>https://shoubhikbanerjee.github.io/blog/p/go-client-released-for-qdrant-vector-search-engine/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/go-client-released-for-qdrant-vector-search-engine/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post Go client released for Qdrant vector search engine" /&gt;&lt;h1 id="go-client-released-for-qdrant-vector-search-engine"&gt;Go client released for Qdrant vector search engine
+&lt;/h1&gt;&lt;p&gt;The Go client for the Qdrant vector search engine has been released, making it easier for developers to integrate vector search capabilities into their Go applications. Internally, the high-level client uses a low-level gRPC client to interact with Qdrant, abstracting away the complexity of direct API calls. The client supports secure communication with TLS 1.3 as the minimum required version when UseTLS is enabled.&lt;/p&gt;
+&lt;h2 id="-availability"&gt;📦 Availability
+&lt;/h2&gt;&lt;p&gt;The client can be installed using the Go package manager:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;go get -u github.com/qdrant/go-client&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-security"&gt;🔐 Security
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Uses TLS 1.3 as the minimum security version when &lt;code&gt;UseTLS: true&lt;/code&gt; is set&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-architecture"&gt;🧩 Architecture
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;High-level client provides simplified API for common operations&lt;/li&gt;
+&lt;li&gt;Low-level gRPC client handles direct communication with Qdrant server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;This release enables Go developers to leverage Qdrant&amp;rsquo;s vector search capabilities without implementing low-level networking code, accelerating the development of AI and machine learning applications that require semantic search functionality.&lt;/p&gt;
+&lt;p&gt;#Go #Qdrant #VectorSearch #gRPC #TLS #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/go-client" target="_blank" rel="noopener"
+&gt;qdrant/go-client&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Qdrant Vector Search Tutorial Collection Released</title><link>https://shoubhikbanerjee.github.io/blog/p/qdrant-vector-search-tutorial-collection-released/</link><pubDate>Wed, 18 Nov 2026 22:09:17 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/qdrant-vector-search-tutorial-collection-released/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post Qdrant Vector Search Tutorial Collection Released" /&gt;&lt;h1 id="qdrant-vector-search-tutorial-collection-released"&gt;Qdrant Vector Search Tutorial Collection Released
+&lt;/h1&gt;&lt;p&gt;A new collection of examples and tutorials has been released for the Qdrant vector search engine. The repository contains a curated set of tutorials, demos, and how-to guides focused on Qdrant and adjacent technologies.&lt;/p&gt;
+&lt;h2 id="-how-it-works"&gt;🧩 How it works
+&lt;/h2&gt;&lt;p&gt;The tutorials cover a range of data types and use cases, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Text Data:&lt;/strong&gt; Introduction to the intersection of vector databases and natural language processing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Image Data:&lt;/strong&gt; Use of semantic search for accurate skin cancer image comparison with Qdrant and CLIP.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Audio Data:&lt;/strong&gt; Introduction to audio embeddings, audio data, and music recommendation systems.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Agentic RAG:&lt;/strong&gt; Building a vector-search-powered agentic workflow to extract insights from meeting recordings using Qdrant and CrewAI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-key-details"&gt;⚙️ Key details
+&lt;/h2&gt;&lt;p&gt;Specific guides within the collection include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Qdrant 101 - Getting Started&amp;rdquo;: Introduction to semantic search and the recommendation API of Qdrant.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Build a Semantic Search Engine in 5 Minutes&amp;rdquo;: A quick starter tutorial that builds a semantic search engine for science-fiction books.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Semantic Search for Sci-Fi Books&amp;rdquo;: A demonstration of semantic search over a top-100 set of science-fiction books.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Build a Semantic Search API&amp;rdquo;: A guide to searching startup descriptions by meaning with Qdrant Cloud Inference, filtering by city, and serving results through FastAPI.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Language Model QA with Qdrant&amp;rdquo;: A tutorial on document retrieval with Vision Language Models and binary quantization.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;AI Getting Started Demo&amp;rdquo;: A sample menu dataset and pre-written script used by the &amp;ldquo;Start building on Qdrant&amp;rdquo; agent prompt in the Qdrant docs to demo local semantic search.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-why-it-matters"&gt;💡 Why it matters
+&lt;/h2&gt;&lt;p&gt;The collection provides structured learning paths for developers, covering foundational concepts such as the recommendation API and advanced implementations like agentic workflows and visual document retrieval.&lt;/p&gt;
+&lt;p&gt;#Qdrant #VectorSearch #SemanticSearch #RAG #Tutorials #CLIP&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/examples" target="_blank" rel="noopener"
+&gt;qdrant/examples&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Qdrant Helm Chart Enables Kubernetes Deployment with Community Support</title><link>https://shoubhikbanerjee.github.io/blog/p/qdrant-helm-chart-enables-kubernetes-deployment-with-community-support/</link><pubDate>Mon, 16 Nov 2026 22:14:27 +0530</pubDate><guid>https://shoubhikbanerjee.github.io/blog/p/qdrant-helm-chart-enables-kubernetes-deployment-with-community-support/</guid><description>&lt;img src="https://avatars.githubusercontent.com/u/73504361?v=4" alt="Featured image of post Qdrant Helm Chart Enables Kubernetes Deployment with Community Support" /&gt;&lt;h1 id="qdrant-helm-chart-enables-kubernetes-deployment-with-community-support"&gt;Qdrant Helm Chart Enables Kubernetes Deployment with Community Support
+&lt;/h1&gt;&lt;p&gt;The Qdrant Helm chart has been introduced, enabling users to deploy Qdrant within their Kubernetes clusters. While distributed deployment is possible, the chart lacks advanced features found in Qdrant Cloud and Private Cloud Enterprise Operator offerings.&lt;/p&gt;
+&lt;h2 id="-deployment-options"&gt;📦 Deployment Options
+&lt;/h2&gt;&lt;p&gt;The Helm chart is classified as open-source and provides a quick start for local or development environments. It installs the latest version of Qdrant by default.&lt;/p&gt;
+&lt;h2 id="-upgrade-process"&gt;🔧 Upgrade Process
+&lt;/h2&gt;&lt;p&gt;Users can perform rolling upgrades using standard Helm commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;helm repo update
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;helm upgrade your-qdrant-installation-name qdrant/qdrant
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;When a new Qdrant version is released, this procedure updates one node at a time. Any custom image tag overrides in &lt;code&gt;values.yaml&lt;/code&gt; must be updated before executing the upgrade.&lt;/p&gt;
+&lt;h2 id="-feature-comparison"&gt;⚖️ Feature Comparison
+&lt;/h2&gt;&lt;p&gt;A feature comparison table highlights differences between the Helm chart and Qdrant Cloud:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;th&gt;Helm Chart&lt;/th&gt;
+&lt;th&gt;Qdrant Cloud&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Zero-downtime upgrades&lt;/td&gt;
+&lt;td&gt;Limited&lt;/td&gt;
+&lt;td&gt;Full support&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Monitoring, logging&lt;/td&gt;
+&lt;td&gt;Basic&lt;/td&gt;
+&lt;td&gt;Advanced&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Backup and disaster recovery&lt;/td&gt;
+&lt;td&gt;Not included&lt;/td&gt;
+&lt;td&gt;Included&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Enterprise support&lt;/td&gt;
+&lt;td&gt;Community only&lt;/td&gt;
+&lt;td&gt;Available&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Additional Qdrant Cloud capabilities include API keys with granular access control, data loss prevention on downscaling, automatic shard rebalancing, and full cluster backup functionality.&lt;/p&gt;
+&lt;h2 id="-resources"&gt;📚 Resources
+&lt;/h2&gt;&lt;p&gt;For detailed configuration guidance, consult &lt;a class="link" href="charts/qdrant/README.md" &gt;the helm chart&amp;rsquo;s README&lt;/a&gt;. Information about Qdrant Cloud deployment options is available at &lt;a class="link" href="https://qdrant.tech/cloud/" target="_blank" rel="noopener"
+&gt;Qdrant Cloud&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;#Kubernetes #Qdrant #Helm #AI&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Source: &lt;a class="link" href="https://github.com/qdrant/qdrant-helm" target="_blank" rel="noopener"
+&gt;qdrant/qdrant-helm&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>
