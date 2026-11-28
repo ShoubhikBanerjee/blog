@@ -2,7 +2,7 @@
 title: "pCloud Pass users report unauthorized device connections following cyberattack"
 slug: "pcloud-pass-users-report-unauthorized-device-connections-following-cyberattack"
 description: "The pCloud Pass password manager was recently targeted by a cyberattack, resulting in users reporting that unknown devices had connected to their accounts, some with two-factor authentication (2FA)..."
-date: 2026-11-28T12:09:39+05:30
+date: 2026-11-28T18:07:42+05:30
 tags: [pCloud, PasswordManager, Cybersecurity, DataBreach, 2FA]
 categories: ["AI", "Cybersecurity", "Data Breach", "Security", "IT News"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/27/pcloud-logo.jpg"

@@ -2,7 +2,7 @@
 title: "QLC+ Is a Free, Cross-Platform Open-Source Lighting Control Tool"
 slug: "qlc-is-a-free-cross-platform-open-source-lighting-control-tool"
 description: "QLC+ is a free, open-source, and cross-platform software designed to control DMX and analog lighting systems. It is a fork of the original QLC project and aims to continue development while..."
-date: 2026-11-28T12:09:39+05:30
+date: 2026-11-28T18:07:42+05:30
 tags: [LightingControl, OpenSource, QLC, DMX, Theatre]
 categories: ["AI", "Open Source Software", "Digital Entertainment", "Hardware Control"]
 image: "https://avatars.githubusercontent.com/u/2951337?v=4"

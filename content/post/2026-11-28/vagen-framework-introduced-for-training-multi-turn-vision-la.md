@@ -2,7 +2,7 @@
 title: "VAGEN framework introduced for training multi-turn vision-language model agents"
 slug: "vagen-framework-introduced-for-training-multi-turn-vision-language-model-agents"
 description: "VAGEN is a new reinforcement learning (RL) framework specifically designed for training multi-turn vision-language model (VLM) agents. The framework enables these agents to build an internal world..."
-date: 2026-11-28T12:09:39+05:30
+date: 2026-11-28T18:07:42+05:30
 tags: [VAGEN, RL, VLM, AI, Agents, ReinforcementLearning]
 categories: ["AI", "Machine Learning", "Reinforcement Learning", "Vision-Language Models", "AI Agents"]
 image: "https://avatars.githubusercontent.com/u/204804147?v=4"

@@ -2,7 +2,7 @@
 title: "VS Code extension enables Python in Web via WebAssembly"
 slug: "vs-code-extension-enables-python-in-web-via-webassembly"
 description: "A new VS Code extension allows users to run Python code in the Web, such as in vscode.dev, using WebAssembly as the execution engine. The project is designed primarily as an experimentation..."
-date: 2026-11-28T12:09:39+05:30
+date: 2026-11-28T18:07:42+05:30
 tags: [VSCode, WebAssembly, Python, Extension]
 categories: ["AI", "Developer Tools", "Web Technologies", "Programming Languages"]
 image: "https://avatars.githubusercontent.com/u/6154722?v=4"

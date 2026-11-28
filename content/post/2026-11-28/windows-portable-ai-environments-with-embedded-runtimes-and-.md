@@ -2,7 +2,7 @@
 title: "Windows Portable AI Environments with Embedded Runtimes and Quantization Support"
 slug: "windows-portable-ai-environments-with-embedded-runtimes-and-quantization-support"
 description: "A set of new pre-configured 64-bit Windows 10/11 distributions has been released, bundling runtime libraries, offline configuration profiles, and installers into single portable packages for AI..."
-date: 2026-11-28T12:09:39+05:30
+date: 2026-11-28T18:07:42+05:30
 tags: [AI, Windows, LLM, PortableApps, CUDA, Quantization]
 categories: ["AI", "Machine Learning", "Developer Tools", "AI Infrastructure", "Windows"]
 image: "https://avatars.githubusercontent.com/u/309019269?v=4"
