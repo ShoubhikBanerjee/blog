@@ -2,7 +2,7 @@
 title: "ИИкона 1.9.7: AI integration for 1C supporting multiple model providers"
 slug: "1-9-7-ai-integration-for-1c-supporting-multiple-model-providers"
 description: "ИИкона, an extension for working with language models directly within 1C, has released version 1.9.7. This update provides a common connector that enables features such as expert chats, database..."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [1C, AI, LLM, Integration, DeveloperTools]
 categories: ["AI", "Enterprise Software", "Artificial Intelligence", "Developer Tools", "Integration"]
 image: "https://avatars.githubusercontent.com/u/5669019?v=4"

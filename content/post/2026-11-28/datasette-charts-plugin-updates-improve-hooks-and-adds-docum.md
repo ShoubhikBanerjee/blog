@@ -2,7 +2,7 @@
 title: "Datasette Charts plugin updates improve hooks and adds documentation website"
 slug: "datasette-charts-plugin-updates-improve-hooks-and-adds-documentation-website"
 description: "The datasette-charts plugin has released an update addressing friction points identified in its chart type plugin hooks, along with the launch of a dedicated documentation website."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [Datasette, Python, DataVisualization, Plugins, AIAssistedDevelopment]
 categories: ["AI", "Data Visualization", "Development Tools", "Python Ecosystem", "AI Applications"]
 author: "Shoubhik Banerjee"

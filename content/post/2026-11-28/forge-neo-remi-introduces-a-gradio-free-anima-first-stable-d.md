@@ -2,7 +2,7 @@
 title: "Forge Neo Remi introduces a Gradio-free, Anima-first Stable Diffusion workbench"
 slug: "forge-neo-remi-introduces-a-gradio-free-anima-first-stable-diffusion-workbench"
 description: "Forge Neo Remi is a new downstream distribution of Forge Neo, built as an Anima-first Stable Diffusion WebUI workbench. It replaces the traditional Gradio interface with a fast, Gradio-free React 19..."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [StableDiffusion, AIImageGeneration, ForgeNeo, ReactJS, OpenSourceAI]
 categories: ["AI", "Generative AI", "Developer Tools", "Software Architecture", "Machine Learning"]
 image: "https://avatars.githubusercontent.com/u/98527099?v=4"

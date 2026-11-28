@@ -2,7 +2,7 @@
 title: "Boston Scientific Exposes 117,000 Records Following Voice Phishing Attack"
 slug: "boston-scientific-exposes-117-000-records-following-voice-phishing-attack"
 description: "Boston Scientific, a Massachusetts-based medical device manufacturer, is sending data breach notices to individuals after a cyberattack exposed personal and medical information belonging to 117,789..."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [databreach, cybersecurity, medicaldevices, vishing, BostonScientific]
 categories: ["AI", "Cybersecurity", "Data Privacy", "Healthcare IT", "Incident Response"]
 image: "https://www.bleepstatic.com/content/hl-images/2026/11/27/bostonscientific.jpg"

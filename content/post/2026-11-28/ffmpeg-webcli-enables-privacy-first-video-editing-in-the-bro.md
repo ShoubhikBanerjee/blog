@@ -2,7 +2,7 @@
 title: "ffmpeg-webCLI enables privacy-first video editing in the browser"
 slug: "ffmpeg-webcli-enables-privacy-first-video-editing-in-the-browser"
 description: "A new browser-based video editor, ffmpeg-webCLI, has been released as a reference implementation of the Web-CLI architecture. Unlike cloud-based tools such as CloudConvert, Kapwing, or Ezgif that..."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [WebAssembly, ffmpeg, Privacy, BrowserTools, ClientSide]
 categories: ["AI", "Web Development", "Privacy and Security", "Media Processing", "Developer Tools"]
 image: "https://avatars.githubusercontent.com/u/1267401?v=4"

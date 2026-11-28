@@ -2,7 +2,7 @@
 title: "DSPy-Go brings systematic prompt engineering to Go applications"
 slug: "dspy-go-brings-systematic-prompt-engineering-to-go-applications"
 description: "DSPy-Go is a native Go implementation of the DSPy framework, bringing systematic prompt engineering and automated reasoning capabilities to Go applications. It enables developers to build reliable..."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [DSPy, Go, LLM, PromptEngineering, AI]
 categories: ["AI", "AI Development", "LLMs", "Programming Languages", "Prompt Engineering"]
 image: "https://avatars.githubusercontent.com/u/3046977?v=4"

@@ -2,7 +2,7 @@
 title: "Nix Sandbox Provides Declarative Security for AI CLI Agents"
 slug: "nix-sandbox-provides-declarative-security-for-ai-cli-agents"
 description: "A new lightweight, declarative sandboxing tool has been introduced for AI agents operating on Linux and macOS. Built using Nix, the project aims to prevent 'YOLO mode' agents from performing..."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [Nix, AIagents, Linux, macOS, Sandboxing, DevOps]
 categories: ["AI", "AI Agents", "DevOps", "Linux", "Security"]
 image: "https://avatars.githubusercontent.com/u/93987987?v=4"

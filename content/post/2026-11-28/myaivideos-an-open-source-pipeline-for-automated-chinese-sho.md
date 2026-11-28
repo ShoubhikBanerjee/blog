@@ -2,7 +2,7 @@
 title: "myAiVideos: An open-source pipeline for automated Chinese short-video production"
 slug: "myaivideos-an-open-source-pipeline-for-automated-chinese-short-video-production"
 description: "myAiVideos is a new open-source engineering project designed for the automated production of Chinese-language short videos. It covers the full pipeline from topic discovery through creative..."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [OpenSource, VideoGeneration, FastAPI, Java, AIModels]
 categories: ["AI", "Generative AI", "Open Source Software", "Video Production", "Software Architecture"]
 image: "https://avatars.githubusercontent.com/u/94903442?v=4"

@@ -2,7 +2,7 @@
 title: "G2i explains AI labs' data purchasing decisions at AI Engineer CODE 2026"
 slug: "g2i-explains-ai-labs-data-purchasing-decisions-at-ai-engineer-code-2026"
 description: "At AI Engineer CODE 2026, G2i founder Gabe Greenberg discussed how frontier AI labs decide whether to pay more for exclusive training data or take a discount on data another lab can also buy, and..."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [AIEngineering, TrainingData, G2i]
 categories: ["AI", "Artificial Intelligence", "Machine Learning", "Data Engineering", "AI Conferences"]
 image: "https://latent.space/og/card/post/inside_the_ai_training_data_market_gabe_greenberg_g2i/ed4688cb2744d2e4d5cd5ddc7c23532f2380d1828a6e519e2f223ecffa72430e.png"

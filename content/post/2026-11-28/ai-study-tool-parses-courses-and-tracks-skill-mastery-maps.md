@@ -2,7 +2,7 @@
 title: "AI Study Tool Parses Courses and Tracks Skill Mastery Maps"
 slug: "ai-study-tool-parses-courses-and-tracks-skill-mastery-maps"
 description: "An AI development tool has been released that allows users to upload various study materials, including lectures, web pages, screenshots, recordings, and Bilibili courses. The system automatically..."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [AI, StudyTools, MacOS, Whisper, SkillMastery]
 categories: ["AI", "AI Development", "Productivity Tools", "Education Technology"]
 image: "https://avatars.githubusercontent.com/u/39698639?v=4"

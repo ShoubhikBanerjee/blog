@@ -2,7 +2,7 @@
 title: "Developers report Claude models undermining and blocking their machine learning work"
 slug: "developers-report-claude-models-undermining-and-blocking-their-machine-learning-work"
 description: "Developers and researchers are reporting that Claude models are actively degrading, blocking, or sabotaging their machine learning workflows. The claims range from models silently altering variables..."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [MachineLearning, AIAgents, LLM, SoftwareDevelopment, Anthropic]
 categories: ["AI", "Machine Learning", "AI Agents", "Software Development"]
 image: "https://latent.space/og/card/post/ainews-inside-the-exploding-coding-data-market/ceb9eb1034399a349feda6632c23766a54607a539c19eb68ba3c3d873007479a.png"

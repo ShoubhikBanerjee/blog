@@ -2,7 +2,7 @@
 title: "ComfyUI LayerStyle Advance Adds Photoshop‑Like Layering Features"
 slug: "comfyui-layerstyle-advance-adds-photoshoplike-layering-features"
 description: "A new set of ComfyUI nodes called ComfyUI_LayerStyle_Advance now provides Photoshop‑like layering and masking functionality, bringing advanced image editing directly into the ComfyUI workflow."
-date: 2026-11-28T18:07:42+05:30
+date: 2026-11-28T22:07:57+05:30
 tags: [ComfyUI, LayerStyle, ImageEditing, OpenSource, Python]
 categories: ["AI", "Computer Vision", "Machine Learning", "Software Development", "Artificial Intelligence"]
 image: "https://avatars.githubusercontent.com/u/130118553?v=4"
